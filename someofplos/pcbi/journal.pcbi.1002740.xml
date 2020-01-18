@@ -1,0 +1,953 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" article-type="research-article" dtd-version="3.0" xml:lang="en">
+  <front>
+    <journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">PCOMPBIOL-D-12-00800</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1002740</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Anatomy and physiology</subject>
+            <subj-group>
+              <subject>Endocrine system</subject>
+              <subj-group>
+                <subject>Endocrine physiology</subject>
+                <subj-group>
+                  <subject>Neuroendocrinology</subject>
+                </subj-group>
+              </subj-group>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Computational biology</subject>
+            <subj-group>
+              <subject>Computational neuroscience</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Neuroscience</subject>
+            <subj-group>
+              <subject>Computational neuroscience</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Medicine</subject>
+          <subj-group>
+            <subject>Anatomy and physiology</subject>
+            <subj-group>
+              <subject>Electrophysiology</subject>
+            </subj-group>
+          </subj-group>
+          <subj-group>
+            <subject>Endocrinology</subject>
+            <subj-group>
+              <subject>Neuroendocrinology</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Diabetes and Endocrinology</subject>
+          <subject>Physiology</subject>
+          <subject>Computational Biology</subject>
+          <subject>Neuroscience</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>Phasic Firing in Vasopressin Cells: Understanding Its Functional Significance through Computational Models</article-title><alt-title alt-title-type="running-head">Vasopressin Phasic Firing: Model and Function</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>MacGregor</surname>
+            <given-names>Duncan J.</given-names>
+          </name>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Leng</surname>
+            <given-names>Gareth</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1">
+        <addr-line>Centre for Integrative Physiology, University of Edinburgh, Edinburgh, United Kingdom</addr-line>
+      </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Behrens</surname>
+            <given-names>Tim</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">
+        <addr-line>University of Oxford, United Kingdom</addr-line>
+      </aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">gareth.leng@ed.ac.uk</email></corresp>
+        <fn fn-type="conflict">
+          <p>The authors have declared that no competing interests exist.</p>
+        </fn>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: DJM GL. Performed the experiments: DJM. Analyzed the data: DJM. Contributed reagents/materials/analysis tools: DJM. Wrote the paper: DJM GL. Designed the modelling software: DJM.</p>
+        </fn>
+      </author-notes><pub-date pub-type="collection">
+        <month>10</month>
+        <year>2012</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>18</day>
+        <month>10</month>
+        <year>2012</year>
+      </pub-date><volume>8</volume><issue>10</issue><elocation-id>e1002740</elocation-id><history>
+        <date date-type="received">
+          <day>15</day>
+          <month>5</month>
+          <year>2012</year>
+        </date>
+        <date date-type="accepted">
+          <day>24</day>
+          <month>8</month>
+          <year>2012</year>
+        </date>
+      </history><permissions>
+        
+        <copyright-holder>MacGregor, Leng</copyright-holder>
+        <license xlink:type="simple">
+          <license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+        </license>
+      </permissions><abstract>
+        <p>Vasopressin neurons, responding to input generated by osmotic pressure, use an intrinsic mechanism to shift from slow irregular firing to a distinct phasic pattern, consisting of long bursts and silences lasting tens of seconds. With increased input, bursts lengthen, eventually shifting to continuous firing. The phasic activity remains asynchronous across the cells and is not reflected in the population output signal. Here we have used a computational vasopressin neuron model to investigate the functional significance of the phasic firing pattern. We generated a concise model of the synaptic input driven spike firing mechanism that gives a close quantitative match to vasopressin neuron spike activity recorded <italic>in vivo</italic>, tested against endogenous activity and experimental interventions. The integrate-and-fire based model provides a simple physiological explanation of the phasic firing mechanism involving an activity-dependent slow depolarising afterpotential (DAP) generated by a calcium-inactivated potassium leak current. This is modulated by the slower, opposing, action of activity-dependent dendritic dynorphin release, which inactivates the DAP, the opposing effects generating successive periods of bursting and silence. Model cells are not spontaneously active, but fire when perturbed by random perturbations mimicking synaptic input. We constructed one population of such phasic neurons, and another population of similar cells but which lacked the ability to fire phasically. We then studied how these two populations differed in the way that they encoded changes in afferent inputs. By comparison with the non-phasic population, the phasic population responds linearly to increases in tonic synaptic input. Non-phasic cells respond to transient elevations in synaptic input in a way that strongly depends on background activity levels, phasic cells in a way that is independent of background levels, and show a similar strong linearization of the response. These findings show large differences in information coding between the populations, and apparent functional advantages of asynchronous phasic firing.</p>
+      </abstract><abstract abstract-type="summary">
+        <title>Author Summary</title>
+        <p>Vasopressin is a hormone secreted from specialised brain cells into the bloodstream, acting at the kidneys to control water excretion, and thereby help regulate osmotic pressure. This is a cell membrane property determined by the ratio between body salt and water, and its maintenance is essential to the function of all our cells and organs, which depend on a stable fluid volume and extracellular salt concentration. Specialised cells in the brain sense osmotic pressure and generate electrical signals, which the thousands of vasopressin neurons process and respond to by producing and secreting vasopressin. The individual vasopressin cells generate an interesting phasic pattern of electrical activity in response to rises in osmotic pressure – they fire in long bursts, separated by long silences. In our project we're using modelling to simulate this phasic pattern of electrical activity and how it relates to the input signals, trying to understand exactly why vasopressin cells generate this kind of pattern and exactly what advantages it offers to signal processing and the control of vasopressin secretion.</p>
+      </abstract><funding-group>
+        <funding-statement>This work was supported by the Wellcome Trust Grant #089543. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+      </funding-group><counts>
+        <page-count count="16"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>Magnocellular vasopressin neurons produce and secrete the antidiuretic hormone vasopressin in response to increases in the osmotic pressure of extracellular fluid <xref ref-type="bibr" rid="pcbi.1002740-Dunn1">[1]</xref>. They form a key part of the highly robust homeostatic system which maintains osmotic pressure within narrow bounds. Each of the neurons independently encodes and responds to an input signal, but they must also coordinate as a population, making the vasopressin neurons a prime example of a distributed control system <xref ref-type="bibr" rid="pcbi.1002740-Leng1">[2]</xref>.</p>
+      <p>The vasopressin cell bodies, located in the supraoptic and paraventricular nuclei of the hypothalamus, project axons to the posterior pituitary gland, and receive synaptic input from osmosensitive neurons located near the third ventricle, as well as responding through depolarising currents generated by the vasopressin neurons' own osmosensitive ion channels <xref ref-type="bibr" rid="pcbi.1002740-Leng1">[2]</xref>–<xref ref-type="bibr" rid="pcbi.1002740-Leng2">[4]</xref>. The generated action potentials (spikes) propagate down the axons to trigger hormone secretion from the axonal terminals into the blood. When osmotic pressure rises, the secreted vasopressin acts at the kidneys to reduce the amount of water lost in urine.</p>
+      <p>After chronic water deprivation, many vasopressin neurons respond to the increased osmotic input by shifting from slow irregular firing into a distinctive phasic pattern, consisting of long bursts and silences lasting tens of seconds. As input increases the bursts lengthen, eventually shifting to fast continuous firing <xref ref-type="bibr" rid="pcbi.1002740-Poulain1">[3]</xref>, <xref ref-type="bibr" rid="pcbi.1002740-Leng2">[4]</xref>. Unlike the rhythmic activity observed in many other neural systems, phasic firing is generated by an intrinsic mechanism, rather than by network activity <xref ref-type="bibr" rid="pcbi.1002740-Brown1">[5]</xref>. The vasopressin neurons have no synaptic interconnections, and they fire asynchronously; accordingly, the hormone output reflects a smooth population signal rather than the fluctuating activity at individual cells. Activity-dependent secretion is characterised by a combination of <italic>frequency facilitation</italic>, whereby disproportionately more vasopressin is secreted at higher frequencies of stimulation, and <italic>fatigue</italic>, whereby peak secretion rates can only be sustained transiently. As a result, phasic firing patterns are optimally efficient <xref ref-type="bibr" rid="pcbi.1002740-Dutton1">[6]</xref>, <xref ref-type="bibr" rid="pcbi.1002740-Leng3">[7]</xref>, in the sense of maintaining a given level of secretion with the fewest spikes.</p>
+      <p>However, phasic firing is efficient only because the properties of the neurosecretory terminals make it so, and those properties are not universal – in particular the properties of oxytocin terminals in the posterior pituitary gland are different from those of vasopressin terminals, and seem to be adapted to the different firing properties of oxytocin neurons. Both cells' secretion mechanisms are subject to facilitation, and oxytocin cells can also show an enhanced response to phasic firing compared to a continuous pattern <xref ref-type="bibr" rid="pcbi.1002740-Bicknell1">[8]</xref>. However, the phasic pattern is not optimal as it is for vasopressin cells. The oxytocin cells have a much greater facilitation frequency range, and are not subject to short timescale (10s of seconds) fatigue <xref ref-type="bibr" rid="pcbi.1002740-Bicknell2">[9]</xref>.</p>
+      <p>It seems that the secretion mechanism is as much adapted to the spike patterning as vice versa, thus while phasic firing is efficient for secreting vasopressin, we must look deeper to fully understand why these neurons fire phasically. To address this, we need a model that can accurately reproduce the range of firing response observed <italic>in vivo</italic>, which we can then systematically interrogate to understand how phasic firing affects the signal processing properties of the neurons. This requires a model which includes the essential elements of the neuronal firing mechanism, but which is still simple enough to manipulate and be well understood.</p>
+      <p>The core of the phasic firing mechanism is a slow depolarising after potential (DAP), acting on a timescale of several seconds. This activity-dependent current increases neuronal excitability, generating a positive feedback effect. When a vasopressin cell is in a silent phase, a few random close spikes will generate the beginnings of a depolarised ‘plateau potential’ that can self-sustain, resulting in a prolonged burst of spikes. However, during this burst, firing also triggers the dendritic release of the opioid peptide dynorphin <xref ref-type="bibr" rid="pcbi.1002740-Brown2">[10]</xref>, which acts back on the cell of origin in an autocrine manner to progressively attenuate the DAP <xref ref-type="bibr" rid="pcbi.1002740-Brown3">[11]</xref>. The cumulative effect of activity-dependent dynorphin secretion eventually causes the plateau to fail, and the cell begins a new silent phase <xref ref-type="bibr" rid="pcbi.1002740-Brown1">[5]</xref>.</p>
+      <p>There are two current theories for the slow DAP. Li and Hatton <xref ref-type="bibr" rid="pcbi.1002740-Li1">[12]</xref> suggest that it is caused by the removal of a hyperpolarising K<sup>+</sup> leak current, whereas Bourque <italic>et al</italic> <xref ref-type="bibr" rid="pcbi.1002740-Bourque1">[13]</xref>, <xref ref-type="bibr" rid="pcbi.1002740-GhamariLangroudi1">[14]</xref> suggest that a depolarising non-specific cation current is responsible. Using a Hodgkin-Huxley based model fitted to <italic>in vitro</italic> data, Roper <italic>et al</italic> <xref ref-type="bibr" rid="pcbi.1002740-Roper1">[15]</xref>, <xref ref-type="bibr" rid="pcbi.1002740-Roper2">[16]</xref> argue that the generation of both a plateau, and a silent period, is more easily explained by the K<sup>+</sup> leak based mechanism. The Roper model uses only one compartment, but includes a dynorphin mechanism, and was the first published model to demonstrate bursting. However, the Roper model is based on data recorded <italic>in vitro</italic>. Vasopressin cells recorded <italic>in vitro</italic> are largely denuded of afferent input, and accordingly have a high input resistance; this directly impacts upon membrane time constants, and all activity-dependent potentials are amplified <xref ref-type="bibr" rid="pcbi.1002740-Destexhe1">[17]</xref>. In particular, the DAP following single spikes <italic>in vitro</italic> is so large that it can produce regenerative spiking, while perturbations produced by synaptic input are relatively sparse. For vasopressin cells <italic>in vitro</italic>, bursts comprise spikes that occur at a relatively constant inter-spike interval, giving a symmetrical distribution of intervals with a modal value that is the inverse of the mean intraburst firing rate. This distribution implies regenerative spiking. By contrast, <italic>in vivo</italic>, bursts in vasopressin cells comprise inter-spike intervals that have a very skewed distribution, with a mode that is disproportionately short for the mean firing rate – and which is largely independent of the mean firing rate. At the same time, the distributions have a very long tail, and this tail can be fit by a single negative exponential. From these features it can be deduced that, <italic>in vivo</italic>, neuronal excitability after a spike follows a sequence of hypoexcitability – consistent with an HAP, followed by hyperexcitability, consistent with a subthreshold DAP peaking at ∼40 ms. However, most spikes occur at longer intervals, and the negative exponential distribution suggests that their arrival is the result of a Poisson process – and is random in being independent of prior activity. Thus <italic>in vivo</italic>, spiking is not regenerative, and spike patterning is dominated by the stochastic effects of synaptic input <xref ref-type="bibr" rid="pcbi.1002740-Sabatier1">[18]</xref>; these effects not only increase variation and noise in the output but can also change the qualitative behaviour <xref ref-type="bibr" rid="pcbi.1002740-Leng4">[19]</xref>. In phasic cells in particular, small variations in firing activity can trigger the starting and stopping of bursts <xref ref-type="bibr" rid="pcbi.1002740-Sabatier2">[20]</xref>, <xref ref-type="bibr" rid="pcbi.1002740-Dreifuss1">[21]</xref>.</p>
+      <p>Nadeau <italic>et al.</italic> <xref ref-type="bibr" rid="pcbi.1002740-Nadeau1">[22]</xref> extended the Roper model by adding synaptic input and a simulation of direct osmosensitivity. In this model, synaptic noise produces some variability in spike timing, but the burst mechanism remains essentially regenerative: bursts, once triggered, can be sustained in the absence of synaptic input, and firing within bursts has the extreme regularity typical of <italic>in vitro</italic> data but very different to <italic>in vivo</italic> data. Thus intraburst frequency is largely unaffected by EPSP or IPSP rates, except at high frequencies of synaptic input, which give reasonable matches to ISI distributions observed <italic>in vivo</italic> but produce continuous, rather than phasic, firing.</p>
+      <p>Clayton <italic>et al.</italic> <xref ref-type="bibr" rid="pcbi.1002740-Clayton1">[23]</xref> took a different approach; they use an integrate-and-fire model and ask what is the simplest model that can fit <italic>in vivo</italic> spike data to a point whereby data from a model cell cannot be distinguished statistically from data from a target vasopressin cell? In this model, the combination of a slow DAP and the opposing action of dynorphin is represented by an explicit bistable mechanism which drives phasic firing. Using automated parameter fitting, this model produces extremely close fits to <italic>in vivo</italic> spike patterns, and can be fitted well to cells firing phasically, or firing continuously. However, we observed that, when a model cell with parameters that fit a phasically firing cell is challenged with increasing input, it fails to shift to continuous firing. Thus the Clayton model's explicit bistable mechanism captures the neuron's behaviour concisely, but within only a limited range. This suggests that some of the fitted parameters, particularly those accounting for bistability, are activity-or input dependent, and rather than being parameters, need to be incorporated into the model's dynamics.</p>
+      <p>Here we simulate vasopressin neurons in a model that displays emergent bistable behaviour, combining the best elements of previous models. The model gives a more complete match to vasopressin neuronal firing activity, while being simpler and more directly related to the physiology. We then use this model to explore how vasopressin cell activity encodes afferent signals, by comparing a population of phasically firing model neurons with an otherwise identical non-phasic population. We show that bistability and phasic firing gives neurons acting as a population several important signal processing properties that non-phasic neurons lack. They can produce a strongly linear response to both a constant and transient input signal, and they produce a consistent response to transient signals, independent of background activity. These are important properties that have been identified in the vasopressin response <italic>in vivo</italic> <xref ref-type="bibr" rid="pcbi.1002740-Dunn1">[1]</xref>, and may also apply more generally to neural signal processing.</p>
+    </sec>
+    <sec id="s2" sec-type="methods">
+      <title>Methods</title>
+      <sec id="s2a">
+        <title>The model</title>
+        <p>The model takes as its base the oxytocin cell model of <xref ref-type="bibr" rid="pcbi.1002740-Leng4">[19]</xref>, <xref ref-type="bibr" rid="pcbi.1002740-MacGregor1">[24]</xref>. This is a leaky integrate-and-fire (IGF) model driven by Poisson random decaying input perturbations simulating synaptic input. A fast large hyperpolarising afterpotential (HAP) and a slow small after-hyperpolarising potential (AHP), are simulated as exponentially decaying variables, incremented (using a negative value for hyperpolarisation) when a spike is fired. These are summed with a fixed resting potential and the synaptic input to give the membrane voltage. When this crosses the spike threshold a spike is recorded, followed by an absolute refractory period of 3 ms. This gives a close match to the <italic>in vivo</italic> spike patterning in oxytocin neurons, and by adding a simple fast DAP, using the same decaying exponential form, a similar model can closely match the intraburst activity of vasopressin neurons.</p>
+        <p>These representations of post-spike potentials were developed to match the spike-dependent changes in excitability deduced from the interspike interval (ISI) distributions and hazard functions of oxytocin and vasopressin cells recorded <italic>in vivo</italic>, based on the decaying post-spike depolarisation and hyperpolarisations observed in <italic>in vitro</italic> intracellular recordings. They are comparable to the forms used in Roper's Hodgkin-Huxley based model <xref ref-type="bibr" rid="pcbi.1002740-Roper1">[15]</xref>, <xref ref-type="bibr" rid="pcbi.1002740-Roper2">[16]</xref>, which represents the HAP, AHP, and DAP as separate compartments of intracellular [Ca<sup>2+</sup>], ([Ca<sup>2+</sup>]<sub>i</sub>) driving Ca<sup>2+</sup> sensitive currents. The varied decay time courses used in the IGF model are similar to the corresponding compartmental [Ca<sup>2+</sup>] half-lives.</p>
+        <p>We explored whether adding a second, slower, simple DAP could generate quantitatively realistic burst firing in the IGF model. A sustained plateau could be achieved if the DAP half life was &gt;2 s, and combined with saturation to limit the DAP magnitude. Given the ability to sustain a plateau, an activity-dependent mechanism is required to terminate the bursts. Physiologically, this involves spike-dependent release of dynorphin which inhibits the DAP. Using a slow spike-dependent exponentially decaying variable to inhibit the DAP, combined with a hyperpolarised resting potential (−75 mV), we could produce bursts, but could not achieve sharp bistable switches in activity, and could not produce <italic>in vivo</italic> comparable silent periods, only periods of slower activity. The Roper model <xref ref-type="bibr" rid="pcbi.1002740-Roper1">[15]</xref>, <xref ref-type="bibr" rid="pcbi.1002740-Roper2">[16]</xref> uses a different DAP mechanism to solve these problems; the burst plateau is generated by fully suppressing a hyperpolarising K<sup>+</sup> leak current that is partially active at resting potential, and silences are periods where the K<sup>+</sup> leak current is fully active, suppressing firing. This single mechanism can generate both activity dependent depolarisation and hyperpolarisation. Its model form, fitted to <italic>in vitro</italic> data, includes saturation and a simple relation between competing spike-triggered increases in [Ca<sup>2+</sup>]<sub>i</sub> and dynorphin, allowing dynorphin accumulation to eventually switch off a burst and generate a prolonged silence. This mechanism was simplified and integrated into the IGF model to produce the design illustrated in <xref ref-type="fig" rid="pcbi-1002740-g001">Figure 1</xref>.</p>
+        <fig id="pcbi-1002740-g001" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002740.g001</object-id>
+          <label>Figure 1</label>
+          <caption>
+            <title>The vasopressin spike firing model.</title>
+            <p>Schematic illustrating the structure of the integrate-and-fire based single neuron spiking model. Input is a Poisson random timed mix of excitatory and inhibitory pulses, simulating PSPs. These are summed to generate a membrane potential which is also modulated by a set of spike triggered Ca<sup>2+</sup> based potentials. The HAP, fast DAP and AHP are based on simple decaying exponentials, similar to a previous oxytocin cell model <xref ref-type="bibr" rid="pcbi.1002740-Leng4">[19]</xref>, <xref ref-type="bibr" rid="pcbi.1002740-MacGregor1">[24]</xref>. The K<sup>+</sup> leak current based slow DAP which generates bursting is based on the mechanism of the Hodgkin-Huxley type model of <xref ref-type="bibr" rid="pcbi.1002740-Roper2">[16]</xref>. Spikes are generated when the membrane potential crosses a threshold value.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002740.g001" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s2b">
+        <title>Model equations</title>
+        <p>Twin Poisson random processes generate excitatory and inhibitory post-synaptic potential (EPSP and IPSP) counts <italic>e<sub>n</sub></italic> and <italic>i<sub>n</sub></italic> at each 1-ms time step, using mean rates <italic>I</italic><sub>re</sub> and <italic>I</italic><sub>ri</sub>; the IPSP frequency <italic>I</italic><sub>ri</sub> is defined as a proportion of <italic>I</italic><sub>re</sub> given by <italic>I</italic><sub>ratio</sub>. All of the results here use <italic>I</italic><sub>ratio</sub> = 1 so that input rate is controlled by using just <italic>I</italic><sub>re</sub>. The input potentials have fixed amplitudes <italic>e</italic><sub>h</sub> = 2 mV and <italic>i</italic><sub>h</sub> = −2 mV and are summed to give the input:<disp-formula id="pcbi.1002740.e001"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e001" xlink:type="simple"/><label>(1)</label></disp-formula>This is summed with the synaptic component of the membrane potential, <italic>V<sub>syn</sub></italic>, decaying exponentially with half life λ<italic><sub>syn</sub></italic>:<disp-formula id="pcbi.1002740.e002"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e002" xlink:type="simple"/><label>(2)</label></disp-formula>Time constants are calculated from half-life parameters by:<disp-formula id="pcbi.1002740.e003"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e003" xlink:type="simple"/></disp-formula>where <italic>x</italic> is the variable concerned.</p>
+        <p>Variables for the HAP, AHP and the fast DAP decay exponentially, controlled by half-life parameters, λ<italic><sub>HAP</sub></italic>, λ<italic><sub>AHP</sub></italic>, and λ<italic><sub>DAP</sub></italic>, and are incremented by <italic>k<sub>HAP</sub></italic>, <italic>k<sub>AHP</sub></italic>, and <italic>k<sub>DAP</sub></italic> when a spike is fired. The AHP also depends on [Ca<sup>2+</sup>]<sub>i</sub>, so that only fast spiking substantially activates the AHP.<disp-formula id="pcbi.1002740.e004"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e004" xlink:type="simple"/><label>(3)</label></disp-formula><disp-formula id="pcbi.1002740.e005"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e005" xlink:type="simple"/><label>(4)</label></disp-formula><disp-formula id="pcbi.1002740.e006"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e006" xlink:type="simple"/><label>(5)</label></disp-formula>where <italic>s</italic> = 1 if a spike is fired at time <italic>t</italic>, and <italic>s</italic> = 0 otherwise.</p>
+        <p>Variables for [Ca<sup>2+</sup>]<sub>i</sub>, <italic>C</italic> and dynorphin, <italic>D</italic>, use similar forms:<disp-formula id="pcbi.1002740.e007"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e007" xlink:type="simple"/><label>(6)</label></disp-formula><disp-formula id="pcbi.1002740.e008"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e008" xlink:type="simple"/><label>(7)</label></disp-formula>The slow DAP (<italic>L</italic>) uses a simplified version of the DAP conductance equations in the Roper model <xref ref-type="bibr" rid="pcbi.1002740-GhamariLangroudi1">[14]</xref>, <xref ref-type="bibr" rid="pcbi.1002740-Roper1">[15]</xref>, defined as two components:<disp-formula id="pcbi.1002740.e009"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e009" xlink:type="simple"/><label>(8)</label></disp-formula>where <italic>k<sub>L</sub></italic> is a scaling parameter. The function tanh, previously used in the fit to <italic>in vitro</italic> data <xref ref-type="bibr" rid="pcbi.1002740-Roper1">[15]</xref>, ensures that the activation of <italic>L</italic> is sigmoidal, with half maximal activation at 0. This is used to inhibit the K<sup>+</sup> leak potential, <italic>V<sub>L</sub></italic>, scaled by conductance parameter <italic>g<sub>L</sub></italic>:<disp-formula id="pcbi.1002740.e010"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e010" xlink:type="simple"/><label>(9)</label></disp-formula>Finally, these components are summed with the resting potential, <italic>V<sub>rest</sub></italic>, to give the membrane potential <italic>V</italic>:<disp-formula id="pcbi.1002740.e011"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e011" xlink:type="simple"/><label>(10)</label></disp-formula>When <italic>V</italic> exceeds the spike threshold, <italic>V<sub>thresh</sub></italic>, a spike is fired, though its form is not modelled.</p>
+        <p>The parameter values for the figures in this paper are given in <xref ref-type="table" rid="pcbi-1002740-t001">tables 1</xref> and <xref ref-type="table" rid="pcbi-1002740-t002">2</xref>.</p>
+        <table-wrap id="pcbi-1002740-t001" orientation="portrait" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1002740.t001</object-id><label>Table 1</label><caption>
+            <title>Single neuron model parameters fitted to cell v1 (a.u., arbitrary units).</title>
+          </caption><alternatives>
+            <graphic id="pcbi-1002740-t001-1" mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002740.t001" xlink:type="simple"/>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">Name</td>
+                  <td align="left" colspan="1" rowspan="1">Description</td>
+                  <td align="left" colspan="1" rowspan="1">Value</td>
+                  <td align="left" colspan="1" rowspan="1">Units</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>I</italic>
+                    <sub>re</sub>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">excitatory input rate</td>
+                  <td align="left" colspan="1" rowspan="1">600</td>
+                  <td align="left" colspan="1" rowspan="1">Hz</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>I</italic>
+                    <sub>ratio</sub>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">inhibitory input ratio</td>
+                  <td align="left" colspan="1" rowspan="1">1</td>
+                  <td align="left" colspan="1" rowspan="1">-</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>e</italic>
+                    <sub>h</sub>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">EPSP amplitude</td>
+                  <td align="left" colspan="1" rowspan="1">2</td>
+                  <td align="left" colspan="1" rowspan="1">mV</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>i</italic>
+                    <sub>h</sub>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">IPSP amplitude</td>
+                  <td align="left" colspan="1" rowspan="1">−2</td>
+                  <td align="left" colspan="1" rowspan="1">mV</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">λ<italic><sub>syn</sub></italic></td>
+                  <td align="left" colspan="1" rowspan="1">PSP half life</td>
+                  <td align="left" colspan="1" rowspan="1">7.5</td>
+                  <td align="left" colspan="1" rowspan="1">ms</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>k<sub>HAP</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">HAP amplitude per spike</td>
+                  <td align="left" colspan="1" rowspan="1">60</td>
+                  <td align="left" colspan="1" rowspan="1">mV</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">λ<italic><sub>HAP</sub></italic></td>
+                  <td align="left" colspan="1" rowspan="1">HAP half life</td>
+                  <td align="left" colspan="1" rowspan="1">8</td>
+                  <td align="left" colspan="1" rowspan="1">ms</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>k<sub>DAP</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">fast DAP amplitude per spike</td>
+                  <td align="left" colspan="1" rowspan="1">0</td>
+                  <td align="left" colspan="1" rowspan="1">mV</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">λ<italic><sub>DAP</sub></italic></td>
+                  <td align="left" colspan="1" rowspan="1">fast DAP half life</td>
+                  <td align="left" colspan="1" rowspan="1">150</td>
+                  <td align="left" colspan="1" rowspan="1">ms</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>k<sub>AHP</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">AHP activation factor</td>
+                  <td align="left" colspan="1" rowspan="1">0.00012</td>
+                  <td align="left" colspan="1" rowspan="1">mV/nM</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">λ<italic><sub>AHP</sub></italic></td>
+                  <td align="left" colspan="1" rowspan="1">AHP half life</td>
+                  <td align="left" colspan="1" rowspan="1">10000</td>
+                  <td align="left" colspan="1" rowspan="1">ms</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>C<sub>AHP</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">minimum [Ca]<sub>i</sub> to activate AHP</td>
+                  <td align="left" colspan="1" rowspan="1">200</td>
+                  <td align="left" colspan="1" rowspan="1">nM</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>C</italic>
+                    <sub>rest</sub>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">rest [Ca]<sub>i</sub></td>
+                  <td align="left" colspan="1" rowspan="1">113</td>
+                  <td align="left" colspan="1" rowspan="1">nM</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>k<sub>C</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">[Ca]<sub>i</sub> increase per spike</td>
+                  <td align="left" colspan="1" rowspan="1">10</td>
+                  <td align="left" colspan="1" rowspan="1">nM</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">λ<italic><sub>C</sub></italic></td>
+                  <td align="left" colspan="1" rowspan="1">[Ca]<sub>i</sub> half life</td>
+                  <td align="left" colspan="1" rowspan="1">2500</td>
+                  <td align="left" colspan="1" rowspan="1">ms</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>k<sub>D</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">dynorphin activation per spike</td>
+                  <td align="left" colspan="1" rowspan="1">1.68</td>
+                  <td align="left" colspan="1" rowspan="1">a.u.</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">λ<italic><sub>D</sub></italic></td>
+                  <td align="left" colspan="1" rowspan="1">dynorphin half life</td>
+                  <td align="left" colspan="1" rowspan="1">10000</td>
+                  <td align="left" colspan="1" rowspan="1">ms</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>k<sub>L</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">K<sup>+</sup> leak calcium sensitivity</td>
+                  <td align="left" colspan="1" rowspan="1">36</td>
+                  <td align="left" colspan="1" rowspan="1">nM</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>g<sub>L</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">K<sup>+</sup> leak maximum voltage</td>
+                  <td align="left" colspan="1" rowspan="1">8.5</td>
+                  <td align="left" colspan="1" rowspan="1">mV</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>V</italic>
+                    <sub>rest</sub>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">resting potential</td>
+                  <td align="left" colspan="1" rowspan="1">−56</td>
+                  <td align="left" colspan="1" rowspan="1">mV</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>V</italic>
+                    <sub>thresh</sub>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">spike threshold potential</td>
+                  <td align="left" colspan="1" rowspan="1">−50</td>
+                  <td align="left" colspan="1" rowspan="1">mV</td>
+                </tr>
+              </tbody>
+            </table>
+          </alternatives></table-wrap>
+        <table-wrap id="pcbi-1002740-t002" orientation="portrait" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1002740.t002</object-id><label>Table 2</label><caption>
+            <title>Model parameters fitted to <italic>in vivo</italic> cells.</title>
+          </caption><alternatives>
+            <graphic id="pcbi-1002740-t002-2" mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002740.t002" xlink:type="simple"/>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">Cell</td>
+                  <td align="left" colspan="1" rowspan="1">Model</td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>I</italic>
+                    <sub>re</sub>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">λ<italic><sub>HAP</sub></italic></td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>k<sub>DAP</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>k<sub>AHP</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>k<sub>C</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>k<sub>D</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">λ<italic><sub>D</sub></italic></td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>g<sub>L</sub></italic>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">v1</td>
+                  <td align="left" colspan="1" rowspan="1">m1</td>
+                  <td align="left" colspan="1" rowspan="1">600</td>
+                  <td align="left" colspan="1" rowspan="1">8.0</td>
+                  <td align="left" colspan="1" rowspan="1">0.00</td>
+                  <td align="left" colspan="1" rowspan="1">0.00012</td>
+                  <td align="left" colspan="1" rowspan="1">10.0</td>
+                  <td align="left" colspan="1" rowspan="1">1.68</td>
+                  <td align="left" colspan="1" rowspan="1">10000</td>
+                  <td align="left" colspan="1" rowspan="1">8.5</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">v2</td>
+                  <td align="left" colspan="1" rowspan="1">m2</td>
+                  <td align="left" colspan="1" rowspan="1">1050</td>
+                  <td align="left" colspan="1" rowspan="1">10.5</td>
+                  <td align="left" colspan="1" rowspan="1">1.15</td>
+                  <td align="left" colspan="1" rowspan="1">0.00017</td>
+                  <td align="left" colspan="1" rowspan="1">11.8</td>
+                  <td align="left" colspan="1" rowspan="1">2.79</td>
+                  <td align="left" colspan="1" rowspan="1">7500</td>
+                  <td align="left" colspan="1" rowspan="1">8.0</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">v3</td>
+                  <td align="left" colspan="1" rowspan="1">m3</td>
+                  <td align="left" colspan="1" rowspan="1">920</td>
+                  <td align="left" colspan="1" rowspan="1">9.5</td>
+                  <td align="left" colspan="1" rowspan="1">1.20</td>
+                  <td align="left" colspan="1" rowspan="1">0.00005</td>
+                  <td align="left" colspan="1" rowspan="1">12.0</td>
+                  <td align="left" colspan="1" rowspan="1">3.10</td>
+                  <td align="left" colspan="1" rowspan="1">7500</td>
+                  <td align="left" colspan="1" rowspan="1">8.0</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">v4</td>
+                  <td align="left" colspan="1" rowspan="1">m4</td>
+                  <td align="left" colspan="1" rowspan="1">630</td>
+                  <td align="left" colspan="1" rowspan="1">10.5</td>
+                  <td align="left" colspan="1" rowspan="1">1.00</td>
+                  <td align="left" colspan="1" rowspan="1">0.00013</td>
+                  <td align="left" colspan="1" rowspan="1">12.0</td>
+                  <td align="left" colspan="1" rowspan="1">1.95</td>
+                  <td align="left" colspan="1" rowspan="1">10000</td>
+                  <td align="left" colspan="1" rowspan="1">10.5</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">v5</td>
+                  <td align="left" colspan="1" rowspan="1">m5</td>
+                  <td align="left" colspan="1" rowspan="1">530</td>
+                  <td align="left" colspan="1" rowspan="1">8.5</td>
+                  <td align="left" colspan="1" rowspan="1">0.90</td>
+                  <td align="left" colspan="1" rowspan="1">0.00004</td>
+                  <td align="left" colspan="1" rowspan="1">12.0</td>
+                  <td align="left" colspan="1" rowspan="1">2.15</td>
+                  <td align="left" colspan="1" rowspan="1">10000</td>
+                  <td align="left" colspan="1" rowspan="1">8.5</td>
+                </tr>
+              </tbody>
+            </table>
+          </alternatives></table-wrap>
+        <p>We also tested a more complex model of dynorphin dynamics where release depends on the availability of dynorphin for activity-dependent release, which in turn depends on a slow activity-dependent mechanism, <italic>T</italic>, possibly representing vesicle translocation from some reserve pool to the releasable pool close to the membrane, similar to the mechanism suggested for vesicles at the terminal release sites <xref ref-type="bibr" rid="pcbi.1002740-Giovannucci1">[25]</xref>:<disp-formula id="pcbi.1002740.e012"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e012" xlink:type="simple"/><label>(11)</label></disp-formula>The releasable store (<italic>D</italic><sub>store</sub>) accumulates at a rate determined by <italic>T</italic>, and is capped at parameter <italic>D</italic><sub>storecap</sub> (D<sub>store</sub> increases only if D<sub>store</sub>&lt;D<sub>storecap</sub>). Dynorphin release (and store depletion) per spike is independent of the store, unless <italic>D</italic><sub>store</sub> is too low for one unit of release, defined by parameter <italic>D</italic><sub>spike</sub>:<disp-formula id="pcbi.1002740.e013"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e013" xlink:type="simple"/><label>(12)</label></disp-formula><disp-formula id="pcbi.1002740.e014"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e014" xlink:type="simple"/><label>(13)</label></disp-formula>where <italic>r</italic> = 1 if <italic>s</italic> = 1 and <italic>D</italic><sub>store</sub>&gt;<italic>D</italic><sub>spike</sub>, and <italic>r</italic> = 0 otherwise. This is incorporated into the model by replacing <xref ref-type="disp-formula" rid="pcbi.1002740.e008">eqn.7</xref> with <xref ref-type="disp-formula" rid="pcbi.1002740.e014">eqn.13</xref>.</p>
+      </sec>
+      <sec id="s2c">
+        <title>Simulating osmotic input</title>
+        <p>To simulate the effect of an acute systemic intraperitoneal injection of hypertonic saline, which has a delayed effect on osmotic pressure as the hypertonic saline enters the blood <xref ref-type="bibr" rid="pcbi.1002740-Brimble1">[26]</xref>, we added an osmotic pressure variable <italic>O</italic> which shifts towards parameter <italic>O</italic><sub>inject</sub> with time constant τ<italic><sub>O</sub></italic>:<disp-formula id="pcbi.1002740.e015"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e015" xlink:type="simple"/><label>(14)</label></disp-formula>where initially <italic>O</italic><sub>inject</sub> = <italic>O</italic>. Injection is simulated by changing <italic>O</italic><sub>inject</sub> at a specified time. Synaptic input is then generated assuming a simple linear relation:<disp-formula id="pcbi.1002740.e016"><graphic orientation="portrait" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002740.e016" xlink:type="simple"/><label>(15)</label></disp-formula>which with <italic>I</italic><sub>ratio</sub> = 1, gives a parallel increase in excitatory and inhibitory synaptic input with increased osmotic pressure. The values 20 and 280 scale <italic>I</italic><sub>re</sub> so that the physiological 1–8spikes/s range corresponds to osmotic pressures of ∼290–320 mOsmol/l.</p>
+      </sec>
+      <sec id="s2d">
+        <title>Spike pattern analysis</title>
+        <p>The data from the model and from experimental recordings consist of series of ISIs. These are used to calculate mean firing rates and to generate ISI histograms and hazard plots, as described in <xref ref-type="bibr" rid="pcbi.1002740-Sabatier1">[18]</xref>. A burst detection algorithm is used to detect and measure bursts, with a burst defined as a train of &gt;25 spikes with no interval &gt;1500 ms. Burst measures include spike count, burst duration, silence duration, and intra-burst firing rate. The <italic>in vivo</italic> spike data for model fitting are from extracellular recordings of magnocellular vasopressin neurons, recorded from the supraoptic nucleus in urethane-anaesthetised rats. The method is detailed in Sabatier <italic>et al.</italic> <xref ref-type="bibr" rid="pcbi.1002740-Sabatier1">[18]</xref>.</p>
+      </sec>
+      <sec id="s2e">
+        <title>Pulse response</title>
+        <p>To test the model neuron response to transient changes in input we used a fixed synaptic input rate (<italic>I</italic><sub>re</sub>) as a background and added four identical 1-s duration changes to this rate at intervals of 100 s. We measured the response as the mean firing rate over the four 1-s pulses.</p>
+      </sec>
+      <sec id="s2f">
+        <title>Simulating cell heterogeneity</title>
+        <p>To simulate <italic>in vivo</italic> data gathered from multiple cells with varied spiking patterns, we took a set of parameters based on an existing fit of the model, and added random variation to the parameter subset which we vary to fit recorded cells (see <xref ref-type="sec" rid="s3">Results</xref> below). Each varied parameter was defined by a fixed mean and standard deviation, using these to generate normally distributed random values.</p>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Results</title>
+      <sec id="s3a">
+        <title>Analysis of <italic>in vivo</italic> phasic firing activity</title>
+        <p>To match the firing activity of a cell with a model in a quantitatively robust way, we need to define the features of that activity in a way that we can statistically compare recorded and model generated data. Spike activity comprises the overall firing pattern, shown by spike rate as measured in bins of varying width; the bursting characteristics, using burst detection to quantify bursts and silences and plot the mean burst profile; and short term spike patterning and excitability, contained in the ISI distribution and related hazard function (<xref ref-type="fig" rid="pcbi-1002740-g002">Figure 2</xref>). Together, these measures capture the important features of phasic firing, and describe the variation between individual cells. They also relate closely to many of the underlying mechanisms, such as the post-spike potentials.</p>
+        <fig id="pcbi-1002740-g002" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002740.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>Analysis of <italic>in vivo</italic> phasic firing activity.</title>
+            <p>(<bold>A</bold>) The 1-s bin spike rate counts for a phasic firing vasopressin neuron recorded in rat supraoptic nucleus. The cell fires in long bursts of varying duration (here mean 154s) which begin with a distinct peak before falling to a more stable intraburst firing rate (mean 8.91Hz). Bursts are separated by silent periods of almost no firing, and more regular duration (here mean 16s). (<bold>B</bold>) The burst profile of a cell is characterised by examining the mean firing rate over the first 50s and last 50s across all bursts, defining a mean shape for the head and tail. At the start of a burst, the firing rate rises rapidly, over ∼3s before falling back to a relatively stable plateau. The burst tail shows a slightly less rapid shift, declining over ∼7s. (<bold>C</bold>) The ISI histogram and hazard function show the short term spike patterning and post-spike excitability. The lack of short intervals is due to the HAP dominated refractory period. The following peak in excitability indicates a DAP. Beyond ∼150ms, the tail of the histogram can be fitted by a decaying exponential (y = 5000e<sup>−0.0114x</sup>, r<sup>2</sup> = 0.982), indicating that firing is otherwise random. The single spike effect of the AHP is too small to distinguish here <xref ref-type="bibr" rid="pcbi.1002740-MacGregor1">[24]</xref>.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002740.g002" xlink:type="simple"/>
+        </fig>
+        <p>These burst measures differ considerably between cells, and in any one cell, as synaptic input increases, bursts lengthen, silences shorten and the intra-burst firing rate increases <xref ref-type="bibr" rid="pcbi.1002740-Poulain1">[3]</xref>, <xref ref-type="bibr" rid="pcbi.1002740-Leng2">[4]</xref>. The burst profile of a cell typically shows a distinctive peak in firing rate at the start of the burst which rapidly rises and then declines to a plateau (<xref ref-type="fig" rid="pcbi-1002740-g002">Figure 2B</xref>). <italic>In vitro</italic> experiments have shown that this decline requires an AHP <xref ref-type="bibr" rid="pcbi.1002740-Kirkpatrick1">[27]</xref>.</p>
+        <p>The ISI histogram and hazard plots (<xref ref-type="fig" rid="pcbi-1002740-g002">Figure 2C</xref>), used to examine spike patterning within bursts, show a relative refractory period of 30–50 ms followed by a period of increased firing excitability, which slowly decays, consistent with the superposition of an HAP and a slower DAP. The long exponentially decaying tail of the histogram suggests that after about 150 ms has elapsed since a spike, spikes arise randomly, indicating that there is no patterning in the synaptic input activity.</p>
+      </sec>
+      <sec id="s3b">
+        <title>Fitting the model to <italic>in vivo</italic> burst firing activity</title>
+        <p>Our previous <italic>in vivo</italic> modelling work <xref ref-type="bibr" rid="pcbi.1002740-Clayton1">[23]</xref> used automated parameter fitting based on a genetic algorithm. The present model can be fitted with the same technique (not shown), but is also simple enough to fit manually. Using manual fitting helps to understand how each parameter effects spiking behaviour, and also how parameters interact and how independent they are.</p>
+        <p>To fit the model to data, we began with the ISI distribution and hazard function, and then moved to the burst features. The basic membrane parameters, for <italic>V<sub>rest</sub></italic>, <italic>V<sub>thresh</sub></italic>, PSP magnitude, and PSP half life, are derived from the earlier oxytocin cell model <xref ref-type="bibr" rid="pcbi.1002740-Leng4">[19]</xref>; oxytocin cells are closely related to vasopressin cells but lack a DAP and a bistable burst mechanism. The fitting for each <italic>in vivo</italic> recording began with <italic>g<sub>L</sub></italic> = 0, to switch off bursting and get an initial approximate fit for the synaptic input rate, HAP, AHP and fast DAP parameters; the cell's intra-burst ISI distribution, hazard function and firing rate can be closely fit without producing bursting. The burst mechanism was then turned on by setting <italic>g<sub>L</sub></italic>, and the full model fitted to the mean firing rate, mean burst duration, mean silence duration, and mean burst profile.</p>
+        <p>To understand which parameters are most important to variation between cells, we attempted to fit different cells by varying as few parameters as possible. This process identified the dynorphin parameters <italic>k<sub>D</sub></italic>, λ<italic><sub>D</sub></italic>, calcium parameter <italic>k<sub>C</sub></italic>, and <italic>g<sub>L</sub></italic> as those required to fit the burst measures. Parameter <italic>k<sub>D</sub></italic> dominates the burst duration, while λ<italic><sub>D</sub></italic> and <italic>g<sub>L</sub></italic> can be adjusted to match varied silence durations. The HAP, AHP and DAP parameters were further adjusted to compensate for the K<sup>+</sup> leak current's additional effect on short term spike patterning. The AHP parameter <italic>k<sub>AHP</sub></italic> dominates the size of the peak in firing rate at the start of each burst, consistent with experimental evidence that this current is responsible <xref ref-type="bibr" rid="pcbi.1002740-Kirkpatrick1">[27]</xref>. Five representative fits to recorded phasic cells are shown in <xref ref-type="fig" rid="pcbi-1002740-g003">Figure 3</xref>, using the parameters given in <xref ref-type="table" rid="pcbi-1002740-t001">Tables 1</xref> and <xref ref-type="table" rid="pcbi-1002740-t002">2</xref>; all give a close match to the firing rate, hazard, and burst measures (<xref ref-type="table" rid="pcbi-1002740-t003">Table 3</xref>).</p>
+        <fig id="pcbi-1002740-g003" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002740.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>The model fitted to five typical phasic cells recorded <italic>in vivo</italic>.</title>
+            <p>On the left we show pairs of matched <italic>in vivo</italic> and model generated spike rate data, and on the right, the fitted hazard and burst profiles. The model closely matches burst profile, mean burst length, mean silence length, intraburst firing rate, and the intraburst hazard, showing post-spike excitability and patterning. A subset of eight of the model's 21 parameters were varied to match the cells. The fit parameters vary synaptic input rate, HAP half life, AHP magnitude, fast DAP magnitude, dynorphin magnitude, calcium magnitude and K+ leak conductance. The parameter values are given in <xref ref-type="table" rid="pcbi-1002740-t001">tables 1</xref> and <xref ref-type="table" rid="pcbi-1002740-t002">2</xref>.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002740.g003" xlink:type="simple"/>
+        </fig>
+        <table-wrap id="pcbi-1002740-t003" orientation="portrait" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1002740.t003</object-id><label>Table 3</label><caption>
+            <title>Fitted model (m) and <italic>in vivo</italic> (v) burst measures.</title>
+          </caption><alternatives>
+            <graphic id="pcbi-1002740-t003-3" mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002740.t003" xlink:type="simple"/>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">Data</td>
+                  <td align="left" colspan="1" rowspan="1">Intra(Hz)</td>
+                  <td align="left" colspan="1" rowspan="1">Burst Mean(s)</td>
+                  <td align="left" colspan="1" rowspan="1">Burst SD</td>
+                  <td align="left" colspan="1" rowspan="1">Silence Mean(s)</td>
+                  <td align="left" colspan="1" rowspan="1">Silence SD</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">v1</td>
+                  <td align="left" colspan="1" rowspan="1">7.89</td>
+                  <td align="left" colspan="1" rowspan="1">85</td>
+                  <td align="left" colspan="1" rowspan="1">31</td>
+                  <td align="left" colspan="1" rowspan="1">41</td>
+                  <td align="left" colspan="1" rowspan="1">23</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">m1</td>
+                  <td align="left" colspan="1" rowspan="1">7.90</td>
+                  <td align="left" colspan="1" rowspan="1">85</td>
+                  <td align="left" colspan="1" rowspan="1">51</td>
+                  <td align="left" colspan="1" rowspan="1">38</td>
+                  <td align="left" colspan="1" rowspan="1">5</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">v2</td>
+                  <td align="left" colspan="1" rowspan="1">8.91</td>
+                  <td align="left" colspan="1" rowspan="1">154</td>
+                  <td align="left" colspan="1" rowspan="1">68</td>
+                  <td align="left" colspan="1" rowspan="1">16</td>
+                  <td align="left" colspan="1" rowspan="1">4</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">m2</td>
+                  <td align="left" colspan="1" rowspan="1">8.88</td>
+                  <td align="left" colspan="1" rowspan="1">149</td>
+                  <td align="left" colspan="1" rowspan="1">93</td>
+                  <td align="left" colspan="1" rowspan="1">19</td>
+                  <td align="left" colspan="1" rowspan="1">3</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">v3</td>
+                  <td align="left" colspan="1" rowspan="1">12.85</td>
+                  <td align="left" colspan="1" rowspan="1">88</td>
+                  <td align="left" colspan="1" rowspan="1">37</td>
+                  <td align="left" colspan="1" rowspan="1">29</td>
+                  <td align="left" colspan="1" rowspan="1">5</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">m3</td>
+                  <td align="left" colspan="1" rowspan="1">12.87</td>
+                  <td align="left" colspan="1" rowspan="1">83</td>
+                  <td align="left" colspan="1" rowspan="1">51</td>
+                  <td align="left" colspan="1" rowspan="1">26</td>
+                  <td align="left" colspan="1" rowspan="1">3</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">v4</td>
+                  <td align="left" colspan="1" rowspan="1">8.05</td>
+                  <td align="left" colspan="1" rowspan="1">112</td>
+                  <td align="left" colspan="1" rowspan="1">39</td>
+                  <td align="left" colspan="1" rowspan="1">50</td>
+                  <td align="left" colspan="1" rowspan="1">10</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">m4</td>
+                  <td align="left" colspan="1" rowspan="1">8.03</td>
+                  <td align="left" colspan="1" rowspan="1">107</td>
+                  <td align="left" colspan="1" rowspan="1">54</td>
+                  <td align="left" colspan="1" rowspan="1">47</td>
+                  <td align="left" colspan="1" rowspan="1">8</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">v5</td>
+                  <td align="left" colspan="1" rowspan="1">11.00</td>
+                  <td align="left" colspan="1" rowspan="1">100</td>
+                  <td align="left" colspan="1" rowspan="1">38</td>
+                  <td align="left" colspan="1" rowspan="1">51</td>
+                  <td align="left" colspan="1" rowspan="1">22</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">m5</td>
+                  <td align="left" colspan="1" rowspan="1">11.06</td>
+                  <td align="left" colspan="1" rowspan="1">92</td>
+                  <td align="left" colspan="1" rowspan="1">55</td>
+                  <td align="left" colspan="1" rowspan="1">49</td>
+                  <td align="left" colspan="1" rowspan="1">6</td>
+                </tr>
+              </tbody>
+            </table>
+          </alternatives></table-wrap>
+      </sec>
+      <sec id="s3c">
+        <title>Examining the model's burst firing mechanism</title>
+        <p>The bistable burst firing mechanism is based on opposing effects of [Ca<sup>2+</sup>]<sub>i</sub> and dynorphin, acting on different timescales. These do not act deterministically, but shift the probability of a burst starting or stopping, subject to the stochastic synaptic input. When rapid successive spikes arise during a silent period, they cause an increase in [Ca<sup>2+</sup>]<sub>i</sub> which begins to suppress the hyperpolarising K<sup>+</sup> leak current. This triggers activity-dependent positive feedback, increasing firing rate and hence [Ca<sup>2+</sup>]<sub>i</sub>. This feedback becomes self-sustaining, maintaining the suppression of the leak current and hence allowing spike activity to be sustained at a relatively stable level (<xref ref-type="fig" rid="pcbi-1002740-g004">Figure 4</xref>).</p>
+        <fig id="pcbi-1002740-g004" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002740.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>The model's burst firing mechanism.</title>
+            <p>The data here shows two typical bursts from the model fitted to cell v4. The burst mechanism is driven by the spike triggered accumulation of [Ca<sup>2+</sup>]<sub>i</sub> and dynorphin. The [Ca<sup>2+</sup>]<sub>i</sub> signal inhibits the hyperpolarising K<sup>+</sup> leak current, increasing firing and creating a positive feedback that sustains a burst. The more slowly accumulating dynorphin signal opposes the effect of [Ca<sup>2+</sup>]<sub>i</sub>, eventually causing burst termination and driving a silent period of sustained hyperpolarisation. The positive feedback combined with the two opposing effects acting on different timescales creates an emergent bistability, shown in the rapid shifts of the K<sup>+</sup> leak (<italic>L</italic>) activation and the resulting effect on membrane potential (<italic>V<sub>L</sub></italic>).</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002740.g004" xlink:type="simple"/>
+        </fig>
+        <p>As a burst begins, the AHP begins to accumulate, but this rises more slowly than the burst initiates, allowing a peak in firing rate at the head of the burst, before the AHP slows the intra-burst firing. Bursts reach a stable state when activity-dependent inhibition reaches an approximate equilibrium with activity-dependent disinhibition of the leak current. As bursts continue, the effects of dynorphin accumulate, with a small increase per spike but a long half life (∼10 s), while [Ca<sup>2+</sup>]<sub>i</sub> remains stable. Dynorphin weakens the ability of [Ca<sup>2+</sup>]<sub>i</sub> to suppress the leak current, and, as a result, the burst becomes sensitive to small fluctuations in firing rate. A small drop in firing rate, within the range of random variation, can be sufficient to cause the plateau to collapse, causing the leak current to switch back on, silencing firing.</p>
+        <p>The silent period depends on the reverse order of effect between [Ca<sup>2+</sup>]<sub>i</sub> and dynorphin. [Ca<sup>2+</sup>]<sub>i</sub> decays more rapidly, so that the more prolonged effect of dynorphin is left unopposed; this causes a large leak current that hyperpolarises the cell and prevents burst initiation and most spike firing until dynorphin has sufficiently decayed. The cycle then repeats when enough spikes occur to initiate a new burst.</p>
+        <p>The key to the model parameters is to balance dynorphin's increase per spike and half life such that it does not quite reach equilibrium at the plateau firing rate. This leaves a gradual increase which eventually terminates the burst. More dynorphin release per spike or a slower decay will cause faster accumulation and terminate the burst more quickly. Too little per spike or too fast a decay and the effects of dynorphin will not continue to increase, so that the burst never terminates. Equally, [Ca<sup>2+</sup>]<sub>i</sub> parameters must be such that [Ca<sup>2+</sup>]<sub>i</sub> is sufficient to initiate and sustain a burst, but not so strong that it cannot be eventually overcome by dynorphin.</p>
+      </sec>
+      <sec id="s3d">
+        <title>Testing the model with antidromic spikes</title>
+        <p><italic>In vivo</italic> experiments have shown that bursting can be both initiated and terminated by triggering increased spike firing, either by evoking spikes antidromically by electrical stimulation of the axons <xref ref-type="bibr" rid="pcbi.1002740-Leng2">[4]</xref>, or by stimulating increased synaptic input <xref ref-type="bibr" rid="pcbi.1002740-Sabatier2">[20]</xref>. It is an important test of the model to be able to reproduce this, as these effects have clear implications for information coding. <xref ref-type="fig" rid="pcbi-1002740-g005">Figure 5</xref> shows simulated antidromic spikes in a typical model cell. The model has the advantage that its noisy input activity can be repeated precisely, so that the effects of interventions can be tested against known times of burst initiation and termination. In the model cell illustrated, stimulating at 10 Hz for 0.5 s has no effect early in the silent period, but more intense stimulation (10 Hz for 2 s) or stimulation later in the silent period, causes early burst initiation. Triggering early burst termination requires stronger stimulation than burst initiation, but shows a similar pattern, requiring either a more intense stimulation (20 Hz for 2 s) or stimulation at a later point in the burst. There is still a delay before the burst stops, due to the opposing effects of [Ca<sup>2+</sup>]<sub>i</sub> and dynorphin: the activity-induced increase in [Ca<sup>2+</sup>]<sub>i</sub> sustains the burst before the longer lasting activity-dependent dynorphin increase causes termination. Such delayed terminations are an experimentally-observed feature of bursts that are truncated by modest stimulation (see <xref ref-type="fig" rid="pcbi-1002740-g003">Figure 3A</xref> of <xref ref-type="bibr" rid="pcbi.1002740-Sabatier2">[20]</xref>). Applying a very intense stimulation (50 Hz for 2 s) causes a more rapid termination by increasing the AHP sufficiently to block spike firing.</p>
+        <fig id="pcbi-1002740-g005" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002740.g005</object-id>
+          <label>Figure 5</label>
+          <caption>
+            <title>Using simulated antidromic spikes to trigger and terminate bursts.</title>
+            <p>The data here uses the model fitted to cell v4, repeated using the same random synaptic input. Antidromic stimulation (as in <xref ref-type="bibr" rid="pcbi.1002740-Dreifuss1">[21]</xref>) is simulated by adding spikes to the model, at a specified frequency and time. In the left column, spikes are added during the silent period, attempting to trigger a burst. In the right column, spikes are added during the second burst, attempting to terminate the burst. Burst triggering is more likely when stimulated later into the silent period, or using a more intense stimulation. Generally, burst termination requires a more intense stimulation than burst triggering. Successful termination is more likely later into the burst, when there is more dynorphin accumulation, or with a more intense stimulation. The competing effects of spike-triggered increases in [Ca<sup>2+</sup>]<sub>i</sub> and dynorphin cause a delay before termination occurs, unless the stimulation is sufficiently intense to trigger a large AHP, which immediately terminates spike firing.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002740.g005" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s3e">
+        <title>Model response to increased input</title>
+        <p><italic>In vivo</italic>, when osmotic input is increased, an increased proportion of vasopressin neurons fire phasically, shifting from slow irregular firing. Phasic neurons also show longer bursts, shorter silences, and higher intra-burst firing rates <xref ref-type="bibr" rid="pcbi.1002740-Poulain1">[3]</xref>, eventually shifting to continuous firing. We tested this in the model by increasing the synaptic input rate. Similarly, model cells progress from slow sparse firing to short irregular bursts and then full phasic firing with bursts increasing in duration and firing rate and shortening silent periods, until they eventually shift to continuous firing (<xref ref-type="fig" rid="pcbi-1002740-g006">Figure 6</xref>). The increase in intraburst firing rate is more linear than the increase in burst duration due to the additional opposing effect of the AHP on firing rate.</p>
+        <fig id="pcbi-1002740-g006" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002740.g006</object-id>
+          <label>Figure 6</label>
+          <caption>
+            <title>Model cell behaviour with increasing synaptic input.</title>
+            <p>When osmotic pressure is increased <italic>in vivo</italic> we see a shift to phasic firing followed by increases in intraburst firing rate and burst duration, eventually shifting to continuous firing <xref ref-type="bibr" rid="pcbi.1002740-Poulain1">[3]</xref>. Here, we reproduce this in the model (using parameters fitted to cell v2) by increasing synaptic input. Intraburst firing rate increases fairly linearly, whereas the increase in burst duration is much more non-linear. Silence duration shows a fairly linear decline after phasic firing is established.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002740.g006" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s3f">
+        <title>Simulating the effect of hypertonic injection</title>
+        <p>The experimental study of Brimble and Dyball <xref ref-type="bibr" rid="pcbi.1002740-Brimble1">[26]</xref> reports the responses of vasopressin cells to a systemic injection of hypertonic saline, which triggers a rapid and prolonged increase in osmotic pressure. In that study, relatively slow phasic neurons shifted to longer, faster bursts, and faster firing phasic neurons shifted to continuous firing, similar to our results above. However, non-phasic slow, irregular neurons when challenged go through a transitional period of ∼10 min of continuous firing before shifting to stable phasic firing (see <xref ref-type="fig" rid="pcbi-1002740-g005">Figure 5</xref> in <xref ref-type="bibr" rid="pcbi.1002740-Brimble1">[26]</xref>). The firing rate of the neurons rises much more quickly than the shift to bursting, suggesting that the change in firing pattern is determined by the state of the burst mechanism rather than the input <italic>per se</italic>.</p>
+        <p>We simulated the delayed effect of hypertonic saline injection on the rise in osmotic pressure, but could not reproduce these experimental results with our basic model. However, the pool of readily-releasable vesicles in the dendrites of magnocellular neurones is labile, and regulated in an activity-dependent manner. We therefore hypothesised that, in the absence of activity-dependent replenishment of the readily releasable pool, the initial lack of burst termination might be due to insufficient readily releasable stores of dynorphin. Out first attempt at modelling this used a simple mechanism where spike-triggered dynorphin release was directly dependent on a dynorphin store charged by spike activity. However this resulted in shorter, not longer, bursts as input activity increased, and so we developed a more complex mechanism where spike triggered dynorphin release is partially decoupled from the dynamics of the releasable dynorphin store, and using this mechanism we were able to reproduce the initial period of continuous firing before onset of phasic firing (<xref ref-type="fig" rid="pcbi-1002740-g007">Figure 7</xref>). In this mechanism, a slowly accumulating measure of spike activity (<italic>T</italic>, hypothesised to represent slow activity-driven vesicle translocation) determines the rate at which the readily releasable pool of dynorphin is replenished. While <italic>T</italic> is too low, the release decoupling element (<italic>r</italic> in <xref ref-type="disp-formula" rid="pcbi.1002740.e013">eqn. 12</xref> and <xref ref-type="disp-formula" rid="pcbi.1002740.e014">13</xref>) makes some spikes fail to trigger dynorphin release, slowing the increase in dynorphin while store replenishment is too slow to keep up with the spike rate. This results in a gradual increase in the amount of dynorphin available for activity-dependent release until it reaches an equilibrium with activity-dependent depletion, at which point it is sufficient to sustain phasic firing.</p>
+        <fig id="pcbi-1002740-g007" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002740.g007</object-id>
+          <label>Figure 7</label>
+          <caption>
+            <title>Using the model to simulate the effect of hypertonic saline injection.</title>
+            <p>An injection of hypertonic saline causes a rapid increase in osmotic pressure. The rapid increase in input causes some initially slow firing vasopressin cells to shift immediately to fast continuous firing before settling in a phasic pattern after a long delay (∼10 min) <xref ref-type="bibr" rid="pcbi.1002740-Brimble1">[26]</xref>. We hypothesise that this is due to insufficient availability of dendritic dynorphin, which takes time to upregulate. We tested this using an extension to the basic model and were able to reproduce the effect observed <italic>in vivo</italic>. Osmotic pressure was initially set at 295 and increased to 315 by injection at 5 min. We suggest that releasable dynorphin store upregulation is dependent on a slow activity-dependent vesicle transport mechanism, <italic>T</italic>. The extended dynorphin mechanism uses parameters <italic>k<sub>T</sub></italic> = 0.00001, λ<italic><sub>T</sub></italic> = 500000, <italic>k<sub>D</sub></italic><sub>store</sub> = 0.02, λ<italic><sub>D</sub></italic><sub>store</sub> = 1000000, <italic>D</italic><sub>spike</sub> = 0.1, <italic>D</italic><sub>storecap</sub> = 10, and τ<italic><sub>O</sub></italic> = 200000.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002740.g007" xlink:type="simple"/>
+        </fig>
+      </sec>
+      <sec id="s3g">
+        <title>Simulating the effect of the dynorphin antagonist nor-BNI</title>
+        <p>In the model, one of the main elements which generates the inter-burst silence is a dynorphin driven hyperpolarisation. In addition to dynorphin, silence duration is also determined by the AHP and the synaptic input rate. However, Brown et al <xref ref-type="bibr" rid="pcbi.1002740-Brown4">[28]</xref> studied the effect of the competitive dynorphin antagonist nor-BNI, combining analysis of <italic>in vitro</italic> and <italic>in vivo</italic> results to suggest that dynorphin does not affect inter-burst activity. We used the model to test this by simulating their <italic>in vivo</italic> results. As a competitive antagonist, nor-BNI reduces rather than blocks dynorphin's effect and we simulated this in the model by reducing parameter k<italic><sub>D</sub></italic> (<xref ref-type="disp-formula" rid="pcbi.1002740.e008">eqn. 7</xref>) sufficiently to produce a similar increase in burst duration as they observe. Their <italic>in vivo</italic> data is taken from multiple cells, and to simulate cell variation we generated 100 model cells based on the fit to cell v1, with small random variations in the parameter subset we varied to fit different <italic>in vivo</italic> cells (<xref ref-type="table" rid="pcbi-1002740-t004">Table 4</xref>). We ran each cell for 3000 s with and without reduced k<italic><sub>D</sub></italic>, generating a total of 3032 bursts under simulated control, and 1239 bursts under simulated nor-BNI. We then generated the same collected data burst and silence duration histograms and hazards as shown in <xref ref-type="fig" rid="pcbi-1002740-g005">Figure 5</xref> of Brown et al 2006 <xref ref-type="bibr" rid="pcbi.1002740-Brown4">[28]</xref> (<xref ref-type="fig" rid="pcbi-1002740-g008">Figure 8</xref>).</p>
+        <fig id="pcbi-1002740-g008" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002740.g008</object-id>
+          <label>Figure 8</label>
+          <caption>
+            <title>Simulating <italic>in vivo</italic> study of the effect of reduced dynorphin on burst and silence duration.</title>
+            <p>Our data simulates in vivo analysis using data from multiple cells by generating 100 model cells with random variation in the seven non-synaptic parameters used to fit the varied cells in <xref ref-type="fig" rid="pcbi-1002740-g003">Figure 3</xref> (<xref ref-type="table" rid="pcbi-1002740-t004">Table 4</xref>). The dynorphin antagonist was simulated by reducing k<italic><sub>D</sub></italic> by 15% in each generated cell. This is sufficient to have a large effect on spike rate (A) and the burst duration histogram and hazard (B), comparable to the <italic>in vivo</italic> results in Brown et al 2006 <xref ref-type="bibr" rid="pcbi.1002740-Brown4">[28]</xref> (c.f. their <xref ref-type="fig" rid="pcbi-1002740-g005">figure 5</xref>) but also shows very little effect on the silence (inter-burst interval) duration (C), similar to what they observe, suggesting that their results do not, as they interpret, exclude a role for dynorphin in generating inter-burst silence.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002740.g008" xlink:type="simple"/>
+        </fig>
+        <table-wrap id="pcbi-1002740-t004" orientation="portrait" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1002740.t004</object-id><label>Table 4</label><caption>
+            <title>Parameters varied to simulate <italic>in vivo</italic> cell heterogeneity.</title>
+          </caption><alternatives>
+            <graphic id="pcbi-1002740-t004-4" mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002740.t004" xlink:type="simple"/>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">Parameter</td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>I</italic>
+                    <sub>re</sub>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">λ<italic><sub>HAP</sub></italic></td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>k<sub>DAP</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>k<sub>AHP</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>k<sub>C</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>k<sub>D</sub></italic>
+                  </td>
+                  <td align="left" colspan="1" rowspan="1">λ<italic><sub>D</sub></italic></td>
+                  <td align="left" colspan="1" rowspan="1">
+                    <italic>g<sub>L</sub></italic>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">mean</td>
+                  <td align="left" colspan="1" rowspan="1">600</td>
+                  <td align="left" colspan="1" rowspan="1">9</td>
+                  <td align="left" colspan="1" rowspan="1">0.50</td>
+                  <td align="left" colspan="1" rowspan="1">0.00012</td>
+                  <td align="left" colspan="1" rowspan="1">11</td>
+                  <td align="left" colspan="1" rowspan="1">2.7</td>
+                  <td align="left" colspan="1" rowspan="1">7500</td>
+                  <td align="left" colspan="1" rowspan="1">8.5</td>
+                </tr>
+                <tr>
+                  <td align="left" colspan="1" rowspan="1">S.D.</td>
+                  <td align="left" colspan="1" rowspan="1">0</td>
+                  <td align="left" colspan="1" rowspan="1">1</td>
+                  <td align="left" colspan="1" rowspan="1">0.25</td>
+                  <td align="left" colspan="1" rowspan="1">0.00004</td>
+                  <td align="left" colspan="1" rowspan="1">1</td>
+                  <td align="left" colspan="1" rowspan="1">0.3</td>
+                  <td align="left" colspan="1" rowspan="1">0</td>
+                  <td align="left" colspan="1" rowspan="1">1.0</td>
+                </tr>
+              </tbody>
+            </table>
+          </alternatives></table-wrap>
+        <p>Our results show a similar strong effect of reduced dynorphin action increasing burst duration, but despite our dynorphin-based mechanism, we also show very little effect on silence duration, similar to the result of Brown et al <xref ref-type="bibr" rid="pcbi.1002740-Brown4">[28]</xref>. Further reductions in dynorphin effect (not shown) do show a reduction in the mean silence duration, but it is much smaller than the effect on increased burst duration, and in a varied population results in many cells shifting to continuous firing.</p>
+      </sec>
+      <sec id="s3h">
+        <title>Phasic firing and population signal encoding</title>
+        <p>We want to understand what use asynchronous phasic firing is, in particular what advantage it gives to information processing in a neuronal population. We can use the model to study this, running duplicates of the single neuron model in parallel, and taking the summed spike activity as the population output.</p>
+        <p>To study population response, we compare the summed activity of 100 model cells in two conditions: one where all cells were made phasic by setting <italic>g<sub>L</sub></italic> = 8.5, and one where the cells were made non-phasic by setting <italic>g<sub>L</sub></italic> = 0, but with no other change (<xref ref-type="fig" rid="pcbi-1002740-g009">Figure 9</xref>). To maintain an asynchronous population, we use independently generated input PSPs for each model cell, using a common input rate, parameter <italic>I</italic><sub>re</sub>.</p>
+        <fig id="pcbi-1002740-g009" orientation="portrait" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002740.g009</object-id>
+          <label>Figure 9</label>
+          <caption>
+            <title>Comparing the population spike response of phasic and non-phasic model cells.</title>
+            <p>Data here is from a population of 100 identical model cells (using the fit to cell v1) run in parallel, taking as output the summed spike rate. Synaptic input uses a common rate parameter, <italic>I</italic><sub>re</sub>, but was generated independently for each neuron, maintaining an asynchronous population. Non-phasic cells use g<italic><sub>L</sub></italic> = 0. To test pulse response, <italic>I</italic><sub>re</sub>, was set to a defined pulse input for 1s at four time points spaced 100s apart. The pulse response was measured as the mean population spike rate response over the four pulses. (<bold>A</bold>) Mean population rate with a varied base input rate (range 100–1000). The population response in the phasic cells, shows a much more linear relation to the input, once input is sufficient to trigger phasic firing, particularly in the physiological spiking range of 1–8Hz. (<bold>B</bold>) Population spike activity in non-phasic and phasic cells with matched 500Hz base input rate and 1000Hz pulse input. The summed asynchronous bursting activity in the phasic cells does not show the bursting, but does show more variable activity and a lower mean spike rate. Each input pulse produces a distinct increase in firing rate. (<bold>C</bold>) Testing response with a varied base input rate (range 100–1000) and fixed 1000Hz pulse input. As background input increases, the mean pulse response in the non-phasic cells gradually falls, whereas in the non-phasic cells it is much more consistent. (<bold>D</bold>) Testing response with varied pulse input rate (range 100–1000Hz) and base rate set to give matched mean firing rate = 5 spikes/s (non-phasic base <italic>I</italic><sub>re</sub> = 255, phasic base <italic>I</italic><sub>re</sub> = 560). The phasic population response shows a much more linear relation to the input pulse rate.</p>
+          </caption>
+          <graphic mimetype="image" orientation="portrait" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002740.g009" xlink:type="simple"/>
+        </fig>
+        <p>We first measured the mean spike rate in the population in response to constant input rates over the range 100–1000 Hz (beyond this range the phasic cells begin to fire continuously and behave as non-phasic cells), running the model cells for 2000 s of activity (<xref ref-type="fig" rid="pcbi-1002740-g009">Figure 9A</xref>). The non-phasic cells show a very non-linear relationship between input and output rates, with an initially steep relationship at low input rates that flattens at higher input rates. By contrast, the phasic cells show very little response until the input is sufficient to trigger bursting, but then show a much more linear average increase in response. In the overall output range of ∼1–8 spikes/s (including mean intraburst rates as high as 15spikes/s), which corresponds to the normal physiological dynamic range of firing activity of vasopressin cells <italic>in vivo</italic>, the relationship is particularly linear for phasic cells compared to non-phasic cells. At high input rates, the phasic population shifts to continuous firing, at which point they give a non-linear response that is similar to that of the non-phasic cells. Thus overall, the phasic cells show a strong linearization of the response to increasing input, compared to the non-phasic cells, which show a typical non-linear neuronal response.</p>
+        <p>To study how the population responds to transient pulses, we challenged the two populations with four 1-s duration periods of increased input by setting parameter <italic>I</italic><sub>re</sub> to 1000 Hz at 100-s intervals, testing over the same range of background input as <xref ref-type="fig" rid="pcbi-1002740-g009">Figure 9A</xref>. The phasic population shows more variability in its average output activity, but the response to the input pulses is similar to that of the non-phasic population (<xref ref-type="fig" rid="pcbi-1002740-g009">Figure 9B</xref>). However, unlike the non-phasic population, the phasic population responds to pulses in a way that is relatively independent of the background input, producing a consistent response that is largely independent of background rate (<xref ref-type="fig" rid="pcbi-1002740-g009">Figure 9C</xref>). By contrast, for the non-phasic population, the mean response to pulses reduces as the background input increases, as the constant firing increases the amount of time that cells are refractory due to activity-dependent hyperpolarisation.</p>
+        <p>Finally, we tested the response of the two populations to transient input of varying amplitude. For this, we fixed the background input (255 Hz for non-phasic, 560 Hz for phasic) so that the two populations were firing at the same mean rate (5 Hz) and tested the effects of input pulses in the range 100–1000 Hz. The phasic population (<xref ref-type="fig" rid="pcbi-1002740-g009">Figure 9D</xref>) responds to increasing pulse amplitudes with a linear average increase in firing rate (measured during the pulses). By contrast, the non-phasic population again shows a non-linear response. The response of the phasic population to transient pulses is also smaller than that of non-phasic cells, supporting the previous suggestion <xref ref-type="bibr" rid="pcbi.1002740-Sabatier2">[20]</xref> that the asynchronous phasic cells function as a low-pass filter.</p>
+      </sec>
+    </sec>
+    <sec id="s4">
+      <title>Discussion</title>
+      <p>We have described an integrate-and-fire based model of magnocellular vasopressin neurons, which is capable of explaining and reproducing a large range of the firing behaviours observed <italic>in vivo</italic>. The model implements a phasic firing mechanism based on a hyperpolarising K<sup>+</sup> leak current, modulated by intracellular calcium and dynorphin.</p>
+      <p>The most important advance with this model is that it can realistically reproduce the dynamic behaviour of vasopressin cells as synaptic input changes, giving the ability to go forward and test how the neurons' properties relate to their function. Here, we have begun to use the model to test the general information processing properties of phasic firing neurons. In particular, we asked what are the specific consequences of phasic firing for information coding, given that phasic vasopressin cells fire asynchronously. We approached this question by constructing two populations of neurons that matched the properties of vasopressin cells closely, and which differed only in their ability to fire phasically. We showed that, compared with non-phasic cells, phasic cells respond (as a population) to sustained increases in synaptic input with a relatively linear increase in mean firing rate in the range 0–10 spikes/s. This is the physiological dynamic range of vasopressin cells: 10 spikes/s is about as fast as these cells can sustain firing under extremes of physiological dehydration <xref ref-type="bibr" rid="pcbi.1002740-Leng1">[2]</xref>–<xref ref-type="bibr" rid="pcbi.1002740-Leng2">[4]</xref>.</p>
+      <p>Previously we suggested that a population of asynchronous phasic neurons might function as a low-pass filter <xref ref-type="bibr" rid="pcbi.1002740-Sabatier2">[20]</xref>, as short pulses of increased input will sometimes start and sometimes stop bursts. Testing with the model shows that non-phasic neurons are indeed much less sensitive to transient increases in synaptic input (<xref ref-type="fig" rid="pcbi-1002740-g009">Figure 9D</xref>), although with sufficiently large transients there is still some increase in activity, as the increase in spikes from starting a burst is greater than the reduction in spikes from stopping one. The net effect also includes cells where the input pulse generates extra spikes without stopping a burst. Moreover, whereas the response of non-phasic cells to brief transients strongly depends on the background level of synaptic input, phasic cells respond to transient increases in a way that is largely independent of background synaptic input. Finally, the response of phasic cells to transient perturbations is again much more linear with the magnitude of those perturbations, than that of non-phasic cells. This idea, that competing excitatory and inhibitory effects lead to overall linearization of the response is comparable to our previous result <xref ref-type="bibr" rid="pcbi.1002740-Leng4">[19]</xref> showing that mixed excitatory and inhibitory synaptic input gives a more linear firing response in neurons.</p>
+      <p>Individually, phasic cells are extremely non-linear and inconsistent in their responses to changes in afferent input <xref ref-type="bibr" rid="pcbi.1002740-Leng1">[2]</xref>, however, here we have shown that a population of asynchronous phasic cells is much more linear and more consistent in its overall response than a matched population of cells that do not display phasic firing. The natural inference is that these consequences of phasic firing are adaptive, and constitute an explanation of why vasopressin cells fire phasically.</p>
+      <sec id="s4a">
+        <title>The model</title>
+        <p>The present model is relatively simple; it has 21 parameters, but five of these define the synaptic input, and only one of these, <italic>I</italic><sub>re</sub>, is varied here, to control the input rate. Parameter <italic>C</italic><sub>rest</sub> is only included to scale [Ca<sup>2+</sup>]<sub>i</sub> to <italic>in vivo</italic> units, and can be removed by setting to 0. Several others can be fixed, and only eight varied parameters are required to fit the model to a wide range of recorded cells.</p>
+        <p>The one element of the model which was predicted, rather than directly based on experimental data, is the fast DAP, which is required to fit the short term spike patterning detected in the ISI histogram and hazard function. It turns out that such a current has already been found in recent <italic>in vitro</italic> work of Armstrong <italic>et al</italic> <xref ref-type="bibr" rid="pcbi.1002740-Armstrong1">[29]</xref>. Our predicted 150 ms half life is a close match to their measured value of 200 ms.</p>
+        <p>Both a medium-duration (∼500 ms half life) and a slow AHP have been found in vasopressin cells <xref ref-type="bibr" rid="pcbi.1002740-Kirkpatrick1">[27]</xref>, <xref ref-type="bibr" rid="pcbi.1002740-GhamariLangroudi2">[30]</xref>. We represent the AHP in the model using only a single slow AHP. We tested whether adding a second AHP would alter the model behaviour (not shown) but found no clear effects of this. The very long half life (10s.) is necessary to fit the duration of the peak at the head of each burst. The Roper model uses a single medium-duration AHP but also shows burst peaks which are much shorter than <italic>in vivo</italic>.</p>
+        <p>One of the distinctions of the model from previous published attempts is that it works with very simple dynorphin dynamics. The Nadeau spiking model was unable to reproduce the increase in burst duration with increased input activity, and they corrected this by adding frequency-dependent fatigue to the dynorphin signal. The Roper model itself added spike rate based facilitation to dynorphin accumulation, attempting to make burst duration less regular. Our model is able to produce the increased burst duration with a simple fixed rate of dynorphin accumulation per spike, suggesting that the more complex dynamics are not required. It will require further work, attempting to map between the models, to understand what the important difference is.</p>
+        <p>We did use more complex dynorphin dynamics when attempting to simulate the effect of sudden changes in osmotic input, showing that the observed switch to continuous firing from slow irregular firing, before settling into phasic firing, can be explained by activity-dependent upregulation of releasable dendritic dynorphin stores. In vasopressin neurons, dynorphin is co-packaged with vasopressin in large dense-cored vesicles, and these vesicles can be released from the dendrites by calcium-dependent exocytosis. Electrical activity can induce dendritic release through voltage-gated calcium entry through mainly N-type calcium channels <xref ref-type="bibr" rid="pcbi.1002740-Tobin1">[31]</xref>, but the amount of release in response to electrical activity depends on other factors. In particular, dendrites possess a readily-releasable pool of vesicles close to the plasma membrane <xref ref-type="bibr" rid="pcbi.1002740-Ludwig1">[32]</xref>, and recruitment of vesicles into this pool from deeper reserve stores is regulated by the cytosolic actin cytoskeleton in a calcium-dependent way <xref ref-type="bibr" rid="pcbi.1002740-Tobin2">[33]</xref>, allowing for a slow activity-dependent augmentation of dendritic release. Adding this mechanism only affects model behaviour in response to sudden and prolonged changes to input activity. We don't require the more complex mechanism to simulate other behaviour and so consider this an optional extension for the purposes of further work. It is an advantage to maintain a model which is as simple as possible in order to understand its behaviour.</p>
+        <p>The obvious simplification in our model, compared to the Hodgkin-Huxley based models, is that we don't have voltage dependency. During the model's development, voltage dependency was tested with the K<sup>+</sup> leak current, but was unable to produce proper burst activity. Experience suggests that an incomplete implementation of voltage dependence does not work well in neural models. The HAP for example, modelled as a decaying exponential, requires a very large initial magnitude (60 mV) when the spike is just a point event. In an integrate-and-fire model this doesn't matter – the HAP is unrealistically large initially, but only at a time when cells are refractory, and so has no effect on spike patterning. However, if other voltage-dependent elements are added then the large voltage perturbation can cause unrealistic behaviour. We would argue that it is more important for an <italic>in vivo</italic> model to match spike patterning, rather than the detailed dynamics of individual spikes – as generally the experimental data <italic>in vivo</italic> essentially capture only spike events. Obviously spike events and membrane voltage changes are related, but the detailed parameters are more difficult to measure <italic>in vivo</italic>, and voltage dependence <italic>in vivo</italic> is much weaker than <italic>in vitro</italic> <xref ref-type="bibr" rid="pcbi.1002740-Destexhe1">[17]</xref>. The deafferentation of neurons that is inevitable in the preparation of hypothalamic slices for <italic>in vitro</italic> recordings leaves the cells relatively denuded of synaptic input; accordingly the cell input resistance is inevitably higher due to the lack of activation of neurotransmitter-gated ion channels, and the higher input resistance amplifies the effects of conductance changes on membrane potential. Comparing <italic>in vivo</italic> and <italic>in vitro</italic> recordings of vasopressin cells shows a large difference in post-spike excitability <xref ref-type="bibr" rid="pcbi.1002740-Sabatier1">[18]</xref>, that cannot be accounted for by the membrane voltage effects of a different level of background synaptic input, indicating that channel dynamics are very different <italic>in vivo</italic>. The combination of losing the stochastic element of the synaptic input and the larger post-spike potentials makes <italic>in vitro</italic> spiking slower and more regular, as observed in the ISI histograms <xref ref-type="bibr" rid="pcbi.1002740-Sabatier1">[18]</xref>. In addition, the slower, larger DAP makes bursting regenerative. Bursts become self-sustaining, and not subject to external input. <italic>In vivo</italic>, bursts are generated by the same intrinsic mechanism, but the smaller DAP is not sufficient on its own, requiring synapse driven depolarisation to maintain a burst. Thus <italic>in vivo</italic> bursting characteristics depend on both synaptic input and the intrinsic bursting mechanism.</p>
+      </sec>
+      <sec id="s4b">
+        <title>Cell heterogeneity and fitting the model</title>
+        <p>Vasopressin neurons display diverse patterns of spontaneous spike activity; some cells are relatively silent or irregular, some are continuous, and the rest show variations of the phasic pattern, with varying intraburst rates, burst durations and silence durations. We have shown (<xref ref-type="fig" rid="pcbi-1002740-g006">Figure 6</xref>) that these different modes of spiking can be produced in a single model neuron by varying the synaptic input rate. However, other parameter changes were required to reproduce the different phasic firing characteristics observed between cells. To determine the subset of parameters essential for capturing the full heterogeneity seen <italic>in vivo</italic>, we attempted to fit different cells changing as few parameters as possible (<xref ref-type="table" rid="pcbi-1002740-t002">Table 2</xref>). In addition to the synaptic input rate (<italic>I</italic><sub>re</sub>), the HAP and fast DAP parameters were required to fit the short-term spike patterning reflected in the ISI histogram and hazard function. The most important parameters however were <italic>k<sub>AHP</sub></italic>, and the K<sup>+</sup> leak parameters, in particular <italic>k<sub>D</sub></italic>, which determines dynorphin's effect on the slow DAP. The AHP is essential to determining the intraburst spike rate, balancing against the depolarising effects of the DAPs. Dynorphin's most sensitive effect is on limiting burst duration, which in turn defines how much input is required to shift a cell to continuous firing, but in the model it is also essential to determining mean silence duration, as further discussed below. To fit the cells with longer mean silence, we had to use a longer dynorphin half-life value, λ<italic><sub>D</sub></italic>.</p>
+      </sec>
+      <sec id="s4c">
+        <title>Comparison with other work</title>
+        <p>Nadeau et al <xref ref-type="bibr" rid="pcbi.1002740-Nadeau2">[34]</xref> have recently extended their spiking model to include the vasopressin secretion response, and have used their model to explore what properties of the spiking mechanism might underlie the heterogeneity observed in the cell population. The core of their secretion model is based on an interpolation of <italic>in vitro</italic> data which demonstrated the frequency facilitation effect <xref ref-type="bibr" rid="pcbi.1002740-Bicknell2">[9]</xref>, assuming that this is sufficient to also represent the fatigue effect on secretion. The important test of a secretion model should be whether it can reproduce the enhanced secretion response to phasic firing compared to continuous firing at the same mean spike rate <xref ref-type="bibr" rid="pcbi.1002740-Dutton1">[6]</xref>. This is thought to depend on both the facilitation and the fatigue elements of the secretion mechanism.</p>
+        <p>Their spiking model, like our present model, includes a dynorphin mechanism that plays a role in cell heterogeneity, and which is a key element in determining whether cells fire irregularly, phasically or continuously. They suggest however that synaptic input in the normal frequency range is not a factor in determining firing mode, and their model shows very little response to increases in synaptic activity while in the phasic firing mode. The differences between the Nadeau model and the present model mirror the differences between vasopressin cell activity <italic>in vitro</italic> and <italic>in vivo</italic>: the Nadeau model is a regenerative spiking model, in which a relatively very low level of synaptic activity provides a limited variability in spike timing, while the present model displays spike activity that is wholly dependent on a relatively high level of synaptic input. In response to increased osmotic pressure, their individual cells produce a step-like increase in spike rate and secretion. They suggest that the linear population response is based on inter-cell variation in the dynorphin parameters and resting potential, so that the proportion of active cells gradually increases with increased osmotic input. Such a non-linear increase is not observed in our model, nor in the responses of individual vasopressin cells to progressive osmotic pressure changes <italic>in vivo</italic>.</p>
+        <p>We further tested our model by using it to simulate various <italic>in vivo</italic> experiments which have studied the spiking activity and the underlying mechanisms. We predict that some slow activity driven dendritic vesicle translocation is responsible for the delayed shift to phasic firing in response to a sudden rise in osmotic input. We do not require this mechanism for other results, and so retain it as an optional extension to the model, but it may play an important role when further considering the effects of dendritic release in future work, and has parallels to the mechanisms postulated for the axonal secretion, the idea of a releasable and a reserve store <xref ref-type="bibr" rid="pcbi.1002740-Giovannucci1">[25]</xref>.</p>
+        <p>It is now widely accepted that dynorphin is an essential element of the phasic mechanism, and determines burst duration, but there is debate on what role it plays in determining inter-burst silence. Combining <italic>in vitro</italic> and <italic>in vivo</italic> analysis of the response to a dynorphin antagonist, Brown et al <xref ref-type="bibr" rid="pcbi.1002740-Brown4">[28]</xref> suggested that dynorphin does not play a role. However, our model, in which dynorphin is a part of the silence generating mechanism, is able to replicate the results of their <italic>in vivo</italic> analysis. We show that reducing the effect of dynorphin has a much larger effect on burst duration than silence duration. It does reduce silence duration, but to show this significantly requires a dose of the antagonist which will turn most cells continuous. The cells selected for their analysis were by nature those which retained bursting, and likely to show less effect on silence duration. Their in vitro data shows no change in time course of the inter-burst hyperpolarisation with reduced dynorphin. We would suggest that this is due to the slow AHP acting on a similar time course. More recent <italic>in vivo</italic> results <xref ref-type="bibr" rid="pcbi.1002740-Scott1">[35]</xref> do show a reduction in silence duration in response to the same dynorphin antagonist, supporting the hypothesis that dynorphin drives a post-burst hyperpolarisation.</p>
+      </sec>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <title>References</title>
+      <ref id="pcbi.1002740-Dunn1">
+        <label>1</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dunn</surname><given-names>FL</given-names></name>, <name name-style="western"><surname>Brennan</surname><given-names>TJ</given-names></name>, <name name-style="western"><surname>Nelson</surname><given-names>AE</given-names></name>, <name name-style="western"><surname>Robertson</surname><given-names>GL</given-names></name> (<year>1973</year>) <article-title>The role of blood osmolality and volume in regulating vasopressin secretion in the rat</article-title>. <source>J Clin Invest</source> <volume>52</volume>: <fpage>3212</fpage>–<lpage>3219</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1172/JCI107521" xlink:type="simple">10.1172/JCI107521</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Leng1">
+        <label>2</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Leng</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Brown</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Sabatier</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Scott</surname><given-names>V</given-names></name> (<year>2008</year>) <article-title>Population dynamics in vasopressin cells</article-title>. <source>Neuroendocrinology</source> <volume>88</volume>: <fpage>160</fpage>–<lpage>172</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1159/000149827" xlink:type="simple">10.1159/000149827</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Poulain1">
+        <label>3</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Poulain</surname><given-names>DA</given-names></name>, <name name-style="western"><surname>Wakerley</surname><given-names>JB</given-names></name> (<year>1982</year>) <article-title>Electrophysiology of hypothalamic magnocellular neurones secreting oxytocin and vasopressin</article-title>. <source>Neuroscience</source> <volume>7</volume>: <fpage>773</fpage>–<lpage>808</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Leng2">
+        <label>4</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Leng</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Brown</surname><given-names>CH</given-names></name>, <name name-style="western"><surname>Russell</surname><given-names>JA</given-names></name> (<year>1999</year>) <article-title>Physiological pathways regulating the activity of magnocellular neurosecretory cells</article-title>. <source>Prog Neurobiol</source> <volume>57</volume>: <fpage>625</fpage>–<lpage>655</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Brown1">
+        <label>5</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brown</surname><given-names>CH</given-names></name>, <name name-style="western"><surname>Bourque</surname><given-names>CW</given-names></name> (<year>2006</year>) <article-title>Mechanisms of rhythmogenesis: insights from hypothalamic vasopressin neurons</article-title>. <source>Trends Neurosci</source> <volume>29</volume>: <fpage>108</fpage>–<lpage>115</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.tins.2005.11.005" xlink:type="simple">10.1016/j.tins.2005.11.005</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Dutton1">
+        <label>6</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dutton</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Dyball</surname><given-names>RE</given-names></name> (<year>1979</year>) <article-title>Phasic firing enhances vasopressin release from the rat neurohypophysis</article-title>. <source>J Physiol (Lond)</source> <volume>290</volume>: <fpage>433</fpage>–<lpage>440</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Leng3">
+        <label>7</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Leng</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Dyball</surname><given-names>RE</given-names></name>, <name name-style="western"><surname>Luckman</surname><given-names>SM</given-names></name> (<year>1992</year>) <article-title>Mechanisms of vasopressin secretion</article-title>. <source>Horm Res</source> <volume>37</volume>: <fpage>33</fpage>–<lpage>38</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Bicknell1">
+        <label>8</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bicknell</surname><given-names>RJ</given-names></name>, <name name-style="western"><surname>Flint</surname><given-names>APF</given-names></name>, <name name-style="western"><surname>Leng</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Sheldrick</surname><given-names>EL</given-names></name> (<year>1982</year>) <article-title>Phasic pattern of electrical stimulation enhances oxytocin secretion from the isolated neurohypophysis</article-title>. <source>Neurosci Lett</source> <volume>30</volume>: <fpage>47</fpage>–<lpage>50</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/0304-3940(82)90010-6" xlink:type="simple">10.1016/0304-3940(82)90010-6</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Bicknell2">
+        <label>9</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bicknell</surname><given-names>RJ</given-names></name> (<year>1988</year>) <article-title>Optimizing release from peptide hormone secretory nerve terminals</article-title>. <source>J Exp Biol</source> <volume>139</volume>: <fpage>51</fpage>–<lpage>65</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Brown2">
+        <label>10</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brown</surname><given-names>CH</given-names></name>, <name name-style="western"><surname>Ludwig</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Leng</surname><given-names>G</given-names></name> (<year>1998</year>) <article-title>kappa-opioid regulation of neuronal activity in the rat supraoptic nucleus in vivo</article-title>. <source>J Neurosci</source> <volume>18</volume>: <fpage>9480</fpage>–<lpage>9488</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Brown3">
+        <label>11</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brown</surname><given-names>CH</given-names></name>, <name name-style="western"><surname>Leng</surname><given-names>G</given-names></name> (<year>2000</year>) <article-title>In vivo modulation of post-spike excitability in vasopressin cells by kappa-opioid receptor activation</article-title>. <source>J Neuroendocrinol</source> <volume>12</volume>: <fpage>711</fpage>–<lpage>714</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Li1">
+        <label>12</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Hatton</surname><given-names>GI</given-names></name> (<year>1997</year>) <article-title>Reduced outward K+ conductances generate depolarizing after-potentials in rat supraoptic nucleus neurones</article-title>. <source>J Physiol (Lond)</source> <volume>505</volume> (<issue>Pt 1</issue>)  <fpage>95</fpage>–<lpage>106</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Bourque1">
+        <label>13</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bourque</surname><given-names>CW</given-names></name> (<year>1986</year>) <article-title>Calcium-dependent spike after-current induces burst firing in magnocellular neurosecretory cells</article-title>. <source>Neurosci Lett</source> <volume>70</volume>: <fpage>204</fpage>–<lpage>209</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-GhamariLangroudi1">
+        <label>14</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ghamari-Langroudi</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Bourque</surname><given-names>CW</given-names></name> (<year>2002</year>) <article-title>Flufenamic acid blocks depolarizing afterpotentials and phasic firing in rat supraoptic neurones</article-title>. <source>J Physiol (Lond)</source> <volume>545</volume>: <fpage>537</fpage>–<lpage>542</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Roper1">
+        <label>15</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Roper</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Callaway</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Shevchenko</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Teruyama</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Armstrong</surname><given-names>W</given-names></name> (<year>2003</year>) <article-title>AHP's, HAP's and DAP's: how potassium currents regulate the excitability of rat supraoptic neurones</article-title>. <source>J Comput Neurosci</source> <volume>15</volume>: <fpage>367</fpage>–<lpage>389</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Roper2">
+        <label>16</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Roper</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Callaway</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Armstrong</surname><given-names>W</given-names></name> (<year>2004</year>) <article-title>Burst initiation and termination in phasic vasopressin cells of the rat supraoptic nucleus: a combined mathematical, electrical, and calcium fluorescence study</article-title>. <source>J Neurosci</source> <volume>24</volume>: <fpage>4818</fpage>–<lpage>4831</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1523/JNEUROSCI.4203-03.2004" xlink:type="simple">10.1523/JNEUROSCI.4203-03.2004</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Destexhe1">
+        <label>17</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Destexhe</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Rudolph</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Paré</surname><given-names>D</given-names></name> (<year>2003</year>) <article-title>The high-conductance state of neocortical neurons in vivo</article-title>. <source>Nat Rev Neurosci</source> <volume>4</volume>: <fpage>739</fpage>–<lpage>751</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrn1198" xlink:type="simple">10.1038/nrn1198</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Sabatier1">
+        <label>18</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sabatier</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Brown</surname><given-names>CH</given-names></name>, <name name-style="western"><surname>Ludwig</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Leng</surname><given-names>G</given-names></name> (<year>2004</year>) <article-title>Phasic spike patterning in rat supraoptic neurones in vivo and in vitro</article-title>. <source>J Physiol (Lond)</source> <volume>558</volume>: <fpage>161</fpage>–<lpage>180</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1113/jphysiol.2004.063982" xlink:type="simple">10.1113/jphysiol.2004.063982</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Leng4">
+        <label>19</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Leng</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Brown</surname><given-names>CH</given-names></name>, <name name-style="western"><surname>Bull</surname><given-names>PM</given-names></name>, <name name-style="western"><surname>Brown</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Scullion</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2001</year>) <article-title>Responses of magnocellular neurons to osmotic stimulation involves coactivation of excitatory and inhibitory input: an experimental and theoretical analysis</article-title>. <source>J Neurosci</source> <volume>21</volume>: <fpage>6967</fpage>–<lpage>6977</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Sabatier2">
+        <label>20</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sabatier</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Leng</surname><given-names>G</given-names></name> (<year>2007</year>) <article-title>Bistability with hysteresis in the activity of vasopressin cells</article-title>. <source>J Neuroendocrinol</source> <volume>19</volume>: <fpage>95</fpage>–<lpage>101</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1365-2826.2006.01509.x" xlink:type="simple">10.1111/j.1365-2826.2006.01509.x</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Dreifuss1">
+        <label>21</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dreifuss</surname><given-names>JJ</given-names></name>, <name name-style="western"><surname>Tribollet</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Baertschi</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Lincoln</surname><given-names>DW</given-names></name> (<year>1976</year>) <article-title>Mammalian endocrine neurones: Control of phasic activity by antidromic action potentials</article-title>. <source>Neurosci Lett</source> <volume>3</volume>: <fpage>281</fpage>–<lpage>286</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Nadeau1">
+        <label>22</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nadeau</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Mouginot</surname><given-names>D</given-names></name> (<year>2011</year>) <article-title>New determinants of firing rates and patterns of vasopressinergic magnocellular neurons: predictions using a mathematical model of osmodetection</article-title>. <source>J Comput Neurosci</source> <volume>31</volume>: <fpage>441</fpage>–<lpage>451</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10827-011-0321-4" xlink:type="simple">10.1007/s10827-011-0321-4</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Clayton1">
+        <label>23</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Clayton</surname><given-names>TF</given-names></name>, <name name-style="western"><surname>Murray</surname><given-names>AF</given-names></name>, <name name-style="western"><surname>Leng</surname><given-names>G</given-names></name> (<year>2010</year>) <article-title>Modelling the in vivo spike activity of phasically-firing vasopressin cells</article-title>. <source>J Neuroendocrinol</source> <volume>22</volume>: <fpage>1290</fpage>–<lpage>1300</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1365-2826.2010.02080.x" xlink:type="simple">10.1111/j.1365-2826.2010.02080.x</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-MacGregor1">
+        <label>24</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>MacGregor</surname><given-names>DJ</given-names></name>, <name name-style="western"><surname>Williams</surname><given-names>CKI</given-names></name>, <name name-style="western"><surname>Leng</surname><given-names>G</given-names></name> (<year>2009</year>) <article-title>A new method of spike modelling and interval analysis</article-title>. <source>J Neurosci Methods</source> <volume>176</volume>: <fpage>45</fpage>–<lpage>56</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jneumeth.2008.08.011" xlink:type="simple">10.1016/j.jneumeth.2008.08.011</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Giovannucci1">
+        <label>25</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Giovannucci</surname><given-names>DR</given-names></name>, <name name-style="western"><surname>Stuenkel</surname><given-names>EL</given-names></name> (<year>1997</year>) <article-title>Regulation of secretory granule recruitment and exocytosis at rat neurohypophysial nerve endings</article-title>. <source>J Physiol (Lond)</source> <volume>498</volume> (<issue>Pt 3</issue>)  <fpage>735</fpage>–<lpage>751</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Brimble1">
+        <label>26</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brimble</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Dyball</surname><given-names>RE</given-names></name> (<year>1977</year>) <article-title>Characterization of the responses of oxytocin- and vasopressin-secreting neurones in the supraoptic nucleus to osmotic stimulation</article-title>. <source>J Physiol (Lond)</source> <volume>271</volume>: <fpage>253</fpage>–<lpage>271</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Kirkpatrick1">
+        <label>27</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kirkpatrick</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Bourque</surname><given-names>CW</given-names></name> (<year>1996</year>) <article-title>Activity dependence and functional role of the apamin-sensitive K+ current in rat supraoptic neurones in vitro</article-title>. <source>J Physiol (Lond)</source> <volume>494</volume> (<issue>Pt 2</issue>)  <fpage>389</fpage>–<lpage>398</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Brown4">
+        <label>28</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brown</surname><given-names>CH</given-names></name>, <name name-style="western"><surname>Leng</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Ludwig</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Bourque</surname><given-names>CW</given-names></name> (<year>2006</year>) <article-title>Endogenous activation of supraoptic nucleus kappa-opioid receptors terminates spontaneous phasic bursts in rat magnocellular neurosecretory cells</article-title>. <source>J Neurophysiol</source> <volume>95</volume>: <fpage>3235</fpage>–<lpage>3244</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1152/jn.00062.2006" xlink:type="simple">10.1152/jn.00062.2006</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Armstrong1">
+        <label>29</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Armstrong</surname><given-names>WE</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Teruyama</surname><given-names>R</given-names></name> (<year>2010</year>) <article-title>Performance, properties and plasticity of identified oxytocin and vasopressin neurones in vitro</article-title>. <source>J Neuroendocrinol</source> <volume>22</volume>: <fpage>330</fpage>–<lpage>342</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1365-2826.2010.01989.x" xlink:type="simple">10.1111/j.1365-2826.2010.01989.x</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-GhamariLangroudi2">
+        <label>30</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ghamari-Langroudi</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Bourque</surname><given-names>CW</given-names></name> (<year>2004</year>) <article-title>Muscarinic receptor modulation of slow afterhyperpolarization and phasic firing in rat supraoptic nucleus neurons</article-title>. <source>J Neurosci</source> <volume>24</volume>: <fpage>7718</fpage>–<lpage>7726</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1523/JNEUROSCI.1240-04.2004" xlink:type="simple">10.1523/JNEUROSCI.1240-04.2004</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Tobin1">
+        <label>31</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tobin</surname><given-names>VA</given-names></name>, <name name-style="western"><surname>Douglas</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Leng</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Ludwig</surname><given-names>M</given-names></name> (<year>2011</year>) <article-title>The involvement of voltage-operated calcium channels in somato-dendritic oxytocin release</article-title>. <source>PLoS ONE</source> <volume>6</volume>: <fpage>e25366</fpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0025366" xlink:type="simple">10.1371/journal.pone.0025366</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Ludwig1">
+        <label>32</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ludwig</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Bull</surname><given-names>PM</given-names></name>, <name name-style="western"><surname>Tobin</surname><given-names>VA</given-names></name>, <name name-style="western"><surname>Sabatier</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Landgraf</surname><given-names>R</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Regulation of activity-dependent dendritic vasopressin release from rat supraoptic neurones</article-title>. <source>J Physiol (Lond)</source> <volume>564</volume>: <fpage>515</fpage>–<lpage>522</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1113/jphysiol.2005.083931" xlink:type="simple">10.1113/jphysiol.2005.083931</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Tobin2">
+        <label>33</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tobin</surname><given-names>VA</given-names></name>, <name name-style="western"><surname>Ludwig</surname><given-names>M</given-names></name> (<year>2007</year>) <article-title>The role of the actin cytoskeleton in oxytocin and vasopressin release from rat supraoptic nucleus neurons</article-title>. <source>J Physiol (Lond)</source> <volume>582</volume>: <fpage>1337</fpage>–<lpage>1348</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1113/jphysiol.2007.132639" xlink:type="simple">10.1113/jphysiol.2007.132639</ext-link></comment></mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Nadeau2">
+        <label>34</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nadeau</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Mouginot</surname><given-names>D</given-names></name> (<year>2012</year>) <article-title>Quantitative prediction of vasopressin secretion using a computational population model of rat magnocellular neurons</article-title>. <source>J Comput Neurosci</source> [epub ahead of print].</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002740-Scott1">
+        <label>35</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Scott</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Bishop</surname><given-names>VR</given-names></name>, <name name-style="western"><surname>Leng</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Brown</surname><given-names>CH</given-names></name> (<year>2009</year>) <article-title>Dehydration-induced modulation of kappa-opioid inhibition of vasopressin neurone activity</article-title>. <source>J Physiol (Lond)</source> <volume>587</volume>: <fpage>5679</fpage>–<lpage>5689</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1113/jphysiol.2009.180232" xlink:type="simple">10.1113/jphysiol.2009.180232</ext-link></comment></mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

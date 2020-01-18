@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="publisher-id">plos</journal-id>
+      <journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+      <journal-id journal-id-type="pmc">ploscomp</journal-id>
+      <journal-title-group>
+        <journal-title>PLoS Computational Biology</journal-title>
+      </journal-title-group>
+      <issn pub-type="ppub">1553-734X</issn>
+      <issn pub-type="epub">1553-7358</issn>
+      <publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="publisher-id">PCOMPBIOL-D-12-01022</article-id>
+      <article-id pub-id-type="doi">10.1371/journal.pcbi.1002935</article-id>
+      <article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Computational biology</subject>
+            <subj-group>
+              <subject>Genomics</subject>
+              <subj-group>
+                <subject>Epigenomics</subject>
+                <subject>Functional genomics</subject>
+                <subject>Genome complexity</subject>
+                <subject>Genome sequencing</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Sequence analysis</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Computational Biology</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Detecting DNA Modifications from SMRT Sequencing Data by Modeling Sequence Context Dependence of Polymerase Kinetic</article-title>
+        <alt-title alt-title-type="running-head">Detecting Epigenetic Changes with SMRT Sequencing</alt-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Feng</surname>
+            <given-names>Zhixing</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Fang</surname>
+            <given-names>Gang</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">
+            <sup>3</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Korlach</surname>
+            <given-names>Jonas</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff4">
+            <sup>4</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Clark</surname>
+            <given-names>Tyson</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff4">
+            <sup>4</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Luong</surname>
+            <given-names>Khai</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff4">
+            <sup>4</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Zhang</surname>
+            <given-names>Xuegong</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Wong</surname>
+            <given-names>Wing</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Schadt</surname>
+            <given-names>Eric</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff4">
+            <sup>4</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff5">
+            <sup>5</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group>
+      <aff id="aff1">
+        <label>1</label>
+        <addr-line>Tsinghua National Laboratory for Information Science and Technology, and Department of Automation, Tsinghua University, Beijing, China</addr-line>
+      </aff>
+      <aff id="aff2">
+        <label>2</label>
+        <addr-line>Department of Statistics, Stanford University, Stanford, California, United States of America</addr-line>
+      </aff>
+      <aff id="aff3">
+        <label>3</label>
+        <addr-line>Department of Computer Science and Engineering, University of Minnesota, Minneapolis, Minnesota, United States of America</addr-line>
+      </aff>
+      <aff id="aff4">
+        <label>4</label>
+        <addr-line>Pacific Biosciences, Menlo Park, California, United States of America</addr-line>
+      </aff>
+      <aff id="aff5">
+        <label>5</label>
+        <addr-line>Department of Genetics and Genomics Sciences, Mount Sinai School of Medicine, New York, New York, United States of America</addr-line>
+      </aff>
+      <contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Eisen</surname>
+            <given-names>Jonathan A.</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group>
+      <aff id="edit1">
+        <addr-line>University of California Davis, United States of America</addr-line>
+      </aff>
+      <author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">whwong@stanford.edu</email> (WW); <email xlink:type="simple">eric.schadt@mssm.edu</email> (ES)</corresp>
+        <fn fn-type="conflict">
+          <p>I have read the journal's policy and have the following conflicts: ES, JK, TC, and KL are employees of Pacific Biosciences and own stock in the company.</p>
+        </fn>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: ZF GF XZ WW ES. Performed the experiments: JK TC KL. Analyzed the data: ZF GF JK TC KL ES. Contributed reagents/materials/analysis tools: ZF GF JK TC KL. Wrote the paper: ZF GF XZ WW ES.</p>
+        </fn>
+      </author-notes>
+      <pub-date pub-type="collection">
+        <month>3</month>
+        <year>2013</year>
+      </pub-date>
+      <pub-date pub-type="epub">
+        <day>14</day>
+        <month>3</month>
+        <year>2013</year>
+      </pub-date>
+      <volume>9</volume>
+      <issue>3</issue>
+      <elocation-id>e1002935</elocation-id>
+      <history>
+        <date date-type="received">
+          <day>20</day>
+          <month>6</month>
+          <year>2012</year>
+        </date>
+        <date date-type="accepted">
+          <day>8</day>
+          <month>1</month>
+          <year>2013</year>
+        </date>
+      </history>
+      <permissions>
+        <copyright-year>2013</copyright-year>
+        <copyright-holder>Feng et al</copyright-holder>
+        <license xlink:type="simple">
+          <license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+        </license>
+      </permissions>
+      <abstract>
+        <p>DNA modifications such as methylation and DNA damage can play critical regulatory roles in biological systems. Single molecule, real time (SMRT) sequencing technology generates DNA sequences as well as DNA polymerase kinetic information that can be used for the direct detection of DNA modifications. We demonstrate that local sequence context has a strong impact on DNA polymerase kinetics in the neighborhood of the incorporation site during the DNA synthesis reaction, allowing for the possibility of estimating the expected kinetic rate of the enzyme at the incorporation site using kinetic rate information collected from existing SMRT sequencing data (historical data) covering the same local sequence contexts of interest. We develop an Empirical Bayesian hierarchical model for incorporating historical data. Our results show that the model could greatly increase DNA modification detection accuracy, and reduce requirement of control data coverage. For some DNA modifications that have a strong signal, a control sample is not even needed by using historical data as alternative to control. Thus, sequencing costs can be greatly reduced by using the model. We implemented the model in a R package named seqPatch, which is available at <ext-link ext-link-type="uri" xlink:href="https://github.com/zhixingfeng/seqPatch" xlink:type="simple">https://github.com/zhixingfeng/seqPatch</ext-link>.</p>
+      </abstract>
+      <abstract abstract-type="summary">
+        <title>Author Summary</title>
+        <p>DNA modifications have been found in a wide range of living organisms, from bacteria to human. Many existing studies have shown that they play important roles in development, disease, bacteria virulence, etc. However, for many types of DNA modification, for example N6-methyladenine and 8-oxoG, there is not an efficient and accurate detection method. Single molecule real time (SMRT) sequencing not only generates DNA sequences, but also generates DNA polymerase kinetic information. The kinetic information is sensitive to DNA modifications in the sequenced DNA template, and therefore can be used for detecting a wide range of DNA modification types. The usual detection strategy is a case-control method, which compare kinetic information between native sample and a control sample whose modifications have been removed. However, generating a control sample doubles the cost. We proposed a hierarchical model, which can incorporate existing SMRT sequencing data to increase detection accuracy and reduce coverage requirement of control sample or even avoid the need of a control sample in some cases. We tested our method on SMRT sequencing data of plasmids with known modified sites and <italic>E. coli</italic> K-12 strain to demonstrate our method can greatly increase detection accuracy and reduce sequencing cost.</p>
+      </abstract>
+      <funding-group>
+        <funding-statement>This study was carried out at and funded by Pacific Biosciences. Since we are employees of Pacific Biosciences and Pacific Biosciences funded the work, the funders and those devising the study design, data collection, analysis, decision to publish and prepare the manuscript are one and the same.</funding-statement>
+      </funding-group>
+      <counts>
+        <page-count count="10"/>
+      </counts>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>Modifications to individual bases like 5-methylcytosine, 5-hydroxymethylcytosine, and N6-methyladenine in DNA sequences are an important epigenetic component to the regulation of living systems, from individual genes to cellular function. Single molecule, real time (SMRT) sequencing provides a high throughput platform for direct DNA modification detection without the need for special sample preparation procedures such as bisulphite treatment or restriction enzyme digestion <xref ref-type="bibr" rid="pcbi.1002935-Flusberg1">[1]</xref>–<xref ref-type="bibr" rid="pcbi.1002935-Clark2">[3]</xref>. In SMRT sequencing, each base identity is read when fluorescently labeled nucleotides are incorporated into a DNA sequence being synthesized by DNA polymerase <xref ref-type="bibr" rid="pcbi.1002935-Eid1">[4]</xref>. In this case, because the incorporation events are being directly observed in real time, the duration between the pulses of light (referred to as inter-pulse duration or IPD) that indicate an incorporation event can be precisely measured. IPD measures are a direct reflection of the DNA polymerase kinetics. This kinetic parameter for the enzyme has been shown to be sensitive to a wide range of DNA modification events, including 5-methylcytosine, 5-hydroxymethylcytosine, and N6-methyladenocine <xref ref-type="bibr" rid="pcbi.1002935-Flusberg1">[1]</xref>–<xref ref-type="bibr" rid="pcbi.1002935-Clark2">[3]</xref>, where variations in the kinetics are predictive of modification events.</p>
+      <p>For each position in the DNA sequence being synthesized, the IPD distribution is empirically determined as each read covering a given position yields an IPD value for that position, so that for each position there are a number of IPD observations. In these previous demonstrations <xref ref-type="bibr" rid="pcbi.1002935-Flusberg1">[1]</xref>, <xref ref-type="bibr" rid="pcbi.1002935-Clark1">[2]</xref>, kinetic variations were detected using a case-control method in which the IPDs at a given site in the native DNA from a sample of interest (case group) are compared to the IPDs in whole-genome amplified (WGA) DNA corresponding to the native DNA (control group). The WGA process erases all of the modifications by replacing any modified base with the corresponding standard base. The null IPD distribution can be determined from the IPDs in the control group and then the IPD distribution for the case group can be compared to this null distribution (<xref ref-type="fig" rid="pcbi-1002935-g001">Figure 1A</xref>). If the IPD values between cases and controls differ significantly, then a kinetic variation event is called. Because SMRT sequencing reads are strand specific with respect to the detection of these kinetic variation events, modifications can be inferred in a strand specific manner. This approach to detecting kinetic variation events works well when there is sufficiently high numbers of reads covering each position, but is much less reliable in low coverage cases due to the high variability of IPD measures (the IPDs are exponentially distributed). In addition, this case-control method requires sequencing a sample twice, so making these detections come at a significant cost.</p>
+      <fig id="pcbi-1002935-g001" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pcbi.1002935.g001</object-id>
+        <label>Figure 1</label>
+        <caption>
+          <title>Movie effects and an IPD profile example.</title>
+          <p>(A) IPD distributions of positions 327–357 in the native and control samples (Plasmid m4C native and Plasmid m4C control in <xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref>). The middle and bottom panels show IPD distributions(Boxplot) of the native and control sample respectively. The top panel shows ratio of the average IPD between native sample and control sample. Position 342 is modified, and its ratio of the average IPD values between native sample and control sample is much higher than the other positions. In addition, a single modified nucleotide can affect IPD distributions at several flanking bases. Here, the average IPD of position 346 in the native sample is higher than that of the control sample because of the modification event at position 342. (B) Boxplots of IPD distributions of 45 movies of <italic>E. coli</italic> WGA-FCR in <xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref> show that the IPD distribution can undergo large overall shifts across different movies.</p>
+        </caption>
+        <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002935.g001" position="float" xlink:type="simple"/>
+      </fig>
+      <p>In this paper, we examine the correlation between polymerase kinetics and sequence context to demonstrate that polymerase kinetics can be well predicted by local sequence context, suggesting that baseline kinetics can be established for any sequence context to use as a null distribution in testing for base modification events. We demonstrate that this correlation between local sequence context and enzyme kinetics is highly consistent across independent experiments carried out on DNA from different species. Given this, we hypothesized that IPDs from positions with the same sequence context, referred to as homologous positions, including those from historical control data, could be used jointly to better estimate the null IPD distribution. Towards that end, we develop a hierarchical model to combine IPDs across homologous positions to enhance the detection of kinetic variation events. The hierarchical model can work with or without control data. When control data are available, for a given position, the hierarchical model combines IPDs of control data and IPDs of homologous positions to estimate the null IPD distribution. We refer to this type of model as a hierarchical model with control data. When there is no control data available, for a given position, the hierarchical model estimates the null IPD distribution using only IPDs of homologous positions from historical data. We refer to this as a hierarchical model without control data. We test these two hierarchical models on two high coverage plasmid datasets and a medium coverage <italic>E. coli</italic> K-12 MG 1655 dataset: 1) plasmid DNA isolated from a strain of <italic>E. coli</italic> engineered to methylate the 4th carbon in cytosine residues, referred to as 4-mC, in the GATC context; 2) plasmid DNA isolated from a strain of <italic>E. coli</italic> engineered to methylate the A residue in the GATC context, referred to as 6-mA; and 3) DNA isolated from a wild type <italic>E. coli</italic> reference strain (K-12) (<xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref>). We show that the hierarchical model with control data significantly increases the detection accuracy compared with the case-control design on all of the datasets. The hierarchical model without control data also achieves a good accuracy for N6-methyladenocine, which has a strong signal-to-noise ratio (i.e. impact on the enzyme kinetics), but does not work well for methylcytosine, whose signal-to-noise ratio is relatively weak. In the case of the <italic>E. coli</italic> K-12 dataset, we were able to detect roughly 80% of the 6-mA events in the GATC context at a 5% FDR (False Discovery Rate) using the hierarchical model with control data, a context known to be methylated in a vast majority of the occurrences of the GATC motif in this strain <xref ref-type="bibr" rid="pcbi.1002935-Geier1">[5]</xref>. In addition to detecting these known methyladenine events in the GATC context, we demonstrate the detection of thousands of kinetic variation events that occur at positions not previously described as having known methylation motifs, suggesting more extensive patterns of modification than had been previously observed.</p>
+      <table-wrap id="pcbi-1002935-t001" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pcbi.1002935.t001</object-id>
+        <label>Table 1</label>
+        <caption>
+          <title>Samples.</title>
+        </caption>
+        <alternatives>
+          <graphic id="pcbi-1002935-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002935.t001" xlink:type="simple"/>
+          <table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Sample names</td>
+                <td align="left" rowspan="1" colspan="1">Genome size</td>
+                <td align="left" rowspan="1" colspan="1">Coverage per strand</td>
+                <td align="left" rowspan="1" colspan="1">Chemistry</td>
+                <td align="left" rowspan="1" colspan="1">NCBI SRA ID</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Plasmid m4C native</td>
+                <td align="left" rowspan="1" colspan="1">3,589 nt</td>
+                <td align="left" rowspan="1" colspan="1">752x</td>
+                <td align="left" rowspan="1" colspan="1">FCR</td>
+                <td align="left" rowspan="1" colspan="1">SRX209633</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Plasmid m4C control</td>
+                <td align="left" rowspan="1" colspan="1">3,589 nt</td>
+                <td align="left" rowspan="1" colspan="1">1557x</td>
+                <td align="left" rowspan="1" colspan="1">FCR</td>
+                <td align="left" rowspan="1" colspan="1">SRX209634</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Plasmid m6A native</td>
+                <td align="left" rowspan="1" colspan="1">3,591 nt</td>
+                <td align="left" rowspan="1" colspan="1">186x</td>
+                <td align="left" rowspan="1" colspan="1">FCR</td>
+                <td align="left" rowspan="1" colspan="1">SRX188834</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1">Plasmid m6A control</td>
+                <td align="left" rowspan="1" colspan="1">3,591 nt</td>
+                <td align="left" rowspan="1" colspan="1">1486x</td>
+                <td align="left" rowspan="1" colspan="1">FCR</td>
+                <td align="left" rowspan="1" colspan="1">SRX188835</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1"><italic>M. pneumoniae</italic> WGA-FCR</td>
+                <td align="left" rowspan="1" colspan="1">816,394 nt</td>
+                <td align="left" rowspan="1" colspan="1">15x</td>
+                <td align="left" rowspan="1" colspan="1">FCR</td>
+                <td align="left" rowspan="1" colspan="1">SRX209646</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1"><italic>E. coli</italic> WGA-FCR</td>
+                <td align="left" rowspan="1" colspan="1">4,639,675 nt</td>
+                <td align="left" rowspan="1" colspan="1">8x</td>
+                <td align="left" rowspan="1" colspan="1">FCR</td>
+                <td align="left" rowspan="1" colspan="1">SRX209658</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1"><italic>E. coli</italic> native</td>
+                <td align="left" rowspan="1" colspan="1">4,639,675 nt</td>
+                <td align="left" rowspan="1" colspan="1">12x</td>
+                <td align="left" rowspan="1" colspan="1">C2</td>
+                <td align="left" rowspan="1" colspan="1">SRX209659</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1"><italic>E. coli</italic> WGA-N</td>
+                <td align="left" rowspan="1" colspan="1">4,639,675 nt</td>
+                <td align="left" rowspan="1" colspan="1">12x</td>
+                <td align="left" rowspan="1" colspan="1">C2</td>
+                <td align="left" rowspan="1" colspan="1">SRX209660</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1"><italic>E. coli</italic> WGA-C</td>
+                <td align="left" rowspan="1" colspan="1">4,639,675 nt</td>
+                <td align="left" rowspan="1" colspan="1">13x</td>
+                <td align="left" rowspan="1" colspan="1">C2</td>
+                <td align="left" rowspan="1" colspan="1">SRX209661</td>
+              </tr>
+              <tr>
+                <td align="left" rowspan="1" colspan="1"><italic>M. pneumoniae</italic> WGA-C2</td>
+                <td align="left" rowspan="1" colspan="1">816,394 nt</td>
+                <td align="left" rowspan="1" colspan="1">40x</td>
+                <td align="left" rowspan="1" colspan="1">C2</td>
+                <td align="left" rowspan="1" colspan="1">SRX209662</td>
+              </tr>
+            </tbody>
+          </table>
+        </alternatives>
+      </table-wrap>
+    </sec>
+    <sec id="s2">
+      <title>Results</title>
+      <sec id="s2a">
+        <title>Box-Cox transformation and normalization</title>
+        <p>We note that while the IPDs are observed to be exponentially distributed, tests based on this assumption are more sensitive to extreme outliers. Thus, we adopt a Box-Cox transformation to make the IPDs follow an approximate normal distribution (<xref ref-type="fig" rid="pcbi-1002935-g002">Figure 2</xref>), making it more robust to outliers. Formally, we used the following transformation,<disp-formula id="pcbi.1002935.e001"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e001" xlink:type="simple"/></disp-formula>Because the chemistry of SMRT sequencing is being constantly improved, there are two different types of chemistry, FCR and C2, represented in our datasets. The IPD characteristics of these different chemistries are quite different, so we used different <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e002" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e003" xlink:type="simple"/></inline-formula>, which were estimated for each set. For data using the FCR chemistry, we used <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e004" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e005" xlink:type="simple"/></inline-formula>. For data using the C2 chemistry, we used <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e006" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e007" xlink:type="simple"/></inline-formula>. The <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e008" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e009" xlink:type="simple"/></inline-formula> parameter values were chosen empirically such that the skewness distribution was approximately centered at 0.</p>
+        <fig id="pcbi-1002935-g002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002935.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>Skewness and kurtosis distribution.</title>
+            <p>For each position, the skewness and kurtosis of its Box-Cox transformed IPDs are plotted. (A) The distribution of skewness of all positions is approximately centered at 0. (B) The distribution of kurtosis is approximately centered at 3.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002935.g002" position="float" xlink:type="simple"/>
+        </fig>
+        <p>A number of factors can influence enzyme kinetics in addition to sequence context (see below) and DNA modification, including reagent lot, temperature, SMRTcell lot and instrument operator. Just as we observe batch effects and other experimental noise factors with other technologies such as microarrays and RNA-seq that impact gene expression values, so these different effects can have strong effects on the IPD. Therefore, IPDs from different experiments are not necessarily directly comparable. For the current version of the Pacific Biosciences RS DNA sequencing instrument, DNA molecules are sequenced in zero mode waveguides (ZMWs) located on a SMRTcell <xref ref-type="bibr" rid="pcbi.1002935-Schadt1">[6]</xref>, with pulses of light in different color channels corresponding to the bases being incorporated into the sequence being synthesized. These signals are detected and recorded by a CCD camera operating at 100 Hz, resulting in a movie containing up to 150,000 pulse streams corresponding to the different ZMWs on the SMRTcell. Overall, the IPD distribution can be significantly different between movies even for identical DNA samples (<xref ref-type="fig" rid="pcbi-1002935-g001">Figure 1B</xref>). Therefore, we applied a simple centering approach to normalize the IPD data before modification detection.<disp-formula id="pcbi.1002935.e010"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e010" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e011" xlink:type="simple"/></inline-formula> is any Box-Cox transformed IPD in a movie, and N is the number of alignable bases in that movie. In the rest of the paper, we refer to the normalized IPD as simply the IPD.</p>
+      </sec>
+      <sec id="s2b">
+        <title>Dependence of polymerase kinetic on sequence context</title>
+        <p>The kinetic rate of DNA polymerase is known to be sensitive to sequence context <xref ref-type="bibr" rid="pcbi.1002935-Bloom1">[7]</xref>. Given the ability of SMRT sequencing to observe many thousands of individual molecules of DNA polymerase as they carry out DNA synthesis, we examined the relationship between the kinetic rate (estimated from the IPDs) and sequence context. For each position, the position-specific kinetic rate is defined as the mean of its Box-Cox transformed IPDs (<xref ref-type="sec" rid="s4">Methods</xref>). Sequence context is defined as the sequence flanking the incorporation site of interest, the boundaries of which are explored below. To avoid ambiguity caused by modification events, we explored enzyme kinetics using whole-genome amplified (WGA) <italic>E. coli</italic> K-12 data (<italic>E. coli</italic> WGA-FCR in <xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref>), given the WGA process erases all chemical modifications. From the K-12 dataset, we extracted positions in which the single strand coverage was greater than 35 reads. We then applied MART <xref ref-type="bibr" rid="pcbi.1002935-Friedman1">[8]</xref>, a non-linear tree based regression method, to estimate the relationships between polymerase kinetics and sequence context. Here, position-specific kinetic rate is the response variable and sequence context is the predictor variable. The proportion of the variation in the response variable that can be explained by the predictor variable (i.e., the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e012" xlink:type="simple"/></inline-formula> value), was used as the measure of dependence of enzyme kinetics on sequence context. We explored these relationships over different sequence context lengths and found that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e013" xlink:type="simple"/></inline-formula> grows as the number of bases upstream of the incorporation site increases, but becomes saturated at 7 bases upstream. The bases downstream from the incorporation site have much smaller impact on the enzyme kinetic rate, with positions more than 2 bases downstream from the incorporation site having no observable impact on the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e014" xlink:type="simple"/></inline-formula> values (<xref ref-type="fig" rid="pcbi-1002935-g003">Figure 3A</xref>). Roughly 80% of the IPD variation can be explained by a 10 base pair sequence context (7 bases upstream and 2 bases downstream from the incorporation site).</p>
+        <fig id="pcbi-1002935-g003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002935.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>Impact of sequence context on position-specific kinetic rates.</title>
+            <p>(A) Heatmap of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e015" xlink:type="simple"/></inline-formula> for the position-specific kinetic rate variance explained by sequence context suggests that 7 bases upstream and 2 bases downstream, [−7,+2], of the incorporation site are the most informative. Bases beyond this region do not provide much information about polymerase kinetics. (B) Scatter plot of the [−7,+2] context effect in whole genome amplified <italic>E. coli</italic> and <italic>M. pneumoniae</italic> (<italic>E. coli</italic> WGA-C and <italic>M. pneumoniae</italic> WGA-C2 in the <xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref>) shows that context effects are highly consistent between these experiments, with a Pearson's correlation coefficient is 0.91.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002935.g003" position="float" xlink:type="simple"/>
+        </fig>
+        <p>We refer to the average Box-Cox transformed IPDs corresponding to positions with the same sequence context as the context effect. We examined the consistency of the context effect between two independent experiments: 1) WGA data from the <italic>E. coli</italic> K-12 strain, and 2) WGA data from <italic>M. pneumoniae</italic> (<italic>E. coli</italic> WGA-C and <italic>M. pneumoniae</italic> WGA-C2 in <xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref>). While these experiments were performed completely independently, carried out by two different groups at two geographically separated sites, the context effects were strikingly similar (<xref ref-type="fig" rid="pcbi-1002935-g003">Figure 3B</xref>), with 80% of the IPD variation in one set explained by variation in the second set. Importantly, we compared context effects between two experiments using the same chemistry (FCR chemistry), as the consistency of context effects will not hold when comparing experiments using different chemistries. Thus, in all the experiments carried out herein, only datasets with the same chemistry are used together.</p>
+      </sec>
+      <sec id="s2c">
+        <title>Detecting DNA modifications by incorporating sequence context information</title>
+        <p>Given that a large percentage of variability of position specific enzyme kinetic rates can be explained by sequence context (<xref ref-type="fig" rid="pcbi-1002935-g003">Figure 3A</xref>), IPDs of homologous positions can be combined together to estimate the null IPD distribution. In addition, because of the high consistency in context effects across different experiments, IPDs of homologous positions in historical WGA datasets can also be incorporated to enhance the power to detect kinetic variation events (<xref ref-type="fig" rid="pcbi-1002935-g004">Figure 4</xref>). However, the IPD distributions of homologous positions will not be exactly the same, and so, false positive calls may be introduced if the null IPD distribution is estimated without considering the heterogeneity in the IPD distributions that can exist between homologous positions. To deal with this type of heterogeneity, we developed an hierarchical model to incorporate IPDs of homologous positions in a robust fashion. In the hierarchical model, Box-Cox transformed IPDs of homologous positions were assumed to follow normal distributions, with differences in mean and variance allowed between these distributions. The mean and variance parameters were treated as random variables and were assumed to follow the same prior distribution. For the hierarchical model with control data, the model was fitted by both IPDs from the control data and as well as IPDs from all homologous positions. For the hierarchical model without control data, the model was fitted using only homologous positions in historical data. Then, we adopt a likelihood ratio to evaluate how likely a position is modified (See <xref ref-type="sec" rid="s4">Methods</xref>).</p>
+        <fig id="pcbi-1002935-g004" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002935.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>Schematic diagram of the hierarchical model.</title>
+            <p>The red letter A represents the test base, with each read covering this position contributing an IPD, denoted by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e016" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e017" xlink:type="simple"/></inline-formula> for native and control samples(if available), respectively, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e018" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e019" xlink:type="simple"/></inline-formula> indicate the sequence coverage. IPDs of homologous positions in historical data are denoted by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e020" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e021" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e022" xlink:type="simple"/></inline-formula> is the number of homologous positions.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002935.g004" position="float" xlink:type="simple"/>
+        </fig>
+        <p>To assess the utility of the hierarchical model in detecting kinetic variation events, we compared the naive case-control design with the hierarchical model using data from two data sets in which the sites that were modified were known a priori. The first set was generated from plasmid DNA isolated from a strain of <italic>E. coli</italic> engineered to methylate the 4th carbon of cytosine residues in each GATC context (referred to as the 4-mC set), and the second was generated from plasmid DNA isolated from a strain of <italic>E. coli</italic> engineered to methylate adenine residues in each GATC context (referred to as the 6-mA set). We use <italic>E. coli</italic> WGA-FCR and <italic>M. pneumoniae</italic> WGA-FCR in <xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref> as historical data and only contexts that have more than 5 positions with larger than 10x coverage in the historical data are used. We explored both the [−7,+2] contexts (7 bp upstream, 2 bp downstream of the incorporation site) and [−6,+1] contexts, and found that their performances were similar (<xref ref-type="fig" rid="pcbi-1002935-g005">Figure 5</xref>). However, roughly one third of the positions in these datasets did not have the corresponding [−7,+2] context in the historical data. Therefore, to make the comparisons fair, we only considered positions that had a corresponding context in the historical data. To maximize the number of sequence contexts in one dataset that would be represented in another, we restricted the sequence context to 8 bases(the [−6,+1] context) for the remainder of our study. For the hierarchial model with control data (see <xref ref-type="sec" rid="s4">Methods</xref>), when the sequence coverage of the control sample is relatively low (15x<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e023" xlink:type="simple"/></inline-formula>35x single strand coverage), the hierarchical model compared to the case-control method is seen to increase the sensitivity by 10%<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e024" xlink:type="simple"/></inline-formula>30% under the same FDR (<xref ref-type="fig" rid="pcbi-1002935-g005">Figure 5</xref>). Performance of the case-control method and hierarchical model become similar as sequencing coverage of the control sample increases. For the hierarchical model without control (See <xref ref-type="sec" rid="s4">Methods</xref>), the accuracy is comparable to the case-control method for 6-mA, but does not perform as good for 4-mC.</p>
+        <fig id="pcbi-1002935-g005" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002935.g005</object-id>
+          <label>Figure 5</label>
+          <caption>
+            <title>Performance of the hierarchical model in plasmid data.</title>
+            <p>The red, green and blue curves are ROC curves for the hierarchical model with control data, the case-control method, and the hierarchical model without control data, respectively. These three methods were tested on two different datasets: 1) a 3,589 bases long plasmid with 19 known 4-methylcytosines(4-mC) under single strand coverage 35x,50x,and 65x, respectively(A,C,E), and 2) a 3,591 bases long plasmid with 23 known N6-methyladenines(6-mA) under single strand coverage 15x,20x,25x(B,D,F). The solid lines are ROC curves using a [−6,+1] sequence context and the dotted lines are ROC curves using the [−7,+2] sequence context.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002935.g005" position="float" xlink:type="simple"/>
+        </fig>
+        <p>We further tested our method on datasets with partial modifications in which only a fraction of the molecules with respect to a given position were modified. Given one of the limitations with the modeling approach presented herein is that it assumes in the native sample a given position is either fully modified or not, understanding the sensitivity of this assumption on the detection rates is important. For each of the 6-mA set and 4-mC datasets, we constructed an artificial native sample, where only a certain proportion of reads were sampled from the native sample (referred to as the modification proportion), while others were sampled from the control data. We tested the performance of our method on three different modification proportions: 50%, 70% and 90%. As expected, the detection accuracy decreases as the modification proportion decreases, however, in all cases our method was still able to make detections even when the fully modified assumption was clearly violated. We further note that it is possible to achieve accuracy that is comparable to the case of fully modified positions by increasing the sequence coverage of the native sample (<xref ref-type="supplementary-material" rid="pcbi.1002935.s001">Figure S1</xref>).</p>
+      </sec>
+      <sec id="s2d">
+        <title>Detecting DNA modifications in <italic>E. coli</italic> K-12</title>
+        <p>To further evaluate the performance of the hierarchical model, we explored data from the <italic>E. coli</italic> K-12 strain in which there are not only modifications that are known to occur in certain sequence motifs (e.g. GATC), but also potentially novel modification events that cannot be explained by known motifs. We applied both hierarchical modeling with and without control data to the SMRT sequencing data from native the <italic>E. coli</italic> K-12 MG 1655 strain (<italic>E. coli</italic> native in <xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref>). For the hierarchical model with control data, we used data from a WGA <italic>E. coli</italic> K-12 MG 1655 sample as control (<italic>E. coli</italic> WGA-C in <xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref>) and a WGA <italic>M. pneumoniae</italic> data (<italic>M. pneumoniae</italic> WGA-C2 in <xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref>), which is generated in another unrelated experiment, as historical data. For each given position, the IPD distribution in the native sample was compared to the null IPD distribution, which was estimated by fitting a hierarchical model that combines the IPDs of the corresponding positions in the control sample and IPDs of all of the homologous positions. Homologous positions were identified in two different ways: 1) find homologous positions in the WGA <italic>M. pneumoniae</italic> data, and 2) find homologous positions in the control data. For the hierarchical model without control, we estimated the null distribution by fitting the hierarchical model by the homologous positions in the WGA <italic>M. pneumoniae</italic> data only. A position was called modified if the generated likelihood ratio exceeded a certain threshold (see <xref ref-type="sec" rid="s4">Methods</xref>).</p>
+        <p>As most adenines in the GATC context are expected to be methylated in wild type <italic>E. coli</italic> K-12 MG 1655, we detected modifications in the regions within 20 bp around adenine positions in the GATC context to evaluate how well 6-mA could be detected. Here, the FDR is estimated as the ratio between the number of significant adenines detected that are not in the GATC context and the total number of significant adenines detected. We note that it is certainly possible that there are modified bases outside of the GATC context, so that treating only adenines detected in the GATC context as true positives and all other bases as true negatives, out estimated FDR can be considered as a conservative estimation, i.e. the actual FDR is lower than this. The receiver operating characteristic (ROC) curve (<xref ref-type="fig" rid="pcbi-1002935-g006">Figure 6A</xref>) shows that 95% of adenine of GATC can be detected under FDR of 5% by using the hierarchical model with control. The hierarchical model greatly increases the detection accuracy in this instance compared to the case-control method. We can also detect 6-mA without the control data, where the accuracy is lower than hierarchical model with control, but the results are comparable to the naive case-control method. If we apply this detection approach on genome-wide scale, we detect many putative modification events, with the ROC curve (<xref ref-type="fig" rid="pcbi-1002935-g006">Figure 6B</xref>) showing that at the 5% FDR we not only detect 80% of the adenine in the GATC context by using hierarchical model with control, but we also identify about 2000 other positions in other contexts that may reflect off target activity of the methyltransferase that makes the 6-mA modifications in the GATC context or perhaps reflects the activity of other enzymes capable of inducing base modifications. In the genome-wide study, to estimate FDR, we detected DNA modifications in another WGA sample (<italic>E. coli</italic> WGA-N in <xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref>), where no modification should be found, and FDR is estimated by ratio between number of DNA modifications detected in the WGA sample(<italic>E. coli</italic> WGA-N in <xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref>) and number of modifications detected in the native sample (<italic>E. coli</italic> native in <xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref>).</p>
+        <fig id="pcbi-1002935-g006" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002935.g006</object-id>
+          <label>Figure 6</label>
+          <caption>
+            <title>Performance of the hierarchical model in <italic>E. coli</italic> K-12 data.</title>
+            <p>The red, green and blue curves are ROC curves for the hierarchical model with control data, the case-control method, and the hierarchical model without control data, respectively. (A) shows the ROC curve when the detection region is restricted to 20 bp around the adenine residue in the GATC context, and (B) shows the ROC curve for the whole genome detection.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002935.g006" position="float" xlink:type="simple"/>
+        </fig>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Discussion</title>
+      <p>We examined the correlation between DNA polymerase kinetics and sequence context quantitatively and found that roughly 80% of the variation in the enzyme kinetics as measured by IPD variance can be explained by sequence context. Our data support that the most informative regions of sequence context for the enzyme kinetics at a given incorporation site is the region 7 bp upstream and 2 bp downstream of the incorporation site. In addition, we found that this context dependence is extremely consistent between independent SMRT sequencing experiments carried out using the same chemistry. IPDs of homologous positions, including those from historical control data can therefore be incorporated to improve DNA modification detection accuracy. However, because heterogeneity of the IPD distribution within the same sequence context can cause false positive events, we adopted a hierarchical model that can adaptively incorporate information from homologous positions. The hierarchical model is flexible in that it can be used with or without control data. We demonstrated that the hierarchical model with control data can greatly increase accuracy compared to the naive case-control method. For the types of modifications that have a relatively weak signal-to-noise ratio, such as 4-mC, the hierarchical model without control does not perform as good as the case-control method. This may be expected given the sequence context in such instances does not appear to explain all of the kinetic variation, with other factors such as fragment length and experimental condition perhaps dominating the estimation of the null distribution from historical data. However, for modification types with a strong signal-to-noise ratio, noisy null IPD distributions have a relatively small impact on accuracy.</p>
+      <p>Our results suggest that the hierarchical model can reduce the requirement of control samples and thus provide a significant cost benefit. For detecting modifications with a strong signal-to-noise ratio, one can generate low coverage control data or even avoid the generation of the control data altogether. It may be possible in the future as more SMRT sequencing data obtains, given the dependence of local sequence context on enzyme kinetics, to build null models specific to each sequence context to leverage as a control in detecting base modification events. We anticipate as well that as more sequence data obtains across different species with larger genomes than the prokaryotic genomes represented in our study, that we will be able to re-evaluate whether a more expanded sequence context around the incorporation site better explains the DNA polymerase enzyme kinetics. It may be that with an expanded set that considers 9 bases upstream of the incorporation site and 3 bases downstream, for example, a better explanation of the enzyme kinetics obtains. Further, as the historical datasets get larger, we may also find that the historical data on its own achieves the same results as the combined historical and control data in all contexts and for all modification types.</p>
+    </sec>
+    <sec id="s4" sec-type="methods">
+      <title>Methods</title>
+      <sec id="s4a">
+        <title>Characterizing the relationship between sequence context and polymerase kinetics</title>
+        <p>For the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e025" xlink:type="simple"/></inline-formula>th position in the genome, we assume that its Box-Cox transformed IPDs follow a normal distribution, which is<disp-formula id="pcbi.1002935.e026"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e026" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e027" xlink:type="simple"/></inline-formula> is the jth Box-Cox transformed IPD of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e028" xlink:type="simple"/></inline-formula>th position in the genome, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e029" xlink:type="simple"/></inline-formula> is the position specific polymerase kinetic rate, which is by its sequence context. We used <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e030" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e031" xlink:type="simple"/></inline-formula> is the single strand coverage of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e032" xlink:type="simple"/></inline-formula>th position), which are the estimated position specific polymerase kinetic rates, as the response, and the corresponding sequence context as the predictor to build a non-linear regression model using the MART method <xref ref-type="bibr" rid="pcbi.1002935-Friedman1">[8]</xref>. The dataset we employed for this characterization is whole genome amplified <italic>E. coli</italic> K-12 data after outlier removal and coverage filtering. Each data point in the dataset is a pair of estimated position specific polymerase kinetic rates and sequence contexts, which represent the upstream and downstream bases of the position of interest. Performance of the regression approach was evaluated using 5-fold cross validation in which 80% of the data points were randomly selected as the training set, MART was trained on this set, and then the predicted responses were carried out for the remaining 20% of the data set. The <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e033" xlink:type="simple"/></inline-formula> was the statistic used to measure the performance and was calculated as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e034" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e035" xlink:type="simple"/></inline-formula> is the sample size, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e036" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e037" xlink:type="simple"/></inline-formula> is the predicted <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e038" xlink:type="simple"/></inline-formula>.</p>
+      </sec>
+      <sec id="s4b">
+        <title>Hierarchical model with control data</title>
+        <sec id="s4b1">
+          <title>Alternative model</title>
+          <p>For a given position, the Box-Cox transformed IPDs in the native and control samples were <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e039" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e040" xlink:type="simple"/></inline-formula>, respectively, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e041" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e042" xlink:type="simple"/></inline-formula> represent the sequence coverage of each. Box-Cox transformed IPDs of the homologous positions are denoted by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e043" xlink:type="simple"/></inline-formula>, i = 1,…,m, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e044" xlink:type="simple"/></inline-formula> is the sequence coverage and m is the number of homologous positions. We assume that the Box-Cox transformed IPDs follow a normal distribution.<disp-formula id="pcbi.1002935.e045"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e045" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e046" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e047" xlink:type="simple"/></inline-formula>. We assume that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e048" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e049" xlink:type="simple"/></inline-formula>, come from the same conjugate prior distribution, i.e.<disp-formula id="pcbi.1002935.e050"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e050" xlink:type="simple"/></disp-formula><disp-formula id="pcbi.1002935.e051"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e051" xlink:type="simple"/></disp-formula><disp-formula id="pcbi.1002935.e052"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e052" xlink:type="simple"/></disp-formula><disp-formula id="pcbi.1002935.e053"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e053" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e054" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e055" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e056" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e057" xlink:type="simple"/></inline-formula> are hyperparameters, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e058" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e059" xlink:type="simple"/></inline-formula>, are independent and identically distributed given hyperparameters. In addition, we also assume the variance of the Box-Cox transformed IPDs in the native sample, i.e. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e060" xlink:type="simple"/></inline-formula> is generated by the same prior distribution with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e061" xlink:type="simple"/></inline-formula>, is<disp-formula id="pcbi.1002935.e062"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e062" xlink:type="simple"/></disp-formula>The means of the IPDs in the native sample, i.e. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e063" xlink:type="simple"/></inline-formula>, is treated as hyperparameters rather than being assumed to have the same prior distribution with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e064" xlink:type="simple"/></inline-formula>, given putative DNA modification events may have an impact on <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e065" xlink:type="simple"/></inline-formula> and thus make it deviate from that prior distribution. Therefore, given the hyperparameters, the marginal log-likelihood function is<disp-formula id="pcbi.1002935.e066"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e066" xlink:type="simple"/><label>(1)</label></disp-formula>By integrating out <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e067" xlink:type="simple"/></inline-formula> in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e068" xlink:type="simple"/></inline-formula>, we get<disp-formula id="pcbi.1002935.e069"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e069" xlink:type="simple"/></disp-formula>where i = 0,1,…,m, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e070" xlink:type="simple"/></inline-formula> is the scale parameter of the posterior distribution of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e071" xlink:type="simple"/></inline-formula>, which is <xref ref-type="bibr" rid="pcbi.1002935-Gelman1">[9]</xref><disp-formula id="pcbi.1002935.e072"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e072" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e073" xlink:type="simple"/></inline-formula> is<disp-formula id="pcbi.1002935.e074"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e074" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e075" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e076" xlink:type="simple"/></inline-formula>.</p>
+          <p>By integrating out <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e077" xlink:type="simple"/></inline-formula> in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e078" xlink:type="simple"/></inline-formula>, we get<disp-formula id="pcbi.1002935.e079"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e079" xlink:type="simple"/><label>(2)</label></disp-formula>It is obvious that given <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e080" xlink:type="simple"/></inline-formula>, formula (2) can be maximized by setting <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e081" xlink:type="simple"/></inline-formula>, which is denoted by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e082" xlink:type="simple"/></inline-formula>. By substituting <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e083" xlink:type="simple"/></inline-formula> into the formula (1), <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e084" xlink:type="simple"/></inline-formula> can be maximized by Algorithm 1 in the <xref ref-type="supplementary-material" rid="pcbi.1002935.s002">Text S1</xref>. The solution is denoted by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e085" xlink:type="simple"/></inline-formula>.</p>
+          <p>To evaluate how likely a base is to be modified, we use the marginal log-likelihood ratio, which is<disp-formula id="pcbi.1002935.e086"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e086" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e087" xlink:type="simple"/></inline-formula> are hyperparameters maximizing the marginal log-likelihood function, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e088" xlink:type="simple"/></inline-formula>, when the null hypothesis, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e089" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e090" xlink:type="simple"/></inline-formula> having the same distribution, is true(null model). A base is called modified if <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e091" xlink:type="simple"/></inline-formula> exceeds a certain threshold.</p>
+        </sec>
+        <sec id="s4b2">
+          <title>Null model</title>
+          <p>By assuming the null hypothesis is true, we pool <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e092" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e093" xlink:type="simple"/></inline-formula> together and denote the pooled sample as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e094" xlink:type="simple"/></inline-formula>. We assume<disp-formula id="pcbi.1002935.e095"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e095" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e096" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e097" xlink:type="simple"/></inline-formula>. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e098" xlink:type="simple"/></inline-formula> are assumed to have the same prior distribution with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e099" xlink:type="simple"/></inline-formula>, which is<disp-formula id="pcbi.1002935.e100"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e100" xlink:type="simple"/></disp-formula><disp-formula id="pcbi.1002935.e101"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e101" xlink:type="simple"/></disp-formula>By integrating out <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e102" xlink:type="simple"/></inline-formula> in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e103" xlink:type="simple"/></inline-formula>, we can get<disp-formula id="pcbi.1002935.e104"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e104" xlink:type="simple"/><label>(3)</label></disp-formula>Thus, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e105" xlink:type="simple"/></inline-formula> can be maximized by Algorithm 1 described in the <xref ref-type="supplementary-material" rid="pcbi.1002935.s002">Text S1</xref>, and the solution is denoted as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e106" xlink:type="simple"/></inline-formula></p>
+        </sec>
+      </sec>
+      <sec id="s4c">
+        <title>Hierarchical model without control data</title>
+        <p>The hierarchical model without control data is a special case of the hierarchical model with control data, i.e. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e107" xlink:type="simple"/></inline-formula> or vector <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e108" xlink:type="simple"/></inline-formula> is empty.</p>
+        <sec id="s4c1">
+          <title>Alternative model</title>
+          <p>By simply removing <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e109" xlink:type="simple"/></inline-formula> in (1), we can get the hierarchical model without control data, and the marginal log-likelihood is<disp-formula id="pcbi.1002935.e110"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e110" xlink:type="simple"/></disp-formula>The <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e111" xlink:type="simple"/></inline-formula> can be maximized by Algorithm 1 in the <xref ref-type="supplementary-material" rid="pcbi.1002935.s002">Text S1</xref>, and the solution is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e112" xlink:type="simple"/></inline-formula>.</p>
+        </sec>
+        <sec id="s4c2">
+          <title>Null model</title>
+          <p>By assuming the null model is true, i.e.<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e113" xlink:type="simple"/></inline-formula> are generated by the same prior distribution with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e114" xlink:type="simple"/></inline-formula>, the likelihood function <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e115" xlink:type="simple"/></inline-formula> could be got by setting <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e116" xlink:type="simple"/></inline-formula> in (3). Thus, we use<disp-formula id="pcbi.1002935.e117"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e117" xlink:type="simple"/></disp-formula>to evaluate how likely the base is modified. where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e118" xlink:type="simple"/></inline-formula> is the parameter maximizing likelihood <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e119" xlink:type="simple"/></inline-formula> when null model is true.</p>
+        </sec>
+      </sec>
+      <sec id="s4d">
+        <title>Evaluation of DNA modification detection methods</title>
+        <p>We evaluated case-control method and hierarchical model on two different datasets: 3589 bases long plasmid with 19 known 4-methylcytosines, and 3591 bases long plasmid with 23 known N6-methyladenines (Plasmid m4C native/control and Plasmid m6A native/control in <xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref>). Whole genome amplified <italic>E. coli</italic> and <italic>M. pneumoniae</italic> data were used as historical data (<italic>E. coli</italic> WGA-FCR and <italic>M. pneumoniae</italic> WGA-FCR in <xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref>). A detection is called correct only if its distance to the nearest true modified position is less than or equal to 5 bp. Different thresholds of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002935.e120" xlink:type="simple"/></inline-formula> were set, and the corresponding false discovery rate and true positive rate were calculated. False discovery rate and true positive rate are defined as<disp-formula id="pcbi.1002935.e121"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e121" xlink:type="simple"/></disp-formula><disp-formula id="pcbi.1002935.e122"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1002935.e122" xlink:type="simple"/></disp-formula>respectively. To get the ROC under different coverage, we randomly sampled reads without replacement 100 times to get average FDR under different TPRs.</p>
+      </sec>
+      <sec id="s4e">
+        <title>Data access</title>
+        <p>The raw sequence data listed in <xref ref-type="table" rid="pcbi-1002935-t001">Table 1</xref> are available at <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/sra" xlink:type="simple">http://www.ncbi.nlm.nih.gov/sra</ext-link>, under accession number SRA062773 and SRA058893. (SRA058893 was published in <xref ref-type="bibr" rid="pcbi.1002935-Schadt2">[10]</xref>).</p>
+      </sec>
+    </sec>
+    <sec id="s5">
+      <title>Supporting Information</title>
+      <supplementary-material id="pcbi.1002935.s001" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1002935.s001" position="float" xlink:type="simple">
+        <label>Figure S1</label>
+        <caption>
+          <p><bold>Performance of the hierarchical model in partially modified plasmid data.</bold> The red, green and blue curves are ROC curves for the hierarchical model with control data, the case-control method, and the hierarchical model without control data, respectively. These three methods were tested on two different datasets: 1) a 3,589 bases long plasmid with 19 known 4-methylcytosines(4-mC) where 50%, 70%, and 90% molecules from the modified site are actually modified on average (single strand coverage of native sample and control sample are 200x and 65x, respectively)(A,C,E), and 2) a 3,591 bases long plasmid with 23 known N6-methyladenines(6-mA) where 50%, 70%, and 90% molecules from the modified site are actually modified on average (single strand coverage of native sample and control sample are 100x and 20x, respectively) (B,D,F).</p>
+          <p>(TIFF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002935.s002" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pcbi.1002935.s002" position="float" xlink:type="simple">
+        <label>Text S1</label>
+        <caption>
+          <p><bold>EM algorithm for fitting the hierarchial model.</bold> <xref ref-type="supplementary-material" rid="pcbi.1002935.s002">Text S1</xref> provides a detailed description of the EM (Expectation-Maximization) algorithm used for estimating hyperparameters of the proposed hierarchical model.</p>
+          <p>(PDF)</p>
+        </caption>
+      </supplementary-material>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <title>References</title>
+      <ref id="pcbi.1002935-Flusberg1">
+        <label>1</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Flusberg</surname><given-names>BA</given-names></name>, <name name-style="western"><surname>Webster</surname><given-names>DR</given-names></name>, <name name-style="western"><surname>Lee</surname><given-names>JH</given-names></name>, <name name-style="western"><surname>Travers</surname><given-names>KJ</given-names></name>, <name name-style="western"><surname>Olivares</surname><given-names>EC</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Direct detection of DNA methylation during single-molecule, real-time sequencing</article-title>. <source>Nature Methods</source> <volume>7</volume>: <fpage>461</fpage>–<lpage>465</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002935-Clark1">
+        <label>2</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Clark</surname><given-names>TA</given-names></name>, <name name-style="western"><surname>Spittle</surname><given-names>KE</given-names></name>, <name name-style="western"><surname>Turner</surname><given-names>SW</given-names></name>, <name name-style="western"><surname>Korlach</surname><given-names>J</given-names></name> (<year>2011</year>) <article-title>Direct detection and sequencing of damaged DNA bases</article-title>. <source>Genome Integrity</source> <volume>2</volume>: <fpage>10</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002935-Clark2">
+        <label>3</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Clark</surname><given-names>TA</given-names></name>, <name name-style="western"><surname>Murray</surname><given-names>IA</given-names></name>, <name name-style="western"><surname>Morgan</surname><given-names>RD</given-names></name>, <name name-style="western"><surname>Kislyuk</surname><given-names>AO</given-names></name>, <name name-style="western"><surname>Spittle</surname><given-names>KE</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Characterization of DNA methyltransferase specificities using single-molecule, real-time DNA sequencing</article-title>. <source>Nucleic Acids Research</source> <volume>40</volume>: <fpage>e29</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002935-Eid1">
+        <label>4</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Eid</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Fehr</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Gray</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Luong</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Lyle</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Real-time DNA sequencing from single polymerase molecules</article-title>. <source>Science</source> <volume>323</volume>: <fpage>133</fpage>–<lpage>138</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002935-Geier1">
+        <label>5</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Geier</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Modrich</surname><given-names>P</given-names></name> (<year>1979</year>) <article-title>Recognition sequence of the dam methylase of Escherichia coli K12 and mode of cleavage of Dpn I endonuclease</article-title>. <source>Journal of Biological Chemistry</source> <volume>254</volume>: <fpage>1408</fpage>–<lpage>1413</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002935-Schadt1">
+        <label>6</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schadt</surname><given-names>EE</given-names></name>, <name name-style="western"><surname>Turner</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Kasarskis</surname><given-names>A</given-names></name> (<year>2010</year>) <article-title>A window into third-generation sequencing</article-title>. <source>Human Molecular Genetics</source> <volume>19</volume>: <fpage>R227</fpage>–<lpage>R240</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002935-Bloom1">
+        <label>7</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bloom</surname><given-names>LB</given-names></name>, <name name-style="western"><surname>Otto</surname><given-names>MR</given-names></name>, <name name-style="western"><surname>Eritja</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Reha-Krantz</surname><given-names>LJ</given-names></name>, <name name-style="western"><surname>Goodman</surname><given-names>MF</given-names></name>, <etal>et al</etal>. (<year>1994</year>) <article-title>Pre-steady-state kinetic analysis of sequence-dependent nucleotide excision by the 3′-exonuclease activity of bacteriophage T4 DNA poly- merase</article-title>. <source>Biochemistry</source> <volume>33</volume>: <fpage>7576</fpage>–<lpage>7586</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002935-Friedman1">
+        <label>8</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Friedman</surname><given-names>J</given-names></name> (<year>2001</year>) <article-title>Greedy function approximation: a gradient boosting machine</article-title>. <source>Annals of Statistics</source> <volume>29</volume>: <fpage>1189</fpage>–<lpage>1232</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002935-Gelman1">
+        <label>9</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Gelman A, Carlin JB, Stern HS, Rubin DB (2003) Bayesian Data Analysis. 2nd edition. Chapman and Hall/CRC. 50 pp.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002935-Schadt2">
+        <label>10</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schadt</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Banerjee</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Fang</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Feng</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Wong</surname><given-names>W</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Modeling kinetic rate variation in third generation DNA sequencing data to detect putative modifications to DNA bases</article-title>. <source>Genome Research</source> <volume>23</volume>: <fpage>129</fpage>–<lpage>141</lpage>.</mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

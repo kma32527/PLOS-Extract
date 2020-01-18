@@ -1,0 +1,994 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1d3 20150301//EN" "http://jats.nlm.nih.gov/publishing/1.1d3/JATS-journalpublishing1.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="1.1d3" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-16-01772</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1005688</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+<subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Anatomy</subject><subj-group><subject>Digestive system</subject><subj-group><subject>Gastrointestinal tract</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Medicine and health sciences</subject><subj-group><subject>Anatomy</subject><subj-group><subject>Digestive system</subject><subj-group><subject>Gastrointestinal tract</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Anatomy</subject><subj-group><subject>Biological tissue</subject><subj-group><subject>Epithelium</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Medicine and health sciences</subject><subj-group><subject>Anatomy</subject><subj-group><subject>Biological tissue</subject><subj-group><subject>Epithelium</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Mathematical and statistical techniques</subject><subj-group><subject>Mathematical models</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Physical sciences</subject><subj-group><subject>Mathematics</subject><subj-group><subject>Approximation methods</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Cell biology</subject><subj-group><subject>Cell motility</subject><subj-group><subject>Cell migration</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Developmental biology</subject><subj-group><subject>Cell migration</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Computer and information sciences</subject><subj-group><subject>Information technology</subject><subj-group><subject>Data processing</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Physical sciences</subject><subj-group><subject>Mathematics</subject><subj-group><subject>Probability theory</subject><subj-group><subject>Probability distribution</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Experimental organism systems</subject><subj-group><subject>Model organisms</subject><subj-group><subject>Mouse models</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Model organisms</subject><subj-group><subject>Mouse models</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Experimental organism systems</subject><subj-group><subject>Animal models</subject><subj-group><subject>Mouse models</subject></subj-group></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>A hierarchical Bayesian model for understanding the spatiotemporal dynamics of the intestinal epithelium</article-title>
+<alt-title alt-title-type="running-head">Hierarchical Bayesian model for the spatiotemporal dynamics of the intestinal epithelium</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-3982-4539</contrib-id>
+<name name-style="western">
+<surname>Maclaren</surname> <given-names>Oliver J.</given-names></name>
+<role content-type="http://credit.casrai.org/">Conceptualization</role>
+<role content-type="http://credit.casrai.org/">Data curation</role>
+<role content-type="http://credit.casrai.org/">Formal analysis</role>
+<role content-type="http://credit.casrai.org/">Investigation</role>
+<role content-type="http://credit.casrai.org/">Methodology</role>
+<role content-type="http://credit.casrai.org/">Software</role>
+<role content-type="http://credit.casrai.org/">Validation</role>
+<role content-type="http://credit.casrai.org/">Visualization</role>
+<role content-type="http://credit.casrai.org/">Writing – original draft</role>
+<role content-type="http://credit.casrai.org/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Parker</surname> <given-names>Aimée</given-names></name>
+<role content-type="http://credit.casrai.org/">Conceptualization</role>
+<role content-type="http://credit.casrai.org/">Data curation</role>
+<role content-type="http://credit.casrai.org/">Formal analysis</role>
+<role content-type="http://credit.casrai.org/">Investigation</role>
+<role content-type="http://credit.casrai.org/">Methodology</role>
+<role content-type="http://credit.casrai.org/">Validation</role>
+<role content-type="http://credit.casrai.org/">Visualization</role>
+<role content-type="http://credit.casrai.org/">Writing – original draft</role>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Pin</surname> <given-names>Carmen</given-names></name>
+<role content-type="http://credit.casrai.org/">Conceptualization</role>
+<role content-type="http://credit.casrai.org/">Funding acquisition</role>
+<role content-type="http://credit.casrai.org/">Project administration</role>
+<role content-type="http://credit.casrai.org/">Resources</role>
+<role content-type="http://credit.casrai.org/">Supervision</role>
+<role content-type="http://credit.casrai.org/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Carding</surname> <given-names>Simon R.</given-names></name>
+<role content-type="http://credit.casrai.org/">Funding acquisition</role>
+<role content-type="http://credit.casrai.org/">Project administration</role>
+<role content-type="http://credit.casrai.org/">Resources</role>
+<role content-type="http://credit.casrai.org/">Supervision</role>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Watson</surname> <given-names>Alastair J. M.</given-names></name>
+<role content-type="http://credit.casrai.org/">Conceptualization</role>
+<role content-type="http://credit.casrai.org/">Funding acquisition</role>
+<role content-type="http://credit.casrai.org/">Methodology</role>
+<role content-type="http://credit.casrai.org/">Project administration</role>
+<role content-type="http://credit.casrai.org/">Supervision</role>
+<role content-type="http://credit.casrai.org/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0003-0525-4336</contrib-id>
+<name name-style="western">
+<surname>Fletcher</surname> <given-names>Alexander G.</given-names></name>
+<role content-type="http://credit.casrai.org/">Conceptualization</role>
+<role content-type="http://credit.casrai.org/">Methodology</role>
+<role content-type="http://credit.casrai.org/">Supervision</role>
+<role content-type="http://credit.casrai.org/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff004"><sup>4</sup></xref>
+<xref ref-type="aff" rid="aff005"><sup>5</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Byrne</surname> <given-names>Helen M.</given-names></name>
+<role content-type="http://credit.casrai.org/">Conceptualization</role>
+<role content-type="http://credit.casrai.org/">Funding acquisition</role>
+<role content-type="http://credit.casrai.org/">Project administration</role>
+<role content-type="http://credit.casrai.org/">Resources</role>
+<role content-type="http://credit.casrai.org/">Supervision</role>
+<role content-type="http://credit.casrai.org/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff006"><sup>6</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-0146-9164</contrib-id>
+<name name-style="western">
+<surname>Maini</surname> <given-names>Philip K.</given-names></name>
+<role content-type="http://credit.casrai.org/">Conceptualization</role>
+<role content-type="http://credit.casrai.org/">Funding acquisition</role>
+<role content-type="http://credit.casrai.org/">Project administration</role>
+<role content-type="http://credit.casrai.org/">Supervision</role>
+<role content-type="http://credit.casrai.org/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff006"><sup>6</sup></xref>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<label>1</label>
+<addr-line>Department of Engineering Science, University of Auckland, Auckland, New Zealand</addr-line>
+</aff>
+<aff id="aff002">
+<label>2</label>
+<addr-line>Gut Health and Food Safety Research Programme, Institute of Food Research, Norwich, United Kingdom</addr-line>
+</aff>
+<aff id="aff003">
+<label>3</label>
+<addr-line>Norwich Medical School, University of East Anglia, Norwich, United Kingdom</addr-line>
+</aff>
+<aff id="aff004">
+<label>4</label>
+<addr-line>School of Mathematics and Statistics, University of Sheffield, Sheffield, United Kingdom</addr-line>
+</aff>
+<aff id="aff005">
+<label>5</label>
+<addr-line>Bateson Centre, University of Sheffield, Sheffield, United Kingdom</addr-line>
+</aff>
+<aff id="aff006">
+<label>6</label>
+<addr-line>Wolfson Centre for Mathematical Biology, Mathematical Institute, University of Oxford, Oxford, United Kingdom</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Nie</surname> <given-names>Qing</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>University of California Irvine, UNITED STATES</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">oliver.maclaren@auckland.ac.nz</email></corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<month>7</month>
+<year>2017</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>28</day>
+<month>7</month>
+<year>2017</year>
+</pub-date>
+<volume>13</volume>
+<issue>7</issue>
+<elocation-id>e1005688</elocation-id>
+<history>
+<date date-type="received">
+<day>29</day>
+<month>10</month>
+<year>2016</year>
+</date>
+<date date-type="accepted">
+<day>18</day>
+<month>7</month>
+<year>2017</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2017</copyright-year>
+<copyright-holder>Maclaren et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1005688"/>
+<abstract>
+<p>Our work addresses two key challenges, one biological and one methodological. First, we aim to understand how proliferation and cell migration rates in the intestinal epithelium are related under healthy, damaged (Ara-C treated) and recovering conditions, and how these relations can be used to identify mechanisms of repair and regeneration. We analyse new data, presented in more detail in a companion paper, in which BrdU/IdU cell-labelling experiments were performed under these respective conditions. Second, in considering how to more rigorously process these data and interpret them using mathematical models, we use a probabilistic, hierarchical approach. This provides a best-practice approach for systematically modelling and understanding the uncertainties that can otherwise undermine the generation of reliable conclusions—uncertainties in experimental measurement and treatment, difficult-to-compare mathematical models of underlying mechanisms, and unknown or unobserved parameters. Both spatially discrete and continuous mechanistic models are considered and related via hierarchical conditional probability assumptions. We perform model checks on both in-sample and out-of-sample datasets and use them to show how to test possible model improvements and assess the robustness of our conclusions. We conclude, for the present set of experiments, that a primarily proliferation-driven model suffices to predict labelled cell dynamics over most time-scales.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author summary</title>
+<p>The intestinal epithelium is an important model system for studying the dynamics and regulation of multicellular populations. It is characterised by rapid rates of self-renewal and repair; dysregulation of these processes is thought to explain, in part, why many tumours form in the intestinal and similar epithelial tissues. These features have led to a large amount of work on estimating cell kinetic parameters in the intestine. There remain, however, large gaps between the raw data collected, the interpretation of these experimental data, and mechanistic models that describe the underlying processes. Hierarchical statistical modelling provides a natural method with which to bridge these gaps, but has, to date, been underutilised in the study of intestinal tissue self-renewal. As we illustrate, this approach makes essential use of the distinction between ‘measurement’, ‘process’ and ‘parameter’ models, giving an explicit framework for combining experimental data and mechanistic modelling in the presence of multiple sources of uncertainty. We apply this approach to analyse experiments on healthy, damaged and recovering intestinal tissue, finding that observed data can be explained by a model in which cell movement is driven primarily by proliferation.</p>
+</abstract>
+<funding-group>
+<award-group id="award001">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/501100000268</institution-id>
+<institution>Biotechnology and Biological Sciences Research Council</institution>
+</institution-wrap>
+</funding-source>
+<award-id>BB/K018256/1</award-id>
+</award-group>
+<award-group id="award002">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/501100000268</institution-id>
+<institution>Biotechnology and Biological Sciences Research Council</institution>
+</institution-wrap>
+</funding-source>
+<award-id>BB/K017578/1</award-id>
+</award-group>
+<award-group id="award003">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/501100000268</institution-id>
+<institution>Biotechnology and Biological Sciences Research Council</institution>
+</institution-wrap>
+</funding-source>
+<award-id>BB/K017144/1</award-id>
+</award-group>
+<award-group id="award004">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/501100000268</institution-id>
+<institution>Biotechnology and Biological Sciences Research Council</institution>
+</institution-wrap>
+</funding-source>
+<award-id>BB/J004529/1</award-id>
+</award-group>
+<award-group id="award005">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/501100000266</institution-id>
+<institution>Engineering and Physical Sciences Research Council</institution>
+</institution-wrap>
+</funding-source>
+<award-id>EP/I017909/1</award-id>
+</award-group>
+<funding-statement>This work was funded by The Biotechnology and Biological Sciences Research Council (<ext-link ext-link-type="uri" xlink:href="http://www.bbsrc.ac.uk" xlink:type="simple">www.bbsrc.ac.uk</ext-link>), project numbers BB/K018256/1 (PKM, HMB, CP, OJM, AP), BB/K017578/1 (PKM, HMB, OJM), BB/K017144/1 (SRC, AJMW, AP), BB/J004529/1 (SRC, AJMW, CP, AP) and the The Engineering and Physical Sciences Research Council (<ext-link ext-link-type="uri" xlink:href="https://www.epsrc.ac.uk/" xlink:type="simple">https://www.epsrc.ac.uk/</ext-link>) project number EP/I017909/1 (PKM, AGF). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="11"/>
+<table-count count="0"/>
+<page-count count="23"/>
+</counts>
+<custom-meta-group>
+<custom-meta>
+<meta-name>PLOS Publication Stage</meta-name>
+<meta-value>vor-update-to-uncorrected-proof</meta-value>
+</custom-meta>
+<custom-meta>
+<meta-name>Publication Update</meta-name>
+<meta-value>2017-08-09</meta-value>
+</custom-meta>
+<custom-meta id="data-availability">
+<meta-name>Data Availability</meta-name>
+<meta-value>All manuscript, code and data files can be found at the following github page: <ext-link ext-link-type="uri" xlink:href="https://github.com/omaclaren/open-manuscripts/tree/master/hierarchical-framework-intestinal-epithelium" xlink:type="simple">https://github.com/omaclaren/open-manuscripts/tree/master/hierarchical-framework-intestinal-epithelium</ext-link>.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<sec id="sec002">
+<title>Motivation</title>
+<p>The intestinal epithelium provides crucial barrier, transport and homeostatic functions. These requirements lead it to undergo constant repair and regeneration, and dysfunctions can result in pathologies such as tumorigenesis [<xref ref-type="bibr" rid="pcbi.1005688.ref001">1</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref007">7</xref>]. Much work has been carried out on estimating the rate parameters in the intestine and other epithelia [<xref ref-type="bibr" rid="pcbi.1005688.ref001">1</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref008">8</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref010">10</xref>]. However, attempts to interpret these experimental data using mechanistic modelling remain inconclusive [<xref ref-type="bibr" rid="pcbi.1005688.ref011">11</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref014">14</xref>], due to the lack of consistent and reproducible approaches for comparing models representing conjectured biological mechanisms, both to each other and to experimental data.</p>
+<p>This challenge goes in both directions: using experimental data (taken to be ‘true’) to parameterise and test mathematical or computational formalisations of mechanistic theories, and using these models (taken to be ‘true’) to predict, interpret and question experimental results. Both experimental measurements and mathematical models are subject to uncertainty, and we hence need systematic ways of quantifying these uncertainties and attributing them to the appropriate sources. Furthermore, establishing a common approach for analysing experimental results, formulating mechanistic models and generating new predictions has many potential advantages for enabling interdisciplinary teams to communicate in a common language so that they may efficiently discover and follow promising directions as and when they arise.</p>
+</sec>
+<sec id="sec003">
+<title>Approach</title>
+<p>We address the above issues by developing a hierarchical Bayesian model for combining measurements, models and inference procedures, and applying it to a set of experiments targeting mechanisms of repair and regeneration in the intestinal epithelium.</p>
+<p>While progress is now being made in tackling this challenge in other areas of biology (see, for example, [<xref ref-type="bibr" rid="pcbi.1005688.ref015">15</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref017">17</xref>]), to our knowledge the problem of intestinal epithelial dynamics has not yet been investigated using such an approach.</p>
+<p>The experiments under investigation were performed by ourselves and are presented in more detail in [<xref ref-type="bibr" rid="pcbi.1005688.ref018">18</xref>]. The aim of these experiments was to determine how proliferation rates, tissue growth and cellular migration rates are related under healthy, damaged (Ara-C treated) and recovering conditions, and how these relations can be used to identify mechanisms of repair and regeneration.</p>
+<p>A notable feature of the Bayesian approach to probabilistic modelling is that all sources of uncertainty are represented via probability distributions [<xref ref-type="bibr" rid="pcbi.1005688.ref019">19</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref021">21</xref>]. Adopting this perspective, we consider both observations and parameters to be random variables. Within a modelling context, uncertainty may be associated with (at least): parameters within a mechanistic model of a biological or physical process, the mechanistic model of the process itself and the measurements of the underlying process. This leads, initially, to the postulation of a full joint probability distribution for observable, unobservable/unobserved variables, parameters and data.</p>
+<p>Another key feature of the Bayesian perspective is that it provides a natural way of decomposing such full joint models in a <italic>hierarchical</italic> manner, e.g. by separating out processes occurring on different scales and at different analysis stages. A given set of hierarchical assumptions corresponds to assuming a factorisation of the full joint distribution mentioned above, and gives a more interpretable and tractable starting point.</p>
+<p>Our factorisation follows that described in [<xref ref-type="bibr" rid="pcbi.1005688.ref021">21</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref024">24</xref>]. This comprises: a ‘measurement model’, which defines the observable (sample) features to be considered reproducible and the precision with which they are reproducible (the measurement scale); an underlying ‘process’ model, which captures the key mechanistic hypotheses of spatiotemporal evolution, and a prior parameter model which defines a broad class of <italic>a priori</italic> acceptable parameter values.</p>
+<p>In order to illustrate some of the modelling benefits of the hierarchical approach, we show how both discrete and continuous process models can be derived and related using the hierarchical perspective. We discuss the relationship between the conditional/hierarchical modelling and causal modelling literatures (see [<xref ref-type="bibr" rid="pcbi.1005688.ref025">25</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref027">27</xref>] for reviews) and illustrate the distinct roles of (Bayesian) predictive distributions vs. parameter distributions for model checking and the assessment of evidence, respectively [<xref ref-type="bibr" rid="pcbi.1005688.ref020">20</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref028">28</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref031">31</xref>].</p>
+</sec>
+<sec id="sec004">
+<title>Conclusions</title>
+<p>Our hierarchical Bayesian model incorporates measurement, process and parameter models and facilitates separate checking of these components. This checking indicates, in the present application to the spatiotemporal dynamics of the intestinal epithelium, that much of the observed measurement variability can be adequately captured by a simple measurement model. Similarly we find that a relatively simple process model can account for the main spatiotemporal dynamics of interest; however, model checking also identifies a minor misfit in the process model appearing over long time-scales. This motivates possible model improvements: we consider the inclusion of additional finite-cell-size effects in the process model, derived from a discrete process model and a subsequent continuum approximation formulated in terms of conditional probability. This only gives a slightly better qualitative fit to experimental data, however. We instead find that the dominant sources of the long-time misfits are probably due to some other factors—most likely relatively slow, time-varying proliferation rates (e.g. due to circadian rhythms). In summary, a primarily proliferation-driven model appears adequate for predictions over moderate time-scales.</p>
+</sec>
+</sec>
+<sec id="sec005" sec-type="materials|methods">
+<title>Materials and methods</title>
+<sec id="sec006">
+<title>Experimental treatments and data processing</title>
+<sec id="sec007">
+<title>Homeostasis mouse model</title>
+<p>To estimate intestinal epithelial cell proliferation and migration rates under normal, homeostatic conditions in healthy mice, we used standard methods of proliferative cell labelling and tracing [<xref ref-type="bibr" rid="pcbi.1005688.ref001">1</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref008">8</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref010">10</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref032">32</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref034">34</xref>] (see also [<xref ref-type="bibr" rid="pcbi.1005688.ref018">18</xref>] for full details). Actively proliferating cells in the intestinal crypts were labelled by single injection of the thymine analogue 5-bromo-2-deoxyuridine (BrdU) and labelled cells detected by immunostaining of intestinal sections collected from different individuals over time. Migration of labelled cells traced from the base of crypts to villus tips was monitored over the course of 96 hours (5760 min). At least 30 such strips were analysed per mouse. The figures presented in [<xref ref-type="bibr" rid="pcbi.1005688.ref018">18</xref>] reveal that these strips were independent and obtained from one-cell thick sections. All strips in which the base of the crypt and the tip of the villus were clearly observed were considered. All sides of the crypt that were visible and connected to entire villi were analysed. A typical image from those analysed in [<xref ref-type="bibr" rid="pcbi.1005688.ref018">18</xref>] is shown in Fig D in <xref ref-type="supplementary-material" rid="pcbi.1005688.s001">S1 Supplementary information</xref>.</p>
+</sec>
+<sec id="sec008">
+<title>Blocked-proliferation mouse model</title>
+<p>To assess the effects of proliferation inhibition on crypt/villus migration, migrating and proliferating epithelial cells were monitored by double labelling with two thymine analogues (BrdU and IdU), administered sequentially a number of hours apart and subsequently distinguished by specific immunostaining in longitudinal sections of small intestine. Following initial IdU labelling of proliferating cells at t = −17h (−1020 min, relative to Ara-C treatment), mice were then treated with cytosine arabinoside (Ara-C) at 250 mg/kg body weight, a dose reported to inhibit proliferation without causing major crypt cell atrophy (see [<xref ref-type="bibr" rid="pcbi.1005688.ref018">18</xref>] and references therein for details). Tissues were collected over 24 hours, with BrdU administered one hour prior to collection to check for residual proliferation. Successful inhibition of proliferation following treatment with Ara-C was confirmed by an absence of BrdU (S-phase) and phospho-Histone H3 (pH3) staining (M-phase) in longitudinal sections of small intestine (again, see [<xref ref-type="bibr" rid="pcbi.1005688.ref018">18</xref>] for full details).</p>
+</sec>
+<sec id="sec009">
+<title>Recovering-proliferation mouse model</title>
+<p>The above Ara-C treatment effect was observed to last for at least 10h (600 min). Cell proliferation returned to near normal levels in samples obtained 18h (1080 min) post-Ara-C treatment. We hence considered samples collected at least 10h post-Ara-C treatment as corresponding to ‘recovering-proliferation’ conditions.</p>
+</sec>
+<sec id="sec010">
+<title>Data processing: Reference grid and key observable features</title>
+<p>To relate experimental measurements to the mechanistic models discussed below we specified a reference grid and defined the key features of the data relative to this grid. These key features established an ideal ‘underlying population’ from which samples were considered to be drawn. This also allowed us to construct our hierarchical model in a (data-to-parameter) manner, starting from a measurement model.</p>
+<p>With reference to <xref ref-type="fig" rid="pcbi.1005688.g001">Fig 1</xref>, we viewed the data as a collection of one-dimensional ‘strips’ of cells. The strips extended from the base of the crypt to the tip of the villus, along the so-called ‘crypt-villus’ axis. This corresponds to how strips were collected experimentally, but does not account for possible biases due to ‘angled’ sampling [<xref ref-type="bibr" rid="pcbi.1005688.ref035">35</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref036">36</xref>]. Each measurement was given a spatial cell location index <italic>i</italic> and a time label <italic>t</italic>. The location index was measured in numbers of cells along the crypt-villus axis, starting from the crypt base, and hence defined a discrete one-dimensional grid.</p>
+<fig id="pcbi.1005688.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005688.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>The (a) intestinal epithelium, (b) individual measurements as strips of cells and (c) collection of strips, where ‘C’ and ‘V’ indicated ‘crypt’ and ‘villus’ respectively.</title>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005688.g001" xlink:type="simple"/>
+</fig>
+<p>When notationally convenient, the labels <italic>i</italic> and <italic>t</italic> were combined in a two-dimensional grid of space-time points via the single index parameter <italic>s</italic> ≔ (<italic>i</italic>, <italic>t</italic>). A ‘typical’ reference crypt-villus unit was characterised by the two vectors (<bold>L</bold>, <bold>n</bold>), where <bold>L</bold> is the vector of underlying labelled fractions (i.e. occupancy probabilities) at each grid point and <bold>n</bold> is the vector of number of samples at each grid point. This defines a useful reduction of the system from two spatial dimensions to one.</p>
+<p>We assumed that each strip was independent of the others as, in general, strips were taken from different crypt-villus units and/or animals after ‘identical preparation’. Thus we did not ever directly possess, for example, measurements of a particular crypt with dimensions given in terms of a certain number of strips. We note, however, that the dynamics of strips in a given crypt may be affected by those in the same crypt. We did not consider this additional complexity in the present work, and so this complication should be kept in mind when interpreting the results.</p>
+</sec>
+</sec>
+<sec id="sec011">
+<title>Mathematical model</title>
+<p>Our hierarchical probability model was constructed on the basis of conditional probability assumptions. These allowed us to factor out a measurement model, a mechanistic model and a parameter model.</p>
+<sec id="sec012">
+<title>Overall hierarchical structure</title>
+<p>Our model structure consisted of a full joint distribution, conditioned on a given experimental treatment <italic>E</italic> and known sample size vector <bold>n</bold>, decomposed according to
+<disp-formula id="pcbi.1005688.e001"><alternatives><graphic id="pcbi.1005688.e001g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e001" xlink:type="simple"/><mml:math display="block" id="M1"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>p</mml:mi> <mml:mo>(</mml:mo> <mml:mi mathvariant="bold">y</mml:mi> <mml:mo>,</mml:mo> <mml:mi mathvariant="bold">L</mml:mi> <mml:mo>,</mml:mo> <mml:mi mathvariant="bold">k</mml:mi> <mml:mo>|</mml:mo> <mml:mi mathvariant="bold">n</mml:mi> <mml:mo>,</mml:mo> <mml:mi>E</mml:mi> <mml:mo>)</mml:mo> <mml:mo>=</mml:mo> <mml:mi>p</mml:mi> <mml:mo>(</mml:mo> <mml:mi mathvariant="bold">y</mml:mi> <mml:mo>|</mml:mo> <mml:mi mathvariant="bold">L</mml:mi> <mml:mo>,</mml:mo> <mml:mi mathvariant="bold">n</mml:mi> <mml:mo>)</mml:mo> <mml:mi>p</mml:mi> <mml:mo>(</mml:mo> <mml:mi mathvariant="bold">L</mml:mi> <mml:mo>|</mml:mo> <mml:mi mathvariant="bold">k</mml:mi> <mml:mo>)</mml:mo> <mml:mi>p</mml:mi> <mml:mo>(</mml:mo> <mml:mi mathvariant="bold">k</mml:mi> <mml:mo>|</mml:mo> <mml:mi>E</mml:mi> <mml:mo>)</mml:mo> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(1)</label></disp-formula>
+where <bold>k</bold> are the cellular proliferation rates (these are discussed below). This hierarchical factorisation corresponds to the assumption of conditional independence between the various levels, i.e. <italic>p</italic>(<bold>y</bold>|<bold>L</bold>, <bold>k</bold>, <bold>n</bold>, <italic>E</italic>) = <italic>p</italic>(<bold>y</bold>|<bold>L</bold>, <bold>n</bold>), <italic>p</italic>(<bold>L</bold>|<bold>k</bold>, <bold>n</bold>, <italic>E</italic>) = <italic>p</italic>(<bold>L</bold>|<bold>k</bold>) and <italic>p</italic>(<bold>k</bold>|<bold>n</bold>, <italic>E</italic>) = <italic>p</italic>(<bold>k</bold>|<italic>E</italic>). The first term, <italic>p</italic>(<bold>y</bold>|<bold>L</bold>, <bold>n</bold>) is the <italic>measurement model</italic>; the second term <italic>p</italic>(<bold>L</bold>|<bold>k</bold>) is the underlying <italic>process model</italic>, and the last term <italic>p</italic>(<bold>k</bold>|<italic>E</italic>) is a <italic>prior parameter model</italic>. These are discussed in turn below.</p>
+<p>Notably, a ‘causal’ (structural invariance) assumption [<xref ref-type="bibr" rid="pcbi.1005688.ref025">25</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref027">27</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref037">37</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref042">42</xref>] is made by assuming that the experimental treatment condition affects the process parameters <bold>k</bold> but not the structure of the measurement or process models. In particular, while the experimental treatment ultimately affects <bold>y</bold>, in our model it does so <italic>via</italic> its effect on <bold>k</bold> and <bold>k</bold>’s subsequent effect on <bold>L</bold>. This leads to the conditional independence structure mentioned. In terms of so-called directed acyclic graphs (DAGs), used in the causal modelling literature referenced above, we assumed
+<disp-formula id="pcbi.1005688.e002"><alternatives><graphic id="pcbi.1005688.e002g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e002" xlink:type="simple"/><mml:math display="block" id="M2"><mml:mrow><mml:mi>E</mml:mi> <mml:mo stretchy="true">→</mml:mo> <mml:mi mathvariant="bold">k</mml:mi> <mml:mo stretchy="true">→</mml:mo> <mml:mi mathvariant="bold">L</mml:mi> <mml:mo stretchy="true">→</mml:mo> <mml:mi mathvariant="bold">y</mml:mi> <mml:mo>.</mml:mo></mml:mrow></mml:math></alternatives> <label>(2)</label></disp-formula>
+Another way of stating this is that knowledge of <bold>L</bold> (and <bold>n</bold>) is sufficient to determine <bold>y</bold> regardless of how <bold>L</bold> was brought about, but that to know <bold>L</bold> we (ultimately) have to know which experiment was carried out. Note that in general we suppressed, in our notation, the explicit conditioning on sample size <bold>n</bold>, since it was taken to be fixed and known, as well as the conditioning on <italic>E</italic> (keeping in mind that it was assumed to only affect <bold>k</bold>).</p>
+<p>The assumptions underlying the above factorisation could be checked to some extent. This relied on a distinction between working ‘within’ the model—e.g. parameter estimation assuming the model and factorisation is valid—and working ‘outside’ the model, e.g. checking the validity of the model structural assumptions themselves [<xref ref-type="bibr" rid="pcbi.1005688.ref020">20</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref030">30</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref031">31</xref>]. This distinction is made in the Results section.</p>
+<p>Implicit in the model derivations, discussed below, we used a <italic>deterministic expression of conservation of probability</italic> for the process model, as is typical for such equations [<xref ref-type="bibr" rid="pcbi.1005688.ref043">43</xref>]. It sufficed for the presentation here to simply replace all functional dependencies on the process variable above with a dependence on the process parameters [<xref ref-type="bibr" rid="pcbi.1005688.ref021">21</xref>].</p>
+<p>We provide further discussion of our approach to interpretation of statistical evidence in the Supplementary Information.</p>
+</sec>
+<sec id="sec013">
+<title>Bayesian framework for predictions and incorporating information from observations</title>
+<p>The overall model of the previous section defined our initial ‘generative’ probabilistic model, prior to explicitly incorporating information from our experimental data. This enabled samples to be drawn from both prior predictive and prior parameter models, in the usual way (see e.g. [<xref ref-type="bibr" rid="pcbi.1005688.ref020">20</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref044">44</xref>] and the Computational methods section below). In particular, the prior predictive distribution was used in its usual form
+<disp-formula id="pcbi.1005688.e003"><alternatives><graphic id="pcbi.1005688.e003g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e003" xlink:type="simple"/><mml:math display="block" id="M3"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi mathvariant="bold">y</mml:mi> <mml:mo>∼</mml:mo> <mml:mi>p</mml:mi> <mml:mo>(</mml:mo> <mml:mi mathvariant="bold">y</mml:mi> <mml:mo>)</mml:mo> <mml:mo>=</mml:mo> <mml:mo>∫</mml:mo> <mml:mi>p</mml:mi> <mml:mo>(</mml:mo> <mml:mi mathvariant="bold">y</mml:mi> <mml:mo>|</mml:mo> <mml:mi>f</mml:mi> <mml:mo>(</mml:mo> <mml:mi mathvariant="bold">k</mml:mi> <mml:mo>)</mml:mo> <mml:mo>)</mml:mo> <mml:mi>p</mml:mi> <mml:mo>(</mml:mo> <mml:mi mathvariant="bold">k</mml:mi> <mml:mo>)</mml:mo> <mml:mi>d</mml:mi> <mml:mi mathvariant="bold">k</mml:mi></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(3)</label></disp-formula>
+which incorporates the aforementioned deterministic link between a given sample of process parameters and the output process variable, <bold>L</bold> = <italic>f</italic>(<bold>k</bold>). Note that here ∼ denotes ‘distributed as’, or more relevantly, ‘samples drawn according to’.</p>
+<p>To incorporate new data <bold>y</bold><sub><bold>0</bold></sub> we updated the parameters of the model, hence passing to a ‘posterior predictive’ model [<xref ref-type="bibr" rid="pcbi.1005688.ref020">20</xref>]
+<disp-formula id="pcbi.1005688.e004"><alternatives><graphic id="pcbi.1005688.e004g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e004" xlink:type="simple"/><mml:math display="block" id="M4"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mrow><mml:mi mathvariant="bold">y</mml:mi> <mml:mo>|</mml:mo></mml:mrow> <mml:msub><mml:mi mathvariant="bold">y</mml:mi> <mml:mn mathvariant="bold">0</mml:mn></mml:msub> <mml:mo>∼</mml:mo> <mml:mi>p</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi mathvariant="bold">y</mml:mi> <mml:mo>|</mml:mo> <mml:msub><mml:mi mathvariant="bold">y</mml:mi> <mml:mn mathvariant="bold">0</mml:mn></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mo>∫</mml:mo> <mml:mi>p</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi mathvariant="bold">y</mml:mi> <mml:mo>|</mml:mo> <mml:mi>f</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi mathvariant="bold">k</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>p</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi mathvariant="bold">k</mml:mi> <mml:mo>|</mml:mo> <mml:msub><mml:mi mathvariant="bold">y</mml:mi> <mml:mn mathvariant="bold">0</mml:mn></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>d</mml:mi> <mml:mi mathvariant="bold">k</mml:mi></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(4)</label></disp-formula>
+where we used the conditional probability closure assumption <italic>p</italic>(<bold>y</bold>|<italic>f</italic>(<bold>k</bold>), <bold>y</bold><sub><bold>0</bold></sub>) = <italic>p</italic>(<bold>y</bold>|<italic>f</italic>(<bold>k</bold>)). This closure assumption can be interpreted as maintaining our same mechanistic model despite new observations.</p>
+</sec>
+<sec id="sec014">
+<title>Measurement model</title>
+<p>The measurement model <italic>p</italic>(<bold>y</bold>|<bold>L</bold>, <bold>n</bold>) component was taken to be a binomial distribution <inline-formula id="pcbi.1005688.e005"><alternatives><graphic id="pcbi.1005688.e005g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e005" xlink:type="simple"/><mml:math display="inline" id="M5"><mml:mi mathvariant="script">B</mml:mi></mml:math></alternatives></inline-formula> of the form
+<disp-formula id="pcbi.1005688.e006"><alternatives><graphic id="pcbi.1005688.e006g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e006" xlink:type="simple"/><mml:math display="block" id="M6"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>p</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi mathvariant="bold">y</mml:mi> <mml:mo>|</mml:mo> <mml:mi mathvariant="bold">L</mml:mi> <mml:mo>,</mml:mo> <mml:mi mathvariant="bold">n</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:munder><mml:mover><mml:mo>Π</mml:mo> <mml:mrow><mml:mi>S</mml:mi> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:mover> <mml:mrow><mml:mi>s</mml:mi> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn></mml:mrow></mml:munder> <mml:mi mathvariant="script">B</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>n</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:mo>,</mml:mo> <mml:msub><mml:mi>L</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(5)</label></disp-formula>
+This related our ‘raw’ observable <bold>y</bold>, the vector of counts of labelled cells at each grid point, to ‘ideal characteristics’ of comparison (<bold>L</bold>, <bold>n</bold>). We took the measurement component to be independent of the experimental treatment <italic>E</italic>, i.e. treatment was assumed to affect the underlying <italic>process parameters</italic> only (see ‘Overall hierarchical structure’ section). The measurement component <italic>p</italic>(<bold>y</bold>|<bold>L</bold>, <bold>n</bold>) then defined a likelihood function <inline-formula id="pcbi.1005688.e007"><alternatives><graphic id="pcbi.1005688.e007g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e007" xlink:type="simple"/><mml:math display="inline" id="M7"><mml:mi mathvariant="script">L</mml:mi></mml:math></alternatives></inline-formula> for this measurement model,
+<disp-formula id="pcbi.1005688.e008"><alternatives><graphic id="pcbi.1005688.e008g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e008" xlink:type="simple"/><mml:math display="block" id="M8"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi mathvariant="script">L</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi mathvariant="bold">L</mml:mi> <mml:mo>;</mml:mo> <mml:mi mathvariant="bold">y</mml:mi> <mml:mo>,</mml:mo> <mml:mi mathvariant="bold">n</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:munder><mml:mover><mml:mo>Π</mml:mo> <mml:mrow><mml:mi>S</mml:mi> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:mover> <mml:mrow><mml:mi>s</mml:mi> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn></mml:mrow></mml:munder> <mml:msubsup><mml:mi>L</mml:mi> <mml:mi>s</mml:mi> <mml:msub><mml:mi>y</mml:mi> <mml:mi>s</mml:mi></mml:msub></mml:msubsup> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:msub><mml:mi>L</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:msub><mml:mi>n</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:mo>-</mml:mo> <mml:msub><mml:mi>y</mml:mi> <mml:mi>s</mml:mi></mml:msub></mml:mrow></mml:msup> <mml:mo>∝</mml:mo> <mml:mi>p</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi mathvariant="bold">y</mml:mi> <mml:mo>|</mml:mo> <mml:mi mathvariant="bold">L</mml:mi> <mml:mo>,</mml:mo> <mml:mi mathvariant="bold">n</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:munder><mml:mover><mml:mo>Π</mml:mo> <mml:mrow><mml:mi>S</mml:mi> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:mover> <mml:mrow><mml:mi>s</mml:mi> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn></mml:mrow></mml:munder> <mml:mi mathvariant="script">B</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>n</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:mo>,</mml:mo> <mml:msub><mml:mi>L</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(6)</label></disp-formula>
+When interpreting model misfit based on residuals, we applied the usual normal approximation to the binomial distribution. In that case, denoting the set of all measured labelled fractions through the (useful, but slightly non-standard) notation <bold>y</bold>/<bold>n</bold> ≔ (<italic>y</italic><sub>1</sub>/<italic>n</italic><sub>1</sub>, …, <italic>y</italic><sub><italic>S</italic></sub>/<italic>n</italic><sub><italic>S</italic></sub>), we have
+<disp-formula id="pcbi.1005688.e009"><alternatives><graphic id="pcbi.1005688.e009g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e009" xlink:type="simple"/><mml:math display="block" id="M9"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi mathvariant="script">L</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi mathvariant="bold">L</mml:mi> <mml:mo>;</mml:mo> <mml:mi mathvariant="bold">n</mml:mi> <mml:mo>,</mml:mo> <mml:mfrac><mml:mi mathvariant="bold">y</mml:mi> <mml:mi mathvariant="bold">n</mml:mi></mml:mfrac> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mi>p</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mfrac><mml:mi mathvariant="bold">y</mml:mi> <mml:mi mathvariant="bold">n</mml:mi></mml:mfrac> <mml:mo>|</mml:mo> <mml:mi mathvariant="bold">L</mml:mi> <mml:mo>,</mml:mo> <mml:mi mathvariant="bold">n</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:munder><mml:mover><mml:mo>Π</mml:mo> <mml:mrow><mml:mi>S</mml:mi> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:mover> <mml:mrow><mml:mi>s</mml:mi> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn></mml:mrow></mml:munder> <mml:mfrac><mml:mn>1</mml:mn> <mml:mrow><mml:msub><mml:mi>σ</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:msqrt><mml:mrow><mml:mn>2</mml:mn> <mml:mi>π</mml:mi></mml:mrow></mml:msqrt></mml:mrow></mml:mfrac> <mml:mo form="prefix">exp</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mo>-</mml:mo> <mml:mfrac><mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mfrac><mml:msub><mml:mi>y</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:msub><mml:mi>n</mml:mi> <mml:mi>s</mml:mi></mml:msub></mml:mfrac> <mml:mo>-</mml:mo> <mml:msub><mml:mi>L</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mn>2</mml:mn></mml:msup> <mml:mrow><mml:mn>2</mml:mn> <mml:msubsup><mml:mi>σ</mml:mi> <mml:mi>s</mml:mi> <mml:mn>2</mml:mn></mml:msubsup></mml:mrow></mml:mfrac> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(7)</label></disp-formula>
+where the standard deviations are given by <inline-formula id="pcbi.1005688.e010"><alternatives><graphic id="pcbi.1005688.e010g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e010" xlink:type="simple"/><mml:math display="inline" id="M10"><mml:mrow><mml:msub><mml:mi>σ</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:mo>=</mml:mo> <mml:msqrt><mml:mfrac><mml:mrow><mml:msub><mml:mi>L</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:msub><mml:mi>L</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow></mml:mrow> <mml:msub><mml:mi>n</mml:mi> <mml:mi>s</mml:mi></mml:msub></mml:mfrac></mml:msqrt></mml:mrow></mml:math></alternatives></inline-formula>.</p>
+</sec>
+<sec id="sec015">
+<title>Process models: Spatially discrete model</title>
+<p>We developed our process model at different levels of resolution. First, we considered a spatially discrete probabilistic model at the level of our measurement grid defined above. Second, we considered two spatially continuous approximations: one model excluding explicit cell-scale effects and one including them. Here we first consider the discrete model.</p>
+<p>Our basic ‘process’ model described the evolution of the occupancy probabilities (population labelled fractions) at the scale of the measurement grid. This was derived as follows. With reference to <xref ref-type="fig" rid="pcbi.1005688.g001">Fig 1</xref>, we considered a collection of one-dimensional ‘strips’ of cells. We used <italic>l</italic><sub><italic>i</italic></sub> ∈ {0, 1} as an indicator variable denoting the occupancy status of site <italic>i</italic> of a given strip. The full state of this strip was given by the vector <bold>l</bold> = (<italic>l</italic><sub>0</sub>, <italic>l</italic><sub>1</sub>, …<italic>l</italic><sub><italic>S</italic> − 1</sub>). We then sought a description of the probabilistic dynamics in terms of a discrete-time Markov chain for the probability distribution of the full state <italic>p</italic>(<bold>l</bold>, <italic>t</italic>) following standard arguments [<xref ref-type="bibr" rid="pcbi.1005688.ref043">43</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref045">45</xref>].</p>
+<p>We began from an explicit joint distribution for the full state and then reduced it to a description in terms of the set of ‘single-site’ probability distributions <italic>p</italic>(<italic>l</italic><sub><italic>i</italic></sub>, <italic>t</italic>) for each site <italic>i</italic>. This derivation was aided by adopting an explicit notation: the probabilities of occupancy and vacancy at site <italic>i</italic> at time <italic>t</italic> were denoted by <italic>p</italic>(<italic>l</italic><sub><italic>i</italic></sub>(<italic>t</italic>) = 1) and <italic>p</italic>(<italic>l</italic><sub><italic>i</italic></sub>(<italic>t</italic>) = 0) respectively. Since <italic>p</italic>(<italic>l</italic><sub><italic>i</italic></sub>(<italic>t</italic>) = 1) + <italic>p</italic>(<italic>l</italic><sub><italic>i</italic></sub>(<italic>t</italic>) = 0) = 1 we only needed to consider the probability of occupancy to fully characterise the distribution <italic>p</italic>(<italic>l</italic><sub><italic>i</italic></sub>(<italic>t</italic>)).</p>
+<p>The equation of evolution for this probability was derived by considering conservation of probability in terms of probability fluxes in and out, giving, to first order in Δ<italic>t</italic>,
+<disp-formula id="pcbi.1005688.e011"><alternatives><graphic id="pcbi.1005688.e011g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e011" xlink:type="simple"/><mml:math display="block" id="M11"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>p</mml:mi> <mml:mo>(</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mo>Δ</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo></mml:mrow><mml:mrow><mml:mo>-</mml:mo> <mml:mi>p</mml:mi> <mml:mo>(</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo> <mml:mo>=</mml:mo></mml:mrow><mml:mrow><mml:mo>Δ</mml:mo> <mml:mi>t</mml:mi> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>j</mml:mi> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn></mml:mrow> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:munderover> <mml:msub><mml:mi>k</mml:mi> <mml:mi>j</mml:mi></mml:msub> <mml:mo>[</mml:mo> <mml:mi>p</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> <mml:mo>,</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:mi>p</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn> <mml:mo>,</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>]</mml:mo> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(8)</label></disp-formula>
+The first term on the right represents a net ‘influx of occupancy probability’ due to a single division event at site <italic>j</italic> &lt; <italic>i</italic>, each division event having a probability <italic>k</italic><sub><italic>j</italic></sub> Δ<italic>t</italic>. This flux means the value of the state variable <italic>l</italic><sub><italic>i</italic></sub>(<italic>t</italic>) = 0 could be replaced, at the next time step, by the value of <italic>l</italic><sub><italic>i</italic> − 1</sub>(<italic>t</italic>) = 1. Similarly the second term represents a net ‘outflux of occupancy probability’ due to a division event at site <italic>j</italic> &lt; <italic>i</italic>. Partitioning on the events <italic>l</italic><sub><italic>i</italic> − 1</sub>(<italic>t</italic>) = 0 and <italic>l</italic><sub><italic>i</italic></sub>(<italic>t</italic>), we obtain
+<disp-formula id="pcbi.1005688.e012"><alternatives><graphic id="pcbi.1005688.e012g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e012" xlink:type="simple"/><mml:math display="block" id="M12"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>p</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mo>Δ</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:mi>p</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mo>Δ</mml:mo> <mml:mi>t</mml:mi> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>j</mml:mi> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn></mml:mrow> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:munderover> <mml:msub><mml:mi>k</mml:mi> <mml:mi>j</mml:mi></mml:msub> <mml:mo>[</mml:mo> <mml:mi>p</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:mi>p</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>]</mml:mo> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(9)</label></disp-formula></p>
+</sec>
+<sec id="sec016">
+<title>Process models: Underlying continuous model and zeroth-order approximation</title>
+<p>To aid model interpretation and model cross comparisons we derived a continuous approximation to the occupancy probability, <italic>L</italic>(<italic>x</italic>, <italic>t</italic>). This gave a further idealisation of the ‘underlying population’ from which we envisaged the strips were sampled. This smoothness assumption, while not strictly necessary, meant some model properties could be interpreted in terms of local derivatives; it also reduced arbitrary dependence on discrete grid features, aiding future comparisons with off-lattice and/or continuum models [<xref ref-type="bibr" rid="pcbi.1005688.ref044">44</xref>].</p>
+<p>As detailed in the Supplementary Information, <italic>L</italic>(<italic>x</italic>, <italic>t</italic>) satisfies the equation
+<disp-formula id="pcbi.1005688.e013"><alternatives><graphic id="pcbi.1005688.e013g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e013" xlink:type="simple"/><mml:math display="block" id="M13"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mfrac><mml:mrow><mml:mi>∂</mml:mi> <mml:mi>L</mml:mi> <mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mi>∂</mml:mi> <mml:mi>t</mml:mi></mml:mrow></mml:mfrac> <mml:mo>+</mml:mo> <mml:mi>v</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mfrac><mml:mrow><mml:mi>∂</mml:mi> <mml:mi>L</mml:mi> <mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mi>∂</mml:mi> <mml:mi>x</mml:mi></mml:mrow></mml:mfrac> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(10)</label></disp-formula>
+with
+<disp-formula id="pcbi.1005688.e014"><alternatives><graphic id="pcbi.1005688.e014g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e014" xlink:type="simple"/><mml:math display="block" id="M14"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>v</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:msubsup><mml:mo>∫</mml:mo> <mml:mn>0</mml:mn> <mml:mi>x</mml:mi></mml:msubsup> <mml:mi>k</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>x</mml:mi> <mml:mo>′</mml:mo></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>d</mml:mi> <mml:msup><mml:mi>x</mml:mi> <mml:mo>′</mml:mo></mml:msup> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(11)</label></disp-formula>
+where <italic>k</italic>(<italic>x</italic>) denotes the (net) proliferation rate.</p>
+</sec>
+<sec id="sec017">
+<title>Process models: Underlying continuous model and higher-order spatial effects</title>
+<p>Our ‘zeroth-order’ continuous approximation above was obtained by neglecting all higher-order terms in Δ<italic>x</italic>. We anticipate that a more accurate continuum approximation may be obtained by retaining higher-order spatial derivatives and hence finite-cell-size effects. This gives rise to a Fokker-Planck equation containing a diffusion term [<xref ref-type="bibr" rid="pcbi.1005688.ref043">43</xref>]:
+<disp-formula id="pcbi.1005688.e015"><alternatives><graphic id="pcbi.1005688.e015g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e015" xlink:type="simple"/><mml:math display="block" id="M15"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mfrac><mml:mrow><mml:mi>∂</mml:mi> <mml:mi>L</mml:mi> <mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mi>∂</mml:mi> <mml:mi>t</mml:mi></mml:mrow></mml:mfrac> <mml:mo>+</mml:mo> <mml:mi>v</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mfrac><mml:mrow><mml:mi>∂</mml:mi> <mml:mi>L</mml:mi> <mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mi>∂</mml:mi> <mml:mi>x</mml:mi></mml:mrow></mml:mfrac> <mml:mo>=</mml:mo> <mml:mi>D</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mfrac><mml:mrow><mml:msup><mml:mi>∂</mml:mi> <mml:mn>2</mml:mn></mml:msup> <mml:mi>L</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mrow> <mml:mrow><mml:mi>∂</mml:mi> <mml:msup><mml:mi>x</mml:mi> <mml:mn>2</mml:mn></mml:msup></mml:mrow></mml:mfrac></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(12)</label></disp-formula>
+where <italic>D</italic>(<italic>x</italic>) = (1/2)Δ<italic>xv</italic>(<italic>x</italic>). Similar equations have been derived before, based on continuous approximations to discrete master equations [<xref ref-type="bibr" rid="pcbi.1005688.ref046">46</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref049">49</xref>]. Retaining the second spatial derivative hence amounts to accounting for spatial effects due to finite cell sizes. We evaluated our original ‘zeroth-order’ (advection) model against our data, and also examined the extent to which higher-order spatial terms such as those considered above could account for any misfits.</p>
+</sec>
+<sec id="sec018">
+<title>Definition of priors</title>
+<p>Since we adopted a Bayesian perspective in this work we required a parameter prior model that could express additional modelling assumptions [<xref ref-type="bibr" rid="pcbi.1005688.ref020">20</xref>]. Essentially, this is an empirical Bayesian approach as we used an empirical correlation matrix [<xref ref-type="bibr" rid="pcbi.1005688.ref050">50</xref>].</p>
+<p>Candidate proliferation profiles, varying with cell locations, were represented as realisations from a prior given in terms of a discretised random field (a random vector) <bold>k</bold> of length <italic>m</italic> = 5, modelled as a multivariate Gaussian <inline-formula id="pcbi.1005688.e016"><alternatives><graphic id="pcbi.1005688.e016g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e016" xlink:type="simple"/><mml:math display="inline" id="M16"><mml:mrow><mml:mi mathvariant="script">N</mml:mi> <mml:mo>(</mml:mo> <mml:mo mathvariant="bold-italic">μ</mml:mo> <mml:mo>,</mml:mo> <mml:mi mathvariant="bold">C</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula> with joint distribution
+<disp-formula id="pcbi.1005688.e017"><alternatives><graphic id="pcbi.1005688.e017g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e017" xlink:type="simple"/><mml:math display="block" id="M17"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>p</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi mathvariant="bold">k</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mrow><mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mn>2</mml:mn> <mml:mi>π</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>m</mml:mi></mml:msup> <mml:msqrt><mml:mrow><mml:mtext>det</mml:mtext> <mml:mo>(</mml:mo> <mml:mi mathvariant="bold">C</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msqrt></mml:mrow></mml:mfrac> <mml:mo form="prefix">exp</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mo>-</mml:mo> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mi mathvariant="bold">k</mml:mi> <mml:mo>-</mml:mo> <mml:mo mathvariant="bold-italic">μ</mml:mo> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>T</mml:mi></mml:msup> <mml:msup><mml:mi mathvariant="bold">C</mml:mi> <mml:mrow><mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi mathvariant="bold">k</mml:mi> <mml:mo>-</mml:mo> <mml:mo mathvariant="bold-italic">μ</mml:mo> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>/</mml:mo> <mml:mn>2</mml:mn> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(13)</label></disp-formula>
+characterised by its mean vector <bold><italic>μ</italic></bold> and covariance matrix <bold>C</bold>. This parameter prior constrained the variability of the spatially varying parameter field <italic>a priori</italic> to help avoid unphysical solutions.</p>
+<p>The covariance matrix was first decomposed into a standard deviation matrix given by the outer (tensor) product of the standard deviation vector for each variable, <bold>S</bold> = <bold><italic>σσ</italic></bold><sup><italic>T</italic></sup>, and correlation matrix <bold>R</bold>. These multiply element-wise to give <italic>C</italic><sub><italic>ij</italic></sub> = <italic>S</italic><sub><italic>ij</italic></sub> <italic>R</italic><sub><italic>ij</italic></sub> (no summation). We then adopted the common, equivalent, representation <bold>C</bold> = <bold>D</bold><bold>R</bold><bold>D</bold> where <bold>D</bold> is a diagonal matrix with diagonal entries <italic>D</italic><sub><italic>ii</italic></sub> = <italic>σ</italic><sub><italic>i</italic></sub>.</p>
+<p>We took the correlation matrix <bold>R</bold> to have the squared-exponential (Gaussian) correlation function <inline-formula id="pcbi.1005688.e018"><alternatives><graphic id="pcbi.1005688.e018g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005688.e018" xlink:type="simple"/><mml:math display="inline" id="M18"><mml:mrow><mml:mi>k</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>,</mml:mo> <mml:mi>j</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mo form="prefix">exp</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mfrac><mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>-</mml:mo> <mml:mi>j</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mn>2</mml:mn></mml:msup> <mml:mrow><mml:mn>2</mml:mn> <mml:msubsup><mml:mi>l</mml:mi> <mml:mi>c</mml:mi> <mml:mn>2</mml:mn></mml:msubsup></mml:mrow></mml:mfrac> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>, where <italic>l</italic><sub><italic>c</italic></sub> is a parameter controlling the characteristic length-scale of the correlations in terms of number of indices of <bold>k</bold>. This characteristic length scale gives the number of <bold>k</bold> indices over which the correlation function decays to 1/<italic>e</italic>. This allowed us to control the ‘smoothness’ of the realisations from the <bold>k</bold> prior, in the sense that as <italic>l</italic><sub><italic>c</italic></sub> is increased the values <bold>k</bold><sub><italic>i</italic></sub> and <bold>k</bold><sub><italic>j</italic></sub> tend to be more similar.</p>
+<p>The matrix <bold>R</bold> was generated by evaluating this correlation function at discrete locations along the crypt-villus axis. This discretisation was chosen to be coarser than the measurement grid and gave a variation somewhat similar to compartment-style regions of proliferation activity. This corresponded to assuming that the cell-type and associated proliferation rates varied on a coarser scale than individual cells, and was thus somewhat similar to a compartment-style assumption [<xref ref-type="bibr" rid="pcbi.1005688.ref051">51</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref052">52</xref>], though the resulting proliferation rate function is defined for all values of the finer, individual-cell scale <italic>x</italic>. The parameter <italic>l</italic><sub><italic>c</italic></sub> could also be interpreted as a ‘parameter correlation length’ for the proliferation rates, a measure of the number of parameters—or number of ‘compartments’—over which the correlations decay. We considered correlation lengths of 1–2 parameters.</p>
+<p>We found it most informative to visualise realisations of the whole function from the resulting prior rather than simply give the individual parameters/matrices separately ([<xref ref-type="bibr" rid="pcbi.1005688.ref021">21</xref>] discusses this visualisation approach to priors in more detail). These are hence discussed and displayed in more detail in the Results section below.</p>
+</sec>
+<sec id="sec019">
+<title>Implementation of MCMC sampling and Bayesian updating</title>
+<p>We used the (open source) Python package emcee (<ext-link ext-link-type="uri" xlink:href="http://dan.iel.fm/emcee/" xlink:type="simple">http://dan.iel.fm/emcee/</ext-link>) to perform Markov Chain Monte Carlo (MCMC) [<xref ref-type="bibr" rid="pcbi.1005688.ref053">53</xref>] to obtain samples from the posterior distributions. Given samples from the resulting prior and posterior parameter distributions, respectively, prior and posterior predictive distributions were obtained by forward simulation of the process model described below. We note that each candidate proliferation rate vector <bold>k</bold> is connected to the measurements <bold>y</bold> via the latent vector <bold>L</bold>; since this step is deterministic, however, no additional sampling steps were required for the process model component.</p>
+</sec>
+<sec id="sec020">
+<title>Solution of differential equations</title>
+<p>For the results in all sections other than the final results section in which we include higher-order spatial effects, we solved the differential equation model using the <italic>PyCLAW</italic> [<xref ref-type="bibr" rid="pcbi.1005688.ref054">54</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref055">55</xref>] Python interface to the <italic>CLAWPACK</italic> [<xref ref-type="bibr" rid="pcbi.1005688.ref056">56</xref>] set of solvers for hyperbolic PDEs. We adapted a Riemann solver for the colour equation available from the Riemann solver repository (<ext-link ext-link-type="uri" xlink:href="https://github.com/clawpack/riemann" xlink:type="simple">https://github.com/clawpack/riemann</ext-link>). For testing the inclusion of higher-order spatial effects (thus changing the class of our equations from hyperbolic to parabolic) we used the Python finite-volume solver <italic>FiPy</italic> [<xref ref-type="bibr" rid="pcbi.1005688.ref057">57</xref>].</p>
+</sec>
+<sec id="sec021">
+<title>Data and source code availability</title>
+<p>Our code is available in the form of a Jupyter Notebook (<ext-link ext-link-type="uri" xlink:href="http://ipython.org/notebook.html" xlink:type="simple">http://ipython.org/notebook.html</ext-link>) in the Supplementary Information. We ran these using the Anaconda distribution of Python (<ext-link ext-link-type="uri" xlink:href="https://store.continuum.io/cshop/anaconda" xlink:type="simple">https://store.continuum.io/cshop/anaconda</ext-link>) which is a (free) distribution bundling a number of scientific Python tools. Any additional Python packages and instructions which may be required are listed at the beginning of our Jupyter Notebook.</p>
+</sec>
+</sec>
+</sec>
+<sec id="sec022" sec-type="results">
+<title>Results</title>
+<sec id="sec023">
+<title>Parameter inference under homeostatic (healthy) conditions</title>
+<p>
+<xref ref-type="fig" rid="pcbi.1005688.g002">Fig 2</xref> illustrates the process of updating from realisations of the prior distributions of the proliferation and velocity fields to realisations of their posterior (post-data) distributions. As discussed in the Materials and methods section above, these are generated by an underlying piecewise-constant Gaussian random field of proliferation rates, <bold>k</bold>. This has length <italic>m</italic> = 5, and defines an assignment of the cell indices into biologically-motivated regions of proliferation activity.</p>
+<fig id="pcbi.1005688.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005688.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Simulated realisations from the prior (left) and posterior (right) distributions for proliferation profiles (top) and velocities (bottom).</title>
+<p>After data are obtained the posterior distributions are much more tightly-constrained, and are picking out biologically plausible results (see main text).</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005688.g002" xlink:type="simple"/>
+</fig>
+<p>The left-hand side of the figure shows simulations from the prior distribution for proliferation field (top) and realisations from the induced distribution for the velocity field (bottom), respectively. The right-hand side shows the corresponding simulations after the prior parameter distribution has been updated to a posterior parameter distribution. The prior-to-posterior parameter estimation was carried out using the MCMC sampling approach described above with <italic>t</italic> = 120 min (2 h) as an initial condition and <italic>t</italic> = 360 min (6 h) and 600 min (10 h) as given data. The initial condition for the underlying labelled fraction (occupancy probability) was determined by fitting a smoothing spline to the data. The prior distribution for the proliferation field shown in <xref ref-type="fig" rid="pcbi.1005688.g002">Fig 2</xref> incorporated a weak mean trend in net proliferation rates, rising from the crypt base to the mid-crypt before falling exponentially to zero over the last few parameter regions post-crypt end, and a parameter correlation length of 1. These assumptions can be relaxed/varied with little effect, though typically a non-zero parameter correlation length and a shut-off in proliferation after the crypt end produce more stable (well-identified) estimates. Additional visualisations of the parameter inferences are provided in Fig A-C in <xref ref-type="supplementary-material" rid="pcbi.1005688.s001">S1 Supplementary information</xref>.</p>
+</sec>
+<sec id="sec024">
+<title>Parameter inference for blocked proliferation conditions</title>
+<p>
+<xref ref-type="fig" rid="pcbi.1005688.g003">Fig 3</xref> is the same as <xref ref-type="fig" rid="pcbi.1005688.g002">Fig 2</xref> described in the previous section, but this time under treatment by Ara-C. Results from the baseline case are shown in grey, while those from Ara-C treatment are shown in blue. Here 1140 min (19 h post IdU labelling, 2 h post Ara-C treatment) was used as the initial condition and 1500 min (25 h post IdU labelling, 8 h post Ara-C treatment) used for fitting. The intermediate time 1260 min (21 h post IdU labelling, 4 h post Ara-C treatment) and later time 1620 min (27 h post IdU labelling, 10 h post Ara-C treatment) were used as out-of-sample comparisons (see later).</p>
+<fig id="pcbi.1005688.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005688.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Simulated realisations from the prior (left) and posterior (right) distributions for proliferation profiles (top) and velocities (bottom) under Ara-C treatment (blue) as compared to no treatment (grey).</title>
+<p>The velocities are reduced to near zero, as are the proliferation rates, though the latter are noisier.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005688.g003" xlink:type="simple"/>
+</fig>
+<p>As can be seen, there is clear inhibition of proliferation and an even clearer effect on the cell migration (growth) velocity. The greater variability in the underlying parameter results compared to the baseline case may indicate, for example, greater parameter underdetermination and/or inconsistency of the model. This is not surprising as we expect all proliferation parameters to be reduced to similar (low) values and hence to become less distinguishable.</p>
+<p>To add additional stability to the results we can attempt to reduce underdetermination in the parameters by increasing the parameter correlation length and inducing an effectively more ‘lumped’ representation of the parameter field (since values tend to stick together more). Doing this removed the more extreme negative net proliferation in the posterior profile, however it still allowed for small amounts of negative net proliferation/velocity (the available Jupyter notebook can be used to explore various prior assumptions).</p>
+<p>Again, the need to introduce more stability is likely due to some combination of the limitations of resolution, a consequence of trying to fit the data too closely, or an indication of model inadequacies. In particular, under inhibited-proliferation conditions the effective number of parameters would be expected to be reduced. When fitting the full model, with largely independent parameters for each region, it is to be expected that some additional regularisation would be required for greater stability.</p>
+</sec>
+<sec id="sec025">
+<title>Parameter inference for recovering proliferation conditions</title>
+<p>Ara-C is metabolised between 10–12 h post-treatment. The two times considered here, 1620 min and 2520 min, correspond to 10 h and 25 h post Ara-C treatment, respectively, i.e to the end of the effect and after the resumption of proliferation. Hence, to check for the recovery of proliferation, we fitted the model using 1620 min as the initial condition and 2520 min as the final time.</p>
+<p>
+<xref ref-type="fig" rid="pcbi.1005688.g004">Fig 4</xref> is the same as Figs <xref ref-type="fig" rid="pcbi.1005688.g002">2</xref> and <xref ref-type="fig" rid="pcbi.1005688.g003">3</xref> described in the previous sections, but this time after/during recovering from treatment by Ara-C. The previous results from the baseline case are shown in grey, while the new results following recovery from Ara-C treatment are shown in blue. Here 1620 min (27 h post IdU labelling, 10 h post Ara-C treatment) was used as the initial condition and 2520 min (42 h post IdU labelling, 25 h post Ara-C treatment) used for fitting. We did not make additional out-of-sample comparisons in this case, though in-sample posterior predictive checks were still carried out (see later).</p>
+<fig id="pcbi.1005688.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005688.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Simulated realisations from the prior (left) and posterior (right) distributions for proliferation profiles (top) and velocities (bottom) after recovery from Ara-C treatment (blue) as compared to no treatment (grey).</title>
+<p>The velocities and proliferation rates show partial recovery towards healthy conditions.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005688.g004" xlink:type="simple"/>
+</fig>
+<p>Here, as expected, the proliferation and velocity profiles indicate that proliferation has resumed. The rates of proliferation appear to be lower than under fully healthy conditions, however, perhaps due to incomplete recovery (the initial condition being right at the beginning of the recovery period). The timing of the recovery of proliferation and the well-identified proliferation and velocity profiles inferred give no indication that any other mechanism is required to account for these data, however.</p>
+</sec>
+<sec id="sec026">
+<title>Predictive checks under homeostatic (healthy) conditions</title>
+<p>
+<xref ref-type="fig" rid="pcbi.1005688.g005">Fig 5</xref> illustrates simulations from the predictive distributions corresponding to the prior and posterior parameter distributions of <xref ref-type="fig" rid="pcbi.1005688.g002">Fig 2</xref>. This enables a first self-consistency check—i.e. can the model re-simulate data similar to that to which it was fitted [<xref ref-type="bibr" rid="pcbi.1005688.ref020">20</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref058">58</xref>]? If this is the case then we can (provisionally) trust the parameter estimates in the previous figure; if not, then the parameter estimates would be unreliable, no matter how well-determined they seem. In our case the model appears to adequately replicate the data used for fitting.</p>
+<fig id="pcbi.1005688.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005688.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Simulated realisations from prior (top) and posterior (bottom) predictive distributions (grey) for label data at fitted times (120 min, 360 min and 600 min i.e. 2 h, 6 h and 10 h).</title>
+<p>Actual data are indicated by black lines. Again the posterior distributions are much more constrained than the prior distributions, representing the gain in information from collecting (and fitting to) experimental data. The first profile in each panel is held as a constant initial condition in this example.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005688.g005" xlink:type="simple"/>
+</fig>
+<p>Figs <xref ref-type="fig" rid="pcbi.1005688.g006">6</xref> and <xref ref-type="fig" rid="pcbi.1005688.g007">7</xref> illustrate two additional ways of visualising replicated datasets. The former visualises the label profile along the crypt-villus axis at the future unfitted/out-of-sample time 1080 min (18 h), while the latter visualises both fitted (120 min/2 h, 360 min/6 h and 600 min/10 h) and unfitted/out-of-sample (1080 min/18 h) predictions plotted in the characteristic plane (<italic>t</italic>, <italic>x</italic>) in which the slopes along lines of constant colour should be inversely proportional to the migration velocities at that point, due to the (hyperbolic) nature of our ‘colour’ equation (see e.g. [<xref ref-type="bibr" rid="pcbi.1005688.ref059">59</xref>]). We have interpolated between the dotted grid lines. These figures, in combination with <xref ref-type="fig" rid="pcbi.1005688.g005">Fig 5</xref>, indicate that the model is capable of reliably reproducing the data to which it was fitted, as well as predicting key features of unfitted datasets such as the rate of movement of the front. On the other hand, there is clearly a greater misfit with the predicted rather than fitted data. In order to locate the possible source of misfit we considered various model residuals and error terms—see ‘Locating model misfit’ below.</p>
+<fig id="pcbi.1005688.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005688.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>Simulated realisations from prior (left) and posterior (right) predictive distributions (grey) for label data at the unfitted (out-of-sample) time 1080 min (18 h).</title>
+<p>Actual data are indicated by black lines. The model appears to give reasonable predictions capturing the key features, but there is also some misfit to be explored further.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005688.g006" xlink:type="simple"/>
+</fig>
+<fig id="pcbi.1005688.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005688.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Actual (smoothed) data (left, black box) and one replication based on the model (right; plotting the latent/measurement-error-free process) as visualised in the characteristic plane.</title>
+<p>This has been discretised and interpolated between the dotted lines to facilitate fair but coarse-grained comparisons. The model structure implies that there should be lines of constant colour tracing out curves with slopes inversely proportional to the migration velocities at that point. The model again captures several of these key qualitative features, but fits less well for the out-of-sample (above the horizontal gap at 600 min/10 h) data. There is little variability in the latent model process and so only one replication is shown.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005688.g007" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec027">
+<title>Predictive checks under blocked proliferation conditions</title>
+<p>Here data from 1140 min (19 h; post IdU labelling) were used as the initial conditions and 1500 min (25 h) used for fitting. 1260 min (21 h) and 1620 min (27 h) were used as out-of-sample (non-fitted) comparisons. <xref ref-type="fig" rid="pcbi.1005688.g008">Fig 8</xref> is analogous to <xref ref-type="fig" rid="pcbi.1005688.g005">Fig 5</xref> in the healthy case. In general all of the features up to 1620 min (27 h) in <xref ref-type="fig" rid="pcbi.1005688.g008">Fig 8</xref>, and for both fitted and predicted times, are reasonably well captured. The fit at 1620 min is generally good, but perhaps worse than the other cases. This could be due to errors in longer-time predictions and to the beginning of proliferation recovery: we explore these alternatives in what follows.</p>
+<fig id="pcbi.1005688.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005688.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>Simulated realisations from posterior predictive distributions (grey) for label data at 1140 min (initial condition), 1500 min (fitted time) and at two out-of-sample/unfitted times (1260 and 1620 min).</title>
+<p>The posterior distributions appear to adequately capture the actual label data (black).</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005688.g008" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec028">
+<title>Predictive checks under recovering proliferation conditions</title>
+<p>As discussed above, Ara-C is metabolised between 10–12 h post-treatment. The two times considered here, 1620 min and 2520 min, correspond to 10 h and 25 h post Ara-C treatment, respectively, i.e to the end of the effect and after the resumption of proliferation.</p>
+<p>As can be seen in <xref ref-type="fig" rid="pcbi.1005688.g009">Fig 9</xref>, and as expected, the label has resumed movement in concert with the resumption in proliferation. The model appears to fit reasonably well.</p>
+<fig id="pcbi.1005688.g009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005688.g009</object-id>
+<label>Fig 9</label>
+<caption>
+<title>Simulated realisations from posterior predictive distributions (grey) for label data at 1620 min (initial condition) and 2520 min (fitted).</title>
+<p>These indicate that proliferation has resumed, consistent with the time taken to metabolise Ara-C—see the main text for more detail.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005688.g009" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec029">
+<title>Locating model misfit</title>
+<p>While the zeroth-order model behaves essentially as desired under experimental perturbation, and is likely capturing the essential features of interest, we observed some minor model misfit. We used posterior predictive checks to unpick the contributions of the various model parts and determine the source(s) of misfit. This in turn motivated potential model improvements. These checks were carried out under baseline (healthy) conditions as we were more confident of the experimental results under this scenario, but they can equally be carried out for the other datasets. Note, however, that time-varying effects are not expected to be as relevant under conditions of inhibited proliferation.</p>
+<p>
+<xref ref-type="fig" rid="pcbi.1005688.g010">Fig 10</xref> shows the following checks: measurement error as determined by subtracting a smoothed spline from the observed data (dark line) and comparing these to the results obtained by subtracting the process model from the simulated data (panels 1–4, moving left-to-right and top-to-bottom, showing fitted—120 min/2 h, 360 min/6 h and 600 min/10 h—and unfitted/out-of-sample—1080 min/18 h—times). This presentation follows the noise-checking approach in [<xref ref-type="bibr" rid="pcbi.1005688.ref060">60</xref>], as well as the general recommendations given in [<xref ref-type="bibr" rid="pcbi.1005688.ref020">20</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref058">58</xref>]. Reliable interpretation of these as ‘true’ measurement residuals depends on the validity of the normal approximation <xref ref-type="disp-formula" rid="pcbi.1005688.e009">Eq 7</xref> since these expressions are not directly interpretable in terms of the discrete binomial model (see e.g. [<xref ref-type="bibr" rid="pcbi.1005688.ref020">20</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref058">58</xref>]). These are also visualised in terms of the corresponding cumulative distributions in the middle panel (panel 5, following as above). Panels 6–9 show the differences between the underlying process model and the smoothed spline fitted to the data. As can be seen, the measurement model appears approximately valid at all times, while the process model appears to have non-zero error for the 1080 min sample. We consider this in more detail next.</p>
+<fig id="pcbi.1005688.g010" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005688.g010</object-id>
+<label>Fig 10</label>
+<caption>
+<title>Model and data residual components.</title>
+<p>Panels 1–4, moving left-to-right and top-to-bottom, shows measurement error as determined by subtracting a smoothed spline from the observed data (dark line) and comparing this to the results obtained by subtracting the process model for fitted—120, 360 and 600 mins—and unfitted/out-of-sample—1080 min—times from the realised data (grey). These measurement error distributions are also visualised in terms of the corresponding cumulative distributions in the middle panel (panel 5, following as above. Black—actual data, grey—model simulations). Panels 6–9 show the differences between realisations of the underlying process model and the smoothed spline fitted to the data. As can be seen across panels, the measurement model appears approximately valid at all times, while the process model appears to have non-zero error for the 1080 min sample. This observation is discussed in the text.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005688.g010" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec030">
+<title>Possible model improvement and robustness—Higher-order spatial effects</title>
+<p>As discussed in the process model section above, the presence of cellular structure in the epithelial tissue means that higher-order spatial effects could be present. One way of deciding whether these are important is to consider the extent to which these may account for the minor misfit identified above, as opposed to other factors such as time-varying proliferation rates. To do this we considered both uniform percentage reductions of the original parameter estimates (approximating time-varying rates) and the inclusion of higher-order spatial terms.</p>
+<p>
+<xref ref-type="fig" rid="pcbi.1005688.g011">Fig 11</xref> gives an idea of the qualitative differences induced by including the higher-order spatial terms and those that could be induced by time-varying proliferation rates. This figure is based on the (healthy) 1080 min (18 h) data in which we found some indication of a process model error.</p>
+<fig id="pcbi.1005688.g011" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005688.g011</object-id>
+<label>Fig 11</label>
+<caption>
+<title>Comparison of the modified process model which includes higher-order spatial terms (blue) to the original model (grey, dashed), both at lowered proliferation rates (decreased 20%), which is required for a better fit to the data.</title>
+<p>The original model at the original fitted proliferation rates is also shown (grey, solid). Although the model with higher-order spatial terms gives a better qualitative fit to the data for the same proliferation rates, it is clear that the dominant cause of misfit is better attributed to (time) varying proliferation rates (in the context of the present set of models).</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005688.g011" xlink:type="simple"/>
+</fig>
+<p>We see that while the higher-order model appears to give a slightly better qualitative fit to the data, both the higher-order and lower-order models require similar reductions of the parameter values to quantitatively improve the fit to our out-of-sample data. The reduced parameter values shown in <xref ref-type="fig" rid="pcbi.1005688.g011">Fig 11</xref> correspond to a reduction of 20%, which was chosen visually as a reduction accounting for the bulk of the misfit.</p>
+<p>Thus the key (yet relatively small) difference between the model and out-of-sample data is likely due to an effect other than finite-cell sizes; in this case it is likely due to time-variation in parameter values due to circadian rhythms (we have assumed steady-state parameter values). Other potential factors include label dilution or an unmodelled mixing phenomenon in the full two-dimensional case. We note however that these effects are small and appear to be important primarily for predicting much further ahead in time than the fitted data and the steady-state parameter assumption is likely valid for reasonable time intervals. This means that the more easily interpretable original model may be sufficient for many purposes.</p>
+</sec>
+</sec>
+<sec id="sec031" sec-type="conclusions">
+<title>Discussion</title>
+<p>Understanding the intricate dynamics of the intestinal epithelium requires an interdisciplinary approach that integrates experimental measurements, mathematical and computational modelling, and statistical quantification of uncertainties. While a diverse range of mathematical models have been proposed for epithelial cell and tissue dynamics (reviewed in [<xref ref-type="bibr" rid="pcbi.1005688.ref051">51</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref052">52</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref061">61</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref063">63</xref>]), from compartment models to individual-based models to continuum models, we lack consistent and reproducible approaches for comparing models representing conjectured biological mechanisms both to each other and to experimental data (for an overview, see our review [<xref ref-type="bibr" rid="pcbi.1005688.ref044">44</xref>]). These shortcomings may explain why questions such as the connection between proliferation and migration and its variation under experimental perturbations remain open [<xref ref-type="bibr" rid="pcbi.1005688.ref008">8</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref014">14</xref>].</p>
+<p>The aim of the present work was to acknowledge and confront these difficulties explicitly, and to present some initial constructive steps towards establishing such a framework. To do this we carried out new experiments (described more fully in a companion paper [<xref ref-type="bibr" rid="pcbi.1005688.ref018">18</xref>]) aimed at determining how cell proliferation rates, tissue growth and cell migration rates are related in the intestinal epithelium under healthy, damaged (Ara-C treated) and recovering conditions. We performed BrdU/IdU cell-labelling experiments under these respective conditions. We then developed a probabilistic, hierarchical (conditional) model to process and interpret these data.</p>
+<p>Our hierarchical model provides a best-practice approach for describing and understanding the uncertainties that could lead to unreliable mechanistic conclusions—uncertainties in experimental measurement and treatment, difficult-to-compare mathematical models of underlying mechanisms, and unknown or unobserved parameters. Our approach was influenced by recognising the benefits that the hierarchical Bayesian approach has demonstrated in applications across a number of different disciplines (e.g. in environmental and geophysical science as in [<xref ref-type="bibr" rid="pcbi.1005688.ref064">64</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref065">65</xref>]; ecological modelling as in [<xref ref-type="bibr" rid="pcbi.1005688.ref066">66</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref067">67</xref>]; and in Bayesian statistical modelling and inverse problems more generally as in [<xref ref-type="bibr" rid="pcbi.1005688.ref020">20</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref024">24</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref068">68</xref>]). We also note that a hierarchical approach can have significant benefits outside the Bayesian framework (see for example the ‘extended likelihood’ approach described in [<xref ref-type="bibr" rid="pcbi.1005688.ref069">69</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref071">71</xref>]).</p>
+<p>The hierarchical approach provides a framework, not only for combining disparate sources of uncertainty, but also for facilitating modelling derivations and relating discrete and continuous models. Though the resulting measurement, process and parameter models can be (or have been) derived by other means, as far as we are aware this particular perspective has not been systematically utilised in the manner considered here.</p>
+<p>We also note the connection between the choice of a measurement model as required here (and/or process model error, and following e.g. [<xref ref-type="bibr" rid="pcbi.1005688.ref021">21</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref024">24</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref064">64</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref072">72</xref>]), and the development of approximate sampling and parameter fitting procedures, which are particularly useful for analytically difficult models. A key concern of the latter is the appropriate choice of summary statistics for constructing a ‘synthetic likelihood’ [<xref ref-type="bibr" rid="pcbi.1005688.ref073">73</xref>] or similarly-modified posterior target for Approximate Bayesian Computation (ABC) [<xref ref-type="bibr" rid="pcbi.1005688.ref074">74</xref>–<xref ref-type="bibr" rid="pcbi.1005688.ref076">76</xref>]. This choice determines (implicitly or explicitly) in which ways a given model or set of models can be considered an ‘adequate’ representation of the data, which features are considered to be reproducible and what the associated ‘noise’ structure should be ([<xref ref-type="bibr" rid="pcbi.1005688.ref077">77</xref>] presents an alternative approach to characterising data features and model adequacy). These issues are crucial in deciding how to model the complexity of epithelial cell and tissue dynamics.</p>
+<p>An important next step, as described above, would be to consider other process model types and to evaluate and compare them under carefully modelled experimental conditions. Extensions incorporating other mechanical and/or cellular-level information (e.g. [<xref ref-type="bibr" rid="pcbi.1005688.ref011">11</xref>, <xref ref-type="bibr" rid="pcbi.1005688.ref012">12</xref>]) into process models would provide a natural next step. Importantly, due to the separation between measurement and process model components, these more complex process models could be incorporated into our present framework simply by replacing our process model component with a new model, while retaining the same measurement model. Of course additional parameters would require additional prior assumptions, and if additional data features were of interest then these would need to be incorporated into a modified measurement model. The benefit of a hierarchical model is that it offers an explicit guide as to where such modifications should be incorporated.</p>
+<p>In summary, the main results established using the above approach were</p>
+<list list-type="bullet">
+<list-item>
+<p>An adequate description of intestinal epithelial dynamics is achievable using a model based on proliferation-driven growth alone;</p>
+</list-item>
+<list-item>
+<p>This model is consistent with healthy, proliferation-inhibited (Ara-C treated) and recovering conditions;</p>
+</list-item>
+<list-item>
+<p>The measurement and process model errors can be reasonably distinguished and checked separately;</p>
+</list-item>
+<list-item>
+<p>Checking indicates that much of the natural variability is attributable to the data collection process and this process can be modelled in a simple manner</p>
+</list-item>
+<list-item>
+<p>Possible model errors can also be identified and proposed explanations incorporated and tested within our model, and, thus, the proper interpretation of experimental procedures is aided by using an explicit mathematical model and its predictive simulations</p>
+</list-item>
+<list-item>
+<p>Including finite-cell-size effects gives a slightly better qualitative fit to experimental data, but the dominant sources of the long-time misfits are likely due to some other factor such as (relatively slowly) time-varying proliferation rates (e.g. due to circadian rhythms) or label dilution.</p>
+</list-item>
+</list>
+</sec>
+<sec id="sec032">
+<title>Supporting information</title>
+<supplementary-material id="pcbi.1005688.s001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005688.s001" xlink:type="simple">
+<label>S1 Supplementary information</label>
+<caption>
+<title/>
+<p><bold>Fig A</bold>. <bold>Posterior for proliferation rates under baseline, healthy conditions</bold>. The upper diagonal represents the marginal distributions for each proliferation rate when averaging over all other profileration rates. The plots below the diagonal show bivariate marginal distributions illustrating pairwise associations after averaging over all other profileration rates. These visualisations are a way of understanding the full joint posterior distribution which is five-dimensional in full generality. <bold>Fig B</bold>. <bold>Posterior for proliferation rates under Ara-C treatment</bold>. The upper diagonal represents the marginal distributions for each proliferation rate when averaging over all other profileration rates. The plots below the diagonal show bivariate marginal distributions illustrating pairwise associations after averaging over all other profileration rates. These visualisations are a way of understanding the full joint posterior distribution which is five-dimensional in full generality. <bold>Fig C</bold>. <bold>Posterior for proliferation rates when recovering from Ara-C treatment</bold>. The upper diagonal represents the marginal distributions for each proliferation rate when averaging over all other profileration rates. The plots below the diagonal show bivariate marginal distributions illustrating pairwise associations after averaging over all other profileration rates. These visualisations are a way of understanding the full joint posterior distribution which is five-dimensional in full generality. <bold>Fig D</bold>. <bold>Typical section obtained during the experimental procedures described in the main manuscript</bold>. These are also described more fully in the companion paper [<xref ref-type="bibr" rid="pcbi.1005688.ref018">18</xref>].</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>OJM would like to thank the members of the Wolfson Centre of Mathematical Biology for useful discussion and feedback, in particular Ruth Baker for her helpful comments on stochastic modelling.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1005688.ref001">
+<label>1</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Wright</surname> <given-names>NA</given-names></name>, <name name-style="western"><surname>Alison</surname> <given-names>M</given-names></name> (<year>1984</year>) <source>The biology of epithelial cell populations</source>. <publisher-name>Oxford University Press</publisher-name>, <publisher-loc>USA</publisher-loc></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref002">
+<label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Radtke</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Clevers</surname> <given-names>H</given-names></name> (<year>2005</year>) <article-title>Self-renewal and cancer of the gut: Two sides of a coin</article-title>. <source>Science</source> <volume>307</volume>:<fpage>1904</fpage>–<lpage>1909</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1104815" xlink:type="simple">10.1126/science.1104815</ext-link></comment> <object-id pub-id-type="pmid">15790842</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref003">
+<label>3</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Reuss</surname> <given-names>L</given-names></name> (<year>2010</year>) <chapter-title>Epithelial transport</chapter-title>. <source>Comprehensive physiology</source></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref004">
+<label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>van der Flier</surname> <given-names>LG</given-names></name>, <name name-style="western"><surname>Clevers</surname> <given-names>H</given-names></name> (<year>2009</year>) <article-title>Stem cells, self-renewal, and differentiation in the intestinal epithelium</article-title>. <source>Annu Rev Physiol</source> <volume>71</volume>:<fpage>241</fpage>–<lpage>260</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1146/annurev.physiol.010908.163145" xlink:type="simple">10.1146/annurev.physiol.010908.163145</ext-link></comment> <object-id pub-id-type="pmid">18808327</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref005">
+<label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Turner</surname> <given-names>JR</given-names></name> (<year>2009</year>) <article-title>Intestinal mucosal barrier function in health and disease</article-title>. <source>Nat Rev Immunol</source> <volume>9</volume>:<fpage>799</fpage>–<lpage>809</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nri2653" xlink:type="simple">10.1038/nri2653</ext-link></comment> <object-id pub-id-type="pmid">19855405</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref006">
+<label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Marchiando</surname> <given-names>AM</given-names></name>, <name name-style="western"><surname>Graham</surname> <given-names>WV</given-names></name>, <name name-style="western"><surname>Turner</surname> <given-names>JR</given-names></name> (<year>2010</year>) <article-title>Epithelial barriers in homeostasis and disease</article-title>. <source>Annu Rev Pathol</source> <volume>5</volume>:<fpage>119</fpage>–<lpage>144</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1146/annurev.pathol.4.110807.092135" xlink:type="simple">10.1146/annurev.pathol.4.110807.092135</ext-link></comment> <object-id pub-id-type="pmid">20078218</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref007">
+<label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Barker</surname> <given-names>N</given-names></name> (<year>2014</year>) <article-title>Adult intestinal stem cells: Critical drivers of epithelial homeostasis and regeneration</article-title>. <source>Nat Rev Mol Cell Biol</source> <volume>15</volume>:<fpage>19</fpage>–<lpage>33</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrm3721" xlink:type="simple">10.1038/nrm3721</ext-link></comment> <object-id pub-id-type="pmid">24326621</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref008">
+<label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kaur</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Potten</surname> <given-names>CS</given-names></name> (<year>1986</year>) <article-title>Cell migration velocities in the crypts of the small intestine after cytotoxic insult are not dependent on mitotic activity</article-title>. <source>Cell Tissue Kinet</source> <volume>19</volume>:<fpage>601</fpage>–<lpage>610</lpage> <object-id pub-id-type="pmid">3026633</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref009">
+<label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kaur</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Potten</surname> <given-names>CS</given-names></name> (<year>1986</year>) <article-title>Circadian variation in migration velocity in small intestinal epithelium</article-title>. <source>Cell Tissue Kinet</source> <volume>19</volume>:<fpage>591</fpage>–<lpage>599</lpage> <object-id pub-id-type="pmid">3802183</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref010">
+<label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Tsubouchi</surname> <given-names>S</given-names></name> (<year>1983</year>) <article-title>Theoretical implications for cell migration through the crypt and the villus of labelling studies conducted at each position within the crypt</article-title>. <source>Cell Tissue Kinet</source> <volume>16</volume>:<fpage>441</fpage>–<lpage>456</lpage> <object-id pub-id-type="pmid">6883429</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref011">
+<label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Dunn</surname> <given-names>S-J</given-names></name>, <name name-style="western"><surname>Näthke</surname> <given-names>IS</given-names></name>, <name name-style="western"><surname>Osborne</surname> <given-names>JM</given-names></name> (<year>2013</year>) <article-title>Computational models reveal a passive mechanism for cell migration in the crypt</article-title>. <source>PLoS One</source> <volume>8</volume>:<fpage>e80516</fpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0080516" xlink:type="simple">10.1371/journal.pone.0080516</ext-link></comment> <object-id pub-id-type="pmid">24260407</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref012">
+<label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Meineke</surname> <given-names>FA</given-names></name>, <name name-style="western"><surname>Potten</surname> <given-names>CS</given-names></name>, <name name-style="western"><surname>Loeffler</surname> <given-names>M</given-names></name> (<year>2001</year>) <article-title>Cell migration and organization in the intestinal crypt using a lattice-free model</article-title>. <source>Cell Prolif</source> <volume>34</volume>:<fpage>253</fpage>–<lpage>266</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1046/j.0960-7722.2001.00216.x" xlink:type="simple">10.1046/j.0960-7722.2001.00216.x</ext-link></comment> <object-id pub-id-type="pmid">11529883</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref013">
+<label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Loeffler</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Stein</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Wichmann</surname> <given-names>HE</given-names></name>, <name name-style="western"><surname>Potten</surname> <given-names>CS</given-names></name>, <name name-style="western"><surname>Kaur</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Chwalinski</surname> <given-names>S</given-names></name> (<year>1986</year>) <article-title>Intestinal cell proliferation. I. A comprehensive model of steady-state proliferation in the crypt</article-title>. <source>Cell Tissue Kinet</source> <volume>19</volume>:<fpage>627</fpage>–<lpage>645</lpage> <object-id pub-id-type="pmid">3802185</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref014">
+<label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Loeffler</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Potten</surname> <given-names>CS</given-names></name>, <name name-style="western"><surname>Paulus</surname> <given-names>U</given-names></name>, <name name-style="western"><surname>Glatzer</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Chwalinski</surname> <given-names>S</given-names></name> (<year>1988</year>) <article-title>Intestinal crypt proliferation. II. Computer modelling of mitotic index data provides further evidence for lateral and vertical cell migration in the absence of mitotic activity</article-title>. <source>Cell Tissue Kinet</source> <volume>21</volume>:<fpage>247</fpage>–<lpage>258</lpage> <object-id pub-id-type="pmid">3233644</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref015">
+<label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Vyshemirsky</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Girolami</surname> <given-names>MA</given-names></name> (<year>2008</year>) <article-title>Bayesian ranking of biochemical system models</article-title>. <source>Bioinformatics</source> <volume>24</volume>:<fpage>833</fpage>–<lpage>839</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btn475" xlink:type="simple">10.1093/bioinformatics/btn475</ext-link></comment> <object-id pub-id-type="pmid">18057018</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref016">
+<label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kirk</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Thorne</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Stumpf</surname> <given-names>MP</given-names></name> (<year>2013</year>) <article-title>Model selection in systems and synthetic biology</article-title>. <source>Current opinion in biotechnology</source> <volume>24</volume>:<fpage>767</fpage>–<lpage>774</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.copbio.2013.03.012" xlink:type="simple">10.1016/j.copbio.2013.03.012</ext-link></comment> <object-id pub-id-type="pmid">23578462</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref017">
+<label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Weavers</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Liepe</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Sim</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Wood</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Martin</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Stumpf</surname> <given-names>MP</given-names></name> (<year>2016</year>) <article-title>Systems analysis of the dynamic inflammatory response to tissue damage reveals spatiotemporal properties of the wound attractant gradient</article-title>. <source>Current Biology</source> <volume>26</volume>:<fpage>1975</fpage>–<lpage>1989</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cub.2016.06.012" xlink:type="simple">10.1016/j.cub.2016.06.012</ext-link></comment> <object-id pub-id-type="pmid">27426513</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref018">
+<label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Parker</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Maclaren</surname> <given-names>OJ</given-names></name>, <name name-style="western"><surname>Fletcher</surname> <given-names>AG</given-names></name>, <name name-style="western"><surname>Muraro</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Kreuzaler</surname> <given-names>PA</given-names></name>, <name name-style="western"><surname>Byrne</surname> <given-names>HM</given-names></name>, <name name-style="western"><surname>Maini</surname> <given-names>PK</given-names></name>, <name name-style="western"><surname>Watson</surname> <given-names>AJM</given-names></name>, <name name-style="western"><surname>Pin</surname> <given-names>C</given-names></name> (<year>2016</year>) <article-title>Cell proliferation within small intestinal crypts is the principal driving force for cell migration on villi</article-title>. <source>The FASEB Journal</source>; published ahead of print October 20, 2016.</mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref019">
+<label>19</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Bernardo</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Smith</surname> <given-names>AFM</given-names></name> (<year>2009</year>) <source>Bayesian theory</source>. <publisher-name>John Wiley &amp; Sons</publisher-name></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref020">
+<label>20</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Gelman</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Carlin</surname> <given-names>JB</given-names></name>, <name name-style="western"><surname>Stern</surname> <given-names>HS</given-names></name>, <name name-style="western"><surname>Dunson</surname> <given-names>DB</given-names></name>, <name name-style="western"><surname>Vehtari</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Rubin</surname> <given-names>DB</given-names></name> (<year>2013</year>) <source>Bayesian data analysis</source>, <edition>third edition</edition>. <publisher-name>Taylor &amp; Francis</publisher-name></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref021">
+<label>21</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Tarantola</surname> <given-names>A</given-names></name> (<year>2005</year>) <source>Inverse problem theory and methods for model parameter estimation</source>. <publisher-name>SIAM</publisher-name></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref022">
+<label>22</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Berliner</surname> <given-names>LM</given-names></name> (<year>1996</year>) <chapter-title>Hierarchical Bayesian time series models</chapter-title>. In: <source>Maximum entropy and Bayesian methods</source>. <publisher-name>Springer</publisher-name> <publisher-loc>Netherlands</publisher-loc>, pp <fpage>15</fpage>–<lpage>22</lpage></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref023">
+<label>23</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Cressie</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Wikle</surname> <given-names>CK</given-names></name> (<year>2011</year>) <source>Statistics for spatio-temporal data</source>. <publisher-name>John Wiley &amp; Sons</publisher-name></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref024">
+<label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Wikle</surname> <given-names>CK</given-names></name> (<year>2015</year>) <article-title>Modern perspectives on statistics for spatio-temporal data</article-title>. <source>WIREs Comput Stat</source> <volume>7</volume>:<fpage>86</fpage>–<lpage>98</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/wics.1341" xlink:type="simple">10.1002/wics.1341</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref025">
+<label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Dawid</surname> <given-names>AP</given-names></name> (<year>2002</year>) <article-title>Influence diagrams for causal modelling and inference</article-title>. <source>Int Stat Rev</source> <volume>70</volume>:<fpage>161</fpage>–<lpage>189</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/1403901" xlink:type="simple">10.2307/1403901</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref026">
+<label>26</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Dawid</surname> <given-names>PA</given-names></name> (<year>2010</year>) <chapter-title>Seeing and doing: The Pearlian synthesis</chapter-title>. In: <name name-style="western"><surname>Dechter</surname> <given-names>Rina</given-names></name>, <name name-style="western"><surname>Geffner</surname> <given-names>Hector</given-names></name>, and <name name-style="western"><surname>Halpern</surname> <given-names>Joseph Y.</given-names></name> (ed) <source>Heuristics, probability and causality: A tribute to judea pearl</source>. <publisher-name>College Publications</publisher-name> <publisher-loc>London</publisher-loc>, pp <fpage>309</fpage>–<lpage>325</lpage></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref027">
+<label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Dawid</surname> <given-names>PA</given-names></name> (<year>2010</year>) <article-title>Beware of the DAG!</article-title> <source>NIPS Causality: Objectives and Assessment</source> <volume>6</volume>:<fpage>59</fpage>–<lpage>86</lpage></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref028">
+<label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Box</surname> <given-names>GEP</given-names></name> (<year>1976</year>) <article-title>Science and statistics</article-title>. <source>J Am Stat Assoc</source> <volume>71</volume>:<fpage>791</fpage>–<lpage>799</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1080/01621459.1976.10480949" xlink:type="simple">10.1080/01621459.1976.10480949</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref029">
+<label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Box</surname> <given-names>GEP</given-names></name> (<year>1980</year>) <article-title>Sampling and Bayes’ inference in scientific modelling and robustness</article-title>. <source>J R Stat Soc Ser A</source> <volume>143</volume>:<fpage>383</fpage>–<lpage>430</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/2982063" xlink:type="simple">10.2307/2982063</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref030">
+<label>30</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Evans</surname> <given-names>M</given-names></name> (<year>2015</year>) <source>Measuring statistical evidence using relative belief</source>. <publisher-name>CRC Press</publisher-name></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref031">
+<label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Gelman</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Shalizi</surname> <given-names>CR</given-names></name> (<year>2013</year>) <article-title>Philosophy and the practice of Bayesian statistics</article-title>. <source>Br J Math Stat Psychol</source> <volume>66</volume>:<fpage>8</fpage>–<lpage>38</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.2044-8317.2011.02037.x" xlink:type="simple">10.1111/j.2044-8317.2011.02037.x</ext-link></comment> <object-id pub-id-type="pmid">22364575</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref032">
+<label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kozar</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Morrissey</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Nicholson</surname> <given-names>AM</given-names></name>, <name name-style="western"><surname>van der Heijden</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Zecchini</surname> <given-names>HI</given-names></name>, <name name-style="western"><surname>Kemp</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Tavaré</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Vermeulen</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Winton</surname> <given-names>DJ</given-names></name> (<year>2013</year>) <article-title>Continuous clonal labeling reveals small numbers of functional stem cells in intestinal crypts and adenomas</article-title>. <source>Cell Stem Cell</source> <volume>13</volume>:<fpage>626</fpage>–<lpage>633</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.stem.2013.08.001" xlink:type="simple">10.1016/j.stem.2013.08.001</ext-link></comment> <object-id pub-id-type="pmid">24035355</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref033">
+<label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Vermeulen</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Morrissey</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>van der Heijden</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Nicholson</surname> <given-names>AM</given-names></name>, <name name-style="western"><surname>Sottoriva</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Buczacki</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Kemp</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Tavaré</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Winton</surname> <given-names>DJ</given-names></name> (<year>2013</year>) <article-title>Defining stem cell dynamics in models of intestinal tumor initiation</article-title>. <source>Science</source> <volume>342</volume>:<fpage>995</fpage>–<lpage>998</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1243148" xlink:type="simple">10.1126/science.1243148</ext-link></comment> <object-id pub-id-type="pmid">24264992</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref034">
+<label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Lopez-Garcia</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Klein</surname> <given-names>AM</given-names></name>, <name name-style="western"><surname>Simons</surname> <given-names>BD</given-names></name>, <name name-style="western"><surname>Winton</surname> <given-names>DJ</given-names></name> (<year>2010</year>) <article-title>Intestinal stem cell replacement follows a pattern of neutral drift</article-title>. <source>Science</source> <volume>330</volume>:<fpage>822</fpage>–<lpage>825</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1196236" xlink:type="simple">10.1126/science.1196236</ext-link></comment> <object-id pub-id-type="pmid">20929733</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref035">
+<label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Meineke</surname> <given-names>FA</given-names></name>, <name name-style="western"><surname>Potten</surname> <given-names>CS</given-names></name>, <name name-style="western"><surname>Loeffler</surname> <given-names>M</given-names></name> (<year>2001</year>) <article-title>Cell migration and organization in the intestinal crypt using a lattice-free model</article-title>. <source>Cell Prolif</source> <volume>34</volume>:<fpage>253</fpage>–<lpage>266</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1046/j.0960-7722.2001.00216.x" xlink:type="simple">10.1046/j.0960-7722.2001.00216.x</ext-link></comment> <object-id pub-id-type="pmid">11529883</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref036">
+<label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Potten</surname> <given-names>CS</given-names></name>, <name name-style="western"><surname>Roberts</surname> <given-names>SA</given-names></name>, <name name-style="western"><surname>Chwalinski</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Loeffler</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Paulus</surname> <given-names>U</given-names></name> (<year>1988</year>) <article-title>Scoring mitotic activity in longitudinal sections of crypts of the small intestine</article-title>. <source>Cell Tissue Kinet</source> <volume>21</volume>:<fpage>231</fpage>–<lpage>246</lpage> <object-id pub-id-type="pmid">3233643</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref037">
+<label>37</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Pearl</surname> <given-names>J</given-names></name> (<year>2009</year>) <source>Causality</source>. <publisher-name>Cambridge University Press</publisher-name></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref038">
+<label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Pearl</surname> <given-names>J</given-names></name> (<year>2009</year>) <article-title>Causal inference in statistics: An overview</article-title>. <source>Stat Surv</source> <volume>3</volume>:<fpage>96</fpage>–<lpage>146</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1214/09-SS057" xlink:type="simple">10.1214/09-SS057</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref039">
+<label>39</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Dawid</surname> <given-names>PA</given-names></name> (<year>1979</year>) <article-title>Conditional independence in statistical theory</article-title>. <source>J R Stat Soc Series B Stat Methodol</source> <volume>41</volume>:<fpage>1</fpage>–<lpage>31</lpage></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref040">
+<label>40</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Woodward</surname> <given-names>J</given-names></name> (<year>2003</year>) <source>Making things happen: A theory of causal explanation</source>. <publisher-name>Oxford University Press</publisher-name></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref041">
+<label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Woodward</surname> <given-names>J</given-names></name> (<year>1997</year>) <article-title>Explanation, invariance, and intervention</article-title>. <source>Philos Sci</source> <volume>64</volume>:<fpage>S26</fpage>–<lpage>S41</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/392584" xlink:type="simple">10.1086/392584</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref042">
+<label>42</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Spirtes</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Glymour</surname> <given-names>CN</given-names></name>, <name name-style="western"><surname>Scheines</surname> <given-names>R</given-names></name> (<year>2000</year>) <source>Causation, prediction, and search</source>. <publisher-name>MIT Press</publisher-name></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref043">
+<label>43</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Van Kampen</surname> <given-names>NG</given-names></name> (<year>1992</year>) <source>Stochastic processes in physics and chemistry</source>. <publisher-name>Elsevier</publisher-name></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref044">
+<label>44</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Maclaren</surname> <given-names>OJ</given-names></name>, <name name-style="western"><surname>Byrne</surname> <given-names>HM</given-names></name>, <name name-style="western"><surname>Fletcher</surname> <given-names>AG</given-names></name>, <name name-style="western"><surname>Maini</surname> <given-names>PK</given-names></name> (<year>2015</year>) <article-title>Models, measurement and inference in epithelial tissue dynamics</article-title>. <source>Math Biosci Eng</source> <volume>12</volume>:<fpage>1321</fpage>–<lpage>1340</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3934/mbe.2015.12.1321" xlink:type="simple">10.3934/mbe.2015.12.1321</ext-link></comment> <object-id pub-id-type="pmid">26775866</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref045">
+<label>45</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Wilkinson</surname> <given-names>DJ</given-names></name> (<year>2011</year>) <source>Stochastic modelling for systems biology</source>. <publisher-name>CRC Press</publisher-name></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref046">
+<label>46</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Baker</surname> <given-names>RE</given-names></name>, <name name-style="western"><surname>Yates</surname> <given-names>CA</given-names></name>, <name name-style="western"><surname>Erban</surname> <given-names>R</given-names></name> (<year>2010</year>) <article-title>From microscopic to macroscopic descriptions of cell migration on growing domains</article-title>. <source>Bull Math Biol</source> <volume>72</volume>:<fpage>719</fpage>–<lpage>762</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s11538-009-9467-x" xlink:type="simple">10.1007/s11538-009-9467-x</ext-link></comment> <object-id pub-id-type="pmid">19862577</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref047">
+<label>47</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Hywood</surname> <given-names>JD</given-names></name>, <name name-style="western"><surname>Hackett-Jones</surname> <given-names>EJ</given-names></name>, <name name-style="western"><surname>Landman</surname> <given-names>KA</given-names></name> (<year>2013</year>) <article-title>Modeling biological tissue growth: Discrete to continuum representations</article-title>. <source>Phys Rev E Stat Nonlin Soft Matter Phys</source> <volume>88</volume>:<fpage>032704</fpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevE.88.032704" xlink:type="simple">10.1103/PhysRevE.88.032704</ext-link></comment> <object-id pub-id-type="pmid">24125291</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref048">
+<label>48</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Fozard</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Byrne</surname> <given-names>HM</given-names></name>, <name name-style="western"><surname>Jensen</surname> <given-names>OE</given-names></name>, <name name-style="western"><surname>King</surname> <given-names>JR</given-names></name> (<year>2010</year>) <article-title>Continuum approximations of individual-based models for epithelial monolayers</article-title>. <source>Math Med Biol</source> <volume>27</volume>:<fpage>39</fpage>–<lpage>74</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/imammb/dqp015" xlink:type="simple">10.1093/imammb/dqp015</ext-link></comment> <object-id pub-id-type="pmid">19617301</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref049">
+<label>49</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Murray</surname> <given-names>PJ</given-names></name>, <name name-style="western"><surname>Edwards</surname> <given-names>CM</given-names></name>, <name name-style="western"><surname>Tindall</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Maini</surname> <given-names>PK</given-names></name> (<year>2009</year>) <article-title>From a discrete to a continuum model of cell dynamics in one dimension</article-title>. <source>Phys Rev E Stat Nonlin Soft Matter Phys</source> <volume>80</volume>:<fpage>031912</fpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevE.80.031912" xlink:type="simple">10.1103/PhysRevE.80.031912</ext-link></comment> <object-id pub-id-type="pmid">19905151</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref050">
+<label>50</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Rasmussen</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Williams</surname> <given-names>C</given-names></name> (<year>2005</year>) <source>Gaussian processes for machine learning</source>. <publisher-name>MIT</publisher-name></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref051">
+<label>51</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Johnston</surname> <given-names>MD</given-names></name>, <name name-style="western"><surname>Edwards</surname> <given-names>CM</given-names></name>, <name name-style="western"><surname>Bodmer</surname> <given-names>WF</given-names></name>, <name name-style="western"><surname>Maini</surname> <given-names>PK</given-names></name>, <name name-style="western"><surname>Chapman</surname> <given-names>SJ</given-names></name> (<year>2007</year>) <article-title>Examples of mathematical modeling: Tales from the crypt</article-title>. <source>Cell Cycle</source> <volume>6</volume>:<fpage>2106</fpage>–<lpage>2112</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.4161/cc.6.17.4649" xlink:type="simple">10.4161/cc.6.17.4649</ext-link></comment> <object-id pub-id-type="pmid">17873520</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref052">
+<label>52</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Carulli</surname> <given-names>AJ</given-names></name>, <name name-style="western"><surname>Samuelson</surname> <given-names>LC</given-names></name>, <name name-style="western"><surname>Schnell</surname> <given-names>S</given-names></name> (<year>2014</year>) <article-title>Unraveling intestinal stem cell behavior with models of crypt dynamics</article-title>. <source>Integr Biol</source> <volume>6</volume>:<fpage>243</fpage>–<lpage>257</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1039/c3ib40163d" xlink:type="simple">10.1039/c3ib40163d</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref053">
+<label>53</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Robert</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Casella</surname> <given-names>G</given-names></name> (<year>2013</year>) <source>Monte carlo statistical methods</source>. <publisher-name>Springer Science &amp; Business Media</publisher-name></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref054">
+<label>54</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Ketcheson</surname> <given-names>DI</given-names></name>, <name name-style="western"><surname>Mandli</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Ahmadia</surname> <given-names>AJ</given-names></name>, <name name-style="western"><surname>Alghamdi</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>de Luna</surname> <given-names>MQ</given-names></name>, <name name-style="western"><surname>Parsani</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Knepley</surname> <given-names>MG</given-names></name>, <name name-style="western"><surname>Emmett</surname> <given-names>M</given-names></name> (<year>2012</year>) <article-title>PyClaw: Accessible, extensible, scalable tools for wave propagation problems</article-title>. <source>SIAM J Sci Comput</source> <volume>34</volume>:<fpage>C210</fpage>–<lpage>C231</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1137/110856976" xlink:type="simple">10.1137/110856976</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref055">
+<label>55</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Mandli</surname> <given-names>KT</given-names></name>, <name name-style="western"><surname>Ketcheson</surname> <given-names>DI</given-names></name>, others (<year>2014</year>) <source>PyClaw software</source>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref056">
+<label>56</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<collab>Clawpack Development Team</collab> (<year>2014</year>) <source>Clawpack software</source>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref057">
+<label>57</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Guyer</surname> <given-names>JE</given-names></name>, <name name-style="western"><surname>Wheeler</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Warren</surname> <given-names>JA</given-names></name> (<year>2009</year>) <article-title>FiPy: Partial differential equations with python</article-title>. <source>Comput. Sci. Eng</source>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1109/MCSE.2009.52" xlink:type="simple">10.1109/MCSE.2009.52</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref058">
+<label>58</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Gelman</surname> <given-names>A</given-names></name> (<year>2004</year>) <article-title>Exploratory data analysis for complex models</article-title>. <source>J Comput Graph Stat</source> <volume>13</volume>:<fpage>755</fpage>–<lpage>779</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1198/106186004X11435" xlink:type="simple">10.1198/106186004X11435</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref059">
+<label>59</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>LeVeque</surname> <given-names>RJ</given-names></name> (<year>2002</year>) <source>Finite volume methods for hyperbolic problems</source>. <publisher-name>Cambridge University Press</publisher-name></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref060">
+<label>60</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Aguilar</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Allmaras</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Bangerth</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Tenorio</surname> <given-names>L</given-names></name> (<year>2015</year>) <article-title>Statistics of parameter estimates: A concrete example</article-title>. <source>SIAM Rev</source> <volume>57</volume>:<fpage>131</fpage>–<lpage>149</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1137/130929230" xlink:type="simple">10.1137/130929230</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref061">
+<label>61</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kershaw</surname> <given-names>SK</given-names></name>, <name name-style="western"><surname>Byrne</surname> <given-names>HM</given-names></name>, <name name-style="western"><surname>Gavaghan</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Osborne</surname> <given-names>JM</given-names></name> (<year>2013</year>) <article-title>Colorectal cancer through simulation and experiment</article-title>. <source>IET Syst Biol</source> <volume>7</volume>:<fpage>57</fpage>–<lpage>73</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1049/iet-syb.2012.0019" xlink:type="simple">10.1049/iet-syb.2012.0019</ext-link></comment> <object-id pub-id-type="pmid">24046975</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref062">
+<label>62</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>De Matteis</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Graudenzi</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Antoniotti</surname> <given-names>M</given-names></name> (<year>2013</year>) <article-title>A review of spatial computational models for multi-cellular systems, with regard to intestinal crypts and colorectal cancer development</article-title>. <source>J Math Biol</source> <volume>66</volume>:<fpage>1409</fpage>–<lpage>1462</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00285-012-0539-4" xlink:type="simple">10.1007/s00285-012-0539-4</ext-link></comment> <object-id pub-id-type="pmid">22565629</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref063">
+<label>63</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Fletcher</surname> <given-names>AG</given-names></name>, <name name-style="western"><surname>Murray</surname> <given-names>PJ</given-names></name>, <name name-style="western"><surname>Maini</surname> <given-names>PK</given-names></name> (<year>2015</year>) <article-title>Multiscale modelling of intestinal crypt organization and carcinogenesis</article-title>. <source>Math Models Methods Appl Sci</source> <volume>25</volume>:<fpage>2563</fpage>–<lpage>2585</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1142/S0218202515400187" xlink:type="simple">10.1142/S0218202515400187</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref064">
+<label>64</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Berliner</surname> <given-names>LM</given-names></name> (<year>2003</year>) <article-title>Physical-statistical modeling in geophysics</article-title>. <source>J. Geophys. Res</source>. <volume>108</volume>: <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1029/2002JD002865" xlink:type="simple">10.1029/2002JD002865</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref065">
+<label>65</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Wikle</surname> <given-names>CK</given-names></name> (<year>2003</year>) <article-title>Hierarchical models in environmental science</article-title>. <source>Int Stat Rev</source> <volume>71</volume>:<fpage>181</fpage>–<lpage>199</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1751-5823.2003.tb00192.x" xlink:type="simple">10.1111/j.1751-5823.2003.tb00192.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref066">
+<label>66</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Cressie</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Calder</surname> <given-names>CA</given-names></name>, <name name-style="western"><surname>Clark</surname> <given-names>JS</given-names></name>, <name name-style="western"><surname>Ver Hoef</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Wikle</surname> <given-names>CK</given-names></name> (<year>2009</year>) <article-title>Accounting for uncertainty in ecological analysis: The strengths and limitations of hierarchical statistical modeling</article-title>. <source>Ecol Appl</source> <volume>19</volume>:<fpage>553</fpage>–<lpage>570</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1890/07-0744.1" xlink:type="simple">10.1890/07-0744.1</ext-link></comment> <object-id pub-id-type="pmid">19425416</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref067">
+<label>67</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Ogle</surname> <given-names>K</given-names></name> (<year>2009</year>) <article-title>Hierarchical Bayesian statistics: Merging experimental and modeling approaches in ecology</article-title>. <source>Ecol Appl</source> <volume>19</volume>:<fpage>577</fpage>–<lpage>581</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1890/08-0560.1" xlink:type="simple">10.1890/08-0560.1</ext-link></comment> <object-id pub-id-type="pmid">19425419</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref068">
+<label>68</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Blei</surname> <given-names>DM</given-names></name> (<year>2014</year>) <article-title>Build, compute, critique, repeat: Data analysis with latent variable models</article-title>. <source>Annual Review of Statistics and Its Application</source> <volume>1</volume>:<fpage>203</fpage>–<lpage>232</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1146/annurev-statistics-022513-115657" xlink:type="simple">10.1146/annurev-statistics-022513-115657</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref069">
+<label>69</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Pawitan</surname> <given-names>Y</given-names></name> (<year>2001</year>) <source>In all likelihood: Statistical modelling and inference using likelihood</source>. <publisher-name>OUP Oxford</publisher-name></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref070">
+<label>70</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Pawitan</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Lee</surname> <given-names>Y</given-names></name> (<year>2016</year>) <article-title>Wallet game: Probability, likelihood and extended likelihood</article-title>. <source>Am Stat</source> <volume>0</volume>:<fpage>1</fpage>–<lpage>7</lpage></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref071">
+<label>71</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Lee</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Nelder</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Pawitan</surname> <given-names>Y</given-names></name> (<year>2006</year>) <source>Generalized linear models with random effects: Unified analysis via h-likelihood</source>. <publisher-name>CRC Press</publisher-name></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref072">
+<label>72</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Mosegaard</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Tarantola</surname> <given-names>A</given-names></name> (<year>2002</year>) <article-title>Probabilistic approach to inverse problems</article-title>. <source>International Geophysics Series</source> <volume>81</volume>:<fpage>237</fpage>–<lpage>268</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0074-6142(02)80219-4" xlink:type="simple">10.1016/S0074-6142(02)80219-4</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref073">
+<label>73</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Wood</surname> <given-names>SN</given-names></name> (<year>2010</year>) <article-title>Statistical inference for noisy nonlinear ecological dynamic systems</article-title>. <source>Nature</source> <volume>466</volume>:<fpage>1102</fpage>–<lpage>1104</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature09319" xlink:type="simple">10.1038/nature09319</ext-link></comment> <object-id pub-id-type="pmid">20703226</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref074">
+<label>74</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Marin</surname> <given-names>J-M</given-names></name>, <name name-style="western"><surname>Pudlo</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Robert</surname> <given-names>CP</given-names></name>, <name name-style="western"><surname>Ryder</surname> <given-names>RJ</given-names></name> (<year>2012</year>) <article-title>Approximate Bayesian computational methods</article-title>. <source>Stat Comput</source> <volume>22</volume>:<fpage>1167</fpage>–<lpage>1180</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s11222-011-9288-2" xlink:type="simple">10.1007/s11222-011-9288-2</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref075">
+<label>75</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Wilkinson</surname> <given-names>RD</given-names></name> (<year>2013</year>) <article-title>Approximate Bayesian computation (ABC) gives exact results under the assumption of model error</article-title>. <source>Stat Appl Genet Mol Biol</source> <volume>12</volume>:<fpage>129</fpage>–<lpage>141</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1515/sagmb-2013-0010" xlink:type="simple">10.1515/sagmb-2013-0010</ext-link></comment> <object-id pub-id-type="pmid">23652634</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref076">
+<label>76</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Ratmann</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Andrieu</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Wiuf</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Richardson</surname> <given-names>S</given-names></name> (<year>2009</year>) <article-title>Model criticism based on likelihood-free inference, with an application to protein network evolution</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>106</volume>:<fpage>10576</fpage>–<lpage>10581</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0807882106" xlink:type="simple">10.1073/pnas.0807882106</ext-link></comment> <object-id pub-id-type="pmid">19525398</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005688.ref077">
+<label>77</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Davies</surname> <given-names>PL</given-names></name> (<year>2014</year>) <source>Data analysis and approximate models: Model choice, Location-Scale, analysis of variance, nonparametric regression and image analysis</source>. <publisher-name>CRC Press</publisher-name></mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

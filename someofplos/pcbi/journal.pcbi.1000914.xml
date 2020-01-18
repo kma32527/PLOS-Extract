@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Computational Biology</journal-title></journal-title-group><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">10-PLCB-RA-1667R3</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1000914</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Cardiovascular Disorders/Arrhythmias, Electrophysiology, and Pacing</subject><subject>Computational Biology/Systems Biology</subject><subject>Physiology/Cardiovascular Physiology and Circulation</subject></subj-group></article-categories><title-group><article-title>Regression Analysis for Constraining Free Parameters in Electrophysiological Models of Cardiac Cells</article-title><alt-title alt-title-type="running-head">Constraining Parameters Using Regression</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Sarkar</surname><given-names>Amrita X.</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Sobie</surname><given-names>Eric A.</given-names></name><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group><aff id="aff1">          <addr-line>Department of Pharmacology and Systems Therapeutics, Mount Sinai School of Medicine, New York, New York, United States of America</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>McCulloch</surname><given-names>Andrew D.</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">University of California San Diego, United States of America</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">eric.sobie@mssm.edu</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: AXS EAS. Analyzed the data: AXS EAS. Wrote the paper: AXS EAS. Performed the simulations: AXS.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><month>9</month><year>2010</year></pub-date><pub-date pub-type="epub"><day>2</day><month>9</month><year>2010</year></pub-date><volume>6</volume><issue>9</issue><elocation-id>e1000914</elocation-id><history>
+<date date-type="received"><day>14</day><month>1</month><year>2010</year></date>
+<date date-type="accepted"><day>31</day><month>7</month><year>2010</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2010</copyright-year><copyright-holder>Sarkar, Sobie</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>A major challenge in computational biology is constraining free parameters in mathematical models. Adjusting a parameter to make a given model output more realistic sometimes has unexpected and undesirable effects on other model behaviors. Here, we extend a regression-based method for parameter sensitivity analysis and show that a straightforward procedure can uniquely define most ionic conductances in a well-known model of the human ventricular myocyte. The model's parameter sensitivity was analyzed by randomizing ionic conductances, running repeated simulations to measure physiological outputs, then collecting the randomized parameters and simulation results as “input” and “output” matrices, respectively. Multivariable regression derived a matrix whose elements indicate how changes in conductances influence model outputs. We show here that if the number of linearly-independent outputs equals the number of inputs, the regression matrix can be inverted. This is significant, because it implies that the inverted matrix can specify the ionic conductances that are required to generate a particular combination of model outputs. Applying this idea to the myocyte model tested, we found that most ionic conductances could be specified with precision (R<sup>2</sup> &gt; 0.77 for 12 out of 16 parameters). We also applied this method to a test case of changes in electrophysiology caused by heart failure and found that changes in most parameters could be well predicted. We complemented our findings using a Bayesian approach to demonstrate that model parameters cannot be specified using limited outputs, but they can be successfully constrained if multiple outputs are considered. Our results place on a solid mathematical footing the intuition-based procedure simultaneously matching a model's output to several data sets. More generally, this method shows promise as a tool to define model parameters, in electrophysiology and in other biological fields.</p>
+</abstract><abstract abstract-type="summary"><title>Author Summary</title>
+<p>Mathematical models of biological processes generally contain many free parameters that are not known from experiments. Choosing values for these parameters, although an important step in the construction of realistic computational models, is frequently performed using an ad hoc approach that is a combination of intuition and trial and error. We have developed a novel method for constraining free parameters in mathematical models based on the techniques of linear algebra. We demonstrate this method's utility through simulations with a model of a human heart cell. The underlying premise is that if the model is only asked to recapitulate one or a few biological behaviors, the values of the parameters may be ambiguous; however, if the model must simultaneously match many features of experimental data, the free parameters can be determined uniquely. The results demonstrate that if computational models are to be realistic, they must be compared with several sets of data at the same time. This new method should serve as a valuable tool for investigators interested in developing realistic mathematical models of biological processes.</p>
+</abstract><funding-group><funding-statement>This work was supported by National Institutes of Health grants HL076230 and GM071558. The funder had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="11"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Mathematical modeling has become an increasingly popular and important technique for gaining insight into biological systems, both in physiology, where models have a long history <xref ref-type="bibr" rid="pcbi.1000914-Hodgkin1">[1]</xref>, <xref ref-type="bibr" rid="pcbi.1000914-Noble1">[2]</xref>, and in biochemistry and cell biology, where quantitative approaches have gained traction more recently <xref ref-type="bibr" rid="pcbi.1000914-Bhalla1">[3]</xref>, <xref ref-type="bibr" rid="pcbi.1000914-Novak1">[4]</xref>. However, as new models proliferate and become increasingly complex, analysis of parameter sensitivity has emerged as an important issue <xref ref-type="bibr" rid="pcbi.1000914-Weaver1">[5]</xref>, <xref ref-type="bibr" rid="pcbi.1000914-Romero1">[6]</xref>. It is clear that to understand a model requires not only knowing the output generated using the published “baseline” set of parameters, but also some knowledge of how changes in the model's parameters affect its behavior.</p>
+<p>During the development of a mathematical model, the choice of parameters is a critical step. Parameters are constrained by data whenever this is possible, but direct measurements are frequently lacking. Often, however, a situation exists in which values for many parameters are unknown, but a considerable amount is known about the system's emergent phenomena. In such cases, experienced researchers narrow down the values of the unknown model parameters based on how the model “ought to behave.” Parameter sets that generate grossly unrealistic output are rejected whereas those that produce reasonable output are tentatively accepted until they fail in some important respect. The emergent phenomena considered in this process can be switching or oscillatory behavior in the case of biochemical signaling models <xref ref-type="bibr" rid="pcbi.1000914-Bhalla1">[3]</xref>, <xref ref-type="bibr" rid="pcbi.1000914-Novak1">[4]</xref>, or outputs such as action potential (AP) and calcium transient morphology in models of ion transport <xref ref-type="bibr" rid="pcbi.1000914-Jafri1">[7]</xref>–<xref ref-type="bibr" rid="pcbi.1000914-Wang1">[10]</xref>. Computational studies, however, have revealed the limitations of this intuition-based procedure. In particular, work in theoretical neuroscience has shown that when a single output such as neuronal firing rate is considered, many different combinations of model parameters can generate equivalent behavior <xref ref-type="bibr" rid="pcbi.1000914-Achard1">[11]</xref>–<xref ref-type="bibr" rid="pcbi.1000914-Prinz2">[14]</xref>.</p>
+<p>This general problem is illustrated in <xref ref-type="fig" rid="pcbi-1000914-g001">Figure 1A</xref>, which shows results from a popular mathematical model of the human ventricular action potential, that of ten Tusscher, Noble, Noble, and Panfilov (TNNP; <xref ref-type="bibr" rid="pcbi.1000914-TenTusscher1">[15]</xref>). Random variation of model parameters revealed that completely different parameter combinations could produce virtually identical AP morphology. This result is analogous to studies by Prinz et al. examining firing rate in neuronal cell models <xref ref-type="bibr" rid="pcbi.1000914-Prinz1">[13]</xref>, <xref ref-type="bibr" rid="pcbi.1000914-Prinz2">[14]</xref>. However, an interesting aspect of the simulation is as follows. The two hypothetical cells, although generating nearly identical APs under normal conditions, exhibited intracellular Ca<sup>2+</sup> transients that differed with respect to both amplitude and kinetics (<xref ref-type="fig" rid="pcbi-1000914-g001">Figure 1B</xref>). Theoretically, then, a justifiable choice between these two parameter combinations, while impossible based only on the results shown in <xref ref-type="fig" rid="pcbi-1000914-g001">Figure 1A</xref>, could be made by considering the additional information in <xref ref-type="fig" rid="pcbi-1000914-g001">Figure 1B</xref>. Such distinctions are frequently made by researchers with experimental expertise, who either accept or reject models based on how well they recapitulate a range of observed phenomena. This process, although somewhat arbitrary and potentially subject to bias, nonetheless reflects sound reasoning, since a “good” model should successfully reproduce many biological behaviors.</p>
+<fig id="pcbi-1000914-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000914.g001</object-id><label>Figure 1</label><caption>
+<title>Effects of parameter variation on model output.</title>
+<p>(<bold>A</bold>) Drastically different combinations of ionic conductances result in nearly identical action potential morphology. The bar graphs show log(G/G<sub>control</sub>) for each ionic conductance in the TNNP <xref ref-type="bibr" rid="pcbi.1000914-TenTusscher1">[15]</xref> model, where G<sub>control</sub> is the conductance in the published model (see <xref ref-type="table" rid="pcbi-1000914-t001">Table 1</xref> in <xref ref-type="supplementary-material" rid="pcbi.1000914.s006">Text S1</xref> for full list) (<bold>B</bold>) Intracellular calcium (Ca<sup>2+</sup>) transients produced by the two parameter combinations are distinct, in terms of both amplitude and kinetics, suggesting that such information could be used to distinguish between the two parameter sets.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000914.g001" xlink:type="simple"/></fig>
+<p>Based on results such as those shown in <xref ref-type="fig" rid="pcbi-1000914-g001">Figure 1</xref>, we sought to formalize and place on a sound mathematical footing the process of choosing parameters by comparing model output with several sets of data. In particular, our hypothesis was that examining a single model output, such as action potential duration (APD), would fail to constrain parameters, but success would be more likely if the number of physiological outputs was similar to the number of free model parameters. We demonstrate that this is true in the case of the TNNP model <xref ref-type="bibr" rid="pcbi.1000914-TenTusscher1">[15]</xref> through two methods. The first, an extension of the use of multivariable regression for parameter sensitivity analysis <xref ref-type="bibr" rid="pcbi.1000914-Sobie1">[16]</xref>, consists of inverting a regression matrix and then using this to calculate the changes in model parameters required to generate a given change in outputs. The second method employs Bayes's theorem to estimate the probabilities that model parameters lie within certain ranges. The results, which are generally applicable across different models and different biological systems, can be of great use when building new models, and also provide new insights into the relationships between model parameters and model results.</p>
+</sec><sec id="s2">
+<title>Results</title>
+<p>The overall hypothesis of our study was that if several physiologically-relevant characteristics of a model's behavior were known, this information would be sufficient to constrain some or all of the model's parameters. We tested this idea using two approaches: one based on multivariable regression and the other based on Bayes's theorem. We began by generating a database of candidate models. The parameters that define maximal conductances and rates of ion transport in the TNNP model <xref ref-type="bibr" rid="pcbi.1000914-TenTusscher1">[15]</xref> were varied randomly, and several simulations, defining how the candidate model responded to altered experimental conditions, were performed with each new set of parameters. In general, the simulations reflected experimental tests commonly performed on ventricular myocytes, such as determining the threshold for excitation or changing the rate of pacing.</p>
+<p>For the first approach, the results of these simulations were collected in “input” and “output” matrices <bold>X</bold> and <bold>Y</bold>, respectively. Each column of <bold>X</bold> corresponded to a model parameter, and each row corresponded to a candidate model (n = 300). The columns of <bold>Y</bold> were the physiological outputs extracted from the simulation results, such as action potential duration (APD) and Ca<sup>2+</sup> transient amplitude. Complete descriptions of the randomization procedure and simulation protocols are provided in the <xref ref-type="sec" rid="s4">Methods</xref> and <xref ref-type="supplementary-material" rid="pcbi.1000914.s006">Text S1</xref>. Outputs are listed in <xref ref-type="table" rid="pcbi-1000914-t001">Table 1</xref> and described in detail in <xref ref-type="supplementary-material" rid="pcbi.1000914.s006">Text S1</xref>.</p>
+<table-wrap id="pcbi-1000914-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000914.t001</object-id><label>Table 1</label><caption>
+<title>Physiological outputs in simulations with TNNP model.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000914-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000914.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Output #</td>
+<td align="left" colspan="1" rowspan="1">Abbreviation</td>
+<td align="left" colspan="1" rowspan="1">Description</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>1</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>APD</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Action potential duration</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>2</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>V<sub>rest</sub></bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Resting membrane potential</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>3</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>V<sub>peak</sub></bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Peak voltage during phase 0</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">dV/dt <sub>max</sub></td>
+<td align="left" colspan="1" rowspan="1">Maximum upstroke velocity</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>5</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>ΔCa</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Ca<sup>2+</sup> transient amplitude</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">V<sub>maxmin</sub></td>
+<td align="left" colspan="1" rowspan="1">Shape parameter to characterize AP</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">7</td>
+<td align="left" colspan="1" rowspan="1">V<sub>minmax</sub></td>
+<td align="left" colspan="1" rowspan="1">Shape parameter to characterize AP</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">8</td>
+<td align="left" colspan="1" rowspan="1">t<sub>minmax</sub></td>
+<td align="left" colspan="1" rowspan="1">Shape parameter to characterize AP</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">9</td>
+<td align="left" colspan="1" rowspan="1">BCL<sub>alt</sub></td>
+<td align="left" colspan="1" rowspan="1">Alternans threshold</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>10</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>I<sub>thresh</sub></bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Stimulation threshold</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">11</td>
+<td align="left" colspan="1" rowspan="1">Maxslope</td>
+<td align="left" colspan="1" rowspan="1">Maximum slope of restitution curve</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">12</td>
+<td align="left" colspan="1" rowspan="1">Time to peak</td>
+<td align="left" colspan="1" rowspan="1">Time to peak of Ca<sup>2+</sup> transient</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>13</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Decay time</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Time constant of decay of Ca<sup>2+</sup> transient</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">14</td>
+<td align="left" colspan="1" rowspan="1">APD<sub>pause</sub></td>
+<td align="left" colspan="1" rowspan="1">Action potential duration after a long pause</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">15</td>
+<td align="left" colspan="1" rowspan="1">ΔCa<sub>pause</sub></td>
+<td align="left" colspan="1" rowspan="1">Ca<sup>2+</sup> transient amplitude after a long pause</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">16</td>
+<td align="left" colspan="1" rowspan="1">V<sub>maxmin_pause</sub></td>
+<td align="left" colspan="1" rowspan="1">Shape parameter to characterize AP after a long pause</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">17</td>
+<td align="left" colspan="1" rowspan="1">V<sub>minmax_pause</sub></td>
+<td align="left" colspan="1" rowspan="1">Shape parameter to characterize AP after a long pause</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">18</td>
+<td align="left" colspan="1" rowspan="1">t<sub>minmax_pause</sub></td>
+<td align="left" colspan="1" rowspan="1">Shape parameter to characterize AP after a long pause</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>19</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>APD<sub>diff</sub></bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Difference in APD between the first and the last AP during pacing</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>20</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>ΔCa<sub>diff</sub></bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Difference in ΔCa between the first and the last AP during pacing</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>21</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>APD<sub>hypo</sub></bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Action potential duration during hypokalemia</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>22</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>APD<sub>hyper</sub></bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Action potential duration during hyperkalemia</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">23</td>
+<td align="left" colspan="1" rowspan="1">V<sub>maxmin hypo</sub></td>
+<td align="left" colspan="1" rowspan="1">Shape parameter to characterize AP during hypokalemia</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>24</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>V<sub>minmax hypo</sub></bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Shape parameter to characterize AP during hypokalemia</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">25</td>
+<td align="left" colspan="1" rowspan="1">t<sub>minmax hypo</sub></td>
+<td align="left" colspan="1" rowspan="1">Shape parameter to characterize AP during hypokalemia</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>26</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>V<sub>maxmin hyper</sub></bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Shape parameter to characterize AP during hyperkalemia</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>27</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>V<sub>minmax hyper</sub></bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Shape parameter to characterize AP during hyperkalemia</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">28</td>
+<td align="left" colspan="1" rowspan="1">t<sub>minmax hyper</sub></td>
+<td align="left" colspan="1" rowspan="1">Shape parameter to characterize AP during hyperkalemia</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>29</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Ca<sup>2+</sup></bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Intracellular Ca<sup>2+</sup> after 60 seconds of quiescence</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>30</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Na<sup>+</sup></bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Intracellular Na<sup>+</sup> after 60 seconds of quiescence</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>31</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>K<sup>+</sup></bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Intracellular K<sup>+</sup> after 60 seconds of quiescence</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>32</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Frequency</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>Frequency adaptation of APD</bold></td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label/><p>For each set of random parameters, simulations were performed to calculate each output in the Table. Methods used for calculation of these outputs are provided in <xref ref-type="supplementary-material" rid="pcbi.1000914.s006">Text S1</xref>. Entries in bold and plain text, respectively, indicate outputs that were retained or rejected for matrix inversion.</p></fn></table-wrap-foot></table-wrap>
+<p>Multivariable regression techniques were used to quantitatively relate the inputs to the outputs. In the “forward problem,” a matrix of regression coefficients <bold>B</bold> was derived such that the predicted output <bold>Y</bold> ̂ = <bold>XB</bold> was a close approximation of the actual output <bold>Y</bold>. This method has recently been proven useful for characterizing the parameter sensitivity of electrophysiological models <xref ref-type="bibr" rid="pcbi.1000914-Sobie1">[16]</xref>. We reasoned that a similar approach could be used to address the question: if the measurable physiological characteristics of a cardiac myocyte are known, can this information be used to uniquely specify the magnitudes of the ionic currents and Ca<sup>2+</sup> transport processes? Specifically, we hypothesized that if: 1) <bold>Y</bold> ̂ = <bold>XB</bold> was a close approximation of the true output <bold>Y</bold>, and 2) <bold>B</bold> was a square matrix of full rank, then <bold>X<sub>predicted</sub></bold> = <bold>YB<sup>−1</sup></bold> should be a close approximation of the true input matrix <bold>X</bold>. This argument is illustrated schematically in <xref ref-type="fig" rid="pcbi-1000914-g002">Figure 2</xref>.</p>
+<fig id="pcbi-1000914-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000914.g002</object-id><label>Figure 2</label><caption>
+<title>Schematic of input, output and regression matrix structures.</title>
+<p>Randomly-varied model parameters are collected in an input matrix <bold>X</bold> with dimensions <italic>n</italic>, corresponding to the number of trials, by <italic>p</italic>, corresponding to the number of parameters. Simulation results define <italic>m</italic> outputs that are collected in the output matrix <bold>Y</bold>, with dimensions an <italic>n</italic>×<italic>m</italic>. Regression matrix <bold>B</bold>, with dimensions <italic>p</italic>×<italic>m</italic>, can be used to predict <bold>Y</bold> from <bold>X</bold>, the so-called “forward problem.” If <italic>m</italic> = <italic>n</italic>, and the outputs are linearly independent, then <bold>B</bold> can be inverted, and <bold>YB<sup>−1</sup></bold> should be a good approximation of <bold>X</bold>. This is our strategy for addressing the “reverse problem.”</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000914.g002" xlink:type="simple"/></fig>
+<p><xref ref-type="fig" rid="pcbi-1000914-g003">Figure 3A</xref> demonstrates the accuracy of the reverse regression method. For four chosen conductances, the scatter plots show the “actual” values, generated by randomizing the baseline parameters in the published TNNP model, versus the “predicted” values calculated with the regression model. The large R<sup>2</sup> values (&gt;0.9) indicate that the predictions of the regression method are quite accurate. Of the 16 conductances in the TNNP model, 12 could be predicted with R<sup>2</sup>&gt;0.7. The four that were less well-predicted were the Na<sup>+</sup> background conductance (G<sub>Nab</sub>), the rapid component of the K<sup>+</sup> delayed rectifier conductance (G<sub>Kr</sub>), the sarcolemmal Ca<sup>2+</sup> pump (K<sub>pCa</sub>) and the second SR Ca<sup>2+</sup> release parameter (K<sub>rel2</sub>).</p>
+<fig id="pcbi-1000914-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000914.g003</object-id><label>Figure 3</label><caption>
+<title>Predictions of the linear empirical model generated by reverse regression.</title>
+<p>(<bold>A</bold>) Scatter plots are displayed for four input conductances: G<sub>Na</sub> (top left), G<sub>Ca</sub> (top right), G<sub>to</sub> (bottom left) and K<sub>NCX</sub> (bottom right). Each plot shows the value actually used in the simulations (abscissa) versus the estimate generated by the regression model (ordinate). The regression was performed on a simulated data set containing 300 samples. (<bold>B</bold>) R<sup>2</sup> values for each conductance in the TNNP model in the reverse regression. The three cases shown correspond to regression performed with: all 32 outputs (blue); the sixteen “best” outputs (green), and the 16 rejected outputs (red).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000914.g003" xlink:type="simple"/></fig>
+<p>To verify that these encouraging results were not specific to the TNNP model, we performed similar analyses on additional models, the human ventricular myocyte model of Bernus et al. <xref ref-type="bibr" rid="pcbi.1000914-Bernus1">[17]</xref>, and the “Phase 1” ventricular cell model of Luo and Rudy <xref ref-type="bibr" rid="pcbi.1000914-Luo2">[18]</xref>. In either case (<xref ref-type="supplementary-material" rid="pcbi.1000914.s003">Figures S3</xref> and <xref ref-type="supplementary-material" rid="pcbi.1000914.s004">S4</xref>, respectively), the reverse regression was highly predictive of most parameters, indicating that this approach is generally applicable. The outputs used for these analyses, listed in <xref ref-type="supplementary-material" rid="pcbi.1000914.s006">Text S1</xref>, differed somewhat from those used for the TNNP simulations because the Bernus et al. <xref ref-type="bibr" rid="pcbi.1000914-Bernus1">[17]</xref> and Phase 1 Luo and Rudy <xref ref-type="bibr" rid="pcbi.1000914-Luo2">[18]</xref> models are relatively simple and do not consider intracellular Ca<sup>2+</sup> handling in detail.</p>
+<p><xref ref-type="fig" rid="pcbi-1000914-g003">Figure 3B</xref> illustrates how the quantity and identity of the outputs in <bold>Y</bold> affected the accuracy of the predictions. Bar graphs show R<sup>2</sup> values for prediction of each model parameter obtained by performing the reverse regression in three ways: 1) using all 32 outputs (blue), 2) matrix inversion (green), with the 16 best outputs as identified by the output elimination algorithm (see <xref ref-type="sec" rid="s4">Methods</xref>), and 3) using only the 16 rejected outputs (red). The R<sup>2</sup> values computed using the 16 best outputs were virtually identical to those obtained when all 32 outputs were used whereas R<sup>2</sup> values for most conductances were substantially lower when only the 16 rejected outputs were included. These tests validate the algorithm which selected the outputs for matrix inversion. Moreover, since the 16 best outputs performed essentially as well as the full set of 32 outputs, this result implies that the model outputs were not fully linearly independent, and the 16 rejected outputs contained redundant information.</p>
+<p><xref ref-type="fig" rid="pcbi-1000914-g004">Figure 4</xref> displays, as heat maps, the coefficients for both the forward and reverse regression problems. The former indicate how model parameters influence outputs, whereas the latter specify how changes in model outputs restrict the parameters. Parameter sensitivities for selected outputs and conductances are shown as bar graphs to the right. As previously argued for the case of forward regression <xref ref-type="bibr" rid="pcbi.1000914-Sobie1">[16]</xref>, these parameter sensitivities help to illustrate the relationships between parameters and outputs. For instance, forward regression coefficients indicate that diastolic [Ca<sup>2+</sup>] is determined primarily by a balance between SR Ca<sup>2+</sup> uptake and SR Ca<sup>2+</sup> leak, with other parameters making only minimal contributions. Conversely, for reverse regression, the maximal conductance of L-type Ca<sup>2+</sup> current (G<sub>Ca</sub>) depends on many model outputs including action potential duration, Ca<sup>2+</sup> transient amplitude, and, in particular, how these are altered with changes in extracellular potassium. This result underscores the centrality of intracellular Ca<sup>2+</sup> regulation to many cellular processes.</p>
+<fig id="pcbi-1000914-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000914.g004</object-id><label>Figure 4</label><caption>
+<title>Parameter sensitivities for forward and reverse regression.</title>
+<p>Values in the forward regression matrix <bold>B</bold> and reverse regression matrix <bold>B<sup>−1</sup></bold> are shown as “heat maps,” with white representing values near zeros, and blue and red indicating positive and negative values, respectively. (<bold>A</bold>) The forward regression matrix <bold>B</bold>, where each row represents the contributions of each of the conductances to a particular output. The bar graphs corresponding to two of these outputs (APD and diastolic [Ca<sup>2+</sup>]) are shown to the right. (<bold>B</bold>) The reverse regression matrix <bold>B<sup>−1</sup></bold>, where each row represents the contributions of each of the outputs to a given conductance. The bar graphs corresponding to two of these conductances (G<sub>Na</sub> and G<sub>Ca</sub>) are shown to the right.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000914.g004" xlink:type="simple"/></fig>
+<p>The results shown in <xref ref-type="fig" rid="pcbi-1000914-g003">Figure 3</xref> demonstrated that most of the model parameters used to generate the dataset could be reconstructed using the reverse regression procedure. To provide evidence that this procedure may be more broadly useful, we applied the method to a novel test case by performing simulations with the most recent version of the Hund &amp; Rudy canine ventricular model <xref ref-type="bibr" rid="pcbi.1000914-Hund1">[19]</xref>. Specifically, we considered changes in seven parameters corresponding to the condition of heart failure, as previously modeled by Shannon et al <xref ref-type="bibr" rid="pcbi.1000914-Shannon2">[20]</xref>. <xref ref-type="fig" rid="pcbi-1000914-g005">Figure 5A</xref> shows that implementing these parameter changes dramatically alters both AP shape and Ca<sup>2+</sup> transient amplitude. After performing simulations under a range of conditions with both normal, healthy cells and pathological, failing cells (see <xref ref-type="sec" rid="s4">Methods</xref> and <xref ref-type="supplementary-material" rid="pcbi.1000914.s006">Text S1</xref>), we asked how well the reverse regression matrix could calculate the parameter changes in the failing cells. We found that this method constrained 5 out of 7 parameters with excellent accuracy, while changes in two parameters (G<sub>Ks</sub> and K<sub>leak</sub>) were overestimated somewhat by the regression algorithm. This novel test cases validates our approach and suggests that it may indeed prove a useful method for developing new models based on experimental measurements.</p>
+<fig id="pcbi-1000914-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000914.g005</object-id><label>Figure 5</label><caption>
+<title>Application of reverse regression to constrain model parameters in heart failure.</title>
+<p>Simulations were performed with the Hund &amp; Rudy model of the dog ventricular myocyte <xref ref-type="bibr" rid="pcbi.1000914-Hund1">[19]</xref>, with changes made to 7 model parameters to replicate changes occurring in heart failure, as previously simulated by Shannon <italic>et al.</italic> <xref ref-type="bibr" rid="pcbi.1000914-Shannon2">[20]</xref>. (<bold>A</bold>) The differences between normal and pathological states is shown by contrasting the action potential waveforms and Ca<sup>2+</sup> transients. The action potential is triangular in shape in heart failure while the Ca<sup>2+</sup> transient is dramatically reduced in the failing cell. The directional changes in the 7 altered parameters are also indicated. (<bold>B</bold>) The true values of the changed parameters are shown alongside the values predicted by reverse regression. Each is represented as a multiple of the baseline parameter value, where no change is indicated by the dashed line. Note the break in the y-axis, reflecting the fact that the reverse regression procedure overestimates the change in the parameter K<sub>leak</sub>. Similarly, the regression model overestimates the change in G<sub>Ks</sub>, as the height of this bar, 0.86% of the control value, is difficult to visualize on this scale.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000914.g005" xlink:type="simple"/></fig>
+<p>The second approach for constraining model parameters is based on Bayes's theorem. In statistics, this celebrated result describes the conditional probability of one event given another in terms of: 1) the conditional probability of the second event given the first, and 2) the marginal probabilities of the two events:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000914.e001" xlink:type="simple"/></disp-formula>In this context, we consider event A that a model conductance lies within a given range, and event B that a model output is within a particular range. When many simulations are performed with randomly varying parameters, the probability P(A) is fixed by the user, while the probabilities P(B) and P(B|A) can be estimated from the results. This allows us to approximate P(A|B), which reflects how well a model parameter is constrained by a particular simulation result.</p>
+<p>Since our hypothesis was that multiple outputs needed to be considered to constrain model parameters, we were interested in extensions of Bayes's theorem to more than two variables, e.g. P(A|B∩C), where B and C are events related to two model outputs. For instance, B and C could represent, respectively, that APD and Ca<sup>2+</sup> transient amplitude are within particular ranges. If the conditional probability of the parameter increases as additional outputs are considered, this validates the thinking underlying the approach.</p>
+<p>The application of this strategy to our data set is illustrated in <xref ref-type="fig" rid="pcbi-1000914-g006">Figure 6</xref>. The two rows of histograms display distributions of G<sub>Na</sub> and G<sub>Ca</sub>, which are typical of the 16 model parameters considered. The leftmost histogram in each row shows the distribution of conductance values in the entire population, and the remaining columns show conductance values for sub-populations that satisfy constraints on one or more model outputs. Successive columns from left to right show distributions with additional model outputs considered, as noted. In either case, the distributions become progressively narrower, and the conditional probability is unity once 3 outputs are considered.</p>
+<fig id="pcbi-1000914-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000914.g006</object-id><label>Figure 6</label><caption>
+<title>Illustration of Bayesian probability approach.</title>
+<p>(<bold>A</bold>) Distributions of G<sub>Na</sub> with different constraints. From left to right, histograms show G<sub>Na</sub> values in the complete data set; given that APD is in a particular range (from 295–298 ms, representing 10% of the samples); given that APD and V<sub>rest</sub> (−84.96 to −85.02 mV) are in particular ranges; given that APD, V<sub>rest</sub>, and V<sub>peak</sub> (37.05 to 37.81 mV) are in particular ranges. (<bold>B</bold>) Distributions of G<sub>Ca</sub>, given the same constraints as in (<bold>A</bold>).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000914.g006" xlink:type="simple"/></fig>
+<p>This procedure also provides insights into which specific outputs provide the greatest information about particular model parameters. For instance, the distribution of G<sub>Na</sub> given a certain range of APD appears similar to the overall distribution of G<sub>Na</sub> because these two variables are not strongly correlated (i.e. P(B|A) ≈ P(B)). In contrast, inclusion of V<sub>peak</sub>, an output highly dependent on G<sub>Na</sub>, narrows the distribution significantly. In the case of G<sub>Ca</sub>, restricting APD to a particular range makes the distribution narrower, which is to be expected given the relatively strong correlation between the parameter and the output. Thus, an approach based on Bayes's theorem also supports the idea that model parameters can successfully be constrained if multiple model outputs are considered.</p>
+</sec><sec id="s3">
+<title>Discussion</title>
+<p>In this study we have presented two methods that can be used to constrain free parameters in complex mathematical models of biological systems. The utility of these methods was demonstrated through simulations with models of ventricular myocytes <xref ref-type="bibr" rid="pcbi.1000914-TenTusscher1">[15]</xref>, <xref ref-type="bibr" rid="pcbi.1000914-Bernus1">[17]</xref>–<xref ref-type="bibr" rid="pcbi.1000914-Hund1">[19]</xref>, but with modifications the strategies could also be applied to other classes of models. For instance, these methods could be used to constrain parameters in models of the sinoatrial node <xref ref-type="bibr" rid="pcbi.1000914-Kurata1">[21]</xref>, <xref ref-type="bibr" rid="pcbi.1000914-Zhang1">[22]</xref>, but in this case more useful outputs would be metrics such as inter-beat interval, diastolic depolarization rate, and maximum diastolic potential <xref ref-type="bibr" rid="pcbi.1000914-KroghMadsen1">[23]</xref>. Our results show that model parameters are difficult to specify uniquely using a limited number of model outputs as “targets,” but parameters can be constrained successfully if numerous model outputs are simultaneously considered <xref ref-type="bibr" rid="pcbi.1000914-Sobie2">[24]</xref>. The premise underlying this strategy is therefore similar to ideas advanced by Sethna and colleagues in discussions of model “sloppiness” <xref ref-type="bibr" rid="pcbi.1000914-Brown1">[25]</xref>, <xref ref-type="bibr" rid="pcbi.1000914-Gutenkunst1">[26]</xref>. Even if individual parameters are largely unknown or cannot be measured with precision, predictive models can still be built if care is taken to match the model's output to diverse sets of experimental data.</p>
+<p>The reverse regression method uses matrix multiplication to predict a set of parameters, in this case ionic current maximal conductances, that are most likely to recapitulate a given set of model outputs. In a recent paper <xref ref-type="bibr" rid="pcbi.1000914-Sobie1">[16]</xref>, parameter randomization followed by regression was used to quantify parameter sensitivities in electrophysiological models. The method presented here is an extension of this: we added outputs so that the regression matrix <bold>B</bold> could be inverted. Each element of this inverted matrix, <bold>B<sup>−1</sup></bold>, therefore indicates how much a physiological output contributes to the prediction of a particular input conductance (<xref ref-type="fig" rid="pcbi-1000914-g004">Figure 4</xref>). In experimental studies, metrics derived from data are frequently used as indirect semi-quantitative surrogates of ionic conductances. For instance, conventional wisdom holds that action potential upstroke velocity reflects the availability of Na<sup>+</sup> current <xref ref-type="bibr" rid="pcbi.1000914-Hondeghem1">[27]</xref>, and the prominence of the Phase 1 “notch” indicates the contribution of transient outward K<sup>+</sup> current <xref ref-type="bibr" rid="pcbi.1000914-Oudit1">[28]</xref>, <xref ref-type="bibr" rid="pcbi.1000914-Sun1">[29]</xref>. Our reverse regression method is simply a mathematically more formal extension of this general strategy, whereby every output can conceivably influence the prediction of each model parameter.</p>
+<p>When applied to the simulations with the TNNP model, reverse regression was able to generate accurate predictions of most conductances or rates of ion transport in the model (R<sup>2</sup>&gt;0.7 for 12 of 16 parameters). Of the 4 parameters that were not predicted accurately, two, namely Na<sup>+</sup> background conductance (G<sub>Nab</sub>) and the sarcolemmal Ca<sup>2+</sup> ATPase (K<sub>pCa</sub>) are considered to be relatively unimportant for normal cellular physiology. The parameter K<sub>rel2</sub> (c<sub>rel</sub> in the original TNNP model), was also predicted poorly, most likely because it is partially redundant with the parameter K<sub>rel1</sub> (a<sub>rel</sub> in the original TNNP model), which was well constrained by the analysis. The surprise in our simulations was the poor prediction of the rapid component of the delayed rectifier current, G<sub>Kr</sub>, since this current contributes to AP repolarization <xref ref-type="bibr" rid="pcbi.1000914-Sanguinetti1">[30]</xref>, <xref ref-type="bibr" rid="pcbi.1000914-Zeng1">[31]</xref>, and block of I<sub>Kr</sub> is the primary cause of drug-induced long QT syndrome <xref ref-type="bibr" rid="pcbi.1000914-Roden1">[32]</xref>, <xref ref-type="bibr" rid="pcbi.1000914-Sanguinetti2">[33]</xref>. It should be noted, however, that our prediction of the conductance corresponding to the slow delayed rectifier, G<sub>Ks</sub>, was accurate. This suggests that in the TNNP model, these conductances serve similar functions and perhaps compensate for each other.</p>
+<p>A similar conclusion can be drawn from the simulations in which we used the reverse regression procedure to reconstruct the parameters corresponding to heart failure in the Hund &amp; Rudy <xref ref-type="bibr" rid="pcbi.1000914-Hund1">[19]</xref> model (<xref ref-type="fig" rid="pcbi-1000914-g005">Figure 5</xref>). Five out of the seven parameters altered in the heart failure cell were predicted accurately by the reverse regression procedure. The two that were not predicted accurately, K<sub>leak</sub>, and G<sub>Ks</sub>, have relatively minor effects in the Hund &amp; Rudy model, although these are more important in some other models. Thus, these methods are not only useful for constraining parameters; they can provide novel insight into the relative importance of particular model parameters in determining physiological function.</p>
+<p>Two important factors influencing the accuracy of the conductance predictions are the number and quality of the outputs. Mathematically, inversion of the regression matrix <bold>B</bold> requires that the columns be linearly independent, which in turn requires independence of the columns of <bold>Y</bold>, i.e. the outputs. In contrast, linear dependence would imply that the outputs contain redundant information. Since we did not know a priori which outputs would be informative and which would be partially redundant, we implemented an algorithm to remove outputs sequentially and find a set of 16 that yielded the best results. This resulted in the unexpected elimination of seemingly important outputs such as the maximal upstroke velocity, a metric closely related to Na<sup>+</sup> conductance. However, it is important to note that this result does not argue against the usefulness of upstroke velocity as a metric, it merely indicates that the information contained in this output has already been captured by the 16 that were selected.</p>
+<p>These considerations suggest a future application of these techniques, besides their obvious utility in the construction of new mathematical models. Since the regression analyses provide insight into which physiological measures are independent and which are partially redundant, these types of simulation studies can be used to prioritize experiments. Experimental studies consume the valuable resources of reagents, animals, and person-hours, and computational approaches that could reliably distinguish between more informative and less informative experiments would therefore be quite valuable. For example, the pacing cycle length at which a myocyte begins to exhibit APD alternans (BCL<sub>alt</sub>) is an important quantity related to the arrhythmogenic potential of the cardiac substrate <xref ref-type="bibr" rid="pcbi.1000914-Weiss1">[34]</xref>, <xref ref-type="bibr" rid="pcbi.1000914-Laurita1">[35]</xref>. Determining this threshold, however, requires time-consuming experiments in which myocytes must be paced at many different rates. This output was rejected by our elimination algorithm, suggesting that, at least in the TNNP model, the information provided by this difficult experiment is not different from that contained in other, perhaps simpler, measurements. Our current work is focused on formalizing these ideas and developing methods to quantify the relative information content of different experimental measurements.</p>
+<p>We should note that the outputs chosen for our analysis are physiologically meaningful metrics that are measured routinely in isolated cardiac myocytes. We purposely excluded measures that quantify how cellular behavior changes after application of a pharmacological agent. Since the explicit purpose of adding a drug is often to deduce the importance of the drug's primary target, we felt that including these metrics would, for an existing model, make the parameter constraint problem fairly trivial. In future studies, however, including these outputs will undoubtedly improve the predictive power of these methods. Similarly, the addition of more columns to the matrix <bold>Y</bold> corresponding to results from voltage-clamp experiments should also improve the accuracy of the method. These extensions will likely be necessary if maximal conductances are essentially unknown, or if ionic current kinetic parameters are also to be constrained.</p>
+<p>In the field of cardiac electrophysiology, a few modeling studies have examined issues of parameter sensitivity <xref ref-type="bibr" rid="pcbi.1000914-Romero1">[6]</xref>,<xref ref-type="bibr" rid="pcbi.1000914-Sobie1">[16]</xref>,<xref ref-type="bibr" rid="pcbi.1000914-Kim1">[36]</xref>,<xref ref-type="bibr" rid="pcbi.1000914-Nygren1">[37]</xref>, parameter estimation <xref ref-type="bibr" rid="pcbi.1000914-Dokos1">[38]</xref>, <xref ref-type="bibr" rid="pcbi.1000914-BuenoOrovio1">[39]</xref>, and model identifiability <xref ref-type="bibr" rid="pcbi.1000914-Fink1">[40]</xref>. For example, Fink and Noble recently assessed the adequacy of whole-cell voltage clamp records for uniquely determining parameters in models of ion channel gating <xref ref-type="bibr" rid="pcbi.1000914-Fink1">[40]</xref>. These analyses suggested that optimized voltage clamp protocols might be more efficient for parameter identification than protocols currently used in experiments. More studies that address these sorts of issues have been performed in computational neuroscience. For instance, analogous to the results shown in <xref ref-type="fig" rid="pcbi-1000914-g001">Figure 1A</xref>, several studies have shown that different combinations of model conductances can produce seemingly identical behavior, either in isolated neurons <xref ref-type="bibr" rid="pcbi.1000914-Achard1">[11]</xref>, <xref ref-type="bibr" rid="pcbi.1000914-Prinz1">[13]</xref> or in models of small neuronal networks <xref ref-type="bibr" rid="pcbi.1000914-Prinz2">[14]</xref>. Olypher and Calabrese then generalized this result by demonstrating that, close to a particular location in parameter space, infinitely many parameter combinations can produce the same level of activity as the original location, and these authors derived 2×2 sensitivity matrices to demonstrate these compensatory changes <xref ref-type="bibr" rid="pcbi.1000914-Olypher1">[41]</xref>. Our reverse regression approach is essentially an extension of this idea to multiple dimensions, with the implicit assumption that considering additional linearly-independent model outputs will increase the likelihood of determining parameters uniquely.</p>
+<p>Given that parameters in neuronal models cannot be uniquely specified using only a metric such as firing rate, a few studies have combined genetic algorithms with more sophisticated data-matching strategies such as phase-plane analysis <xref ref-type="bibr" rid="pcbi.1000914-Achard1">[11]</xref> or multiple objective optimization <xref ref-type="bibr" rid="pcbi.1000914-Druckmann1">[42]</xref>. Our methods offer both advantages and disadvantages compared with these alternative strategies. The primary advantage here is that reverse regression is simple and intuitive, and the outputs considered are well-defined metrics that are readily obtainable in the laboratory. We can therefore easily relate, in a way that other techniques do not allow, the observable characteristics of the cardiac myocyte to the membrane densities of the important ion channels. The main drawbacks of our approach are: 1) that we only perform a local search around the baseline model and 2) that we assume a linear relationship between changes in parameters and changes in outputs. While linear approximations to these input-output relationships have been shown to work well in cardiac models <xref ref-type="bibr" rid="pcbi.1000914-Sobie1">[16]</xref>, particularly when conductances are expressed in log-transformed units, this assumption may not hold in all classes of models <xref ref-type="bibr" rid="pcbi.1000914-Taylor1">[43]</xref>. This limitation is evident in the simulations shown in <xref ref-type="fig" rid="pcbi-1000914-g006">Figure 6</xref> in that: 1) two parameters were poorly predicted by the regression model; and 2) in these simulations, the parameter search was constrained to only seven possibilities rather than allowing any model parameter to contribute to the phenotype. Future studies will likely improve on these strategies and combine aspects of several approaches to refine methods for determining parameters in complex models of biological processes.</p>
+<p>In summary, we have presented new methods for constraining free parameters in mathematical models, and demonstrated their utility through analyses of a common model of the ventricular myocyte. The approaches we describe have potentially broad implications. Analysis tools such as these can be used to obtain new insight into the relationships between model parameters, model outputs, and experimental data. The ideas offer hope that, even if some model parameters cannot be directly measured, a close comparison of data to model output can still discriminate between possibilities and produce a model with strong predictive power.</p>
+</sec><sec id="s4" sec-type="methods">
+<title>Methods</title>
+<p>This computational study aimed to extend the use of regression to develop methods for constraining free parameters in mathematical models. The ideas were tested through simulations using the TNNP model <xref ref-type="bibr" rid="pcbi.1000914-TenTusscher1">[15]</xref> of the human ventricular action potential (described in more detail in the Supporting Information). First, regression was used to derive a matrix <bold>(B)</bold> whose elements indicate how changes in input parameters, namely maximal ionic conductances, affect physiologically-meaningful model outputs. The regression matrix was then inverted, thereby deriving a new matrix <bold>(B<sup>−1</sup>)</bold> that specifies the ionic conductances required to produce a given set of model outputs.</p>
+<p>In the first stage, the input matrix <bold>X</bold> was generated by randomly scaling 16 parameters in the TNNP model. A total of 300 random sets of parameters were generated such that <bold>X</bold> had dimensions 300×16. To compute the output matrix <bold>Y</bold>, several simulations were performed with each of the 300 models defined by a given parameter set. These simulations reflected standard electrophysiological tests such as the response of the myocyte to changes in pacing rate or extracellular potassium concentration. The calculation of some of these outputs is illustrated in <xref ref-type="supplementary-material" rid="pcbi.1000914.s001">Figure S1</xref>. The 32 outputs computed from these simulations, listed in <xref ref-type="table" rid="pcbi-1000914-t001">Table 1</xref>, ranged from straightforward measures such as action potential duration (APD) and Ca<sup>2+</sup> transient amplitude to more abstract metrics such as the minimum cycle length required to induce APD alternans <xref ref-type="bibr" rid="pcbi.1000914-Weiss1">[34]</xref>.</p>
+<p>The 16×32 matrix <bold>B</bold> relates the inputs to the outputs such that <bold>Y</bold> ̂ = <bold>XB</bold> is a close approximation of the true output matrix <bold>Y</bold>. To allow for inputs and outputs expressed in different units to be compared, values in <bold>X</bold> and <bold>Y</bold> were converted into Z-scores – i.e. each column was mean-centered and normalized by its standard deviation. The results of the “forward” regression performed in the first stage are shown in <xref ref-type="supplementary-material" rid="pcbi.1000914.s002">Figure S2</xref>.</p>
+<p>The second stage of the computational experiment aimed to determine if the input matrix <bold>X</bold> could be inferred, assuming the output matrix <bold>Y</bold> was known. Since <bold>Y</bold> ̂ = <bold>XB≈Y</bold>, we reasoned that <bold>YB<sup>−1</sup></bold> should be a close approximation of <bold>X</bold>, provided that <bold>B</bold> is an invertible matrix. We performed an iterative procedure to determine the 16 most appropriate outputs for this matrix inversion. First, with the full 300×32 matrix <bold>Y</bold>, “reverse regression” was performed to derive a matrix <bold>B′</bold> such that <bold>YB′≈X</bold>. We then removed each of the columns of <bold>Y</bold> and performed the reverse regression with the remaining 31 outputs. The output whose removal caused the smallest change in the prediction of <bold>X</bold> (quantified by R<sup>2</sup>) was deemed the least essential and was removed permanently. This procedure was repeated to reduce the number of outputs from 31 to 30, etc., until <bold>Y</bold> had dimensions 300×16.</p>
+<p>A further set of simulations was performed with the 2008 version of the Hund and Rudy model of the canine action potential <xref ref-type="bibr" rid="pcbi.1000914-Hund1">[19]</xref>. In these simulations, we sought to determine whether changes in model parameters in heart failure could be determined using the reverse regression procedure. We simulated the changes in parameters used by Shannon et al to simulate heart failure in their model of the rabbit action potential <xref ref-type="bibr" rid="pcbi.1000914-Shannon2">[20]</xref>. This involved alterations to seven model parameters: G<sub>K1</sub>, G<sub>Ks</sub>, G<sub>to</sub>, K<sub>NCX</sub>, K<sub>RyR</sub>, K<sub>SERCA</sub>, and K<sub>leak</sub>. Simulations were performed under three conditions: normal extracellular [K<sup>+</sup>]<sub>o</sub> (5.4 mM), hypokalemia ([K<sup>+</sup>]<sub>o</sub> = 3 mM) and hyperkalemia ([K<sup>+</sup>]<sub>o</sub> = 8 mM). In these simulations, a total of 33 model outputs were calculated to constrain the parameters (see <xref ref-type="supplementary-material" rid="pcbi.1000914.s006">Text S1</xref> for full list). Reverse regression was performed to map the 33 outputs from the simulated failing myocyte to the predicted 7 parameter changes.</p>
+<p>In the second approach, based on Bayes's theorem, we were interested in estimating P(A|B) from P(B|A), P(A), and P(B). In this context, A is that a parameter is in a particular range, and B is that a model output is in a specified range. To estimate P(B|A) from the set of 300 simulation results, we sorted the values in each column of <bold>X</bold> and <bold>Y</bold>, then computed the percentile ranges. This allowed us to easily select, for instance, 10% of the values of a particular output centered around a given value. To generate histograms such as those shown in <xref ref-type="fig" rid="pcbi-1000914-g004">Figure 4</xref>, we first plotted the distribution of all the tested values of a given conductance. Then we selected the conductance values corresponding only to those trials for which APD fell within a particular range, and generated the histogram of this set. From this subset of conductances, we then selected the conductance values corresponding to those trials for which V<sub>rest</sub> was in a certain range, etc. To allow for visual comparison, each histogram was normalized to the total number of values of the subset. To ensure that this procedure found a set of conductances that actually existed in the data set, we first identified the “best” trial for which the difference between <bold>Y</bold> and <bold>Y</bold> ̂ was minimal. The output ranges used to select the subsets of conductances all represented deviations of ±5% around these values.</p>
+<p>A bundle containing the Matlab™ code used to generate the results presented in the manuscript has been uploaded as <xref ref-type="supplementary-material" rid="pcbi.1000914.s005">Protocol S1</xref> in the Supporting Information.</p>
+</sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1000914.s001" mimetype="application/postscript" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000914.s001" xlink:type="simple"><label>Figure S1</label><caption>
+<p>Examples of several of the outputs calculated from the simulations. (A) Shape parameters that are extracted from the AP waveform. These characterize the “spike and dome” morphology typical of epicardial myocytes. The loss of spike and dome indicates an abnormality possibly resulting from a pathological state. (B) Illustration of BCL<sub>alt</sub> , the minimum basic cycle length required to induce APD alternans. When the cell is paced at BCL = 285, no alternans is observed. However, the characteristic alternating long-short pattern is seen at BCL = 280. (C) Illustration of the process used to determine the threshold stimulus current required to induce an action potential. Sub- and supra-threshold stimuli are applied iteratively until the correct magnitude of the threshold stimulus, in this case 15.9 pA/pF is determined. (D) Illustration of maximum slope of the APD restitution curve. Slopes&gt;1 may indicate increased arrhythmia risk.</p>
+<p>(0.63 MB EPS)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000914.s002" mimetype="application/postscript" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000914.s002" xlink:type="simple"><label>Figure S2</label><caption>
+<p>Bar graph showing the R<sup>2</sup> values for each of the 32 outputs of the TNNP model predicted by the forward PLS regression. Most of these outputs (27 of 32) had R<sup>2</sup> values&gt;0.9. The outputs that could not be predicted well were among those that were rejected by the algorithm that narrowed the total number of outputs down to 16 for the matrix inversion.</p>
+<p>(0.18 MB EPS)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000914.s003" mimetype="application/postscript" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000914.s003" xlink:type="simple"><label>Figure S3</label><caption>
+<p>Scatter plots showing the R<sup>2</sup> values of the reverse regression predictions for 8 of the conductances in the Bernus <xref ref-type="bibr" rid="pcbi.1000914-Bernus1">[17]</xref> model. Prediction of mode of the conductances (6 of 8) was quite accurate (R<sup>2</sup> values&gt;0.7). The background Na<sup>+</sup> conductance was poorly predicted; however, this conductance, however, plays only a minor role in the physiological behavior of the Bernus <xref ref-type="bibr" rid="pcbi.1000914-Bernus1">[17]</xref> model.</p>
+<p>(1.25 MB EPS)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000914.s004" mimetype="application/postscript" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000914.s004" xlink:type="simple"><label>Figure S4</label><caption>
+<p>Scatter plots showing the R<sup>2</sup> values for 6 of the conductances in the Luo-Rudy (LR1) model <xref ref-type="bibr" rid="pcbi.1000914-Luo2">[18]</xref> predicted by the reverse PLS regression. All of these conductances had R<sup>2</sup> values&gt;0.65, and 5 out of 6 had R<sup>2</sup>&gt;0.85.</p>
+<p>(1.02 MB EPS)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000914.s005" mimetype="application/zip" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000914.s005" xlink:type="simple"><label>Protocol S1</label><caption>
+<p>Bundle containing Matlab code used by the authors to generate the results presented in the manuscript. The file ‘READ ME’ within the bundle explains the function of each individual program.</p>
+<p>(0.11 MB ZIP)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000914.s006" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000914.s006" xlink:type="simple"><label>Text S1</label><caption>
+<p>Supplementary methods.</p>
+<p>(0.09 MB DOC)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>The authors thank Ruth Griswold (Mount Sinai School of Medicine) for sharing computer code and Dr. Emilia Entcheva (Stony Brook University) for helpful discussions.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1000914-Hodgkin1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hodgkin</surname><given-names>AL</given-names></name>
+<name name-style="western"><surname>Huxley</surname><given-names>AF</given-names></name>
+</person-group>             <year>1952</year>             <article-title>A quantitative description of membrane current and its application to conduction and excitation in nerve.</article-title>             <source>J Physiol</source>             <volume>117</volume>             <fpage>500</fpage>             <lpage>544</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Noble1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Noble</surname><given-names>D</given-names></name>
+</person-group>             <year>1962</year>             <article-title>A modification of the Hodgkin–Huxley equations applicable to Purkinje fibre action and pace-maker potentials.</article-title>             <source>J Physiol</source>             <volume>160</volume>             <fpage>317</fpage>             <lpage>352</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Bhalla1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bhalla</surname><given-names>US</given-names></name>
+<name name-style="western"><surname>Iyengar</surname><given-names>R</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Emergent properties of networks of biological signaling pathways.</article-title>             <source>Science</source>             <volume>283</volume>             <fpage>381</fpage>             <lpage>387</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Novak1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Novak</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Tyson</surname><given-names>JJ</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Numerical analysis of a comprehensive model of M-phase control in Xenopus oocyte extracts and intact embryos.</article-title>             <source>J Cell Sci</source>             <volume>106</volume>             <issue>Pt 4</issue>             <fpage>1153</fpage>             <lpage>1168</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Weaver1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Weaver</surname><given-names>CM</given-names></name>
+<name name-style="western"><surname>Wearne</surname><given-names>SL</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Neuronal firing sensitivity to morphologic and active membrane parameters.</article-title>             <source>PLoS Comput Biol</source>             <volume>4</volume>             <fpage>e11</fpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Romero1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Romero</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Pueyo</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Fink</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Rodriguez</surname><given-names>B</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Impact of ionic current variability on human ventricular cellular electrophysiology.</article-title>             <source>Am J Physiol Heart Circ Physiol</source>             <volume>297</volume>             <fpage>H1436</fpage>             <lpage>H1445</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Jafri1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jafri</surname><given-names>MS</given-names></name>
+<name name-style="western"><surname>Rice</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Winslow</surname><given-names>RL</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Cardiac Ca<sup>2+</sup> dynamics: the roles of ryanodine receptor adaptation and sarcoplasmic reticulum load.</article-title>             <source>Biophys J</source>             <volume>74</volume>             <fpage>1149</fpage>             <lpage>1168</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Luo1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Luo</surname><given-names>CH</given-names></name>
+<name name-style="western"><surname>Rudy</surname><given-names>Y</given-names></name>
+</person-group>             <year>1994</year>             <article-title>A dynamic model of the cardiac ventricular action potential. I. Simulations of ionic currents and concentration changes.</article-title>             <source>Circ Res</source>             <volume>74</volume>             <fpage>1071</fpage>             <lpage>1096</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Shannon1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Shannon</surname><given-names>TR</given-names></name>
+<name name-style="western"><surname>Wang</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Puglisi</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Weber</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Bers</surname><given-names>DM</given-names></name>
+</person-group>             <year>2004</year>             <article-title>A mathematical treatment of integrated Ca dynamics within the ventricular myocyte.</article-title>             <source>Biophys J</source>             <volume>87</volume>             <fpage>3351</fpage>             <lpage>3371</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Wang1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wang</surname><given-names>LJ</given-names></name>
+<name name-style="western"><surname>Sobie</surname><given-names>EA</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Mathematical model of the neonatal mouse ventricular action potential.</article-title>             <source>Am J Physiol Heart Circ Physiol</source>             <volume>294</volume>             <fpage>H2565</fpage>             <lpage>H2575</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Achard1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Achard</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>DeSchutter</surname><given-names>E</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Complex parameter landscape for a complex neuron model.</article-title>             <source>PLoS Comput Biol</source>             <volume>2</volume>             <fpage>e94</fpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Marder1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Marder</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Goaillard</surname><given-names>JM</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Variability, compensation and homeostasis in neuron and network function.</article-title>             <source>Nat Rev Neurosci</source>             <volume>7</volume>             <fpage>563</fpage>             <lpage>574</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Prinz1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Prinz</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Billimoria</surname><given-names>CP</given-names></name>
+<name name-style="western"><surname>Marder</surname><given-names>E</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Alternative to hand-tuning conductance-based models: construction and analysis of databases of model neurons.</article-title>             <source>J Neurophysiol</source>             <volume>90</volume>             <fpage>3998</fpage>             <lpage>4015</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Prinz2"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Prinz</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Bucher</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Marder</surname><given-names>E</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Similar network activity from disparate circuit parameters.</article-title>             <source>Nat Neurosci</source>             <volume>7</volume>             <fpage>1345</fpage>             <lpage>1352</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-TenTusscher1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ten Tusscher</surname><given-names>KH</given-names></name>
+<name name-style="western"><surname>Noble</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Noble</surname><given-names>PJ</given-names></name>
+<name name-style="western"><surname>Panfilov</surname><given-names>AV</given-names></name>
+</person-group>             <year>2004</year>             <article-title>A model for human ventricular tissue.</article-title>             <source>Am J Physiol Heart Circ Physiol</source>             <volume>286</volume>             <fpage>H1573</fpage>             <lpage>H1589</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Sobie1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sobie</surname><given-names>EA</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Parameter sensitivity analysis in electrophysiological models using multivariable regression.</article-title>             <source>Biophys J</source>             <volume>96</volume>             <fpage>1264</fpage>             <lpage>1274</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Bernus1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bernus</surname><given-names>O</given-names></name>
+<name name-style="western"><surname>Wilders</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Zemlin</surname><given-names>CW</given-names></name>
+<name name-style="western"><surname>Verschelde</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Panfilov</surname><given-names>AV</given-names></name>
+</person-group>             <year>2002</year>             <article-title>A computationally efficient electrophysiological model of human ventricular cells.</article-title>             <source>Am J Physiol Heart Circ Physiol</source>             <volume>282</volume>             <fpage>H2296</fpage>             <lpage>H2308</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Luo2"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Luo</surname><given-names>CH</given-names></name>
+<name name-style="western"><surname>Rudy</surname><given-names>Y</given-names></name>
+</person-group>             <year>1991</year>             <article-title>A model of the ventricular cardiac action potential. Depolarization, repolarization, and their interaction.</article-title>             <source>Circ Res</source>             <volume>68</volume>             <fpage>1501</fpage>             <lpage>1526</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Hund1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hund</surname><given-names>TJ</given-names></name>
+<name name-style="western"><surname>Decker</surname><given-names>KF</given-names></name>
+<name name-style="western"><surname>Kanter</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Mohler</surname><given-names>PJ</given-names></name>
+<name name-style="western"><surname>Boyden</surname><given-names>PA</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Role of activated CaMKII in abnormal calcium homeostasis and I<sub>Na</sub> remodeling after myocardial infarction: insights from mathematical modeling.</article-title>             <source>J Mol Cell Cardiol</source>             <volume>45</volume>             <fpage>420</fpage>             <lpage>428</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Shannon2"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Shannon</surname><given-names>TR</given-names></name>
+<name name-style="western"><surname>Wang</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Bers</surname><given-names>DM</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Regulation of cardiac sarcoplasmic reticulum Ca release by luminal [Ca] and altered gating assessed with a mathematical model.</article-title>             <source>Biophys J</source>             <volume>89</volume>             <fpage>4096</fpage>             <lpage>4110</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Kurata1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kurata</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Hisatome</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Imanishi</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Shibamoto</surname><given-names>T</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Dynamical description of sinoatrial node pacemaking: improved mathematical model for primary pacemaker cell.</article-title>             <source>Am J Physiol Heart Circ Physiol</source>             <volume>283</volume>             <fpage>H2074</fpage>             <lpage>H2101</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Zhang1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zhang</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Holden</surname><given-names>AV</given-names></name>
+<name name-style="western"><surname>Kodama</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Honjo</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Lei</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>2000</year>             <article-title>Mathematical models of action potentials in the periphery and center of the rabbit sinoatrial node.</article-title>             <source>Am J Physiol Heart Circ Physiol</source>             <volume>279</volume>             <fpage>H397</fpage>             <lpage>H421</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-KroghMadsen1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Krogh-Madsen</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Schaffer</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Skriver</surname><given-names>AD</given-names></name>
+<name name-style="western"><surname>Taylor</surname><given-names>LK</given-names></name>
+<name name-style="western"><surname>Pelzmann</surname><given-names>B</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>An ionic model for rhythmic activity in small clusters of embryonic chick ventricular cells.</article-title>             <source>Am J Physiol Heart Circ Physiol</source>             <volume>289</volume>             <fpage>H398</fpage>             <lpage>H413</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Sobie2"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sobie</surname><given-names>EA</given-names></name>
+<name name-style="western"><surname>Ramay</surname><given-names>HR</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Excitation-contraction coupling gain in ventricular myocytes: insights from a parsimonious model.</article-title>             <source>J Physiol</source>             <volume>587</volume>             <fpage>1293</fpage>             <lpage>1299</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Brown1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Brown</surname><given-names>KS</given-names></name>
+<name name-style="western"><surname>Sethna</surname><given-names>JP</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Statistical mechanical approaches to models with many poorly known parameters.</article-title>             <source>Phys Rev E Stat Nonlin Soft Matter Phys</source>             <volume>68</volume>             <fpage>021904</fpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Gutenkunst1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gutenkunst</surname><given-names>RN</given-names></name>
+<name name-style="western"><surname>Waterfall</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Casey</surname><given-names>FP</given-names></name>
+<name name-style="western"><surname>Brown</surname><given-names>KS</given-names></name>
+<name name-style="western"><surname>Myers</surname><given-names>CR</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Universally sloppy parameter sensitivities in systems biology models.</article-title>             <source>PLoS Comput Biol</source>             <volume>3</volume>             <fpage>1871</fpage>             <lpage>1878</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Hondeghem1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hondeghem</surname><given-names>LM</given-names></name>
+</person-group>             <year>1978</year>             <article-title>Validity of Vmax as a measure of the sodium current in cardiac and nervous tissues.</article-title>             <source>Biophys J</source>             <volume>23</volume>             <fpage>147</fpage>             <lpage>152</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Oudit1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Oudit</surname><given-names>GY</given-names></name>
+<name name-style="western"><surname>Kassiri</surname><given-names>Z</given-names></name>
+<name name-style="western"><surname>Sah</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Ramirez</surname><given-names>RJ</given-names></name>
+<name name-style="western"><surname>Zobel</surname><given-names>C</given-names></name>
+<etal/></person-group>             <year>2001</year>             <article-title>The molecular physiology of the cardiac transient outward potassium current (I(to)) in normal and diseased myocardium.</article-title>             <source>J Mol Cell Cardiol</source>             <volume>33</volume>             <fpage>851</fpage>             <lpage>872</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Sun1"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sun</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Wang</surname><given-names>HS</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Role of the transient outward current (Ito) in shaping canine ventricular action potential–a dynamic clamp study.</article-title>             <source>J Physiol</source>             <volume>564</volume>             <fpage>411</fpage>             <lpage>419</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Sanguinetti1"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sanguinetti</surname><given-names>MC</given-names></name>
+<name name-style="western"><surname>Jurkiewicz</surname><given-names>NK</given-names></name>
+</person-group>             <year>1990</year>             <article-title>Two components of cardiac delayed rectifier K+ current. Differential sensitivity to block by class III antiarrhythmic agents.</article-title>             <source>J Gen Physiol</source>             <volume>96</volume>             <fpage>195</fpage>             <lpage>215</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Zeng1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zeng</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Laurita</surname><given-names>KR</given-names></name>
+<name name-style="western"><surname>Rosenbaum</surname><given-names>DS</given-names></name>
+<name name-style="western"><surname>Rudy</surname><given-names>Y</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Two components of the delayed rectifier K+ current in ventricular myocytes of the guinea pig type. Theoretical formulation and their role in repolarization.</article-title>             <source>Circ Res</source>             <volume>77</volume>             <fpage>140</fpage>             <lpage>152</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Roden1"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Roden</surname><given-names>DM</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Drug-induced prolongation of the QT interval.</article-title>             <source>N Engl J Med</source>             <volume>350</volume>             <fpage>1013</fpage>             <lpage>1022</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Sanguinetti2"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sanguinetti</surname><given-names>MC</given-names></name>
+<name name-style="western"><surname>Tristani-Firouzi</surname><given-names>M</given-names></name>
+</person-group>             <year>2006</year>             <article-title>hERG potassium channels and cardiac arrhythmia.</article-title>             <source>Nature</source>             <volume>440</volume>             <fpage>463</fpage>             <lpage>469</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Weiss1"><label>34</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Weiss</surname><given-names>JN</given-names></name>
+<name name-style="western"><surname>Karma</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Shiferaw</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Chen</surname><given-names>PS</given-names></name>
+<name name-style="western"><surname>Garfinkel</surname><given-names>A</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>From pulsus to pulseless: the saga of cardiac alternans.</article-title>             <source>Circ Res</source>             <volume>98</volume>             <fpage>1244</fpage>             <lpage>1253</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Laurita1"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Laurita</surname><given-names>KR</given-names></name>
+<name name-style="western"><surname>Rosenbaum</surname><given-names>DS</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Cellular mechanisms of arrhythmogenic cardiac alternans.</article-title>             <source>Prog Biophys Mol Biol</source>             <volume>97</volume>             <fpage>332</fpage>             <lpage>347</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Kim1"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kim</surname><given-names>TH</given-names></name>
+<name name-style="western"><surname>Shin</surname><given-names>SY</given-names></name>
+<name name-style="western"><surname>Choo</surname><given-names>SM</given-names></name>
+<name name-style="western"><surname>Cho</surname><given-names>KH</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Dynamical analysis of the calcium signaling pathway in cardiac myocytes based on logarithmic sensitivity analysis.</article-title>             <source>Biotechnol J</source>             <volume>3</volume>             <fpage>639</fpage>             <lpage>647</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Nygren1"><label>37</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Nygren</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Fiset</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Firek</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Clark</surname><given-names>JW</given-names></name>
+<name name-style="western"><surname>Lindblad</surname><given-names>DS</given-names></name>
+<etal/></person-group>             <year>1998</year>             <article-title>Mathematical model of an adult human atrial cell: the role of K+ currents in repolarization.</article-title>             <source>Circ Res</source>             <volume>82</volume>             <fpage>63</fpage>             <lpage>81</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Dokos1"><label>38</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dokos</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Lovell</surname><given-names>NH</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Parameter estimation in cardiac ionic models.</article-title>             <source>Prog Biophys Mol Biol</source>             <volume>85</volume>             <fpage>407</fpage>             <lpage>431</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-BuenoOrovio1"><label>39</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bueno-Orovio</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Cherry</surname><given-names>EM</given-names></name>
+<name name-style="western"><surname>Fenton</surname><given-names>FH</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Minimal model for human ventricular action potentials in tissue.</article-title>             <source>J Theor Biol</source>             <volume>253</volume>             <fpage>544</fpage>             <lpage>560</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Fink1"><label>40</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Fink</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Noble</surname><given-names>D</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Markov models for ion channels: versatility versus identifiability and speed. Philos. Transact.</article-title>             <source>A Math Phys Eng Sci</source>             <volume>367</volume>             <fpage>2161</fpage>             <lpage>2179</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Olypher1"><label>41</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Olypher</surname><given-names>AV</given-names></name>
+<name name-style="western"><surname>Calabrese</surname><given-names>RL</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Using constraints on neuronal activity to reveal compensatory changes in neuronal parameters.</article-title>             <source>J Neurophysiol</source>             <volume>98</volume>             <fpage>3749</fpage>             <lpage>3758</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Druckmann1"><label>42</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Druckmann</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Banitt</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Gidon</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Schurmann</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Markram</surname><given-names>H</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>A novel multiple objective optimization framework for constraining conductance-based neuron models by experimental data.</article-title>             <source>Front Neurosci</source>             <volume>1</volume>             <fpage>7</fpage>             <lpage>18</lpage>          </element-citation></ref>
+<ref id="pcbi.1000914-Taylor1"><label>43</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Taylor</surname><given-names>AL</given-names></name>
+<name name-style="western"><surname>Goaillard</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Marder</surname><given-names>E</given-names></name>
+</person-group>             <year>2009</year>             <article-title>How multiple conductances determine electrophysiological properties in a multicompartment model.</article-title>             <source>J Neurosci</source>             <volume>29</volume>             <fpage>5573</fpage>             <lpage>5586</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

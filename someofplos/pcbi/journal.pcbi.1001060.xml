@@ -1,0 +1,1202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+   <journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Computational Biology</journal-title></journal-title-group><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+         <publisher-name>Public Library of Science</publisher-name>
+         <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+   <article-meta><article-id pub-id-type="publisher-id">10-PLCB-RA-1618R3</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1001060</article-id><article-categories>
+         <subj-group subj-group-type="heading">
+            <subject>Research Article</subject>
+         </subj-group>
+         <subj-group subj-group-type="Discipline">
+<subject>Computational Biology</subject>
+         </subj-group>
+      </article-categories><title-group><article-title>Estimation of Parent Specific DNA Copy Number in Tumors using High-Density Genotyping Arrays</article-title><alt-title alt-title-type="running-head">Estimation of Parent Specific DNA Copy Number</alt-title></title-group><contrib-group>
+         <contrib contrib-type="author" xlink:type="simple">
+            <name name-style="western"><surname>Chen</surname><given-names>Hao</given-names></name>
+            <xref ref-type="aff" rid="aff1"><sup>1</sup></xref>
+         </contrib>
+         <contrib contrib-type="author" xlink:type="simple">
+            <name name-style="western"><surname>Xing</surname><given-names>Haipeng</given-names></name>
+            <xref ref-type="aff" rid="aff2"><sup>2</sup></xref>
+         </contrib>
+         <contrib contrib-type="author" xlink:type="simple">
+            <name name-style="western"><surname>Zhang</surname><given-names>Nancy R.</given-names></name>
+            <xref ref-type="aff" rid="aff3"><sup>3</sup></xref>
+            <xref ref-type="corresp" rid="cor1"><sup>*</sup></xref>
+         </contrib>
+      </contrib-group><aff id="aff1"><label>1</label><addr-line>Department of Statistics, Stanford University, Stanford, California, United States of America</addr-line>
+      </aff><aff id="aff2"><label>2</label><addr-line>Department of Applied Mathematics and Statistics, SUNY at Stony Brook, Stony Brook, New York, United States of America</addr-line>
+      </aff><aff id="aff3"><label>3</label><addr-line>Department of Statistics, Stanford University, Stanford, California, United States of America</addr-line>
+      </aff><contrib-group>
+         <contrib contrib-type="editor" xlink:type="simple">
+            <name name-style="western"><surname>Markel</surname><given-names>Scott</given-names></name>
+            <role>Editor</role><xref ref-type="aff" rid="edit1"/></contrib>
+      </contrib-group><aff id="edit1">Accelrys, United States of America</aff><author-notes>
+         <corresp id="cor1">* E-mail: <email xlink:type="simple">nzhang@stanford.edu</email></corresp>
+         <fn fn-type="con">
+            <p>Analyzed the data: HC NRZ. Wrote the paper: HC HX NRZ. Designed methodology: NRZ HC HX.</p>
+         </fn>
+      <fn fn-type="conflict">
+         <p>The authors have declared that no competing interests exist.</p>
+      </fn></author-notes><pub-date pub-type="collection">
+         <month>1</month>
+         <year>2011</year>
+      </pub-date><pub-date pub-type="epub">
+         <day>27</day>
+         <month>1</month>
+         <year>2011</year>
+      </pub-date><volume>7</volume><issue>1</issue><elocation-id>e1001060</elocation-id><history>
+         <date date-type="received">
+            <day>7</day>
+            <month>1</month>
+            <year>2010</year>
+         </date>
+         <date date-type="accepted">
+            <day>17</day>
+            <month>12</month>
+            <year>2010</year>
+         </date>
+      </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2011</copyright-year><copyright-holder>Chen et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+         <p>Chromosomal gains and losses comprise an important type of genetic change in tumors, and can now be assayed using microarray hybridization-based experiments. Most current statistical models for DNA copy number estimate total copy number, which do not distinguish between the underlying quantities of the two inherited chromosomes. This latter information, sometimes called <italic>parent specific copy number</italic>, is important for identifying allele-specific amplifications and deletions, for quantifying normal cell contamination, and for giving a more complete molecular portrait of the tumor. We propose a stochastic segmentation model for parent-specific DNA copy number in tumor samples, and give an estimation procedure that is computationally efficient and can be applied to data from the current high density genotyping platforms. The proposed method does not require matched normal samples, and can estimate the unknown genotypes simultaneously with the parent specific copy number. The new method is used to analyze 223 glioblastoma samples from the Cancer Genome Atlas (TCGA) project, giving a more comprehensive summary of the copy number events in these samples. Detailed case studies on these samples reveal the additional insights that can be gained from an allele-specific copy number analysis, such as the quantification of fractional gains and losses, the identification of copy neutral loss of heterozygosity, and the characterization of regions of simultaneous changes of both inherited chromosomes.</p>
+      </abstract><abstract abstract-type="summary">
+         <title>Author Summary</title>
+         <p>Many genetic diseases are related to copy number aberrations of some regions of the genome. As we know, each chromosome normally has two copies. However, under some circumstances, for some regions, either one or both of the chromosomes change. Genotyping microarray data provides the copy number of the two alleles of polymorphic sites along the chromosomes, which make the inference of the copy number aberrations of the chromosome feasible. One difficulty is that genotyping microarray data cannot provide the haplotype of the two copies of a chromosome. In this paper, we model the copy number along the chromosome as a two-dimensional Markov Chain. Using the observed copy number of both alleles of all the sites, we can determine the parent specific copy number along the chromosome as well as infer the haplotypes of the two copies of the inherited chromosomes in regions where there is allelic imbalance. Simulation results show high sensitivity and specificity of the method. Applying this method to glioblastoma samples from the Cancer Genome Atlas data illustrate the insights gained from allele-specific copy number analysis.</p>
+      </abstract><funding-group><funding-statement>Hao Chen's research was supported in part by NIH Merit Award R37EB02784. Haipeng Xing's research was supported by the National Science Foundation grant DMS-0906593. Nancy R. Zhang's research was supported in part by the National Science Foundation grant DMS-0906394. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts>
+<page-count count="15"/>
+</counts></article-meta>
+</front>
+<body>
+   <sec id="s1">
+      <title>Introduction</title>
+      <p>DNA copy number aberration (CNA), defined as gains or losses of specific chromosomal segments, are an important type of genetic change in tumors. Various microarray based experimental platforms <xref ref-type="bibr" rid="pcbi.1001060-Pinkel1">[1]</xref>–<xref ref-type="bibr" rid="pcbi.1001060-Wang1">[7]</xref> have made possible the fine scale measurement of CNAs. Whereas the earlier platforms such as comparative genome hybridization arrays were designed to measure the total copy number of both inherited chromosomes, other platforms such as high density genotyping microarrays <xref ref-type="bibr" rid="pcbi.1001060-Peiffer1">[6]</xref>–<xref ref-type="bibr" rid="pcbi.1001060-Bignell1">[8]</xref> can measure allele specific DNA quantity. For alleles that represent known variants of genes, it would be of biological interest to know which allele has undergone copy number change <xref ref-type="bibr" rid="pcbi.1001060-Hanahan1">[9]</xref>. Also, some genetic mechanisms, such as gene conversion, mitotic recombination, and uniparental disomy, cause loss of heterozygosity (LOH) without change in total DNA copy number, and thus can not be detected through conventional analysis methods relying only on total copy number. Even in the case where the total DNA copy number changes, it would be informative to know whether one or both of the inherited parental chromosomes are involved. Thus, to construct a more detailed molecular portrait of tumors, we need to distinguish between the underlying quantities of the two inherited chromosomes, which we call the <italic>parent specific copy numbers</italic>.</p>
+      <p>This paper addresses the problem of parent specific copy number estimation using allele-specific raw copy number data from high-density genotyping arrays. We will describe the data in more detail in the next section. Here, we clarify the differences between total copy number analysis and parent specific copy number analysis, and review the background of the computational treatment of this problem.</p>
+      <p>The genome of each somatic human cell normally contains two copies of each of the 22 autosomes, one inherited from each biological parent. At any genome location, one or both of these two chromosomes may gain or lose copies, thus creating a change in total copy number at that location. Microarray experiments for measuring total copy number produce a sequence of continuous valued measurements mapping to ordered locations along the chromosomes. Computational methods can be applied to segment this noisy sequence of measurements into regions of homogeneous copy number <xref ref-type="bibr" rid="pcbi.1001060-Brot1">[10]</xref>–<xref ref-type="bibr" rid="pcbi.1001060-Xing1">[21]</xref>, see Lai and Park <xref ref-type="bibr" rid="pcbi.1001060-Lai1">[22]</xref> and Willenbrock and Fridlyand <xref ref-type="bibr" rid="pcbi.1001060-Willenbrock1">[23]</xref> for a review. Since chromosomes are gained and lost in contiguous segments, the true total copy number should be piecewise continuous. This is why change-point models and hidden Markov models have been very useful for total copy number estimation.</p>
+      <p>Total copy number estimates do not reveal which (or both) of the two inherited chromosomes have been gained or lost, and if a locus is polymorphic, which (or both) of the alleles have been affected. This information is now available in data produced by high density genotyping platforms, which give, at selected single nucleotide polymorphisms (SNPs), a bivariate measurement quantifying the two alleles which we arbitrarily label <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e001" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e002" xlink:type="simple"/></inline-formula>, as shown in the left panel of <xref ref-type="fig" rid="pcbi-1001060-g001">Figure 1</xref>. Some platforms output the total raw copy number (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e003" xlink:type="simple"/></inline-formula>), which is the sum of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e004" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e005" xlink:type="simple"/></inline-formula>, and the B-allele frequency (BAF), which is the percentage of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e006" xlink:type="simple"/></inline-formula> allele raw copy number among the total allele raw copy number, i.e., <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e007" xlink:type="simple"/></inline-formula>. The logR quantifies the total copy number, while the BAF quantifies the imbalance between the two alleles. The right panel of <xref ref-type="fig" rid="pcbi-1001060-g001">Figure 1</xref> shows <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e008" xlink:type="simple"/></inline-formula>, the sum of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e009" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e010" xlink:type="simple"/></inline-formula> allele intensities, and BAF. Unlike the total copy number, the allele-specific measurements are mixtures that depend on the unknown genotype at each location. For this reason, conventional change-point models can not be applied to allele specific copy number estimation.</p>
+      <fig id="pcbi-1001060-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1001060.g001</object-id><label>Figure 1</label>
+         <caption>
+            <title>An example data sequence taken from a stretch of a TCGA glioblastoma sample (first 10000 SNPs of TCGA sample 02-0258 chromosome 2) assayed using the Illumina HumanHap 550k SNP array.</title>
+            <p>The left panel shows the A and B allele intensities. The right panel shows the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e011" xlink:type="simple"/></inline-formula> and BAF. All <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e012" xlink:type="simple"/></inline-formula>-axes are in mega base pairs.</p>
+         </caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.g001" xlink:type="simple"/></fig>
+      <p>This problem can be formulated statistically as follows: The observed <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e013" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e014" xlink:type="simple"/></inline-formula> intensities form a bivariate sequence whose underlying distribution undergoes abrupt changes. The distributions at each location are mixtures. Both the change-points, the mixture components, and the cluster memberships at each data point are unknown and must be estimated from the data.</p>
+      <p>There have been much effort extending existing genotyping and total copy number segmentation procedures to analyze allele-specific data. At the probe level, CNAT <xref ref-type="bibr" rid="pcbi.1001060-Affymetrix1">[24]</xref>, CN5 <xref ref-type="bibr" rid="pcbi.1001060-Affymetrix1">[24]</xref>, CRMA <xref ref-type="bibr" rid="pcbi.1001060-Bengtsson1">[25]</xref>, dChipSNP <xref ref-type="bibr" rid="pcbi.1001060-Li1">[26]</xref>, <xref ref-type="bibr" rid="pcbi.1001060-Lin1">[27]</xref>, PLASQ <xref ref-type="bibr" rid="pcbi.1001060-LaFramboise1">[28]</xref>, and PICR <xref ref-type="bibr" rid="pcbi.1001060-Wan1">[29]</xref> can be applied to Affymetrix data to produce allele-specific probe-set summaries at each SNP location. However, just as in the estimation of total copy number, the allele-specific intensities for adjacent SNPs should be smoothed to infer the underlying parent-specific copy numbers. LaFramboise et al. <xref ref-type="bibr" rid="pcbi.1001060-LaFramboise1">[28]</xref> first segmented the total copy number using Circular Binary Segmentation <xref ref-type="bibr" rid="pcbi.1001060-Olshen1">[30]</xref>, and then estimated the parent-specific copy numbers for each segment. This early approach misses copy neutral loss-of -heterozygosity (LOH) events, defined as the simultaneous gain of one chromosome and balanced loss of the other chromosome resulting in loss of heterozygosity but no change in total copy number. Many other existing approaches rely on discrete-state hidden Markov models <xref ref-type="bibr" rid="pcbi.1001060-Lin1">[27]</xref>, <xref ref-type="bibr" rid="pcbi.1001060-Beroukhim1">[31]</xref>–<xref ref-type="bibr" rid="pcbi.1001060-Li2">[34]</xref>, which are hidden Markov models assuming a pre-specified finite set of underlying states. For example, PennCNV <xref ref-type="bibr" rid="pcbi.1001060-Wang3">[32]</xref> and QuantiSNP <xref ref-type="bibr" rid="pcbi.1001060-Colella1">[33]</xref> assume that the underlying copy numbers belong to the integer classes <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e015" xlink:type="simple"/></inline-formula>, and that the allele-specific copy numbers can be described by “generalized genotypes” AA, AB, BB, A-, B-, AAB, ABB, etc. While these types of models are very useful for detecting germline copy number variants in normal tissue, they do not generalize well to genetically heterogeneous samples. This is because by requiring a fixed set of pre-defined discrete states, they do not account for the heterogeneity of cells within the sample, which produces data with apparently fractional copy number changes rather than the idealized unit-copy changes. This is especially problematic for tumor samples, which are usually heterogeneous mixtures of cells with different genetic profiles. Through titration studies, Staaf et al. <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref> showed that methods relying on idealized genotype states lose sensitivity when tumors are diluted with normal cells.</p>
+      <p>The fractional changes in tumors inspired recent approaches <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref>,  that segment both the logR and BAF simultaneously. Since BAF is a mixture of homozygous and heterozygous SNPs, it cannot be processed using existing segmentation procedures. Current methods solve this problem through a pre-processing step that gets rid of the homozygous SNPs. However, identifying the “homozygous SNPs” is nontrivial when the regions of CNA are unknown, and a segmentation procedure that simultaneously genotype each SNP while inferring the underlying parental copy numbers is desirable, unless a matched normal is available.</p>
+      <p>In light of these recent developments, we need a systematic stochastic model for parent specific copy number which can accommodate fractional copy number changes. We propose a general two-chromosome hidden Markov model for this problem. The hidden states of the model represent the copy numbers of each of the two inherited chromosomes, and take value in the continuous space of real numbers. Thus, unlike discrete state space HMMs, this model is not limited to idealized unit-copy changes. Computationally efficient fitting algorithms are given that scale well to data obtained from the current high density genotyping arrays. The estimation procedure based on the two chromosome model, which we call Parent-Specific-Copy-Number (PSCN), extends the framework developed in Lai et al. <xref ref-type="bibr" rid="pcbi.1001060-Lai2">[37]</xref> for total copy number analysis.</p>
+      <p>After segmenting the genome into regions of constant parent-specific copy number, we identify, for each region, whether both or only one of the parental chromosomes have changed copies. We also determine, in regions containing simultaneous gain of one chromosome and loss of the other, whether the changes are balanced. Thus, we classify the regions into six different types of aberrations depending on the status of the two parental chromosomes: gain of both chromosomes (gain/gain), gain of only one chromosome (gain/normal), gain of one chromosome and balanced loss of the other chromosome (balanced gain/loss), gain of one chromosome and unbalanced loss of the other chromosome (unbalanced gain/loss), loss of only one chromosome (normal/loss) and loss of both chromosomes (loss/loss). To our knowledge, this is the most detailed classification available among methods for allele-specific analysis. The PSCN method outputs the copy number for both chromosomes in each segment.</p>
+      <p>We evaluate the accuracy of the proposed procedure on a series of simulated tumor titration data provided by Staaf et al. <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref>, as well as a new set of simulation data containing a larger variety of chromosomal aberrations. We then apply the new approach to 223 glioblastoma samples from the Cancer Genome Atlas project <xref ref-type="bibr" rid="pcbi.1001060-The1">[38]</xref>, and illustrate through case studies some of the insights gained from an analysis of allele-specific data.</p>
+   </sec>
+   <sec id="s2">
+      <title>Results</title>
+      <sec id="s2a">
+         <title>The Two Chromosome Hidden Markov Model</title>
+         <p>Let <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e016" xlink:type="simple"/></inline-formula> be the allele-specific signals for alleles A and B at <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e017" xlink:type="simple"/></inline-formula> SNPs ordered by their locations in a reference genome. The way of obtaining <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e018" xlink:type="simple"/></inline-formula> depends on the experimental platform (see “Data Transformation” in <xref ref-type="sec" rid="s4">Methods</xref>). Our goal is to infer the quantities of the parent specific copy numbers, which we denote by <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e019" xlink:type="simple"/></inline-formula>. By <italic>parent-specific</italic>, we distinguish between the chromosomes inherited from the two parents, which we treat as exchangeable and do not label as maternal or paternal. Let <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e020" xlink:type="simple"/></inline-formula> be the configuration at SNP <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e021" xlink:type="simple"/></inline-formula> specifying the alleles carried by the inherited chromosomes. Let <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e022" xlink:type="simple"/></inline-formula> be the true copy numbers of alleles <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e023" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e024" xlink:type="simple"/></inline-formula> at SNP <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e025" xlink:type="simple"/></inline-formula>. The relationship between <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e026" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e027" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e028" xlink:type="simple"/></inline-formula> is shown in <xref ref-type="table" rid="pcbi-1001060-t001">Table 1</xref>.</p>
+         <table-wrap id="pcbi-1001060-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1001060.t001</object-id><label>Table 1</label><caption>
+               <title>Relationship between the inherited allele configuration <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e029" xlink:type="simple"/></inline-formula> and the true allele specific copy numbers <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e030" xlink:type="simple"/></inline-formula>.</title>
+            </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1001060-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.t001" xlink:type="simple"/><table>
+               <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+               </colgroup>
+               <tbody>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e031" xlink:type="simple"/></inline-formula></td>
+                     <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e032" xlink:type="simple"/></inline-formula></td>
+                     <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e033" xlink:type="simple"/></inline-formula></td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e034" xlink:type="simple"/></inline-formula></td>
+                     <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e035" xlink:type="simple"/></inline-formula></td>
+                     <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e036" xlink:type="simple"/></inline-formula></td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e037" xlink:type="simple"/></inline-formula></td>
+                     <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e038" xlink:type="simple"/></inline-formula></td>
+                     <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e039" xlink:type="simple"/></inline-formula></td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e040" xlink:type="simple"/></inline-formula></td>
+                     <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e041" xlink:type="simple"/></inline-formula></td>
+                     <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e042" xlink:type="simple"/></inline-formula></td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e043" xlink:type="simple"/></inline-formula></td>
+                     <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e044" xlink:type="simple"/></inline-formula></td>
+                     <td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e045" xlink:type="simple"/></inline-formula></td>
+                  </tr>
+               </tbody>
+            </table></alternatives></table-wrap>
+         <p>Note that when a somatic event causes a change in copy number of one or both parental chromosomes at SNP <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e046" xlink:type="simple"/></inline-formula>, the allele-specific copy numbers <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e047" xlink:type="simple"/></inline-formula> change, but <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e048" xlink:type="simple"/></inline-formula> remains fixed. For example, if the inherited genotype is <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e049" xlink:type="simple"/></inline-formula>, and if <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e050" xlink:type="simple"/></inline-formula> is amplified two-fold, then the true copy number of allele <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e051" xlink:type="simple"/></inline-formula> would also be amplified two-fold, but <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e052" xlink:type="simple"/></inline-formula> would still be <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e053" xlink:type="simple"/></inline-formula>. The <italic>observed</italic> allele specific signals <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e054" xlink:type="simple"/></inline-formula> are assumed to be equal to the true allele specific quantities plus an independent measurement error,<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e055" xlink:type="simple"/><label>(1)</label></disp-formula>where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e056" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e057" xlink:type="simple"/></inline-formula> are state specific error covariance matrices. The model that relates <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e058" xlink:type="simple"/></inline-formula> to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e059" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e060" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e061" xlink:type="simple"/></inline-formula> is illustrated in <xref ref-type="fig" rid="pcbi-1001060-g002">Figure 2</xref>.</p>
+         <fig id="pcbi-1001060-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1001060.g002</object-id><label>Figure 2</label>
+            <caption>
+               <title>Overview of the stochastic segmentation model.</title>
+               <p>The Markov sequence <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e062" xlink:type="simple"/></inline-formula> represent the parent-specific copy number, i.e. the underlying copy numbers of the two inherited chromosomes. For each SNP <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e063" xlink:type="simple"/></inline-formula>, the <italic>allele</italic>-specific copy numbers <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e064" xlink:type="simple"/></inline-formula> depend on both <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e065" xlink:type="simple"/></inline-formula> and the inherited allele configuration <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e066" xlink:type="simple"/></inline-formula>. The observed allele-specific signals, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e067" xlink:type="simple"/></inline-formula>, are <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e068" xlink:type="simple"/></inline-formula> overlayed with Gaussian noise. <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e069" xlink:type="simple"/></inline-formula> affects <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e070" xlink:type="simple"/></inline-formula> in the way that different type of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e071" xlink:type="simple"/></inline-formula> can have different covariance structure for the Gaussion noise.</p>
+            </caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.g002" xlink:type="simple"/></fig>
+         <p>To model the gains and losses of the two inherited chromosomes, we assume that <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e072" xlink:type="simple"/></inline-formula> is a Markov jump process with state space <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e073" xlink:type="simple"/></inline-formula>. Conceptually, each time <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e074" xlink:type="simple"/></inline-formula> jumps, it can choose between two states: The <italic>normal</italic> state (one copy each of maternal and paternal chromosome), where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e075" xlink:type="simple"/></inline-formula> must assume a known baseline value <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e076" xlink:type="simple"/></inline-formula>, or the <italic>variant</italic> state, where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e077" xlink:type="simple"/></inline-formula> picks a new random value from the bivariate Gaussian <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e078" xlink:type="simple"/></inline-formula>. The prior mean <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e079" xlink:type="simple"/></inline-formula> and prior covariance <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e080" xlink:type="simple"/></inline-formula>, along with the other hyperparameters of the prior, will be estimated by maximum likelihood. To allow the possibility of the copy number changing from a variant state to a different variant state, for example, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e081" xlink:type="simple"/></inline-formula> to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e082" xlink:type="simple"/></inline-formula>, we technically need two identically distributed variant states in our formulation of the Markov chain. Hence we let the states be <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e083" xlink:type="simple"/></inline-formula>. Then, the dynamics of the Markov model can be described by the transition matrix<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e084" xlink:type="simple"/><label>(2)</label></disp-formula>The matrix <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e085" xlink:type="simple"/></inline-formula> specifies that if <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e086" xlink:type="simple"/></inline-formula> is in the normal state at SNP <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e087" xlink:type="simple"/></inline-formula>, then at SNP <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e088" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e089" xlink:type="simple"/></inline-formula> stays in the normal state with probability <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e090" xlink:type="simple"/></inline-formula>, or jumps to a variant state with probability <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e091" xlink:type="simple"/></inline-formula>. If <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e092" xlink:type="simple"/></inline-formula> is in a variant state, then at SNP <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e093" xlink:type="simple"/></inline-formula>, it would stay at the <italic>same</italic> variant state with probability <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e094" xlink:type="simple"/></inline-formula>, or jump to a <italic>different</italic> variant state with probability <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e095" xlink:type="simple"/></inline-formula>, or jump back to the normal state with probability <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e096" xlink:type="simple"/></inline-formula>. One can verify that this formulation of the Markov chain, with one baseline state and two variant states, allows for a model with a baseline state and generic “variant” states as desired. This model extends the one used for the analysis of total copy number in Lai et al. <xref ref-type="bibr" rid="pcbi.1001060-Lai2">[37]</xref>. This Markov chain has the stationary distribution <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e097" xlink:type="simple"/></inline-formula>. The three-state Markov chain with transition probability matrix <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e098" xlink:type="simple"/></inline-formula> and initialized at the stationary distribution is reversible, which provides substantial simplification for the estimation of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e099" xlink:type="simple"/></inline-formula>. Practically, the reversibility of the Markov model implies that we would obtain the same segmentation going from right to left as we do going from left to right. Biologically, this seems logical, as there is no known directionality of copy number aberration events.</p>
+         <p>We assume that the inherited allele configurations <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e100" xlink:type="simple"/></inline-formula> are independent multinomial with prior parameters<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e101" xlink:type="simple"/></disp-formula>which can be obtained from the genotyping data of a set of normal control samples. Note that <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e102" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e103" xlink:type="simple"/></inline-formula> cannot be distinguished in normal samples, so we can set <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e104" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e105" xlink:type="simple"/></inline-formula> to one-half of the proportion of heterozygotes for SNP <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e106" xlink:type="simple"/></inline-formula>. When these figures are not available, we have found that a uniform prior usually works reasonably well. This is because the main purpose of the model is to estimate the parent-specific copy numbers, with <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e107" xlink:type="simple"/></inline-formula> as surrogate information. With the large number of data points obtained from the high density arrays, the posterior for the parent-specific copy numbers is usually quite insensitive to the prior on <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e108" xlink:type="simple"/></inline-formula>. Note that for platforms, such as the Affymetrix 6.0 array, have non-polymorphic copy number markers rather than SNP markers. For those markers, the prior for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e109" xlink:type="simple"/></inline-formula> can be set to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e110" xlink:type="simple"/></inline-formula>. In this way, the posterior will always remain at <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e111" xlink:type="simple"/></inline-formula> and only the total copy number information at these markers would contribute to the overall segmentation.</p>
+         <p>Note that this model contains many assumptions, including Gaussianity of the allele specific intensities and Markovicity of the underlying copy number states. These assumptions allow fast and explicit analytic formulas to be derived, thus avoiding the need for Monte Carlo based estimates. For most platforms, the allele-specific intensities deviate from Gaussianity, despite careful normalization. Also, there has never been proof that chromosomal breakages are Markovian. These assumptions are made for modeling convenience, just as in the total-copy number estimation problem <xref ref-type="bibr" rid="pcbi.1001060-Fridlyand1">[11]</xref>, <xref ref-type="bibr" rid="pcbi.1001060-Hup1">[16]</xref>, <xref ref-type="bibr" rid="pcbi.1001060-Olshen1">[30]</xref>, <xref ref-type="bibr" rid="pcbi.1001060-Lai2">[37]</xref>. It is reassuring that the estimation method is robust to deviations from both the Gaussian and Markov assumptions, as we show using the titration data from Staaf et al. <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref> and through our own spike-in studies.</p>
+         <p>Our primary objective is to estimate the parent specific copy numbers <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e112" xlink:type="simple"/></inline-formula>, which depend on the observed signals through the unobserved inherited allele configurations <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e113" xlink:type="simple"/></inline-formula>. Let <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e114" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e115" xlink:type="simple"/></inline-formula> be the set of all possible realizations for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e116" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e117" xlink:type="simple"/></inline-formula>, respectively. We describe below an iterative algorithm to estimate <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e118" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e119" xlink:type="simple"/></inline-formula>.</p>
+         <sec id="s2a1">
+            <title>Allele-specific iterative smoothing</title>
+            <p>Fix stopping threshold <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e120" xlink:type="simple"/></inline-formula>. Initialize <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e121" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e122" xlink:type="simple"/></inline-formula> through an initial 4-group clustering of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e123" xlink:type="simple"/></inline-formula>. Repeat:</p>
+            <list list-type="order">
+               <list-item>
+                  <p>Expectation step: Given <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e124" xlink:type="simple"/></inline-formula>, set <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e125" xlink:type="simple"/></inline-formula> to its posterior mean<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e126" xlink:type="simple"/><label>(3)</label></disp-formula>Computationally efficient formulas for (3) are given in <xref ref-type="sec" rid="s4">Methods</xref>.</p>
+               </list-item>
+               <list-item>
+                  <p>Maximization step: Given <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e127" xlink:type="simple"/></inline-formula>, set <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e128" xlink:type="simple"/></inline-formula> to its maximum a posterior value<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e129" xlink:type="simple"/><label>(4)</label></disp-formula>This can be done easily because given <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e130" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e131" xlink:type="simple"/></inline-formula> is a four-component mixture of Gaussians at each <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e132" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e133" xlink:type="simple"/></inline-formula> is simply the identifier for each mixture component. The exact formula for (4) is given in <xref ref-type="sec" rid="s4">Methods</xref>.</p>
+               </list-item>
+               <list-item>
+                  <p>If <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e134" xlink:type="simple"/></inline-formula>, stop and report <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e135" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e136" xlink:type="simple"/></inline-formula>. Otherwise, set <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e137" xlink:type="simple"/></inline-formula> and go back to step 1.</p>
+               </list-item>
+            </list>
+            <p>In each iteration of the above algorithm, the expectation step estimates <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e138" xlink:type="simple"/></inline-formula> by its posterior mean given the data and the current estimate of the configuration states <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e139" xlink:type="simple"/></inline-formula>. Then, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e140" xlink:type="simple"/></inline-formula> is set to its posterior mode given the data and the current estimate of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e141" xlink:type="simple"/></inline-formula>. Computationally efficient forward-backward equations for (3) and formulas for (4) are given in <xref ref-type="sec" rid="s4">Methods</xref>, where we also describe an expectation maximization procedure for estimating the hyperparameters <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e142" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e143" xlink:type="simple"/></inline-formula> from the data, so that they do not need to be specified a priori.</p>
+            <p>The above algorithm returns a soft segmentation of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e144" xlink:type="simple"/></inline-formula> in the form of a Bayesian estimate <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e145" xlink:type="simple"/></inline-formula> for the parent specific copy numbers at each location. A hard segmentation is sometimes desirable, for example, to give a sparse representation of the data. A hard segmentation can be obtained from the soft segmentation as follows: Compute for each <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e146" xlink:type="simple"/></inline-formula> the one-step Euclidean distance <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e147" xlink:type="simple"/></inline-formula>. Estimate the change-points to be the locations where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e148" xlink:type="simple"/></inline-formula> are larger than the threshold, with the constraint that they must be separated by a pre-chosen minimum number of SNPs (e.g. 20). The segmentation algorithm starts with the set <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e149" xlink:type="simple"/></inline-formula> containing only the end points of the sequence. Change-points are added recursively to the set by maximizing <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e150" xlink:type="simple"/></inline-formula> under the separation constraint, until no more change-point can be added. We start with a low threshold for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e151" xlink:type="simple"/></inline-formula> allowing some false positives, with most of the false positives eliminated by a subsequent Wilcoxon Rank-Sum test (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e152" xlink:type="simple"/></inline-formula>-value threshold of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e153" xlink:type="simple"/></inline-formula>) that combines adjacent segments with no significant difference in mean. We found this to be more accurate than a one-step procedure using a more stringent threshold on <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e154" xlink:type="simple"/></inline-formula>.</p>
+         </sec>
+      </sec>
+      <sec id="s2b">
+         <title>Identifying the Type of Aberration</title>
+         <p>The segmentation divides the genome into regions where the copy numbers of the two inherited chromosomes are constant. It is often useful to know, for each region, whether the copy numbers of one or both parental chromosomes deviate from the normal level. This involves classifying each region into one of the following six types of chromosomal change: gain/gain, gain/normal, balanced gain/loss, unbalanced gain/loss, normal/loss and loss/loss.</p>
+         <p>For each segmented region, we define the major copy number to be the normalized raw copy number of the more abundant chromosome, and the minor copy number to be the normalized raw copy number of the less abundant chromosome. If the two chromosomes have equal copy numbers, then the major and minor chromosome labels are assigned arbitrarily. The major and minor copy numbers are estimated after the hard-segmentation using a mixture model on the heterozygous SNPs in each region (which can be identified using <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e155" xlink:type="simple"/></inline-formula>). Then, a <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e156" xlink:type="simple"/></inline-formula>-test is used to compare the estimated major and minor copy numbers of each region to the estimated allele copy number of the normal level in the unchanged segments. The Bonferroni correction is used to adjust for multiple testing. The technical details are given in <xref ref-type="sec" rid="s4">Methods</xref>. This procedure allows us to discover and distinguish all of the six types of CNVs.</p>
+         <p>An additional caveat is that when both parental chromosomes carry the same haplotype, a balanced gain/loss would be called if the region were long enough. Without matched data from normal tissue, it is impossible to distinguish with certainty between inherited and somatic LOH. However, we rely on the fact that long regions of LOH are infrequent, and thus the minor allele frequency of SNPs and the linkage disequilibrium between them can be used to conduct a test for the probability that an inherited LOH appears by chance. This haplotype correction only takes care of the unique common haplotypes, i.e., when a region is dominated by one haplotype. If a haplotype is not common in that region, or if there are several haplotypes in that region, this test loses sensitivity. In this case, paired normal cell information would be useful. More details are given in <xref ref-type="sec" rid="s4">Methods</xref>.</p>
+      </sec>
+      <sec id="s2c">
+         <title>Results on Simulated Dilution Data from Staaf et al. <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref></title>
+         <p>Staaf et al. <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref> performed a systematic comparison of existing methods for allele-specific copy number estimation. They created a simulated dilution data set based on experimental 550k Illumina data for HapMap sample NA06991. To the diploid HapMap sample, ten regions of aberrant copy number were added at increasing fractions to mimic a tumor sample that is contaminated with normal cells. Here, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e157" xlink:type="simple"/></inline-formula> normal cell contamination means <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e158" xlink:type="simple"/></inline-formula> part normal cells are mixed with <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e159" xlink:type="simple"/></inline-formula> part tumor cells. The aberrant regions vary by type and length, and represent regions of hemizygous gains and losses and copy neutral LOH. Since the locations of the true aberrant regions are known, the specificity and sensitivity of the detection methods can be evaluated.</p>
+         <p>We applied PSCN, the R package we developed based on our method, to this dilution data set and compared it with existing approaches in an analysis that parallels the insightful analysis in Staaf et al. <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref>. The sensitivity and specificity of results from PSCN at varying contamination ratios is shown in <xref ref-type="fig" rid="pcbi-1001060-g003">Figures 3</xref> and <xref ref-type="fig" rid="pcbi-1001060-g004">4</xref> overlayed onto plots reproduced from Staaf et al. <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref>. In order to compare with the sensitivity analysis of other models done in the paper by Staaf et al. <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref>, we define a “correct detection” to mean that a true CNA region has been called, but do not require that the type of CNA (e.g. gain/loss, normal/loss) has been correctly identified. All the other current procedures only categorize the CNAs into Gain, Loss and LOH, which are the three types of CNAs used in the Dilution data in Staaf et al. <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref>. We assess the accuracy of PSCN in a more detailed classification of identified CNAs based on the six types of chromosomal change in a separate data set that contains a wider diversity of chromosomal events (see next section). In the simulated dilution data, the regions vary in length, magnitude, and type of aberration, with some regions harder to detect than the others. There is a separate sensitivity plot for each of the 10 aberrant regions created by <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref>. As expected, for all regions, sensitivity is maintained at a high level up to a certain contamination ratio, then drops sharply. Since Staaf et al. and we used very stringent detection thresholds, the specificity is maintained near 1 for all contamination ratios, as shown in <xref ref-type="fig" rid="pcbi-1001060-g004">Figure 4</xref>. The sensitivity of PSCN is comparable to SOMATICs <xref ref-type="bibr" rid="pcbi.1001060-Assi1">[36]</xref>, but the latter method has much lower specificity, as shown in the analysis of Staaf et al., see <xref ref-type="fig" rid="pcbi-1001060-g004">Figure 4</xref>. PSCN achieves good accuracy compared to the other existing methods, especially methods based on discrete-state hidden Markov models for high levels of contamination. The discrepancy between the two specificity plots in <xref ref-type="fig" rid="pcbi-1001060-g004">Figure 4</xref> are due to the fact that when an aberration is called, it may be labeled as an incorrect type (for example, a copy neutral LOH may be labeled as single copy gain). When the correct calling of aberration type is required, the specificity of PSCN is maintained through a higher level of contamination as compared to existing models. The new model can identify the correct aberration type if the normal cell contamination is below 80%. Above 80%, PSCN gains significantly in sensitivity compared to existing methods but also sacrifices slightly in specificity.</p>
+         <fig id="pcbi-1001060-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1001060.g003</object-id><label>Figure 3</label>
+            <caption>
+               <title>Sensitivity versus normal cell contamination for 10 regions in the dilution data set of Staaf et al. <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref></title>
+               <p>. We overlayed our results on top of plots reproduced from <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref>.</p>
+            </caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.g003" xlink:type="simple"/></fig>
+         <fig id="pcbi-1001060-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1001060.g004</object-id><label>Figure 4</label>
+            <caption>
+               <title>Specificity versus normal cell contamination in the dilution data set of Staaf et al. <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref></title>
+               <p>. We overlayed our results on top of plots reproduced from <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref>. Left panel shows the overall specificity, which is the fraction of SNPs outside of all simulated alletic imbalances that are not called. The right panel shows the specificity of correct calling of the type of allelic imbalance, i.e., if a truly aberrant region is identified as aberrant, but of an incorrect type, then it is also considered as a wrong call. Note that the scale of y-axis is different for the two plots.</p>
+            </caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.g004" xlink:type="simple"/></fig>
+      </sec>
+      <sec id="s2d">
+         <title>Accuracy of Aberration Type Identification</title>
+         <p>The dilution data set from Staaf et al. <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref> contains only three types of aberrations: hemizygous loss (normal/loss), single copy gain (gain/normal), and copy neutral LOH (balanced gain/loss). We created a simulated data set containing all six types of aberrations: gain/gain, gain/normal, balanced gain/loss, unbalanced gain/loss, normal/loss and loss/loss. To make the simulation resemble real data, we started with the 550k Illumina data for chromosome 1 of HapMap sample NA06991. To this normal sequence we imposed six different signal types on six regions. The positions and magnitudes of the added signals are shown in <xref ref-type="table" rid="pcbi-1001060-t002">Table 2</xref>. The top panel of <xref ref-type="fig" rid="pcbi-1001060-g005">Figure 5</xref> (first row) shows the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e160" xlink:type="simple"/></inline-formula> and BAF before the signals are imposed. The middle and bottom panels show the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e161" xlink:type="simple"/></inline-formula> and BAF after the signals have been imposed, at 0% and 80% contamination respectively, with true signals indicated by black lines. Signal becomes weaker when normal cell contamination increases, and thus are harder to detect. The estimated parent-specific copy numbers are shown in <xref ref-type="fig" rid="pcbi-1001060-g006">Figure 6</xref>. We can see from the plots that the estimated parent-specific copy numbers are very close to the true allele copy numbers. <xref ref-type="table" rid="pcbi-1001060-t003">Table 3</xref> shows the largest normal cell contamination under which the signals are detectable by PSCN. When normal cell contamination is less than 80%, our model can detect most of the signals with both alleles assigned to the correct type. When the normal cell contamination rises to 90%, our model can still detect three out of the six CNA regions, but assigns the correct type to only one of the two alleles. For example, at a high contamination level of 90%, there is a tendency for a fractional loss of both chromosomes to be mistaken for a fractional loss of only one of the two chromosomes. From this study, we see that the correct type of aberration can be identified robustly for all but the highest levels of normal cell contamination.</p>
+         <fig id="pcbi-1001060-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1001060.g005</object-id><label>Figure 5</label>
+            <caption>
+               <title>Signal of the simulated data by imposing six types of aberrations on chromosome 1 of HapMap sample NA06991.</title>
+               <p>The first row shows <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e162" xlink:type="simple"/></inline-formula> and BAF before the signals are imposed. The second row shows <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e163" xlink:type="simple"/></inline-formula> and BAF after the signals are imposed, under normal cell contamination 0%. True signals are indicated by black lines. The third row shows <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e164" xlink:type="simple"/></inline-formula> and BAF after the signals are imposed, under 80% normal cell contamination.</p>
+            </caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.g005" xlink:type="simple"/></fig>
+         <fig id="pcbi-1001060-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1001060.g006</object-id><label>Figure 6</label>
+            <caption>
+               <title>Copy number estimation of PSCN on the simulated data by imposing six types of aberrations on chromosome 1 of HapMap sample NA06991.</title>
+               <p>Top panel: no normal cell contamination. Middle panel: normal cell contamination 60%. Bottom panel: normal cell contamination 80%. In all panels, solid lines denote estimated allele copy numbers and dashed lines denote true copy numbers.</p>
+            </caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.g006" xlink:type="simple"/></fig>
+         <table-wrap id="pcbi-1001060-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1001060.t002</object-id><label>Table 2</label><caption>
+               <title>Signals imposed on to Chromosome 1.</title>
+            </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1001060-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.t002" xlink:type="simple"/><table>
+               <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1">SNP begin</td>
+                     <td align="left" colspan="1" rowspan="1">SNP end</td>
+                     <td align="left" colspan="1" rowspan="1">Major copy number</td>
+                     <td align="left" colspan="1" rowspan="1">Minor copy number</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Gain/Gain</td>
+                     <td align="left" colspan="1" rowspan="1">2000</td>
+                     <td align="left" colspan="1" rowspan="1">5000</td>
+                     <td align="left" colspan="1" rowspan="1">3</td>
+                     <td align="left" colspan="1" rowspan="1">2</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Gain/Normal</td>
+                     <td align="left" colspan="1" rowspan="1">9000</td>
+                     <td align="left" colspan="1" rowspan="1">12000</td>
+                     <td align="left" colspan="1" rowspan="1">2</td>
+                     <td align="left" colspan="1" rowspan="1">1</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Balanced Gain/Loss</td>
+                     <td align="left" colspan="1" rowspan="1">16000</td>
+                     <td align="left" colspan="1" rowspan="1">19000</td>
+                     <td align="left" colspan="1" rowspan="1">2</td>
+                     <td align="left" colspan="1" rowspan="1">0</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Unbalanced Gain/Loss</td>
+                     <td align="left" colspan="1" rowspan="1">23000</td>
+                     <td align="left" colspan="1" rowspan="1">26000</td>
+                     <td align="left" colspan="1" rowspan="1">3</td>
+                     <td align="left" colspan="1" rowspan="1">0</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Normal/Loss</td>
+                     <td align="left" colspan="1" rowspan="1">30000</td>
+                     <td align="left" colspan="1" rowspan="1">33000</td>
+                     <td align="left" colspan="1" rowspan="1">1</td>
+                     <td align="left" colspan="1" rowspan="1">0</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Loss/Loss</td>
+                     <td align="left" colspan="1" rowspan="1">37000</td>
+                     <td align="left" colspan="1" rowspan="1">40000</td>
+                     <td align="left" colspan="1" rowspan="1">0</td>
+                     <td align="left" colspan="1" rowspan="1">0</td>
+                  </tr>
+               </tbody>
+            </table></alternatives><table-wrap-foot>
+               <fn id="nt101">
+                  <label/>
+                  <p>“SNP begin” and “SNP end” are the indices of the SNP where the added signal begins and ends, respectively. “Major” and “minor” copy numbers are the intensities of the signal in the two alleles.</p>
+               </fn>
+            </table-wrap-foot></table-wrap>
+         <table-wrap id="pcbi-1001060-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1001060.t003</object-id><label>Table 3</label><caption>
+               <title>The largest tolerable percentage for normal cell contamination under which the type of aberration can be correctly detected (left column), and under which the type of aberration can be correctly identified for one of the two alleles when both alleles are different from normal (eg. Gain/Gain identified as Gain/Normal) (right column).</title>
+            </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1001060-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.t003" xlink:type="simple"/><table>
+               <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1"/>
+                     <td align="left" colspan="1" rowspan="1">Correct Type Estimated for both alleles</td>
+                     <td align="left" colspan="1" rowspan="1">Correct Type Estimated for one allele</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Gain/Gain</td>
+                     <td align="left" colspan="1" rowspan="1">70</td>
+                     <td align="left" colspan="1" rowspan="1">90</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Gain/Normal</td>
+                     <td align="left" colspan="1" rowspan="1">85</td>
+                     <td align="left" colspan="1" rowspan="1">Not applicable.</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Balanced Gain/Loss</td>
+                     <td align="left" colspan="1" rowspan="1">80</td>
+                     <td align="left" colspan="1" rowspan="1">90</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Unbalanced Gain/Loss</td>
+                     <td align="left" colspan="1" rowspan="1">85</td>
+                     <td align="left" colspan="1" rowspan="1">90</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Normal/Loss</td>
+                     <td align="left" colspan="1" rowspan="1">85</td>
+                     <td align="left" colspan="1" rowspan="1">Not applicable.</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Loss/Loss</td>
+                     <td align="left" colspan="1" rowspan="1">65</td>
+                     <td align="left" colspan="1" rowspan="1">80</td>
+                  </tr>
+               </tbody>
+            </table></alternatives><table-wrap-foot>
+               <fn id="nt102">
+                  <label/>
+                  <p>All numbers are in percent.</p>
+               </fn>
+            </table-wrap-foot></table-wrap>
+      </sec>
+      <sec id="s2e">
+         <title>Accuracy of Estimation of Genotype States</title>
+         <p>Using the dilution data set created from HapMap sample NA06991, we can also assess the accuracy of PSCN in identifying the genotype states <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e165" xlink:type="simple"/></inline-formula>. Since the genotypes for the SNPs on this sample are known, we simply compared the estimated <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e166" xlink:type="simple"/></inline-formula> with the true values.</p>
+         <p><xref ref-type="table" rid="pcbi-1001060-t004">Table 4</xref> shows the percent of homozygous SNPs that are misclassified as heterozygous, and vice versa. When the SNP is classified as homozygous, the determination between the states AA and BB is trivial, and no errors are made. When normal cell contamination is extremely low, less than 10%, genotyping errors are common in regions of loss of heterozygosity (either normal/loss or gain/loss). This is expected, since in a region with complete LOH and zero contamination, only one of the two parental alleles is left, and thus it would be impossible to distinguish between the homozygous configurations <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e167" xlink:type="simple"/></inline-formula> and the heteryzogous configurations <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e168" xlink:type="simple"/></inline-formula>. Fortunately, these types of genotyping errors would not affect the accurate estimation of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e169" xlink:type="simple"/></inline-formula>, since the mean levels for the heterozygous and homozygous tracks merge for LOH regions under zero contamination. It is slightly unintuitive that the correct estimation of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e170" xlink:type="simple"/></inline-formula> depends on the fact that there is normal cell contamination! This is reflected in <xref ref-type="table" rid="pcbi-1001060-t004">Table 4</xref>, where accuracy quickly improves as normal cell contamination increases, with a total misclassification rate of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e171" xlink:type="simple"/></inline-formula> at <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e172" xlink:type="simple"/></inline-formula> normal cell contamination.</p>
+         <table-wrap id="pcbi-1001060-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1001060.t004</object-id><label>Table 4</label><caption>
+               <title>The number of misclassifications of each type in the identification of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e173" xlink:type="simple"/></inline-formula> on the NA06991 dilution data set, at different levels of normal cell contamination.</title>
+            </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1001060-t004-4" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.t004" xlink:type="simple"/><table>
+               <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Normal Contamination (%)</td>
+                     <td align="left" colspan="1" rowspan="1">Homozygous <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e174" xlink:type="simple"/></inline-formula> Heterozygous</td>
+                     <td align="left" colspan="1" rowspan="1">Heterozygous <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e175" xlink:type="simple"/></inline-formula> Homozygous</td>
+                     <td align="left" colspan="1" rowspan="1">Misclassification Rate (%)</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">0</td>
+                     <td align="left" colspan="1" rowspan="1">1285</td>
+                     <td align="left" colspan="1" rowspan="1">2791</td>
+                     <td align="left" colspan="1" rowspan="1">9.7</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">5</td>
+                     <td align="left" colspan="1" rowspan="1">986</td>
+                     <td align="left" colspan="1" rowspan="1">1</td>
+                     <td align="left" colspan="1" rowspan="1">2.3</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">10</td>
+                     <td align="left" colspan="1" rowspan="1">228</td>
+                     <td align="left" colspan="1" rowspan="1">0</td>
+                     <td align="left" colspan="1" rowspan="1">.54</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">25</td>
+                     <td align="left" colspan="1" rowspan="1">20</td>
+                     <td align="left" colspan="1" rowspan="1">0</td>
+                     <td align="left" colspan="1" rowspan="1">.048</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">50</td>
+                     <td align="left" colspan="1" rowspan="1">93</td>
+                     <td align="left" colspan="1" rowspan="1">0</td>
+                     <td align="left" colspan="1" rowspan="1">.22</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">90</td>
+                     <td align="left" colspan="1" rowspan="1">39</td>
+                     <td align="left" colspan="1" rowspan="1">0</td>
+                     <td align="left" colspan="1" rowspan="1">.093</td>
+                  </tr>
+               </tbody>
+            </table></alternatives><table-wrap-foot>
+               <fn id="nt103">
+                  <label/>
+                  <p>There are 42037 SNPs total.</p>
+               </fn>
+            </table-wrap-foot></table-wrap>
+         <p>A complete analysis of the misclassification rates of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e176" xlink:type="simple"/></inline-formula> are given in the Supporting Information file (<xref ref-type="supplementary-material" rid="pcbi.1001060.s001">Text S1</xref>).</p>
+      </sec>
+      <sec id="s2f">
+         <title>Analysis of TCGA Glioblastoma Samples</title>
+         <p>We applied PSCN to 223 glioblastoma samples from the TCGA project <xref ref-type="bibr" rid="pcbi.1001060-The1">[38]</xref>. These samples were assayed using Illumina HumanHap 550k SNP arrays.</p>
+         <p>Almost all of the 223 samples analyzed contain substantial copy number aberrations. <xref ref-type="table" rid="pcbi-1001060-t005">Table 5</xref> shows the distribution of the types of copy number events found in the samples. Of the gain/loss events, which comprise 45.4% of all of the events, 22.8% are copy neutral LOH and 22.5% are unbalanced gain/loss. We see from this table that, among these glioblastoma samples, single chromosome losses or single chromosome gains comprise 49.6% of all the events, which means that more than half of the events involve change of both inherited chromosomes.</p>
+         <table-wrap id="pcbi-1001060-t005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1001060.t005</object-id><label>Table 5</label><caption>
+               <title>Distribution of types of copy number aberrations across all events found in the 223 glioblastoma samples.</title>
+            </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1001060-t005-5" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.t005" xlink:type="simple"/><table>
+               <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+               </colgroup>
+               <thead>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">Event type</td>
+                     <td align="left" colspan="1" rowspan="1">%</td>
+                     <td align="left" colspan="1" rowspan="1">count</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">gain/gain</td>
+                     <td align="left" colspan="1" rowspan="1">3.6</td>
+                     <td align="left" colspan="1" rowspan="1">1315</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">gain/normal</td>
+                     <td align="left" colspan="1" rowspan="1">21.0</td>
+                     <td align="left" colspan="1" rowspan="1">7773</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">balanced gain/loss</td>
+                     <td align="left" colspan="1" rowspan="1">22.9</td>
+                     <td align="left" colspan="1" rowspan="1">8568</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">unbalanced gain/loss</td>
+                     <td align="left" colspan="1" rowspan="1">22.5</td>
+                     <td align="left" colspan="1" rowspan="1">8352</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">normal/loss</td>
+                     <td align="left" colspan="1" rowspan="1">28.6</td>
+                     <td align="left" colspan="1" rowspan="1">10598</td>
+                  </tr>
+                  <tr>
+                     <td align="left" colspan="1" rowspan="1">loss/loss</td>
+                     <td align="left" colspan="1" rowspan="1">1.4</td>
+                     <td align="left" colspan="1" rowspan="1">521</td>
+                  </tr>
+               </tbody>
+            </table></alternatives></table-wrap>
+         <p>We now zoom in on two example regions to illustrate the additional insights gained from parent-specific copy number analysis. These regions are shown in <xref ref-type="fig" rid="pcbi-1001060-g007">Figure 7</xref>. The figures in the left panel correspond to the entire chromosome 3 of TCGA glioblastoma sample 02-0332, while those on the right panel correspond to the first 10000 SNPs on chromosome 2 of TCGA glioblastoma sample 02-0258. The top two plots in each panel show the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e177" xlink:type="simple"/></inline-formula> and BAF values. The color scheme for these plots show the segmentation obtained using PSCN. We transformed the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e178" xlink:type="simple"/></inline-formula> and BAF values back to the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e179" xlink:type="simple"/></inline-formula> raw copy number values, and fitted two dimensional densities separately to each region in the segmentation. The contours of the two dimensional density estimates, delineating the locations of the clusters, are shown in the third plot from the top in each panel. The color scheme for the contours is the same as the color scheme for the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e180" xlink:type="simple"/></inline-formula> and BAF plots. Finally, the bottom plot of each panel shows the estimated major and minor copy numbers for each region (we will call this type of plot the <italic>mm</italic>-plot). The color scheme of the <italic>mm</italic>-plot reflects the gain/loss status of each region, where red represents gain, blue represents loss, and green represents normal. It is usually difficult to discern the relative magnitudes of gains and losses from the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e181" xlink:type="simple"/></inline-formula> and BAF plots, especially when both inherited chromosomes have undergone copy number changes. Such relative changes in parent specific copy numbers can be quantified more easily by examining the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e182" xlink:type="simple"/></inline-formula> contour and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e183" xlink:type="simple"/></inline-formula>-plots.</p>
+         <fig id="pcbi-1001060-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1001060.g007</object-id><label>Figure 7</label>
+            <caption>
+               <title>Example regions from TCGA sample 02-0332 chromosome 3 (left) and TCGA sample 02-0258 chromosome 2 (first 10000 SNPs) (right).</title>
+               <p>The plots, in order from the top, show the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e184" xlink:type="simple"/></inline-formula> values, BAF values, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e185" xlink:type="simple"/></inline-formula> contours and estimated major and minor copy numbers. The top three plots are color coded by the segmentation estimated using our procedure. In the color coding of the bottom plot, red represents gain, blue represents loss, and green represents normal.</p>
+            </caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.g007" xlink:type="simple"/></fig>
+         <sec id="s2f1">
+            <title>Copy neutral LOH (Balanced Gain/Loss)</title>
+            <p>First, consider the example region from TCGA sample 02-0332 on the left panel. There are three instances of copy neutral LOH, colored in purple. Based on the BAF plot, the loss seems to be complete, that is, it is carried by almost all of the cells in the sample. The <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e186" xlink:type="simple"/></inline-formula>-plot also gives this information, as the estimated major copy number (red line) is close to 2, and the estimated minor copy number (blue line) is close to 0. These LOH regions do not change the total copy number, and thus would not have been detected if the segmentation were based on the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e187" xlink:type="simple"/></inline-formula> profile. On the other hand, an analysis based only on the BAF plot would not have revealed that the LOH is copy neutral; e.g. in the TCGA sample 02-0258, the LOH region (purple) with similar pattern in BAF is not copy neutral. The estimates in the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e188" xlink:type="simple"/></inline-formula>-plot can only be obtained through a joint analysis of both the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e189" xlink:type="simple"/></inline-formula> and the BAF profiles.</p>
+         </sec>
+         <sec id="s2f2">
+            <title>Fractional single chromosome gains and losses</title>
+            <p>Following the copy neutral LOH regions in chromosome 3 of sample 02-0332, there is a stretch of alternating gains and losses, colored respectively in red and blue. The copy of the other parental chromosome in these regions is one. As seen from the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e190" xlink:type="simple"/></inline-formula>-plot, all of these regions contain changes that affect only one of the two inherited chromosomes. The changed chromosome may differ across segments. For example, the paternal chromosome may have been differed in one segment, and the maternal chromosome in the next. The copy number of the other chromosome in these regions remain at the normal level. This fact can not be deduced from total copy number analysis, as an increase in <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e191" xlink:type="simple"/></inline-formula> can be due to gains of both inherited chromosomes, or an unbalanced gain of one chromosome and loss of the other; see the next example (TCGA 02-0258). The <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e192" xlink:type="simple"/></inline-formula> contour plot discriminates between these two possible cases. If we examine the cluster centers corresponding to the heterozygotes in the red and blue segments we see that for any one cluster, only one of the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e193" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e194" xlink:type="simple"/></inline-formula> coordinates is significantly shifted from the corresponding coordinate of the normal AB cluster (coded in gray). This is evidence that the copy number of only one of the chromosomes has changed in these regions. The positions of the heterozygote cluster centers of the red and blue regions indicate only a partial gain and loss, as their shifts from normal are only a fraction of that expected in a complete event. The estimated major and minor copy numbers in the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e195" xlink:type="simple"/></inline-formula>-plot quantifies the partial change explicitly, with the major copy numbers at around 1.5 for the gain and the minor copy numbers at around 0.5 for the loss. Assuming a linear signal response curve for the Illumina platform in the range between 0 and 3 fold change in DNA quantity, this translates to about 50% of the cells in the tumor sample carrying the aberrations coded in blue and red.</p>
+            <p>The same reasoning can be applied to the red and pink regions of chromosome 2 of TCGA sample 02-0258 (right panel), which contains a fractional gain. By teasing apart the copy numbers of each inherited chromosome, we are now able to characterize and quantify these fractional changes.</p>
+         </sec>
+         <sec id="s2f3">
+            <title>Simultaneous unbalanced gain and loss of both chromosomes (unbalanced gain/loss)</title>
+            <p>Now consider the example region color coded in purple from TCGA sample 02-0258 in the right panel. The <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e196" xlink:type="simple"/></inline-formula> plot suggests that there is a gain in total copy number. However, the BAF plot reveals that there seems also to be an almost complete loss of heterozygosity in this region. Loss of one of the inherited chromosomes is necessary for loss of heterozygosity. Thus we conclude that the region colored in purple contains both a gain of one as well as an almost complete loss of the other inherited chromosome. Indeed, as the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e197" xlink:type="simple"/></inline-formula>-plot shows, the estimated major and minor copy number fold changes for this region have values of 3 and 0, respectively. The gain and loss of the two inherited chromosomes is thus unbalanced, suggesting that this region may have experienced multiple mutations. This region is immediately followed by a gain of only one of the two inherited chromosomes (see the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e198" xlink:type="simple"/></inline-formula>-plot), of magnitude roughly equal to the difference between the deviations of the major and minor copy numbers from normal. This suggests the hypothesis that this sample first experienced a gain of one of the inherited chromosomes that covered the purple and red regions, then a LOH which caused a gain of the already amplified chromosome and a simultaneous loss of the other inherited chromosome. Our analysis of the TCGA data shows that these types of unbalanced gain and loss events are quite common.</p>
+         </sec>
+      </sec>
+   </sec>
+   <sec id="s3">
+      <title>Discussion</title>
+      <p>We have developed a method for simultaneous estimation of parent-specific DNA copy number and inherited genotypes for tumor samples using allele-specific raw copy number data. The model and estimation procedure start with transforming allele-specific data into <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e199" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e200" xlink:type="simple"/></inline-formula> intensities, which may vary across experimental platforms. The model assumes that the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e201" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e202" xlink:type="simple"/></inline-formula> allele intensities should be roughly symmetric, roughly variance stabilized and have approximately bivariate Gaussian errors. Indeed, the model is quite robust to the violation of the bivariate Gaussian error assumption. The model gives satisfying results even if this assumption is heavily violated. More details are shown in the the Supporting Information file (<xref ref-type="supplementary-material" rid="pcbi.1001060.s001">Text S1</xref>). We illustrated the method and evaluated its performance on both published and newly generated dilution data sets on the Illumina platform.</p>
+      <p>A rigorous assessment using in silico titration data provided by Staaf et al. <xref ref-type="bibr" rid="pcbi.1001060-Staaf1">[35]</xref> shows that PSCN has good accuracy. The proposed method does not require paired normal samples. However, if such samples were available, then they can be used to further improve accuracy and to distinguish between inherited LOH and somatic LOH. In such cases, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e203" xlink:type="simple"/></inline-formula> can simply be set to the genotypes inferred from the normal samples.</p>
+      <p>PSCN is not platform specific, and we have also applied it to data from the Affymetrix Genotyping 6.0 array, with an example analysis given in the Supporting Information file (<xref ref-type="supplementary-material" rid="pcbi.1001060.s001">Text S1</xref>). The segmentation accuracy of PSCN seems to be reasonable for Affymetrix data, but can potentially be improved significantly by better probe-level normalization. This is due to the fact that the BAF of Affymetrix data is much noisier than the BAF of Illumina data, which makes the estimation of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e204" xlink:type="simple"/></inline-formula> much more difficult. Bengtsson et al. <xref ref-type="bibr" rid="pcbi.1001060-Bengtsson2">[39]</xref> have shown that much of the variation in the BAF of Affymetrix data are due to probe-specific effects that can be removed if a matched normal sample is available. Another promising method for probe-level normalization of Affymetrix data is the probe raw copy number composite representation (PICR) model of Wan et al. <xref ref-type="bibr" rid="pcbi.1001060-Wan1">[29]</xref>, which uses probe sequence information and physico-chemical modeling to estimate binding affinity. However, since the PICR model relies on mismatch probes, it is only applicable to Affymetrix platforms prior to the 6.0 array. Thus, better probe-level normalization of Affymetrix 6.0 data for unmatched samples is still an important problem for further investigation.</p>
+      <p>An overview of an analysis of the TCGA glioblastoma samples reveal that a substantial fraction of copy number changes are copy-neutral loss of heterozygosity events. These events would not have been found using analyses based only on total copy number. Cases of unbalanced simultaneous changes in the copy numbers of both inherited chromosomes were also found. It would be of interest to quantify the frequency of such changes among different cancer subtypes and in other types of tumors.</p>
+      <p>A final point that we would like to emphasize is the quantification of fractional changes, as exemplified by the two case studies on the TCGA glioblastoma samples. Since this requires teasing apart the quantities of the two inherited chromosomes, it can only be achieved through allele-specific estimates. The fraction of cells that carry each copy number event is important for downstream analyses, such as quantifying normal cell contamination and studying tumor microevolution. The parent-specific copy number estimates obtained from the proposed method provides a starting point for these types of investigations.</p>
+      <p>The R package for PSCN is registered on R-Forge (<ext-link ext-link-type="uri" xlink:href="http://r-forge.r-project.org/" xlink:type="simple">http://r-forge.r-project.org/</ext-link>) under project name PSCN.</p>
+   </sec>
+   <sec id="s4" sec-type="methods">
+      <title>Methods</title>
+      <sec id="s4a">
+         <title>Data Transformation</title>
+         <p>The proposed model is not platform specific, and can theoretically be applied to any type of allele-specific copy number data where the errors on the raw copy number values of the alleles can be normalized to approximately adhere to a bi-variate Gaussian distribution. As we show below, the Gaussian error assumption allows for explicit analytic formulas for the posterior mean of the underlying inherited chromosome copy numbers, thus bypassing the need for computationally intensive Monte Carlo methods. For most platforms, the raw allele-specific raw copy number values must be properly normalized for this error model to be a good approximation. However, as we mentioned in the <xref ref-type="sec" rid="s3">Discussion</xref> section, the model is quite robust to the violation of the Gaussian error assumption.</p>
+         <p>A unified approach that gives satisfying results for data from both Illumina and Affymetrix platforms is as follows. Since<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e205" xlink:type="simple"/></disp-formula>we have<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e206" xlink:type="simple"/></disp-formula>Note that the “BAF” given by the Illumina platform <xref ref-type="bibr" rid="pcbi.1001060-Peiffer1">[6]</xref> is not the intuitive quantity (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e207" xlink:type="simple"/></inline-formula>), but the arc-tangent of the ratio of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e208" xlink:type="simple"/></inline-formula> raw copy number versus <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e209" xlink:type="simple"/></inline-formula> raw copy number scaled to [0,1]. Use <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e210" xlink:type="simple"/></inline-formula> to denote the so called BAF given by Illumina, then<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e211" xlink:type="simple"/></disp-formula>For PSCN we use <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e212" xlink:type="simple"/></inline-formula>.</p>
+      </sec>
+      <sec id="s4b">
+         <title>Explicit formulas for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e213" xlink:type="simple"/></inline-formula> given <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e214" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e215" xlink:type="simple"/></inline-formula></title>
+         <p>We give here exact formulas for the conditional expectation (3). Let <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e216" xlink:type="simple"/></inline-formula> denote the probability distribution that assigns probability 1 to the value <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e217" xlink:type="simple"/></inline-formula>. Denote by <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e218" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e219" xlink:type="simple"/></inline-formula>. A brief outline of the estimation procedure is as follows: First, conditioned on all data to the left of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e220" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e221" xlink:type="simple"/></inline-formula> is distributed as a mixture of Gaussians:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e222" xlink:type="simple"/><label>(5)</label></disp-formula>where the formulas for computing the parameters of the mixture <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e223" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e224" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e225" xlink:type="simple"/></inline-formula> are given below. We call (5) the forward filter. Since by our model <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e226" xlink:type="simple"/></inline-formula> is a reversible Markov chain, we can reverse time and obtain a backward filter that is analogous to (5):<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e227" xlink:type="simple"/><label>(6)</label></disp-formula>where the parameters <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e228" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e229" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e230" xlink:type="simple"/></inline-formula>, as for the forward filter, are given in explicitly computable form below. The Bayes theorem can then be used to combine the forward filter (5) and backward filter (6) to derive the posterior distribution of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e231" xlink:type="simple"/></inline-formula> given the complete sequence <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e232" xlink:type="simple"/></inline-formula>, which is a mixture of normal distributions<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e233" xlink:type="simple"/><label>(7)</label></disp-formula>whose parameters can be derived from the forward and backward filters as described below. This forward-backward procedure can be reduced to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e234" xlink:type="simple"/></inline-formula> computation time by the BCMIX algorithm <xref ref-type="bibr" rid="pcbi.1001060-Lai3">[40]</xref>. From (7), it follows that the conditional expectation in Equation (3) can be computed as<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e235" xlink:type="simple"/><label>(8)</label></disp-formula></p>
+         <sec id="s4b1">
+            <title>The forward filter</title>
+            <p>Let <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e236" xlink:type="simple"/></inline-formula> be allele assignment matrices depending on <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e237" xlink:type="simple"/></inline-formula>:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e238" xlink:type="simple"/></disp-formula>Let <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e239" xlink:type="simple"/></inline-formula> denote the nearest change-point at a location less than or equal to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e240" xlink:type="simple"/></inline-formula>. Define<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e241" xlink:type="simple"/></disp-formula>for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e242" xlink:type="simple"/></inline-formula>. The conditional distribution of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e243" xlink:type="simple"/></inline-formula>, given <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e244" xlink:type="simple"/></inline-formula> and the event that <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e245" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e246" xlink:type="simple"/></inline-formula>, is <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e247" xlink:type="simple"/></inline-formula>, where<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e248" xlink:type="simple"/></disp-formula>for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e249" xlink:type="simple"/></inline-formula>. It follows that the posterior distribution of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e250" xlink:type="simple"/></inline-formula> given <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e251" xlink:type="simple"/></inline-formula> is the mixture of normal distributions and a point mass at <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e252" xlink:type="simple"/></inline-formula> given by (5). Let <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e253" xlink:type="simple"/></inline-formula> denote the density function of the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e254" xlink:type="simple"/></inline-formula> distribution, i.e.,<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e255" xlink:type="simple"/></disp-formula>Making use of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e256" xlink:type="simple"/></inline-formula>, it is possible to show as in Lai et al. <xref ref-type="bibr" rid="pcbi.1001060-Lai2">[37]</xref> that the conditional probabilities <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e257" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e258" xlink:type="simple"/></inline-formula> can be determined by the recursions<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e259" xlink:type="simple"/><label>(9)</label></disp-formula><disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e260" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e261" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e262" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e263" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e264" xlink:type="simple"/></inline-formula> for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e265" xlink:type="simple"/></inline-formula>. Specifically, the mixture probabilities in (5) are <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e266" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e267" xlink:type="simple"/></inline-formula>.</p>
+         </sec>
+         <sec id="s4b2">
+            <title>The smoothing estimate</title>
+            <p>Since <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e268" xlink:type="simple"/></inline-formula> is a reversible Markov chain, we can reverse time and apply the same steps as in the forward equations to obtain (6), in which the weights <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e269" xlink:type="simple"/></inline-formula> can be obtained by backward induction using the time-reversed counterpart of (9):<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e270" xlink:type="simple"/><label>(10)</label></disp-formula><disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e271" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e272" xlink:type="simple"/></inline-formula>. Since for any set <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e273" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e274" xlink:type="simple"/></inline-formula>, it follows from (6) and the reversibility of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e275" xlink:type="simple"/></inline-formula> that<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e276" xlink:type="simple"/></disp-formula>The recursions for deriving the components of the mixture for (7) are exactly the same as those for the earlier model limited to total copy number in Lai et al. <xref ref-type="bibr" rid="pcbi.1001060-Lai2">[37]</xref>:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e277" xlink:type="simple"/></disp-formula>and we refer the reader to Lai et al. <xref ref-type="bibr" rid="pcbi.1001060-Lai2">[37]</xref> for their derivation.</p>
+         </sec>
+      </sec>
+      <sec id="s4c">
+         <title>Estimation of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e278" xlink:type="simple"/></inline-formula></title>
+         <p>The variables <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e279" xlink:type="simple"/></inline-formula> are assumed to be i.i.d., with<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e280" xlink:type="simple"/></disp-formula>The inherited allele configurations <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e281" xlink:type="simple"/></inline-formula> is assumed to be independent of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e282" xlink:type="simple"/></inline-formula>, so<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e283" xlink:type="simple"/><label>(11)</label></disp-formula>where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e284" xlink:type="simple"/></inline-formula> is a constant. Each component of the above sum can be maximized separately to give, for each <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e285" xlink:type="simple"/></inline-formula>,<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e286" xlink:type="simple"/></disp-formula></p>
+      </sec>
+      <sec id="s4d">
+         <title>Region Characterization</title>
+         <p>Let <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e287" xlink:type="simple"/></inline-formula> be <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e288" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e289" xlink:type="simple"/></inline-formula> intensities of heterozygous SNPs for segments at normal state and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e290" xlink:type="simple"/></inline-formula> be <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e291" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e292" xlink:type="simple"/></inline-formula> intensities of heterozygous SNPs for the segment being tested. Then, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e293" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e294" xlink:type="simple"/></inline-formula> follow the model:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e295" xlink:type="simple"/></disp-formula>For the normal state, we can estimated the parameters easily as<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e296" xlink:type="simple"/></disp-formula>For the target segment, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e297" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e298" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e299" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e300" xlink:type="simple"/></inline-formula> can be estimated by EM algorithm:</p>
+         <p><bold>Step 1:</bold> Initialize: <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e301" xlink:type="simple"/></inline-formula></p>
+         <p><bold>Step 2:</bold> Set<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e302" xlink:type="simple"/></disp-formula></p>
+         <p><bold>Step 3:</bold> Set<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e303" xlink:type="simple"/></disp-formula></p>
+         <p><bold>Step 4:</bold> Stop if <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e304" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e305" xlink:type="simple"/></inline-formula> is a pre-chosen threshold (PSCN has default value <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e306" xlink:type="simple"/></inline-formula>). Otherwise, set <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e307" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e308" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e309" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e310" xlink:type="simple"/></inline-formula>, and go back to step 2.</p>
+         <p>The motivation of the initial and default settings are as follows. For segment with changed states, the goal is to estimate minor and major copy number. It is expected that the minor copy number would be less than or equal to 1 and the major copy number would be larger than or equal to 1, so the initial values for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e311" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e312" xlink:type="simple"/></inline-formula> are set to 0.9 and 1.1 respectively. Although it is possible that both chromosomes in a segment are gained or lost, a small discrepancy of the initial values of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e313" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e314" xlink:type="simple"/></inline-formula> will also be a good start. Also, it is expected that the numbers of AB and BA states in a segment is similar, so the initial value of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e315" xlink:type="simple"/></inline-formula> is set to 0.5. The initial values for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e316" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e317" xlink:type="simple"/></inline-formula> can be quite arbitrary, with 1 being a reasonable value to use. <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e318" xlink:type="simple"/></inline-formula> is set to be <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e319" xlink:type="simple"/></inline-formula>, which is small enough to indicate a convergence of the iterative algorithm.</p>
+         <p>Denote the estimated parameters by <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e320" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e321" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e322" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e323" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e324" xlink:type="simple"/></inline-formula>. To test the hypothesis <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e325" xlink:type="simple"/></inline-formula>, the standard <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e326" xlink:type="simple"/></inline-formula>-statistic is<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e327" xlink:type="simple"/></disp-formula>Under <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e328" xlink:type="simple"/></inline-formula>, the distribution of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e329" xlink:type="simple"/></inline-formula> is <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e330" xlink:type="simple"/></inline-formula> with degree of freedom <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e331" xlink:type="simple"/></inline-formula>, so <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e332" xlink:type="simple"/></inline-formula>-value can be calculated and compared with the level of the test. The null hypothesis that <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e333" xlink:type="simple"/></inline-formula> needs also be tested, by replacing <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e334" xlink:type="simple"/></inline-formula> with <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1001060.e335" xlink:type="simple"/></inline-formula> in the above equation.</p>
+      </sec>
+   </sec>
+   <sec id="s5">
+      <title>Supporting Information</title>
+<supplementary-material id="pcbi.1001060.s001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1001060.s001" xlink:type="simple">
+<label>Text S1</label>
+<caption><p>Supporting materials for PSCN.</p>
+      <p>(0.28 MB PDF)</p></caption></supplementary-material>
+   </sec>
+</body>
+<back>
+   <ack>
+      <p>We thank Pierre Neuvial and Henrik Bengtsson for helpful discussions, and an anonymous reviewer for the many helpful comments during the paper revision stage.</p>
+   </ack>
+   <ref-list>
+      <title>References</title>
+      <ref id="pcbi.1001060-Pinkel1">
+         <label>1</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Pinkel</surname><given-names>D</given-names></name>
+               <name name-style="western"><surname>Segraves</surname><given-names>R</given-names></name>
+               <name name-style="western"><surname>Sudar</surname><given-names>D</given-names></name>
+               <name name-style="western"><surname>Clark</surname><given-names>S</given-names></name>
+               <name name-style="western"><surname>Poole</surname><given-names>I</given-names></name>
+               <etal/>
+            </person-group>
+            <year>1998</year>
+            <article-title>High resolution analysis of DNA copy number variation using comparative genomic hybridization to microarrays.</article-title>
+            <source>Nat Genet</source>
+            <volume>20</volume>
+            <fpage>207</fpage>
+            <lpage>11</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Snijders1">
+         <label>2</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Snijders</surname><given-names>AM</given-names></name>
+               <name name-style="western"><surname>Nowak</surname><given-names>N</given-names></name>
+               <name name-style="western"><surname>Segraves</surname><given-names>R</given-names></name>
+               <name name-style="western"><surname>Blackwood</surname><given-names>S</given-names></name>
+               <name name-style="western"><surname>Brown</surname><given-names>N</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2001</year>
+            <article-title>Assembly of microarrays for genome-wide measurement of DNA copy number.</article-title>
+            <source>Nat Genet</source>
+            <volume>29</volume>
+            <fpage>263</fpage>
+            <lpage>264</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Pollack1">
+         <label>3</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Pollack</surname><given-names>J</given-names></name>
+               <name name-style="western"><surname>Perou</surname><given-names>C</given-names></name>
+               <name name-style="western"><surname>Alizadeh</surname><given-names>A</given-names></name>
+               <name name-style="western"><surname>Eisen</surname><given-names>M</given-names></name>
+               <name name-style="western"><surname>Pergamenschikov</surname><given-names>A</given-names></name>
+               <etal/>
+            </person-group>
+            <year>1999</year>
+            <article-title>Genome-wide analysis of DNA copy-number changes using cDNA microarrays.</article-title>
+            <source>Nat Genet</source>
+            <volume>23</volume>
+            <fpage>41</fpage>
+            <lpage>46</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Matsuzaki1">
+         <label>4</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Matsuzaki</surname><given-names>H</given-names></name>
+               <name name-style="western"><surname>Dong</surname><given-names>S</given-names></name>
+               <name name-style="western"><surname>Loi</surname><given-names>H</given-names></name>
+               <name name-style="western"><surname>Di</surname><given-names>X</given-names></name>
+               <name name-style="western"><surname>Liu</surname><given-names>G</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2004</year>
+            <article-title>Genotyping over 100,000 SNPs on a pair of oligonucleotide arrays.</article-title>
+            <source>Nat Methods</source>
+            <volume>1</volume>
+            <fpage>109</fpage>
+            <lpage>111</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Gunderson1">
+         <label>5</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Gunderson</surname><given-names>KL</given-names></name>
+               <name name-style="western"><surname>Steemers</surname><given-names>FJ</given-names></name>
+               <name name-style="western"><surname>Lee</surname><given-names>G</given-names></name>
+               <name name-style="western"><surname>Mendoza</surname><given-names>LG</given-names></name>
+               <name name-style="western"><surname>Chee</surname><given-names>MS</given-names></name>
+            </person-group>
+            <year>2005</year>
+            <article-title>A genome-wide scalable SNP genotyping assay using microarray technology.</article-title>
+            <source>Nat Genet</source>
+            <volume>37</volume>
+            <fpage>549</fpage>
+            <lpage>554</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Peiffer1">
+         <label>6</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Peiffer</surname><given-names>DA</given-names></name>
+               <name name-style="western"><surname>Le</surname><given-names>JM</given-names></name>
+               <name name-style="western"><surname>Steemers</surname><given-names>FJ</given-names></name>
+               <name name-style="western"><surname>Chang</surname><given-names>W</given-names></name>
+               <name name-style="western"><surname>Jenniges</surname><given-names>T</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2006</year>
+            <article-title>High-resolution genomic profiling of chromosomal aberrations using infinium whole-genome genotyping.</article-title>
+            <source>Genome Res</source>
+            <volume>16</volume>
+            <fpage>1136</fpage>
+            <lpage>1148</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Wang1">
+         <label>7</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Wang</surname><given-names>Y</given-names></name>
+               <name name-style="western"><surname>Moorhead</surname><given-names>M</given-names></name>
+               <name name-style="western"><surname>Karlin-Neumann</surname><given-names>G</given-names></name>
+               <name name-style="western"><surname>Falkowski</surname><given-names>M</given-names></name>
+               <name name-style="western"><surname>Chen</surname><given-names>C</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2005</year>
+            <article-title>Allele quantification using molecular inversion probes (MIP).</article-title>
+            <source>Nucleic Acids Res</source>
+            <volume>33</volume>
+            <fpage>e183</fpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Bignell1">
+         <label>8</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Bignell</surname><given-names>GR</given-names></name>
+               <name name-style="western"><surname>Huang</surname><given-names>J</given-names></name>
+               <name name-style="western"><surname>Greshock</surname><given-names>J</given-names></name>
+               <name name-style="western"><surname>Watt</surname><given-names>S</given-names></name>
+               <name name-style="western"><surname>Butler</surname><given-names>A</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2004</year>
+            <article-title>High-resolution analysis of DNA copy number using oligonucleotide microarrays.</article-title>
+            <source>Genome Res</source>
+            <volume>14</volume>
+            <fpage>287</fpage>
+            <lpage>295</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Hanahan1">
+         <label>9</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Hanahan</surname><given-names>D</given-names></name>
+               <name name-style="western"><surname>Weinberg</surname><given-names>R</given-names></name>
+            </person-group>
+            <year>2000</year>
+            <article-title>The hallmarks of cancer.</article-title>
+            <source>Cell</source>
+            <volume>100</volume>
+            <fpage>57</fpage>
+            <lpage>70</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Brot1">
+         <label>10</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Broët</surname><given-names>P</given-names></name>
+               <name name-style="western"><surname>Richardson</surname><given-names>S</given-names></name>
+            </person-group>
+            <year>2006</year>
+            <article-title>Detection of gene copy number changes in CGH microarrays using a spatially correlated mixture model.</article-title>
+            <source>Bioinformatics</source>
+            <volume>22</volume>
+            <fpage>911</fpage>
+            <lpage>918</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Fridlyand1">
+         <label>11</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Fridlyand</surname><given-names>J</given-names></name>
+               <name name-style="western"><surname>Snijders</surname><given-names>A</given-names></name>
+               <name name-style="western"><surname>Pinkel</surname><given-names>D</given-names></name>
+               <name name-style="western"><surname>Albertson</surname><given-names>DG</given-names></name>
+               <name name-style="western"><surname>Jain</surname><given-names>A</given-names></name>
+            </person-group>
+            <year>2004</year>
+            <article-title>Application of hidden Markov models to the analysis of the array-CGH data.</article-title>
+            <source>J Multivar Anal</source>
+            <volume>90</volume>
+            <fpage>132</fpage>
+            <lpage>153</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Hsu1">
+         <label>12</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Hsu</surname><given-names>L</given-names></name>
+               <name name-style="western"><surname>Self</surname><given-names>S</given-names></name>
+               <name name-style="western"><surname>Grove</surname><given-names>D</given-names></name>
+               <name name-style="western"><surname>Randolph</surname><given-names>T</given-names></name>
+               <name name-style="western"><surname>Wang</surname><given-names>K</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2005</year>
+            <article-title>Denoising array-based comparative genomic hybridization data using wavelets.</article-title>
+            <source>Biostatistics</source>
+            <volume>6</volume>
+            <fpage>211</fpage>
+            <lpage>226</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Venkatraman1">
+         <label>13</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Venkatraman</surname><given-names>E</given-names></name>
+               <name name-style="western"><surname>Olshen</surname><given-names>A</given-names></name>
+            </person-group>
+            <year>2007</year>
+            <article-title>A faster circular binary segmentation algorithm for the analysis of array cgh data.</article-title>
+            <source>Bioinformatics</source>
+            <volume>23</volume>
+            <fpage>657</fpage>
+            <lpage>663</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Wang2">
+         <label>14</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Wang</surname><given-names>P</given-names></name>
+               <name name-style="western"><surname>Kim</surname><given-names>Y</given-names></name>
+               <name name-style="western"><surname>Pollack</surname><given-names>J</given-names></name>
+               <name name-style="western"><surname>Narasimhan</surname><given-names>B</given-names></name>
+               <name name-style="western"><surname>Tibshirani</surname><given-names>R</given-names></name>
+            </person-group>
+            <year>2005</year>
+            <article-title>A method for calling gains and losses in array-CGH data.</article-title>
+            <source>Biostatistics</source>
+            <volume>6</volume>
+            <fpage>45</fpage>
+            <lpage>58</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Tibshirani1">
+         <label>15</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Tibshirani</surname><given-names>R</given-names></name>
+               <name name-style="western"><surname>Wang</surname><given-names>P</given-names></name>
+            </person-group>
+            <year>2008</year>
+            <article-title>Spatial smoothing and hot spot detection for CGH data using the fused LASSO.</article-title>
+            <source>Biostatistics</source>
+            <volume>9</volume>
+            <fpage>18</fpage>
+            <lpage>29</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Hup1">
+         <label>16</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Hupé</surname><given-names>P</given-names></name>
+               <name name-style="western"><surname>Stransky</surname><given-names>N</given-names></name>
+               <name name-style="western"><surname>Thiery</surname><given-names>JP</given-names></name>
+               <name name-style="western"><surname>Radvanyi</surname><given-names>F</given-names></name>
+               <name name-style="western"><surname>Barillot</surname><given-names>E</given-names></name>
+            </person-group>
+            <year>2004</year>
+            <article-title>Analysis of array CGH data: from signal ratio to gain and loss of DNA regions.</article-title>
+            <source>Bioinformatics</source>
+            <volume>20</volume>
+            <fpage>3413</fpage>
+            <lpage>3422</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Picard1">
+         <label>17</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Picard</surname><given-names>F</given-names></name>
+               <name name-style="western"><surname>Robin</surname><given-names>S</given-names></name>
+               <name name-style="western"><surname>Lavielle</surname><given-names>M</given-names></name>
+               <name name-style="western"><surname>Vaisse</surname><given-names>C</given-names></name>
+               <name name-style="western"><surname>Daudin</surname><given-names>J</given-names></name>
+            </person-group>
+            <year>2005</year>
+            <article-title>A statistical approach for array CGH data analysis.</article-title>
+            <source>BMC Bioinformatics</source>
+            <volume>6</volume>
+            <fpage>27</fpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Engler1">
+         <label>18</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Engler</surname><given-names>D</given-names></name>
+               <name name-style="western"><surname>Mohapatra</surname><given-names>G</given-names></name>
+               <name name-style="western"><surname>Louis</surname><given-names>D</given-names></name>
+               <name name-style="western"><surname>Betensky</surname><given-names>R</given-names></name>
+            </person-group>
+            <year>2006</year>
+            <article-title>A pseudolikelihood approach for simultaneous analysis of array comparative genomic hybridications.</article-title>
+            <source>Biostatistics</source>
+            <volume>7</volume>
+            <fpage>399</fpage>
+            <lpage>421</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Daruwala1">
+         <label>19</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Daruwala</surname><given-names>RS</given-names></name>
+               <name name-style="western"><surname>Rudra</surname><given-names>A</given-names></name>
+               <name name-style="western"><surname>Ostrer</surname><given-names>H</given-names></name>
+               <name name-style="western"><surname>Lucito</surname><given-names>R</given-names></name>
+               <name name-style="western"><surname>Wigler</surname><given-names>M</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2004</year>
+            <article-title>A versatile statistical analysis algorithm to detect genome copy number variation.</article-title>
+            <source>Proc Natl Acad Sci U S A</source>
+            <volume>101</volume>
+            <fpage>16292</fpage>
+            <lpage>16297</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Wen1">
+         <label>20</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Wen</surname><given-names>CC</given-names></name>
+               <name name-style="western"><surname>Wu</surname><given-names>YJ</given-names></name>
+               <name name-style="western"><surname>Huang</surname><given-names>YH</given-names></name>
+               <name name-style="western"><surname>Chen</surname><given-names>WC</given-names></name>
+               <name name-style="western"><surname>Liu</surname><given-names>SC</given-names></name>
+               <etal/>
+            </person-group>
+            <article-title>A Bayes regression approach to array-CGH data.</article-title>
+            <source>Stat Appl Genet Mol Biol</source>
+            <volume>5</volume>
+            <fpage>3</fpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Xing1">
+         <label>21</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Xing</surname><given-names>B</given-names></name>
+               <name name-style="western"><surname>Greenwood</surname><given-names>CMTM</given-names></name>
+               <name name-style="western"><surname>Bull</surname><given-names>SBB</given-names></name>
+            </person-group>
+            <year>2007</year>
+            <article-title>A hierarchical clustering method for estimating copy number variation.</article-title>
+            <source>Biostatistics</source>
+            <volume>8</volume>
+            <fpage>632</fpage>
+            <lpage>653</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Lai1">
+         <label>22</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Lai</surname><given-names>WR</given-names></name>
+               <name name-style="western"><surname>Johnson</surname><given-names>MD</given-names></name>
+               <name name-style="western"><surname>Kucherlapati</surname><given-names>R</given-names></name>
+               <name name-style="western"><surname>Park</surname><given-names>PJ</given-names></name>
+            </person-group>
+            <year>2005</year>
+            <article-title>Comparative analysis of algorithms for identifying amplifications and deletions in array CGH data.</article-title>
+            <source>Bioinformatics</source>
+            <volume>21</volume>
+            <fpage>3763</fpage>
+            <lpage>3770</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Willenbrock1">
+         <label>23</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Willenbrock</surname><given-names>H</given-names></name>
+               <name name-style="western"><surname>Fridlyand</surname><given-names>J</given-names></name>
+            </person-group>
+            <year>2005</year>
+            <article-title>A comparison study: applying segmentation to arrayCGH data for downstream analyses.</article-title>
+            <source>Bioinformatics</source>
+            <volume>21</volume>
+            <fpage>4084</fpage>
+            <lpage>4091</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Affymetrix1">
+         <label>24</label>
+         <element-citation publication-type="other" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Affymetrix</surname></name>
+            </person-group>
+            <year>2006</year>
+            <article-title>Copy number and loss of heterozygosity estimation algorithms for the genechip human mapping array sets.</article-title>
+            <comment>Whitepaper, <ext-link ext-link-type="uri" xlink:href="http://www.affymetrix.com" xlink:type="simple">http://www.affymetrix.com</ext-link></comment>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Bengtsson1">
+         <label>25</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Bengtsson</surname><given-names>H</given-names></name>
+               <name name-style="western"><surname>Irizarry</surname><given-names>R</given-names></name>
+               <name name-style="western"><surname>Carvalho</surname><given-names>B</given-names></name>
+               <name name-style="western"><surname>Speed</surname><given-names>T</given-names></name>
+            </person-group>
+            <year>2008</year>
+            <article-title>Estimation and assessment of raw copy numbers at the single locus level.</article-title>
+            <source>Bioinformatics</source>
+            <volume>24</volume>
+            <fpage>759</fpage>
+            <lpage>767</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Li1">
+         <label>26</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Li</surname><given-names>C</given-names></name>
+               <name name-style="western"><surname>Wong</surname><given-names>W</given-names></name>
+            </person-group>
+            <year>2001</year>
+            <article-title>Model-based analysis of oligonucleotide arrays: expression index computation and outlier detection.</article-title>
+            <source>Proc Natl Acad Sci U S A</source>
+            <volume>98</volume>
+            <fpage>31?</fpage>
+            <lpage>36</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Lin1">
+         <label>27</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Lin</surname><given-names>M</given-names></name>
+               <name name-style="western"><surname>Wei</surname><given-names>LJ</given-names></name>
+               <name name-style="western"><surname>Sellers</surname><given-names>WR</given-names></name>
+               <name name-style="western"><surname>Lieberfarb</surname><given-names>M</given-names></name>
+               <name name-style="western"><surname>Wong</surname><given-names>WH</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2004</year>
+            <article-title>dChipSNP: significance curve and clustering of SNP-array-based loss-of-heterozygosity data.</article-title>
+            <source>Bioinformatics</source>
+            <volume>20</volume>
+            <fpage>1233</fpage>
+            <lpage>1240</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-LaFramboise1">
+         <label>28</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>LaFramboise</surname><given-names>T</given-names></name>
+               <name name-style="western"><surname>Weir</surname><given-names>BA</given-names></name>
+               <name name-style="western"><surname>Zhao</surname><given-names>X</given-names></name>
+               <name name-style="western"><surname>Beroukhim</surname><given-names>R</given-names></name>
+               <name name-style="western"><surname>Li</surname><given-names>C</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2005</year>
+            <article-title>Allele-specific amplification in cancer revealed by SNP array analysis.</article-title>
+            <source>PLoS Comput Bio</source>
+            <volume>l1</volume>
+            <fpage>e65</fpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Wan1">
+         <label>29</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Wan</surname><given-names>L</given-names></name>
+               <name name-style="western"><surname>Sun</surname><given-names>K</given-names></name>
+               <name name-style="western"><surname>Ding</surname><given-names>Q</given-names></name>
+               <name name-style="western"><surname>Cui</surname><given-names>Y</given-names></name>
+               <name name-style="western"><surname>Li</surname><given-names>M</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2009</year>
+            <article-title>Hybridization modeling of oligonucleotide SNP arrays for accurate DNA copy number estimation.</article-title>
+            <source>Nucleic Acids Res</source>
+            <volume>37</volume>
+            <fpage>e117</fpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Olshen1">
+         <label>30</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Olshen</surname><given-names>AB</given-names></name>
+               <name name-style="western"><surname>Venkatraman</surname><given-names>ES</given-names></name>
+               <name name-style="western"><surname>Lucito</surname><given-names>R</given-names></name>
+               <name name-style="western"><surname>Wigler</surname><given-names>M</given-names></name>
+            </person-group>
+            <year>2004</year>
+            <article-title>Circular binary segmentation for the analysis of array-based dna copy number data.</article-title>
+            <source>Biostatistics</source>
+            <volume>5</volume>
+            <fpage>557</fpage>
+            <lpage>572</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Beroukhim1">
+         <label>31</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Beroukhim</surname><given-names>R</given-names></name>
+               <name name-style="western"><surname>Lin</surname><given-names>M</given-names></name>
+               <name name-style="western"><surname>Park</surname><given-names>Y</given-names></name>
+               <name name-style="western"><surname>Hao</surname><given-names>K</given-names></name>
+               <name name-style="western"><surname>Zhao</surname><given-names>X</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2006</year>
+            <article-title>Inferring loss-of-heterozygosity from unpaired tumors using high-density oligonucleotide SNP arrays.</article-title>
+            <source>PLoS Comput Biol</source>
+            <volume>2</volume>
+            <fpage>e41</fpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Wang3">
+         <label>32</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Wang</surname><given-names>K</given-names></name>
+               <name name-style="western"><surname>Li</surname><given-names>M</given-names></name>
+               <name name-style="western"><surname>Hadley</surname><given-names>D</given-names></name>
+               <name name-style="western"><surname>Liu</surname><given-names>R</given-names></name>
+               <name name-style="western"><surname>Glessner</surname><given-names>J</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2007</year>
+            <article-title>PennCNV: an integrated hidden Markov model designed for high-resolution copy number variation detection in whole-genome SNP genotyping data.</article-title>
+            <source>Genome Res</source>
+            <volume>17</volume>
+            <fpage>1665</fpage>
+            <lpage>1674</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Colella1">
+         <label>33</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Colella</surname><given-names>S</given-names></name>
+               <name name-style="western"><surname>Yau</surname><given-names>C</given-names></name>
+               <name name-style="western"><surname>Taylor</surname><given-names>JM</given-names></name>
+               <name name-style="western"><surname>Mirza</surname><given-names>G</given-names></name>
+               <name name-style="western"><surname>Butler</surname><given-names>H</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2007</year>
+            <article-title>QuantiSNP: an objective Bayes hidden Markov model to detect and accurately map copy number variation using SNP genotyping data.</article-title>
+            <source>Nucleic Acids Res</source>
+            <volume>35</volume>
+            <fpage>2013</fpage>
+            <lpage>2025</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Li2">
+         <label>34</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Li</surname><given-names>C</given-names></name>
+               <name name-style="western"><surname>Beroukhim</surname><given-names>R</given-names></name>
+               <name name-style="western"><surname>Weir</surname><given-names>BA</given-names></name>
+               <name name-style="western"><surname>Winckler</surname><given-names>W</given-names></name>
+               <name name-style="western"><surname>Garraway</surname><given-names>LA</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2008</year>
+            <article-title>Major copy proportion analysis of tumor samples using SNP arrays.</article-title>
+            <source>BMC bioinformatics</source>
+            <volume>9</volume>
+            <fpage>204+</fpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Staaf1">
+         <label>35</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Staaf</surname><given-names>J</given-names></name>
+               <name name-style="western"><surname>Lindgren</surname><given-names>D</given-names></name>
+               <name name-style="western"><surname>Vallon-Christersson</surname><given-names>J</given-names></name>
+               <name name-style="western"><surname>Isaksson</surname><given-names>A</given-names></name>
+               <name name-style="western"><surname>Göransson</surname><given-names>H</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2008</year>
+            <article-title>Segmentation-based detection of allelic imbalance and loss-of-heterozygosity in cancer cells using whole genome SNP arrays.</article-title>
+            <source>Genome Biol</source>
+            <volume>9</volume>
+            <fpage>R136+</fpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Assi1">
+         <label>36</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Assié</surname><given-names>G</given-names></name>
+               <name name-style="western"><surname>LaFramboise</surname><given-names>T</given-names></name>
+               <name name-style="western"><surname>Platzer</surname><given-names>P</given-names></name>
+               <name name-style="western"><surname>Bertherat</surname><given-names>J</given-names></name>
+               <name name-style="western"><surname>Stratakis</surname><given-names>C</given-names></name>
+               <etal/>
+            </person-group>
+            <year>2008</year>
+            <article-title>SNP arrays in heterogeneous tissue: highly accurate collection of both germline and somatic genetic information from unpaired single tumor samples.</article-title>
+            <source>Am J Hum Genet</source>
+            <volume>82</volume>
+            <fpage>903</fpage>
+            <lpage>915</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Lai2">
+         <label>37</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Lai</surname><given-names>TL</given-names></name>
+               <name name-style="western"><surname>Xing</surname><given-names>H</given-names></name>
+               <name name-style="western"><surname>Zhang</surname><given-names>NR</given-names></name>
+            </person-group>
+            <year>2008</year>
+            <article-title>Stochastic segmentation models for array-based comparative genomic hybridization data analysis.</article-title>
+            <source>Biostatistics</source>
+            <volume>9</volume>
+            <fpage>290</fpage>
+            <lpage>307</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-The1">
+         <label>38</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <collab xlink:type="simple">The Cancer Genome Atlas</collab>
+            <year>2008</year>
+            <article-title>Comprehensive genomic characterization defines human glioblastoma genes and core pathways.</article-title>
+            <source>Nature</source>
+            <volume>455</volume>
+            <fpage>1061</fpage>
+            <lpage>1068</lpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Bengtsson2">
+         <label>39</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Bengtsson</surname><given-names>H</given-names></name>
+               <name name-style="western"><surname>Neuvial</surname><given-names>P</given-names></name>
+               <name name-style="western"><surname>Speed</surname><given-names>T</given-names></name>
+            </person-group>
+            <year>2010</year>
+            <article-title>TumorBoost: Normalization of allele-specific tumor copy numbers from a single pair of tumor-normal genotyping microarrays.</article-title>
+            <source>BMC Bioinformatics</source>
+            <volume>11</volume>
+            <fpage>245+</fpage>
+         </element-citation>
+      </ref>
+      <ref id="pcbi.1001060-Lai3">
+         <label>40</label>
+         <element-citation publication-type="journal" xlink:type="simple">
+            <person-group person-group-type="author">
+               <name name-style="western"><surname>Lai</surname><given-names>T</given-names></name>
+               <name name-style="western"><surname>Liu</surname><given-names>H</given-names></name>
+               <name name-style="western"><surname>Xing</surname><given-names>H</given-names></name>
+            </person-group>
+            <year>2005</year>
+            <article-title>Autoregressive models with piecewise constant volatility and regression parameters.</article-title>
+            <source>Stat Sin</source>
+            <volume>15</volume>
+            <fpage>279</fpage>
+            <lpage>301</lpage>
+         </element-citation>
+      </ref>
+   </ref-list>
+   
+</back></article>

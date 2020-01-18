@@ -1,0 +1,1275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004186</article-id>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-14-01349</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Explaining Diversity in Metagenomic Datasets by Phylogenetic-Based Feature Weighting</article-title>
+<alt-title alt-title-type="running-head">Phylogenetic-Based Feature Weighting in Metagenomic Datasets</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Albanese</surname>
+<given-names>Davide</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>De Filippo</surname>
+<given-names>Carlotta</given-names>
+</name>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Cavalieri</surname>
+<given-names>Duccio</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Donati</surname>
+<given-names>Claudio</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+<xref rid="cor001" ref-type="corresp">*</xref>
+</contrib>
+</contrib-group>
+<aff id="aff001"><label>1</label> <addr-line>Department of Computational Biology, Research and Innovation Centre, Fondazione Edmund Mach, San Michele all'Adige, Italy</addr-line></aff>
+<aff id="aff002"><label>2</label> <addr-line>Department of Food Quality and Nutrition, Research and Innovation Centre, Fondazione Edmund Mach, San Michele all'Adige, Italy</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Brem</surname>
+<given-names>Rachel</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>United States of America</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: DA CDF DC CD. Performed the experiments: DA CDF CD. Analyzed the data: DA CD. Wrote the paper: DA CDF DC CD.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">claudio.donati@fmach.it</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>27</day>
+<month>3</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="collection">
+<month>3</month>
+<year>2015</year>
+</pub-date>
+<volume>11</volume>
+<issue>3</issue>
+<elocation-id>e1004186</elocation-id>
+<history>
+<date date-type="received">
+<day>23</day>
+<month>7</month>
+<year>2014</year>
+</date>
+<date date-type="accepted">
+<day>12</day>
+<month>2</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Albanese et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004186" xlink:type="simple"/>
+<abstract>
+<p>Metagenomics is revolutionizing our understanding of microbial communities, showing that their structure and composition have profound effects on the ecosystem and in a variety of health and disease conditions. Despite the flourishing of new analysis methods, current approaches based on statistical comparisons between high-level taxonomic classes often fail to identify the microbial taxa that are differentially distributed between sets of samples, since in many cases the taxonomic schema do not allow an adequate description of the structure of the microbiota. This constitutes a severe limitation to the use of metagenomic data in therapeutic and diagnostic applications. To provide a more robust statistical framework, we introduce a class of feature-weighting algorithms that discriminate the taxa responsible for the classification of metagenomic samples. The method unambiguously groups the relevant taxa into clades without relying on pre-defined taxonomic categories, thus including in the analysis also those sequences for which a taxonomic classification is difficult. The phylogenetic clades are weighted and ranked according to their abundance measuring their contribution to the differentiation of the classes of samples, and a criterion is provided to define a reduced set of most relevant clades. Applying the method to public datasets, we show that the data-driven definition of relevant phylogenetic clades accomplished by our ranking strategy identifies features in the samples that are lost if phylogenetic relationships are not considered, improving our ability to mine metagenomic datasets. Comparison with supervised classification methods currently used in metagenomic data analysis highlights the advantages of using phylogenetic information.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>In metagenomics, the composition of complex microbial communities is characterized using Next Generation Sequencing technologies. Thanks to the decreasing cost of sequencing, large amounts of data have been generated for environmental samples and for a variety of health-associated conditions. In parallel there has been a flourishing of statistical methods to analyze metagenomic datasets, concentrating mainly on the problem of assessing the existence of significant differences between microbial communities in different conditions. However, for a large number of therapeutic and diagnostic applications it would be essential to identify and rank the microbial taxa that are most relevant in these comparisons. Here we present PhyloRelief, a novel feature-ranking algorithm that fills this gap by integrating the phylogenetic relationships amongst the taxa into a statistical feature weighting procedure. Without relying on a precompiled taxonomy, PhyloRelief determines the lineages most relevant to the diversification of the samples guided by the data. As such, PhyloRelief can be applied both to cases in which sequences can be classified according to a known taxonomy, and to cases in which this is not feasible, a common occurrence in metagenomic data analysis given the increasing number of new and uncultivable taxa that are discovered using these technologies.</p>
+</abstract>
+<funding-group>
+<funding-statement>The authors received no specific funding for this work.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="3"/>
+<table-count count="4"/>
+<page-count count="18"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the paper and its Supporting Information files. The software is available at the URL <ext-link ext-link-type="uri" xlink:href="http://compmetagen.github.io/phylorelief/" xlink:type="simple">http://compmetagen.github.io/phylorelief/</ext-link></meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Thanks to the possibility to characterize microbial communities through next generation sequencing, microbial ecology has become a central topic in many environmental and therapeutic applications. Extensive explorative studies of the microbiota colonizing several districts of the human body have been conducted, highlighting the large variability from site to site, as well as the interpersonal differences in the same body site [<xref rid="pcbi.1004186.ref001" ref-type="bibr">1</xref>]. The more extensively studied district is the human gastrointestinal tract (GI), whose metagenomics composition appears to be influenced by several factors [<xref rid="pcbi.1004186.ref002" ref-type="bibr">2</xref>], including age [<xref rid="pcbi.1004186.ref003" ref-type="bibr">3</xref>,<xref rid="pcbi.1004186.ref004" ref-type="bibr">4</xref>], geography [<xref rid="pcbi.1004186.ref005" ref-type="bibr">5</xref>], diet [<xref rid="pcbi.1004186.ref006" ref-type="bibr">6</xref>], and lifestyle [<xref rid="pcbi.1004186.ref007" ref-type="bibr">7</xref>]. In addition, a correlation between imbalances or abnormal composition of the gut microbiota and a number of pathologic conditions has been proposed. These alterations might be due to therapeutic interventions, like antibiotic treatment [<xref rid="pcbi.1004186.ref008" ref-type="bibr">8</xref>], or different lifestyle [<xref rid="pcbi.1004186.ref009" ref-type="bibr">9</xref>].</p>
+<p>The growing body of evidence of the importance of the gut microbiota for the self-sustainability of health of the “holobiont” is opening the debate on the design of therapeutic intervention strategies. Fecal transplantation has shown its effectiveness and safety in the treatment of recurrent <italic>Clostridium difficile</italic> infections [<xref rid="pcbi.1004186.ref010" ref-type="bibr">10</xref>], which are known to correlate with altered microbiomes following antibiotic treatment [<xref rid="pcbi.1004186.ref011" ref-type="bibr">11</xref>]. Alternatives for bioremediation of microbiota alterations is the supplementation of pro- or prebiotics, while it has been suggested that antibiotic treatment and vaccination can be used to guide the structure of the gut microbiota towards a status that is compatible with health [<xref rid="pcbi.1004186.ref012" ref-type="bibr">12</xref>,<xref rid="pcbi.1004186.ref013" ref-type="bibr">13</xref>]. Most of these intervention strategies would greatly increase their efficacy using a precise definition of the microbial species that are differentially distributed in health and disease conditions. This task faces several difficulties. On one hand, most of the microorganisms composing the human and environmental microbiota are poorly characterized, difficult to cultivate, and lack a precise taxonomic classification. On the other hand, methods to unambiguously define the microbial taxa that are responsible for these differences are still lacking, and their identification usually relies on a small number of arbitrarily chosen association tests with high-level taxonomic classes, or on statistical learning methods, both evaluating only taxa for which a taxonomic classification is possible [<xref rid="pcbi.1004186.ref014" ref-type="bibr">14</xref>]. In addition, the low abundance of most microbial taxa in metagenomic samples poses additional challenges only recently tackled with statistical methods [<xref rid="pcbi.1004186.ref015" ref-type="bibr">15</xref>].</p>
+<p>In amplicon metagenomics, the composition in term of microbial genera of a sample is inferred from the high throughput sequencing of a small number of diagnostic genomic loci, the most popular being the V1–V6 variable regions of the 16S rDNA gene for bacteria [<xref rid="pcbi.1004186.ref016" ref-type="bibr">16</xref>] and the ITS spacer for fungi [<xref rid="pcbi.1004186.ref017" ref-type="bibr">17</xref>], selectively amplified using broadly conserved PCR primers. As a proxy for species, Operational Taxonomic Units (OTUs) are determined by the clustering of the sequences up to a given level of similarity, usually 97%. Using the OTUs abundances, the differentiation between samples or classes of samples is accomplished by measuring their <italic>β</italic>-diversity, <italic>i</italic>.<italic>e</italic>. the variations in community membership across the different groups [<xref rid="pcbi.1004186.ref018" ref-type="bibr">18</xref>]. Given that the sequences of marker genes are available, phylogenetic measures of diversity such as UniFrac [<xref rid="pcbi.1004186.ref019" ref-type="bibr">19</xref>,<xref rid="pcbi.1004186.ref020" ref-type="bibr">20</xref>] have proven to be able to identify subtle differences in the structures of microbial communities by weighting species abundances with the phylogenetic relationships amongst taxa.</p>
+<p>Here we present PhyloRelief, a ranking strategy to identify the taxa significantly contributing to the differentiation of groups of amplicon metagenomic samples. By integrating the phylogenetic relationships amongst taxa into the framework of statistical learning, the method is able to unambiguously group the taxa into clades without relying on a precompiled taxonomy, and accomplishes a ranking of the clades according to their contribution to the sample differentiation. We applied the method to a meta-analysis of two recent datasets of comparative studies of the gut microbiota of European, USA, African and South American healthy individuals, identifying bacterial taxa that are differentially distributed with geography and age. Comparison of the performances of the method to popular feature selection and classification algorithms shows that or strategy is effective in identifying microbial clades associated to the different sample groups, providing a novel analysis method for targeted metagenomic datasets.</p>
+</sec>
+<sec id="sec002" sec-type="results">
+<title>Results</title>
+<p>PhyloRelief is an algorithm that introduces the Relief [<xref rid="pcbi.1004186.ref021" ref-type="bibr">21</xref>,<xref rid="pcbi.1004186.ref022" ref-type="bibr">22</xref>] strategy of feature weighting in a phylogenetic context to identify those OTUs or groups of OTUs that are responsible for the differentiation between classes of samples (<italic>i</italic>.<italic>e</italic>. healthy vs. disease, lean vs. obese, population A vs. population B, etc.) in a metagenomic dataset. The method is designed to analyze any set of samples that has been characterized via high throughput sequencing of one or more marker genomic loci, whose sequences have been clustered into OTUs. The process requires that the samples are unambiguously classified into cases and controls according to the description provided by the study design, and that a phylogenetic tree of the OTUs has been obtained by molecular phylogenetic analysis.</p>
+<p>The algorithm is composed by two main conceptual steps: i) a scoring scheme that ranks the branches of the OTU tree according to their contribution to the differentiation of the classes, and ii) a merging step that merges nested subtrees into independent clades. At the end of this procedure, PhyloRelief ranks the clades according to their discriminant power between cases and controls.</p>
+<sec id="sec003">
+<title>Definition of the scores</title>
+<p>Given a partitioning of the samples into two or more classes ({C1}, {C2},…), PhyloRelief ranks the internal branches in the OTU tree by assigning them a score <italic>w</italic> that reflects their importance in the differentiation of the classes. In its simplest form the procedure is as follows. First, one sample <italic>S</italic> is randomly chosen and its nearest hit <italic>H</italic> (<italic>i</italic>.<italic>e</italic>. the nearest sample of the same class) and miss <italic>M</italic> (<italic>i</italic>.<italic>e</italic>. the nearest sample of a different class) are individuated (<xref rid="pcbi.1004186.g001" ref-type="fig">Fig. 1</xref>). Next, the score <italic>w</italic> of each clade is increased by an amount proportional to the contribution of the clade to the distance between <italic>S</italic> and <italic>M</italic>, and decreased by an amount proportional to its contribution to the distance between <italic>S</italic> and <italic>H</italic>. In this way, the score of those clades that support the fact that <italic>S</italic> is more distant from <italic>M</italic> than from <italic>H</italic> is increased, while the score of those that support the contrary is decreased. A detailed description of the update rules is given in the Methods section. After that the procedure has been repeated over all possible choices of <italic>S</italic>, each clade has a score <italic>w</italic> that is high if the clade supports the partitioning of the samples into classes, {C1}, {C2}, and low if it does not (<xref rid="pcbi.1004186.g001" ref-type="fig">Fig. 1</xref>). The critical step of the procedure is the choice of the update function, for which different definitions are possible. Here we define (see <xref rid="sec008" ref-type="sec">Methods</xref>): a) an unweighted update function, that, for each clade, is proportional to the fraction of the clade that is unique to one of the classes, <italic>i</italic>.<italic>e</italic>. the fraction of the phylogenetic tree from which descend only OTUs belonging to one of the classes; b) a weighted update function, in which each branch of the tree is weighted by a quantity proportional to its unbalance between the classes, <italic>i</italic>.<italic>e</italic>. the difference between the number of sequences in samples from one class and from the other. Analogously to the Relief-F extension of the Relief algorithm, PhyloRelief can be applied to multi-class problems and can use <italic>k</italic>-nearest neighbors in the score computation, becoming robust in the case of noisy or unbalanced data sets [<xref rid="pcbi.1004186.ref021" ref-type="bibr">21</xref>].</p>
+<fig id="pcbi.1004186.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004186.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Schema of the method.</title>
+<p>A) Preliminary analysis. The PhyloRelief algorithm relies on a set of preprocessing steps of the metagenomic datasets that must be performed using standard algorithms. From the sequences of the marker genomic loci selected by the experimental design, an OTU table and a phylogenetic tree of the representative sequences of the OTUs is computed. B) Next, the matrix of the distances between the samples must be computed using a phylogenetic measure of β-diversity, such as weighted or unweighted UniFrac must be provided. C) The PhyloRelief strategy. Once one sample <italic>S</italic> has been randomly selected, the nearest hit <italic>H</italic>, <italic>i</italic>.<italic>e</italic>. the nearest sample of the same class, and the nearest miss <italic>M</italic>, <italic>i</italic>.<italic>e</italic>. the nearest sample of different class according to distance matrix D<sup>S</sup> are identified. D) The update function. For each subtree T<sub>i</sub> the weight w<sub>i</sub> is updated by summing the value <italic>d(T</italic><sub><italic>i</italic></sub>,<italic>S</italic>,<italic>H)/m</italic> and subtracting <italic>d(T</italic><sub><italic>i</italic></sub>,<italic>S</italic>,<italic>M)/m</italic>. The function <italic>d(T</italic><sub><italic>i</italic></sub>,<italic>A</italic>,<italic>B)/m</italic> is computed by summing the UniFrac distance between the sample <italic>A</italic> and <italic>B</italic> restricted to the subtree <italic>T</italic><sub><italic>i</italic></sub> and <italic>m</italic> is the number of samples. E) Correlation of the weights and definition of the clades. The weights of each clade propagate to the parents, where it is either reinforced if coalescing with a clade sharing similar unbalance between the classes, or is diluted if coalescing with a clade with no or contrasting unbalance. This allows an iterative procedure leading to the unambiguous identification of a set of uncorrelated clades. F) Output. The algorithm provides a list of clades of the phylogenetic tree ranked according to their contribution to the separation of the classes of samples.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004186.g001" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec004">
+<title>Correlation between the lineages and identification of the clades</title>
+<p>The peculiar nature of the features that we are ranking (<italic>i</italic>.<italic>e</italic>. subtrees in a tree) introduces a correlation that needs to be taken into account when analyzing the data, and that can be exploited to define a set of independent clades ranking them according to their relevance. If a given branch is heavier, due to unbalanced OTUs distribution between the different classes, its weight will propagate to the parent branches, where it is either reinforced by coalescing with branches sharing a similar unbalance, or diluted if the coalescing branches have contrasting or no unbalances. Exploiting this property, individual lineages can be clustered into taxonomic clades by inspecting the profile of the weights along the tree and identifying the branch where this has a local maximum. This rule, exemplified in <xref rid="pcbi.1004186.s001" ref-type="supplementary-material">S1 Fig</xref>, (see <xref rid="sec008" ref-type="sec">Methods</xref>) naturally defines a set of independent taxonomic clades and ranks them according to their contribution to the diversification between the classes. Using this ranking, the minimal set of clades necessary to describe the classes to a certain level of accuracy is determined by running non-parametric tests of class diversification, such as PERMANOVA[<xref rid="pcbi.1004186.ref023" ref-type="bibr">23</xref>] and ANOSIM[<xref rid="pcbi.1004186.ref024" ref-type="bibr">24</xref>], as a function of the number of clades.</p>
+</sec>
+<sec id="sec005">
+<title>Applications</title>
+<p>In order to illustrate the potentialities of the method, we analyzed two recent datasets, one including 528 samples from healthy individuals of different ages from the United States, from Guhaibo Amerindians living in two villages in Venezuela, and from four rural communities in Malawi [<xref rid="pcbi.1004186.ref005" ref-type="bibr">5</xref>], and the other including samples from 14 healthy children from the Mossi ethnic group living in a rural setting in Burkina Faso and 15 healthy children living in Florence (Italy)[<xref rid="pcbi.1004186.ref006" ref-type="bibr">6</xref>]. To allow joint analysis of these two datasets, OTUs were picked using a reference database (see <xref rid="sec008" ref-type="sec">Materials and Methods</xref>) and the OTU tables were merged and rarefied to the same number of reads. A PCoA analysis of the weighted UniFrac distances (<xref rid="pcbi.1004186.g002" ref-type="fig">Fig. 2A</xref>) shows that the samples segregate by geographical origin, with the USA and Italian samples clearly distinct from the African (Malawi and Burkina Faso) samples, and the Venezuelan occupying an intermediate position between the two groups. Previous meta-analyses of these data have shown differences in microbiota composition correlating to the “Western” (USA and Italy) or “non-Western” (Malawi, Burkina Faso and Venezuela) origin of the samples, and it has been suggested that these differences are related to the different balance between protein-rich and fiber-rich diet in these communities [<xref rid="pcbi.1004186.ref002" ref-type="bibr">2</xref>,<xref rid="pcbi.1004186.ref005" ref-type="bibr">5</xref>,<xref rid="pcbi.1004186.ref006" ref-type="bibr">6</xref>]. Stratifying the data by age of the subjects shows (<xref rid="pcbi.1004186.s002" ref-type="supplementary-material">S2 Fig</xref>) that the age is also an important factor in the variability of the human gut microbiota, and that this variability seems to be highest at younger age.</p>
+<fig id="pcbi.1004186.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004186.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Variability of the gut microbiome with geography.</title>
+<p>A) PCoA of the weighted UniFrac distances stratified by geographical origin. B) Phylogenetic tree of the OTUs. The 30 clades most relevant for the differentiation of the USA and Italian samples form the Burkina Faso, Malawi and Venezuelan samples are highlighted. Colors distinguish those more prevalent in the USA and Italian samples (green) form those more prevalent in the Burkina Faso, Malawi and Venezuelan samples (red) C) PCoA of the weighted UniFrac distances using only the OTUs included in the most relevant clades. D) Heatmap of the Log<sub>10</sub> of the relative abundances of the 30 most relevant clades (rows) identified by PhyloRelief. The age and origin of the individuals (columns) are indicated.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004186.g002" position="float" xlink:type="simple"/>
+</fig>
+<p>To identify the taxonomic groups that associate with the geographical origin and that might be correlated to the different diets of the five different populations, we partitioned the samples into two classes, one including the Western subjects (from Italy and the USA), and the other including the non-Western (Malawi, Burkina Faso and Venezuela) subjects, and applied the PhyloRelief algorithm to these two classes. To identify the number of clades that were more relevant to differentiate the two classes, we performed ANOSIM and PERMANOVA analysis with increasing number of clades ranked according to the PhyloRelief weights (<xref rid="pcbi.1004186.t001" ref-type="table">Table 1</xref>). This procedure showed that both ANOSIM and PERMANOVA had a maximum comprised between 20 and 30 clades, indicating that using this number of clades the separation between the groups is largest. In <xref rid="pcbi.1004186.g002" ref-type="fig">Fig. 2B</xref> we show a phylogenetic tree of the OTUs present in the samples, with those included in the 30 most relevant clades identified by PhyloRelief highlighted (in red OTUs more prevalent in Malawi, Burkina Faso and Venezuela, in green OTUs more prevalent in the USA and Italy). It is worth noting that most of these clades were specifically more represented in the non-Western samples, while only few were specific of the Western individuals, and that much of the differences were confined within the order Bacteroidales. In particular, the Malawi, Burkina Faso and Venezuelan samples were rich in Prevotellaceae, while the Western samples were rich in Ruminococcaceae. In <xref rid="pcbi.1004186.g002" ref-type="fig">Fig. 2C</xref> the PCoA of the weighted UniFrac distances computed on the 30 most relevant clades is shown. Although the Western samples were distinct from the rest, they showed a large degree of variability, with a small fraction of samples from the USA closely related to the Malawi, Burkina Faso and Venezuelan samples. In addition, age was still a major factor, being closely associated to the second component of the PCoA (<xref rid="pcbi.1004186.s003" ref-type="supplementary-material">S3 Fig</xref>). To further investigate the individual distribution of the 30 most relevant clades, we show in <xref rid="pcbi.1004186.g002" ref-type="fig">Fig. 2D</xref> a heatmap of the logarithm of the prevalences of the OTUs within these clades. These data confirmed that there was a group of individuals from the USA that were closely related to the non-Western individuals, sharing three clades of Prevotellaceae with most of the Malawi, Burkina Faso and Venezuelan subjects. Stratifying the subjects by age, we found that in both classes young subjects (below 2 years of age) were clearly distinct from older subjects (<xref rid="pcbi.1004186.g002" ref-type="fig">Fig. 2D</xref>, upper panel). In addition, while we found clear separation between Western and non-Western adult subjects, some of the Western young subjects were classified by hierarchical clustering together with the non-Western young subjects and vice-versa, suggesting that at young age cultural or geographical differences are less important in determining the structure of the gut microbiota probably related to the instability of the gut microbiota, a phenomenon typical of childhood[<xref rid="pcbi.1004186.ref005" ref-type="bibr">5</xref>].</p>
+<table-wrap id="pcbi.1004186.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004186.t001</object-id>
+<label>Table 1</label> <caption><title>Permutational ANOVA and ANOSIM tests on the effect of the number of clades used in the calculation of the weighted UniFrac distance between Western (USA and Italy) and non-Western (Malawi, Burkina Faso and Venezuela) individuals.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004186.t001g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004186.t001" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1"/>
+<th colspan="3" align="center" rowspan="1">PERMANOVA</th>
+<th colspan="2" align="center" rowspan="1">ANOSIM</th>
+</tr>
+<tr>
+<th align="left" rowspan="1" colspan="1">N clades</th>
+<th align="left" rowspan="1" colspan="1">F</th>
+<th align="left" rowspan="1" colspan="1">R<sup>2</sup></th>
+<th align="left" rowspan="1" colspan="1">p-value</th>
+<th align="left" rowspan="1" colspan="1">R</th>
+<th align="left" rowspan="1" colspan="1">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">10</td>
+<td align="char" char="." rowspan="1" colspan="1">49.00</td>
+<td align="char" char="." rowspan="1" colspan="1">0.13</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.40</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">20</td>
+<td align="char" char="." rowspan="1" colspan="1">414.44</td>
+<td align="char" char="." rowspan="1" colspan="1">0.44</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.68</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">30</td>
+<td align="char" char="." rowspan="1" colspan="1">374.68</td>
+<td align="char" char="." rowspan="1" colspan="1">0.41</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.61</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">40</td>
+<td align="char" char="." rowspan="1" colspan="1">139.46</td>
+<td align="char" char="." rowspan="1" colspan="1">0.20</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.29</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">50</td>
+<td align="char" char="." rowspan="1" colspan="1">121.25</td>
+<td align="char" char="." rowspan="1" colspan="1">0.18</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.27</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">60</td>
+<td align="char" char="." rowspan="1" colspan="1">83.88</td>
+<td align="char" char="." rowspan="1" colspan="1">0.13</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.36</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">70</td>
+<td align="char" char="." rowspan="1" colspan="1">82.01</td>
+<td align="char" char="." rowspan="1" colspan="1">0.13</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.35</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">80</td>
+<td align="char" char="." rowspan="1" colspan="1">82.24</td>
+<td align="char" char="." rowspan="1" colspan="1">0.13</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.35</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">90</td>
+<td align="char" char="." rowspan="1" colspan="1">92.72</td>
+<td align="char" char="." rowspan="1" colspan="1">0.14</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.30</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">100</td>
+<td align="char" char="." rowspan="1" colspan="1">86.89</td>
+<td align="char" char="." rowspan="1" colspan="1">0.14</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.32</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">200</td>
+<td align="char" char="." rowspan="1" colspan="1">98.98</td>
+<td align="char" char="." rowspan="1" colspan="1">0.15</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.36</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">300</td>
+<td align="char" char="." rowspan="1" colspan="1">101.74</td>
+<td align="char" char="." rowspan="1" colspan="1">0.15</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.35</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">400</td>
+<td align="char" char="." rowspan="1" colspan="1">109.94</td>
+<td align="char" char="." rowspan="1" colspan="1">0.17</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.37</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">500</td>
+<td align="char" char="." rowspan="1" colspan="1">109.73</td>
+<td align="char" char="." rowspan="1" colspan="1">0.17</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.37</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">600</td>
+<td align="char" char="." rowspan="1" colspan="1">106.61</td>
+<td align="char" char="." rowspan="1" colspan="1">0.16</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.38</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">700</td>
+<td align="char" char="." rowspan="1" colspan="1">94.92</td>
+<td align="char" char="." rowspan="1" colspan="1">0.15</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.35</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">800</td>
+<td align="char" char="." rowspan="1" colspan="1">94.90</td>
+<td align="char" char="." rowspan="1" colspan="1">0.15</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.35</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">900</td>
+<td align="char" char="." rowspan="1" colspan="1">96.79</td>
+<td align="char" char="." rowspan="1" colspan="1">0.15</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.36</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1000</td>
+<td align="char" char="." rowspan="1" colspan="1">96.51</td>
+<td align="char" char="." rowspan="1" colspan="1">0.15</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.36</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>To highlight the role of age, and to identify the age for which the differences between young and older individual was highest, we partitioned the samples into two groups using as variable the age threshold, performing a PERMANOVA analysis of the weighted UniFrac distances between the groups as a function of this threshold. We found (<xref rid="pcbi.1004186.s004" ref-type="supplementary-material">S4 Fig</xref> and <xref rid="pcbi.1004186.s007" ref-type="supplementary-material">S1 table</xref>) that the differentiation between young and older subjects was largest when the age threshold was set to two years, and that above 14 years of age, there was no difference between the microbiome of young and adult subjects. However, running the PhyloRelief analysis on the complete dataset, we could not unambiguously identify a minimal set of bacterial clades associated to this differentiation (<xref rid="pcbi.1004186.s008" ref-type="supplementary-material">S2 Table</xref>). This result was likely due to the different gut microbiota of Western and non-Western adult subjects. For this reason, we repeated the analysis separately for Western and non-Western samples. ANOSIM and PERMANOVA showed that the maximum differentiation between individuals below age of 2 and above age of 2 for the Western and for the non-Western samples was achieved using 90 (<xref rid="pcbi.1004186.t002" ref-type="table">Table 2</xref>) and 30 clades (<xref rid="pcbi.1004186.t003" ref-type="table">Table 3</xref>), respectively, where both PERMANOVA R<sup>2</sup> and ANOSIM R have a maximum. The differentiation between young and adults was much sharper in Western subjects, with a prominent role played by Lachnospiraceae and Ruminococcaceae in the adults (Figs. <xref rid="pcbi.1004186.g003" ref-type="fig">3A</xref> and <xref rid="pcbi.1004186.s005" ref-type="supplementary-material">S5</xref>). In non-Western subjects (Figs. <xref rid="pcbi.1004186.g003" ref-type="fig">3B</xref> and <xref rid="pcbi.1004186.s006" ref-type="supplementary-material">S6</xref>), there was also a contribution of the presence of five clades of Prevotellaceae to the differentiation of the adult gut microbiota. In both Western and non-Western samples the younger subjects have higher abundance of Bifidobacteriaceae (<xref rid="pcbi.1004186.g003" ref-type="fig">Fig. 3</xref>), probably due to breast-feeding in infants [<xref rid="pcbi.1004186.ref005" ref-type="bibr">5</xref>]. Bifidobacteriaceae were present at lower prevalence in most adult subjects, except for the adults from Burkina Faso probably due to the absence of dairy food in adult age in this African population [<xref rid="pcbi.1004186.ref025" ref-type="bibr">25</xref>].</p>
+<table-wrap id="pcbi.1004186.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004186.t002</object-id>
+<label>Table 2</label> <caption><title>Permutational ANOVA and ANOSIM tests on the effect of the number of clades used in the calculation of the weighted UniFrac distance between young (below two years of age) and older (above two years of age) Western individuals (USA and Italy).</title></caption>
+<alternatives>
+<graphic id="pcbi.1004186.t002g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004186.t002" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1"/>
+<th colspan="3" align="center" rowspan="1">PERMANOVA</th>
+<th colspan="2" align="center" rowspan="1">ANOSIM</th>
+</tr>
+<tr>
+<th align="left" rowspan="1" colspan="1">N clades</th>
+<th align="left" rowspan="1" colspan="1">F</th>
+<th align="left" rowspan="1" colspan="1">R<sup>2</sup></th>
+<th align="left" rowspan="1" colspan="1">p-value</th>
+<th align="left" rowspan="1" colspan="1">R</th>
+<th align="left" rowspan="1" colspan="1">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>10</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">138.89</td>
+<td align="char" char="." rowspan="1" colspan="1">0.31</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.75</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>20</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">50.38</td>
+<td align="char" char="." rowspan="1" colspan="1">0.14</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.58</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>30</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">92.73</td>
+<td align="char" char="." rowspan="1" colspan="1">0.22</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.73</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>40</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">76.12</td>
+<td align="char" char="." rowspan="1" colspan="1">0.19</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.71</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>50</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">72.53</td>
+<td align="char" char="." rowspan="1" colspan="1">0.18</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.69</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>60</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">69.68</td>
+<td align="char" char="." rowspan="1" colspan="1">0.18</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.68</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>70</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">72.43</td>
+<td align="char" char="." rowspan="1" colspan="1">0.18</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.71</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>80</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">78.38</td>
+<td align="char" char="." rowspan="1" colspan="1">0.20</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.74</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>90</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">124.58</td>
+<td align="char" char="." rowspan="1" colspan="1">0.28</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.81</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>100</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">121.48</td>
+<td align="char" char="." rowspan="1" colspan="1">0.27</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.80</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>110</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">117.01</td>
+<td align="char" char="." rowspan="1" colspan="1">0.27</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.80</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>120</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">110.17</td>
+<td align="char" char="." rowspan="1" colspan="1">0.26</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.78</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>130</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">110.45</td>
+<td align="char" char="." rowspan="1" colspan="1">0.26</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.78</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>140</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">110.62</td>
+<td align="char" char="." rowspan="1" colspan="1">0.26</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.78</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>150</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">111.04</td>
+<td align="char" char="." rowspan="1" colspan="1">0.26</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.78</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>160</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">111.04</td>
+<td align="char" char="." rowspan="1" colspan="1">0.26</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.78</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>170</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">107.45</td>
+<td align="char" char="." rowspan="1" colspan="1">0.25</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.78</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>180</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">107.89</td>
+<td align="char" char="." rowspan="1" colspan="1">0.25</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.77</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>190</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">103.66</td>
+<td align="char" char="." rowspan="1" colspan="1">0.24</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.76</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>200</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">101.49</td>
+<td align="char" char="." rowspan="1" colspan="1">0.24</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.75</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>200</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">101.49</td>
+<td align="char" char="." rowspan="1" colspan="1">0.24</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.75</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>300</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">88.90</td>
+<td align="char" char="." rowspan="1" colspan="1">0.22</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.74</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>400</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">85.75</td>
+<td align="char" char="." rowspan="1" colspan="1">0.21</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.72</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>500</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">88.47</td>
+<td align="char" char="." rowspan="1" colspan="1">0.22</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.72</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>600</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">88.89</td>
+<td align="char" char="." rowspan="1" colspan="1">0.22</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.73</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>700</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">89.97</td>
+<td align="char" char="." rowspan="1" colspan="1">0.22</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.73</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>800</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">89.82</td>
+<td align="char" char="." rowspan="1" colspan="1">0.22</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.73</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>900</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">89.79</td>
+<td align="char" char="." rowspan="1" colspan="1">0.22</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.73</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>1000</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">89.77</td>
+<td align="char" char="." rowspan="1" colspan="1">0.22</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.73</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<table-wrap id="pcbi.1004186.t003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004186.t003</object-id>
+<label>Table 3</label> <caption><title>Permutational ANOVA and ANOSIM tests on the effect of the number of clades used in the calculation of the weighted UniFrac distance between young (below two years of age) and older (above two years of age) non-Western individuals (Malawi, Burkina Faso and Venezuela).</title></caption>
+<alternatives>
+<graphic id="pcbi.1004186.t003g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004186.t003" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1"/>
+<th colspan="3" align="center" rowspan="1">PERMANOVA</th>
+<th colspan="2" align="center" rowspan="1">ANOSIM</th>
+</tr>
+<tr>
+<th align="left" rowspan="1" colspan="1">N clades</th>
+<th align="left" rowspan="1" colspan="1">F</th>
+<th align="left" rowspan="1" colspan="1">R<sup>2</sup></th>
+<th align="left" rowspan="1" colspan="1">p-value</th>
+<th align="left" rowspan="1" colspan="1">R</th>
+<th align="left" rowspan="1" colspan="1">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>10</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">17.54</td>
+<td align="char" char="." rowspan="1" colspan="1">0.09</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.38</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>20</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">18.92</td>
+<td align="char" char="." rowspan="1" colspan="1">0.10</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.42</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>30</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">173.33</td>
+<td align="char" char="." rowspan="1" colspan="1">0.47</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.73</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>40</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">154.84</td>
+<td align="char" char="." rowspan="1" colspan="1">0.45</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.72</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>50</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">161.55</td>
+<td align="char" char="." rowspan="1" colspan="1">0.46</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.72</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>60</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">144.83</td>
+<td align="char" char="." rowspan="1" colspan="1">0.43</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.68</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>70</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">125.26</td>
+<td align="char" char="." rowspan="1" colspan="1">0.39</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.66</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>80</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">129.25</td>
+<td align="char" char="." rowspan="1" colspan="1">0.40</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.66</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>90</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">111.63</td>
+<td align="char" char="." rowspan="1" colspan="1">0.37</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.63</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>100</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">111.37</td>
+<td align="char" char="." rowspan="1" colspan="1">0.37</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.60</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>110</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">111.52</td>
+<td align="char" char="." rowspan="1" colspan="1">0.37</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.60</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>120</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">103.80</td>
+<td align="char" char="." rowspan="1" colspan="1">0.35</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.59</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>130</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">103.00</td>
+<td align="char" char="." rowspan="1" colspan="1">0.35</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.58</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>140</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">103.52</td>
+<td align="char" char="." rowspan="1" colspan="1">0.35</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.59</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>150</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">94.73</td>
+<td align="char" char="." rowspan="1" colspan="1">0.33</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.53</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>160</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">93.17</td>
+<td align="char" char="." rowspan="1" colspan="1">0.33</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.53</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>170</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">92.03</td>
+<td align="char" char="." rowspan="1" colspan="1">0.32</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.53</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>180</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">91.97</td>
+<td align="char" char="." rowspan="1" colspan="1">0.32</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.53</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>190</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">91.39</td>
+<td align="char" char="." rowspan="1" colspan="1">0.32</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.53</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>200</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">91.20</td>
+<td align="char" char="." rowspan="1" colspan="1">0.32</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.54</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>200</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">91.20</td>
+<td align="char" char="." rowspan="1" colspan="1">0.32</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.54</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>300</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">85.45</td>
+<td align="char" char="." rowspan="1" colspan="1">0.31</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.52</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>400</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">78.85</td>
+<td align="char" char="." rowspan="1" colspan="1">0.29</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.51</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>500</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">73.88</td>
+<td align="char" char="." rowspan="1" colspan="1">0.28</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.46</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>600</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">69.12</td>
+<td align="char" char="." rowspan="1" colspan="1">0.26</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.46</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>700</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">69.20</td>
+<td align="char" char="." rowspan="1" colspan="1">0.26</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.46</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>800</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">69.12</td>
+<td align="char" char="." rowspan="1" colspan="1">0.26</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.46</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>900</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">68.97</td>
+<td align="char" char="." rowspan="1" colspan="1">0.26</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.46</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>1000</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">68.92</td>
+<td align="char" char="." rowspan="1" colspan="1">0.26</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+<td align="char" char="." rowspan="1" colspan="1">0.46</td>
+<td align="char" char="." rowspan="1" colspan="1">0.001</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<fig id="pcbi.1004186.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004186.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Variability of the gut microbiome with age.</title>
+<p>A) Italy and USA; Heatmap of the Log<sub>10</sub> of the relative abundances of the 90 clades (rows) identified by PhyloRelief that differentiate the samples from individuals below 2 years of age from the older individuals (columns). B) Italy and USA; Phylogenetic tree of the OTUs. The 90 most relevant clades are highlighted. Colors distinguish those more prevalent in the younger samples (green) form those more prevalent in the older samples (red). C) Burkina Faso, Malawi and Venezuela; Heatmap of the Log<sub>10</sub> of the relative abundances of the 30 clades (rows) identified by PhyloRelief that differentiate the samples from individuals below 2 years of age from the older individuals (columns). D) Burkina Faso, Malawi and Venezuela; Phylogenetic tree of the OTUs. The 30 most relevant clades are highlighted. Colors distinguish those more prevalent in the younger samples (green) form those more prevalent in the older samples (red).</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004186.g003" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec006">
+<title>Predictivity of the ranked features in supervised classification problems</title>
+<p>The main goal of supervised classification is to build a model from a set of labeled samples to classify new, uncategorized data in high dimensional datasets in the presence of complex relationships between the variables. Identifying a ranking strategy to reduce the dimensionality of the dataset can improve the effectiveness of classification algorithms in metagenomic datasets, where correlations between the variables are introduced both by the phylogenetic relationships between the clades and by the fact that relative abundances are measured. The Random Forest (RF) classifier was recently proven to be the most effective in this class of problems [<xref rid="pcbi.1004186.ref026" ref-type="bibr">26</xref>,<xref rid="pcbi.1004186.ref027" ref-type="bibr">27</xref>], both for feature selection and classification. Although the main goal of this work is to define a phylogeny-based OTUs ranking method, it is interesting to assess the predictive power of the ranked taxa for the classification of samples into predefined categories in comparison to other state of the art algorithms. For this purpose, we selected four publicly available datasets, including data from four body sites (forehead vs. external nose and volar forearm vs. popliteal fossa) [<xref rid="pcbi.1004186.ref001" ref-type="bibr">1</xref>], from fecal samples (IBD vs. healthy) [<xref rid="pcbi.1004186.ref028" ref-type="bibr">28</xref>] and skin [<xref rid="pcbi.1004186.ref029" ref-type="bibr">29</xref>] (using both subject identification—3 classes—and subject/hand identification—6 classes—as target) that have recently been used as benchmark in comparative evaluations of classification methods for metagenomic data [<xref rid="pcbi.1004186.ref026" ref-type="bibr">26</xref>,<xref rid="pcbi.1004186.ref027" ref-type="bibr">27</xref>,<xref rid="pcbi.1004186.ref028" ref-type="bibr">28</xref>].</p>
+<p>We compared the performance of PhyloRelief coupled with the RF classifier to LEfSe [<xref rid="pcbi.1004186.ref030" ref-type="bibr">30</xref>], an algorithm that uses statistical tests for biomarker discovery, to MetaPhyl, a recent phylogeny-based method for the classification of microbial communities [<xref rid="pcbi.1004186.ref031" ref-type="bibr">31</xref>] and to Random Forest, used both as classifier and feature selection method. The performances were assessed in terms of average predictive accuracy using the K-category correlation coefficient (KCCC), a multiclass extension of the Matthews Correlation Coefficient (MCC) [<xref rid="pcbi.1004186.ref032" ref-type="bibr">32</xref>] (see <xref rid="sec008" ref-type="sec">Materials and Methods</xref> for details on the procedure). The results are reported in <xref rid="pcbi.1004186.t004" ref-type="table">Table 4</xref>. We found that while in one case (in the volar forearm vs. popliteal fossa sample) the OTUs identified by LEfSe had a higher predictive value, in all other cases PhyloRelief coupled to RF performed equivalently to the most efficient alternative algorithm (FH vs. EN: Phylorelief 0.220+/-0.073—MetaPhyl 0.170+/-0.106; IBD: Phylorelief 0.213+/-0.074—LEfSe 0.238+/-0.065; FS subject: PhyloRelief 1.0—LEfSe 1.0; FS subject/hand: PhyloRelief 0.684+/-0.026—RF 0.670+/-0.026), suggesting that taxa identified using phylogenetic information have high predictive power in classification problems.</p>
+<table-wrap id="pcbi.1004186.t004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004186.t004</object-id>
+<label>Table 4</label> <caption><title>Classification accuracy in terms of average K-category correlation coefficient (KCCC) using weighted and unweighted PhyloRelief, LEfSe using OTUs and classified taxa, RF and MetaPhyl.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004186.t004g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004186.t004" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1"/>
+<th align="left" rowspan="1" colspan="1"/>
+<th align="left" rowspan="1" colspan="1">FH vs. EN (CBH)</th>
+<th align="left" rowspan="1" colspan="1">VF vs. PF (CBH)</th>
+<th align="left" rowspan="1" colspan="1">IBD</th>
+<th align="left" rowspan="1" colspan="1">FS subject (C = 3)</th>
+<th align="left" rowspan="1" colspan="1">FS subject/hand (C = 6)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>PhyloRelief W + RF</bold></td>
+<td align="left" rowspan="1" colspan="1">k = 2</td>
+<td align="left" rowspan="1" colspan="1">0.214 0.103 (4)</td>
+<td align="left" rowspan="1" colspan="1">0.655 0.045 (800)</td>
+<td align="left" rowspan="1" colspan="1">-0.011 0.060 (40)</td>
+<td align="left" rowspan="1" colspan="1"><bold>1 0 (700)</bold></td>
+<td align="left" rowspan="1" colspan="1">0.678 0.028 (900)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">k = 3</td>
+<td align="left" rowspan="1" colspan="1">0.158 0.060 (4)</td>
+<td align="left" rowspan="1" colspan="1">0.718 0.033 (800)</td>
+<td align="left" rowspan="1" colspan="1">0.079 0.090 (40)</td>
+<td align="left" rowspan="1" colspan="1"><bold>1 0 (700)</bold></td>
+<td align="left" rowspan="1" colspan="1">0.666 0.027 (800)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">k = 4</td>
+<td align="left" rowspan="1" colspan="1"><bold>0.220 0.073 (4)</bold></td>
+<td align="left" rowspan="1" colspan="1">0.685 0.065 (800)</td>
+<td align="left" rowspan="1" colspan="1">0.074 0.067 (40)</td>
+<td align="left" rowspan="1" colspan="1"><bold>1 0 (700)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>0.684 0.026 (900)</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>PhyloRelief U + RF</bold></td>
+<td align="left" rowspan="1" colspan="1">k = 2</td>
+<td align="left" rowspan="1" colspan="1">-0.042 0.087 (4)</td>
+<td align="left" rowspan="1" colspan="1">0.565 0.077 (800)</td>
+<td align="left" rowspan="1" colspan="1">0.165 0.057 (40)</td>
+<td align="left" rowspan="1" colspan="1"><bold>1 0 (700)</bold></td>
+<td align="left" rowspan="1" colspan="1">0.655 0.024 (900)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">k = 3</td>
+<td align="left" rowspan="1" colspan="1">0.112 0.095 (4)</td>
+<td align="left" rowspan="1" colspan="1">0.539 0.080 (800)</td>
+<td align="left" rowspan="1" colspan="1">0.213 0.074 (40)</td>
+<td align="left" rowspan="1" colspan="1">0.994 0.006 (700)</td>
+<td align="left" rowspan="1" colspan="1">0.640 0.020 (800)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">k = 4</td>
+<td align="left" rowspan="1" colspan="1">0.066 0.089 (4)</td>
+<td align="left" rowspan="1" colspan="1">0.599 0.050 (800)</td>
+<td align="left" rowspan="1" colspan="1">0.121 0.078 (40)</td>
+<td align="left" rowspan="1" colspan="1">0.994 0.006 (700)</td>
+<td align="left" rowspan="1" colspan="1">0.653 0.017 (900)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>LEfSe + RF</bold></td>
+<td align="left" rowspan="1" colspan="1">OTU</td>
+<td align="left" rowspan="1" colspan="1">-0.039 0.061 (19)</td>
+<td align="left" rowspan="1" colspan="1"><bold>0.836 0.040 (100)</bold></td>
+<td align="left" rowspan="1" colspan="1">0.083 0.057 (81)</td>
+<td align="left" rowspan="1" colspan="1"><bold>1 0 (181)</bold></td>
+<td align="left" rowspan="1" colspan="1">0.628 0.022 (59)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Taxa</td>
+<td align="left" rowspan="1" colspan="1">0.044 0.059 (4)</td>
+<td align="left" rowspan="1" colspan="1">0.833 0.035 (50)</td>
+<td align="left" rowspan="1" colspan="1"><bold>0.238 0.065 (20)</bold></td>
+<td align="left" rowspan="1" colspan="1">0.983 0.008 (85)</td>
+<td align="left" rowspan="1" colspan="1">0.517 0.034 (101)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>RF</bold></td>
+<td align="left" rowspan="1" colspan="1">FS</td>
+<td align="left" rowspan="1" colspan="1">0.108 0.099 (1)</td>
+<td align="left" rowspan="1" colspan="1">0.784 0.074 (40)</td>
+<td align="left" rowspan="1" colspan="1">0.142 0.059 (7)</td>
+<td align="left" rowspan="1" colspan="1">1.0 0.0 (200)</td>
+<td align="left" rowspan="1" colspan="1">0.670 0.026 (30)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">No FS</td>
+<td align="left" rowspan="1" colspan="1">-0.021 0.021 (-)</td>
+<td align="left" rowspan="1" colspan="1">0.659 0.060 (-)</td>
+<td align="left" rowspan="1" colspan="1">0.0 0.0 (-)</td>
+<td align="left" rowspan="1" colspan="1">1.0 0.0 (-)</td>
+<td align="left" rowspan="1" colspan="1">0.667 0.026 (-)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>MetaPhyl</bold></td>
+<td align="left" rowspan="1" colspan="1">No FS</td>
+<td align="left" rowspan="1" colspan="1">0.170 0.106 (-)</td>
+<td align="left" rowspan="1" colspan="1">0.831 0.048 (-)</td>
+<td align="left" rowspan="1" colspan="1">0.229 0.085 (-)</td>
+<td align="left" rowspan="1" colspan="1">0.950 0.022 (-)</td>
+<td align="left" rowspan="1" colspan="1">0.672 0.036 (-)</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t004fn001"><p>For PhyloRelief, three value of k (k = 2,3,4) are shown. When feature selection was performed using PhyloRelief, LEfSe and RF, the RF classifier was used. For each of these algorithms we report the cross-validation accuracy in terms of average KCCC, the Standard Error and the number of features selected in the final model using the complete dataset (in parentheses). For PhyloRelief and RF the number of features was selected by a nested cross validation loop. For each dataset, the maximum KCCC value is marked in bold.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+</sec>
+</sec>
+<sec id="sec007" sec-type="conclusions">
+<title>Discussion</title>
+<p>High throughput sequencing applied to the study of microbial communities is revolutionizing the way we understand the role of microorganisms in the environment and in health and disease conditions. The relatively low cost of sequencing has triggered an exponential increase in the amount of data generated, that have highlighted correlations between the structure of the microbiota and important human pathologies for which conventional intervention strategies were not effective. This suggests that a precise definition of the structure of the healthy vs. disease microbiota could allow early diagnosis and the definition of effective intervention strategies in a number of pathologies. To become a viable diagnostic and therapeutic tool, the evolution of sequencing technologies needs to be paralleled by progress in computational tools enabling to significantly correlate phenotypes to the smallest possible number of microbial taxa. This would allow, on one hand, to develop relatively cheap and easy to use diagnostic tools, and on the other hand to design focused and personalized intervention strategies.</p>
+<p>PhyloRelief is an algorithm that resolves the problem of relevant taxa identification by applying the Relief strategy of feature ranking in a phylogenetic context. The improvement of this method over existing ones consists in its ability to accomplish a ranking of the microbial clades, defined on the basis of the taxa distribution amongst the samples weighted by phylogenetic information, discovering those that contribute to the differentiation between two or more classes of samples. Importantly, this result is obtained without relying on a predefined set of taxonomic categories that are often hard pressed to describe the complexity of the evolutionary relationships between microorganisms.</p>
+<p>We applied the algorithm to case control studies derived from the literature, in all cases identifying taxa that are significantly differentially distributed. Of particular interest were the results obtained when comparing infants vs. adults in the different geographies, showing that age has a much greater influence in the USA and Italy than in the African and South American samples, with a much larger fraction of the OTU differentially distributed between young children and adults in the former than in the latter. Comparing the performances of the algorithm to LEfSe, MetaPhyl and to Random Forest in a classical supervised classification schema using cross validation, we found that the taxa ranked by PhyloRelief had also a high predictive value, performing as well as—and in some cases outperforming—current gold standard methods.</p>
+<p>The algorithm is general and does not rely on any specific sequencing technology, as long as a phylogenetic tree of the OTUs and the distribution of the OTUs in the different samples are available. The method presented here is technology agnostic since it can be used to interpret data generated by the targeted amplification of marker genomic loci, such as the variable regions of the 16S rDNA gene for bacteria, or the ITS sequences for fungi as well as complete metagenome sequencing data, such as those obtained with Illumina technologies. In addition, the algorithm can readily be extended to regression problems to include cases where a continuous variable differentiate the individual samples using the RReliefF extension of Relief [<xref rid="pcbi.1004186.ref021" ref-type="bibr">21</xref>,<xref rid="pcbi.1004186.ref022" ref-type="bibr">22</xref>]. The PhyloRelief class of algorithms fills a significant gap in the growing array of computational methods that are currently used for the analysis of metagenomic data, and will impact importantly on the application of metagenomics to the development of novel diagnostic markers, leading the application of these approaches from the bench to the bedside.</p>
+</sec>
+<sec id="sec008" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="sec009">
+<title>The PhyloRelief algorithm</title>
+<p>We will assume that a phylogenetic tree <italic>T</italic> of the OTUs is given, and that a distance matrix <italic>D</italic><sup><italic>S</italic></sup> between the samples S has been computed according to some measure of β -diversity. Given the availability of phylogenetic data, β -diversity measures incorporating phylogenetic information, such as weighted and unweighted UniFrac [<xref rid="pcbi.1004186.ref019" ref-type="bibr">19</xref>,<xref rid="pcbi.1004186.ref020" ref-type="bibr">20</xref>] have become popular in the context of metagenomic research, but other measures, such as Bray-Curtis dissimilarity index could also be used. Let us define a partitioning of <italic>S</italic> into sample class {<italic>C1</italic>} and {<italic>C2</italic>}. Usually, this partitioning is obtained either by exploratory analysis of the distance matrix <italic>D</italic><sup><italic>S</italic></sup>, or by the study design (<italic>e</italic>.<italic>g</italic>. according to the origin of the samples, health status or age of the donor in the case of human samples, etc.).</p>
+<p>The purpose of the PhyloRelief algorithm is to rank the OTUs according to their relevance in the partitioning of <italic>S</italic> into {<italic>C1</italic>} and {<italic>C2</italic>}. To accomplish this result, we developed a modified version of the Relief-F procedure that takes into account the phylogenetic information contained in the tree <italic>T</italic>. To this purpose, the algorithm does not work directly with the OTUs, but with the clades (or sub-trees) <italic>T</italic><sub><italic>i</italic></sub> of the tree <italic>T</italic>. Below we report the two main steps of the algorithm, i.e. i) the scoring scheme ranking the sub-trees of the tree <italic>T</italic>, and ii) the merging step that identifies the independent clades.</p>
+<sec id="sec010">
+<title>Definition of the scores</title>
+<p>Two different scoring function have been define: a unweighted update function and a weighted update function. Being closely related to the unweighted UniFrac distance, the unweighted update function is the natural choice when exploratory analysis of the samples has been performed using unweighted UniFrac, while the weighted update function is the natural choice when weighted UniFrac has been used.</p>
+<p>Unweighted PhyloRelief. For each subtree <italic>T</italic><sub><italic>i</italic></sub> (1≤<italic>i</italic>≤<italic>N</italic>)of <italic>T</italic>, we compute a weight w[<italic>T</italic><sub><italic>i</italic></sub>] with the following iterative procedure:</p>
+<p specific-use="line"> <bold>Start</bold></p>
+<p specific-use="line"> define the subtrees <italic>T</italic><sub><italic>i</italic></sub> (1≤<italic>i</italic>≤<italic>N</italic>) that have the branches <italic>B</italic><sub><italic>i</italic></sub> as root;</p>
+<p specific-use="line"> set all weights w[<italic>T</italic><sub><italic>i</italic></sub>] = 0;</p>
+<p specific-use="line"> <bold>for</bold> j: = 1 <bold>to</bold> <italic>m</italic> <bold>do</bold> begin</p>
+<p specific-use="line">  randomly select a sample <italic>S</italic><sub><italic>j</italic></sub>;</p>
+<p specific-use="line">  find nearest hit <italic>H</italic> and nearest miss <italic>M</italic>;</p>
+<p specific-use="line">  <bold>for</bold> <italic>i</italic> <bold>=</bold> 1<bold>to</bold> <italic>N</italic> <bold>do</bold></p>
+<disp-formula id="pcbi.1004186.e001">
+<alternatives>
+<graphic id="pcbi.1004186.e001g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004186.e001" xlink:type="simple"/>
+<mml:math display="block" id="M1" overflow="scroll">
+<mml:mrow><mml:mi>w</mml:mi><mml:mrow><mml:mo>[</mml:mo><mml:mrow><mml:msub><mml:mi mathvariant="script">T</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow><mml:mo>]</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mi>w</mml:mi><mml:mrow><mml:mo>[</mml:mo><mml:mrow><mml:msub><mml:mi mathvariant="script">T</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow><mml:mo>]</mml:mo></mml:mrow><mml:mo>−</mml:mo><mml:mfrac><mml:mrow><mml:mi>d</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi mathvariant="script">T</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo> </mml:mo><mml:mo>,</mml:mo><mml:msub><mml:mi>S</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:mi>H</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mi>m</mml:mi></mml:mfrac><mml:mo>+</mml:mo><mml:mfrac><mml:mrow><mml:mi>d</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi mathvariant="script">T</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>S</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:mi>M</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mi>m</mml:mi></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula>
+<p specific-use="line">  <bold>end;</bold></p>
+<p specific-use="line"> <bold>end;</bold></p>
+<p>The function <italic>d</italic>(<italic>T</italic><sub><italic>i</italic></sub>,<italic>A</italic>,<italic>B)</italic> is equal to:
+<disp-formula id="pcbi.1004186.e002">
+<alternatives>
+<graphic id="pcbi.1004186.e002g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004186.e002" xlink:type="simple"/>
+<mml:math display="block" id="M2" overflow="scroll">
+<mml:mrow><mml:mi>d</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi mathvariant="script">T</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:mi>A</mml:mi><mml:mo>,</mml:mo><mml:mi>B</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mstyle displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:msub><mml:mi mathvariant="script">B</mml:mi><mml:mi>q</mml:mi></mml:msub><mml:mo>∈</mml:mo><mml:mrow><mml:mo>{</mml:mo> <mml:mrow><mml:msub><mml:mi mathvariant="script">T</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow> <mml:mo>}</mml:mo></mml:mrow></mml:mrow></mml:msub><mml:msub><mml:mi>b</mml:mi><mml:mi>q</mml:mi></mml:msub><mml:mrow><mml:mo>|</mml:mo> <mml:mrow><mml:msubsup><mml:mtext>Θ</mml:mtext><mml:mi>q</mml:mi><mml:mi>A</mml:mi></mml:msubsup><mml:mo>−</mml:mo><mml:msubsup><mml:mtext>Θ</mml:mtext><mml:mi>q</mml:mi><mml:mi>B</mml:mi></mml:msubsup></mml:mrow> <mml:mo>|</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:msub><mml:mstyle displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:msub><mml:mi mathvariant="script">B</mml:mi><mml:mi>q</mml:mi></mml:msub><mml:mo>∈</mml:mo><mml:mrow><mml:mo>{</mml:mo> <mml:mrow><mml:msub><mml:mi mathvariant="script">T</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow> <mml:mo>}</mml:mo></mml:mrow></mml:mrow></mml:msub><mml:msub><mml:mi>b</mml:mi><mml:mi>q</mml:mi></mml:msub></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula>
+where <inline-formula id="pcbi.1004186.e003"><alternatives><graphic id="pcbi.1004186.e003g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004186.e003" xlink:type="simple"/><mml:math display="inline" id="M3" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>Θ</mml:mi><mml:mi>q</mml:mi><mml:mi>S</mml:mi></mml:msubsup></mml:mrow></mml:math></alternatives></inline-formula> is equal to 1 if the branch <italic>B</italic><sub><italic>q</italic></sub> contains OTUs from sample <italic>S</italic>, 0 otherwise. In this way, the contribution of each clade does not take into account the prevalence of the OTUs in the different classes, but just their presence. Consequently, the algorithm identifies those lineages that are specific to one of the classes of samples.</p>
+<p><bold>Weighted PhyloRelief</bold>. In weighted PhyloRelief we use the same iterative procedure defined above, but the update function <italic>d</italic>(<italic>T</italic><sub><italic>i</italic></sub>,<italic>A</italic>,<italic>B)</italic> is defined as:
+<disp-formula id="pcbi.1004186.e004">
+<alternatives>
+<graphic id="pcbi.1004186.e004g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004186.e004" xlink:type="simple"/>
+<mml:math display="block" id="M4" overflow="scroll">
+<mml:mrow><mml:mi>d</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi mathvariant="script">T</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:mi>A</mml:mi><mml:mo>,</mml:mo><mml:mi>B</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mstyle displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:msub><mml:mi mathvariant="script">B</mml:mi><mml:mi>q</mml:mi></mml:msub><mml:mo>∈</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mrow><mml:msub><mml:mi mathvariant="script">T</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow><mml:mo>}</mml:mo></mml:mrow></mml:mrow></mml:msub><mml:msub><mml:mi>b</mml:mi><mml:mi>q</mml:mi></mml:msub><mml:mrow><mml:mo>|</mml:mo><mml:mrow><mml:msubsup><mml:mi>p</mml:mi><mml:mi>q</mml:mi><mml:mi>A</mml:mi></mml:msubsup><mml:mo>−</mml:mo><mml:msubsup><mml:mi>p</mml:mi><mml:mi>q</mml:mi><mml:mi>B</mml:mi></mml:msubsup></mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:msub><mml:mstyle displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:msub><mml:mi mathvariant="script">B</mml:mi><mml:mi>q</mml:mi></mml:msub><mml:mo>∈</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mrow><mml:msub><mml:mi mathvariant="script">T</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow><mml:mo>}</mml:mo></mml:mrow></mml:mrow></mml:msub><mml:msub><mml:mi>b</mml:mi><mml:mi>q</mml:mi></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msubsup><mml:mi>p</mml:mi><mml:mi>q</mml:mi><mml:mi>A</mml:mi></mml:msubsup><mml:mo>+</mml:mo><mml:msubsup><mml:mi>p</mml:mi><mml:mi>q</mml:mi><mml:mi>B</mml:mi></mml:msubsup></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula>
+The sum runs on all branches <italic>B</italic><sub><italic>q</italic></sub> of <italic>T</italic><sub><italic>i</italic></sub> (including <italic>B</italic><sub><italic>i</italic></sub>). <inline-formula id="pcbi.1004186.e005"><alternatives><graphic id="pcbi.1004186.e005g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004186.e005" xlink:type="simple"/><mml:math display="inline" id="M5" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>p</mml:mi><mml:mi>q</mml:mi><mml:mi>A</mml:mi></mml:msubsup></mml:mrow></mml:math></alternatives></inline-formula> and <inline-formula id="pcbi.1004186.e006"><alternatives><graphic id="pcbi.1004186.e006g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004186.e006" xlink:type="simple"/><mml:math display="inline" id="M6" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>p</mml:mi><mml:mi>q</mml:mi><mml:mi>B</mml:mi></mml:msubsup></mml:mrow></mml:math></alternatives></inline-formula> are the fraction of the taxa descending from the branch <italic>B</italic><sub><italic>q</italic></sub> that are from samples <italic>A</italic> and <italic>B</italic>, respectively. <italic>b</italic><sub><italic>q</italic></sub> is the length of the branch <italic>B</italic><sub><italic>q</italic></sub>. In other words, <italic>d</italic>(<italic>T</italic><sub><italic>i</italic></sub>,<italic>A</italic>,<italic>B)</italic> is the weighted UniFrac distance between samples <italic>A</italic> and <italic>B</italic> due to the OTUs in the subtree <italic>T</italic><sub><italic>i</italic></sub> of the tree <italic>T</italic> defined by the branch <italic>B</italic><sub><italic>i</italic></sub>. By iterating over <italic>S</italic><sub><italic>j</italic></sub>, the procedure positively weights those sub-trees <italic>T</italic><sub><italic>i</italic></sub> that support the partitioning of <italic>S</italic> into {<italic>C1</italic>} and {<italic>C2</italic>}, and negatively those that do not support the partitioning. <italic>m</italic> is a user defined parameter that, in practice, can be set to the number of samples in <italic>S</italic>.</p>
+</sec>
+<sec id="sec011">
+<title>Generalizations and extensions</title>
+<p>Analogously to the Relief-F algorithm, PhyloRelief can work with multi-class classification problems. Moreover, in its generalized form, the algorithm again randomly selects a sample <italic>S</italic>, but then identifies <italic>k</italic> of its nearest neighbors from the same class, called nearest hits <italic>H</italic><sub><italic>l</italic></sub>, and <italic>k</italic> nearest neighbors from each of the different classes, called nearest misses <italic>M</italic><sub><italic>l</italic></sub>(<italic>C</italic>).</p>
+<p specific-use="line"> <bold>Start</bold></p>
+<p specific-use="line"> define the subtrees <italic>T</italic><sub><italic>i</italic></sub> (1≤<italic>i</italic>≤<italic>N</italic>) that have the branches <italic>B</italic><sub><italic>i</italic></sub> as root;</p>
+<p specific-use="line"> set all weights w[<italic>T</italic><sub><italic>i</italic></sub>] = 0;</p>
+<p specific-use="line"> <bold>for</bold> j: = 1 <bold>to</bold> <italic>m</italic> <bold>do begin</bold></p>
+<p specific-use="line">  randomly select a sample <italic>S</italic><sub><italic>j</italic></sub>;</p>
+<p specific-use="line">  find <italic>k</italic> nearest hits <italic>H</italic><sub><italic>l</italic></sub>;</p>
+<p specific-use="line">  <bold>for</bold> each class <italic>C≠class(S</italic><sub><italic>j</italic></sub>) <bold>do</bold></p>
+<p specific-use="line">   find <italic>k</italic> nearest misses <italic>M</italic><sub><italic>l</italic></sub>(<italic>C</italic>);</p>
+<p specific-use="line">   <bold>for</bold> <italic>i</italic> = 1<bold>to</bold> <italic>N</italic> <bold>do</bold></p>
+<disp-formula id="pcbi.1004186.e007">
+<alternatives>
+<graphic id="pcbi.1004186.e007g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004186.e007" xlink:type="simple"/>
+<mml:math display="block" id="M7" overflow="scroll">
+<mml:mrow><mml:mi>w</mml:mi><mml:mrow><mml:mo>[</mml:mo><mml:mrow><mml:msub><mml:mi mathvariant="script">T</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow><mml:mo>]</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mi>w</mml:mi><mml:mrow><mml:mo>[</mml:mo><mml:mrow><mml:msub><mml:mi mathvariant="script">T</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow><mml:mo>]</mml:mo></mml:mrow><mml:mo>−</mml:mo><mml:msubsup><mml:mstyle displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:mi>l</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mi>k</mml:mi></mml:msubsup><mml:mfrac><mml:mrow><mml:mi>d</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi mathvariant="script">T</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo> </mml:mo><mml:mo>,</mml:mo><mml:msub><mml:mi>S</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>H</mml:mi><mml:mi>l</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mi>m</mml:mi><mml:mo>*</mml:mo><mml:mi>k</mml:mi></mml:mrow></mml:mfrac><mml:mo>+</mml:mo></mml:mrow><mml:mrow><mml:msub><mml:mstyle displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:mi>C</mml:mi><mml:mo>≠</mml:mo><mml:mi>c</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>s</mml:mi><mml:mi>s</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>S</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:msub><mml:mfrac><mml:mrow><mml:mi>P</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mi>C</mml:mi><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>P</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>c</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>s</mml:mi><mml:mi>s</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>S</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mfrac><mml:mo> </mml:mo><mml:msubsup><mml:mstyle displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:mi>l</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mi>k</mml:mi></mml:msubsup><mml:mfrac><mml:mrow><mml:mi>d</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi mathvariant="script">T</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>S</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>M</mml:mi><mml:mi>l</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mi>m</mml:mi><mml:mo>*</mml:mo><mml:mi>k</mml:mi></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula>
+<p specific-use="line">   <bold>end;</bold></p>
+<p specific-use="line">  <bold>end;</bold></p>
+<p specific-use="line"> <bold>end;</bold></p>
+<p>where <italic>P</italic>(<italic>C</italic>) is the fraction of samples in class <italic>C</italic>. The factor <inline-formula id="pcbi.1004186.e008"><alternatives><graphic id="pcbi.1004186.e008g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004186.e008" xlink:type="simple"/><mml:math display="inline" id="M8" overflow="scroll"><mml:mrow><mml:mfrac><mml:mrow><mml:mi>P</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mi>C</mml:mi><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mi>P</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>c</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>s</mml:mi><mml:mi>s</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>S</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula> is required for ensuring appropriate normalization and to guarantee that the contribution of hits and of each class of misses is between 0 and 1.</p>
+</sec>
+<sec id="sec012">
+<title>Definition of the clades</title>
+<p>Let <italic>T</italic><sub><italic>j</italic></sub> be a sub-tree of <italic>T</italic><sub><italic>i</italic></sub>. The correlation between the values <italic>w</italic>[<italic>T</italic><sub><italic>i</italic></sub>], <italic>w</italic>[<italic>T</italic><sub><italic>j</italic></sub>] is illustrated by the example in <xref rid="pcbi.1004186.s001" ref-type="supplementary-material">S1 Fig</xref>, where the weights for four samples (“circles”, “squares”, “triangles” and “stars”) partitioned into two classes (“red” and “blue”) are shown. The high weights in the bottom clade (Clade b, containing OTUs only from the “red” class of samples) propagates up from the terminal branches until it merges with Clade a, that contains OTUs from the “blue” class of samples. In the parent branch of Clades <bold>a</bold> and <bold>b</bold>, the unbalance between the two samples is diluted, and consequently the weight decreases. In this example, Clade <bold>a</bold> and clade <bold>b</bold> separately, but not their parent clade, would be responsible for the differentiation between “red” and “blue” samples.</p>
+<p>In order to exploit the information contained in the weights <italic>w</italic>[<italic>T</italic><sub><italic>i</italic></sub>], it is crucial to define a set of independent clades and rank those in order of importance. To accomplish this, we identify the sub-tree <italic>T</italic> with the highest weight. In the case of ties, we randomly start from one of the subtrees if these are independent, or take the one closest to the root if these are nested. This defines the first clade. Next, we prune the tree from all the branches descending from <italic>T</italic>, and from those ascending from <italic>T</italic>. This last step is needed to avoid the possibility to iteratively enlarge the same clades, given the correlation between the weights of nested sub-trees discussed above. Iteratively applying this rule, we define a set of independent clades ranked according to their weight. Using this ranking, the minimal set of clades necessary to describe the classes to a certain level of accuracy is determined by running non-parametric tests of class diversification, such as PERMANOVA[<xref rid="pcbi.1004186.ref023" ref-type="bibr">23</xref>] and ANOSIM[<xref rid="pcbi.1004186.ref024" ref-type="bibr">24</xref>], as a function of the number of clades. Alternatively, univariate non-parametric tests such as the Kruskal—Wallis could be applied for testing whether samples originate from the same distribution in each clade.</p>
+</sec>
+<sec id="sec013">
+<title>Applications</title>
+<p>Definition of the OTU table. USA, Venezuela and Malawi dataset. Reads were downloaded from the MG-RAST web server (<ext-link ext-link-type="uri" xlink:href="http://metagenomics.anl.gov/metagenomics.cgi?page=MetagenomeProject&amp;project=401" xlink:type="simple">http://metagenomics.anl.gov/metagenomics.cgi?page=MetagenomeProject&amp;project=401</ext-link>). II) Burkina vs. European children. Raw data were obtained from the Sequence Read Archive (<ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/sra" xlink:type="simple">http://www.ncbi.nlm.nih.gov/sra</ext-link>), study number ERP000133. Forward and reverse primers were removed using cutadapt [<xref rid="pcbi.1004186.ref033" ref-type="bibr">33</xref>] and reads missing the forward primer were discarded. Quality trimming was performed by sickle (<ext-link ext-link-type="uri" xlink:href="https://github.com/najoshi/sickle" xlink:type="simple">https://github.com/najoshi/sickle</ext-link>), with quality threshold 20. Reads with length &lt;100 were discarded. Chimeras were removed by uchime[<xref rid="pcbi.1004186.ref034" ref-type="bibr">34</xref>] (reference database mode) using the Greengenes[<xref rid="pcbi.1004186.ref035" ref-type="bibr">35</xref>] database (Release 13_5) clustered at 85% identity threshold as reference.</p>
+<p>OTUs were picked using QIIME (pick_otus.py seqs.fna --max_accepts 1 --max_rejects 8 --stepwords 8 -- word_length 8 -C) against the Greengenes database clusters at 97% identity level (Greengenes database available at: <ext-link ext-link-type="uri" xlink:href="http://greengenes.lbl.gov/Download/Sequence_Data/Fasta_data_files/Reference_OTUs_for_Pipelines/Caporaso_Reference_OTUs/gg_otus_4feb2011.tgz" xlink:type="simple">http://greengenes.lbl.gov/Download/Sequence_Data/Fasta_data_files/Reference_OTUs_for_Pipelines/Caporaso_Reference_OTUs/gg_otus_4feb2011.tgz</ext-link>). The OTU table was obtained using custom scripts, and rarefied using the rarefy_even_depth() function in the phyloseq package (version 1.6.1) of the R (version 3.0.2) statistical software. Taxonomy was assigned to the representative sequences using the RDP classifier [<xref rid="pcbi.1004186.ref036" ref-type="bibr">36</xref>] (version 2.5) with a confidence threshold of 0.8. UniFrac distances were computed and the PhyloRelief analysis was performed using the reference phylogenetic tree from the Greengenes release.</p>
+<p>IBD, Costello et al. Body Habitats (CBH) and Fierer et al. Subject (FS) Datasets. Preprocessed reads and metadata were downloaded from the Qiime repository <ext-link ext-link-type="uri" xlink:href="http://www.microbio.me/qiime/" xlink:type="simple">http://www.microbio.me/qiime/</ext-link> under the study ids 1290, 449 and 232 respectively. OTU tables and phylogenetic trees were inferred using the standard QIIME pipeline with default settings, where OTUs were picked with UCLUST [<xref rid="pcbi.1004186.ref037" ref-type="bibr">37</xref>] at a sequence similarity threshold of 0.97%. Taxonomy was assigned using the Greengenes database (version 2013/05). Rarefactions were performed at the depth of the shallowest sample. Phylogenetic tree were computed using PyNAST [<xref rid="pcbi.1004186.ref038" ref-type="bibr">38</xref>] (using the Greengenes 2013/05 database as template) and FastTree [<xref rid="pcbi.1004186.ref039" ref-type="bibr">39</xref>].</p>
+</sec>
+<sec id="sec014">
+<title>Non parametric tests</title>
+<p>Permutational ANOVA (PERMANOVA) and ANOSIM tests were performed with 999 permutations.</p>
+</sec>
+</sec>
+<sec id="sec015">
+<title>Predictive classification pipeline</title>
+<p>We compared the predictive performance of PhyloRelief with the Random Forest classifier (PhyloRelief +RF) to LEfSe + RF, MetaPhyl (without feature selection) and Random Forest used as both classifier and feature selection method (RF + RF).</p>
+<p>To assess the prediction performance of the weighted features we implemented a predictive pipeline based on a stratified 10x random subsampling cross validation (CV). Data are partitioned into a training set and a testing set (75% and 25% of the samples respectively). In order to avoid overfitting and selection bias effects, the feature selection procedure was included in the cross validation loop [<xref rid="pcbi.1004186.ref040" ref-type="bibr">40</xref>,<xref rid="pcbi.1004186.ref041" ref-type="bibr">41</xref>]. For each training set, the number of ranked features <italic>n</italic><sub>0</sub> that provides the smallest average KCCC is found by a nested 10x random subsampling CV. Later, the features are ranked using the entire training set and the model is trained using the top ranked <italic>n</italic><sub>0</sub> features. The model is finally tested on the independent testing set and a KCCC is computed. In the case of LEfSe + RF, LEfSe was treated as feature selection method using the common p-value threshold of 0.05. For MetaPhyl, no feature selection was performed and the nested CV was used to find the optimal model parameters (parameters grid: <italic>λ</italic> = {100000, 1000, 100, 10, 1, 0.1, 0.01, 0.001, 0.0001} and <italic>w</italic> = {0, 0.2, 0.4, 0.6, 0.8, 1}). For the Random Forest classifier, the number of trees was set to 500 and the weights were computed as in [<xref rid="pcbi.1004186.ref042" ref-type="bibr">42</xref>]. In PhyloRelief OTUs were ranked using the weights computed on the related clades.</p>
+<p>The pipeline was developed in Python using the scikit-learn module (<ext-link ext-link-type="uri" xlink:href="http://scikit-learn.org" xlink:type="simple">http://scikit-learn.org</ext-link>).</p>
+<sec id="sec016">
+<title>Software dependencies and availability</title>
+<p>PhyloRelief is implemented in Python (<ext-link ext-link-type="uri" xlink:href="http://www.python.org" xlink:type="simple">http://www.python.org</ext-link>), and requires Python &gt; = 2.7 with the NumPy/SciPy (<ext-link ext-link-type="uri" xlink:href="http://www.scipy.org" xlink:type="simple">http://www.scipy.org</ext-link>), Pandas (<ext-link ext-link-type="uri" xlink:href="http://pandas.pydata.org/" xlink:type="simple">http://pandas.pydata.org/</ext-link>), DendroPy [<xref rid="pcbi.1004186.ref043" ref-type="bibr">43</xref>] and Statsmodels (<ext-link ext-link-type="uri" xlink:href="http://statsmodels.sourceforge.net/" xlink:type="simple">http://statsmodels.sourceforge.net/</ext-link>) libraries. PhyloRelief software, scripts and data analyzed in this paper are available at <ext-link ext-link-type="uri" xlink:href="http://compmetagen.github.io/phylorelief" xlink:type="simple">http://compmetagen.github.io/phylorelief</ext-link>.</p>
+</sec>
+</sec>
+</sec>
+<sec id="sec017">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1004186.s001" xlink:href="info:doi/10.1371/journal.pcbi.1004186.s001" mimetype="image/tiff" position="float" xlink:type="simple">
+<label>S1 Fig</label>
+<caption>
+<title>The PhiloRelief scoring scheme</title>
+<p>In this example, four samples (“circles”, “squares”, “triangles” and “stars”) are partitioned into two classes (“red” and “blue”). The Bottom clades (Clade <bold>a</bold> and Clade <bold>b</bold>) have high weight since they contain OTUs only from the “blue” and “red” class of samples, respectively. The higher weights of the branches in clade <bold>b</bold> take into account the more even distribution of the “blue” class of samples. The weights propagate up from the terminal branches until the two clades merge. In the parent branch of Clade <bold>a</bold> and Clade <bold>b</bold> the unbalance between the two samples is diluted, and consequently the weight decreases.</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004186.s002" xlink:href="info:doi/10.1371/journal.pcbi.1004186.s002" mimetype="image/tiff" position="float" xlink:type="simple">
+<label>S2 Fig</label>
+<caption>
+<title>PCoA of the weighted UniFrac distances stratified by age.</title>
+<p>While the first component is correlated to geography (see <xref rid="pcbi.1004186.g002" ref-type="fig">Fig. 2</xref>) the second is related to the age of the subjects.</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004186.s003" xlink:href="info:doi/10.1371/journal.pcbi.1004186.s003" mimetype="image/tiff" position="float" xlink:type="simple">
+<label>S3 Fig</label>
+<caption>
+<title>PCoA of the weighted UniFrac distances computed using only the OTUs included in the 30 most relevant clades for the differentiation between Western (Italy and USA) and non-Western (Malawi, Burkina Faso and Venezuela) populations.</title>
+<p>Colors indicate the age of the subjects. Above two years (red); below two years (blue).</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004186.s004" xlink:href="info:doi/10.1371/journal.pcbi.1004186.s004" mimetype="image/tiff" position="float" xlink:type="simple">
+<label>S4 Fig</label>
+<caption>
+<title>R<sup>2</sup> of the Permutational ANOVA obtained by partitioning the individuals into two samples using an increasing age threshold, and the pair-wise weighted UniFrac distance.</title>
+<p>The differentiation is maximum for two years of age, and there is no difference between the two sub-samples above 16 years.</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004186.s005" xlink:href="info:doi/10.1371/journal.pcbi.1004186.s005" mimetype="image/tiff" position="float" xlink:type="simple">
+<label>S5 Fig</label>
+<caption>
+<title>PCoA of the weighted UniFrac distances between Western (Italy and USA) individuals using only the OTUs included in the 90 most relevant clades.</title>
+<p>Colors indicate the age of the subjects. Above two years (red); below two years (blue).</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004186.s006" xlink:href="info:doi/10.1371/journal.pcbi.1004186.s006" mimetype="image/tiff" position="float" xlink:type="simple">
+<label>S6 Fig</label>
+<caption>
+<title>PCoA of the weighted UniFrac distances between non-Western (Malawi, Burkina Faso and Venezuela) individuals using only the OTUs included in the 30 most relevant clades.</title>
+<p>Colors indicate the age of the subjects. Above two years (red); below two years (blue).</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004186.s007" xlink:href="info:doi/10.1371/journal.pcbi.1004186.s007" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S1 Table</label>
+<caption>
+<title>Permutational ANOVA and ANOSIM tests on the effect of age.</title>
+<p>The sample has been partitioned into two as function of an age threshold and the Permutational ANOVA and ANOSIM tests have been computed using the weighted UniFrac distance.</p>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004186.s008" xlink:href="info:doi/10.1371/journal.pcbi.1004186.s008" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S2 Table</label>
+<caption>
+<title>Permutational ANOVA and ANOSIM tests on the effect of the number of clades used in the calculation of the UniFrac distance between young (below two years of age) and older (above two years of age) individuals.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>The authors would like to thank S. Riccadonna, P. Fontana, P. Franceschi and V. Goremykin for useful discussions.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004186.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Costello</surname> <given-names>EK</given-names></name>, <name name-style="western"><surname>Lauber</surname> <given-names>CL</given-names></name>, <name name-style="western"><surname>Hamady</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Fierer</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Gordon</surname> <given-names>JI</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Bacterial community variation in human body habitats across space and time</article-title>. <source>Science</source> <volume>326</volume>: <fpage>1694</fpage>–<lpage>1697</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1177486" xlink:type="simple">10.1126/science.1177486</ext-link></comment> <object-id pub-id-type="pmid">19892944</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lozupone</surname> <given-names>CA</given-names></name>, <name name-style="western"><surname>Stombaugh</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Gonzalez</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Ackermann</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Wendel</surname> <given-names>D</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Meta-analyses of studies of the human microbiota</article-title>. <source>Genome research</source> <volume>23</volume>: <fpage>1704</fpage>–<lpage>1714</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.151803.112" xlink:type="simple">10.1101/gr.151803.112</ext-link></comment> <object-id pub-id-type="pmid">23861384</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Koenig</surname> <given-names>JE</given-names></name>, <name name-style="western"><surname>Spor</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Scalfone</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Fricker</surname> <given-names>AD</given-names></name>, <name name-style="western"><surname>Stombaugh</surname> <given-names>J</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Succession of microbial consortia in the developing infant gut microbiome</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source> <volume>108</volume> <issue>Suppl 1</issue>: <fpage>4578</fpage>–<lpage>4585</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1000081107" xlink:type="simple">10.1073/pnas.1000081107</ext-link></comment> <object-id pub-id-type="pmid">20668239</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Claesson</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Jeffery</surname> <given-names>IB</given-names></name>, <name name-style="western"><surname>Conde</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Power</surname> <given-names>SE</given-names></name>, <name name-style="western"><surname>O'Connor</surname> <given-names>EM</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Gut microbiota composition correlates with diet and health in the elderly</article-title>. <source>Nature</source> <volume>488</volume>: <fpage>178</fpage>–<lpage>184</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature11319" xlink:type="simple">10.1038/nature11319</ext-link></comment> <object-id pub-id-type="pmid">22797518</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yatsunenko</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Rey</surname> <given-names>FE</given-names></name>, <name name-style="western"><surname>Manary</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Trehan</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Dominguez-Bello</surname> <given-names>MG</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Human gut microbiome viewed across age and geography</article-title>. <source>Nature</source> <volume>486</volume>: <fpage>222</fpage>–<lpage>227</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature11053" xlink:type="simple">10.1038/nature11053</ext-link></comment> <object-id pub-id-type="pmid">22699611</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>De Filippo</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Cavalieri</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Di Paola</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Ramazzotti</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Poullet</surname> <given-names>JB</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Impact of diet in shaping gut microbiota revealed by a comparative study in children from Europe and rural Africa</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source> <volume>107</volume>: <fpage>14691</fpage>–<lpage>14696</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1005963107" xlink:type="simple">10.1073/pnas.1005963107</ext-link></comment> <object-id pub-id-type="pmid">20679230</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bull-Otterson</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Feng</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Kirpich</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Qin</surname> <given-names>X</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Metagenomic analyses of alcohol induced pathogenic alterations in the intestinal microbiome and the effect of Lactobacillus rhamnosus GG treatment</article-title>. <source>PloS one</source> <volume>8</volume>: <fpage>e53028</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0053028" xlink:type="simple">10.1371/journal.pone.0053028</ext-link></comment> <object-id pub-id-type="pmid">23326376</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dethlefsen</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Relman</surname> <given-names>DA</given-names></name> (<year>2011</year>) <article-title>Incomplete recovery and individualized responses of the human distal gut microbiota to repeated antibiotic perturbation</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source> <volume>108</volume> <issue>Suppl 1</issue>: <fpage>4554</fpage>–<lpage>4561</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1000087107" xlink:type="simple">10.1073/pnas.1000087107</ext-link></comment> <object-id pub-id-type="pmid">20847294</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Prideaux</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Kamm</surname> <given-names>MA</given-names></name>, <name name-style="western"><surname>De Cruz</surname> <given-names>PP</given-names></name>, <name name-style="western"><surname>Chan</surname> <given-names>FK</given-names></name>, <name name-style="western"><surname>Ng</surname> <given-names>SC</given-names></name> (<year>2012</year>) <article-title>Inflammatory bowel disease in Asia: a systematic review</article-title>. <source>Journal of gastroenterology and hepatology</source> <volume>27</volume>: <fpage>1266</fpage>–<lpage>1280</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1440-1746.2012.07150.x" xlink:type="simple">10.1111/j.1440-1746.2012.07150.x</ext-link></comment> <object-id pub-id-type="pmid">22497584</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bakken</surname> <given-names>JS</given-names></name>, <name name-style="western"><surname>Borody</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Brandt</surname> <given-names>LJ</given-names></name>, <name name-style="western"><surname>Brill</surname> <given-names>JV</given-names></name>, <name name-style="western"><surname>Demarco</surname> <given-names>DC</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Treating Clostridium difficile infection with fecal microbiota transplantation</article-title>. <source>Clinical gastroenterology and hepatology: the official clinical practice journal of the American Gastroenterological Association</source> <volume>9</volume>: <fpage>1044</fpage>–<lpage>1049</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cgh.2011.08.014" xlink:type="simple">10.1016/j.cgh.2011.08.014</ext-link></comment> <object-id pub-id-type="pmid">21871249</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Buffie</surname> <given-names>CG</given-names></name>, <name name-style="western"><surname>Jarchum</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Equinda</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Lipuma</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Gobourne</surname> <given-names>A</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Profound alterations of intestinal microbiota following a single dose of clindamycin results in sustained susceptibility to Clostridium difficile-induced colitis</article-title>. <source>Infection and immunity</source> <volume>80</volume>: <fpage>62</fpage>–<lpage>73</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/IAI.05496-11" xlink:type="simple">10.1128/IAI.05496-11</ext-link></comment> <object-id pub-id-type="pmid">22006564</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Arumugam</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Raes</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Pelletier</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Le Paslier</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Yamada</surname> <given-names>T</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Enterotypes of the human gut microbiome</article-title>. <source>Nature</source> <volume>473</volume>: <fpage>174</fpage>–<lpage>180</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature09944" xlink:type="simple">10.1038/nature09944</ext-link></comment> <object-id pub-id-type="pmid">21508958</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Koren</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Knights</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Gonzalez</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Waldron</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Segata</surname> <given-names>N</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>A guide to enterotypes across the human body: meta-analysis of microbial community structures in human microbiome datasets</article-title>. <source>PLoS computational biology</source> <volume>9</volume>: <fpage>e1002863</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1002863" xlink:type="simple">10.1371/journal.pcbi.1002863</ext-link></comment> <object-id pub-id-type="pmid">23326225</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bokulich</surname> <given-names>NA</given-names></name>, <name name-style="western"><surname>Thorngate</surname> <given-names>JH</given-names></name>, <name name-style="western"><surname>Richardson</surname> <given-names>PM</given-names></name>, <name name-style="western"><surname>Mills</surname> <given-names>DA</given-names></name> (<year>2013</year>) <article-title>Microbial biogeography of wine grapes is conditioned by cultivar, vintage, and climate</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source>.</mixed-citation></ref>
+<ref id="pcbi.1004186.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Paulson</surname> <given-names>JN</given-names></name>, <name name-style="western"><surname>Stine</surname> <given-names>OC</given-names></name>, <name name-style="western"><surname>Bravo</surname> <given-names>HC</given-names></name>, <name name-style="western"><surname>Pop</surname> <given-names>M</given-names></name> (<year>2013</year>) <article-title>Differential abundance analysis for microbial marker-gene surveys</article-title>. <source>Nature methods</source> <volume>10</volume>: <fpage>1200</fpage>–<lpage>1202</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nmeth.2658" xlink:type="simple">10.1038/nmeth.2658</ext-link></comment> <object-id pub-id-type="pmid">24076764</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hamady</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Knight</surname> <given-names>R</given-names></name> (<year>2009</year>) <article-title>Microbial community profiling for human microbiome projects: Tools, techniques, and challenges</article-title>. <source>Genome research</source> <volume>19</volume>: <fpage>1141</fpage>–<lpage>1152</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.085464.108" xlink:type="simple">10.1101/gr.085464.108</ext-link></comment> <object-id pub-id-type="pmid">19383763</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schoch</surname> <given-names>CL</given-names></name>, <name name-style="western"><surname>Seifert</surname> <given-names>KA</given-names></name>, <name name-style="western"><surname>Huhndorf</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Robert</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Spouge</surname> <given-names>JL</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Nuclear ribosomal internal transcribed spacer (ITS) region as a universal DNA barcode marker for Fungi</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source> <volume>109</volume>: <fpage>6241</fpage>–<lpage>6246</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1117018109" xlink:type="simple">10.1073/pnas.1117018109</ext-link></comment> <object-id pub-id-type="pmid">22454494</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Weinstock</surname> <given-names>GM</given-names></name> (<year>2012</year>) <article-title>Genomic approaches to studying the human microbiota</article-title>. <source>Nature</source> <volume>489</volume>: <fpage>250</fpage>–<lpage>256</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature11553" xlink:type="simple">10.1038/nature11553</ext-link></comment> <object-id pub-id-type="pmid">22972298</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lozupone</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Knight</surname> <given-names>R</given-names></name> (<year>2005</year>) <article-title>UniFrac: a new phylogenetic method for comparing microbial communities</article-title>. <source>Applied and environmental microbiology</source> <volume>71</volume>: <fpage>8228</fpage>–<lpage>8235</lpage>. <object-id pub-id-type="pmid">16332807</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lozupone</surname> <given-names>CA</given-names></name>, <name name-style="western"><surname>Hamady</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Kelley</surname> <given-names>ST</given-names></name>, <name name-style="western"><surname>Knight</surname> <given-names>R</given-names></name> (<year>2007</year>) <article-title>Quantitative and qualitative beta diversity measures lead to different insights into factors that structure microbial communities</article-title>. <source>Applied and environmental microbiology</source> <volume>73</volume>: <fpage>1576</fpage>–<lpage>1585</lpage>. <object-id pub-id-type="pmid">17220268</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Robnik-Sikonja</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Cukjati</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Kononenko</surname> <given-names>I</given-names></name> (<year>2003</year>) <article-title>Comprehensible evaluation of prognostic factors and prediction of wound healing</article-title>. <source>Artificial intelligence in medicine</source> <volume>29</volume>: <fpage>25</fpage>–<lpage>38</lpage>. <object-id pub-id-type="pmid">12957779</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Robnik-Sikonja</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Kononenko</surname> <given-names>I</given-names></name> (<year>2003</year>) <article-title>Theoretical and Empirical Analysis of ReliefF and RReliefF</article-title>. <source>Machine Learning</source> <volume>53</volume>: <fpage>23</fpage>–<lpage>69</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004186.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Anderson</surname> <given-names>MJ</given-names></name> (<year>2001</year>) <article-title>A new method for non-parametric multivariate analysis of variance</article-title>. <source>Austral Ecology</source> <volume>26</volume>: <fpage>32</fpage>–<lpage>46</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004186.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Clarke</surname> <given-names>KR</given-names></name> (<year>1993</year>) <article-title>Non-parametric multivariate analysis of changes in community structure</article-title>. <source>Australian Journal of Ecology</source> <volume>18</volume>: <fpage>117</fpage>–<lpage>143</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004186.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schnorr</surname> <given-names>SL</given-names></name>, <name name-style="western"><surname>Candela</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Rampelli</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Centanni</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Consolandi</surname> <given-names>C</given-names></name>, <etal>et al</etal>. (<year>2014</year>) <article-title>Gut microbiome of the Hadza hunter-gatherers</article-title>. <source>Nature communications</source> <volume>5</volume>: <fpage>3654</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/ncomms4654" xlink:type="simple">10.1038/ncomms4654</ext-link></comment> <object-id pub-id-type="pmid">24736369</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Knights</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Costello</surname> <given-names>EK</given-names></name>, <name name-style="western"><surname>Knight</surname> <given-names>R</given-names></name> (<year>2011</year>) <article-title>Supervised classification of human microbiota</article-title>. <source>FEMS microbiology reviews</source> <volume>35</volume>: <fpage>343</fpage>–<lpage>359</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1574-6976.2010.00251.x" xlink:type="simple">10.1111/j.1574-6976.2010.00251.x</ext-link></comment> <object-id pub-id-type="pmid">21039646</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Statnikov</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Henaff</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Narendra</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Konganti</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>Z</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>A comprehensive evaluation of multicategory classification methods for microbiomic data</article-title>. <source>Microbiome</source> <volume>1</volume>: <fpage>11</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/2049-2618-1-11" xlink:type="simple">10.1186/2049-2618-1-11</ext-link></comment> <object-id pub-id-type="pmid">24456583</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Papa</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Docktor</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Smillie</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Weber</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Preheim</surname> <given-names>SP</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Non-invasive mapping of the gastrointestinal microbiota identifies children with inflammatory bowel disease</article-title>. <source>PloS one</source> <volume>7</volume>: <fpage>e39242</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0039242" xlink:type="simple">10.1371/journal.pone.0039242</ext-link></comment> <object-id pub-id-type="pmid">22768065</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fierer</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Lauber</surname> <given-names>CL</given-names></name>, <name name-style="western"><surname>Zhou</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>McDonald</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Costello</surname> <given-names>EK</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Forensic identification using skin bacterial communities</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source> <volume>107</volume>: <fpage>6477</fpage>–<lpage>6481</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1000162107" xlink:type="simple">10.1073/pnas.1000162107</ext-link></comment> <object-id pub-id-type="pmid">20231444</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Segata</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Izard</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Waldron</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Gevers</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Miropolsky</surname> <given-names>L</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Metagenomic biomarker discovery and explanation</article-title>. <source>Genome biology</source> <volume>12</volume>: <fpage>R60</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2011-12-6-r60" xlink:type="simple">10.1186/gb-2011-12-6-r60</ext-link></comment> <object-id pub-id-type="pmid">21702898</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tanaseichuk</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Borneman</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Jiang</surname> <given-names>T</given-names></name> (<year>2014</year>) <article-title>Phylogeny-based classification of microbial communities</article-title>. <source>Bioinformatics</source> <volume>30</volume>: <fpage>449</fpage>–<lpage>456</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btt700" xlink:type="simple">10.1093/bioinformatics/btt700</ext-link></comment> <object-id pub-id-type="pmid">24369151</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gorodkin</surname> <given-names>J</given-names></name> (<year>2004</year>) <article-title>Comparing two K-category assignments by a K-category correlation coefficient</article-title>. <source>Computational biology and chemistry</source> <volume>28</volume>: <fpage>367</fpage>–<lpage>374</lpage>. <object-id pub-id-type="pmid">15556477</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref033"><label>33</label><mixed-citation publication-type="other" xlink:type="simple">Martin M (2011) Cutadapt removes adapter sequences from high-throughput sequencing reads.</mixed-citation></ref>
+<ref id="pcbi.1004186.ref034"><label>34</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Edgar</surname> <given-names>RC</given-names></name>, <name name-style="western"><surname>Haas</surname> <given-names>BJ</given-names></name>, <name name-style="western"><surname>Clemente</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Quince</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Knight</surname> <given-names>R</given-names></name> (<year>2011</year>) <article-title>UCHIME improves sensitivity and speed of chimera detection</article-title>. <source>Bioinformatics</source> <volume>27</volume>: <fpage>2194</fpage>–<lpage>2200</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btr381" xlink:type="simple">10.1093/bioinformatics/btr381</ext-link></comment> <object-id pub-id-type="pmid">21700674</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref035"><label>35</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>DeSantis</surname> <given-names>TZ</given-names></name>, <name name-style="western"><surname>Hugenholtz</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Larsen</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Rojas</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Brodie</surname> <given-names>EL</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Greengenes, a chimera-checked 16S rRNA gene database and workbench compatible with ARB</article-title>. <source>Applied and environmental microbiology</source> <volume>72</volume>: <fpage>5069</fpage>–<lpage>5072</lpage>. <object-id pub-id-type="pmid">16820507</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref036"><label>36</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname> <given-names>Q</given-names></name>, <name name-style="western"><surname>Garrity</surname> <given-names>GM</given-names></name>, <name name-style="western"><surname>Tiedje</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Cole</surname> <given-names>JR</given-names></name> (<year>2007</year>) <article-title>Naive Bayesian classifier for rapid assignment of rRNA sequences into the new bacterial taxonomy</article-title>. <source>Applied and environmental microbiology</source> <volume>73</volume>: <fpage>5261</fpage>–<lpage>5267</lpage>. <object-id pub-id-type="pmid">17586664</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref037"><label>37</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Edgar</surname> <given-names>RC</given-names></name> (<year>2010</year>) <article-title>Search and clustering orders of magnitude faster than BLAST</article-title>. <source>Bioinformatics</source> <volume>26</volume>: <fpage>2460</fpage>–<lpage>2461</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btq461" xlink:type="simple">10.1093/bioinformatics/btq461</ext-link></comment> <object-id pub-id-type="pmid">20709691</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref038"><label>38</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Caporaso</surname> <given-names>JG</given-names></name>, <name name-style="western"><surname>Bittinger</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Bushman</surname> <given-names>FD</given-names></name>, <name name-style="western"><surname>DeSantis</surname> <given-names>TZ</given-names></name>, <name name-style="western"><surname>Andersen</surname> <given-names>GL</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>PyNAST: a flexible tool for aligning sequences to a template alignment</article-title>. <source>Bioinformatics</source> <volume>26</volume>: <fpage>266</fpage>–<lpage>267</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btp636" xlink:type="simple">10.1093/bioinformatics/btp636</ext-link></comment> <object-id pub-id-type="pmid">19914921</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref039"><label>39</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Price</surname> <given-names>MN</given-names></name>, <name name-style="western"><surname>Dehal</surname> <given-names>PS</given-names></name>, <name name-style="western"><surname>Arkin</surname> <given-names>AP</given-names></name> (<year>2010</year>) <article-title>FastTree 2—approximately maximum-likelihood trees for large alignments</article-title>. <source>PloS one</source> <volume>5</volume>: <fpage>e9490</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0009490" xlink:type="simple">10.1371/journal.pone.0009490</ext-link></comment> <object-id pub-id-type="pmid">20224823</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref040"><label>40</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Guyon</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Gunn</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Nikravesh</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Zadeh</surname> <given-names>LA</given-names></name> (<year>2006</year>) <source>Feature Extraction: Foundations and Applications (Studies in Fuzziness and Soft Computing)</source>: <publisher-name>Springer-Verlag New York, Inc</publisher-name>.</mixed-citation></ref>
+<ref id="pcbi.1004186.ref041"><label>41</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ambroise</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>McLachlan</surname> <given-names>GJ</given-names></name> (<year>2002</year>) <article-title>Selection bias in gene extraction on the basis of microarray gene-expression data</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source> <volume>99</volume>: <fpage>6562</fpage>–<lpage>6566</lpage>. <object-id pub-id-type="pmid">11983868</object-id></mixed-citation></ref>
+<ref id="pcbi.1004186.ref042"><label>42</label><mixed-citation publication-type="other" xlink:type="simple">Breiman L, Friedman JH, Olshen RA, Stone CJ, trees R (1984) Classification and Regression Trees: Wads-worth &amp; Brooks/Cole Advanced Books &amp; Software.</mixed-citation></ref>
+<ref id="pcbi.1004186.ref043"><label>43</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sukumaran</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Holder</surname> <given-names>MT</given-names></name> (<year>2010</year>) <article-title>DendroPy: a Python library for phylogenetic computing</article-title>. <source>Bioinformatics</source> <volume>26</volume>: <fpage>1569</fpage>–<lpage>1571</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btq228" xlink:type="simple">10.1093/bioinformatics/btq228</ext-link></comment> <object-id pub-id-type="pmid">20421198</object-id></mixed-citation></ref>
+</ref-list>
+</back>
+</article>

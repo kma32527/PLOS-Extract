@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="discussion" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Computational Biology</journal-title></journal-title-group><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">08-PLCB-EN-0342R2</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1000151</article-id><article-categories><subj-group subj-group-type="heading"><subject>Education</subject></subj-group>
+<subj-group subj-group-type="Discipline">
+<subject>Computational Biology/Macromolecular Structure Analysis</subject><subject>Computational Biology/Genomics</subject><subject>Computational Biology/Comparative Sequence Analysis</subject>
+</subj-group>
+</article-categories><title-group><article-title>Structure-Guided Comparative Analysis of Proteins: Principles, Tools, and Applications for Predicting Function</article-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Mazumder</surname><given-names>Raja</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Vasudevan</surname><given-names>Sona</given-names></name><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group><aff id="aff1">          <addr-line>Department of Biochemistry and Molecular &amp; Cellular Biology, Georgetown University Medical Center, Washington, D.C., United States of America</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Lewitter</surname><given-names>Fran</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">Whitehead Institute, United States of America</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">sv67@georgetown.edu</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><month>9</month><year>2008</year></pub-date><pub-date pub-type="epub"><day>26</day><month>9</month><year>2008</year></pub-date><volume>4</volume><issue>9</issue><elocation-id>e1000151</elocation-id><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2008</copyright-year><copyright-holder>Mazumder, Vasudevan</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><counts><page-count count="11"/></counts></article-meta>
+</front>
+<body>
+<p><graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1000151.tutorial_logo" xlink:type="simple"/></p>
+<sec id="s1">
+<title>Introduction</title>
+<p>With the increase in genomic and proteomic data from genome sequencing projects and structural genomic initiatives, we are faced with an increasing number of sequences and structures in various databases annotated as “uncharacterized,” “hypothetical,” or “unknown function” <xref ref-type="bibr" rid="pcbi.1000151-Watson1">[1]</xref>,<xref ref-type="bibr" rid="pcbi.1000151-Blundell1">[2]</xref>. In addition to this exponential increase in sequence and structure data, we are also seeing an increase in the number of databases that hold these data, and thus the need to evaluate the quality of these databases <xref ref-type="bibr" rid="pcbi.1000151-Galperin1">[3]</xref>. All these data, however, can be used meaningfully for biological and clinical research only if we can extract the functional information from them and convert biological data into knowledge of biological systems. While we have made significant progress in this regard with the availability of several functional prediction servers such as ProFunc, ProtFun 2.2, PFP ConFunc, and others <xref ref-type="bibr" rid="pcbi.1000151-Laskowski1">[4]</xref>–<xref ref-type="bibr" rid="pcbi.1000151-Hawkins1">[8]</xref>, many challenges still remain in accurately inferring function and more importantly propagating this information reliably to the millions of proteins that still lack experimental characterization. Unfortunately, none of these servers have a high success rate for large-scale function predictions. The reasons for this failure are many-fold, including lack of strict adherence to common guidelines for functional inference. However, through rigorous and systematic comparative analysis of structures and sequences, one can make headway in annotating these proteins on a large scale with relevant biological functional information. Detailed methodologies for large-scale functional annotations are discussed elsewhere <xref ref-type="bibr" rid="pcbi.1000151-Natale1">[9]</xref>.</p>
+<p>Biological function can be inferred at different levels depending on sequence identities that exist between the sequences. The success of functional inference, however, depends on the availability of experimentally validated information of related proteins. This relatedness may be at the full-length protein level, domain level, structural level, or motif level. Depending on the type and level of similarity, specific or general functions can be propagated. In fact, it has become widely accepted that percent identity is more effective at quantifying functional conservation than any other scores or means <xref ref-type="bibr" rid="pcbi.1000151-Friedberg1">[10]</xref>. Our view of this is presented as a percent-identity scale shown in <xref ref-type="fig" rid="pcbi-1000151-g001">Figure 1</xref>. This scale is rather conservative since it is not clear what level of sequence identities guarantees that two proteins have similar functions <xref ref-type="bibr" rid="pcbi.1000151-Rost1">[11]</xref>,<xref ref-type="bibr" rid="pcbi.1000151-Todd1">[12]</xref>. For sequences with identities above 50%, a general approach for functional characterization is by transfer of annotation from a characterized template to a subject. While it is a common practice to transfer such annotations, an error rate as high as 30% or more has been reported when proper caution is not taken <xref ref-type="bibr" rid="pcbi.1000151-Brenner1">[13]</xref>. Therefore, ideally for sequences whose identities fall below this threshold, availability of structural information becomes important, and transfer of annotation should be done with care. An example where homology-based transfer failed is cbiT, which was annotated as a decarboxylase until the structure revealed that it was a methyltransferase <xref ref-type="bibr" rid="pcbi.1000151-Keller1">[14]</xref>. It has now become clear from several studies that no single method is sufficient for functional inference <xref ref-type="bibr" rid="pcbi.1000151-Adams1">[15]</xref>,<xref ref-type="bibr" rid="pcbi.1000151-Watson2">[16]</xref>. In fact, as will be clear from the example discussed in this tutorial, several layers of evidence have to be collected before assigning the function to a protein.</p>
+<fig id="pcbi-1000151-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000151.g001</object-id><label>Figure 1</label><caption>
+<title>Percent-identity scale.</title>
+<p>The horizontal line gives the percent identity between query and subject sequences, and the boxes gives the resources and tools that can be used for functional inference.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000151.g001" xlink:type="simple"/></fig>
+<p>The main objective of this article is to define a ten-step procedure (<xref ref-type="fig" rid="pcbi-1000151-g002">Figure 2</xref>) guided by the percent-identity scale (<xref ref-type="fig" rid="pcbi-1000151-g001">Figure 1</xref>), that can be followed as a general rule for functional inference of an uncharacterized protein. In addition, the goal is also to provide the available tools and databases that are relevant for functional analysis.</p>
+<fig id="pcbi-1000151-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000151.g002</object-id><label>Figure 2</label><caption>
+<title>Ten-step procedure for comparative analysis of protein structures and sequences to infer biological function.</title>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000151.g002" xlink:type="simple"/></fig>
+<p>We will describe the ten-step procedure using an example of an uncharacterized conserved bacterial protein from <italic>Aquifex aeolicus</italic> (UniProt ID O67940_ <italic>AQUAE</italic>) <xref ref-type="bibr" rid="pcbi.1000151-Uniprot1">[17]</xref>. Aquifex, a hyperthermophilic chemolithoautotrophic bacterium, is considered to be one of the earliest bacteria to diverge from eubacteria <xref ref-type="bibr" rid="pcbi.1000151-Hedges1">[18]</xref>—hence its importance. Also, bacterial halogenation is poorly understood, and this example brings out the importance and challenges in function prediction.</p>
+<sec id="s1a">
+<title/>
+<sec id="s1a1">
+<title><italic>Note</italic></title>
+<p><italic>The analysis performed and results shown reflect the databases at the time of writing of this paper. Unless otherwise mentioned, default parameters were used. Also, because of limitation in space, we have not included other excellent databases and tools that can be used for this type of analysis. The list of tools and resources included in this paper (<xref ref-type="table" rid="pcbi-1000151-t001">Table 1</xref>) were chosen because of the authors' familiarity with them, and because they are widely used.</italic></p>
+<table-wrap id="pcbi-1000151-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000151.t001</object-id><label>Table 1</label><caption>
+<title>URLs used for this tutorial</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000151-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000151.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Resource</td>
+<td align="left" colspan="1" rowspan="1">URL</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">UniProt</td>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.uniprot.org" xlink:type="simple">http://www.uniprot.org</ext-link></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">NCBI</td>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov" xlink:type="simple">http://www.ncbi.nlm.nih.gov</ext-link></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">PDB</td>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.pdb.org" xlink:type="simple">http://www.pdb.org</ext-link></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">SCOP</td>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://scop.mrc-lmb.cam.ac.uk/scop/" xlink:type="simple">http://scop.mrc-lmb.cam.ac.uk/scop/</ext-link></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">PIRSF</td>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://pir.georgetown.edu/pirsf/" xlink:type="simple">http://pir.georgetown.edu/pirsf/</ext-link></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">COGs/KOGs</td>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/COG/" xlink:type="simple">http://www.ncbi.nlm.nih.gov/COG/</ext-link></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">PROSITE</td>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://expasy.org/prosite/" xlink:type="simple">http://expasy.org/prosite/</ext-link></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">VAST</td>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/Structure/VAST/vast.shtml" xlink:type="simple">http://www.ncbi.nlm.nih.gov/Structure/VAST/vast.shtml</ext-link></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Cn3D/CDTree</td>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/Structure/cdtree/cdtree.shtml" xlink:type="simple">http://www.ncbi.nlm.nih.gov/Structure/cdtree/cdtree.shtml</ext-link></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">PDBSum</td>
+<td align="left" colspan="1" rowspan="1"><ext-link ext-link-type="uri" xlink:href="http://www.ebi.ac.uk/thornton-srv/databases/pdbsum/" xlink:type="simple">http://www.ebi.ac.uk/thornton-srv/databases/pdbsum/</ext-link></td>
+</tr>
+</tbody>
+</table></alternatives></table-wrap></sec></sec></sec><sec id="s2">
+<title>Tools, Resources, and General Concepts for Functional Analysis and Annotation Transfer</title>
+<sec id="s2a">
+<title/>
+<sec id="s2a1">
+<title>(a) Homology determination based on full-length sequence information</title>
+<p>Based on the percent-identity scale (<xref ref-type="fig" rid="pcbi-1000151-g001">Figure 1</xref>) for sequences with identities &gt;80%, a simple pair-wise alignment or comparison using BLAST <xref ref-type="bibr" rid="pcbi.1000151-Altschul1">[19]</xref> to an experimentally characterized protein may suffice to infer function, provided the uncharacterized protein and the characterized protein are of similar lengths and align end-to-end without large insertions or deletions. In such cases, for the most part it may be safe to assume that the two proteins have similar overall functions. The widely used and the most reliable resource for obtaining high-quality annotated sequences is UniProtKB/Swiss-Prot <xref ref-type="bibr" rid="pcbi.1000151-Uniprot1">[17]</xref>. For sequences whose identities fall in the 50%–80% range, the general approach for functional assignment includes evaluation of homology to protein family, domain, and functional motif databases. The most commonly used methodology is querying against profiles generated using either hidden Markov models (HMM) <xref ref-type="bibr" rid="pcbi.1000151-Eddy1">[20]</xref> or position-specific scoring matrices (PSSM) <xref ref-type="bibr" rid="pcbi.1000151-Altschul1">[19]</xref>.</p>
+<p>In the higher end of this range, say above 70% identity, a widely used practice is to see if the query protein belongs to a protein family that has experimentally characterized members. The concept of protein family based on homology was articulated by Margaret Dayhoff in the early days of sequence analysis <xref ref-type="bibr" rid="pcbi.1000151-Dayhoff1">[21]</xref>. Protein family classification has several advantages as a basic approach for large-scale genomic annotation over other methods. Classification databases ideal for this kind of analysis include PIRSF <xref ref-type="bibr" rid="pcbi.1000151-Wu1">[22]</xref> and the prokaryotic and eukaryotic Clusters of Orthologous Groups of proteins (COGs and KOGs) <xref ref-type="bibr" rid="pcbi.1000151-Koonin1">[23]</xref>,<xref ref-type="bibr" rid="pcbi.1000151-Tatusov1">[24]</xref>. The PIRSF provides classification of UniProtKB sequences primarily into homeomorphic (end-to-end similarity) families and subfamilies (domain level superfamilies are also included) based on their evolutionary relationships. Because PIRSF families and subfamilies are based on full-length proteins rather than on component domains, they allow annotation of generic biochemical and specific biological functions, as well as classification of proteins without well-defined domains. On the other hand, COGs and KOGs consist of clusters of orthologous (and co-orthologous/inparalogous) proteins from completed genomes. The identification of orthologous protein sets is based on automatic clustering of proteins from three or more distantly related organisms based on reciprocal BLAST. This is followed by additional automatic recruitment based on a rigorous BLAST-based algorithm, and subsequent extensive manual curation of membership (including splitting of full-length proteins and assigning them to different clusters if necessary) and annotation.</p>
+<p>For sequences whose identities fall in the lower end, say &lt;70% range, in the absence of end-to-end similarity, a safer approach would be to evaluate domain architectures of these proteins, as these can evolve and exist independently of the rest of the protein chain. The most widely used domain database that provides a comprehensive coverage is Pfam <xref ref-type="bibr" rid="pcbi.1000151-Finn1">[25]</xref>.</p>
+</sec><sec id="s2a2">
+<title>(b) Homology determination based on 3D-structural information</title>
+<p>Sequence similarity based on full-length sequences has been used as a guiding principle in many classification databases. While this works quite well for closely related sequences whose sequence identities are greater than 50%, it begins to fail for sequences that are related at the three-dimensional structural levels rather than at sequence levels <xref ref-type="bibr" rid="pcbi.1000151-Watson1">[1]</xref>, <xref ref-type="bibr" rid="pcbi.1000151-Bartlett1">[26]</xref>–<xref ref-type="bibr" rid="pcbi.1000151-Thornton1">[28]</xref>. This is not surprising since molecular evolution conserves structural features longer than sequence <xref ref-type="bibr" rid="pcbi.1000151-Watson2">[16]</xref>,<xref ref-type="bibr" rid="pcbi.1000151-Rost2">[29]</xref>.</p>
+<p>Examination of a protein's structural neighbors and fold comparisons can reveal distant evolutionary relationships that are otherwise undetectable and, perhaps, suggest unsuspected functional properties. Just as proteins with end-to-end similarities may be evolutionarily related, structures with similar folds may also be related. Data resources that provide structural comparisons include Vector Alignment Structural Tool (VAST) <xref ref-type="bibr" rid="pcbi.1000151-Gibrat1">[30]</xref>, Combinatorial Extension (CE) <xref ref-type="bibr" rid="pcbi.1000151-Shindyalov1">[31]</xref>, and DALI databases <xref ref-type="bibr" rid="pcbi.1000151-Holm1">[32]</xref>. For structural classifications, SCOP and CATH have become the most widely used structural resources that provide a comprehensive hierarchical description of structural relationships <xref ref-type="bibr" rid="pcbi.1000151-Hubbard1">[33]</xref>–<xref ref-type="bibr" rid="pcbi.1000151-Greene1">[35]</xref>. The uniqueness of SCOP, however, is that it is an expert-constructed database geared toward identifying evolutionary relationships rather than relationships based on mere three-dimensional geometry of proteins.</p>
+</sec><sec id="s2a3">
+<title>(c) Sequence and structural motifs to aid in functional inference</title>
+<p>Analysis of sequence/structural motifs becomes valuable especially for cases where the overall percent identity goes below 30% for functional inference. These functional motifs/sites form stable units and are evolutionarily conserved relative to the remainder of the protein. Their identification is important in the assignment of protein names and accurate propagation of structural and functional site annotations <xref ref-type="bibr" rid="pcbi.1000151-Natale1">[9]</xref>. The most commonly used programs and tools available to calculate inter and molecular contacts are PDBSum <xref ref-type="bibr" rid="pcbi.1000151-Laskowski2">[36]</xref> and LPC/CSU <xref ref-type="bibr" rid="pcbi.1000151-Sobolev1">[37]</xref> servers. For identifying known sequence and structural patterns/motifs, PROSITE and the Catalytic Site Atlas (CATRES), respectively, are invaluable resources <xref ref-type="bibr" rid="pcbi.1000151-Hulo1">[38]</xref>,<xref ref-type="bibr" rid="pcbi.1000151-Porter1">[39]</xref>.</p>
+</sec></sec></sec><sec id="s3">
+<title>Ten-Step Procedure—An Example</title>
+<p>We propose a ten-step procedure (<xref ref-type="fig" rid="pcbi-1000151-g002">Figure 2</xref>) that can generally be followed for inferring function of an unknown protein. The candidate protein with ID O67940_<italic>AQUAE</italic> from <italic>Aquifex aeolicus</italic> is currently annotated as an “<italic>uncharacterized conserved protein</italic>” in UniProtKB <xref ref-type="bibr" rid="pcbi.1000151-Uniprot1">[17]</xref>, whose orthologs are found in bacterial and archeal species.</p>
+<sec id="s3a">
+<title/>
+<sec id="s3a1">
+<title>Step 1: PSI-BLAST against NCBI non-redundant database (nr)</title>
+<p>The amino acid sequence of O67940_ <italic>AQUAE</italic> is blasted against NCBI's non-redundant protein database (nr) in order to retrieve all its related sequences (<xref ref-type="fig" rid="pcbi-1000151-g003">Figure 3</xref>, top). Results of the BLAST output (<xref ref-type="fig" rid="pcbi-1000151-g003">Figure 3</xref>, bottom) show no hit to a characterized protein among the top hits (additional iterations to convergence did not hit any other characterized members). However, a close examination of the results indicates that the query protein hits several solved crystal structures (tagged with S in a red box). Two of them with PDB IDs 2Q6O from <italic>Salinispora tropica</italic> (UniProt accession A4X3Q0) and 1RQP from <italic>Streptomyces cattleya</italic> (UniProt accession Q70GK9) are functionally characterized as chlorinase and fluorinase, respectively <xref ref-type="bibr" rid="pcbi.1000151-Berman1">[40]</xref>–<xref ref-type="bibr" rid="pcbi.1000151-Dong1">[42]</xref>. In the BLAST results, 2Q6O has an e-value of 3e-20 with a percent identity of 32%, while 1RQP has an e-value of 3e-17 with a percent identity of 26%. Now the question is: Can we reliably predict O67940_Aquefix to be a chlorinase (specific to a chloride ion) or a fluorinase (specific to a fluoride ion) or just a halogenase (could be specific to one or more of the halogens)? The answer is not yet known since the sequence identities between the query and the characterized members fall in the low end of the sequence-identity scale, and therefore additional supportive evidence needs to be gathered before reliable function transfer.</p>
+<fig id="pcbi-1000151-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000151.g003</object-id><label>Figure 3</label><caption>
+<title>PSI-BLAST input panel (top) and PSI-BLAST output iteration (bottom).</title>
+<p>(Top) Default parameters are used. The fasta sequence of query protein with UniProt accession O67940 from <italic>Aquifex aeolicus</italic> is blasted against NCBI's nr database. (Bottom) The query protein <italic>O67940_ AQUAE</italic> hits several structures (tagged with S in a red box). Only two of the non-redundant structures with PDB-ids 2Q6O and 1RQP (marked by a pink box) are functionally characterized with e-values 3e-20 and 3e-17 and percent identities of 32% and 26%, respectively. (The Expect value (E) or an e-value is a parameter that describes the number of hits one can “expect” to see by chance when searching a database of a particular size. It decreases exponentially as the Score (S) of the match increases.)</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000151.g003" xlink:type="simple"/></fig></sec><sec id="s3a2">
+<title>Step 2: Evaluate pairwise alignment with the identified structures from Step 1</title>
+<p>The results of the BLAST run (<xref ref-type="fig" rid="pcbi-1000151-g004">Figure 4</xref>) of query versus subjects (2Q6O—pdb|2Q6O|A and 1RQP—pdb|1RQP|A) gives us the pairwise alignments. The pairwise alignment of query with 2Q6O (<xref ref-type="fig" rid="pcbi-1000151-g004">Figure 4</xref>, top) extends almost the entire length of the protein without long gaps. However, the alignment of query with 1RQP (<xref ref-type="fig" rid="pcbi-1000151-g004">Figure 4</xref>, bottom) has three regions with relatively long gaps. Based on this, it is clear that we need to get additional homologs and construct a multiple sequence alignment to identify the conserved residues before transferring functional annotation.</p>
+<fig id="pcbi-1000151-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000151.g004</object-id><label>Figure 4</label><caption>
+<title>Pairwise alignment between query sequence <italic>O67940_ AQUAE</italic> and 2Q6O (top) and 1RQP (bottom).</title>
+<p>(Top) Query aligns end-to-end without any long gaps with a sequence identity of 32%. (Bottom) Query aligns end-to-end but with three regions of gaps, the most significant being a 23-residue region in 1RQP residues 92–116. The sequence identity of query with 1RQP is 26%.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000151.g004" xlink:type="simple"/></fig></sec><sec id="s3a3">
+<title>Step 3: Scan against sequence pattern, domain, and family classification databases</title>
+<p>Results obtained from the steps so far are not conclusive to determine if the query is a chlorinase or a fluorinase. In this step, we will attempt to see if the query protein belongs to any well-annotated protein and domain families or if the protein has any specific identifiable sequence pattern. The results of scanning the candidate protein against family databases PIRSF and COGS are given in <xref ref-type="fig" rid="pcbi-1000151-g005">Figure 5</xref>. The query along with 2Q6O and 1RQP belong to PIRSF006779 and COG1912; both families, however, lack any functional annotation. Similarly, scanning against the domain database Pfam (<xref ref-type="fig" rid="pcbi-1000151-g005">Figure 5E</xref> and <xref ref-type="fig" rid="pcbi-1000151-g005">Figure 5F</xref>) and functional site database PROSITE does not provide any additional insights into the function of the query protein O67940_AQUAE. Nevertheless, Steps 1, 2, and 3 provide clues about phyletic distributions of homologs that can be used to construct a multiple sequence alignment.</p>
+<fig id="pcbi-1000151-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000151.g005</object-id><label>Figure 5</label><caption>
+<title>PIRSF (A,B), COG (C,D), and Pfam (E,F) input and results.</title>
+<p>(A) The fasta sequence of query protein with UniProt accession O67940 from <italic>Aquifex aeolicus</italic> is scanned against PIR's curated family database. (The query is searched against the full-length and domain hidden Markov models for manually curated PIRSFs. If a match is found, the matched regions and statistics are displayed). (B) The query hits the PIRSF family PIRSF006779. The output provides family details; statistical data for full-length proteins, composite domains, and a pairwise alignment of query with the consensus sequence of the PIRSF. (C) The fasta sequence of query protein with UniProt accession O67940 from <italic>Aquifex aeolicus</italic> is scanned against the database of clusters of orthologous groups. COG compares protein sequences encoded in complete genomes, representing major phylogenetic lineages. Each COG consists of orthologous/co-orthologous proteins from at least three lineages. (D) The query hits COG1912. The output provides the family details: statistical score, reciprocal best hits, and members of the family. (E) The fasta sequence of query protein with UniProt accession O67940 from <italic>Aquifex aeolicus</italic> is scanned against the Pfam domain database. The Pfam database is a large collection of domain families, each represented by multiple sequence alignments and hidden Markov models (HMMs). (F) The query hits Pfam family PF01887.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000151.g005" xlink:type="simple"/></fig></sec><sec id="s3a4">
+<title>Step 4: Search against structural family databases for structural classification</title>
+<p>Similarity between related sequences at either the sequence or structural levels may give important clues about their functions since it may be a consequence of functional or evolutionary relationships. Results of the structural searches using the SCOP database is presented in <xref ref-type="fig" rid="pcbi-1000151-g006">Figure 6</xref>. The results indicate that the N- and C-terminal domains of 1RQP belong to two SCOP superfamilies named Bacterial fluorinating enzyme (N-terminal domain) and Bacterial fluorinating enzyme (C-terminal domain). 2Q6O is not classified in the SCOP 1.73 release, but most likely belongs to the same superfamily as 1RQP.</p>
+<fig id="pcbi-1000151-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000151.g006</object-id><label>Figure 6</label><caption>
+<title>SCOP output.</title>
+<p>1RQP is used since our query protein O67940 from <italic>Aquifex aeolicus</italic> does not have a solved structure. The results indicate that the N-terminal and C-terminal domains of 1RQP belong to two SCOP superfamilies. (The SCOP database provides a detailed and comprehensive description of the structural and evolutionary relationships between all proteins whose structure is known).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000151.g006" xlink:type="simple"/></fig></sec><sec id="s3a5">
+<title>Step 5: Search structural database for structural neighbors</title>
+<p>This becomes an important step especially for sequences whose percent identity falls below 30%. Since our query does not have a structure, 2Q6O and 1RQP will be used as starting points to get other related structures. Results of the structural searches using VAST is presented in <xref ref-type="fig" rid="pcbi-1000151-g007">Figure 7</xref>. Thus, identified structures can be used to generate a high-quality structure-guided multiple sequence alignment to which the query and other related sequences can be aligned. The generation of a high-quality alignment is critical for function prediction and reliable phylogenetic analysis.</p>
+<fig id="pcbi-1000151-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000151.g007</object-id><label>Figure 7</label><caption>
+<title>VAST output.</title>
+<p>Since our query protein O67940 from <italic>Aquifex aeolicus</italic> does not have a solved structure, 1RQP is used as a query. The only non-redundant structural neighbor that provides functional annotation is 2Q6O, indicated by a pink box.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000151.g007" xlink:type="simple"/></fig></sec><sec id="s3a6">
+<title>Step 6: Extract homologs</title>
+<p>Transfer of annotations from one homolog to another is not always straightforward. To transfer annotation, one has to identify homologs that can be used for constructing multiple sequence alignments and subsequently used for performing phylogenetic analysis to identify orthologs (next step). More often than not, when many paralogs are present, it becomes difficult to identify a true ortholog. This step is to identify homologs based on results obtained from earlier steps. With the increasing number of genomes being sequenced, it is becoming apparent that restricting analysis to high-quality genomes and sequences from model organisms for generating alignments and performing phylogenetic analysis is important.</p>
+</sec><sec id="s3a7">
+<title>Step 7: Perform structure-guided alignment and phylogenetic analysis</title>
+<p>High-quality multiple alignments are a pre-requisite for understanding the evolutionary relationships that exist between homologous sequences. A structure-guided alignment carried out using Cn3D on the structures and sequences obtained from Step 6 is presented in <xref ref-type="fig" rid="pcbi-1000151-g008">Figure 8</xref>. This alignment is manually edited to ensure that all the secondary structural elements are properly aligned without any geometric violations. To this manually edited structural alignment, the initial query O67940_Aquefix along with the identified homologs from Step 6 are added. It is interesting to note that the longest gap observed in the BLAST pairwise alignment in Step 1 (<xref ref-type="fig" rid="pcbi-1000151-g004">Figure 4</xref>, bottom) between query and 1RQP corresponds to an exposed loop region of the protein. This 23-residue loop region absent in both 2Q6O and the query seems to be significant enough to cause a decrease in the buried surface area around the active site compared to 1RQP. Neighbor-joining (NJ) phylogenetic analysis of the aligned sequences was carried out using CDTree. The tree reveals that the query and our subjects (1RQP and 2Q6O) do not fall in the same branch (<xref ref-type="fig" rid="pcbi-1000151-g008">Figure 8</xref>, bottom). This indicates that transfer of annotation requires more in-depth analysis that includes examination of structural attributes such as regions around the active and binding sites. As mentioned earlier, conservation of these sites is critical for functional inference.</p>
+<fig id="pcbi-1000151-g008" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000151.g008</object-id><label>Figure 8</label><caption>
+<title>Structure-guided alignment constructed with homologous sequences using Cn3D (top) and neighbor-joining tree based on the score of aligned residues from homologous sequences using CDTree (bottom).</title>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000151.g008" xlink:type="simple"/></fig></sec><sec id="s3a8">
+<title>Step 8: Identify functional residues</title>
+<p>Structures of complexes provide more functional information than uncomplexed structures. 2Q6O, also referred to as SalL, is a trimer with substrate chloride and ligand S-adenosyl-L-methionine (SAM) bound. 1RQP on the other hand is a hexamer (dimer of trimers) with three molecules of the ligand SAM bound. The functional site in these two related structures reside at the interface between the monomers. SAM-binding residues were obtained from PDBSum <xref ref-type="bibr" rid="pcbi.1000151-Laskowski2">[36]</xref>. A plot of SAM-binding residues for 1RQP is shown in <xref ref-type="fig" rid="pcbi-1000151-g009">Figure 9</xref>. 2Q6O is a SAM-dependent chlorinase that catalyzes the transfer of a chloride ion to SAM to generate 5′-chloro-5′-deoxyadenosine <xref ref-type="bibr" rid="pcbi.1000151-Eustaquio1">[41]</xref>. It has also been shown to possess brominating and iodinating activities but not fluorinating activity. 1RQP on the other hand is a fluorinating enzyme that catalyzes the formation of a C–F bond by combining SAM and F<sup>−</sup> to generate 5′-fluoro-5′-deoxyadenosine and L-methionine <xref ref-type="bibr" rid="pcbi.1000151-OHagan1">[43]</xref>. Subsequently, it was shown that fluorinase from <italic>Streptomyces cattleya</italic> is also a chlorinase <xref ref-type="bibr" rid="pcbi.1000151-Deng1">[44]</xref>. There are a few crucial differences between 1RQP and 2Q6O that give them their halogenating specificities. For example, the active site residue (involved in catalysis) Gly 131 in 2Q6O is Ser 158 in 1RQP. This small difference seems to result in a larger binding pocket in 2Q6O, resulting in the apparent differences in their specificities, making one a fluorinase/chlorinase and the other a chlorinase/brominase/iodinase. In addition, mutagenesis studies indicate another important active site residue Thr 70 in 1RQP, occupied by a hydrophobic residue Tyr 70 in 2Q6O. Mutation of Tyr 70 in 2Q6O to Thr decreases the chlorinating and brominating activities, indicating their important role in catalysis and the observed specificities <xref ref-type="bibr" rid="pcbi.1000151-Eustaquio1">[41]</xref>.</p>
+<fig id="pcbi-1000151-g009" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000151.g009</object-id><label>Figure 9</label><caption>
+<title>Ligplot for 1RQP.</title>
+<p>SAM-binding residues. Dashed green lines indicate hydrogen bonds, and the half-moon indicates van der Waals interactions. (Ligplot is a program for automatically plotting protein–ligand interactions provided as part of the PDBsum database, which is a Web-based database of summaries and analyses of all PDB structures).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000151.g009" xlink:type="simple"/></fig></sec><sec id="s3a9">
+<title>Step 9: Identify conserved functional residues in query</title>
+<p>Mapping the functional residues from 1RQP and 2Q6O (<xref ref-type="table" rid="pcbi-1000151-t002">Table 2</xref>) to query O67940_ AQUAE identifies residues Asp∶8, Phe 15, *Val 67, Asp 69, *Gly 127, Asp 177, Asn 181, Ser 221, Phe 222, Leu 229, and Val 231 as part of the catalytic region. The two crucial active site residues (marked with a *) discussed in the previous step, namely Gly 131 and Tyr 70 (mutated to Thr) in 2Q6O, are Gly 127 and Val 67 in the query. Alignment of homologous sequences carried out in Step 7 indicates that this position is occupied predominantly by a hydrophobic residue, except in the case of the fluorinating enzyme 1RQP where it is a Thr.</p>
+<table-wrap id="pcbi-1000151-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000151.t002</object-id><label>Table 2</label><caption>
+<title>Alignment of functional residues</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000151-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000151.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">ID/Acc</td>
+<td align="left" colspan="11" rowspan="1">Functional residues (binding and catalytic sites)</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">1RQP</td>
+<td align="left" colspan="1" rowspan="1">Asp 16</td>
+<td align="left" colspan="1" rowspan="1">Ser 23</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="table-fn" rid="nt101">*</xref>Thr 75</td>
+<td align="left" colspan="1" rowspan="1">Tyr 77</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="table-fn" rid="nt101">*</xref>Ser 158</td>
+<td align="left" colspan="1" rowspan="1">Asp 210</td>
+<td align="left" colspan="1" rowspan="1">Asn 215</td>
+<td align="left" colspan="1" rowspan="1">Ser 269</td>
+<td align="left" colspan="1" rowspan="1">Arg 270</td>
+<td align="left" colspan="1" rowspan="1">Arg 277</td>
+<td align="left" colspan="1" rowspan="1">Ala 279</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">2Q6O</td>
+<td align="left" colspan="1" rowspan="1">Asp 11</td>
+<td align="left" colspan="1" rowspan="1">Ala 18</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="table-fn" rid="nt101">*</xref><xref ref-type="table-fn" rid="nt102">+</xref>Tyr 70</td>
+<td align="left" colspan="1" rowspan="1">Tyr 72</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="table-fn" rid="nt101">*</xref>Gly 131</td>
+<td align="left" colspan="1" rowspan="1">Asp 183</td>
+<td align="left" colspan="1" rowspan="1">Asn 188</td>
+<td align="left" colspan="1" rowspan="1">Ser 242</td>
+<td align="left" colspan="1" rowspan="1">Arg 243</td>
+<td align="left" colspan="1" rowspan="1">Arg 250</td>
+<td align="left" colspan="1" rowspan="1">Glu 252</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">O67940</td>
+<td align="left" colspan="1" rowspan="1">Asp 8</td>
+<td align="left" colspan="1" rowspan="1">Phe 15</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="table-fn" rid="nt101">*</xref>Val 67</td>
+<td align="left" colspan="1" rowspan="1">Asp 69</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="table-fn" rid="nt101">*</xref>Gly 127</td>
+<td align="left" colspan="1" rowspan="1">Asp 177</td>
+<td align="left" colspan="1" rowspan="1">Asn 181</td>
+<td align="left" colspan="1" rowspan="1">Ser 221</td>
+<td align="left" colspan="1" rowspan="1">Phe 222</td>
+<td align="left" colspan="1" rowspan="1">Leu 229</td>
+<td align="left" colspan="1" rowspan="1">Val 231</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label>*</label><p>indicates catalytic sites.</p></fn><fn id="nt102"><label>+</label><p>Tyr70Thr mutation in 2Q6O.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3a10">
+<title>Step 10: Evidence-based assignment of biological function of query O67940_Aquefix</title>
+<p>Based on the conservation of the crucial residues that are involved in catalysis, the query is closer to the chlorinating enzyme 2Q6O than the fluorinating enzyme 1RQP. While it is safe to assume that the binding site for SAM is conserved among the members of PIRSF006779 and that all its members bind to SAM and likely are halogenases, it is not safe to assume that all the members are chlorinases or fluorinases. Their specificities may be to a fluoride, chloride, bromide, or iodide. Judging from the alignment and available experimental evidence on bacterial fluorinating (and chlorinating) enzymes in <italic>Streptomyces cattleya</italic> <xref ref-type="bibr" rid="pcbi.1000151-Zhu1">[45]</xref>,<xref ref-type="bibr" rid="pcbi.1000151-Deng2">[46]</xref> and chlorinating enzyme from <italic>Salinispora tropica</italic>, it is likely that the query protein O67940_Aquefix is an enzyme that can halogenate SAM with chloride, bromide, or iodide ions. Based on available experimental information, it is not possible to say if the <italic>Aquefix</italic> enzyme can also use fluorine. Additional supporting experimental data need to be collected before we can conclude the precise specificity of the query.</p>
+<p>By following all the above steps, we have answered one critical question that we set out to answer at the beginning of this tutorial, i.e. the function of O67940_ <italic>AQUAE</italic>. In addition, we have also identified functional residues.</p>
+</sec></sec></sec><sec id="s4">
+<title>Summary</title>
+<p>The main objective of this article was to define a ten-step procedure, largely guided by the percent-identity scale, that can be followed as a general rule for functional inference of an uncharacterized protein. This procedure is by no means exhaustive but can be used as an initial process for functional assignment. In many cases, additional clues and complementary information may be obtained from pathway analysis, operon information, and other non-homology based methods. We have demonstrated how by following the ten steps a function could be assigned for an uncharacterized conserved protein with its related sequences. In addition, the goal was to provide an overview of the available tools and databases to carry out comparative sequence and structural analysis.</p>
+</sec></body>
+<back>
+<ack>
+<p>The authors would like to thank all PIR staff, especially Cathy Wu, for encouragement and support. In addition, the authors would like to thank all the people instrumental in developing and maintaining the various databases and tools mentioned in this article.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1000151-Watson1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Watson</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>Todd</surname><given-names>AE</given-names></name>
+<name name-style="western"><surname>Bray</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Laskowski</surname><given-names>RA</given-names></name>
+<name name-style="western"><surname>Edwards</surname><given-names>A</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Target selection and determination of function in structural genomics.</article-title>             <source>IUBMB Life</source>             <volume>55</volume>             <fpage>249</fpage>             <lpage>255</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Blundell1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Blundell</surname><given-names>TL</given-names></name>
+<name name-style="western"><surname>Mizuguchi</surname><given-names>K</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Structural genomics: An overview.</article-title>             <source>Prog Biophys Mol Biol</source>             <volume>73</volume>             <fpage>289</fpage>             <lpage>295</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Galperin1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Galperin</surname><given-names>MY</given-names></name>
+</person-group>             <year>2008</year>             <article-title>The Molecular Biology Database Collection: 2008 update.</article-title>             <source>Nucleic Acids Res</source>             <volume>36</volume>             <fpage>D2</fpage>             <lpage>D4</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Laskowski1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Laskowski</surname><given-names>RA</given-names></name>
+<name name-style="western"><surname>Watson</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>Thornton</surname><given-names>JM</given-names></name>
+</person-group>             <year>2005</year>             <article-title>ProFunc: A server for predicting protein function from 3D structure.</article-title>             <source>Nucleic Acids Res</source>             <volume>33</volume>             <fpage>W89</fpage>             <lpage>W93</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Shameer1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Shameer</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Sowdhamini</surname><given-names>R</given-names></name>
+</person-group>             <year>2007</year>             <article-title>IWS: Integrated web server for protein sequence and structure analysis.</article-title>             <source>Bioinformation</source>             <volume>2</volume>             <fpage>86</fpage>             <lpage>90</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Jensen1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jensen</surname><given-names>LJ</given-names></name>
+<name name-style="western"><surname>Ussery</surname><given-names>DW</given-names></name>
+<name name-style="western"><surname>Brunak</surname><given-names>S</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Functionality of system components: Conservation of protein function in protein feature space.</article-title>             <source>Genome Res</source>             <volume>13</volume>             <fpage>2444</fpage>             <lpage>2449</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Wass1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wass</surname><given-names>MN</given-names></name>
+<name name-style="western"><surname>Sternberg</surname><given-names>MJ</given-names></name>
+</person-group>             <year>2008</year>             <article-title>ConFunc—Functional annotation in the twilight zone.</article-title>             <source>Bioinformatics</source>             <volume>24</volume>             <fpage>798</fpage>             <lpage>806</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Hawkins1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hawkins</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Luban</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Kihara</surname><given-names>D</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Enhanced automated function prediction using distantly related sequences and contextual association by PFP.</article-title>             <source>Protein Sci</source>             <volume>15</volume>             <fpage>1550</fpage>             <lpage>1556</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Natale1"><label>9</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Natale</surname><given-names>DA</given-names></name>
+<name name-style="western"><surname>Vinayaka</surname><given-names>CR</given-names></name>
+<name name-style="western"><surname>Wu</surname><given-names>CH</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Large-scale, classification-driven, rule-based functional annotation of proteins.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Subramaniam</surname><given-names>S</given-names></name>
+</person-group>             <publisher-loc>New York</publisher-loc>             <publisher-name>John Wiley</publisher-name>          </element-citation></ref>
+<ref id="pcbi.1000151-Friedberg1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Friedberg</surname><given-names>I</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Automated protein function prediction—the genomic challenge.</article-title>             <source>Brief Bioinform</source>             <volume>7</volume>             <fpage>225</fpage>             <lpage>242</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Rost1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rost</surname><given-names>B</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Enzyme function less conserved than anticipated.</article-title>             <source>J Mol Biol</source>             <volume>318</volume>             <fpage>595</fpage>             <lpage>608</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Todd1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Todd</surname><given-names>AE</given-names></name>
+<name name-style="western"><surname>Orengo</surname><given-names>CA</given-names></name>
+<name name-style="western"><surname>Thornton</surname><given-names>JM</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Evolution of function in protein superfamilies, from a structural perspective.</article-title>             <source>J Mol Biol</source>             <volume>307</volume>             <fpage>1113</fpage>             <lpage>1143</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Brenner1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Brenner</surname><given-names>SE</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Errors in genome annotation.</article-title>             <source>Trends Genet</source>             <volume>15</volume>             <fpage>132</fpage>             <lpage>133</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Keller1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Keller</surname><given-names>JP</given-names></name>
+<name name-style="western"><surname>Smith</surname><given-names>PM</given-names></name>
+<name name-style="western"><surname>Benach</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Christendat</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>deTitta</surname><given-names>GT</given-names></name>
+<etal/></person-group>             <year>2002</year>             <article-title>The crystal structure of MT0146/CbiT suggests that the putative precorrin-8w decarboxylase is a methyltransferase.</article-title>             <source>Structure</source>             <volume>10</volume>             <fpage>1475</fpage>             <lpage>1487</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Adams1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Adams</surname><given-names>MA</given-names></name>
+<name name-style="western"><surname>Suits</surname><given-names>MD</given-names></name>
+<name name-style="western"><surname>Zheng</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Jia</surname><given-names>Z</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Piecing together the structure–function puzzle: Experiences in structure-based functional annotation of hypothetical proteins.</article-title>             <source>Proteomics</source>             <volume>7</volume>             <fpage>2920</fpage>             <lpage>2932</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Watson2"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Watson</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>Sanderson</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Ezersky</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Savchenko</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Edwards</surname><given-names>A</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Towards fully automated structure-based function prediction in structural genomics: A case study.</article-title>             <source>J Mol Biol</source>             <volume>367</volume>             <fpage>1511</fpage>             <lpage>1522</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Uniprot1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <collab xlink:type="simple">Uniprot Consortium</collab>             <year>2008</year>             <article-title>The universal protein resource (UniProt).</article-title>             <source>Nucleic Acids Res</source>             <volume>36</volume>             <fpage>D190</fpage>             <lpage>D195</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Hedges1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hedges</surname><given-names>SB</given-names></name>
+</person-group>             <year>2002</year>             <article-title>The origin and evolution of model organisms.</article-title>             <source>Nat Rev Genet</source>             <volume>3</volume>             <fpage>838</fpage>             <lpage>849</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Altschul1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Altschul</surname><given-names>SF</given-names></name>
+<name name-style="western"><surname>Gish</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Miller</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Myers</surname><given-names>EW</given-names></name>
+<name name-style="western"><surname>Lipman</surname><given-names>DJ</given-names></name>
+</person-group>             <year>1990</year>             <article-title>Basic local alignment search tool.</article-title>             <source>J Mol Biol</source>             <volume>215</volume>             <fpage>403</fpage>             <lpage>410</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Eddy1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Eddy</surname><given-names>SR</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Profile hidden Markov models.</article-title>             <source>Bioinformatics</source>             <volume>14</volume>             <fpage>755</fpage>             <lpage>763</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Dayhoff1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dayhoff</surname><given-names>MO</given-names></name>
+</person-group>             <year>1976</year>             <article-title>The origin and evolution of protein superfamilies.</article-title>             <source>Fed Proc</source>             <volume>35</volume>             <fpage>2132</fpage>             <lpage>2138</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Wu1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wu</surname><given-names>CH</given-names></name>
+<name name-style="western"><surname>Nikolskaya</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Huang</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Yeh</surname><given-names>LS</given-names></name>
+<name name-style="western"><surname>Natale</surname><given-names>DA</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>PIRSF: Family classification system at the Protein Information Resource.</article-title>             <source>Nucleic Acids Res</source>             <volume>32</volume>             <fpage>D112</fpage>             <lpage>D114</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Koonin1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Koonin</surname><given-names>EV</given-names></name>
+<name name-style="western"><surname>Fedorova</surname><given-names>ND</given-names></name>
+<name name-style="western"><surname>Jackson</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>Jacobs</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Krylov</surname><given-names>DM</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>A comprehensive evolutionary classification of proteins encoded in complete eukaryotic genomes.</article-title>             <source>Genome Biol</source>             <volume>5</volume>             <fpage>R7</fpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Tatusov1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tatusov</surname><given-names>RL</given-names></name>
+<name name-style="western"><surname>Fedorova</surname><given-names>ND</given-names></name>
+<name name-style="western"><surname>Jackson</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>Jacobs</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Kiryutin</surname><given-names>B</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>The COG database: An updated version includes eukaryotes.</article-title>             <source>BMC Bioinformatics</source>             <volume>4</volume>             <fpage>41</fpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Finn1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Finn</surname><given-names>RD</given-names></name>
+<name name-style="western"><surname>Tate</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Mistry</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Coggill</surname><given-names>PC</given-names></name>
+<name name-style="western"><surname>Sammut</surname><given-names>SJ</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>The Pfam protein families database.</article-title>             <source>Nucleic Acids Res</source>             <volume>36</volume>             <fpage>D281</fpage>             <lpage>D288</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Bartlett1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bartlett</surname><given-names>GJ</given-names></name>
+<name name-style="western"><surname>Todd</surname><given-names>AE</given-names></name>
+<name name-style="western"><surname>Thornton</surname><given-names>JM</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Inferring protein function from structure.</article-title>             <source>Methods Biochem Anal</source>             <volume>44</volume>             <fpage>387</fpage>             <lpage>407</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Whisstock1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Whisstock</surname><given-names>JC</given-names></name>
+<name name-style="western"><surname>Lesk</surname><given-names>AM</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Prediction of protein function from protein sequence and structure.</article-title>             <source>Q Rev Biophys</source>             <volume>36</volume>             <fpage>307</fpage>             <lpage>340</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Thornton1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Thornton</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Todd</surname><given-names>AE</given-names></name>
+<name name-style="western"><surname>Milburn</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Borkakoti</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Orengo</surname><given-names>CA</given-names></name>
+</person-group>             <year>2000</year>             <article-title>From structure to function: Approaches and limitations.</article-title>             <source>Nat Struct Biol </source><volume>7</volume><supplement>(Supplement)</supplement>             <fpage>991</fpage>             <lpage>994</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Rost2"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rost</surname><given-names>B</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Protein structures sustain evolutionary drift.</article-title>             <source>Fold Des</source>             <volume>2</volume>             <fpage>S19</fpage>             <lpage>S24</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Gibrat1"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gibrat</surname><given-names>JF</given-names></name>
+<name name-style="western"><surname>Madej</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Bryant</surname><given-names>SH</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Surprising similarities in structure comparison.</article-title>             <source>Curr Opin Struct Biol</source>             <volume>6</volume>             <fpage>377</fpage>             <lpage>385</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Shindyalov1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Shindyalov</surname><given-names>IN</given-names></name>
+<name name-style="western"><surname>Bourne</surname><given-names>PE</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Protein structure alignment by incremental combinatorial extension (CE) of the optimal path.</article-title>             <source>Protein Eng</source>             <volume>11</volume>             <fpage>739</fpage>             <lpage>747</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Holm1"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Holm</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Sander</surname><given-names>C</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Dali/FSSP classification of three-dimensional protein folds.</article-title>             <source>Nucleic Acids Res</source>             <volume>25</volume>             <fpage>231</fpage>             <lpage>234</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Hubbard1"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hubbard</surname><given-names>TJ</given-names></name>
+<name name-style="western"><surname>Murzin</surname><given-names>AG</given-names></name>
+<name name-style="western"><surname>Brenner</surname><given-names>SE</given-names></name>
+<name name-style="western"><surname>Chothia</surname><given-names>C</given-names></name>
+</person-group>             <year>1997</year>             <article-title>SCOP: A structural classification of proteins database.</article-title>             <source>Nucleic Acids Res</source>             <volume>25</volume>             <fpage>236</fpage>             <lpage>239</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Andreeva1"><label>34</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Andreeva</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Howorth</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Chandonia</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Brenner</surname><given-names>SE</given-names></name>
+<name name-style="western"><surname>Hubbard</surname><given-names>TJ</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Data growth and its impact on the SCOP database: New developments.</article-title>             <source>Nucleic Acids Res</source>             <volume>36</volume>             <fpage>D419</fpage>             <lpage>D425</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Greene1"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Greene</surname><given-names>LH</given-names></name>
+<name name-style="western"><surname>Lewis</surname><given-names>TE</given-names></name>
+<name name-style="western"><surname>Addou</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Cuff</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Dallman</surname><given-names>T</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>The CATH domain structure database: New protocols and classification levels give a more comprehensive resource for exploring evolution.</article-title>             <source>Nucleic Acids Res</source>             <volume>35</volume>             <fpage>D291</fpage>             <lpage>D297</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Laskowski2"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Laskowski</surname><given-names>RA</given-names></name>
+<name name-style="western"><surname>Chistyakov</surname><given-names>VV</given-names></name>
+<name name-style="western"><surname>Thornton</surname><given-names>JM</given-names></name>
+</person-group>             <year>2005</year>             <article-title>PDBsum more: New summaries and analyses of the known 3D structures of proteins and nucleic acids.</article-title>             <source>Nucleic Acids Res</source>             <volume>33</volume>             <fpage>D266</fpage>             <lpage>D268</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Sobolev1"><label>37</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sobolev</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Eyal</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Gerzon</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Potapov</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Babor</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>SPACE: A suite of tools for protein structure prediction and analysis based on complementarity and environment.</article-title>             <source>Nucleic Acids Res</source>             <volume>33</volume>             <fpage>W39</fpage>             <lpage>W43</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Hulo1"><label>38</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hulo</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Bairoch</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Bulliard</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Cerutti</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Cuche</surname><given-names>BA</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>The 20 years of PROSITE.</article-title>             <source>Nucleic Acids Res</source>             <volume>36</volume>             <fpage>D245</fpage>             <lpage>D249</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Porter1"><label>39</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Porter</surname><given-names>CT</given-names></name>
+<name name-style="western"><surname>Bartlett</surname><given-names>GJ</given-names></name>
+<name name-style="western"><surname>Thornton</surname><given-names>JM</given-names></name>
+</person-group>             <year>2004</year>             <article-title>The Catalytic Site Atlas: A resource of catalytic sites and residues identified in enzymes using structural data.</article-title>             <source>Nucleic Acids Res</source>             <volume>32</volume>             <fpage>D129</fpage>             <lpage>D133</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Berman1"><label>40</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Berman</surname><given-names>HM</given-names></name>
+<name name-style="western"><surname>Battistuz</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Bhat</surname><given-names>TN</given-names></name>
+<name name-style="western"><surname>Bluhm</surname><given-names>WF</given-names></name>
+<name name-style="western"><surname>Bourne</surname><given-names>PE</given-names></name>
+<etal/></person-group>             <year>2002</year>             <article-title>The Protein Data Bank.</article-title>             <source>Acta Crystallogr D Biol Crystallogr</source>             <volume>58</volume>             <fpage>899</fpage>             <lpage>907</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Eustaquio1"><label>41</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Eustaquio</surname><given-names>AS</given-names></name>
+<name name-style="western"><surname>Pojer</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Noel</surname><given-names>JP</given-names></name>
+<name name-style="western"><surname>Moore</surname><given-names>BS</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Discovery and characterization of a marine bacterial SAM-dependent chlorinase.</article-title>             <source>Nat Chem Biol</source>             <volume>4</volume>             <fpage>69</fpage>             <lpage>74</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Dong1"><label>42</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dong</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Huang</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Deng</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Schaffrath</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Spencer</surname><given-names>JB</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Crystal structure and mechanism of a bacterial fluorinating enzyme.</article-title>             <source>Nature</source>             <volume>427</volume>             <fpage>561</fpage>             <lpage>565</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-OHagan1"><label>43</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>O'Hagan</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Schaffrath</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Cobb</surname><given-names>SL</given-names></name>
+<name name-style="western"><surname>Hamilton</surname><given-names>JT</given-names></name>
+<name name-style="western"><surname>Murphy</surname><given-names>CD</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Biochemistry: Biosynthesis of an organofluorine molecule.</article-title>             <source>Nature</source>             <volume>416</volume>             <fpage>279</fpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Deng1"><label>44</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Deng</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Cobb</surname><given-names>SL</given-names></name>
+<name name-style="western"><surname>McEwan</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>McGlinchey</surname><given-names>RP</given-names></name>
+<name name-style="western"><surname>Naismith</surname><given-names>JH</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>The fluorinase from Streptomyces cattleya is also a chlorinase.</article-title>             <source>Angew Chem Int Ed Engl</source>             <volume>45</volume>             <fpage>759</fpage>             <lpage>762</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Zhu1"><label>45</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zhu</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Robinson</surname><given-names>DA</given-names></name>
+<name name-style="western"><surname>McEwan</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>O'Hagan</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Naismith</surname><given-names>JH</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Mechanism of enzymatic fluorination in Streptomyces cattleya.</article-title>             <source>J Am Chem Soc</source>             <volume>129</volume>             <fpage>14597</fpage>             <lpage>14604</lpage>          </element-citation></ref>
+<ref id="pcbi.1000151-Deng2"><label>46</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Deng</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>O'Hagan</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Schaffrath</surname><given-names>C</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Fluorometabolite biosynthesis and the fluorinase from Streptomyces cattleya.</article-title>             <source>Nat Prod Rep</source>             <volume>21</volume>             <fpage>773</fpage>             <lpage>784</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

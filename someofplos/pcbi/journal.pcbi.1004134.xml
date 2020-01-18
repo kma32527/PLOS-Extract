@@ -1,0 +1,965 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" dtd-version="3.0" xml:lang="en" article-type="research-article">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-14-00039</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004134</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>When Can Species Abundance Data Reveal Non-neutrality?</article-title>
+<alt-title alt-title-type="running-head">When Can Species Abundance Data Reveal Non-neutrality?</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Al Hammal</surname> <given-names>Omar</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Alonso</surname> <given-names>David</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Etienne</surname> <given-names>Rampal S.</given-names></name>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Cornell</surname> <given-names>Stephen J.</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff004"><sup>4</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<label>1</label>
+<addr-line>School of Biology, University of Leeds, Leeds, United Kingdom</addr-line>
+</aff>
+<aff id="aff002">
+<label>2</label>
+<addr-line>Center for Advanced Studies (CEAB-CSIC), Blanes, Spain</addr-line>
+</aff>
+<aff id="aff003">
+<label>3</label>
+<addr-line>Groningen Institute for Evolutionary Life Sciences, University of Groningen, Groningen, Netherlands</addr-line>
+</aff>
+<aff id="aff004">
+<label>4</label>
+<addr-line>Institute of Integrative Biology, University of Liverpool, Liverpool, United Kingdom (current address)</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Allesina</surname> <given-names>Stefano</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>University of Chicago, UNITED STATES</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: OAH DA RSE SJC. Performed the experiments: OAH DA SJC. Analyzed the data: OAH SJC DA. Contributed reagents/materials/analysis tools: DA RSE. Wrote the paper: OAH DA RSE SJC.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">stephen.cornell@liverpool.ac.uk</email></corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<month>3</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>20</day>
+<month>3</month>
+<year>2015</year>
+</pub-date>
+<volume>11</volume>
+<issue>3</issue>
+<elocation-id>e1004134</elocation-id>
+<history>
+<date date-type="received">
+<day>9</day>
+<month>1</month>
+<year>2014</year>
+</date>
+<date date-type="accepted">
+<day>16</day>
+<month>1</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Al Hammal et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004134" xlink:type="simple"/>
+<abstract>
+<p>Species abundance distributions (SAD) are probably ecology’s most well-known empirical pattern, and over the last decades many models have been proposed to explain their shape. There is no consensus over which model is correct, because the degree to which different processes can be discerned from SAD patterns has not yet been rigorously quantified. We present a power calculation to quantify our ability to detect deviations from neutrality using species abundance data. We study non-neutral stochastic community models, and show that the presence of non-neutral processes is detectable if sample size is large enough and/or the amplitude of the effect is strong enough. Our framework can be used for any candidate community model that can be simulated on a computer, and determines both the sampling effort required to distinguish between alternative processes, and a range for the strength of non-neutral processes in communities whose patterns are statistically consistent with neutral theory. We find that even data sets of the scale of the 50 Ha forest plot on Barro Colorado Island, Panama, are unlikely to be large enough to detect deviations from neutrality caused by competitive interactions alone, though the presence of multiple non-neutral processes with contrasting effects on abundance distributions may be detectable.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>In order to predict and mitigate the response of ecological communities to global change, we need to understand the processes that allow multiple species to coexist in close proximity. A classic idea in Ecology is that species coexist because they occupy different “niches”. However, random processes such as dispersal could also explain species coocurrence, without invoking niche differentiation. “Neutral” models embody this idea, omitting niche differentiation and assuming all species are identical. Such models are mostly statistically consistent with the relative abundances of tree species in tropical forests, but statistical procedures always contain an element of uncertainty and many other models could also be consistent with a particular data set. We compute how strong the non-neutral processes would need to be in order for their effect to be detectable in data sets of different sizes. We find that the largest ecological data sets currently available, such as the 50 hectare plot on Barro Colorado Island in Panama, are not large enough to distinguish between neutral and non-neutral models, unless multiple non-neutral processes are at work. This means that other types of pattern need to be studied, or larger data sets collected, in order to understand the mechanisms behind forest biodiversity.</p>
+</abstract>
+<funding-group>
+<funding-statement>OAH, DA, and SJC were supported by the National Environment Research Council (grant no. NE/H007458/1). DA is supported by grant CGL2012-39964 and Ramon y Cajal program from the Spanish Government. RSE thanks the Netherlands Organisation for Scientific Research (NWO) for funding through VIDI and VICI grants. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="4"/>
+<table-count count="5"/>
+<page-count count="23"/>
+</counts>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>The extent to which ecological processes can be inferred from macroecological patterns has long been debated [<xref ref-type="bibr" rid="pcbi.1004134.ref001">1</xref>–<xref ref-type="bibr" rid="pcbi.1004134.ref004">4</xref>]. The appearance of common patterns in species abundance distributions (SADs) for different communities suggests that the same ecological mechanisms structure these communities [<xref ref-type="bibr" rid="pcbi.1004134.ref005">5</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref006">6</xref>]. However, it is now thought that many patterns describing communities are rather insensitive to these processes [<xref ref-type="bibr" rid="pcbi.1004134.ref007">7</xref>–<xref ref-type="bibr" rid="pcbi.1004134.ref011">11</xref>]. For example, empirical SADs are in many cases found to be statistically consistent with Hubbell’s neutral theory [<xref ref-type="bibr" rid="pcbi.1004134.ref012">12</xref>–<xref ref-type="bibr" rid="pcbi.1004134.ref017">17</xref>], but this does not mean that communities are truly neutral because non-neutral models can predict similar [<xref ref-type="bibr" rid="pcbi.1004134.ref008">8</xref>–<xref ref-type="bibr" rid="pcbi.1004134.ref010">10</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref018">18</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref019">19</xref>] or even identical [<xref ref-type="bibr" rid="pcbi.1004134.ref004">4</xref>] patterns. This raises the question of whether anything can be inferred from fitting it to SAD data [<xref ref-type="bibr" rid="pcbi.1004134.ref003">3</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref004">4</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref020">20</xref>].</p>
+<p>Neutral theory has been criticized for the biological processes it omits, but non-neutral models that give qualitatively or even exactly the same predictions can be equally artificial and unrealistic [<xref ref-type="bibr" rid="pcbi.1004134.ref004">4</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref018">18</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref021">21</xref>]. Neutral theory has many virtues [<xref ref-type="bibr" rid="pcbi.1004134.ref022">22</xref>–<xref ref-type="bibr" rid="pcbi.1004134.ref024">24</xref>] and in many ways it is more complete in scope than competing niche theories [<xref ref-type="bibr" rid="pcbi.1004134.ref025">25</xref>]. It describes community dynamics at the individual level, treating births, deaths, and dispersal as stochastic processes. It is susceptible to rigorous statistical tests, because unlike many other demographic models the likelihood of obtaining a particular community or sample can be computed exactly [<xref ref-type="bibr" rid="pcbi.1004134.ref026">26</xref>–<xref ref-type="bibr" rid="pcbi.1004134.ref030">30</xref>]. Even the controversial neutral assumption that interactions between individuals do not depend on species identity is inspired by biological reality; Hubbell observed that, in tropical forests, all species compete for light—and, therefore, space [<xref ref-type="bibr" rid="pcbi.1004134.ref031">31</xref>]. This means that neutral theory should be a good starting approximation for communities of sessile species that compete for a common resource, such as space (e.g. tropical trees or coral reefs). More realistic models will include non-neutral processes, such as interactions that depend on species identity [<xref ref-type="bibr" rid="pcbi.1004134.ref032">32</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref033">33</xref>], but neutral theory can act as a null model for assessing the weight of evidence for such processes.</p>
+<p>Although the SAD may be rather insensitive to the introduction of non-neutrality, this does not mean that it is identical for any kind of non-neutral effects [<xref ref-type="bibr" rid="pcbi.1004134.ref034">34</xref>]. While there may be patterns or scales for which some processes are undetectable, e.g. due to central limit theorem-like effect [<xref ref-type="bibr" rid="pcbi.1004134.ref019">19</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref035">35</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref036">36</xref>], strong interactions between individuals can structure communities and it is in some cases possible to detect their existence from inspection of the SADs [<xref ref-type="bibr" rid="pcbi.1004134.ref003">3</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref033">33</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref034">34</xref>]. If a data set is found to be consistent with neutral theory, we should therefore be able to infer that some particular non-neutral processes are not present in that community, or at least are not strong enough to produce detectable deviations from neutrality in a data set of this size.</p>
+<p>In this paper, we present a power calculation for neutral theory. Our purpose is to estimate an upper bound for the strength of non-neutral processes in tropical forest data sets [<xref ref-type="bibr" rid="pcbi.1004134.ref037">37</xref>–<xref ref-type="bibr" rid="pcbi.1004134.ref039">39</xref>] that have been found to be consistent with neutral theory [<xref ref-type="bibr" rid="pcbi.1004134.ref013">13</xref>]. To do this, we fit the standard neutral model (SNM) to data sets generated by a non-neutral model, and compute the probability of rejecting neutral theory. We test the neutral null hypothesis using a maximum likelihood approach (using an exact expression [<xref ref-type="bibr" rid="pcbi.1004134.ref026">26</xref>] for the likelihood of a sample from the SNM), where <italic>p</italic>-values are evaluated by a parametric bootstrap procedure.</p>
+<p>The power of a statistical test is defined as the probability that the null hypothesis is rejected when it is indeed false. The power therefore depends on which alternative hypothesis is true. In this paper, we focus on two classes of non-neutral processes: interspecific competition, and intrinsic (density independent) fitness differences between species. Interspecific competition is one of the classic mechanisms that promote coexistence [<xref ref-type="bibr" rid="pcbi.1004134.ref033">33</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref040">40</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref041">41</xref>], whereas differences in fitness represent the fact that the mean environmental conditions in a particular area of habitat will tend to favour one species over another. These represent opposite ends of a spectrum of possible non-neutral models, because symmetric interspecific competition tends to lead to equal abundances among species, whereas intrinsic fitness differences tend to lead to highly uneven abundances. While these are only two examples out of an infinite set of non-neutral models, our method provides a blueprint for computing the detectability of any type of non-neutral process.</p>
+<p>Full details of our models are given in the Methods section. Our models are similar in structure to Hubbell’s standard neutral model (SNM), in that we consider stochastic population dynamics in a local community where strong density dependence regulates the total community size to <italic>J</italic> individuals, coupled by immigration to a much larger metacommunity. We consider two models of interspecific competition: one, which we shall denote HL, is a multi-species stochastic Lotka-Volterra model similar to that studied by Haegemann and Loreau [<xref ref-type="bibr" rid="pcbi.1004134.ref033">33</xref>]; the other, denoted by PC, has stochastic Ricker-like dynamics as studied by Pigolotti and Cencini [<xref ref-type="bibr" rid="pcbi.1004134.ref042">42</xref>]. Our model of intrinsic differences in fitness, denoted by IF, assumes that the fecundity of each species is a randomly generated variable. Each of our models has a single parameter that determines how strong the non-neutral processes are. In model HL, parameter <italic>γ</italic> represents the relative difference in strength between interspecific and intraspecific interactions, so that when <italic>γ</italic> = 0 the dynamics are neutral whereas when <italic>γ</italic> &gt; 0 coexistence is promoted. In model PC, parameter <italic>c</italic> determines the difference between inter- and intra-specific density dependence, so <italic>c</italic> = 0 corresponds to neutral interactions and non-neutrality becomes stronger as <italic>c</italic> increases. In model IF, the fitness of each species is generated from a Gamma distribution with shape factor 1/<italic>k</italic>, so that when <italic>k</italic> = 0 all fitnesses of the species are the same and the local dynamics are neutral.</p>
+<p>As in the SNM, local diversity is maintained by a fraction <italic>m</italic> of all recruits being immigrants from a metacommunity with fixed relative species abundances. The proportion of immigrants of different species follow their relative abundance in the metacommunity. We consider two cases: in case LOGS the metacommunity is described by a logseries with fundamental diversity constant <italic>θ</italic>, and in case EVEN the metacommunity has <italic>S</italic><sub><italic>T</italic></sub> species which all have equal abundance. A logseries distribution can arise from many processes, including but not restricted to neutral dynamics [<xref ref-type="bibr" rid="pcbi.1004134.ref043">43</xref>]. We considered the even metacommunity because it represents a metacommunity limit of our local community dynamics, and as a result represents a contrasting, extremely non-neutral, limit to the logseries. When coupled to the LOGS metacommunity, each of our models should be equivalent to the SNM when the local dynamics are neutral (when <italic>γ, c</italic>, or <italic>k</italic> equals zero). As the dynamics are made more non-neutral, the deviations from the SNM should become stronger, and we expect the power of the test of the neutral null model to increase. However, when coupled to the EVEN metacommunity, the models are not equivalent to the SNM even when the local dynamics are neutral. In this case the power of the test could be high even if the local dynamics were neutral, though if <italic>J</italic> is very small the statistical power could still be low.</p>
+<p>Our study consists of two parts. First, we explore how the parameters of our models affect the probability of detecting non-neutral processes. For a real community we do not know <italic>a priori</italic> the appropriate parameters to use, so we need to choose the parameters so that the alternative model gives comparable patterns to the empirical data. In the second part of our study, we estimate the power of tests of neutrality for empirical data from three New and Old World tropical forests, including Barro Colorado Island (BCI) in Panama. Our power calculation provides an estimate of the smallest sample size that is needed to detect non-neutrality of known intensity, and of the range strengths of non-neutrality needed to reject neutrality for a given species abundance data set.</p>
+</sec>
+<sec id="sec002" sec-type="results">
+<title>Results</title>
+<sec id="sec003">
+<title>Power calculation for fixed non-neutral model parameters</title>
+<p>The strength of non-neutral processes affects the sample size that is required in order to have a good chance of rejecting the neutral hypothesis (see <xref ref-type="fig" rid="pcbi.1004134.g001">Fig. 1</xref>). When interspecific interactions are non-neutral (models HL and PC, top and middle row of <xref ref-type="fig" rid="pcbi.1004134.g001">Fig. 1</xref>), we see a simple pattern: as the strength of non-neutral processes is increased (<italic>γ</italic> or <italic>c</italic> increases from zero), the power of the test increases. In addition, for these models the power of the test increases as the local community size <italic>J</italic> is increased. This shows that any strength of non-neutrality, however weak, can in principle be detected provided the data set is large enough. However, the system sizes needed to give a significant power may be too large to be empirically accessible when local dynamics are nearly neutral (<italic>γ</italic> or <italic>c</italic> close to zero). For the LOGS metacommunity, and when the local dynamics are strictly neutral (<italic>γ</italic> = 0 for model HL or <italic>c</italic> = 0 for model PC), the models are equivalent to the SNM, and the power is equal to the threshold <italic>p</italic>-value for statistical significance (0.05 in our study). However, for the EVEN metacommunity the power can be higher than this threshold even when the local dynamics are neutral, because the immigration process makes the model no longer equivalent to the SNM (though this is not visible for the relatively small values of <italic>m</italic> used with models HL and PC in <xref ref-type="fig" rid="pcbi.1004134.g001">Fig. 1</xref>)</p>
+<fig id="pcbi.1004134.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004134.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Probability of rejecting the neutral null hypothesis as a function of the strength of non-neutral processes.</title>
+<p>Top row: HL model; middle row: PC model; bottom row: IF model. The local dynamics are strictly neutral in the limits to <italic>γ</italic> = 0, <italic>c</italic> = 0, or <italic>k</italic> = 0 respectively. The panels on the left assume a logseries metacommunity with biodiversity parameter <italic>θ</italic>; panels on the right assume a community with <italic>S</italic><sub><italic>T</italic></sub> species with equal abundances. Different colours/symbols correspond to different local comunity sizes, as follows: Black circles <italic>J</italic> = 200; red multiplication signs <italic>J</italic> = 2000; cyan plus signs <italic>J</italic> = 1000; magenta diamonds <italic>J</italic> = 5000; blue triangles <italic>J</italic> = 20000. The other paramerers are: HL/LOGS: <italic>θ</italic> = 50, <italic>m</italic> = 10<sup>−4</sup>; HL/EVEN: <italic>S</italic><sub><italic>T</italic></sub> = 2000, <italic>m</italic> = 10<sup>−4</sup>; PC/LOGS: <italic>θ</italic> = 50, <italic>m</italic> = 10<sup>−4</sup>; PC/EVEN: <italic>S</italic><sub><italic>T</italic></sub> = 200; IF/LOGS: <italic>θ</italic> = 100, <italic>m</italic> = 0.1; IF/EVEN: <italic>S</italic><sub><italic>T</italic></sub> = 100, <italic>m</italic> = 0.1.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004134.g001"/>
+</fig>
+<p>However, the patterns are rather more complicated for model IF (bottom row of <xref ref-type="fig" rid="pcbi.1004134.g001">Fig. 1</xref>). The power is again low when the local dynamics are neutral (<italic>k</italic> → 0) and the metacommunity follows a logseries (bottom left panel). However, the power does not increase monotonically as the non-neutrality parameter <italic>k</italic> is increased. This is because strong selection rapidly leads to dominance by a single species [<xref ref-type="bibr" rid="pcbi.1004134.ref044">44</xref>], especially in small communities, which is a pattern that can also arise from the SNM if the immigration parameter <italic>m</italic> → 0. Moreover, the power no longer increases monotonically when the local community size <italic>J</italic> increases; for example the power for <italic>J</italic> = 2000 in <xref ref-type="fig" rid="pcbi.1004134.g001">Fig. 1</xref>, bottom left, is higher than for <italic>J</italic> = 200, 5000, or 20000. This appears counterintuitive because statistical power should increase monotonically with sample size. However, <italic>J</italic> represents more than just the amount of data available: it is a parameter which interacts non-linearly with the model dynamics. In the IF model, for instance, it determines whether the dynamics are in the strong or weak selection limit, and it also plays a nonlinear role in the SNM.</p>
+<p>To illustrate this effect, we can consider the limit <italic>k</italic> → ∞ of model IF/EVEN. In this special case, there is a single dominant species, relative to which all other species have zero fitness. All local recruits will therefore be of the dominant species, though other species will also be present due to immigration. This case is particularly simple because the species identity of each individual in the local community is the dominant species with probability 1−<italic>m</italic>(1–1/<italic>S</italic><sub><italic>T</italic></sub>), and each of the other species with probability <italic>m</italic>/<italic>S</italic><sub><italic>T</italic></sub>. We find that the power of the test of neutrality is low at small <italic>J</italic>, increases to a maximum at an intermediate value of <italic>J</italic>, and then decreases as <italic>J</italic> increases again (<xref ref-type="fig" rid="pcbi.1004134.g002">Fig. 2</xref>). Because, for the non-neutral model in this limit, <italic>J</italic> is nothing more than a sample size—a community of size 2<italic>J</italic> can be constructed by adding two communities of size <italic>J</italic>—this non-monotonic relationship between power and <italic>J</italic> must be due to the nonlinear role played by <italic>J</italic> in the community dynamics in the neutral null model.</p>
+<fig id="pcbi.1004134.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004134.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Probability of rejecting the neutral null hypothesis as a function of local community size <italic>J</italic> for model IF/EVEN in the limit <italic>k</italic> → ∞.</title>
+<p>Here, <italic>m</italic> = 0.1 and <italic>S</italic><sub><italic>T</italic></sub> = 100. Error bars are 95% Jeffreys confidence intervals.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004134.g002"/>
+</fig>
+<p>The two other model parameters (immigration rate and diversity of the metacommunity) also strongly affect the chance of rejecting the neutral hypothesis. The parameter <italic>m</italic> describes the probability that a newly born individual in the local community is an immigrant from the metacommunity, so the local community resembles the metacommunity more closely as <italic>m</italic> is increased; when <italic>m</italic> = 1, the local community is effectively a random sample from the metacommunity and local dynamics are irrelevant. Increasing <italic>θ</italic> in model LOGS, and increasing <italic>S</italic><sub><italic>T</italic></sub> in model EVEN, lead to more diverse metacommunities, and as a result tend to increase diversity in the local community.</p>
+<p>For models HL and PC, either increasing <italic>m</italic> (top and middle rows <xref ref-type="fig" rid="pcbi.1004134.g003">Fig. 3</xref>), or increasing the diversity of the metacommunity (either increasing <italic>θ</italic> or <italic>S</italic><sub><italic>T</italic></sub> as appropriate, top and middle rows <xref ref-type="fig" rid="pcbi.1004134.g004">Fig. 4</xref>), reduces the power of the test. It is clear why increasing <italic>m</italic> should reduce the power for models HL/LOGS and PC/LOGS, because the local community is then more like a logseries, and hence more like the SNM. The power changes very little between <italic>m</italic> = 10<sup>−4</sup> and <italic>m</italic> = 10<sup>−3</sup>, reflecting the much greater importance of local dynamics on the patterns when <italic>m</italic> is small. It is less clear why increasing <italic>θ</italic> should reduce the power of the test, though it is worth noting that both increasing <italic>θ</italic> and increasing <italic>m</italic> have the effect of increasing the local richness. Increasing <italic>m</italic> or <italic>S</italic><sub><italic>T</italic></sub> in models HL/EVEN and PC/EVEN also increases the local richness, and while it is not obvious why this should make the model resemble the SNM, we find that it also reduces the power of the test.</p>
+<fig id="pcbi.1004134.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004134.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Power of rejecting the neutral null model as a function of the strength of non-neutrality, for different rates of immigration from the metacommunity.</title>
+<p>Back circles: <italic>m</italic> = 10<sup>−4</sup>, red triangles: <italic>m</italic> = 10<sup>−3</sup>; green plus signs <italic>m</italic> = 0.01; blue multiplication signs <italic>m</italic> = 0.03; cyan diamonds: <italic>m</italic> = 0.1. For HL/LOGS and PC/LOGS <italic>θ</italic> = 50; for IF/LOGS <italic>θ</italic> = 1000; for HL/EVEN, PC/EVEN and IF/EVEN <italic>S</italic><sub><italic>T</italic></sub> = 200. In all cases <italic>J</italic> = 2000.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004134.g003"/>
+</fig>
+<fig id="pcbi.1004134.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004134.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Probabilty of rejecting the neutral null model as a function of the strength of non-neutrality, for different levels of diversity in the metacommunity.</title>
+<p>The parameters are: for HL/LOGS: <italic>m</italic> = 10<sup>−3</sup> and <italic>θ</italic> = 25 (blue multiplication signs), <italic>θ</italic> = 50 (red triangles), <italic>θ</italic> = 200 (green plus signs); for PC/LOGS, <italic>m</italic> = 10<sup>−3</sup> and <italic>θ</italic> = 10 (black circles), <italic>θ</italic> = 50 (red triangles), <italic>θ</italic> = 200 (green plus signs); for HL/EVEN and PC/EVEN, <italic>m</italic> = 10<sup>−3</sup> and <italic>S</italic><sub><italic>T</italic></sub> = 20 (black circles), <italic>S</italic><sub><italic>T</italic></sub> = 50 (red triangles), <italic>S</italic><sub><italic>T</italic></sub> = 500 (green plus signs); for IF/LOGS, <italic>m</italic> = 0.1 and <italic>θ</italic> = 10 (black circles), <italic>θ</italic> = 100 (red triangles), <italic>θ</italic> = 1000 (green plus signs); for IF/EVEN <italic>m</italic> = 0.1 and <italic>S</italic><sub><italic>T</italic></sub> = 50 (black circles), <italic>S</italic><sub><italic>T</italic></sub> = 100 (red triangles), <italic>S</italic><sub><italic>T</italic></sub> = 200 (green plus signs). In all cases <italic>J</italic> = 2000.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004134.g004"/>
+</fig>
+<p>For model IF, the effect of both <italic>m</italic> and the metacommunity diversity on the statistical power can be non-monotonic (bottom row, Figs. <xref ref-type="fig" rid="pcbi.1004134.g003">3</xref> and <xref ref-type="fig" rid="pcbi.1004134.g004">4</xref>). For model IF/LOGS when <italic>k</italic> ≈ 10<sup>−3</sup>, for instance, for <italic>θ</italic> = 1000 the power for <italic>m</italic> = 0.03 is higher than for <italic>m</italic> = 0.1 or 0.01 (bottom left, <xref ref-type="fig" rid="pcbi.1004134.g003">Fig. 3</xref>); for <italic>m</italic> = 10<sup>−3</sup> the power for <italic>θ</italic> = 100 is higher than for <italic>θ</italic> = 10 or 1000. On the whole, however, both <italic>m</italic> and the community diversity tend to increase the power of the test, which is the opposite effect from what is seen in models HL and PC. This is because the local dynamics tend to lead to monodominant states, which as explained before are indistinguishable from the SNM even if their origin is highly non-neutral. Processes which increase the local diversity allow the non-neutral features of this model to be better detectable.</p>
+<p>It is interesting to note that the shape of the relationship between power and <italic>c</italic> for model PC in <xref ref-type="fig" rid="pcbi.1004134.g001">Fig. 1</xref>, middle row seems to be independent of <italic>J</italic>. This would be a very useful relationship if it were found to hold in general, because power calculations for large <italic>J</italic> are very expensive computationally and this would enable us to estimate power by varying <italic>c</italic> as a proxy for <italic>J</italic>. We find, however, that this behaviour is not preserved for other parameter values. We did not find any simple way to summarise the dependence on model parameters evident in Figs. <xref ref-type="fig" rid="pcbi.1004134.g001">1</xref>, <xref ref-type="fig" rid="pcbi.1004134.g003">3</xref>, and <xref ref-type="fig" rid="pcbi.1004134.g004">4</xref> that would enable us to estimate the power outside of the parameter range we tested explicitly.</p>
+</sec>
+<sec id="sec004">
+<title>Power calculation for large forest surveys</title>
+<p>Our aim is to explore the detectability of non-neutrality in data sets of different sizes. SNM has been found to be statistically consistent with several large tropical forest data sets [<xref ref-type="bibr" rid="pcbi.1004134.ref012">12</xref>–<xref ref-type="bibr" rid="pcbi.1004134.ref017">17</xref>], but this does not mean that SNM is an exact description so a power calculation gives us, in principle, an upper bound for the degree of non-neutral processes in these systems. We do not know <italic>a priori</italic> the appropriate non-neutral parameter values for these forests, but we can choose model parameters so that the model data match a number of features of the empirical data. Specifically, we chose model parameters so that the community size, mean species richness, and mean Shannon diversity of sample data sets from the non-neutral model are the same as in the empirical data set. More details are given in the Methods section.</p>
+<p>We estimated the power of neutrality for empirical data similar to three data sets collated by the Centre for Tropical Forest Science (CTFS, data available online at <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.ctfs.si.edu">http://www.ctfs.si.edu</ext-link>). The determination of appropriate model parameters, and the power calculation itself, is very computationally expensive, so we performed this for three candidate strengths of non-neutrality, and for models PC and IF only. The results are summarised in tables <xref ref-type="table" rid="pcbi.1004134.t001">1</xref>–<xref ref-type="table" rid="pcbi.1004134.t004">4</xref>.</p>
+<table-wrap id="pcbi.1004134.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004134.t001</object-id>
+<label>Table 1</label>
+<caption>
+<title>Fitted parameters for CTFS data sets and probability of rejecting the neutral null hypothesis, for model PC/LOGS.</title>
+</caption>
+<alternatives>
+<graphic id="pcbi.1004134.t001g" mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004134.t001"/>
+<table frame="box" rules="all" border="0">
+<colgroup span="1">
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Forest</th>
+<th align="left" rowspan="1" colspan="1"><italic>c</italic></th>
+<th align="left" rowspan="1" colspan="1">(<italic>θ, m</italic>)</th>
+<th align="left" rowspan="1" colspan="1">Power (Jeffreys 95% confidence interval)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="3" colspan="1">BCI</td>
+<td align="left" rowspan="1" colspan="1">0.1</td>
+<td align="left" rowspan="1" colspan="1">(40.04, 0.2398)</td>
+<td align="left" rowspan="1" colspan="1">0.00 (0.00–0.03)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">(38.44, 0.3256)</td>
+<td align="left" rowspan="1" colspan="1">0.02 (0.00–0.04)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">10</td>
+<td align="left" rowspan="1" colspan="1">(36.15, 0.600)</td>
+<td align="left" rowspan="1" colspan="1">0.00 (0.00–0.05)</td>
+</tr>
+<tr>
+<td align="left" rowspan="3" colspan="1">Pasoh</td>
+<td align="left" rowspan="1" colspan="1">0.1</td>
+<td align="left" rowspan="1" colspan="1">(183.2, 0.04686)</td>
+<td align="left" rowspan="1" colspan="1">0.00 (0.00–0.03)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">(168.1, 0.06710)</td>
+<td align="left" rowspan="1" colspan="1">0.01 (0.00–0.03)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">10</td>
+<td align="left" rowspan="1" colspan="1">(138.5, 0.1708)</td>
+<td align="left" rowspan="1" colspan="1">0.00 (0.00–0.03)</td>
+</tr>
+<tr>
+<td align="left" rowspan="3" colspan="1">Lambir</td>
+<td align="left" rowspan="1" colspan="1">0.1</td>
+<td align="left" rowspan="1" colspan="1">(219.4, 0.2641)</td>
+<td align="left" rowspan="1" colspan="1">0.01 (0.00–0.05)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">(217.3, 0.2515)</td>
+<td align="left" rowspan="1" colspan="1">0.01 (0.00–0.03)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">10</td>
+<td align="left" rowspan="1" colspan="1">(205.0, 0.4031)</td>
+<td align="left" rowspan="1" colspan="1">0.01 (0.00-0.05)</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<table-wrap id="pcbi.1004134.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004134.t002</object-id>
+<label>Table 2</label>
+<caption>
+<title>Fitted parameters for CTFS data sets and probability of rejecting the neutral null hypothesis, for model PC/EVEN.</title>
+</caption>
+<alternatives>
+<graphic id="pcbi.1004134.t002g" mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004134.t002"/>
+<table frame="box" rules="all" border="0">
+<colgroup span="1">
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Forest</th>
+<th align="left" rowspan="1" colspan="1"><italic>c</italic></th>
+<th align="left" rowspan="1" colspan="1">(<italic>S</italic><sub><italic>T</italic></sub>, <italic>m</italic>)</th>
+<th align="left" rowspan="1" colspan="1">Power (Jeffreys 95% confidence interval)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">BCI</td>
+<td align="char" char="." rowspan="1" colspan="1">0.01731</td>
+<td align="left" rowspan="1" colspan="1">(∞, 0.0008181)</td>
+<td align="left" rowspan="1" colspan="1">0.10 (0.05–0.17)</td>
+</tr>
+<tr>
+<td align="left" rowspan="2" colspan="1">Pasoh</td>
+<td align="char" char="." rowspan="1" colspan="1">0.1</td>
+<td align="left" rowspan="1" colspan="1">(1154, 0.00353)</td>
+<td align="left" rowspan="1" colspan="1">0.06 (0.03–0.10)</td>
+</tr>
+<tr>
+<td align="char" char="." rowspan="1" colspan="1">0.7523</td>
+<td align="left" rowspan="1" colspan="1">(∞, 0.001876)</td>
+<td align="left" rowspan="1" colspan="1">0.20 (0.13–0.29)</td>
+</tr>
+<tr>
+<td align="left" rowspan="2" colspan="1">Lambir</td>
+<td align="char" char="." rowspan="1" colspan="1">0.1</td>
+<td align="left" rowspan="1" colspan="1">(4506, 0.003329)</td>
+<td align="left" rowspan="1" colspan="1">0.02 (0.00–0.05)</td>
+</tr>
+<tr>
+<td align="char" char="." rowspan="1" colspan="1">0.2858</td>
+<td align="left" rowspan="1" colspan="1">(∞, 0.002771)</td>
+<td align="left" rowspan="1" colspan="1">0.01 (0.00–0.05)</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t002fn001"><p>The cases where <italic>S</italic><sub><italic>T</italic></sub> = ∞ correspond to the largest values of <italic>c</italic> for which the model could reproduce the three characteristics of the empirical data.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<table-wrap id="pcbi.1004134.t003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004134.t003</object-id>
+<label>Table 3</label>
+<caption>
+<title>Fitted parameters for CTFS data sets and probability of rejecting the neutral null hypothesis, for model IF/LOGS.</title>
+</caption>
+<alternatives>
+<graphic id="pcbi.1004134.t003g" mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004134.t003"/>
+<table frame="box" rules="all" border="0">
+<colgroup span="1">
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Forest</th>
+<th align="left" rowspan="1" colspan="1"><italic>k</italic></th>
+<th align="left" rowspan="1" colspan="1">(<italic>θ, m</italic>)</th>
+<th align="left" rowspan="1" colspan="1">Power (Jeffreys 95% confidence interval)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="2" colspan="1">BCI</td>
+<td align="left" rowspan="1" colspan="1">10<sup>−4</sup></td>
+<td align="left" rowspan="1" colspan="1">(40.70, 0.1888)</td>
+<td align="left" rowspan="1" colspan="1">0.00 (0.00–0.03)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">10<sup>−4</sup></td>
+<td align="left" rowspan="1" colspan="1">(57.50, 0.02441)</td>
+<td align="left" rowspan="1" colspan="1">0.02 (0.00–0.06)</td>
+</tr>
+<tr>
+<td align="left" rowspan="2" colspan="1">Lambir</td>
+<td align="left" rowspan="1" colspan="1">10<sup>−4</sup></td>
+<td align="left" rowspan="1" colspan="1">(221.0, 0.2394)</td>
+<td align="left" rowspan="1" colspan="1">0.01 (0.00–0.05)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">10<sup>−4</sup></td>
+<td align="left" rowspan="1" colspan="1">(361.5, 0.02922)</td>
+<td align="left" rowspan="1" colspan="1">0.01 (0.00–0.05)</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t003fn001"><p>For these forests with <italic>k</italic> = 10<sup>−4</sup>, there were two distinct parameter sets that match the characteristics of the empirical data. No solutions were found for <italic>k</italic> ≥ 0.01. Pasoh is not included because no parameter sets consistent with the empirical data were found with <italic>k</italic> ≥ 10<sup>−4</sup>.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<table-wrap id="pcbi.1004134.t004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004134.t004</object-id>
+<label>Table 4</label>
+<caption>
+<title>Fitted parameters for CTFS data sets and probability of rejecting the neutral null hypothesis, for model IF/EVEN.</title>
+</caption>
+<alternatives>
+<graphic id="pcbi.1004134.t004g" mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004134.t004"/>
+<table frame="box" rules="all" border="0">
+<colgroup span="1">
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Forest</th>
+<th align="left" rowspan="1" colspan="1"><italic>k</italic></th>
+<th align="left" rowspan="1" colspan="1">(<italic>S</italic><sub><italic>T</italic></sub>, <italic>m</italic>)</th>
+<th align="left" rowspan="1" colspan="1">Power (Jeffreys 95% confidence interval)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="3" colspan="1">BCI</td>
+<td align="left" rowspan="1" colspan="1">10<sup>−4</sup></td>
+<td align="left" rowspan="1" colspan="1">(232, 0.0166)</td>
+<td align="left" rowspan="1" colspan="1">1 (0.975–1)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">0.01</td>
+<td align="left" rowspan="1" colspan="1">(232, 0.134)</td>
+<td align="left" rowspan="1" colspan="1">1 (0.975–1)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">(232, 0.517)</td>
+<td align="left" rowspan="1" colspan="1">1 (0.975–1)</td>
+</tr>
+<tr>
+<td align="left" rowspan="3" colspan="1">Pasoh</td>
+<td align="left" rowspan="1" colspan="1">10<sup>−4</sup></td>
+<td align="left" rowspan="1" colspan="1">(675, 0.0232)</td>
+<td align="left" rowspan="1" colspan="1">1 (0.976–1)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">0.01</td>
+<td align="left" rowspan="1" colspan="1">(672, 0.181)</td>
+<td align="left" rowspan="1" colspan="1">1 (0.976–1)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">(672, 0.648)</td>
+<td align="left" rowspan="1" colspan="1">1 (0.976–1)</td>
+</tr>
+<tr>
+<td align="left" rowspan="3" colspan="1">Lambir</td>
+<td align="left" rowspan="1" colspan="1">10<sup>−4</sup></td>
+<td align="left" rowspan="1" colspan="1">(1018, 0.0236)</td>
+<td align="left" rowspan="1" colspan="1">1 (0.981–1)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">0.01</td>
+<td align="left" rowspan="1" colspan="1">(1006, 0.186)</td>
+<td align="left" rowspan="1" colspan="1">1 (0.976–1)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">(1006, 0.650)</td>
+<td align="left" rowspan="1" colspan="1">1 (0.975–1)</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>For model PC/LOGS, we find that the power of the test of neutrality is extremely low when the model parameters are chosen to match three statistics of the empirical data, whatever the strength of the non-neutrality (<xref ref-type="table" rid="pcbi.1004134.t001">Table 1</xref>). This is because the non-neutral process tends to increase the evenness in the community, so when <italic>c</italic> is increased the fitted immigration rate needs to be increased in order to match the Shannon index in the empirical data. In other words, the parameters of this model need to be close to neutral (either <italic>c</italic> small, or <italic>m</italic> close to 1) in order to agree with the empirical data, so the power of the test is low.</p>
+<p>By contrast, for model IF/EVEN the power of the test is very high for model parameters that reproduce the characteristics of the empirical data (<xref ref-type="table" rid="pcbi.1004134.t004">Table 4</xref>), even for the smallest strength of non-neutral processes we considered. This is because both the metacommunity and the local dynamics are non-neutral, but the local dynamics tends to lead to very uneven (i.e. monodominant) communities while the metacommunity tends to increase the evenness of the community. These processes need to be in balance in order for the model to match the diversity and richness of real data, and as a result the fitted model is far from neutral.</p>
+<p>For model PC/EVEN, both the local dynamics and the metacommunity tend to lead to even abundance distributions, and as a result it was only possible to find parameters so the model matches the empirical data when the strength of the non-neutrality was sufficiently weak (<xref ref-type="table" rid="pcbi.1004134.t002">Table 2</xref>). The largest value of <italic>c</italic> for which the model is consistent with the empirical forest data was found to be when <italic>S</italic><sub><italic>T</italic></sub> → ∞, in which limit the immigration process behaves effectively as a speciation process. It was found that when the model was fitted to the Pasoh data with <italic>c</italic> = 0.7523, the probability of rejecting the neutral null hypothesis was 0.20. The power of the test was much lower when <italic>c</italic> = 0.1, and was always low when the model was fitted to the Lambir data. The model could not reproduce the richness and Shannon diversity of the BCI data set unless <italic>c</italic> &lt; 0.1.</p>
+<p>For related reasons, the probability of rejecting the neutral null model was low for model IF/LOGS when fitted to the empirical data. Here, both the non-neutral local dynamics and the metacommunity tended to lead to highly uneven abundance distributions, and as a result the Shannon index produced by the model was very low unless <italic>k</italic> was small. It was not possible to fit the model to Pasoh when <italic>k</italic> ≥ 10<sup>−4</sup>, or to BCI or Lambir when <italic>k</italic> ≥ 0.01. While there were two discrete parameter sets each that matched the richness and evenness of Pasoh and Lambir (one where <italic>θ</italic> was low and <italic>m</italic> high, and one where <italic>θ</italic> was higher and <italic>m</italic> lower), the power of the test with these parameters was always low.</p>
+</sec>
+</sec>
+<sec id="sec005" sec-type="conclusions">
+<title>Discussion</title>
+<p>Our power calculation shows that, in principle, non-neutrality would be detectable in large enough SAD data sets or when non-neutral processes are strong enough (see <xref ref-type="fig" rid="pcbi.1004134.g001">Fig. 1</xref>). This contradicts the suggestion that the SAD for large samples will approach the same canonical form, and that larger sampling efforts would consequently be futile [<xref ref-type="bibr" rid="pcbi.1004134.ref035">35</xref>]. Indeed, the SNM has been rejected using SAD data from very large phytoplankton communities [<xref ref-type="bibr" rid="pcbi.1004134.ref045">45</xref>], and we found that the SNM could also be rejected for the tropical tree species abundances of Yasuni National Park (see <xref ref-type="sec" rid="sec006">Methods</xref>). Our results also show that independent niches can be distinguishable from neutrality, contrary to suggestions by Chisholm and Pacala [<xref ref-type="bibr" rid="pcbi.1004134.ref036">36</xref>], because the test is most powerful when the species in our model HL undergo independent stochastic logistic dynamics (i.e. when <italic>γ</italic> approaches 1, see <xref ref-type="fig" rid="pcbi.1004134.g001">Fig. 1</xref>). Our HL model with <italic>γ</italic> = 1 differs from the independent-niche models of Chisholm and Pacala [<xref ref-type="bibr" rid="pcbi.1004134.ref036">36</xref>] and Haegeman and Etienne [<xref ref-type="bibr" rid="pcbi.1004134.ref019">19</xref>] by having strong intra-specific density dependence, so the marginal distributions are very different from the SNM.</p>
+<p>However, we conclude that tropical forest abundance data sets, on the scale collected by CFTS, might not be large enough to detect even strongly non-neutral interspecific interactions. As shown in Tables <xref ref-type="table" rid="pcbi.1004134.t001">1</xref> and <xref ref-type="table" rid="pcbi.1004134.t002">2</xref>, statistical power remains very low as <italic>c</italic> (the parameter measuring the intensity of inter- versus intra-specific competition) is varied. This is because the model parameters required to give the same richness and evenness in the empirical data are themselves close to neutral, either because <italic>c</italic> is small or because the metacommunity follows a logseries distribution and <italic>m</italic> is close to 1 (in which case the local community strongly resembles a neutral-like metacommunity). This result is in agreement with the good fits of some species-independent neutral models to a large number of SADs for very diverse communities [<xref ref-type="bibr" rid="pcbi.1004134.ref046">46</xref>]. It is interesting to note that Volkov et al. [<xref ref-type="bibr" rid="pcbi.1004134.ref047">47</xref>] estimated that interspecific species interactions are many times smaller than intraspecific interactions in tropical forests, but we cannot apply their results to our models because they did not include immigration from a metacommnunity.</p>
+<p>On the other hand, we did find that a combination of non-neutral processes producing opposing effects on the local community led to high statistical power for parameters consistent with empirical CTFS data. In model IF/EVEN, intrinsic local fitness differences tend to decrease richness and evenness, whereas the even local community increases richness and evenness. This means that both processes can be strong while still producing levels of richness and abundance consistent with the empirical data. Du et al. [<xref ref-type="bibr" rid="pcbi.1004134.ref010">10</xref>] noted that non-neutral processes which have opposing effects on relative abundance distributions can lead to abundance distributions that resemble neutral theory, but our investigation shows that they can still be distinguished from SNM in some cases. We can therefore conclude that such a combination of strongly non-neutral processes is <italic>not</italic> present in data sets for which the SNM is not rejected, such as the three CTFS forests we studied in this paper.</p>
+<p>The power of a statistical test generally depends on three factors: first, the sample size; second, statistical significance as measured by the threshold <italic>p</italic>-value used to assess significance; and third, the effect size, which quantifies departures from the null hypothesis. In our analysis, effect size is encoded in the parameter values of the non-neutral model under consideration (respectively, <italic>γ, c</italic>, and <italic>k</italic> for models HL, PC, and IF). When density dependence is non-neutral (models HL and PC), power increases as interactions become more non-neutral (see <xref ref-type="fig" rid="pcbi.1004134.g001">Fig. 1</xref>). However, for non-neutral intrinsic fitness (model IF) the power of the test depends non-monotonically on <italic>k</italic> (<xref ref-type="fig" rid="pcbi.1004134.g001">Fig. 1</xref>, bottom row). These patterns can be understood from the effect that these parameters have on diversity patterns—strong non-neutrality (<italic>k</italic> large) in model IF leads to monodominance, which is indistinguishable from the neutral model with strong dispersal limitation (<italic>m</italic> very small).</p>
+<p>Our results highlight the fact that the parameter <italic>J</italic> plays a more complicated role for these models than the sample size in standard power calculations, because the power does not always increase monotonically with <italic>J</italic> (<xref ref-type="fig" rid="pcbi.1004134.g002">Fig. 2</xref>). In most standard statistical tests, a “sample” consists of a number of statistically independent measurements. In an ecological community (or a model thereof), the individuals are not statistically independent because of their interactions (whether within or between species). This is true even in the SNM: an equilibrium community of size <italic>J</italic> can be generated as a hypergeometric subsample of a community with larger <italic>J</italic> [<xref ref-type="bibr" rid="pcbi.1004134.ref048">48</xref>], but the individuals are not independent because this represents sampling without replacement. This means that the community size <italic>J</italic> plays a nonlinear role and is not a straight analogue of the sample size in standard statistical tests, so statistical power does not necessarily increase monotonically with <italic>J</italic>.</p>
+<p>The dependence on other parameters can also be non-monotonic; for example, for metacommunity model LOGS the local community will resemble a log series (and therefore be indistinguishable from the SNM) in the limit <italic>m</italic> → 1, but the power does not decrease monotonically with <italic>m</italic> for model IF/LOGS (see <xref ref-type="fig" rid="pcbi.1004134.g003">Fig. 3</xref>). Increased metacommunity diversity decreases statistical power for models HL and PC (<xref ref-type="fig" rid="pcbi.1004134.g004">Fig. 4</xref>), which echoes the observation that higher local diversity leads to SADs that look more like those created by the SNM even in the presence of niche structuring [<xref ref-type="bibr" rid="pcbi.1004134.ref019">19</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref036">36</xref>]. This suggests that it might be easier to quantify non-neutral interactions in less diverse forests [<xref ref-type="bibr" rid="pcbi.1004134.ref019">19</xref>]. However, this is not true for all types of non-neutral processes: for model IF the power increases when the metacommunity diversity is increased.</p>
+<p>Unfortunately, we were unable to find any general rules to allow us to extrapolate the power calculation outside of the parameter range we simulated. The power calculations in this paper are very computationally expensive, and it would be unfeasible for us to repeat them for <italic>J</italic> much larger than ∼ 30000 individuals. Moreover, to do this we would need to know how parameters <italic>γ</italic> (for model HL) and <italic>c</italic> (for model PC) are affected by <italic>J</italic>. Our notation tacitly assumes that each species is sensitive to mean population densities over the whole community, but in real systems, where individuals of a species are clumped together, an individual will only interact with nearby individuals so the values of <italic>γ</italic> and <italic>c</italic> might depend on <italic>J</italic>. We are therefore unable to estimate the factor by which CTFS data sets would have to be enlarged for us to distinguish model PC from the SNM.</p>
+<p>In this paper, we have analysed a range of non-neutral scenarios: non-neutral density dependence affecting mortality or recruitment; non-neutral differences in intrinsic fitness; neutral-like or extremely non-neutral metacommunity. These processes have contrasting effects on the SAD, so arguably represent the extremes of a spectrum of possibilities. Nevertheless, there are many types of community processes which are not encompassed by our models. For example, trophic or mutualistic interactions are not present in our models and should lead to very different patterns of abundance, though these are more likely to be relevant in other systems than the tropical forests on which we focus. Similarly, dynamics that lead to multimodal SADs should be relatively easy to distinguish from neutrality [<xref ref-type="bibr" rid="pcbi.1004134.ref034">34</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref049">49</xref>]. We have made a number of simplifying assumptions to keep the number of parameters manageable, but our framework could still be used to perform a power calculation for any type of non-neutrality that can be incorporated in a simulation model. It would also be preferable to perform power calculations for spatially explicit models, which represent a more realistic dispersal process and can readily be simulated [<xref ref-type="bibr" rid="pcbi.1004134.ref050">50</xref>]; however, for our test we would need a likelihood for the spatially explicit neutral model, which is not currently available.</p>
+<p>Our results have refined as well as quantified in a statistical sense the suggestion [<xref ref-type="bibr" rid="pcbi.1004134.ref003">3</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref036">36</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref051">51</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref052">52</xref>] (but see also ref. [<xref ref-type="bibr" rid="pcbi.1004134.ref053">53</xref>]) that SAD data do not have sufficient resolving power to assess the importance of non-neutral processes in structuring forest communities. Our study shows that even large-scale tropical forest data sets are not large enough, or are too diverse, to detect non-neutral species interactions using the SAD alone. However, we would not expect to see a good fit to the SNM if these forests contained multiple processes with opposing effects on richness and evenness. Patterns that include more information, such as multiple samples [<xref ref-type="bibr" rid="pcbi.1004134.ref027">27</xref>], spatiotemporal changes [<xref ref-type="bibr" rid="pcbi.1004134.ref054">54</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref055">55</xref>] or phylogenetic data [<xref ref-type="bibr" rid="pcbi.1004134.ref056">56</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref057">57</xref>], are likely to be much more revealing about the processes that generated them. Provided it is possible to compute the likelihood for obtaining such patterns in a neutral model, our approach can be adopted to calculate the sampling effort needed to detect and quantify non-neutral processes, and understand the forces that structure communities.</p>
+</sec>
+<sec id="sec006" sec-type="materials|methods">
+<title>Methods</title>
+<p>This section describes (i) our non-neutral alternative models, and methods for generating samples from them; (ii) our method for testing whether to reject the neutral null hypothesis for a particular data set; (iii) the method for combining (i) and (ii) to give a power calculation; (iv) the method for estimating model parameter values in order to estimate the statistical power of particular experiments.</p>
+<p>Our non-neutral models are similar in structure to the standard neutral model (SNM), i.e. Hubbell’s metacommunity-local community model [<xref ref-type="bibr" rid="pcbi.1004134.ref026">26</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref031">31</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref048">48</xref>], but adapted to include non-neutral processes. As with the SNM, strong local density dependence is assumed to keep the local community size fixed at <italic>J</italic> individuals. A fraction <italic>m</italic> of all recruits immigrate from a “metacommunity”, which is assumed to be large enough for the relative abundances (<italic>P</italic><sub><italic>i</italic></sub> for the <italic>i</italic>’th species) to be effectively static in time. This immigration prevents drift to local monodominance. The models differ in the relationship between the local abundances and the birth and death rates, in the relative abundances in the metacommunity, and in whether the dynamics are syncronous or sequential in time.</p>
+<sec id="sec007">
+<title>Local model HL</title>
+<p>Our local community model “HL” resembles one used by Haegeman and Loreau [<xref ref-type="bibr" rid="pcbi.1004134.ref033">33</xref>]. It can be thought of as a multispecies stochastic Lotka-Volterra competition model with immigration, where a single parameter controls the relative strength of inter-and intra-specific interactions. Our model differs from that of Haegeman and Loreau [<xref ref-type="bibr" rid="pcbi.1004134.ref033">33</xref>] in that each death event is immediately followed by a single birth event so that the local community size remains constant. We consider a local community consisting of <italic>J</italic> individuals, each of which has a species identity which is an integer between 1 and <italic>S</italic><sub><italic>T</italic></sub>. Mortality is affected by inter- and intra-specific density dependent mortality, so that the probability that the next individual that dies has species identiy <italic>i</italic> is proportional to
+<disp-formula id="pcbi.1004134.e001"><alternatives><graphic id="pcbi.1004134.e001g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004134.e001"/><mml:math id="M1" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mi>M</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mo>{</mml:mo> <mml:msub><mml:mi>n</mml:mi> <mml:mi>j</mml:mi></mml:msub> <mml:mo>}</mml:mo></mml:mrow> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mtd> <mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mfenced separators="" open="(" close=")"><mml:mfrac><mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mi>J</mml:mi></mml:mfrac> <mml:mo>+</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:mi>γ</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mfrac><mml:mrow><mml:msub><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>j</mml:mi> <mml:mo>≠</mml:mo> <mml:mi>i</mml:mi></mml:mrow></mml:msub> <mml:msub><mml:mi>n</mml:mi> <mml:mi>j</mml:mi></mml:msub></mml:mrow> <mml:mi>J</mml:mi></mml:mfrac></mml:mfenced> <mml:mfrac><mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mi>J</mml:mi></mml:mfrac></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd/><mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mfenced separators="" open="(" close=")"><mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:mi>γ</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:mi>γ</mml:mi> <mml:mfrac><mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mi>J</mml:mi></mml:mfrac></mml:mfenced> <mml:mfrac><mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mi>J</mml:mi></mml:mfrac></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(1)</label></disp-formula>
+where <italic>n</italic><sub><italic>i</italic></sub> is the number of individuals of species <italic>i</italic> in the community, so that <inline-formula id="pcbi.1004134.e002"><mml:math id="M2" display="inline" overflow="scroll"><mml:mrow><mml:mi>J</mml:mi> <mml:mo>=</mml:mo> <mml:msubsup><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>j</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:msub><mml:mi>S</mml:mi> <mml:mi>T</mml:mi></mml:msub></mml:msubsup> <mml:msub><mml:mi>n</mml:mi> <mml:mi>j</mml:mi></mml:msub></mml:mrow></mml:math></inline-formula>. In the neutral case, <italic>γ</italic> = 0, the mortality rate is the same for all individuals irrespective of species, but when <italic>γ</italic> &gt; 0 per capita mortality is greater for more abundant species.</p>
+<p>The dynamics proceed by choosing the individual that dies next, so that the probability that the dead individual has species identity <italic>i</italic> is proportional to <italic>M</italic><sub><italic>i</italic></sub>. A recruit is then chosen to be of species <italic>i</italic> with probability
+<disp-formula id="pcbi.1004134.e003"><alternatives><graphic id="pcbi.1004134.e003g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004134.e003"/><mml:math id="M3" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mi>F</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mrow><mml:mo>{</mml:mo> <mml:msub><mml:mi>n</mml:mi> <mml:mi>j</mml:mi></mml:msub> <mml:mo>}</mml:mo></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:mi>m</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mfrac><mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mi>J</mml:mi></mml:mfrac> <mml:mo>+</mml:mo> <mml:mi>m</mml:mi> <mml:msub><mml:mi>P</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(2)</label></disp-formula>
+where <italic>P</italic><sub><italic>i</italic></sub> is the relative frequency of species <italic>i</italic> in the metacommunity. One time step consists of <italic>J</italic> of these elemental update steps.</p>
+<p>If <italic>γ</italic> = 0, the mortality rate is independent of species identity, so species interactions are neutral; when 0 &lt; <italic>γ</italic> ≤ 1, niche differentiation tends to promote species coexistence [<xref ref-type="bibr" rid="pcbi.1004134.ref033">33</xref>]. The model is ill-defined when <italic>γ</italic> &gt; 1, since that would lead to <italic>M</italic><sub><italic>i</italic></sub> &lt; 0.</p>
+<p>At first sight, it might appear that a more general model could be obtained by using the functional forms in Haegeman and Loreau [<xref ref-type="bibr" rid="pcbi.1004134.ref033">33</xref>], which allow for density independent as well as density dependent mortality. The rates in Equation (13) of that paper correspond in our notation to
+<disp-formula id="pcbi.1004134.e004"><alternatives><graphic id="pcbi.1004134.e004g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004134.e004"/><mml:math id="M4" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:msub><mml:mi>M</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:mtd> <mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:msub><mml:mi>r</mml:mi> <mml:mo>-</mml:mo></mml:msub> <mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>+</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>r</mml:mi> <mml:mo>+</mml:mo></mml:msub> <mml:mo>-</mml:mo> <mml:msub><mml:mi>r</mml:mi> <mml:mo>-</mml:mo></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mfrac><mml:mrow><mml:mi>α</mml:mi> <mml:mi>J</mml:mi> <mml:mo>+</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:mi>α</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:mrow> <mml:msup><mml:mi>K</mml:mi> <mml:mo>′</mml:mo></mml:msup></mml:mfrac></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(3)</label></disp-formula>
+<disp-formula id="pcbi.1004134.e005"><alternatives><graphic id="pcbi.1004134.e005g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004134.e005"/><mml:math id="M5" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:msub><mml:mi>F</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:mtd> <mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:msub><mml:mi>r</mml:mi> <mml:mo>+</mml:mo></mml:msub> <mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>+</mml:mo> <mml:mi>μ</mml:mi> <mml:msub><mml:mi>S</mml:mi> <mml:mi>T</mml:mi></mml:msub> <mml:msub><mml:mi>P</mml:mi> <mml:mi>i</mml:mi></mml:msub><mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(4)</label></disp-formula>
+where both <italic>M</italic><sub><italic>i</italic></sub> and <italic>F</italic><sub><italic>i</italic></sub> are now rates rather than probabilities (no longer normalised so that they sum to unity) and we have introduced the factor <italic>S</italic><sub><italic>T</italic></sub> <italic>P</italic><sub><italic>i</italic></sub> to allow the immigration rate to differ between species. Here, <italic>r</italic><sub>+</sub> and <italic>r</italic><sub>−</sub> denote respectively the rates of density-independent birth and mortality, <italic>K</italic><sup>′</sup> plays the role of a carrying capacity, and <italic>α</italic> tunes how neutral the interactions are are (neutral when 1; non-neutral competition for 0 &lt; <italic>α</italic> &lt; 1; mutualistic for <italic>α</italic> &lt; 0). A little algebra shows that Equations <xref ref-type="disp-formula" rid="pcbi.1004134.e004">(3)</xref> and <xref ref-type="disp-formula" rid="pcbi.1004134.e005">(4)</xref> are equivalent to Equations <xref ref-type="disp-formula" rid="pcbi.1004134.e001">(1)</xref> and <xref ref-type="disp-formula" rid="pcbi.1004134.e003">(2)</xref> (up to overall prefactors that do not affect the sequence of processes in the simulation) with the choice of parameters
+<disp-formula id="pcbi.1004134.e006"><alternatives><graphic id="pcbi.1004134.e006g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004134.e006"/><mml:math id="M6" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mi>γ</mml:mi></mml:mtd> <mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mfrac><mml:mn>1</mml:mn> <mml:mrow><mml:mn>1</mml:mn> <mml:mo>+</mml:mo> <mml:mfrac><mml:mrow><mml:msub><mml:mi>r</mml:mi> <mml:mo>-</mml:mo></mml:msub> <mml:msup><mml:mi>K</mml:mi> <mml:mo>′</mml:mo></mml:msup> <mml:mo>+</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>r</mml:mi> <mml:mo>+</mml:mo></mml:msub> <mml:mo>-</mml:mo> <mml:msub><mml:mi>r</mml:mi> <mml:mo>-</mml:mo></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>J</mml:mi> <mml:mi>α</mml:mi></mml:mrow> <mml:mrow><mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>r</mml:mi> <mml:mo>+</mml:mo></mml:msub> <mml:mo>-</mml:mo> <mml:msub><mml:mi>r</mml:mi> <mml:mo>-</mml:mo></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>J</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:mi>α</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow></mml:mfrac></mml:mtd></mml:mtr><mml:mtr><mml:mtd columnalign="right"><mml:mi>m</mml:mi></mml:mtd> <mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mfrac><mml:mn>1</mml:mn> <mml:mrow><mml:mn>1</mml:mn> <mml:mo>+</mml:mo> <mml:mfrac><mml:mrow><mml:msub><mml:mi>r</mml:mi> <mml:mo>+</mml:mo></mml:msub> <mml:mi>J</mml:mi></mml:mrow> <mml:mrow><mml:mi>μ</mml:mi> <mml:msub><mml:mi>S</mml:mi> <mml:mi>T</mml:mi></mml:msub></mml:mrow></mml:mfrac></mml:mrow></mml:mfrac><mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+The values of these parameters is within the range for which our model is defined (0 &lt; <italic>m</italic> ≤ 1, 0 ≤ <italic>γ</italic> ≤ 1) provided <italic>r</italic><sub>+</sub> &gt; <italic>r</italic><sub>−</sub> (which is assumed to be the case by Haegeman and Loreau [<xref ref-type="bibr" rid="pcbi.1004134.ref033">33</xref>] in order for there to be a non-trivial equilibrium) and <inline-formula id="pcbi.1004134.e008"><mml:math id="M8" display="inline" overflow="scroll"><mml:mrow><mml:mo>−</mml:mo> <mml:mfrac><mml:mrow><mml:msub><mml:mi>r</mml:mi> <mml:mo>−</mml:mo></mml:msub> <mml:msup><mml:mi>K</mml:mi> <mml:mo>′</mml:mo></mml:msup></mml:mrow> <mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:msub><mml:mi>r</mml:mi> <mml:mo>+</mml:mo></mml:msub> <mml:mo>−</mml:mo> <mml:msub><mml:mi>r</mml:mi> <mml:mo>−</mml:mo></mml:msub> <mml:mo stretchy="false">)</mml:mo> <mml:mi>J</mml:mi></mml:mrow></mml:mfrac> <mml:mo>≤</mml:mo> <mml:mi>α</mml:mi> <mml:mo>≤</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:math></inline-formula>. Therefore, our model defined by Equations <xref ref-type="disp-formula" rid="pcbi.1004134.e001">(1)</xref> and <xref ref-type="disp-formula" rid="pcbi.1004134.e003">(2)</xref> captures the apparently more general density dependence defined in Equations <xref ref-type="disp-formula" rid="pcbi.1004134.e004">(3)</xref> and <xref ref-type="disp-formula" rid="pcbi.1004134.e005">(4)</xref>, except for the case of strongly mutualistic interactions.</p>
+</sec>
+<sec id="sec008">
+<title>Local model PC</title>
+<p>Our second model of non-neutral species interactions is a derivative of that of Pigolotti and Cencini [<xref ref-type="bibr" rid="pcbi.1004134.ref042">42</xref>]. As in model HL, we assume that interspecific interactions are weaker among heterospecifics than among conspecifics, but in model PC we assume a Ricker-like functional form that acts on fecundity so that the number of local propagules of species <italic>i</italic> ∈ {1, …, <italic>S</italic><sub><italic>T</italic></sub>} is ∝ <italic>n</italic><sub><italic>i</italic></sub> exp(−<italic>an</italic><sub><italic>i</italic></sub> − <italic>b</italic>∑<sub><italic>i</italic> ≠ <italic>j</italic></sub> <italic>n</italic><sub><italic>j</italic></sub>), where <italic>n</italic><sub><italic>k</italic></sub> is the local abundance of species <italic>k</italic> and <italic>a</italic> and <italic>b</italic>(&lt; <italic>a</italic>) are constants. The fraction of local propagules that are of species <italic>i</italic> is then
+<disp-formula id="pcbi.1004134.e009"><alternatives><graphic id="pcbi.1004134.e009g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004134.e009"/><mml:math id="M9" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:msubsup><mml:mi>L</mml:mi> <mml:mrow><mml:mi>i</mml:mi></mml:mrow> <mml:mrow><mml:mi>P</mml:mi> <mml:mi>C</mml:mi></mml:mrow></mml:msubsup></mml:mtd> <mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mfrac><mml:mrow><mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:msup><mml:mi>e</mml:mi> <mml:mrow><mml:mo>-</mml:mo> <mml:mi>a</mml:mi> <mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>-</mml:mo> <mml:mi>b</mml:mi> <mml:msub><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>j</mml:mi> <mml:mo>≠</mml:mo> <mml:mi>i</mml:mi></mml:mrow></mml:msub> <mml:msub><mml:mi>n</mml:mi> <mml:mi>j</mml:mi></mml:msub></mml:mrow></mml:msup></mml:mrow> <mml:mrow><mml:msubsup><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>k</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:msub><mml:mi>S</mml:mi> <mml:mi>T</mml:mi></mml:msub></mml:msubsup> <mml:msub><mml:mi>n</mml:mi> <mml:mi>k</mml:mi></mml:msub> <mml:msup><mml:mi>e</mml:mi> <mml:mrow><mml:mo>-</mml:mo> <mml:mi>a</mml:mi> <mml:msub><mml:mi>n</mml:mi> <mml:mi>k</mml:mi></mml:msub> <mml:mo>-</mml:mo> <mml:mi>b</mml:mi> <mml:msub><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>j</mml:mi> <mml:mo>≠</mml:mo> <mml:mi>k</mml:mi></mml:mrow></mml:msub> <mml:msub><mml:mi>n</mml:mi> <mml:mi>j</mml:mi></mml:msub></mml:mrow></mml:msup></mml:mrow></mml:mfrac></mml:mtd></mml:mtr> <mml:mtr><mml:mtd/><mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mfrac><mml:mrow><mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:msup><mml:mi>e</mml:mi> <mml:mrow><mml:mo>-</mml:mo> <mml:mi>c</mml:mi> <mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>/</mml:mo> <mml:mi>J</mml:mi></mml:mrow></mml:msup></mml:mrow> <mml:mrow><mml:msubsup><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>k</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:msub><mml:mi>S</mml:mi> <mml:mi>T</mml:mi></mml:msub></mml:msubsup> <mml:msub><mml:mi>n</mml:mi> <mml:mi>k</mml:mi></mml:msub> <mml:msup><mml:mi>e</mml:mi> <mml:mrow><mml:mo>-</mml:mo> <mml:mi>c</mml:mi> <mml:msub><mml:mi>n</mml:mi> <mml:mi>k</mml:mi></mml:msub> <mml:mo>/</mml:mo> <mml:mi>J</mml:mi></mml:mrow></mml:msup></mml:mrow></mml:mfrac><mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+where <italic>c</italic> = <italic>J</italic>(<italic>a</italic> − <italic>b</italic>). If the interactions are sensitive to the average local density of the different species, i.e. all species are spread throughout the community, then for the same pool of species we expect <italic>c</italic> to be independent of <italic>J</italic>. Spatial effects could lead to a focal species only being sensitive to the dynamics of nearby species, in which case the effective value of <italic>c</italic> would depend on <italic>J</italic>, although this can only be modelled correctly using a spatially explicit model.</p>
+<p>Because a fraction <italic>m</italic> of recruits are immigrants from the metacommunity, the probability that a new recruit is of species <italic>i</italic> is
+<disp-formula id="pcbi.1004134.e010"><alternatives><graphic id="pcbi.1004134.e010g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004134.e010"/><mml:math id="M10" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mi>R</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>=</mml:mo> <mml:mi>m</mml:mi> <mml:msub><mml:mi>P</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>+</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:mi>m</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:msubsup><mml:mi>L</mml:mi> <mml:mrow><mml:mi>i</mml:mi></mml:mrow> <mml:mrow><mml:mi>P</mml:mi> <mml:mi>C</mml:mi></mml:mrow></mml:msubsup><mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(5)</label></disp-formula>
+In this model, we assume that the generations are discrete and non-overlapping: at each timestep, we compute the <italic>R</italic><sub><italic>i</italic></sub> from the current configuration, and generate a new configuration using
+<disp-formula id="pcbi.1004134.e011"><alternatives><graphic id="pcbi.1004134.e011g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004134.e011"/><mml:math id="M11" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mrow><mml:mo>{</mml:mo> <mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>}</mml:mo></mml:mrow> <mml:mo>∼</mml:mo> <mml:mtext>multinomial</mml:mtext> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>J</mml:mi><mml:mo>,</mml:mo> <mml:mrow><mml:mo>{</mml:mo> <mml:msub><mml:mi>R</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>}</mml:mo></mml:mrow> <mml:mo>)</mml:mo></mml:mrow><mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+We do this for the sake of computational efficiency: using a multinomial pseudo random number generator when the local community size is of the order of <italic>J</italic> ∼ 10000 a full system update of this synchronous model is orders of magnitude quicker than for the sequential update model. Sequential updating (as in model HL above) is a more faithful biological description of triopical forest dynamics, but it is known that in the neutral limit the sequential model (Moran process) and the synchronous model (Wright-Fisher process) give indistinguishable equilibrium statistics for the large community sizes we are interested in. The syncronous model is therefore well suited to our goal of exploring the detectability of departures from neutrality. The only circumstances where the synchronous model behaves qualitatively differently from the sequential one is where the Ricker-like dynamics tend to lead to limit cycles or chaos, but that does not affect the results in this paper because we always choose <italic>c</italic> &lt; 2<italic>S</italic><sub><italic>T</italic></sub> (see Metacommunity model EVEN below).</p>
+</sec>
+<sec id="sec009">
+<title>Local model IF</title>
+<p>Interspecific interactions, as implemented in models HL and PC, could be interpreted as representing environmental variability within the community: each species has its own preferred microhabitat, and as a result competes less with heterospecifics (which occupy neighbouring but different microhabitats) than with conspecifics. By contrast, model IF could be interpreted as considering environmental variability between communities. In any given local community, each (out of a total number <italic>S</italic><sub><italic>T</italic></sub>) species has a different intrinsic fitness <italic>f</italic><sub><italic>i</italic></sub>, different from the other species and different from its intrinsic fitness in other commuities. Our model introduces intrinsic fitness differences in a similar way to Chesson and Warner [<xref ref-type="bibr" rid="pcbi.1004134.ref058">58</xref>], though our model is otherwise different because our fitness differences do not fluctuate in time and our dynamics are stochastic rather than deterministic.</p>
+<p>For each realisation, we generate the <italic>f</italic><sub><italic>i</italic></sub> from a Gamma distribution with mean shape factor 1/<italic>k</italic>, so that <italic>k</italic><sup>1/2</sup> is the coefficient of variation among the fitnesses, and all the fitnesses are equal when <italic>k</italic> → 0. The fraction of local propagules that are of species <italic>i</italic> is then
+<disp-formula id="pcbi.1004134.e012"><alternatives><graphic id="pcbi.1004134.e012g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004134.e012"/><mml:math id="M12" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msubsup><mml:mi>L</mml:mi> <mml:mrow><mml:mi>i</mml:mi></mml:mrow> <mml:mrow><mml:mi>I</mml:mi> <mml:mi>F</mml:mi></mml:mrow></mml:msubsup> <mml:mo>=</mml:mo> <mml:mfrac><mml:mrow><mml:msub><mml:mi>f</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:mrow> <mml:mrow><mml:msubsup><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>k</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:msub><mml:mi>S</mml:mi> <mml:mi>T</mml:mi></mml:msub></mml:msubsup> <mml:msub><mml:mi>f</mml:mi> <mml:mi>k</mml:mi></mml:msub> <mml:msub><mml:mi>n</mml:mi> <mml:mi>k</mml:mi></mml:msub></mml:mrow></mml:mfrac><mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+and the probability that a recruit is of species <italic>i</italic> is
+<disp-formula id="pcbi.1004134.e013"><alternatives><graphic id="pcbi.1004134.e013g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004134.e013"/><mml:math id="M13" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mi>R</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>=</mml:mo> <mml:mi>m</mml:mi> <mml:msub><mml:mi>P</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>+</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:mi>m</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:msubsup><mml:mi>L</mml:mi> <mml:mrow><mml:mi>i</mml:mi></mml:mrow> <mml:mrow><mml:mi>I</mml:mi> <mml:mi>F</mml:mi></mml:mrow></mml:msubsup><mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula></p>
+<p>As was the case for model PC, for computational efficiency we assume discrete generations, and simulate the model using a multinomial pseudorandom number generator with probability vector {<italic>R</italic><sub><italic>i</italic></sub>}.</p>
+</sec>
+<sec id="sec010">
+<title>Metacommunity model LOGS</title>
+<p>We assume that the relative immigration rates of different species reflect their abundance in a wider metacommunity. Following the SNM, in model LOGS we assume that this abundance distribution follows a Fisher logseries with diversity parameter <italic>θ</italic>. This is often a good description of empirical data, and can arise from several models of community dynamics including Hubbell’s neutral model [<xref ref-type="bibr" rid="pcbi.1004134.ref031">31</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref059">59</xref>]. Note that the metacommunity represents the pool from which immigrants can be drawn, which could comprise many disparate communities. Therefore, the metacommunity does not necessarily correspond to the large-<italic>J</italic> limit of a single local community model. This means that one reasonable scenario is that the metacommunity follows a canonical form form due to averaging over very large scales [<xref ref-type="bibr" rid="pcbi.1004134.ref035">35</xref>], even when the local dynamics are non-neutral.</p>
+<p>In metacommunity model LOGS we use the distribution introduced by Ewens [<xref ref-type="bibr" rid="pcbi.1004134.ref060">60</xref>] to give the number <italic>f</italic><sub><italic>M</italic></sub> of species in the metacommunity with relative abundance <italic>x</italic> within the interval (<italic>x</italic>; <italic>x</italic> + <italic>dx</italic>).
+<disp-formula id="pcbi.1004134.e014"><alternatives><graphic id="pcbi.1004134.e014g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004134.e014"/><mml:math id="M14" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mi>f</mml:mi> <mml:mi>M</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>d</mml:mi> <mml:mi>x</mml:mi> <mml:mo>=</mml:mo> <mml:mfrac><mml:mi>θ</mml:mi> <mml:mi>x</mml:mi></mml:mfrac> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:mi>x</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mi>θ</mml:mi> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msup> <mml:mi>d</mml:mi> <mml:mi>x</mml:mi><mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(6)</label></disp-formula>
+This distribution is a continuum form of Fisher’s log-series that is appropriate when sampling from an effectively infinite metacommunity [<xref ref-type="bibr" rid="pcbi.1004134.ref014">14</xref>]. In practice, we use this distribution to simulate from a very large metacommunity containing <italic>S</italic><sub><italic>T</italic></sub> species; our full sampling algorithm is described in <xref ref-type="supplementary-material" rid="pcbi.1004134.s001">S1 Text</xref>. The results in this paper are for <italic>S</italic><sub><italic>T</italic></sub> = 2000, which is large enough to be effectively infinite (i.e. a choosing a larger <italic>S</italic><sub><italic>T</italic></sub> did not have a perceptible effect on community statistics or the power of the test of neutrality, but did increase the duration of the simulation).</p>
+</sec>
+<sec id="sec011">
+<title>Metacommunity model EVEN</title>
+<p>As explained above, the logseries is a reasonable candidate metacommuity model even when local community dynamics are non-neutral. However, it is also the metacommunity model in the SNM, so we want to consider the possibility that non-neutral processes are visible in the metacommunity as well. In our EVEN metacommunity model, there are <italic>S</italic><sub><italic>T</italic></sub> species with equal relative abundance, <inline-formula id="pcbi.1004134.e015"><mml:math id="M15" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mi>P</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:msub><mml:mi>S</mml:mi> <mml:mi>T</mml:mi></mml:msub></mml:mfrac></mml:mrow></mml:math></inline-formula>. This distribution has been used in previous modeling studies of neutral and non-neutral community dynamics [<xref ref-type="bibr" rid="pcbi.1004134.ref033">33</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref054">54</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref061">61</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref062">62</xref>], though it has little empirical support. It is appropriate to use this distribution in our study because, as we shall show, it represents a metacommunity limit of our non-neutral local community models.</p>
+<p>The HL model is a form of stochastic multi-species Lotka-Volterra model, so its large-<italic>J</italic> limit is described by differential equations. When 0 ≤ <italic>α</italic> &lt; 1, this has a stable equilibrium with <inline-formula id="pcbi.1004134.e016"><mml:math id="M16" display="inline" overflow="scroll"><mml:mrow><mml:mfrac><mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mi>J</mml:mi></mml:mfrac> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:msub><mml:mi>S</mml:mi> <mml:mi>T</mml:mi></mml:msub></mml:mfrac></mml:mrow></mml:math></inline-formula> for all <italic>i</italic>.</p>
+<p>The PC model is a form of Ricker map. When <italic>J</italic> is large, the multinomial distribution becomes sharply peaked around its mean value, so from <xref ref-type="disp-formula" rid="pcbi.1004134.e010">Equation (5)</xref> (for vanishing <italic>m</italic>) the dynamics of <inline-formula id="pcbi.1004134.e017"><mml:math id="M17" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mi>r</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>=</mml:mo> <mml:mfrac><mml:msub><mml:mi>n</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mi>J</mml:mi></mml:mfrac></mml:mrow></mml:math></inline-formula> follows
+<disp-formula id="pcbi.1004134.e018"><alternatives><graphic id="pcbi.1004134.e018g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004134.e018"/><mml:math id="M18" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mi>r</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mfrac><mml:mrow><mml:msub><mml:mi>r</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:msup><mml:mi>e</mml:mi> <mml:mrow><mml:mo>-</mml:mo> <mml:mi>c</mml:mi> <mml:msub><mml:mi>r</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:msup></mml:mrow> <mml:mrow><mml:msub><mml:mo>∑</mml:mo> <mml:mi>k</mml:mi></mml:msub> <mml:msub><mml:mi>r</mml:mi> <mml:mi>k</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:msup><mml:mi>e</mml:mi> <mml:mrow><mml:mo>-</mml:mo> <mml:mi>c</mml:mi> <mml:msub><mml:mi>r</mml:mi> <mml:mi>k</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:msup></mml:mrow></mml:mfrac><mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+A standard stability analysis shows that the equilibrium <inline-formula id="pcbi.1004134.e019"><mml:math id="M19" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mi>r</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:msub><mml:mi>S</mml:mi> <mml:mi>T</mml:mi></mml:msub></mml:mfrac></mml:mrow></mml:math></inline-formula> is stable provided <italic>cS</italic><sub><italic>T</italic></sub> &lt; 2; for higher values of <italic>c</italic> the community displays limit cycles or chaos.</p>
+<p>In model IF, the community tends to be dominated by the species that has the highest fitness. However, the metacommunity represents an aggregate of many independent local communities, and we expect different species to dominate in different communities. The model assigns fitnesses independently at random to the different species, so we expect each species to have the same overall relative abundance <inline-formula id="pcbi.1004134.e020"><mml:math id="M20" display="inline" overflow="scroll"><mml:mrow><mml:mfrac><mml:mn>1</mml:mn> <mml:msub><mml:mi>S</mml:mi> <mml:mi>T</mml:mi></mml:msub></mml:mfrac></mml:mrow></mml:math></inline-formula> in the metacommunity.</p>
+<p>Therefore, the EVEN metacommunity model represents one metacommunity limit of our local community models. Other metacommunity models could be obtained by taking the limit in different ways. For instance, if parameter <italic>c</italic> in model PC depends on <italic>J</italic> and approaches zero sufficiently rapidly in the limit <italic>J</italic> → ∞, then the metacommunity limit would be neutral and follow the same Ewens distribution as model LOGS. If the fitnesses in model IF were not i.i.d. random variables, but rather different species had different mean fitnesses, then the metacommunity would have a different, uneven distribution. While there is an infinite variety of possible metacommunity distributions, the EVEN metacommunity represents the most contrasting distribution to the logseries, in the sense that it has the maximum Shannon diversity index for a given species richness while the logseries is a very uneven distribution. It also has the advantage of being characterised by a single parameter (<italic>S</italic><sub><italic>T</italic></sub>), whereas other commonly-used distributions (e.g. the lognormal) generally require two parameters.</p>
+</sec>
+<sec id="sec012">
+<title>Testing the neutral null model</title>
+<p>In order to quantify whether a particular data set is consistent with neutral theory, we adopt a maximum likelihood approach together with a parametric bootstrap as used by Walker and Cyr [<xref ref-type="bibr" rid="pcbi.1004134.ref045">45</xref>] and Rosindell and Etienne [<xref ref-type="bibr" rid="pcbi.1004134.ref063">63</xref>]. To calculate the <italic>p</italic>-value of our test, we compare the value of a test statistic for the test data set with values of the test statistic for data sets generated by the null model. We choose the maximized likelihood of the neutral model as our test statistic. The likelihood <italic>L</italic>(<italic>X</italic>∣<italic>m, θ</italic>) that the neutral model would generate a data set <italic>X</italic>, for parameters (<italic>m, θ</italic>) is computed using the exact formula derived by Etienne [<xref ref-type="bibr" rid="pcbi.1004134.ref026">26</xref>]. We use code based on Tetame (<ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://chave.ups-tlse.fr/projects/tetame.htm">http://chave.ups-tlse.fr/projects/tetame.htm</ext-link>), an efficient implementation in C++ of Etienne’s formula that was developed by Jabot et al. [<xref ref-type="bibr" rid="pcbi.1004134.ref064">64</xref>]. We have ported the Tetame code to C, and adapted it so it can be loaded as a dynamic library in R using the .C() function.</p>
+<p>The hypothesis test consists of the following steps:</p>
+<list list-type="order">
+<list-item><p>For a test data set <italic>X</italic><sub><italic>T</italic></sub>, we find the maximum likelihood parameter estimates (<italic>m</italic><sub><italic>MT</italic></sub>, <italic>θ</italic><sub><italic>MT</italic></sub>), i.e. the set of parameters for which <italic>L</italic>(<italic>X</italic><sub><italic>T</italic></sub>∣<italic>m, θ</italic>) takes its largest value, <italic>L</italic>(<italic>X</italic><sub><italic>T</italic></sub>∣<italic>m</italic><sub><italic>MT</italic></sub>, <italic>θ</italic><sub><italic>MT</italic></sub>), the maximum likelihood estimate.</p></list-item>
+<list-item><p>Generate a large number <italic>u</italic> (in this study, <italic>u</italic> = 1000) of sample data sets from a neutral model with parameters (<italic>m</italic><sub><italic>MT</italic></sub>, <italic>θ</italic><sub><italic>MT</italic></sub>), using an Urn algorithm [<xref ref-type="bibr" rid="pcbi.1004134.ref014">14</xref>, <xref ref-type="bibr" rid="pcbi.1004134.ref026">26</xref>].</p></list-item>
+<list-item><p>For the <italic>i</italic>’th sample neutral data set, compute the corresponding maximum likelihood estimate parameter set <inline-formula id="pcbi.1004134.e021"><mml:math id="M21" display="inline" overflow="scroll"><mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:msubsup><mml:mi>m</mml:mi> <mml:mrow><mml:mi>M</mml:mi> <mml:mi>N</mml:mi></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup><mml:mo>,</mml:mo> <mml:msubsup><mml:mi>θ</mml:mi> <mml:mrow><mml:mi>M</mml:mi> <mml:mi>N</mml:mi></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> and maximum likelihood <inline-formula id="pcbi.1004134.e022"><mml:math id="M22" display="inline" overflow="scroll"><mml:mrow><mml:mi>L</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:msubsup><mml:mi>X</mml:mi> <mml:mi>N</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo stretchy="false">∣</mml:mo> <mml:msubsup><mml:mi>m</mml:mi> <mml:mrow><mml:mi>M</mml:mi> <mml:mi>N</mml:mi></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup><mml:mo>,</mml:mo> <mml:msubsup><mml:mi>θ</mml:mi> <mml:mrow><mml:mi>M</mml:mi> <mml:mi>N</mml:mi></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> using the same procedure as used for <italic>X</italic><sub><italic>T</italic></sub>.</p></list-item>
+<list-item><p>The <italic>p</italic>-value for the test is the fraction of neutral data sets whose maximum likelihood is lower than the maximum likelihood for the test data set, i.e. <italic>p</italic> is estimated by:
+<disp-formula id="pcbi.1004134.e023"><alternatives><graphic id="pcbi.1004134.e023g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004134.e023"/><mml:math id="M23" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>p</mml:mi> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mi>u</mml:mi></mml:mfrac> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>u</mml:mi></mml:munderover> <mml:mi>ξ</mml:mi> <mml:mfenced separators="" open="(" close=")"><mml:mi>L</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msubsup><mml:mi>X</mml:mi> <mml:mrow><mml:mi>N</mml:mi></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>|</mml:mo> <mml:msubsup><mml:mi>m</mml:mi> <mml:mrow><mml:mi>M</mml:mi> <mml:mi>N</mml:mi></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup><mml:mo>,</mml:mo> <mml:msubsup><mml:mi>θ</mml:mi> <mml:mrow><mml:mi>M</mml:mi> <mml:mi>N</mml:mi></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:mi>L</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>X</mml:mi> <mml:mi>T</mml:mi></mml:msub> <mml:mo>|</mml:mo> <mml:msub><mml:mi>m</mml:mi> <mml:mrow><mml:mi>M</mml:mi> <mml:mi>T</mml:mi></mml:mrow></mml:msub><mml:mo>,</mml:mo> <mml:msub><mml:mi>θ</mml:mi> <mml:mrow><mml:mi>M</mml:mi> <mml:mi>T</mml:mi></mml:mrow></mml:msub> <mml:mo>)</mml:mo></mml:mrow></mml:mfenced><mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(7)</label></disp-formula>
+where <italic>ξ</italic> is the step function (<italic>ξ</italic> is equal to 1 if its argument is positive and 0 otherwise).</p></list-item>
+<list-item><p>The neutral model is rejected if the <italic>p</italic>-value is less than the chosen threshold for statistical significance, which we take to be 0.05.</p></list-item>
+</list>
+</sec>
+<sec id="sec013">
+<title>Statistical power calculation for fixed non-neutral model parameters</title>
+<p>The power of a statistical test is defined as the probability that the null hypothesis is rejected when it is indeed false. The statistical power can only be quantified by specifying an explicit model to represent the alternative hypothesis. The power can be computed by simulating many data sets from the alternative model, and performing a test of the null hypothesis on each data set, as explained above. The power is the fraction of cases for which the null hypothesis is rejected. A Type II error is defined as the failure to reject the null hypothesis when the alternative hypothesis is true, so the power is equal to 1 − <italic>β</italic>, where <italic>β</italic> is the probability of Type II errors.</p>
+<p>The power of a test will depend on the magnitude of the deviation from the null hypothesis—the so-called effect size—and on the quality of the data at hand, typically, sample size. When coupled to the LOGS metacommunity, our models are equivalent to the SNM in the limit where the non-neutral parameter (<italic>γ</italic> for model HL; <italic>c</italic> for model PC; <italic>k</italic> for model IF) is zero, so <italic>γ, c</italic>, or <italic>k</italic> is our effect size for these models. When coupled to the EVEN metacommunity, our models are never strictly equivalent to the SNM so the effect size cannot be defined. In general, the power of the test will also depend on other model parameters, so we need to perform power calculations for a wide range of potentially interesting parameter values. To calculate the power of tests of neutrality for a non-neutral model with a particular set of model parameters <italic>Y</italic><sub><italic>T</italic></sub>, we use the following procedure:</p>
+<list list-type="order">
+<list-item><p>Generate a large number (in this study, at least 100 and usually more than 400) of equilibrium data sets from the non-neutral model with parameters <italic>Y</italic><sub><italic>T</italic></sub>, by simulating the model for a sufficient number of time steps. The number of time steps was chosen to be at least ten times the number of timesteps such that the species richness and Shannon diversity index in the local community appeared to have reached their equilibrium values; this number depends on the model parameters (e.g. fewer time steps are needed when <italic>m</italic> is close to 1);</p></list-item>
+<list-item><p>For each data set, perform a test of the neutral null model using the parametric bootstrap method described above.</p></list-item>
+<list-item><p>The power of the test is the fraction of non-neutral data sets for which the test was significant (i.e. the neutral null model was rejected).</p></list-item>
+</list>
+<p>Because each non-neutral and neutral data set is statistically independent, the power is a binomial proportional random variable. Where shown, confidence intervals are 95% Jeffreys intervals [<xref ref-type="bibr" rid="pcbi.1004134.ref065">65</xref>].</p>
+</sec>
+<sec id="sec014">
+<title>Power calculations for particular experiments</title>
+<p>Our focus in this paper is on the detectability of non-neutral processes neutral in empirical situations. The power of the test is a property of the ensemble of data sets that could be produced if the data were generated by a non-neutral alternative model. This ensemble of data sets depends on the model parameters which are chosen, but for a particular data set we do not necessarily know the appropriate parameters to use in the alternative model. Here, we choose parameter sets such that the model best describes a set of summary statistics of empirical data sets, specifically: species richness and Shannon index. Once the strength of the non-neutral process (<italic>α, c</italic>, or <italic>k</italic> as appropriate) and the local community size <italic>J</italic> are chosen, the model is characterised by two further parameters: the immigration rate <italic>m</italic> and the diversity (<italic>θ</italic> for model LOGS or <italic>S</italic><sub><italic>T</italic></sub> for model EVEN) of the metacommunity. There will therefore be a discrete set of parameter values where the mean species richness and mean Shannon index of samples from the model match the empirical data sets; in most cases we found only one such parameter set, though in some cases there were two and in others there were none because the model produced a Shannon index that was always higher than, or always lower than, the empirical data.</p>
+<p>We performed this procedure, for a set of candidate values of the non-neutral parameter, to generate parameter sets resembling three tropical forest data sets belonging to the CTFS network to which neutral theory has successfully been fitted in the past [<xref ref-type="bibr" rid="pcbi.1004134.ref046">46</xref>]: Barro Colorado Island, Pasoh Forest Reserve, and Lambir Hills National Park [<xref ref-type="bibr" rid="pcbi.1004134.ref037">37</xref>–<xref ref-type="bibr" rid="pcbi.1004134.ref039">39</xref>]. For each forest, and separately for each survey year, we tested the null model that the data were generated by the SNM using the parametric bootstrap method described above. In each case we found <italic>p</italic> &gt; 0.05, showing that the data were statistically consistent with SNM. The mean total community size, species richness, and Shannon index for these sites, averaged over the census years available at <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.ctfs.si.edu">http://www.ctfs.si.edu</ext-link>, are given in <xref ref-type="table" rid="pcbi.1004134.t005">Table 5</xref>. These sites were selected because they had higher Shannon index than a logseries distribution with the same size and richness, so we expected that a model with non-neutral interspecific interactions or an EVEN metacommunity would describe the data better than the SNM.</p>
+<table-wrap id="pcbi.1004134.t005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004134.t005</object-id>
+<label>Table 5</label>
+<caption>
+<title>Summary statistics for the three tropical forest data sets to which our non-neutral models were fitted.</title>
+</caption>
+<alternatives>
+<graphic id="pcbi.1004134.t005g" mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004134.t005"/>
+<table frame="box" rules="all" border="0">
+<colgroup span="1">
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Data set</th>
+<th align="left" rowspan="1" colspan="1"><italic>J</italic></th>
+<th align="left" rowspan="1" colspan="1"><italic>S</italic></th>
+<th align="left" rowspan="1" colspan="1">Shannon index</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Barro Colorado Island (1982–2005)</td>
+<td align="left" rowspan="1" colspan="1">21058</td>
+<td align="left" rowspan="1" colspan="1">232</td>
+<td align="char" char="." rowspan="1" colspan="1">4.275</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Pasoh Forest Reserve (1987–2000)</td>
+<td align="left" rowspan="1" colspan="1">27955</td>
+<td align="left" rowspan="1" colspan="1">672</td>
+<td align="char" char="." rowspan="1" colspan="1">5.657</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Lambir Hills National Park (1992–1997)</td>
+<td align="left" rowspan="1" colspan="1">32918</td>
+<td align="left" rowspan="1" colspan="1">1007</td>
+<td align="char" char="." rowspan="1" colspan="1">5.928</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>Volkov et al. [<xref ref-type="bibr" rid="pcbi.1004134.ref046">46</xref>] have compared the SNM to three other CTFS forest sites, but the Shannon index in these sites is lower than (Korup National Park and Yasuni National Park) or almost equal to (Sinharaja World Heritage Site) that of a logseries, so we expected it to be more difficult to find suitable model parameters. We also found that the Yasuni National Park data were not consistent with SNM (<italic>p</italic> = 0.001 for 1996 and <italic>p</italic> = 0.014 for 2003), though we found <italic>p</italic> &gt; 0.05 for all Korup and Sinharaja surveys.</p>
+</sec>
+</sec>
+<sec id="sec015">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1004134.s001" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004134.s001" mimetype="application/pdf" xlink:type="simple">
+<label>S1 Text</label>
+<caption>
+<title>Sampling from an infinite metacommunity.</title>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>We acknowledge the support of the Millipede High-Performance Computing Cluster at the University of Groeningen, and the rdlab cluster at the Polytechnic University of Catalonia. The BCI forest dynamics research project was made possible by National Science Foundation grants to Stephen P. Hubbell: DEB-0640386, DEB-0425651, DEB-0346488, DEB-0129874, DEB-00753102, DEB-9909347, DEB-9615226, DEB-9615226, DEB-9405933, DEB-9221033, DEB-9100058, DEB-8906869, DEB-8605042, DEB-8206992, DEB-7922197, support from the Center for Tropical Forest Science, the Smithsonian Tropical Research Institute, the John D. and Catherine T. MacArthur Foundation, the Mellon Foundation, the Small World Institute Fund, and numerous private individuals, and through the hard work of over 100 people from 10 countries over the past two decades. The plot project is part the Center for Tropical Forest Science, a global network of large-scale demographic tree plots.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004134.ref001">
+<label>1</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Brown</surname> <given-names>JH</given-names></name>, <name name-style="western"><surname>Maurer</surname> <given-names>BA</given-names></name> (<year>1989</year>) <article-title>Macroecology: The division of food and space among species on continents</article-title>. <source>Science</source> <volume>243</volume>, <fpage>1145</fpage>–<lpage>1150</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.243.4895.1145" xlink:type="simple">10.1126/science.243.4895.1145</ext-link></comment> <object-id pub-id-type="pmid">17799895</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref002">
+<label>2</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Brown</surname> <given-names>JH</given-names></name> (<year>1995</year>) <source>Macroecology</source>. <publisher-name>University of Chicago Press</publisher-name>, <edition>second edition</edition>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref003">
+<label>3</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Chave</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Muller-Landau</surname> <given-names>HC</given-names></name>, <name name-style="western"><surname>Levin</surname> <given-names>S</given-names></name> (<year>2002</year>) <article-title>Comparing classical community models: Theoretical consequences for patterns of diversity</article-title>. <source>Am Nat</source> <volume>159</volume>, <fpage>1</fpage>–<lpage>23</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/324112" xlink:type="simple">10.1086/324112</ext-link></comment> <object-id pub-id-type="pmid">18707398</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref004">
+<label>4</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Purves</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Pacala</surname> <given-names>S</given-names></name> (<year>2005</year>) <chapter-title>Ecological drift in niche-structured communities: neutral pattern does not imply neutral process</chapter-title>. In: <name name-style="western"><surname>Burslem</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Hartley</surname> <given-names>S</given-names></name>, editors, <source>Biotic Interactions in the Tropics: their role in the maintenance of species diversity</source>, <publisher-name>Cambridge University Press</publisher-name>, <publisher-loc>New York</publisher-loc>. pp. <fpage>107</fpage>–<lpage>138</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref005">
+<label>5</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Motomura</surname> <given-names>I</given-names></name> (<year>1932</year>) <article-title>A statistical treatment of associations</article-title>. <source>Jpn J Zool</source> <volume>44</volume>: <fpage>379</fpage>–<lpage>383</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref006">
+<label>6</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Mac Arthur</surname> <given-names>R</given-names></name> (<year>1957</year>) <article-title>On the relative abundance of bird species</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>43</volume>: <fpage>293</fpage>–<lpage>295</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.43.3.293" xlink:type="simple">10.1073/pnas.43.3.293</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref007">
+<label>7</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Magurran</surname> <given-names>A</given-names></name> (<year>2005</year>) <article-title>Species abundance distributions: pattern or process?</article-title> <source>Funct Ecol</source> <volume>19</volume>: <fpage>177</fpage>–<lpage>181</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.0269-8463.2005.00930.x" xlink:type="simple">10.1111/j.0269-8463.2005.00930.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref008">
+<label>8</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Adler</surname> <given-names>PB</given-names></name>, <name name-style="western"><surname>Lambers</surname> <given-names>JHR</given-names></name>, <name name-style="western"><surname>Levine</surname> <given-names>JM</given-names></name> (<year>2007</year>) <article-title>A niche for neutrality</article-title>. <source>Ecol Lett</source> <volume>2</volume>: <fpage>95</fpage>–<lpage>104</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1461-0248.2006.00996.x" xlink:type="simple">10.1111/j.1461-0248.2006.00996.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref009">
+<label>9</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Walker</surname> <given-names>SC</given-names></name> (<year>2007</year>) <article-title>When and why do non-neutral metacommunities appear neutral?</article-title> <source>Theor Popul Biol</source> <volume>71</volume>: <fpage>318</fpage>–<lpage>331</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.tpb.2006.12.008" xlink:type="simple">10.1016/j.tpb.2006.12.008</ext-link></comment> <object-id pub-id-type="pmid">17346760</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref010">
+<label>10</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Du</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Zhou</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name> (<year>2011</year>) <article-title>Negative density dependence can offset the effect of species competitive asymmetry: A niche-based mechanism for neutral-like patterns</article-title>. <source>J Theor Biol</source> <volume>278</volume>: <fpage>127</fpage>–<lpage>134</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jtbi.2011.03.003" xlink:type="simple">10.1016/j.jtbi.2011.03.003</ext-link></comment> <object-id pub-id-type="pmid">21396944</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref011">
+<label>11</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>McGill</surname> <given-names>BJ</given-names></name>, <name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Gray</surname> <given-names>JS</given-names></name>, <name name-style="western"><surname>Alonso</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Anderson</surname> <given-names>MJ</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Species abundance distributions: moving beyond single prediction theories to integration within an ecological framework</article-title>. <source>Ecol Lett</source> <volume>10</volume>: <fpage>995</fpage>–<lpage>1015</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1461-0248.2007.01094.x" xlink:type="simple">10.1111/j.1461-0248.2007.01094.x</ext-link></comment> <object-id pub-id-type="pmid">17845298</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref012">
+<label>12</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Caswell</surname> <given-names>H</given-names></name> (<year>1976</year>) <article-title>Community structure: a neutral model analysis</article-title>. <source>Ecol Monogr</source> <volume>46</volume>: <fpage>327</fpage>–<lpage>354</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/1942257" xlink:type="simple">10.2307/1942257</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref013">
+<label>13</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Volkov</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Banavar</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Hubbell</surname> <given-names>SP</given-names></name>, <name name-style="western"><surname>Maritan</surname> <given-names>A</given-names></name> (<year>2003</year>) <article-title>Neutral theory and relative species abundance in ecology</article-title>. <source>Nature</source> <volume>424</volume>: <fpage>1035</fpage>–<lpage>1037</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature01883" xlink:type="simple">10.1038/nature01883</ext-link></comment> <object-id pub-id-type="pmid">12944964</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref014">
+<label>14</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Alonso</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>McKane</surname> <given-names>AJ</given-names></name> (<year>2004</year>) <article-title>Sampling Hubbell’s neutral theory of biodiversity</article-title>. <source>Ecol Lett</source> <volume>7</volume>: <fpage>901</fpage>–<lpage>906</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1461-0248.2004.00640.x" xlink:type="simple">10.1111/j.1461-0248.2004.00640.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref015">
+<label>15</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Chave</surname> <given-names>J</given-names></name> (<year>2004</year>) <article-title>Neutral theory and community ecology</article-title>. <source>Ecol Lett</source> <volume>7</volume>: <fpage>241</fpage>–<lpage>253</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1461-0248.2003.00566.x" xlink:type="simple">10.1111/j.1461-0248.2003.00566.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref016">
+<label>16</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>McGill</surname> <given-names>BJ</given-names></name>, <name name-style="western"><surname>Maurer</surname> <given-names>BA</given-names></name>, <name name-style="western"><surname>Weiser</surname> <given-names>MD</given-names></name> (<year>2006</year>) <article-title>Empirical evaluation of neutral theory</article-title>. <source>Ecology</source> <volume>87</volume>(<issue>6</issue>): <fpage>1411</fpage>–<lpage>1423</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1890/0012-9658(2006)87%5B1411:EEONT%5D2.0.CO;2" xlink:type="simple">10.1890/0012-9658(2006)87%5B1411:EEONT%5D2.0.CO;2</ext-link></comment> <object-id pub-id-type="pmid">16869415</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref017">
+<label>17</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Alonso</surname> <given-names>D</given-names></name> (<year>2006</year>) <article-title>Neutral community theory: how stochasticity and dispersal-limitation can explain species coexistence</article-title>. <source>J Stat Phys</source> <volume>128</volume>: <fpage>485</fpage>–<lpage>510</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10955-006-9163-2" xlink:type="simple">10.1007/s10955-006-9163-2</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref018">
+<label>18</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Noble</surname> <given-names>AE</given-names></name>, <name name-style="western"><surname>Temme</surname> <given-names>NM</given-names></name>, <name name-style="western"><surname>Fagan</surname> <given-names>WF</given-names></name>, <name name-style="western"><surname>Keitt</surname> <given-names>TH</given-names></name> (<year>2011</year>) <article-title>A sampling theory for asymmetric communities</article-title>. <source>J Theor Biol</source> <volume>273</volume>: <fpage>1</fpage>–<lpage>14</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jtbi.2010.12.021" xlink:type="simple">10.1016/j.jtbi.2010.12.021</ext-link></comment> <object-id pub-id-type="pmid">21182847</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref019">
+<label>19</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Haegeman</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name> (<year>2011</year>) <article-title>Independent species in independent niches behave neutrally</article-title>. <source>Oikos</source> <volume>120</volume>: <fpage>961</fpage>–<lpage>963</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1600-0706.2011.19697.x" xlink:type="simple">10.1111/j.1600-0706.2011.19697.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref020">
+<label>20</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Clark</surname> <given-names>JS</given-names></name> (<year>2012</year>) <article-title>The coherence problem with the unified neutral theory of biodiversity</article-title>. <source>Trends Ecol Evol</source> <volume>27</volume>: <fpage>198</fpage>–<lpage>202</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.tree.2012.02.001" xlink:type="simple">10.1016/j.tree.2012.02.001</ext-link></comment> <object-id pub-id-type="pmid">22401902</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref021">
+<label>21</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Purves</surname> <given-names>DW</given-names></name>, <name name-style="western"><surname>Turnbull</surname> <given-names>LA</given-names></name> (<year>2010</year>) <article-title>Different but equal: the implausible assumption at the heart of neutral theory: Implausibility of neutrality</article-title>. <source>J Anim Ecol</source> <volume>79</volume>: <fpage>1215</fpage>–<lpage>1225</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1365-2656.2010.01738.x" xlink:type="simple">10.1111/j.1365-2656.2010.01738.x</ext-link></comment> <object-id pub-id-type="pmid">20726922</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref022">
+<label>22</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Alonso</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>McKane</surname> <given-names>AJ</given-names></name> (<year>2006</year>) <article-title>The merits of neutral theory</article-title>. <source>Trends Ecol Evol</source> <volume>21</volume>: <fpage>451</fpage>–<lpage>457</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.tree.2006.03.019" xlink:type="simple">10.1016/j.tree.2006.03.019</ext-link></comment> <object-id pub-id-type="pmid">16766082</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref023">
+<label>23</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Rosindell</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Hubbell</surname> <given-names>SP</given-names></name>, <name name-style="western"><surname>He</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Harmon</surname> <given-names>LJ</given-names></name>, <name name-style="western"><surname>Etienne</surname> <given-names>R</given-names></name> (<year>2012</year>) <article-title>The case for ecological neutral theory</article-title>. <source>Trends Ecol Evol</source> <volume>27</volume>: <fpage>203</fpage>–<lpage>208</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.tree.2012.01.004" xlink:type="simple">10.1016/j.tree.2012.01.004</ext-link></comment> <object-id pub-id-type="pmid">22341498</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref024">
+<label>24</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Wennekes</surname> <given-names>PL</given-names></name>, <name name-style="western"><surname>Rosindell</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name> (<year>2012</year>) <article-title>The neutral-niche debate: A philosophical perspective</article-title>. <source>Acta Biotheor</source> <volume>60</volume>: <fpage>257</fpage>–<lpage>271</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10441-012-9144-6" xlink:type="simple">10.1007/s10441-012-9144-6</ext-link></comment> <object-id pub-id-type="pmid">22302362</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref025">
+<label>25</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Gaston</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Chown</surname> <given-names>S</given-names></name> (<year>2005</year>) <article-title>Neutrality and the niche</article-title>. <source>Funct Ecol</source> <volume>19</volume>: <fpage>1</fpage>–<lpage>6</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.0269-8463.2005.00948.x" xlink:type="simple">10.1111/j.0269-8463.2005.00948.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref026">
+<label>26</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name> (<year>2005</year>) <article-title>A new sampling formula for neutral biodiversity</article-title>. <source>Ecol Lett</source> <volume>8</volume>: <fpage>253</fpage>–<lpage>260</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1461-0248.2004.00717.x" xlink:type="simple">10.1111/j.1461-0248.2004.00717.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref027">
+<label>27</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name> (<year>2007</year>) <article-title>A neutral sampling formula for multiple samples and an “exact” test of neutrality</article-title>. <source>Ecol Lett</source> <volume>10</volume>: <fpage>608</fpage>–<lpage>618</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1461-0248.2007.01052.x" xlink:type="simple">10.1111/j.1461-0248.2007.01052.x</ext-link></comment> <object-id pub-id-type="pmid">17542939</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref028">
+<label>28</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name> (<year>2009</year>) <article-title>Improved estimation of neutral model parameters for multiple samples with different degrees of dispersal limitation</article-title>. <source>Ecology</source> <volume>90</volume>: <fpage>847</fpage>–<lpage>852</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1890/08-0750.1" xlink:type="simple">10.1890/08-0750.1</ext-link></comment> <object-id pub-id-type="pmid">19341153</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref029">
+<label>29</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name> (<year>2009</year>) <article-title>Maximum likelihood estimation of neutral model parameters for multiple samples with different degrees of dispersal limitation</article-title>. <source>J Theor Biol</source> <volume>257</volume>: <fpage>510</fpage>–<lpage>514</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jtbi.2008.12.016" xlink:type="simple">10.1016/j.jtbi.2008.12.016</ext-link></comment> <object-id pub-id-type="pmid">19168078</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref030">
+<label>30</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Ol</surname> <given-names>H</given-names></name> (<year>2005</year>) <article-title>Confronting different models of community structure to species-abundance data: a bayesian model comparison</article-title>. <source>Ecol Lett</source> <volume>8</volume>: <fpage>493</fpage>–<lpage>504</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1461-0248.2005.00745.x" xlink:type="simple">10.1111/j.1461-0248.2005.00745.x</ext-link></comment> <object-id pub-id-type="pmid">21352453</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref031">
+<label>31</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Hubbell</surname> <given-names>SP</given-names></name> (<year>2001</year>) <source>The Unified Neutral Theory of Biodiversity and Biogeography</source>. <publisher-name>Princeton University Press</publisher-name>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref032">
+<label>32</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Gravel</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Canham</surname> <given-names>CD</given-names></name>, <name name-style="western"><surname>Beaudet</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Messier</surname> <given-names>C</given-names></name> (<year>2006</year>) <article-title>Reconciling niche and neutrality: the continuum hypothesis</article-title>. <source>Ecol Lett</source> <volume>9</volume>: <fpage>399</fpage>–<lpage>409</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1461-0248.2006.00884.x" xlink:type="simple">10.1111/j.1461-0248.2006.00884.x</ext-link></comment> <object-id pub-id-type="pmid">16623725</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref033">
+<label>33</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Haegeman</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Loreau</surname> <given-names>M</given-names></name> (<year>2011</year>) <article-title>A mathematical synthesis of niche and neutral theories in community ecology</article-title>. <source>J Theor Biol</source> <volume>169</volume>: <fpage>150</fpage>–<lpage>165</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jtbi.2010.10.006" xlink:type="simple">10.1016/j.jtbi.2010.10.006</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref034">
+<label>34</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Alonso</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Ostling</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name> (<year>2008</year>) <article-title>The implicit assumption of symmetry and the species abundance distribution</article-title>. <source>Ecol Lett</source> <volume>11</volume>: <fpage>93</fpage>–<lpage>105</lpage>. <object-id pub-id-type="pmid">18034838</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref035">
+<label>35</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Sizling</surname> <given-names>AL</given-names></name>, <name name-style="western"><surname>Storch</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Sizlingova</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Reif</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Gaston</surname> <given-names>KJ</given-names></name> (<year>2009</year>) <article-title>Species abundance distribution results from a spatial analogy of central limit theorem</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>106</volume>: <fpage>6691</fpage>–<lpage>6695</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0810096106" xlink:type="simple">10.1073/pnas.0810096106</ext-link></comment> <object-id pub-id-type="pmid">19346488</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref036">
+<label>36</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Chisholm</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Pacala</surname> <given-names>SW</given-names></name> (<year>2010</year>) <article-title>Niche and neutral models predict asymptotically equivalent species abundance distributions in high-diversity ecological communities</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>107</volume> (<issue>36</issue>): <fpage>15821</fpage>–<lpage>15825</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1009387107" xlink:type="simple">10.1073/pnas.1009387107</ext-link></comment> <object-id pub-id-type="pmid">20733073</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref037">
+<label>37</label>
+<mixed-citation xlink:type="simple" publication-type="other">Hubbell SP, Condit R, Foster RB (2005). Barro colorado forest census plot data. url <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="https://ctfs.arnarb.harvard.edu/webatlas/datasets/bci">https://ctfs.arnarb.harvard.edu/webatlas/datasets/bci</ext-link>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref038">
+<label>38</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Condit</surname> <given-names>R</given-names></name> (<year>1998</year>) <source>Tropical Forest Census Plots</source>. <publisher-name>Springer-Verlag and R. G. Landes Company, Berlin</publisher-name>, <publisher-loc>Germany, and Georgetown, Texas</publisher-loc>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref039">
+<label>39</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Hubbell</surname> <given-names>SP</given-names></name>, <name name-style="western"><surname>Foster</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>O’Brien</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Harms</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Condit</surname> <given-names>R</given-names></name>, <etal>et al</etal>. (<year>1999</year>) <article-title>Light gap disturbances, recruitment limitation, and tree diversity in a neotropical forest</article-title>. <source>Science</source> <volume>283</volume>: <fpage>554</fpage>–<lpage>557</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.283.5401.554" xlink:type="simple">10.1126/science.283.5401.554</ext-link></comment> <object-id pub-id-type="pmid">9915706</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref040">
+<label>40</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Chesson</surname> <given-names>P</given-names></name> (<year>2000</year>) <article-title>General theory of competitive coexistence in spatially-varying environments</article-title>. <source>Theor Popul Biol</source> <volume>58</volume>: <fpage>211</fpage>–<lpage>237</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1006/tpbi.2000.1486" xlink:type="simple">10.1006/tpbi.2000.1486</ext-link></comment> <object-id pub-id-type="pmid">11120650</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref041">
+<label>41</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Chesson</surname> <given-names>P</given-names></name> (<year>2000</year>) <article-title>Mechanisms of maintenance of species diversity</article-title>. <source>Annu Rev Ecol Syst</source> <volume>31</volume>: <fpage>343</fpage>–<lpage>366</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1146/annurev.ecolsys.31.1.343" xlink:type="simple">10.1146/annurev.ecolsys.31.1.343</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref042">
+<label>42</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Pigolotti</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Cencini</surname> <given-names>M</given-names></name> (<year>2013</year>) <article-title>Species abundances and lifetimes: From neutral to niche-stabilized communities</article-title>. <source>J Theor Biol</source> <volume>338</volume>: <fpage>1</fpage>–<lpage>8</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jtbi.2013.08.024" xlink:type="simple">10.1016/j.jtbi.2013.08.024</ext-link></comment> <object-id pub-id-type="pmid">23999281</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref043">
+<label>43</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Pueyo</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>He</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Zillio</surname> <given-names>T</given-names></name> (<year>2007</year>) <article-title>The maximum entropy formalism and the idiosyncratic theory of biodiversity</article-title>. <source>Ecol Lett</source> <volume>10</volume>: <fpage>1017</fpage>–<lpage>1028</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1461-0248.2007.01096.x" xlink:type="simple">10.1111/j.1461-0248.2007.01096.x</ext-link></comment> <object-id pub-id-type="pmid">17692099</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref044">
+<label>44</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Zhou</surname> <given-names>SR</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>DY</given-names></name> (<year>2008</year>) <article-title>A nearly neutral model of biodiversity</article-title>. <source>Ecology</source> <volume>89</volume>: <fpage>248</fpage>–<lpage>258</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1890/06-1817.1" xlink:type="simple">10.1890/06-1817.1</ext-link></comment> <object-id pub-id-type="pmid">18376566</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref045">
+<label>45</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Walker</surname> <given-names>SC</given-names></name>, <name name-style="western"><surname>Cyr</surname> <given-names>H</given-names></name> (<year>2007</year>) <article-title>Testing the standard neutral model of biodiversity in lake communities</article-title>. <source>Oikos</source> <volume>116</volume>: <fpage>143</fpage>–<lpage>155</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.2006.0030-1299.15300.x" xlink:type="simple">10.1111/j.2006.0030-1299.15300.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref046">
+<label>46</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Volkov</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Banavar</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Hubbell</surname> <given-names>SP</given-names></name>, <name name-style="western"><surname>Maritan</surname> <given-names>A</given-names></name> (<year>2007</year>) <article-title>Patterns of relative species abundance in rainforests and coral reefs</article-title>. <source>Nature</source> <volume>450</volume>: <fpage>45</fpage>–<lpage>49</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature06197" xlink:type="simple">10.1038/nature06197</ext-link></comment> <object-id pub-id-type="pmid">17972874</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref047">
+<label>47</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Volkov</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Banavar</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Hubbell</surname> <given-names>SP</given-names></name>, <name name-style="western"><surname>Maritan</surname> <given-names>A</given-names></name> (<year>2009</year>) <article-title>Inferring species interactions in tropical forests</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>106</volume>: <fpage>13854</fpage>–<lpage>13859</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0903244106" xlink:type="simple">10.1073/pnas.0903244106</ext-link></comment> <object-id pub-id-type="pmid">19666524</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref048">
+<label>48</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Alonso</surname> <given-names>D</given-names></name> (<year>2005</year>) <article-title>A dispersal-limited sampling theory for species and alleles</article-title>. <source>Ecol Lett</source> <volume>8</volume>: <fpage>1147</fpage>–<lpage>1156</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1461-0248.2005.00817.x" xlink:type="simple">10.1111/j.1461-0248.2005.00817.x</ext-link></comment> <object-id pub-id-type="pmid">21352438</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref049">
+<label>49</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Dornelas</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Connolly</surname> <given-names>SR</given-names></name> (<year>2008</year>) <article-title>Multiple modes in a coral species abundance distribution</article-title>. <source>Ecol Lett</source> <volume>11</volume>: <fpage>1008</fpage>–<lpage>1016</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1461-0248.2008.01208.x" xlink:type="simple">10.1111/j.1461-0248.2008.01208.x</ext-link></comment> <object-id pub-id-type="pmid">18616549</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref050">
+<label>50</label>
+<mixed-citation xlink:type="simple" publication-type="other">Rosindell J, Wong Y, Etienne RS (2008) A coalescence approach to spatial neutral ecology. Ecol Inform: 259–271.</mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref051">
+<label>51</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Chave</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Alonso</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name> (<year>2006</year>) <article-title>Theoretical biology—comparing models of species abundance</article-title>. <source>Nature</source> <volume>441</volume>: <fpage>E1</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature04827" xlink:type="simple">10.1038/nature04827</ext-link></comment> <object-id pub-id-type="pmid">16672928</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref052">
+<label>52</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Ruokolainen</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Ranta</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Kaitala</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Fowler</surname> <given-names>MS</given-names></name> (<year>2009</year>) <article-title>When can we distinguish between neutral and non-neutral processes in community dynamics under ecological drift?</article-title> <source>Ecol Lett</source> <volume>12</volume>: <fpage>909</fpage>–<lpage>919</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1461-0248.2009.01346.x" xlink:type="simple">10.1111/j.1461-0248.2009.01346.x</ext-link></comment> <object-id pub-id-type="pmid">19570103</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref053">
+<label>53</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Chave</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Alonso</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name> (<year>2006</year>) <article-title>Comparing models of species abundance</article-title>. <source>Nature</source> <volume>441</volume>: <fpage>E1</fpage>–<lpage>E2</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature04827" xlink:type="simple">10.1038/nature04827</ext-link></comment> <object-id pub-id-type="pmid">16672928</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref054">
+<label>54</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Azaele</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Pigolotti</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Banavar</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Maritan</surname> <given-names>A</given-names></name> (<year>2006</year>) <article-title>Dynamical evolution of ecological systems</article-title>. <source>Nature</source> <volume>444</volume>: <fpage>926</fpage>–<lpage>928</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature05320" xlink:type="simple">10.1038/nature05320</ext-link></comment> <object-id pub-id-type="pmid">17167485</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref055">
+<label>55</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Chisholm</surname> <given-names>R</given-names></name> (<year>2011</year>) <article-title>Time-dependent solutions of the spatially implicit neutral model of biodiversity</article-title>. <source>J Theor Biol</source> <volume>80</volume>: <fpage>71</fpage>–<lpage>79</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.tpb.2011.06.002" xlink:type="simple">10.1016/j.tpb.2011.06.002</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref056">
+<label>56</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Jabot</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Chave</surname> <given-names>J</given-names></name> (<year>2009</year>) <article-title>Inferring the parameters of the neutral theory of biodiversity using phylogrenetic information and implications for tropical forests</article-title>. <source>Ecol Lett</source> <volume>12</volume>: <fpage>239</fpage>–<lpage>248</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1461-0248.2008.01280.x" xlink:type="simple">10.1111/j.1461-0248.2008.01280.x</ext-link></comment> <object-id pub-id-type="pmid">19170729</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref057">
+<label>57</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Davies</surname> <given-names>TJ</given-names></name>, <name name-style="western"><surname>Allen</surname> <given-names>AP</given-names></name>, <name name-style="western"><surname>Borda-de Agua</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Regetz</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Melian</surname> <given-names>CJ</given-names></name> (<year>2011</year>) <article-title>Neutral biodiversity can explain the imbalance of phylogenetic trees but not the tempo of their diversification</article-title>. <source>Evolution</source> <volume>65</volume>: <fpage>1841</fpage>–<lpage>1850</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1558-5646.2011.01265.x" xlink:type="simple">10.1111/j.1558-5646.2011.01265.x</ext-link></comment> <object-id pub-id-type="pmid">21729042</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref058">
+<label>58</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Chesson</surname> <given-names>PL</given-names></name>, <name name-style="western"><surname>Warner</surname> <given-names>RR</given-names></name> (<year>1981</year>) <article-title>Environmental variability promotes coexistence in lottery competitive systems</article-title>. <source>Am Nat</source> <volume>117</volume>: <fpage>923</fpage>–<lpage>943</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/283778" xlink:type="simple">10.1086/283778</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref059">
+<label>59</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Pueyo</surname> <given-names>S</given-names></name> (<year>2006</year>) <article-title>Diversity: between neutrality and structure</article-title>. <source>Oikos</source> <volume>112</volume>: <fpage>392</fpage>–<lpage>405</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.0030-1299.2006.14188.x" xlink:type="simple">10.1111/j.0030-1299.2006.14188.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref060">
+<label>60</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Ewens</surname> <given-names>W</given-names></name> (<year>1972</year>) <article-title>The sampling theory of selectively neutral alleles</article-title>. <source>Theor Popul Biol</source> <volume>3</volume>: <fpage>87</fpage>–<lpage>112</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/0040-5809(72)90035-4" xlink:type="simple">10.1016/0040-5809(72)90035-4</ext-link></comment> <object-id pub-id-type="pmid">4667078</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref061">
+<label>61</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>McKane</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Alonso</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Solé</surname> <given-names>R</given-names></name> (<year>2000</year>) <article-title>A mean field stochastic theory for species rich assembled communities</article-title>. <source>Phys Rev E</source> <volume>62</volume>: <fpage>8466</fpage>–<lpage>8484</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevE.62.8466" xlink:type="simple">10.1103/PhysRevE.62.8466</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref062">
+<label>62</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bell</surname> <given-names>G</given-names></name> (<year>2000</year>) <article-title>The distribution of abundances in neutral communities</article-title>. <source>Am Nat</source> <volume>155</volume>: <fpage>606</fpage>–<lpage>617</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/303345" xlink:type="simple">10.1086/303345</ext-link></comment> <object-id pub-id-type="pmid">10777433</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref063">
+<label>63</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Rosindell</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name> (<year>2011</year>) <article-title>The spatial limitations of current neutral models of biodiversity</article-title>. <source>PLoS One</source> <volume>6</volume>(<issue>3</issue>): <fpage>e14717</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0014717" xlink:type="simple">10.1371/journal.pone.0014717</ext-link></comment> <object-id pub-id-type="pmid">21423724</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref064">
+<label>64</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Jabot</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Etienne</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Chave</surname> <given-names>J</given-names></name> (<year>2008</year>) <article-title>Reconciling neutral community models and environmental filtering: theory and an empirical test</article-title>. <source>Oikos</source> <volume>117</volume>: <fpage>1308</fpage>–<lpage>1320</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.0030-1299.2008.16724.x" xlink:type="simple">10.1111/j.0030-1299.2008.16724.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004134.ref065">
+<label>65</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Brown</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Cai</surname> <given-names>TT</given-names></name>, <name name-style="western"><surname>DasGupta</surname> <given-names>A</given-names></name> (<year>2001</year>) <article-title>Interval estimation for a binomial proportion</article-title>. <source>Stat Sci</source> <volume>16</volume>: <fpage>101</fpage>–<lpage>133</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1214/ss/1009213285" xlink:type="simple">10.1214/ss/1009213285</ext-link></comment></mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

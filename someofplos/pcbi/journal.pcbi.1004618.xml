@@ -1,0 +1,909 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004618</article-id>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-15-00509</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>SAAS-CNV: A Joint Segmentation Approach on Aggregated and Allele Specific Signals for the Identification of Somatic Copy Number Alterations with Next-Generation Sequencing Data</article-title>
+<alt-title alt-title-type="running-head">SAAS-CNV: A Joint Segmentation Approach to Detect SCNA</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Zhang</surname>
+<given-names>Zhongyang</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+<xref rid="cor001" ref-type="corresp">*</xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Hao</surname>
+<given-names>Ke</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+<xref rid="aff003" ref-type="aff"><sup>3</sup></xref>
+<xref rid="cor001" ref-type="corresp">*</xref>
+</contrib>
+</contrib-group>
+<aff id="aff001"><label>1</label> <addr-line>Department of Genetics and Genomic Sciences, Icahn School of Medicine at Mount Sinai, New York, New York, United States of America</addr-line></aff>
+<aff id="aff002"><label>2</label> <addr-line>Icahn Institute for Genomics and Multiscale Biology, Icahn School of Medicine at Mount Sinai, New York, New York, United States of America</addr-line></aff>
+<aff id="aff003"><label>3</label> <addr-line>Department of Respiratory Medicine, Shanghai Tenth People’s Hospital, Tongji University, Shanghai, China</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Wang</surname>
+<given-names>Edwin</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>National Research Council of Canada, CANADA</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: ZZ KH. Performed the experiments: ZZ. Analyzed the data: ZZ. Contributed reagents/materials/analysis tools: ZZ KH. Wrote the paper: ZZ KH.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">zhongyang.zhang@mssm.edu</email> (ZZ); <email xlink:type="simple">ke.hao@mssm.edu</email> (KH)</corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>19</day>
+<month>11</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="collection">
+<month>11</month>
+<year>2015</year>
+</pub-date>
+<volume>11</volume>
+<issue>11</issue>
+<elocation-id>e1004618</elocation-id>
+<history>
+<date date-type="received">
+<day>26</day>
+<month>3</month>
+<year>2015</year>
+</date>
+<date date-type="accepted">
+<day>20</day>
+<month>10</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Zhang, Hao</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004618" xlink:type="simple"/>
+<abstract>
+<p>Cancer genomes exhibit profound somatic copy number alterations (SCNAs). Studying tumor SCNAs using massively parallel sequencing provides unprecedented resolution and meanwhile gives rise to new challenges in data analysis, complicated by tumor aneuploidy and heterogeneity as well as normal cell contamination. While the majority of read depth based methods utilize total sequencing depth alone for SCNA inference, the allele specific signals are undervalued. We proposed a joint segmentation and inference approach using both signals to meet some of the challenges. Our method consists of four major steps: 1) extracting read depth supporting reference and alternative alleles at each SNP/Indel locus and comparing the total read depth and alternative allele proportion between tumor and matched normal sample; 2) performing joint segmentation on the two signal dimensions; 3) correcting the copy number baseline from which the SCNA state is determined; 4) calling SCNA state for each segment based on both signal dimensions. The method is applicable to whole exome/genome sequencing (WES/WGS) as well as SNP array data in a tumor-control study. We applied the method to a dataset containing no SCNAs to test the specificity, created by pairing sequencing replicates of a single HapMap sample as normal/tumor pairs, as well as a large-scale WGS dataset consisting of 88 liver tumors along with adjacent normal tissues. Compared with representative methods, our method demonstrated improved accuracy, scalability to large cancer studies, capability in handling both sequencing and SNP array data, and the potential to improve the estimation of tumor ploidy and purity.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>Somatic copy number alterations (SCNAs) are essential in oncogensis and progression of a variety of cancers. Accurate identification and quatification of SCNAs are fundamental in the effort of cataloging different variants in cancer genome. This task has its own challenges due to complex nature of tumor SCNA profile and is further complicated by the heterogeneity of the cells collected from a tumor tissue and the contamination from adjacent normal cells, making it difficult for the methods well tailored for the detection of germline copy number variation (CNV) to fit in tumor SCNA detection. Next generation sequencing provides an opportunity to comprehensively characterize SCNA at unprecedent resolution. While total read depth information is commonly used in SCNA detection methods, the allele-specific read depth is less often considered, leading to sub-optimal solution. By incorparating both pieces of information, we developed a segmentation-based pipeline to address aforementioned issues in SCNA detection. This tool is applicable on both deep sequencing data as well as SNP array data and enables accurate and efficient characterization of genome-wide SCNA profile to facilitate large-scale cancer studies.</p>
+</abstract>
+<funding-group>
+<funding-statement>KH is partially supported by National Natural Science Foundation of China (Grant No. 21477087; the funder's website is <ext-link ext-link-type="uri" xlink:href="http://www.nsfc.gov.cn/publish/portal1/" xlink:type="simple">http://www.nsfc.gov.cn/publish/portal1/</ext-link>) and Melanoma Research Foundation Award (Award ID: 322881; The funder's website is <ext-link ext-link-type="uri" xlink:href="http://www.melanoma.org/" xlink:type="simple">http://www.melanoma.org/</ext-link>). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="11"/>
+<table-count count="3"/>
+<page-count count="27"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>For Dataset I, the WES data are available from Sequence Read Archive (SRA, accession number: PRJNA241071); the WGS data are available from SRA (accession number: PRJNA241062) and European Nucleotide Archive (ENA, accession number: ERP001231). For Dataset II, the whole genome sequencing data are available from ENA (accession number: ERP001196); the SNP array data are available from Gene Expression Omnibus (GEO, accession number: GSE28127).</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Profound somatic copy number alternations (SCNAs) are present in many types of tumors [<xref rid="pcbi.1004618.ref001" ref-type="bibr">1</xref>–<xref rid="pcbi.1004618.ref003" ref-type="bibr">3</xref>], where they affect a larger fraction of the genome than other types of somatic variations [<xref rid="pcbi.1004618.ref003" ref-type="bibr">3</xref>,<xref rid="pcbi.1004618.ref004" ref-type="bibr">4</xref>]. The roles of SCNAs in promoting oncogenesis and tumor progression are under intensive study. In contrast to germline copy number variations (CNVs), which are sparsely distributed along the genome and of small to moderate size, tumor SCNAs are large in size and have a much wider range of magnitudes in copy number. Accurate detection and characterization of genome-wide SCNA profile are further complicated by aneuploidy and heterogeneity of tumor cells and contamination of normal cells [<xref rid="pcbi.1004618.ref005" ref-type="bibr">5</xref>].</p>
+<p>Array comparative genomic hybridization (array-CGH) [<xref rid="pcbi.1004618.ref006" ref-type="bibr">6</xref>] and single nucleotide polymorphism (SNP) array [<xref rid="pcbi.1004618.ref007" ref-type="bibr">7</xref>] were widely used in surveying genome-wide SCNAs in the past decade. More recently, next-generation sequencing (NGS) technology provides unprecedented resolution to comprehensively characterize SCNAs at rapidly decreasing cost [<xref rid="pcbi.1004618.ref008" ref-type="bibr">8</xref>,<xref rid="pcbi.1004618.ref009" ref-type="bibr">9</xref>]. A long list of tools has been developed and successfully applied in analyzing CNV data harvested from NGS; see [<xref rid="pcbi.1004618.ref002" ref-type="bibr">2</xref>,<xref rid="pcbi.1004618.ref010" ref-type="bibr">10</xref>,<xref rid="pcbi.1004618.ref011" ref-type="bibr">11</xref>] for reviews. The available methods mainly fall into four categories: 1) read depth (RD), 2) pair-end mapping (PEM), 3) split read (SR) and 4) Assembling (AS). While they take advantage of complementary information, featuring different perspectives of CNVs, each of them encounters important limitations, due to the complications from the high dynamics of cancer genome. With whole genome sequencing (WGS) data, the latter three methods are good at detecting CNVs of small to moderate sizes, locating CNV break points at higher resolution, and discovering copy neutral rearrangements, but they are less capable in characterizing large-size and wide-range copy number changes at the genome-wide scale. Moreover, their applicability in whole exome sequencing (WES) data is limited by the fact that short reads from WES are concentrated in interspersed genomic regions. Therefore, the RD-based methods are used more widely in the study of tumor CNVs with both WGS and WES data [<xref rid="pcbi.1004618.ref010" ref-type="bibr">10</xref>]. Basically, the majority of RD-based methods, such as CNV-seq [<xref rid="pcbi.1004618.ref012" ref-type="bibr">12</xref>], SegSeq [<xref rid="pcbi.1004618.ref009" ref-type="bibr">9</xref>], ExomeCNV [<xref rid="pcbi.1004618.ref013" ref-type="bibr">13</xref>] and PatternCNV [<xref rid="pcbi.1004618.ref014" ref-type="bibr">14</xref>], follows a “bottom-up” procedure: short-reads mapping, normalization of read depth, copy number estimation in a local region (usually in a window of certain size or in an exonic region) and segmentation to merge regions with the same copy number status [<xref rid="pcbi.1004618.ref010" ref-type="bibr">10</xref>]. This strategy is sensitive in the detection of germline CNVs, but for tumor CNVs (i.e. SCNAs), it is difficult for the local inference to correctly decide the baseline of ploidy and accurately discern weak signals of copy number change in the presence of aneuploidy and normal cell contamination, so that the genome-wide inference drawn from the later segmentation step is inclined to accumulate false positive findings from the earlier local inference step. Further, these methods only consider the aggregated depth of sequencing reads carrying paternal and maternal alleles, aimed at estimating the total copy number, but largely ignore allele specific read depth, while the latter contains critical information of copy number change, copy-neutral loss of heterozygosity (CN-LOH), and, importantly, genome ploidy.</p>
+<p>In analogy to Illumina SNP array [<xref rid="pcbi.1004618.ref007" ref-type="bibr">7</xref>], the allele specific signal from NGS can be quantified at heterozygote sites (e.g. SNP loci) and converted to the so-called B allele frequency (BAF), which is defined as the proportion of the reads carrying “B” allele (i.e. non-reference allele) among all the mappable reads at that site. At an SCNA-free locus, the expectation of BAF is close to 1/2, indicating equal amount of paternal and maternal alleles. With an SCNA event, the expectation of BAF might deviate from 1/2, reflecting differential copy number changes in the two alleles.</p>
+<p>The two data dimensions, total read depth and allele-specific signal (i.e., BAF), carry complementary and consensual information of SCNA events. Incorporating both quantities could theoretically improve power and accuracy in identifying SCNA segment boundaries and characterizing alteration types (i.e., gains, losses, and CN-LOHs). Control-FREEC [<xref rid="pcbi.1004618.ref015" ref-type="bibr">15</xref>] is a representative method that incorporates both types of information. However, it uses them separately rather than jointly in the segmentation and SCNA calling, nor does it make good use of data from match normal sample to generate reliable allele-specific signal. Herein, we propose a tumor SCNA analysis method, SAAS-CNV, based on a joint segmentation algorithm [<xref rid="pcbi.1004618.ref016" ref-type="bibr">16</xref>], to accommodate both total read depth and BAF. Using both data dimensions simultaneously, the method first takes a “top-down” strategy to partition the genome into segments with different alterations by joint segmentation, and subsequently, determines their alteration types. The method was designed for paired normal-tumor settings, in which the spatial variability from non-uniform distribution of short reads along the genome can be alleviated [<xref rid="pcbi.1004618.ref013" ref-type="bibr">13</xref>]. It is able to accommodate WGS and WES data as well as SNP array data.</p>
+<p>In this paper, we first characterized the type-I-error properties of SAAS-CNV using a carefully designed “null” dataset containing no SCNAs (H<sub>0</sub>), created by pairing sequencing replicates of a single HapMap sample as normal-tumor pairs [<xref rid="pcbi.1004618.ref017" ref-type="bibr">17</xref>] (Materials and Methods, Dataset I). Further, we demonstrated its ability to analyze a real-world WGS study of 88 hepatocellular carcinoma (HCC) samples (H<sub>a</sub>), some of which exhibit highly complicated SCNA profiles [<xref rid="pcbi.1004618.ref018" ref-type="bibr">18</xref>,<xref rid="pcbi.1004618.ref019" ref-type="bibr">19</xref>] (Materials and Methods, Dataset II). In both settings (H<sub>o</sub> and H<sub>a</sub>), we compared the performance of SAAS-CNV with other existing methods. We also explored its potential extension in the estimation of ploidy and purity of tumor cells.</p>
+</sec>
+<sec id="sec002" sec-type="materials|methods">
+<title>Methods and Materials</title>
+<sec id="sec003">
+<title>Data</title>
+<sec id="sec004">
+<title>Dataset I</title>
+<p>The DNA sample of HapMap NA18507 was sequenced multiple times with different configurations of runs, machines and lanes, using Illumina HiSeq 2000/2500 [<xref rid="pcbi.1004618.ref017" ref-type="bibr">17</xref>]. 100bp paired-end reads were generated in both WGS and WES runs. For WES, exonic DNA was captured with the SeqCap EZ Human Exome Library v3.0 (NimbleGen). We obtained 6 WES replicates and 3 WGS replicates. Further we retrieved an additional WGS experiment of NA18507 from European Nucleotide Archive (ENA, accession: ERP001231). To mimic the tumor-normal pair study design, one replicate was treated as tumor and another as paired normal. Exhausting all paring possibility, a total of 15 pairs were synthesized on WES data and 6 pairs on WGS data, respectively. More information about the technical replicates and synthesized normal-tumor pair was summarized in <xref rid="pcbi.1004618.s015" ref-type="supplementary-material">S1</xref>–<xref rid="pcbi.1004618.s018" ref-type="supplementary-material">S4</xref> Tables. Using technical replicates of the same sample ensures no SCNA exists and thus the dataset can serve as “null” scenario. Dataset I was used to calibrate the specificity of SCNA detection methods.</p>
+</sec>
+<sec id="sec005">
+<title>Dataset II</title>
+<p>A total of 88 pairs of hepatocellular carcinoma (HCC) and adjacent normal liver genomes were sequenced with 100bp paired-end reads [<xref rid="pcbi.1004618.ref018" ref-type="bibr">18</xref>,<xref rid="pcbi.1004618.ref019" ref-type="bibr">19</xref>]. The WGS data was downloaded from ENA (accession: ERP001196). The read depth information was summarized in <xref rid="pcbi.1004618.s002" ref-type="supplementary-material">S1 Fig</xref>. To simulate WES scenario, we extracted genetic variant loci in exonic regions specified in SeqCap EZ Human Exome Library v3.0 (NimbleGen). On the same set of 88 tumor-normal pairs, Illumina HumanHap 650Y SNP array data [<xref rid="pcbi.1004618.ref020" ref-type="bibr">20</xref>] were retrieved from GEO (accession: GSE28127).</p>
+</sec>
+</sec>
+<sec id="sec006">
+<title>Analysis pipeline</title>
+<p>We used GATK variant analysis pipeline [<xref rid="pcbi.1004618.ref021" ref-type="bibr">21</xref>–<xref rid="pcbi.1004618.ref023" ref-type="bibr">23</xref>] to process raw fastq files in this study [<xref rid="pcbi.1004618.ref017" ref-type="bibr">17</xref>] (more details in <xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1B Text</xref>). As a standard output of the pipeline, single nucleotide variants (SNVs) and small insertion and deletions (Indels), called from mapped high-quality reads, were saved in the variant call format (VCF) files [<xref rid="pcbi.1004618.ref024" ref-type="bibr">24</xref>]. At each variant locus, we extracted the genotype and the depth of reads carrying reference allele and alternative allele, all informative for SCNA inference. <xref rid="pcbi.1004618.g001" ref-type="fig">Fig 1</xref> overviews the workflow of our algorithm in the paired normal-tumor setting.</p>
+<fig id="pcbi.1004618.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004618.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Flow chart of the SCNA analysis pipeline for matched normal and tumor sequencing data.</title>
+<p>REF: reference allele; ALT: alternative allele; RD: read depth; het: heterozygous.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.g001" position="float" xlink:type="simple"/>
+</fig>
+<sec id="sec007">
+<title>Data transformation</title>
+<p>For each tumor-normal pair, we only consider biallelic heterozygous loci observed in the normal tissue, and we refer the reference allele as “A” allele and the alternative (or non-reference) allele as “B” allele. To capture the SCNA signals derived from both the total read depth and BAF at each site, we define two quantities, termed log2ratio and log2mBAF, as follows:
+<disp-formula id="pcbi.1004618.e001">
+<alternatives>
+<graphic id="pcbi.1004618.e001g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e001" xlink:type="simple"/>
+<mml:math display="block" id="M1" overflow="scroll">
+<mml:mrow><mml:mtext>log</mml:mtext><mml:mn>2</mml:mn><mml:mtext>ratio</mml:mtext><mml:mo>=</mml:mo><mml:msub><mml:mi mathvariant="normal">log</mml:mi><mml:mn>2</mml:mn></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:mtext>total RD of tumor</mml:mtext></mml:mrow><mml:mrow><mml:mtext>total RD of normal</mml:mtext></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:msub><mml:mi>log</mml:mi><mml:mn>2</mml:mn></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:msub><mml:mi>A</mml:mi><mml:mi>T</mml:mi></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mi>B</mml:mi><mml:mi>T</mml:mi></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mi>A</mml:mi><mml:mi>N</mml:mi></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mi>B</mml:mi><mml:mi>N</mml:mi></mml:msub></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(1)</label>
+</disp-formula>
+<disp-formula id="pcbi.1004618.e002">
+<alternatives>
+<graphic id="pcbi.1004618.e002g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e002" xlink:type="simple"/>
+<mml:math display="block" id="M2" overflow="scroll">
+<mml:mrow><mml:mtext>log</mml:mtext><mml:mn>2</mml:mn><mml:mtext>mBAF</mml:mtext><mml:mo>=</mml:mo><mml:msub><mml:mi mathvariant="normal">log</mml:mi><mml:mn>2</mml:mn></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:mtext>mBAF of tumor</mml:mtext></mml:mrow><mml:mrow><mml:mtext>mBAF of normal</mml:mtext></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:msub><mml:mi>log</mml:mi><mml:mn>2</mml:mn></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:msub><mml:mi>f</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>B</mml:mi><mml:mi>T</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>A</mml:mi><mml:mi>T</mml:mi></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mi>B</mml:mi><mml:mi>T</mml:mi></mml:msub><mml:mo stretchy="false">)</mml:mo><mml:mo stretchy="false">)</mml:mo></mml:mrow><mml:mrow><mml:msub><mml:mi>f</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>B</mml:mi><mml:mi>N</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>A</mml:mi><mml:mi>N</mml:mi></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mi>B</mml:mi><mml:mi>N</mml:mi></mml:msub><mml:mo stretchy="false">)</mml:mo><mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(2)</label>
+</disp-formula>
+where <italic>A</italic><sub><italic>N</italic></sub> and <italic>B</italic><sub><italic>N</italic></sub> (<italic>A</italic><sub><italic>T</italic></sub> and <italic>B</italic><sub><italic>T</italic></sub>) are the normalized read depths carrying A allele and B allele in normal (tumor) at each site by dividing the read depth by the overall depth of coverage of the normal (tumor) sample; mirrored BAF (mBAF) is obtained by the transformation: mBAF = <italic>f</italic><sub><italic>m</italic></sub>(BAF) = |BAF − 0.5|+0.5, originally proposed for the CNV analysis of Illumina SNP array data [<xref rid="pcbi.1004618.ref025" ref-type="bibr">25</xref>]. The mBAF dissolves the arbitrary definition of B allele with respect to haplotype, so that a segmentation-based approach can be readily applicable to this signal. By taking log2 of the ratio of mBAF between tumor and normal instead of using tumor mBAF alone, the log2mBAF signal is more adhere to normal distribution (<xref rid="pcbi.1004618.s003" ref-type="supplementary-material">S2 Fig</xref>). This is a desired feature, because the joint segmentation algorithm we employed (see <xref rid="sec008" ref-type="sec">Joint segmentation</xref> section) assumes normality of the noise.</p>
+</sec>
+<sec id="sec008">
+<title>Joint segmentation</title>
+<p>The genome-wide pattern of the two quantities (log2ratio and log2mBAF) is assumed to follow a piece-wise constant structure–they can be partitioned into consecutive segments with different means, reflecting different copy number status. Importantly, the change points of the two quantities are expected to be concordant, since they are derived from the same genomic alteration profile. To accommodate the two-dimensional SCNA readouts (log2ratio and log2mBAF) simultaneously, we employ an available joint segmentation algorithm [<xref rid="pcbi.1004618.ref016" ref-type="bibr">16</xref>]. This algorithm is a natural generalization of the circular binary segmentation (CBS) algorithm [<xref rid="pcbi.1004618.ref026" ref-type="bibr">26</xref>], extending CBS’s capability of segmenting one-dimensional signal to jointly segmenting multiple-dimensional signals. In our pipeline, it screens the two sequences of data points simultaneouly by a chi-square type of scan statistic in a recursive manner like CBS and results in a set of concordant change points in the two dimensions. The algorithm can approximate the significance level of the scan statistic in an analytic form, so that it has good computational efficiency. Afterwards, median values of each segment in the two dimensions are taken for the downstream SCNA inference.</p>
+</sec>
+<sec id="sec009">
+<title>Merging segments (optional)</title>
+<p>If an excessive number of change points are reported by the segmentation step, a portion of them may be caused by noise and other spatial variability, but not related to actual copy number change. Thus, it is beneficial to reduce the number of artificial change points by merging adjacent segments, for which the median values in either or both dimensions are not substantially different. This may result in reduced false positives and better interpretability. For this purpose, we construct a <italic>χ</italic><sup>2</sup>-type statistic with two degrees of freedom:
+<disp-formula id="pcbi.1004618.e003">
+<alternatives>
+<graphic id="pcbi.1004618.e003g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e003" xlink:type="simple"/>
+<mml:math display="block" id="M3" overflow="scroll">
+<mml:mrow><mml:msup><mml:mi>δ</mml:mi><mml:mn>2</mml:mn></mml:msup><mml:mo>=</mml:mo><mml:msup><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>x</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mn>1</mml:mn></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mover accent="true"><mml:mi>x</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mn>2</mml:mn></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>x</mml:mi></mml:msub><mml:msqrt><mml:mrow><mml:mn>1</mml:mn><mml:mo>/</mml:mo><mml:msub><mml:mi>n</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mo>+</mml:mo><mml:mn>1</mml:mn><mml:mo>/</mml:mo><mml:msub><mml:mi>n</mml:mi><mml:mn>2</mml:mn></mml:msub></mml:mrow></mml:msqrt></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mn>2</mml:mn></mml:msup><mml:mo>+</mml:mo><mml:msup><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mn>1</mml:mn></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mn>2</mml:mn></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>y</mml:mi></mml:msub><mml:msqrt><mml:mrow><mml:mn>1</mml:mn><mml:mo>/</mml:mo><mml:msub><mml:mi>n</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mo>+</mml:mo><mml:mn>1</mml:mn><mml:mo>/</mml:mo><mml:msub><mml:mi>n</mml:mi><mml:mn>2</mml:mn></mml:msub></mml:mrow></mml:msqrt></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mn>2</mml:mn></mml:msup></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(3)</label>
+</disp-formula>
+where <italic>n</italic><sub>1</sub> and <italic>n</italic><sub>2</sub> are the numbers of loci spanning the two adjacent segments; <inline-formula id="pcbi.1004618.e004"><alternatives><graphic id="pcbi.1004618.e004g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e004" xlink:type="simple"/>
+<mml:math display="inline" id="M4" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>x</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mn>1</mml:mn></mml:msub></mml:mrow></mml:math>
+</alternatives></inline-formula> and <inline-formula id="pcbi.1004618.e005"><alternatives><graphic id="pcbi.1004618.e005g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e005" xlink:type="simple"/>
+<mml:math display="inline" id="M5" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>x</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mn>2</mml:mn></mml:msub></mml:mrow></mml:math>
+</alternatives></inline-formula> the median values of log2ratio, and <inline-formula id="pcbi.1004618.e006"><alternatives><graphic id="pcbi.1004618.e006g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e006" xlink:type="simple"/>
+<mml:math display="inline" id="M6" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mn>1</mml:mn></mml:msub></mml:mrow></mml:math>
+</alternatives></inline-formula> and <inline-formula id="pcbi.1004618.e007"><alternatives><graphic id="pcbi.1004618.e007g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e007" xlink:type="simple"/>
+<mml:math display="inline" id="M7" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mn>2</mml:mn></mml:msub></mml:mrow></mml:math>
+</alternatives></inline-formula> the median values of log2mBAF; <inline-formula id="pcbi.1004618.e008"><alternatives><graphic id="pcbi.1004618.e008g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e008" xlink:type="simple"/>
+<mml:math display="inline" id="M8" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>x</mml:mi></mml:msub></mml:mrow></mml:math>
+</alternatives></inline-formula> and <inline-formula id="pcbi.1004618.e009"><alternatives><graphic id="pcbi.1004618.e009g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e009" xlink:type="simple"/>
+<mml:math display="inline" id="M9" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>y</mml:mi></mml:msub></mml:mrow></mml:math>
+</alternatives></inline-formula> are robust estimates of the noise level of the two signals (<xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1A Text</xref>). Instead of assuming a <italic>χ</italic><sup>2</sup>-distribution to test the significance of <italic>δ</italic><sup>2</sup> away from 0, we employ a resampling strategy. The loci within “normal” segments, which are identified by the same procedure as described in the baseline adjustment section, are pooled together by concatenating them to establish the “null” data. From the “null” data, a set of two adjacent segments, with matched sizes as the two observed segments, is randomly drawn and the <italic>δ</italic><sup>2</sup> statistic is calculated for each random sample respectively to establish the null distribution. The nominal p-value is computed as the proportion of the randomly drawn samples with larger <italic>δ</italic><sup>2</sup> statistic than the observed one. Two adjacent segments with p-value greater than a pre-specified cut-off (e.g. 0.05) are merged and this procedure is done recursively until no segments within a chromosome can be merged. In this study, we used 1000 random samples to establish the null distribution. Please refer to <xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1C Text</xref> for more details.</p>
+</sec>
+<sec id="sec010">
+<title>Baseline adjustment</title>
+<p>The accurate quantification of SCNA is complicated by normal cell contamination and tumor cell aneuploidy and heterogeneity, which could distort the baseline of both log2ratio and log2mBAF signals, corresponding to unaltered genomic segments. Therefore, it is critical to corretly identify the baseline, based on which the SCNA state is assigned to each segment. For this purpose, we used a heuristic searching strategy sequentially in log2mBAF and log2ratio dimensions (<xref rid="pcbi.1004618.g002" ref-type="fig">Fig 2B and 2D</xref>). In log2mBAF dimension, we initialize a search of “normal” segments within a restricted window surrounding 0, [−<italic>w</italic>,<italic>w</italic>], in favor of segments with balanced alleles, where <italic>w</italic> is empirically chosen as <inline-formula id="pcbi.1004618.e010"><alternatives><graphic id="pcbi.1004618.e010g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e010" xlink:type="simple"/>
+<mml:math display="inline" id="M10" overflow="scroll"><mml:mrow><mml:mi>ρ</mml:mi><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>y</mml:mi></mml:msub></mml:mrow></mml:math>
+</alternatives></inline-formula> (<italic>ρ</italic> = 0.5 in this study). Then we take as the log2mBAF baseline the mode of segment medians within the window, weighted by the size of segment, i.e., the median of a segment with n loci is counted n times. The segments within the <italic>d</italic> radius of the cluster centered at the identified log2mBAF baseline are assigned “normal” status, where <italic>d</italic> can be chosen as 2<italic>η</italic> or 3<italic>η</italic>. Here, <italic>η</italic> can be the estimated standard deviation from segments falling in the window or simply <inline-formula id="pcbi.1004618.e011"><alternatives><graphic id="pcbi.1004618.e011g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e011" xlink:type="simple"/>
+<mml:math display="inline" id="M11" overflow="scroll"><mml:mrow><mml:mi>r</mml:mi><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>y</mml:mi></mml:msub></mml:mrow></mml:math>
+</alternatives></inline-formula> (<italic>r</italic> = 0.3 in this study), which is more stable based on our experiences in analyzing several real datasets. If no segments can be found in the initial window, we just enlarge the window size <italic>w</italic> as <inline-formula id="pcbi.1004618.e012"><alternatives><graphic id="pcbi.1004618.e012g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e012" xlink:type="simple"/>
+<mml:math display="inline" id="M12" overflow="scroll"><mml:mrow><mml:mn>2</mml:mn><mml:mi>ρ</mml:mi><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>y</mml:mi></mml:msub></mml:mrow></mml:math>
+</alternatives></inline-formula>, <inline-formula id="pcbi.1004618.e013"><alternatives><graphic id="pcbi.1004618.e013g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e013" xlink:type="simple"/>
+<mml:math display="inline" id="M13" overflow="scroll"><mml:mrow><mml:mn>3</mml:mn><mml:mi>ρ</mml:mi><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>y</mml:mi></mml:msub></mml:mrow></mml:math>
+</alternatives></inline-formula> and so on until we can find segments falling in the window. In log2ratio dimension, the mode of segment medians (weighted by segment size) belonging to the cluster of “normal” segments, identified in the log2mBAF dimension, is regarded as the log2raio baseline. This searching strategy works well in the case that a considerable portion of the genome presents balanced alleles (e.g. diploidy or tetraploidy). In the more complicated case where almost the whole genome is altered in an unbalance way, the baseline may need to be adjusted manually. For the fairness in method comparison, we used automatically identified baseline in this study. We provide a feature in the saasCNV package (see <xref rid="sec030" ref-type="sec">discussion</xref> section) that facilitates the users to manually adjust the baseline according to diagnosis plots like <xref rid="pcbi.1004618.g002" ref-type="fig">Fig 2</xref> when necessary.</p>
+<fig id="pcbi.1004618.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004618.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>SCNA profile for the sample PT017 from Dataset II.</title>
+<p>(A) and (B) display SNP array data and (C) and (D) WGS data. In (A) and (C), on the top panel, the log2ratio signal is plotted against chromosomal position and on the bottom panel, the log2mBAF signal. The dots, each representing a locus, are colored alternately to distinguish chromosomes. The segments, each representing a DNA segment resulting from the joint segmentation, are colored based on inferred SCNA status. In (B) and (D), on the main log2mBAF-log2ratio panel, each circle corresponds to a segment in (A) and (C), with the size reflecting the length of the segment; the color code is specified in legend; the dashed gray lines indicate the adjusted baselines. The side panels, corresponding to log2ratio and log2mBAF dimension respectively, show the distribution of median values of each segment.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.g002" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec011">
+<title>SCNA calling</title>
+<p>After baseline adjustment, our method assigns the alteration state to each segment. The possible states include gain, loss, CN-LOH and normal. The gain and loss refer to the total copy number change with respect to the adjusted baseline, while they may or may not present allelic imbalance at the same time. For example, if the baseline copy number (CN) is 2 (<xref rid="pcbi.1004618.g002" ref-type="fig">Fig 2</xref>), CN 0 and 1 are called as loss and CN&gt;2 as gain; if the genome experienced a whole-genome doubling event and exhibits tetraploidy (see <xref rid="sec019" ref-type="sec">results</xref> section), the baseline CN becomes 4 and CN&lt;4 is called as loss and CN&gt;4 as gain. CN-LOH indicates loss of one allele, leading to allelic imbalance, while the total copy number remains unchanged from baseline.</p>
+<p>In SCNA calling, we again adopt the resampling strategy to establish null distribution based on signals from those “normal” segments that are identified in baseline adjustment step. More precisely, we propose three statistics to quantify the alterations in both log2ratio and log2mBAF dimensions from different perspectives:
+<disp-formula id="pcbi.1004618.e014">
+<alternatives>
+<graphic id="pcbi.1004618.e014g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e014" xlink:type="simple"/>
+<mml:math display="block" id="M14" overflow="scroll">
+<mml:mrow><mml:msubsup><mml:mi>δ</mml:mi><mml:mrow><mml:mi>x</mml:mi><mml:mi>y</mml:mi></mml:mrow><mml:mn>2</mml:mn></mml:msubsup><mml:mo>=</mml:mo><mml:msup><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mover accent="true"><mml:mi>x</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>x</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msqrt><mml:mi>n</mml:mi></mml:msqrt></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mn>2</mml:mn></mml:msup><mml:mo>+</mml:mo><mml:msup><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>y</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msqrt><mml:mi>n</mml:mi></mml:msqrt></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mn>2</mml:mn></mml:msup><mml:mo>,</mml:mo><mml:mspace width="0.20em"/><mml:msubsup><mml:mi>δ</mml:mi><mml:mi>x</mml:mi><mml:mn>2</mml:mn></mml:msubsup><mml:mo>=</mml:mo><mml:msup><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mover accent="true"><mml:mi>x</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>x</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msqrt><mml:mi>n</mml:mi></mml:msqrt></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mn>2</mml:mn></mml:msup><mml:mo>,</mml:mo><mml:mspace width="0.20em"/><mml:msubsup><mml:mi>δ</mml:mi><mml:mi>y</mml:mi><mml:mn>2</mml:mn></mml:msubsup><mml:mo>=</mml:mo><mml:msup><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>y</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msqrt><mml:mi>n</mml:mi></mml:msqrt></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mn>2</mml:mn></mml:msup></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(4)</label>
+</disp-formula></p>
+<p>The notations are interpreted in the similar way as in Eq (<xref rid="pcbi.1004618.e003" ref-type="disp-formula">3</xref>). A set of segments with the same length as the segment under consideration is drawn from the pool of loci located in all those “normal” segments. The three statistics are calculated repeatedly for the randomly drawn samples and pooled to form the null distribution for each statistic respectively. The nominal p-values <italic>p</italic><sub><italic>xy</italic></sub>, <italic>p</italic><sub><italic>x</italic></sub>, and <italic>p</italic><sub><italic>y</italic></sub> are then computed as the proportion of randomly drawn values greater than observed values for each statistic. We used 1000 random samples to establish the null distribution in this study. The alteration status is decided with a set of criteria and a pre-specified significance cut-off <italic>θ</italic> (e.g. 0.05) as listed in <xref rid="pcbi.1004618.t001" ref-type="table">Table 1</xref>.</p>
+<table-wrap id="pcbi.1004618.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004618.t001</object-id>
+<label>Table 1</label> <caption><title>Criteria for alteration status calling.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004618.t001g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.t001" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="1" colspan="1">Alteration</th>
+<th align="center" rowspan="1" colspan="1">log2ratio</th>
+<th align="center" rowspan="1" colspan="1">log2mBAF</th>
+<th align="center" rowspan="1" colspan="1">Both dimension</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" rowspan="1" colspan="1">normal<xref rid="t001fn001" ref-type="table-fn"><sup>a</sup></xref></td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>x</italic></sub> &gt; <italic>θ</italic><xref rid="t001fn003" ref-type="table-fn"><sup>c</sup></xref></td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>y</italic></sub> &gt; <italic>θ</italic></td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>xy</italic></sub> &gt; <italic>θ</italic></td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">gain (imbalanced)</td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>x</italic></sub> &lt; <italic>θ</italic> and <inline-formula id="pcbi.1004618.e015"><alternatives><graphic id="pcbi.1004618.e015g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e015" xlink:type="simple"/>
+<mml:math display="inline" id="M15" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>x</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mo>&gt;</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:math>
+</alternatives></inline-formula></td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>y</italic></sub> &lt; <italic>θ</italic> and <inline-formula id="pcbi.1004618.e016"><alternatives><graphic id="pcbi.1004618.e016g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e016" xlink:type="simple"/>
+<mml:math display="inline" id="M16" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mo>&gt;</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:math>
+</alternatives></inline-formula></td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>xy</italic></sub> &lt; <italic>θ</italic></td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">gain (balanced)<xref rid="t001fn002" ref-type="table-fn"><sup>b</sup></xref></td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>x</italic></sub> &lt; <italic>θ</italic> and <inline-formula id="pcbi.1004618.e017"><alternatives><graphic id="pcbi.1004618.e017g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e017" xlink:type="simple"/>
+<mml:math display="inline" id="M17" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>x</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mo>&gt;</mml:mo><mml:mi>u</mml:mi><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>x</mml:mi></mml:msub></mml:mrow></mml:math>
+</alternatives></inline-formula> <xref rid="t001fn004" ref-type="table-fn"><sup>d</sup></xref></td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>y</italic></sub> &gt; <italic>θ</italic> and <inline-formula id="pcbi.1004618.e018"><alternatives><graphic id="pcbi.1004618.e018g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e018" xlink:type="simple"/>
+<mml:math display="inline" id="M18" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mo>&gt;</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:math>
+</alternatives></inline-formula></td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>xy</italic></sub> &lt; <italic>θ</italic></td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">loss (imbalanced)</td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>x</italic></sub> &lt; <italic>θ</italic> and <inline-formula id="pcbi.1004618.e019"><alternatives><graphic id="pcbi.1004618.e019g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e019" xlink:type="simple"/>
+<mml:math display="inline" id="M19" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>x</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mo>&lt;</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:math>
+</alternatives></inline-formula></td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>y</italic></sub> &lt; <italic>θ</italic> and <inline-formula id="pcbi.1004618.e020"><alternatives><graphic id="pcbi.1004618.e020g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e020" xlink:type="simple"/>
+<mml:math display="inline" id="M20" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mo>&gt;</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:math>
+</alternatives></inline-formula></td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>xy</italic></sub> &lt; <italic>θ</italic></td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">loss (balanced) <xref rid="t001fn002" ref-type="table-fn"><sup>b</sup></xref></td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>x</italic></sub> &lt; <italic>θ</italic> and <inline-formula id="pcbi.1004618.e021"><alternatives><graphic id="pcbi.1004618.e021g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e021" xlink:type="simple"/>
+<mml:math display="inline" id="M21" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>x</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mo>&lt;</mml:mo><mml:mo>−</mml:mo><mml:mi>u</mml:mi><mml:msub><mml:mover accent="true"><mml:mi>σ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>x</mml:mi></mml:msub></mml:mrow></mml:math>
+</alternatives></inline-formula><xref rid="t001fn004" ref-type="table-fn"><sup>d</sup></xref></td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>y</italic></sub> &gt; <italic>θ</italic> and <inline-formula id="pcbi.1004618.e022"><alternatives><graphic id="pcbi.1004618.e022g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e022" xlink:type="simple"/>
+<mml:math display="inline" id="M22" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mo>&gt;</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:math>
+</alternatives></inline-formula></td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>xy</italic></sub> &lt; <italic>θ</italic></td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">CN-LOH</td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>x</italic></sub> &gt; <italic>θ</italic></td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>y</italic></sub> &lt; <italic>θ</italic> and <inline-formula id="pcbi.1004618.e023"><alternatives><graphic id="pcbi.1004618.e023g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e023" xlink:type="simple"/>
+<mml:math display="inline" id="M23" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mo>&gt;</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:math>
+</alternatives></inline-formula></td>
+<td align="center" rowspan="1" colspan="1"><italic>p</italic><sub><italic>xy</italic></sub> &lt; <italic>θ</italic></td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">undecided</td>
+<td align="center" rowspan="1" colspan="1">otherwise</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1"/>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t001fn001"><p><sup>a</sup> The segments initially assigned of normal status in the baseline adjustment step also undergo the SCNA calling step, which is intent to refine the inference from the initial heuristic search.</p></fn>
+<fn id="t001fn002"><p><sup>b</sup> Balanced gains and losses are much less common than imbalanced gains and losses. See <xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1D Text</xref> for more details.</p></fn>
+<fn id="t001fn003"><p><sup>c</sup> <italic>θ</italic> = 0.05 in this study unless specifically noted otherwise.</p></fn>
+<fn id="t001fn004"><p><sup>d</sup> <italic>u</italic> = 1.5 in this study.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<p>We acknowledge that the definition may miss some rare cases due to the complexity of cancer genome. A further goal beyond calling SCNA status qualitatively is to provide an estimate of absolute copy number for each segment with normal cell contamination and tumor heterogeneity taken into account. In the <xref rid="sec019" ref-type="sec">Results</xref> section, we show an example where incorporating BAF substantially improved the copy number inference from total read depth alone. We will approach this goal in future works.</p>
+</sec>
+<sec id="sec012">
+<title>Application to SNP array data</title>
+<p>SNP array generates counterparts of the two dimensions of information we derived from NGS, therefore SAAS-CNV can be readily applied to SNP array data. For example, Illumina SNP array generates two quantities, log R ratio (LRR) and B allele frequency (BAF)[<xref rid="pcbi.1004618.ref007" ref-type="bibr">7</xref>]. LRR reflects total copy number and can be directly taken as log2ratio, while BAF is defined in the same way as for NGS data, except that the signals from the alleles are measured by fluorescent intensities with SNP array, instead of allele specific read depths with NGS. Following the same transformation in Eq (<xref rid="pcbi.1004618.e002" ref-type="disp-formula">2</xref>), log2mBAF can be derived from tumor and normal BAF values. Shown in <xref rid="sec019" ref-type="sec">Results</xref> section, SAAS-CNV was applied to Illumina SNP array data of HCC tumor-normal tissue pairs (e.g., <xref rid="pcbi.1004618.g002" ref-type="fig">Fig 2A</xref>).</p>
+</sec>
+</sec>
+<sec id="sec013">
+<title>Data analysis</title>
+<p>For both datasets, a standard implementation of NGS analysis pipeline following the GATK best practices for variant detection [<xref rid="pcbi.1004618.ref017" ref-type="bibr">17</xref>,<xref rid="pcbi.1004618.ref021" ref-type="bibr">21</xref>,<xref rid="pcbi.1004618.ref022" ref-type="bibr">22</xref>] was applied to the raw FASTQ files to generate recalibrated and deduplicated high-quality BAM files [<xref rid="pcbi.1004618.ref027" ref-type="bibr">27</xref>], as well as VCF files containing detected SNVs and Indels. Information retrieved from biallelic heterozygous sites were processed by our SCNA analysis pipeline (<xref rid="pcbi.1004618.g001" ref-type="fig">Fig 1</xref>). Illumina SNP array data was processed to generate log2ratio and log2mBAF signals in a similar way for downstream analysis. Detailed data analysis steps are described in <xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1B Text</xref>.</p>
+<sec id="sec014">
+<title>Dataset I</title>
+<p>We applied SAAS-CNV to analyze both WES and WGS data in Dataset I. On WES data, we compared our method with ExomeCNV [<xref rid="pcbi.1004618.ref013" ref-type="bibr">13</xref>] and PatternCNV [<xref rid="pcbi.1004618.ref014" ref-type="bibr">14</xref>]. ExomeCNV was designed specifically for matched tumor-normal WES data, taking total read depth from BAM files for copy number inference and BAF information from VCF files for CN-LOH inference. Instead of using matched normal, PatternCNV [<xref rid="pcbi.1004618.ref014" ref-type="bibr">14</xref>] was recently developed to take a group of normal samples as reference to acount for both spatial average and variance patterns of read depth. For PatternCNV, every NA18507 replicate was treated as tumor in turn, and constrasted with the rest five replicates as normal.</p>
+<p>On WGS data, we compared our method with CNAnorm [<xref rid="pcbi.1004618.ref005" ref-type="bibr">5</xref>] and Control-FREEC [<xref rid="pcbi.1004618.ref015" ref-type="bibr">15</xref>]. CNAnorm was developed for the tumor-normal setting and capable of correcting for normal cell contamination and accounting for tumor aneuploidy. It retrieves total read depth information from BAM files as input. Control-FREEC can utilize both total read depth and BAF for CNV and CN-LOH inference. It extracted the two types of information from pileup format files [<xref rid="pcbi.1004618.ref027" ref-type="bibr">27</xref>].</p>
+</sec>
+<sec id="sec015">
+<title>Dataset II</title>
+<p>We applied six different methods on three different data platforms in Dataset II: SAAS-CNV on WGS, synthesized WES and SNP array, CNAnorm, Control-FREEC and CREST [<xref rid="pcbi.1004618.ref028" ref-type="bibr">28</xref>] on WGS, ExomeCNV on synthesized WES, and GAP [<xref rid="pcbi.1004618.ref029" ref-type="bibr">29</xref>] on SNP array. We compared these methods from the following three perspectives.</p>
+</sec>
+<sec id="sec016">
+<title>1) Accuracy in SCNA detection</title>
+<p>For this comparison, we used the results from Genome Alteration Print (GAP) [<xref rid="pcbi.1004618.ref029" ref-type="bibr">29</xref>] on SNP array data to serve as benchmark. GAP uses both total copy number and BAF information for SCNA inference, and it is able to estimate tumor purity and automatically decide the baseline copy number in tumors with complex SCNA profile when normal cell contamination exists. It also provides intuitive visualization method that allows users to visually check the results and manually correct them when necessary. We manually reviewed and validated all the GAP results. We chose SNP array platform as benchmark for at least three reasons: 1) A majority of SCNAs is large and can be captured by high density SNP array (see <xref rid="sec019" ref-type="sec">Results</xref> section). A well-designed method for sequencing platfrom is expected to perform well on large SCNAs. 2) SNP array presents better signal-to-noise ratio than sequencing with moderate coverage (see <xref rid="sec019" ref-type="sec">Results</xref> section). 3) SNP array has been and is still widely used in large-scale cancer studies. Since CNAnorm only calls copy number loss and gain, all other SCNA states (e.g. normal, CN-LOH) were collapsed down to one category, named “non-CNV”. The unit for comparison is segment rather than individual locus. We define the overlap rate of two CNV segments, detected respectively from two different analyses for the same sample, as the ratio of the length of the intersection of the two segments to the length of their union. The two segments are called consensus if their overlap rate passes a pre-determined threshold (e.g. 50%). We picked all the consensus segments from the two analyses under comparison and counted the number of the segments falling into each category (cell) of the contingency tables in <xref rid="pcbi.1004618.g003" ref-type="fig">Fig 3</xref>. We define concordance, sensitivity and specificity as the ratio of the total count in red cells to the total count in blue-border cells, respectively. Receiver operating characteristic (ROC) curves were generated by varying p-value threshold (<xref rid="pcbi.1004618.t001" ref-type="table">Table 1</xref>) for SAAS-CNV, by varying copy number threshold for CNAnorm and Control-FREEC, and by varying segment log2ratio threshold for ExomeCNV.</p>
+<fig id="pcbi.1004618.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004618.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Definition of different accuracy indices.</title>
+<p>Each of the indices is defined as the ratio of the total count in red cells to the total count in blue-border cells. (A) Concordance. (B) Sensitivity. (C) Specificity.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.g003" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec017">
+<title>2) Accuracy in identification of change points</title>
+<p>For this comparison, we used the results from CREST [<xref rid="pcbi.1004618.ref028" ref-type="bibr">28</xref>] applied to WGS data as benchmark. CREST utilizes soft-clipped reads, a type of information orthogonal to sequencing depth, for structural variant (SV) calling. The change points can be detected up to single base pair resolution. We regarded those change points supported by at least five soft-clipped reads as real ones and used them as reference. We checked whether the change points, which were actually boundaries of neighoring segments produced by segmentation from different methods, were consistent with the reference. A change point found by CREST is considered as detected by a segmentation-based method if there exist two neighboring segments such that the CREST change point falls in the gap between the two segments (i.e., between the right boundary of the 5’ segment and the left boundary of the 3’ segment).</p>
+</sec>
+<sec id="sec018">
+<title>3) Computational time</title>
+<p>We ran all the tools on a Linux high performance cluster with AMD 2.3GHz CPUs. The computational time was unified into single thread CPU time.</p>
+</sec>
+</sec>
+</sec>
+<sec id="sec019" sec-type="results">
+<title>Results</title>
+<sec id="sec020">
+<title>An illustration of the data and method</title>
+<p>First, we present a visualization of the processed signals and the results from SAAS-CNV. <xref rid="pcbi.1004618.g002" ref-type="fig">Fig 2</xref> demonstrates a typical example taken from the analysis of Dataset II. The 2-dimensional profiles (log2ratio and log2mBAF) from SNP array (<xref rid="pcbi.1004618.g002" ref-type="fig">Fig 2A and 2B</xref>) and WGS (<xref rid="pcbi.1004618.g002" ref-type="fig">Fig 2C and 2D</xref>) were processed for genome-wide SCNA detection. The signals in the two dimensions are altered by copy number gains and losses, showing consistent patterns of changes, for both platforms. The alteration status assigned to each segment is highly consistent between the two platforms (<xref rid="pcbi.1004618.g002" ref-type="fig">Fig 2A and 2C</xref>). We projected the medians of log2ratio and log2mBAF of each segment onto a 2-D space for SNP array and WGS respectively, confirming the consistency of the inference drawn from the two platforms (<xref rid="pcbi.1004618.g002" ref-type="fig">Fig 2B and 2D</xref>). Segments with the same alteration status are clustered together. Segments with less difference in log2ratio dimension may be distinguished in log2mBAF dimension, suggesting the valuable information added from BAF for SCNA inference. It is noticed that the original baselines in both dimensions deviate substantially from zero (<xref rid="pcbi.1004618.g002" ref-type="fig">Fig 2B and 2D</xref>), and simply using zero as baseline for SCNA inference would result in many false positive calls, underscoring the necessity of baseline adjustment.</p>
+</sec>
+<sec id="sec021">
+<title>Analysis of Dataset I (where H<sub>o</sub> is true)</title>
+<sec id="sec022">
+<title>Analysis of NA18507 WES data</title>
+<p>Processed with the GATK pipeline [<xref rid="pcbi.1004618.ref017" ref-type="bibr">17</xref>], the NA18507 WES data shows high depth of coverage, ranging from 75.5x to 110.1x (<xref rid="pcbi.1004618.s015" ref-type="supplementary-material">S1 Table</xref>). The average read depths at heterozygous loci are about 25% smaller, ranging from 57.6x to 79.9x (<xref rid="pcbi.1004618.s015" ref-type="supplementary-material">S1 Table</xref>), because only mappable reads passing certain quality control criteria were used for SNV and Indel calling.</p>
+<p>To check the data quality, we investigated the correlation of total read depths between normal and tumor data of each synthesized pair across heterozygous sites in the analysis with SAAS-CNV and across exonic regions (exome) in the analysis with ExomeCNV (<xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1J Text</xref>). In NGS data, the non-uniform variability in total read depth is commonly observed. It is unrelated to copy number change but due to non-uniform distribution of GC-content, differential sequencing efficiency in different genomic regions, and other artifacts. This variability is more pronounced in WES, since the exonic DNA sequences are not captured equivalently. This issue could affect SCNA detection and result in false positives. Fortunately, in the normal-tumor pair study design, the undesired variability can be neutralized by contrasting read depth from tumor and paired normal samples [<xref rid="pcbi.1004618.ref013" ref-type="bibr">13</xref>]. A large correlation coefficient implies that the artificial variability is spatially correlated across the genome between the two samples and thus is likely to be remedied (also see <xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1L Text</xref>). For tumor-normal pairs synthesized by sequencing replicates (Materials and Methods, Dataset I), the correlation is very large (<xref rid="pcbi.1004618.g004" ref-type="fig">Fig 4A</xref> and <xref rid="pcbi.1004618.s017" ref-type="supplementary-material">S3 Table</xref>). We also noticed that the strength of correlations in the two analyses are comparable, although the read depth was summarized in different ways (<xref rid="pcbi.1004618.g004" ref-type="fig">Fig 4A</xref>).</p>
+<fig id="pcbi.1004618.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004618.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Comparison of results from ExomeCNV and SAAS-CNV on NA18507 WES data.</title>
+<p>(A) Correlation of total read depths between each synthesized tumor-normal pair for ExomeCNV versus SAAS-CNV. (B) The number of false positives for CNV and CN-LOH. (C) The size of false CNV and CN-LOH calls. (D) The number of false CNV calls versus the correlation. In (A) and (D), each dot represents a synthesized pair. In (A), the dashed line indicates the line with slope 1. In (D), the black line indicates the fitted linear regression line for ExomeCNV and gray line for SAAS-CNV. In (B) and (C), p-values are based on paired t-test.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.g004" position="float" xlink:type="simple"/>
+</fig>
+<p>Next, we compared the CNVs and CN-LOHs called by the two methods. They are false positives in the context of our experimental design. ExomeCNV detected significantly more false positives than SAAS-CNV (<xref rid="pcbi.1004618.g004" ref-type="fig">Fig 4B</xref>), although the parameters controlling specificity was set more stringent than default values (<xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1E Text</xref>). The sizes of detected CNVs and CN-LOHs by ExomeCNV are also orders of magnitude larger than those by SAAS-CNV (<xref rid="pcbi.1004618.g004" ref-type="fig">Fig 4C</xref>). With a closer inspection on the intermediate results from the bottom-up merging step of ExomeCNV (<xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1E Text</xref>), some large segments were called CNVs/CN-LOHs merely because they spanned several exons that were called as CNVs/CN-LOHs at single exon level. This is an intrinsic drawback of the bottom-up strategy. For SAAS-CNV, we noticed that 36% falsely detected CNVs/CN-LOHs span 10 heterozygous loci, which is the pre-defined lower bound of segment size (<xref rid="pcbi.1004618.s004" ref-type="supplementary-material">S3A Fig</xref>). We also found that the average read depths in the detected 10-locus regions are smaller than those of randomly picked 10-locus regions (<xref rid="pcbi.1004618.s004" ref-type="supplementary-material">S3B Fig</xref>). Therefore, a large portion of SAAS-CNV false positives is attribute to low coverage in some exonic regions, a limitation of WES platform.</p>
+<p>Further, we investigated the robustness of the methods with respect to data variability. For both methods, we observed that the number of false positives increases as the correlation of total read depth between the paired sequencing replicates decreases (<xref rid="pcbi.1004618.g004" ref-type="fig">Fig 4D</xref>). Such impact is more pronounced in ExomeCNV performance (note the y-axis in <xref rid="pcbi.1004618.g004" ref-type="fig">Fig 4D</xref> is on log10 scale).</p>
+<p>Moreover, to check whether incorporating log2mBAF helps enhance the specificity and robustness, we compared the analysis using log2ratio alone to the method jointly using both log2ratio and log2mBAF. The joint method produced less false positives and was more robust to the signal variability (<xref rid="pcbi.1004618.s005" ref-type="supplementary-material">S4 Fig</xref>).</p>
+<p>Finally, we compared SAAS-CNV with PatternCNV [<xref rid="pcbi.1004618.ref014" ref-type="bibr">14</xref>]. PatternCNV calls CNVs from a tumor sample by contrasting it with a collection of multiple normal samples as reference instead of one matched normal sample. PatternCNV is different from other read depth based methods in that the exon-wise read depth was calculated by weighted average of read depths of multiple bins within the exon, where the weight are inversely proportional to the variance of bin-wise read depth estimated from the multiple normal samples. Though the noise level is expected to be further reduced by taking advantage of more reference samples, we still observed more false postives incurred from PatternCNV than SAAS-CNV (see <xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1F Text</xref>, <xref rid="pcbi.1004618.s006" ref-type="supplementary-material">S5 Fig</xref> and <xref rid="pcbi.1004618.s007" ref-type="supplementary-material">S6 Fig</xref> for more details). PatternCNV provides CNV calls at exon level but does not aggregate exon-wise CNV calls to segment level, although it provides an option of segmenting log2ratio signal by CBS [<xref rid="pcbi.1004618.ref026" ref-type="bibr">26</xref>] merely for visualization purpose. Therefore, it is difficult to interpret the PatternCNV results in real data analysis. Since the comparison of all other methods based on Dataset II was at segment level, we did not apply PatternCNV to Dataset II (<xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1F Text</xref>).</p>
+<p>In summary, SAAS-CNV benefits from the top-down segmentation strategy and allele specific information in terms of less false positives and better robustness to noisy data as compared with ExomeCNV and PatternCNV, which utilized total read depth information alone. We factor two main reasons into its good performance: 1) With long-range large segments rather than local small segments, especially with the aid of more stable log2mBAF signal, SAAS-CNV can anchor the global baseline more easily, so that incorrect SCNA calls for large segment can be avoided (<xref rid="pcbi.1004618.s006" ref-type="supplementary-material">S5 Fig</xref>); 2) in SCNA calling step, it prevented a majority of outliers in log2ratio from being called as SCNAs with the evidence in log2mBAF (<xref rid="pcbi.1004618.s006" ref-type="supplementary-material">S5C Fig</xref>).</p>
+</sec>
+<sec id="sec023">
+<title>Analysis of NA18507 WGS data</title>
+<p>On WGS data, we investigated similar metrics as in WES study. SAAS-CNV was compared to CNAnorm [<xref rid="pcbi.1004618.ref005" ref-type="bibr">5</xref>] and Control-FREEC [<xref rid="pcbi.1004618.ref015" ref-type="bibr">15</xref>]. CNAnorm and Control-FREEC retrieved mappable reads from BAM files and took 1kb non-overlapping window as basic unit (locus) within which the average total read depth was calculated. The processed WGS data show moderate depth, ranging from 33.8x to 61.9x (<xref rid="pcbi.1004618.s016" ref-type="supplementary-material">S2 Table</xref>). The average read depth across heterozygous sites for SAAS-CNV was comparable with the average read depth across all 1kb windows for CNAnorm and Control-FREEC (<xref rid="pcbi.1004618.s018" ref-type="supplementary-material">S4 Table</xref>).</p>
+<p>The Pearson correlation coefficients of read depths between pairs of replicated samples were calculated across heterozygous sites for SAAS-CNV and across 1kb windows for CNAnorm and Control-FREEC (<xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1J Text</xref>). The former is substantially smaller than the latter, although windows with extremely large read depth were excluded from calculation of correlation (<xref rid="pcbi.1004618.s015" ref-type="supplementary-material">S1J Text</xref> and <xref rid="pcbi.1004618.s018" ref-type="supplementary-material">S4 Table</xref>). This is not beyond expectation because more short reads were involved within 1kb intervals than at single heterozygous sites, leading to more consistent read depth profile between replicates. Nevertheless, SAAS-CNV still called less false positive CNVs than CNAnorm and Control-FREEC (<xref rid="pcbi.1004618.g005" ref-type="fig">Fig 5A</xref>), and the false CNVs are smaller in size than CNAnorm or Control-FREEC (<xref rid="pcbi.1004618.g005" ref-type="fig">Fig 5B</xref>). Control-FREEC produced hundreds more of smaller false CN-LOH calls than SAAS-CNV (<xref rid="pcbi.1004618.g005" ref-type="fig">Fig 5A and 5B</xref>). The main reason could be that Control-FREEC tried to exclude homozygous loci by applying a binomial distribution model with fixed probability of sequencing error on allelic specific read depth in tumor [<xref rid="pcbi.1004618.ref015" ref-type="bibr">15</xref>] rather than taking advantage of the actual genotype inferred from matched normal, resulting in many small blocks of putative heterozygous loci, which are in fact homozygous loci.</p>
+<fig id="pcbi.1004618.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004618.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>NA18507 WGS analysis results from SAAS-CNV, Control-FREEC and CNAnorm.</title>
+<p>The number (A) and the size (B) of falsely called alterations are compared between the three methods stratified by CNVs and CN-LOHs. CNAnorm only detects copy number gain and loss but not CN-LOHs. In (A), the p-values are based on paired Wilcoxon signed-rank test and have the same value due to the nature of rank-based test. In (B), the p-value is from two-sample t-test on the sets of falsely called CNVs (or CN-LOHs) pooled across the 6 pairs for each method respectively.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.g005" position="float" xlink:type="simple"/>
+</fig>
+<p>Similar to the WES study, a large portion of the false positive SCNAs (70.1%) detected by SAAS-CNV span 10 heterozygous loci, which is again the smallest possible size set by our threshold (<xref rid="pcbi.1004618.s008" ref-type="supplementary-material">S7A Fig</xref>). This can also be explained by the low depth of coverage in these 10-locus regions (<xref rid="pcbi.1004618.s008" ref-type="supplementary-material">S7B Fig</xref>). From <xref rid="pcbi.1004618.s009" ref-type="supplementary-material">S8 Fig</xref>, we can clearly see the advantage of the joint analysis over the analysis based on log2ratio alone for WGS data.</p>
+</sec>
+</sec>
+<sec id="sec024">
+<title>Analysis of Dataset II (where H<sub>a</sub> is true)</title>
+<p>We processed the HKU HCC WGS data, consisting of 88 pairs of tumor and adjacent normal tissues, with the standard implementation of GATK pipeline [<xref rid="pcbi.1004618.ref017" ref-type="bibr">17</xref>]. The average read depths of 86 pairs are moderate, ranging from 24.8x to 71.5x, with two pairs sequenced at higher depth (&gt;120x). The average effective read depths measured at heterozygous sites range from 18.2x to 99.8x, composing 68%~90% of available read depth (<xref rid="pcbi.1004618.s002" ref-type="supplementary-material">S1 Fig</xref>). We applied SAAS-CNV, CNVnorm and Control-FREEC on the 88 pairs of normal-HCC samples. Further, we synthesized WES data by retrieving reads located in exonic regions from WGS data. The synthesized WES data was used to test the performance of SAAS-CNV and ExomeCNV. We also applied SAAS-CNV and GAP on the SNP array data from the same samples. As stated above, the GAP results on SNP array data were used as “truth” in benchmarking other SCNA methods.</p>
+<p>Some basic metrics from these analyses are summarized in <xref rid="pcbi.1004618.g006" ref-type="fig">Fig 6</xref>. WGS provides millions of data points (loci) per sample while SNP array and WES provides hundreds of thousands of data points (loci) (<xref rid="pcbi.1004618.g006" ref-type="fig">Fig 6A</xref>). Since SAAS-CNV takes heterozygous loci as input, it utilizes less number of loci than competing methods. For example, only tens of thousands of loci were used by SAAS-SNV in WES data. On SNP array data, SAAS-CNV and GAP produced comparable number of segments per sample (<xref rid="pcbi.1004618.g006" ref-type="fig">Fig 6B</xref>), as well as comparable segment size in terms of locus number per segment (<xref rid="pcbi.1004618.g006" ref-type="fig">Fig 6C</xref>) and physical length (<xref rid="pcbi.1004618.g006" ref-type="fig">Fig 6D</xref>). On WES and WGS data, the competing methods tended to chop the genome into smaller segments (<xref rid="pcbi.1004618.g006" ref-type="fig">Fig 6B</xref>) than SAAS-CNV (<xref rid="pcbi.1004618.g006" ref-type="fig">Fig 6C and 6D</xref>).</p>
+<fig id="pcbi.1004618.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004618.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>Summary of SCNA results for Dataset II.</title>
+<p>SAAS-CNV and ExomeCNV were applied on synthesized WES data, SAAS-CNV and GAP on SNP array data, and SAAS-CNV, CNAnorm and Control-FREEC on WGS data. (A) Number of loci on autosome per sample. (B) Number of segments per sample. (C) Number of loci involved in each segment. (D) The size (in bp) of each segment. In each sub-plot, y-axis is displayed on log10 scale.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.g006" position="float" xlink:type="simple"/>
+</fig>
+<sec id="sec025">
+<title>Accuracy in SCNA detection</title>
+<p>We used GAP results on SNP array data as “truth” in comparison. To make sure GAP correctly set the baseline and detected different types of alterations, we visually checked all the results from GAP for each sample with its visualization tools. GAP did not perform satisfactorily on four samples due to large noise of the data. Further, manual correction is not possible for these four sample, so we exclueded them from downstream analysis. We manually adjusted the GAP results of six out of the remaining 84 samples, where either the baseline or the tumor purity was not correctly estimated.</p>
+<p>At the overlap rate threshold of 50%, we measured the ROC curves for different analyses (<xref rid="pcbi.1004618.g007" ref-type="fig">Fig 7A</xref>). We noted that the log2mBAF criterion (<xref rid="pcbi.1004618.t001" ref-type="table">Table 1</xref>) prevented SAAS-CNV from calling some segments as gain/loss even if the p-value threshold was set to 1, so the SAAS-CNV results never reached 0 specificity in ROC curve. Control-FREEC provided integer copy number estimation for each segment and its ROC curve can not reach 0 specificity either, because the baseline copy number could never be called as gain or loss even though the threshold was reduced to zero copy. It is not surprising that SAAS-CNV results on SNP array data were the best among all the analyses, given the results were derived from the same platform as the “truth” (GAP results on SNP array data). The SAAS-CNV analysis on WGS and WES data resulted in favorable performance as compared to competing methods for different platforms respectively. As the overlap rate varies from 10% to 90% (<xref rid="pcbi.1004618.s010" ref-type="supplementary-material">S9 Fig</xref>), the relative performance of these methods remains similar to what appears in <xref rid="pcbi.1004618.g007" ref-type="fig">Fig 7A</xref>. Interestingly, WES only covers about 1% of the loci of WGS (<xref rid="pcbi.1004618.g006" ref-type="fig">Fig 6A</xref>) in SAAS-CNV analysis, but the result from WES is almost comparable with that of WGS. However, we should be cautious with the performance of SAAS-CNV and ExomeCNV on WES in this case, because real WES data may have larger noise than the synthesized WES data due to the target capture procedure.</p>
+<fig id="pcbi.1004618.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004618.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Comparison of results from six analyses on Dataset II.</title>
+<p>The results from GAP analysis on SNP array data are treated as benchmark. (A) ROC curves for different analyses coded in different lines. The overlap rate threshold is 50%. (B) The concordence of SCNA calls (black) and the percentage of consensus segments (blue) for the six analyses (coded the same way as in (A)), as the overlap rate threshold varies.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.g007" position="float" xlink:type="simple"/>
+</fig>
+<p>In <xref rid="pcbi.1004618.g007" ref-type="fig">Fig 7B</xref>, as the overlap rate threshold increases, the percentage of segments passing consensus criterion (see <xref rid="sec002" ref-type="sec">methods</xref> section) decreases for all the analyses (blue lines), with the SAAS-CNV analysis on WES being the lowest mainly due to much lower locus density (<xref rid="pcbi.1004618.g006" ref-type="fig">Fig 6A</xref>). With more stringent overlap criterion (e.g., &gt;40%), the percentage of consensus segments produced by SAAS-CNV on WGS and SNP array and CNAnorm are roughly the same and higher than Control-FREEC and ExomeCNV. Control-FREEC on WGS provides as many consenus segments as ExomeCNV on WES, suggesting its poor performance in segmentation, provided that WGS has much higher resolution than WES. As another accuracy measurement, the concordance of segment SCNA status remains stable as the overlap threshold varies (black lines). SAAS-CNV also performs better than competing methods. In summary, we demonstrated with a large empirical dataset that SAAS-CNV, by efficiently using both total and allelic specific read depth information in segmentation and SCNA calling, outperformed competing methods on each platform, for which these methods were specifically developed.</p>
+<p>Analyzing empirical data (Dataset II) also provides guidance on the choice of p-value threshold (<xref rid="pcbi.1004618.t001" ref-type="table">Table 1</xref>) for SAAS-CNV. Based on the ROC curves (<xref rid="pcbi.1004618.g007" ref-type="fig">Fig 7A</xref>), when the p-value threshold was at 0.001, 0.005, 0.01, and 0.05 (corresponding the second through the fifth points counting from bottom left corner along the curves), the sensitivity and specificity were rather stable (both around 90%). More stringent p-value threshold led to higher specificity and lower sensitivity and vice versa. In practice, p-value threshold is recommended in the range from 0.001 to 0.05, depending on the users’ preference for sensitivity and/or specificity.</p>
+</sec>
+<sec id="sec026">
+<title>Accuracy in SCNA change point detection</title>
+<p>A total of 1518 genomic structure variant (SV) change points in 58 tumors was identified by CREST, where only the change points with evidence from at least 5 soft-clipped reads were considered as real ones. We investigated the SCNA detection methods’ abilities in accurately detecting the SV change point (<xref rid="pcbi.1004618.t002" ref-type="table">Table 2</xref>). For WGS, SAAS-CNV correctly identified more change points than CNAnorm and Control-FREEC at comparable resolution. Considering CNAnorm and Control-FREEC partitioned the genome into much more segments than SAAS-CNV, the accuray of SAAS-CNV was considerably better than competitors. On SNP array data, SAAS-CNV again correctly identified more change points than GAP. On WES data, SAAS-CNV did not perform as well as ExomeCNV in change point detection mainly due to the limited number of heterozygous loci within exonic regions.</p>
+<table-wrap id="pcbi.1004618.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004618.t002</object-id>
+<label>Table 2</label> <caption><title>Accuracy in change point detection.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004618.t002g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.t002" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="1" colspan="1">Method</th>
+<th align="center" rowspan="1" colspan="1">Platform</th>
+<th align="center" rowspan="1" colspan="1">CREST change point detected<xref rid="t002fn001" ref-type="table-fn"><sup>a</sup></xref></th>
+<th align="center" rowspan="1" colspan="1">#segments per sample<xref rid="t002fn002" ref-type="table-fn"><sup>b</sup></xref></th>
+<th align="center" rowspan="1" colspan="1">Distance (kb)<xref rid="t002fn003" ref-type="table-fn"><sup>c</sup></xref></th>
+<th align="center" rowspan="1" colspan="1">Locus density (#loci/Mb)<xref rid="t002fn004" ref-type="table-fn"><sup>d</sup></xref></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" rowspan="1" colspan="1">GAP</td>
+<td align="center" rowspan="1" colspan="1">SNP array</td>
+<td align="center" rowspan="1" colspan="1">16.9%</td>
+<td align="center" rowspan="1" colspan="1">97 (44)</td>
+<td align="center" rowspan="1" colspan="1">3.7 (3.2)</td>
+<td align="center" rowspan="1" colspan="1">219</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">SAAS-CNV</td>
+<td align="center" rowspan="1" colspan="1">SNP array</td>
+<td align="center" rowspan="1" colspan="1">23.9%</td>
+<td align="center" rowspan="1" colspan="1">110 (46)</td>
+<td align="center" rowspan="1" colspan="1">17.0 (19.6)</td>
+<td align="center" rowspan="1" colspan="1">58</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">SAAS-CNV</td>
+<td align="center" rowspan="1" colspan="1">WES</td>
+<td align="center" rowspan="1" colspan="1">9.4%</td>
+<td align="center" rowspan="1" colspan="1">57 (25)</td>
+<td align="center" rowspan="1" colspan="1">240.7 (290.5)</td>
+<td align="center" rowspan="1" colspan="1">10</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">ExomeCNV</td>
+<td align="center" rowspan="1" colspan="1">WES</td>
+<td align="center" rowspan="1" colspan="1">19.6%</td>
+<td align="center" rowspan="1" colspan="1">93 (65)</td>
+<td align="center" rowspan="1" colspan="1">29.5 (40.2)</td>
+<td align="center" rowspan="1" colspan="1">122</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">SAAS-CNV</td>
+<td align="center" rowspan="1" colspan="1">WGS</td>
+<td align="center" rowspan="1" colspan="1">28.3%</td>
+<td align="center" rowspan="1" colspan="1">289 (163)</td>
+<td align="center" rowspan="1" colspan="1">1.2 (1.4)</td>
+<td align="center" rowspan="1" colspan="1">751</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">CNAnorm</td>
+<td align="center" rowspan="1" colspan="1">WGS</td>
+<td align="center" rowspan="1" colspan="1">24.9%</td>
+<td align="center" rowspan="1" colspan="1">499 (153)</td>
+<td align="center" rowspan="1" colspan="1">0.5 (-)<xref rid="t002fn005" ref-type="table-fn"><sup>e</sup></xref></td>
+<td align="center" rowspan="1" colspan="1">921</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Control-FREEC</td>
+<td align="center" rowspan="1" colspan="1">WGS</td>
+<td align="center" rowspan="1" colspan="1">18.7%</td>
+<td align="center" rowspan="1" colspan="1">1392 (290)</td>
+<td align="center" rowspan="1" colspan="1">0.5 (-)<xref rid="t002fn005" ref-type="table-fn"><sup>e</sup></xref></td>
+<td align="center" rowspan="1" colspan="1">851</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t002fn001"><p><sup>a</sup> A change point found by CREST at single base pair resolution is considered as detected by another method if there exist two neighboring segments produced by the method such that the change point falls in the gap between the two segments (i.e., between the right boundary of the 5’ segment and the left boundary of the 3’ segment). Display is the percentage of CREST change points detected by the method under consideration.</p></fn>
+<fn id="t002fn002"><p><sup>b</sup> The median of per-sample segment number across the samples with CREST-identified change points. Median absolute deviation (MAD) is included in the parentheses.</p></fn>
+<fn id="t002fn003"><p><sup>c</sup> The median half size of the gap (measured in kilo base pair, kb) between the segment boundaries harboring a CREST change point. Median absolute deviation (MAD) is included in the parentheses.</p></fn>
+<fn id="t002fn004"><p><sup>d</sup> Locus density is defined as the number of loci distributed per million base pair (Mb) on average.</p></fn>
+<fn id="t002fn005"><p><sup>e</sup> Since both CNAnorm and Control-FREEC were applied at the resolution of 1kb window, the half size of the gap harboring a CREST change point is exactly 0.5kb.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+</sec>
+<sec id="sec027">
+<title>Computational time</title>
+<p><xref rid="pcbi.1004618.t003" ref-type="table">Table 3</xref> lists computational time for different methods in the analysis of 88 tumor-normal pairs in Dataset II. On SNP array data, our method took slightly longer time than GAP, although both methods were quite fast. On WES and WGS data, our method showed clear advantage over competing methods, making it scalable to large cancer sequencing study.</p>
+<table-wrap id="pcbi.1004618.t003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004618.t003</object-id>
+<label>Table 3</label> <caption><title>Computational time for different methods applied to Dataset II.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004618.t003g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.t003" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="1" colspan="1">Method</th>
+<th align="center" rowspan="1" colspan="1">Platform</th>
+<th align="center" rowspan="1" colspan="1">Input file</th>
+<th align="center" rowspan="1" colspan="1">Coding language</th>
+<th align="center" rowspan="1" colspan="1">Data processing time (min) <xref rid="t003fn005" ref-type="table-fn"><sup>e</sup></xref></th>
+<th align="center" rowspan="1" colspan="1">Analysis time (min) <xref rid="t003fn005" ref-type="table-fn"><sup>e</sup></xref></th>
+<th align="center" rowspan="1" colspan="1">Total time (min) <xref rid="t003fn005" ref-type="table-fn"><sup>e</sup></xref></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" rowspan="1" colspan="1">GAP</td>
+<td align="center" rowspan="1" colspan="1">SNP array</td>
+<td align="center" rowspan="1" colspan="1">LRR and BAF data<xref rid="t003fn001" ref-type="table-fn"><sup>a</sup></xref></td>
+<td align="center" rowspan="1" colspan="1">R</td>
+<td align="center" rowspan="1" colspan="1">0.8 (0.03)</td>
+<td align="center" rowspan="1" colspan="1">4.2 (0.6)</td>
+<td align="center" rowspan="1" colspan="1">5.0 (0.6)</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">SAAS-CNV</td>
+<td align="center" rowspan="1" colspan="1">SNP array</td>
+<td align="center" rowspan="1" colspan="1">LRR and BAF data<xref rid="t003fn001" ref-type="table-fn"><sup>a</sup></xref></td>
+<td align="center" rowspan="1" colspan="1">R</td>
+<td align="center" rowspan="1" colspan="1">0.6 (0.1)</td>
+<td align="center" rowspan="1" colspan="1">9.8 (2.3)</td>
+<td align="center" rowspan="1" colspan="1">10.4 (2.3)</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">SAAS-CNV</td>
+<td align="center" rowspan="1" colspan="1">WES</td>
+<td align="center" rowspan="1" colspan="1">VCF</td>
+<td align="center" rowspan="1" colspan="1">R</td>
+<td align="center" rowspan="1" colspan="1"> 0.1 (0.01)</td>
+<td align="center" rowspan="1" colspan="1"> 1.3 (0.3)</td>
+<td align="center" rowspan="1" colspan="1"> 1.5 (0.3)</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">ExomeCNV</td>
+<td align="center" rowspan="1" colspan="1">WES</td>
+<td align="center" rowspan="1" colspan="1">BAM (and VCF) <xref rid="t003fn002" ref-type="table-fn"><sup>b</sup></xref></td>
+<td align="center" rowspan="1" colspan="1">R</td>
+<td align="center" rowspan="1" colspan="1"> 92.4 (26.6)</td>
+<td align="center" rowspan="1" colspan="1">997.9 (206.7) </td>
+<td align="center" rowspan="1" colspan="1">1090.3 (209.0) </td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">SAAS-CNV</td>
+<td align="center" rowspan="1" colspan="1">WGS</td>
+<td align="center" rowspan="1" colspan="1">VCF</td>
+<td align="center" rowspan="1" colspan="1">R</td>
+<td align="center" rowspan="1" colspan="1"> 17.5 (4.1)</td>
+<td align="center" rowspan="1" colspan="1">68.3 (26.7) </td>
+<td align="center" rowspan="1" colspan="1"> 85.8 (27.2)</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">CNAnorm</td>
+<td align="center" rowspan="1" colspan="1">WGS</td>
+<td align="center" rowspan="1" colspan="1">BAM<xref rid="t003fn003" ref-type="table-fn"><sup>c</sup></xref></td>
+<td align="center" rowspan="1" colspan="1">R</td>
+<td align="center" rowspan="1" colspan="1">1593.8 (580.3)</td>
+<td align="center" rowspan="1" colspan="1">281.7 (80.7)</td>
+<td align="center" rowspan="1" colspan="1">1875.4 (562.2)</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Control-FREEC</td>
+<td align="center" rowspan="1" colspan="1">WGS</td>
+<td align="center" rowspan="1" colspan="1">BAM<xref rid="t003fn004" ref-type="table-fn"><sup>d</sup></xref></td>
+<td align="center" rowspan="1" colspan="1">C++</td>
+<td align="center" rowspan="1" colspan="1"> 1900.9 (445.4)</td>
+<td align="center" rowspan="1" colspan="1"> 295.3 (42.6)</td>
+<td align="center" rowspan="1" colspan="1">2196.2 (472.1) </td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t003fn001"><p><sup>a</sup> The LRR and BAF data can be extracted from the final report generated by Illumina GenomeStudio.</p></fn>
+<fn id="t003fn002"><p><sup>b</sup> BAM file is required by ExomeCNV for calling CNV, while VCF file is optional and used for calling CN-LOH. BAM file is processed by GATK.</p></fn>
+<fn id="t003fn003"><p><sup>c</sup> BAM file is processed by a perl script distributed along with CNAnorm.</p></fn>
+<fn id="t003fn004"><p><sup>d</sup> BAM file is processed by SAMtools.</p></fn>
+<fn id="t003fn005"><p><sup>e</sup> Computational time is unified to single thread CPU time in minute. The list values are average time across samples with standard deviation included in parentheses.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+</sec>
+<sec id="sec028">
+<title>WGS versus SNP array SCNA signal</title>
+<p>Provided the large sample size, it is interesting to compare the quality of SCNA signals generated by WGS and SNP array using SAAS-CNV. The two dimensions (log2ratio and log2mBAF) were largely consistent between the two platforms (<xref rid="pcbi.1004618.g008" ref-type="fig">Fig 8</xref>). In log2ratio dimension (<xref rid="pcbi.1004618.g008" ref-type="fig">Fig 8A</xref>), SNP array exhibited saturation effect, where larger copy numbers were underestimated. This limitation was reported previously [<xref rid="pcbi.1004618.ref008" ref-type="bibr">8</xref>,<xref rid="pcbi.1004618.ref009" ref-type="bibr">9</xref>]. In log2mBAF dimension (<xref rid="pcbi.1004618.g008" ref-type="fig">Fig 8B</xref>), SNP array showed slightly larger values than WGS, probably due to the bias in intensity measurement induced from the two alleles (<xref rid="pcbi.1004618.s011" ref-type="supplementary-material">S10 Fig</xref>) [<xref rid="pcbi.1004618.ref030" ref-type="bibr">30</xref>].</p>
+<fig id="pcbi.1004618.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004618.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>Comparison of SCNA signals between SNP array and WGS from Dataset II.</title>
+<p>(A) log2ratio; (B) log2mBAF. Each dot indicates the median signal value of a genomic segment with concordant SCNA status and &gt;50% overlap between the results from the two platforms using SAAS-CNV. The dashed line indicates the line with slope 1. Solid line is local polynomial regression (LOESS) fit to data points.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.g008" position="float" xlink:type="simple"/>
+</fig>
+<p>In addition to SCNA signals, we further looked into the signal-to-noise ratio (SNR) derived from WGS vs. SNP array. The SNR is defined as the ratio of the median signal to the estimated noise level (<xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1A Text</xref>) for each segment. Of the samples with moderate sequencing depth (n = 86), the SNR of log2ratio is roughly comparable between the two platforms (<xref rid="pcbi.1004618.s002" ref-type="supplementary-material">S1A Fig</xref>), but the SNR of log2mBAF from SNP array was about twice that from WGS (<xref rid="pcbi.1004618.s012" ref-type="supplementary-material">S11B Fig</xref>). For the two samples of high coverage (~120x), the SNR of log2raio derived from WGS was better than SNP array, and the SNR of log2mBAF is roughly comparable (<xref rid="pcbi.1004618.s012" ref-type="supplementary-material">S11C and S11D Fig</xref>). In contrast, when read depth was summarized per 1kb window, the strategy CNAnorm used to pool the information from neighboring reads, WGS produced improved SNR in log2ratio dimension (<xref rid="pcbi.1004618.s013" ref-type="supplementary-material">S12B Fig</xref>). In summary, at moderate depth of coverage (30x~60x), which is mostly seen in contemporary cancer studies, WGS performs better in quantifying the total copy number, especially the amplification with high copy numbers, but it has large variance in measuring allelic imbalance (BAF). One of the major reasons is that, in SNP array data, BAF signal is derived from the normalization of multiple samples [<xref rid="pcbi.1004618.ref007" ref-type="bibr">7</xref>]; but it is derived from each single sample in current WGS methods.</p>
+</sec>
+</sec>
+<sec id="sec029">
+<title>A case study</title>
+<p>We highlighted the potential usage of BAF information in improving the estimation of absolute copy number and tumor purity on the HKU HCC sample PT116 in Dataset II (Materials and Methods). This sample exhibits complicated SCNA profile (<xref rid="pcbi.1004618.g009" ref-type="fig">Fig 9</xref>). We applied SAAS-CNV and CNAnorm together to analyze this sample. In CNAnorm analysis, the ratio of tumor versus normal read depth was calculated per 1kb window along the genome (gray dots in <xref rid="pcbi.1004618.g010" ref-type="fig">Fig 10A</xref>). A smoothing approach was then employed by CNAnorm [<xref rid="pcbi.1004618.ref005" ref-type="bibr">5</xref>] to reduce the random error variability (fitted black curve in <xref rid="pcbi.1004618.g010" ref-type="fig">Fig 10A</xref>). The distribution of smoothed ratio signal clearly showed seven major peaks corresponding to different copy numbers (<xref rid="pcbi.1004618.g010" ref-type="fig">Fig 10B</xref>). CNAnorm attempted to fit a Gaussian mixture model along with Akaike’s information criterion (AIC) onto the distribution in order to identify the number of components (peaks) and their locations. However, CNAnorm was only able to identify five out of the seven peaks (<xref rid="pcbi.1004618.g010" ref-type="fig">Fig 10C</xref>). It then searched different configurations, where plausible copy numbers and the five identified peak centers were aligned in different ways, and chose the most likely configuration that resulted in the best correspondance. Here, the correspondance was measured by the goodness-of-fit (R<sup>2</sup> value) of the linear regression model of peak centers on estimated copy numbers (<xref rid="pcbi.1004618.g010" ref-type="fig">Fig 10C</xref>). In this case, CNAnorm assigned the most common component (the highest peak in <xref rid="pcbi.1004618.g010" ref-type="fig">Fig 10A</xref>) to copy number 2 (i.e. tumor-normal ratio 1). Finally, CNAnorm estimated tumor purity (<italic>ρ</italic>) based on the relationship:
+<disp-formula id="pcbi.1004618.e024">
+<alternatives>
+<graphic id="pcbi.1004618.e024g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.e024" xlink:type="simple"/>
+<mml:math display="block" id="M24" overflow="scroll">
+<mml:mrow><mml:mfrac><mml:mrow><mml:msub><mml:mi>μ</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mi>μ</mml:mi><mml:mrow><mml:mi>C</mml:mi><mml:mi>N</mml:mi><mml:mo>=</mml:mo><mml:mn>2</mml:mn></mml:mrow></mml:msub></mml:mrow></mml:mfrac><mml:mo>−</mml:mo><mml:mn>1</mml:mn><mml:mo>=</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mfrac><mml:mrow><mml:mi>C</mml:mi><mml:msub><mml:mi>N</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow><mml:mn>2</mml:mn></mml:mfrac><mml:mo>−</mml:mo><mml:mn>1</mml:mn><mml:mo stretchy="false">)</mml:mo><mml:mo>⋅</mml:mo><mml:mi>ρ</mml:mi></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(5)</label>
+</disp-formula>
+where <italic>μ</italic><sub><italic>i</italic></sub> is the identified peak center associated with copy number <italic>CN</italic><sub><italic>i</italic></sub> and <italic>μ</italic><sub><italic>CN</italic> = 2</sub> corresponds to peak center associated with copy number 2. With the estimated tumor purity, the absolute copy number of each segment was obtained (<xref rid="pcbi.1004618.s014" ref-type="supplementary-material">S13A Fig</xref>).</p>
+<fig id="pcbi.1004618.g009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004618.g009</object-id>
+<label>Fig 9</label>
+<caption>
+<title>SCNA profile for the sample PT116 from Dataset II.</title>
+<p>(A) and (B) display SNP array data and (C) and (D) WGS data. In (A) and (C), on the top panel, the log2ratio signal is plotted against chromosomal position and on the bottom panel, the log2mBAF signal. The dots, each representing a locus, are colored alternately to distinguish chromosomes. The segments, each representing a DNA segment resulting from the joint segmentation, are colored based on inferred SCNA status. In (B) and (D), on the main log2mBAF-log2ratio panel, each circle corresponds to a segment in (A) and (C), with the size reflecting the length of the segment; the color code is specified in legend; dashed gray lines indicate adjusted baselines. The side panels, corresponding to log2ratio and log2mBAF dimension respectively, show the distribution of median values of each segment.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.g009" position="float" xlink:type="simple"/>
+</fig>
+<fig id="pcbi.1004618.g010" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004618.g010</object-id>
+<label>Fig 10</label>
+<caption>
+<title>Estimation of absolute copy number and tumor purity for the sample PT116 from Dataset II.</title>
+<p>(A) The ratio of tumor versus normal read depth along the genome. The plot was generated by modifying the function plotGenome from R package CNAnorm. Grey dots represent the ratio signal calculated per 1kb window; solid thick black curve is the smoothed signal; green triangulars are points outside the graph; the vertical solid lines separate the chromosomes and the vertical dotted lines indicate the locations of centromeres. (B) Histogram of smoothed ratio signal shows seven major peaks corresponding to different copy numbers. Colored dots indicate the center of each peak. (C) Without accounting for the allelic imbalance pattern, CNAnorm only identified five out of the seven peaks and assigned them to plausible copy numbers, where the highest peak was assigned to copy number 2. (D) With the alleleic imblance pattern informed from the log2mBAF signal (<xref rid="pcbi.1004618.g009" ref-type="fig">Fig 9</xref>), the initial inference was manually corrected, and proper copy numbers were assigned to each of the seven peaks. Especially, the highest peak was assigned copy number 3 and the second heighest peak copy number 4. In (C) and (D), the colored dots correspond to the peak centers in (B). Dashed line is the fitted line. R-square value of fitted linear regression model was shown on the top-left corner.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.g010" position="float" xlink:type="simple"/>
+</fig>
+<p>By a visual check of <xref rid="pcbi.1004618.g010" ref-type="fig">Fig 10B and 10C</xref>, it is obvious that CNAnorm failed to assign copy number correctly. Without accounting for the allelic imbalance pattern information (<xref rid="pcbi.1004618.g009" ref-type="fig">Fig 9</xref>), CNAnorm was not able to correctly infer absolute copy number in such a complicated cancer genome. For example, Chromosomes 3, 9, 11, 12, 14 and 15 were estimated to be diploid (<xref rid="pcbi.1004618.s014" ref-type="supplementary-material">S13A Fig</xref>), contradictory to the strong pattern of allelic imbalance manifested in log2mBAF dimension (<xref rid="pcbi.1004618.g009" ref-type="fig">Fig 9</xref>); Chromosomes 2, 6 and 18 were estimated to be approximately triploid, also contradictory to the log2mBAF pattern showing allelic balance (<xref rid="pcbi.1004618.g009" ref-type="fig">Fig 9</xref>). These observations motivated us to manually correct the inference from CNAnorm. We adjusted the correspondence between peak centers and copy numbers and as a result of the correction, the R<sup>2</sup> was substantially improved (<xref rid="pcbi.1004618.g010" ref-type="fig">Fig 10D</xref>). The tumor purity was re-estimated with the corrected correspondence between <italic>μ</italic><sub><italic>i</italic></sub> and <italic>CN</italic><sub><italic>i</italic></sub> in Eq (<xref rid="pcbi.1004618.e024" ref-type="disp-formula">5</xref>), and revised from 64.92% to 80.88%. The re-estimated copy number profile was improved in terms of better fit to integer copy numbers (horizontal black segments overlap more with the horizontal gray lines in <xref rid="pcbi.1004618.s014" ref-type="supplementary-material">S13B Fig</xref>). The correction also lead to strikingly better fit of the theoretical mBAF to the observed mBAF values (<xref rid="pcbi.1004618.g011" ref-type="fig">Fig 11</xref>). The theoretical mBAF was calculated based on the estimated copy number and tumor purity (detailed in <xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1K Text</xref>). Interestingly, this tumor genome likely underwent a whole-genome doubling event [<xref rid="pcbi.1004618.ref031" ref-type="bibr">31</xref>] and was estimated to be tetraploid, based on which the baseline of “normal” copy number was anchored. In summary, this case study illustrated the joint inference from BAF along with total copy number could result in more reliable estimation of tumor ploidy and purity.</p>
+<fig id="pcbi.1004618.g011" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004618.g011</object-id>
+<label>Fig 11</label>
+<caption>
+<title>Estimated copy number and mBAF for the segments resulting from the PT116 WGS data.</title>
+<p>(A) Inference based on tumor-normal ratio signal alone. (B) Inference with BAF information incorporated for correction. In each panel, the dots represent segments with the size of at least 1Mb. The horizontal bars mark the theoretical mBAF values for different genotypes corresponding to different copy numbers (e.g., “2A3B” denotes the segment has five copies with two A allele copies and three B allele copies).</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004618.g011" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+</sec>
+<sec id="sec030" sec-type="conclusions">
+<title>Discussion</title>
+<p>We have developed a joint segmentation and inference approach for SCNA analysis using both total and allele-specific sequencing depth and investigated its performance with a “null” dataset and a real-world large-scale dataset. Compared with existing methods: ExomeCNV, PatternCNV, CNAnorm and Control-FREEC, our method demonstrated improved accuracy, scalability to large cancer sequencing studies, and the potential in improving the estimation of tumor ploidy and purity. Our approach exhibits flexibility and applicability in a wide range of platforms, including both deep sequencing and SNP array. These good properties can facilitate integrative cancer genomics study using multiple platforms. An R package called saasCNV, which implements our proposed appoach, is avaiable at <ext-link ext-link-type="uri" xlink:href="https://zhangz05.u.hpc.mssm.edu/saasCNV/index.htm" xlink:type="simple">https://zhangz05.u.hpc.mssm.edu/saasCNV/index.htm</ext-link>.</p>
+<p>In contrast with germline CNV detection, characterization of SCNA in cancer genome gives rise to particular challenges, including ambiguous baseline due to aneuploidy and diluted signal pattern due to heterogeneity and normal cell contamination. For this regard, allelic specific information adds valuable input. Our method takes advantage of this information in both deep sequencing and SNP array data and achieves better capability in the correct identification of copy number baseline. We have also demonstrated that incorporating BAF could substantially improve the inference of tumor ploidy and purity. An important future work is the development of an integrated statistical model based on segment-level total sequencing depth and BAF to infer absolute copy number and tumor purity simultaneously.</p>
+<p>SAAS-CNV features good efficiency and scalability by adopting the “top-down” strategy, which reduces the number of statistical inferences from millions to hundreds, and by taking advantage of condensed information from VCF file, which is about 1% of the size of BAM file. On Dataset II, we showed WES of moderate sequencing depth can still provide comparable specificity and sensitivity as WGS in large SCNA detection. At the same time, we acknowledge that quantifying SCNA at heterozygous loci has limitations in that not all information from mapped reads is fully utilized. While this limitation has less influence in WGS, where SNPs and indels are densely distributed on the genome, it affects the resolution in a greater degree on WES data. A possible improvement is to leverage BAMs to boost the SNR of log2ratio signal and the resolution by averaging over read depths within the windows surrounding or nearby heterozygous sites. However, it is quite time-comsumig to manipulate large BAM files. An alternative option is to utilize genomic VCF (GVCF) file, which is in the similar format as VCF, but record both variant sites and non-variant blocks. Inspired by the normalization procedure of Illumina SNP array data [<xref rid="pcbi.1004618.ref007" ref-type="bibr">7</xref>], the data processing step in our method can be further improved by incorparating multiple samples simultaneously, especially when manipulating GVCF makes it computationally feasible.</p>
+<p>The matched tumor-normal design provides several desired features for the identification of SCNA: 1) it is biologically sensible to take matched normal genome as reference to define somatic alterations in tumor genome; 2) it is helpful to reduce the bias induced from the spatially non-uniform distribution of short reads across the genome, due to variability in GC content, exon capture efficiency, mappability of complex regions and so forth (also see <xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1L Text</xref>); 3) it is able to improve the normality of signals (<xref rid="pcbi.1004618.s003" ref-type="supplementary-material">S2 Fig</xref>), which is desirable for joint segmentation step; 4) it can help alleviate allelic signal bias commonly observed in SNP array data (<xref rid="pcbi.1004618.s011" ref-type="supplementary-material">S10 Fig</xref>) [<xref rid="pcbi.1004618.ref030" ref-type="bibr">30</xref>].</p>
+<p>Lastly, our method can be used in accompany with paired-end mapping or split read methods, for example CREST [<xref rid="pcbi.1004618.ref028" ref-type="bibr">28</xref>], to refine the resolution of break points up to base pair level and verify other types of genomic rearrangements, such as intra-chromosomal and inter-chromosomal translocations, which are commonly associated with SCNAs [<xref rid="pcbi.1004618.ref032" ref-type="bibr">32</xref>].</p>
+</sec>
+<sec id="sec031">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1004618.s001" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s001" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S1 Text</label>
+<caption>
+<title>Supplementary methods and results.</title>
+<p>(A) Robust estimate of signal noise level. (B) Some details in analyses using SAAS-CNV. (C) Some remarks on segment merging step. (D) Some remarks on SCNA calling step. (E) ExomeCNV analysis of NA18507 WES data. (F) PatternCNV analysis of NA18507 WES data. (G) CNAnorm analysis of NA18507 WGS data. (H) Control-FREEC analysis of NA18507 WGS data. (I) Some details about the analysis of Dataset II using different methods. (J) Some comments on correlation calculation. (K) Calculation of theoretical mBAF. (L) Some remarks on GC content adjustment in data normalization.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s002" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s002" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S1 Fig</label>
+<caption>
+<title>Read depth (RD) of WGS data of 88 normal-tumor pairs in Dataset II.</title>
+<p>The x-axis is the average RD across the genome, and the y-axis is the average RD at heterozygous sites. Tumor (dark dots) and paired normal (gray dots) were sequenced at comparable depth of coverage. Gray dashed line indicates y = x. Dark dotted line is fitted on all data points. Most samples were sequenced at median of 37.6x, ranging from 24.8x to 139.4x. A large proportion of aligned reads were used for variant calling at heterozygous sites, with median proportion being 78.5% and ranging from 67.9% to 90.0%.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s003" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s003" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S2 Fig</label>
+<caption>
+<title>Normal Q-Q plots for different signals from the sample PT116 in Dataset II.</title>
+<p>(A) SNP array data. (B) WGS data. Red dots indicate heterozygous sites predicted to be involved in gain, blue dots loss, and gray dots neither gain nor loss. Dashed line connects the first and third quartiles. For SNP array data, tumor LRR is treated as log2ratio.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s004" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s004" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S3 Fig</label>
+<caption>
+<title>Size distribution and read depth (RD) of falsely detected SCNAs in NA18507 WES data.</title>
+<p>(A) The distribution of SCNA size measured as the number of loci (on log10 scale). (B) The average RD within each falsely detected SCNA region (white), spanning 10 loci, was calculated for each synthesized normal-tumor pair. As a comparison, the same number of regions (noted in the parentheses), spanning 10 loci, was randomly drawn for each pair (gray), and for each region, the average RD was also calculated. The pairs with &lt;3 10-locus SCNAs are not included in the boxplot. The star above the short horizontal bar indicates the significance level of two-sample t-test: * p-value&lt;0.05; ** p-value&lt;0.01; *** p-value&lt;0.001.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s005" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s005" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S4 Fig</label>
+<caption>
+<title>Comparison of NA18507 WES analysis results between the method using only log2ratio signal and the joint method using both log2ratio and log2mBAF signals.</title>
+<p>(A) The number of falsely called CNVs. (B) The size of falsely called CNVs. The number of false CNV calls is plotted against the correlation for each pair in the analysis with log2ratio only (C) and the joint method (D). In (A), (C) and (D), each dot represents a synthesized pair; in (A), the dashed line has the slope of 1; in (C) and (D), the dotted line indicates the fitted linear regression line.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s006" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s006" mimetype="image/tiff" position="float" xlink:type="simple">
+<label>S5 Fig</label>
+<caption>
+<title>Comparison of SCNA profiles of a sample from NA18507 WES data.</title>
+<p>(A) ExomeCNV, (B) PatternCNV and (C) SAAS-CNV. The signals for ExomeCNV and SAAS-CNV were generated by contrasting replicate 4 versus replicate 5 (<xref rid="pcbi.1004618.s017" ref-type="supplementary-material">S3 Table</xref>), whereas the signals for PatternCNV were generated by contrasting replicate 4 versus all the other 5 replicates. The log2ratio signal in (A), (B) and on the top panel of (C) and the log2mBAF signal on the bottom panel of (C) are plotted against chromosomal position. The dots, each representing a locus, are colored alternately to distinguish chromosomes. The dotted horizontal line is y = 0. The segments in (A) and (C) are colored based on inferred copy number status: loss–blue, normal–gray, gain–red, LOH–darkgreen, undecided–cyan. In (B), blue and red dots represent loss and gain inferred at exon level by PatternCNV. The black segments were obtained by CBS [<xref rid="pcbi.1004618.ref026" ref-type="bibr">26</xref>] for visualization purpose only.</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s007" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s007" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S6 Fig</label>
+<caption>
+<title>Comparison of results from PatternCNV and SAAS-CNV on NA18507 WES data.</title>
+<p>The number of CNVs (false positives) called from PatternCNV at exon level (<xref rid="pcbi.1004618.s001" ref-type="supplementary-material">S1F Text</xref>) and from SAAS-CNV at segment level were compared. P-values are based on two-sample Wilcoxon signed-rank test.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s008" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s008" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S7 Fig</label>
+<caption>
+<title>Size distribution and read depth (RD) of falsely detected SCNAs in NA18507 WGS data.</title>
+<p>(A) The distribution of SCNA size measured as the number of loci (on log10 scale). (B) The average RD within each falsely detected SCNA region (white), spanning 10 loci, was calculated for each synthesized normal-tumor pair. As a comparison, the same number of regions (noted in the parentheses), spanning 10 loci, was randomly drawn for each pair (gray), and for each region, the average RD was also calculated. The star above the short horizontal bar indicates the significance level of two-sample t-test: * p-value&lt;0.05; ** p-value&lt;0.01; *** p-value&lt;0.001.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s009" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s009" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S8 Fig</label>
+<caption>
+<title>Comparison of NA18507 WGS analysis results between the method using only log2ratio signal and the joint method using both log2ratio and log2mBAF signals.</title>
+<p>(A) The number of falsely called CNVs. (B) The size of falsely called CNVs. The number of false CNV calls is plotted against the correlation for each pair in the analysis with log2ratio only (C) and the joint method (D). In (A), (C) and (D), each dot represents a synthesized pair; in (A), the dashed line has the slope of 1; in (C) and (D), the dotted line indicates the fitted linear regression line.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s010" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s010" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S9 Fig</label>
+<caption>
+<title>Comparison of results from six analyses on Dataset II at different overlap rate threshold.</title>
+<p>The results from GAP analysis on SNP array data are treated as benchmark. Overlap rate threshold is (A) 10%, (B) 30%, (C) 70% and (D) 90%.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s011" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s011" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S10 Fig</label>
+<caption>
+<title>Histogram of BAF signals at heterozygous sites.</title>
+<p>Data is taken from the HKU HCC patient PT116. (A) Normal BAF. (B) Tumor BAF. (C) log2mBAF. Black solid line indicates 0.5 in (A) and (B), and 0 in (C). Red dashed line indicates median values in (A) and (B), and the baseline estimated from the analysis pipeline in (C). Gray dotted lines in (A) and (B) are used as reference to mark the relative location of each peak with respect to the black central line, about which peaks on the left and right are expected to be symmetric. Both tumor and normal BAF signals bias toward B allele.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s012" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s012" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S11 Fig</label>
+<caption>
+<title>Comparison of SCNA signal-to-noise ratio (SNR) generated from SAAS-CNV between SNP array and WGS in Dataset II.</title>
+<p>Each dot indicates a genomic segment with concordant copy number status, coded by different colors, and &gt;50% overlap between the results from the two platforms using SAAS-CNV. SNR of log2ratio and log2mBAF is shown in samples with medium RD (n = 86) in (A) and (B), and high RD (n = 2) in (C) and (D), respectively.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s013" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s013" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S12 Fig</label>
+<caption>
+<title>Comparison of SCNA signal and signal-to-noise ratio (SNR) generated from CNAnorm between SNP array and WGS in Dataset II.</title>
+<p>Each dot indicates a genomic segment with concordant copy number status, coded by different colors, and &gt;50% overlap from the results of the two data using CNAnorm. (A) Signal of log2ratio. (B) SNR of log2ratio.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s014" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s014" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S13 Fig</label>
+<caption>
+<title>Genome-wide copy number profile estimated from CNAnorm for PT116 in Dataset II.</title>
+<p>Also see <xref rid="pcbi.1004618.g010" ref-type="fig">Fig 10</xref> in the main text. The plot was generated by modifying the function plotGenome from R package CNAnorm. (A) Results based on tumor-normal ratio signal alone before manual correction. (B) Results after correction with BAF information accounted for. In each panel, grey dots represent normalized and tumor-purity-corrected tumor-normal ratio per 1kb window; solid thick black lines are the segmented DNAcopy output; green triangulars are points outside the graph; the vertical solid lines separate the chromosomes and the vertical dotted lines indicate the locations of centromeres.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s015" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s015" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S1 Table</label>
+<caption>
+<title>Summary metrics for NA18507 WES data.</title>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s016" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s016" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S2 Table</label>
+<caption>
+<title>Summary metrics for NA18507 WGS data.</title>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s017" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s017" mimetype="application/pdf" position="float" xlink:type="simple">
+<label>S3 Table</label>
+<caption>
+<title>Correlation of read depths across loci between pairs of replicates for NA18507 WES data.</title>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004618.s018" xlink:href="info:doi/10.1371/journal.pcbi.1004618.s018" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S4 Table</label>
+<caption>
+<title>Correlation of read depths across loci between pairs of replicates for NA18507 WGS data.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>We thank Michael Linderman and Hardik Shah for their generous help in data pre-processing. We also thank Andrew Uzilov for helpful discussion. We thank the editors and reviewers for their constructive comments and suggestions. This work was supported in part through the computational resources and staff expertise provided by the Department of Scientific Computing at the Icahn School of Medicine at Mount Sinai.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004618.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Lim</surname> <given-names>HY</given-names></name>, <name name-style="western"><surname>Shi</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Lee</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Deng</surname> <given-names>S</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Genomic landscape of copy number aberrations enables the identification of oncogenic drivers in hepatocellular carcinoma</article-title>. <source>Hepatology</source> <volume>58</volume>: <fpage>706</fpage>–<lpage>717</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/hep.26402" xlink:type="simple">10.1002/hep.26402</ext-link></comment> <object-id pub-id-type="pmid">23505090</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref002"><label>2</label><mixed-citation publication-type="other" xlink:type="simple">Xi R, Lee S, Park PJ (2012) A survey of copy-number variation detection tools based on high-throughput sequencing data. Current protocols in human genetics / editorial board, Jonathan L Haines [et al] Chapter 7: Unit7 19.</mixed-citation></ref>
+<ref id="pcbi.1004618.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zack</surname> <given-names>TI</given-names></name>, <name name-style="western"><surname>Schumacher</surname> <given-names>SE</given-names></name>, <name name-style="western"><surname>Carter</surname> <given-names>SL</given-names></name>, <name name-style="western"><surname>Cherniack</surname> <given-names>AD</given-names></name>, <name name-style="western"><surname>Saksena</surname> <given-names>G</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Pan-cancer patterns of somatic copy number alteration</article-title>. <source>Nature genetics</source> <volume>45</volume>: <fpage>1134</fpage>–<lpage>1140</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/ng.2760" xlink:type="simple">10.1038/ng.2760</ext-link></comment> <object-id pub-id-type="pmid">24071852</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kim</surname> <given-names>TM</given-names></name>, <name name-style="western"><surname>Xi</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Luquette</surname> <given-names>LJ</given-names></name>, <name name-style="western"><surname>Park</surname> <given-names>RW</given-names></name>, <name name-style="western"><surname>Johnson</surname> <given-names>MD</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Functional genomic analysis of chromosomal aberrations in a compendium of 8000 cancer genomes</article-title>. <source>Genome research</source> <volume>23</volume>: <fpage>217</fpage>–<lpage>227</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.140301.112" xlink:type="simple">10.1101/gr.140301.112</ext-link></comment> <object-id pub-id-type="pmid">23132910</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gusnanto</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Wood</surname> <given-names>HM</given-names></name>, <name name-style="western"><surname>Pawitan</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Rabbitts</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Berri</surname> <given-names>S</given-names></name> (<year>2012</year>) <article-title>Correcting for cancer genome size and tumour cell content enables better estimation of copy number alterations from next-generation sequence data</article-title>. <source>Bioinformatics</source> <volume>28</volume>: <fpage>40</fpage>–<lpage>47</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btr593" xlink:type="simple">10.1093/bioinformatics/btr593</ext-link></comment> <object-id pub-id-type="pmid">22039209</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pinkel</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Segraves</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Sudar</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Clark</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Poole</surname> <given-names>I</given-names></name>, <etal>et al</etal>. (<year>1998</year>) <article-title>High resolution analysis of DNA copy number variation using comparative genomic hybridization to microarrays</article-title>. <source>Nat Genet</source> <volume>20</volume>: <fpage>207</fpage>–<lpage>211</lpage>. <object-id pub-id-type="pmid">9771718</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Peiffer</surname> <given-names>DA</given-names></name>, <name name-style="western"><surname>Le</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Steemers</surname> <given-names>FJ</given-names></name>, <name name-style="western"><surname>Chang</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Jenniges</surname> <given-names>T</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>High-resolution genomic profiling of chromosomal aberrations using Infinium whole-genome genotyping</article-title>. <source>Genome Res</source> <volume>16</volume>: <fpage>1136</fpage>–<lpage>1148</lpage>. <object-id pub-id-type="pmid">16899659</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Campbell</surname> <given-names>PJ</given-names></name>, <name name-style="western"><surname>Stephens</surname> <given-names>PJ</given-names></name>, <name name-style="western"><surname>Pleasance</surname> <given-names>ED</given-names></name>, <name name-style="western"><surname>O'Meara</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>H</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Identification of somatically acquired rearrangements in cancer using genome-wide massively parallel paired-end sequencing</article-title>. <source>Nat Genet</source> <volume>40</volume>: <fpage>722</fpage>–<lpage>729</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/ng.128" xlink:type="simple">10.1038/ng.128</ext-link></comment> <object-id pub-id-type="pmid">18438408</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chiang</surname> <given-names>DY</given-names></name>, <name name-style="western"><surname>Getz</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Jaffe</surname> <given-names>DB</given-names></name>, <name name-style="western"><surname>O'Kelly</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Zhao</surname> <given-names>X</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>High-resolution mapping of copy-number alterations with massively parallel sequencing</article-title>. <source>Nat Methods</source> <volume>6</volume>: <fpage>99</fpage>–<lpage>103</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nmeth.1276" xlink:type="simple">10.1038/nmeth.1276</ext-link></comment> <object-id pub-id-type="pmid">19043412</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhao</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>Q</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>Q</given-names></name>, <name name-style="western"><surname>Jia</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Zhao</surname> <given-names>Z</given-names></name> (<year>2013</year>) <article-title>Computational tools for copy number variation (CNV) detection using next-generation sequencing data: features and perspectives</article-title>. <source>BMC Bioinformatics</source> <volume>14</volume> <issue>Suppl 11</issue>: <fpage>S1</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2105-14-S11-S1" xlink:type="simple">10.1186/1471-2105-14-S11-S1</ext-link></comment> <object-id pub-id-type="pmid">24564169</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Duan</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>JG</given-names></name>, <name name-style="western"><surname>Deng</surname> <given-names>HW</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>YP</given-names></name> (<year>2013</year>) <article-title>Comparative studies of copy number variation detection methods for next-generation sequencing technologies</article-title>. <source>PLoS One</source> <volume>8</volume>: <fpage>e59128</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0059128" xlink:type="simple">10.1371/journal.pone.0059128</ext-link></comment> <object-id pub-id-type="pmid">23527109</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xie</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Tammi</surname> <given-names>MT</given-names></name> (<year>2009</year>) <article-title>CNV-seq, a new method to detect copy number variation using high-throughput sequencing</article-title>. <source>BMC Bioinformatics</source> <volume>10</volume>: <fpage>80</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2105-10-80" xlink:type="simple">10.1186/1471-2105-10-80</ext-link></comment> <object-id pub-id-type="pmid">19267900</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sathirapongsasuti</surname> <given-names>JF</given-names></name>, <name name-style="western"><surname>Lee</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Horst</surname> <given-names>BA</given-names></name>, <name name-style="western"><surname>Brunner</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Cochran</surname> <given-names>AJ</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Exome sequencing-based copy-number variation and loss of heterozygosity detection: ExomeCNV</article-title>. <source>Bioinformatics</source> <volume>27</volume>: <fpage>2648</fpage>–<lpage>2654</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btr462" xlink:type="simple">10.1093/bioinformatics/btr462</ext-link></comment> <object-id pub-id-type="pmid">21828086</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Evans</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Bhagwate</surname> <given-names>AV</given-names></name>, <name name-style="western"><surname>Prodduturi</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Sarangi</surname> <given-names>V</given-names></name>, <etal>et al</etal>. (<year>2014</year>) <article-title>PatternCNV: a versatile tool for detecting copy number changes from exome sequencing data</article-title>. <source>Bioinformatics</source> <volume>30</volume>: <fpage>2678</fpage>–<lpage>2680</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btu363" xlink:type="simple">10.1093/bioinformatics/btu363</ext-link></comment> <object-id pub-id-type="pmid">24876377</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Boeva</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Popova</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Bleakley</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Chiche</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Cappo</surname> <given-names>J</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Control-FREEC: a tool for assessing copy number and allelic content using next-generation sequencing data</article-title>. <source>Bioinformatics</source> <volume>28</volume>: <fpage>423</fpage>–<lpage>425</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btr670" xlink:type="simple">10.1093/bioinformatics/btr670</ext-link></comment> <object-id pub-id-type="pmid">22155870</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname> <given-names>NR</given-names></name>, <name name-style="western"><surname>Siegmund</surname> <given-names>DO</given-names></name>, <name name-style="western"><surname>Ji</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>JZ</given-names></name> (<year>2010</year>) <article-title>Detecting simultaneous changepoints in multiple sequences</article-title>. <source>Biometrika</source> <volume>97</volume>: <fpage>631</fpage>–<lpage>645</lpage>. <object-id pub-id-type="pmid">22822250</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Linderman</surname> <given-names>MD</given-names></name>, <name name-style="western"><surname>Brandt</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Edelmann</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Jabado</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Kasai</surname> <given-names>Y</given-names></name>, <etal>et al</etal>. (<year>2014</year>) <article-title>Analytical validation of whole exome and whole genome sequencing for clinical applications</article-title>. <source>BMC Medical Genomics</source> <volume>7</volume>: <fpage>20</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1755-8794-7-20" xlink:type="simple">10.1186/1755-8794-7-20</ext-link></comment> <object-id pub-id-type="pmid">24758382</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sung</surname> <given-names>WK</given-names></name>, <name name-style="western"><surname>Zheng</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Chen</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>X</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Genome-wide survey of recurrent HBV integration in hepatocellular carcinoma</article-title>. <source>Nat Genet</source> <volume>44</volume>: <fpage>765</fpage>–<lpage>769</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/ng.2295" xlink:type="simple">10.1038/ng.2295</ext-link></comment> <object-id pub-id-type="pmid">22634754</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kan</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Zheng</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Barber</surname> <given-names>TD</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Whole-genome sequencing identifies recurrent mutations in hepatocellular carcinoma</article-title>. <source>Genome Res</source> <volume>23</volume>: <fpage>1422</fpage>–<lpage>1433</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.154492.113" xlink:type="simple">10.1101/gr.154492.113</ext-link></comment> <object-id pub-id-type="pmid">23788652</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lamb</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Xie</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>B</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Predictive genes in adjacent normal tissue are preferentially altered by sCNV during tumorigenesis in liver cancer and may rate limiting</article-title>. <source>PLoS One</source> <volume>6</volume>: <fpage>e20090</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0020090" xlink:type="simple">10.1371/journal.pone.0020090</ext-link></comment> <object-id pub-id-type="pmid">21750698</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>DePristo</surname> <given-names>MA</given-names></name>, <name name-style="western"><surname>Banks</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Poplin</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Garimella</surname> <given-names>KV</given-names></name>, <name name-style="western"><surname>Maguire</surname> <given-names>JR</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>A framework for variation discovery and genotyping using next-generation DNA sequencing data</article-title>. <source>Nature Genetics</source> <volume>43</volume>: <fpage>491</fpage>–<lpage>498</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/ng.806" xlink:type="simple">10.1038/ng.806</ext-link></comment> <object-id pub-id-type="pmid">21478889</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>McKenna</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Hanna</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Banks</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Sivachenko</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Cibulskis</surname> <given-names>K</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>The Genome Analysis Toolkit: a MapReduce framework for analyzing next-generation DNA sequencing data</article-title>. <source>Genome Res</source> <volume>20</volume>: <fpage>1297</fpage>–<lpage>1303</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.107524.110" xlink:type="simple">10.1101/gr.107524.110</ext-link></comment> <object-id pub-id-type="pmid">20644199</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Van der Auwera</surname> <given-names>GA</given-names></name>, <name name-style="western"><surname>Carneiro</surname> <given-names>MO</given-names></name>, <name name-style="western"><surname>Hartl</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Poplin</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>del Angel</surname> <given-names>G</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>From FastQ data to high-confidence variant calls: The Genome Analysis Toolkit best practices pipeline</article-title>. <source>Current Protocols in Bioinformatics</source> <volume>11</volume>: <fpage>1</fpage>–<lpage>33</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004618.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Danecek</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Auton</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Abecasis</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Albers</surname> <given-names>CA</given-names></name>, <name name-style="western"><surname>Banks</surname> <given-names>E</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>The variant call format and VCFtools</article-title>. <source>Bioinformatics</source> <volume>27</volume>: <fpage>2156</fpage>–<lpage>2158</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btr330" xlink:type="simple">10.1093/bioinformatics/btr330</ext-link></comment> <object-id pub-id-type="pmid">21653522</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Staaf</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Lindgren</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Vallon-Christersson</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Isaksson</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Goransson</surname> <given-names>H</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Segmentation-based detection of allelic imbalance and loss-of-heterozygosity in cancer cells using whole genome SNP arrays</article-title>. <source>Genome Biology</source> <volume>9</volume>: <fpage>R136</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2008-9-9-r136" xlink:type="simple">10.1186/gb-2008-9-9-r136</ext-link></comment> <object-id pub-id-type="pmid">18796136</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Olshen</surname> <given-names>AB</given-names></name>, <name name-style="western"><surname>Venkatraman</surname> <given-names>ES</given-names></name>, <name name-style="western"><surname>Lucito</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Wigler</surname> <given-names>M</given-names></name> (<year>2004</year>) <article-title>Circular binary segmentation for the analysis of array-based DNA copy number data</article-title>. <source>Biostatistics</source> <volume>5</volume>: <fpage>557</fpage>–<lpage>572</lpage>. <object-id pub-id-type="pmid">15475419</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Handsaker</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Wysoker</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Fennell</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Ruan</surname> <given-names>J</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>The Sequence Alignment/Map format and SAMtools</article-title>. <source>Bioinformatics</source> <volume>25</volume>: <fpage>2078</fpage>–<lpage>2079</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btp352" xlink:type="simple">10.1093/bioinformatics/btp352</ext-link></comment> <object-id pub-id-type="pmid">19505943</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Mullighan</surname> <given-names>CG</given-names></name>, <name name-style="western"><surname>Easton</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Roberts</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Heatley</surname> <given-names>SL</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>CREST maps somatic structural variation in cancer genomes with base-pair resolution</article-title>. <source>Nat Methods</source> <volume>8</volume>: <fpage>652</fpage>–<lpage>654</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nmeth.1628" xlink:type="simple">10.1038/nmeth.1628</ext-link></comment> <object-id pub-id-type="pmid">21666668</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Popova</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Manie</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Stoppa-Lyonnet</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Rigaill</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Barillot</surname> <given-names>E</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Genome Alteration Print (GAP): a tool to visualize and mine complex cancer genomic profiles obtained by SNP arrays</article-title>. <source>Genome Biol</source> <volume>10</volume>: <fpage>R128</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2009-10-11-r128" xlink:type="simple">10.1186/gb-2009-10-11-r128</ext-link></comment> <object-id pub-id-type="pmid">19903341</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Staaf</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Vallon-Christersson</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Lindgren</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Juliusson</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Rosenquist</surname> <given-names>R</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Normalization of Illumina Infinium whole-genome SNP data improves copy number estimates and allelic intensity ratios</article-title>. <source>BMC bioinformatics</source> <volume>9</volume>: <fpage>409</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2105-9-409" xlink:type="simple">10.1186/1471-2105-9-409</ext-link></comment> <object-id pub-id-type="pmid">18831757</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dewhurst</surname> <given-names>SM</given-names></name>, <name name-style="western"><surname>McGranahan</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Burrell</surname> <given-names>RA</given-names></name>, <name name-style="western"><surname>Rowan</surname> <given-names>AJ</given-names></name>, <name name-style="western"><surname>Gronroos</surname> <given-names>E</given-names></name>, <etal>et al</etal>. (<year>2014</year>) <article-title>Tolerance of whole-genome doubling propagates chromosomal instability and accelerates cancer genome evolution</article-title>. <source>Cancer Discov</source> <volume>4</volume>: <fpage>175</fpage>–<lpage>185</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1158/2159-8290.CD-13-0285" xlink:type="simple">10.1158/2159-8290.CD-13-0285</ext-link></comment> <object-id pub-id-type="pmid">24436049</object-id></mixed-citation></ref>
+<ref id="pcbi.1004618.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stephens</surname> <given-names>PJ</given-names></name>, <name name-style="western"><surname>Greenman</surname> <given-names>CD</given-names></name>, <name name-style="western"><surname>Fu</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Yang</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Bignell</surname> <given-names>GR</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Massive genomic rearrangement acquired in a single catastrophic event during cancer development</article-title>. <source>Cell</source> <volume>144</volume>: <fpage>27</fpage>–<lpage>40</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2010.11.055" xlink:type="simple">10.1016/j.cell.2010.11.055</ext-link></comment> <object-id pub-id-type="pmid">21215367</object-id></mixed-citation></ref>
+</ref-list>
+</back>
+</article>

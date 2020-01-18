@@ -1,0 +1,932 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Genet</journal-id><journal-id journal-id-type="pmc">plosgen</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Genetics</journal-title></journal-title-group><issn pub-type="ppub">1553-7390</issn><issn pub-type="epub">1553-7404</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">10-PLGE-RA-NV-3181R3</article-id><article-id pub-id-type="doi">10.1371/journal.pgen.1001202</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Computational Biology/Evolutionary Modeling</subject><subject>Computational Biology/Genomics</subject><subject>Computational Biology/Population Genetics</subject><subject>Genetics and Genomics</subject><subject>Genetics and Genomics/Complex Traits</subject><subject>Genetics and Genomics/Genetics of Disease</subject><subject>Genetics and Genomics/Population Genetics</subject><subject>Mathematics/Statistics</subject><subject>Public Health and Epidemiology/Epidemiology</subject></subj-group></article-categories><title-group><article-title>An Evolutionary Framework for Association Testing in Resequencing Studies</article-title><alt-title alt-title-type="running-head">Association Testing in Resequencing Studies</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>King</surname><given-names>C. Ryan</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Rathouz</surname><given-names>Paul J.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Nicolae</surname><given-names>Dan L.</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>Department of Health Studies, University of Chicago, Chicago, Illinois, United States of America</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Department of Biostatistics and Medical Informatics, University of Wisconsin-Madison, Madison, Wisconsin, United States of America</addr-line>       </aff><aff id="aff3"><label>3</label><addr-line>Departments of Medicine, Statistics, and Human Genetics, University of Chicago, Chicago, Illinois, United States of America</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Marchini</surname><given-names>Jonathan</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">University of Oxford, United Kingdom</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">cking@health.bsd.uchicago.edu</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: CRK PJR DLN. Analyzed the data: CRK. Contributed reagents/materials/analysis tools: CRK PJR. Wrote the paper: CRK DLN.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><month>11</month><year>2010</year></pub-date><pub-date pub-type="epub"><day>11</day><month>11</month><year>2010</year></pub-date><volume>6</volume><issue>11</issue><elocation-id>e1001202</elocation-id><history>
+<date date-type="received"><day>12</day><month>5</month><year>2010</year></date>
+<date date-type="accepted"><day>7</day><month>10</month><year>2010</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2010</copyright-year><copyright-holder>King et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>Sequencing technologies are becoming cheap enough to apply to large numbers of study participants and promise to provide new insights into human phenotypes by bringing to light rare and previously unknown genetic variants. We develop a new framework for the analysis of sequence data that incorporates all of the major features of previously proposed approaches, including those focused on allele counts and allele burden, but is both more general and more powerful. We harness population genetic theory to provide prior information on effect sizes and to create a pooling strategy for information from rare variants. Our method, EMMPAT (Evolutionary Mixed Model for Pooled Association Testing), generates a single test per gene (substantially reducing multiple testing concerns), facilitates graphical summaries, and improves the interpretation of results by allowing calculation of attributable variance. Simulations show that, relative to previously used approaches, our method increases the power to detect genes that affect phenotype when natural selection has kept alleles with large effect sizes rare. We demonstrate our approach on a population-based re-sequencing study of association between serum triglycerides and variation in ANGPTL4.</p>
+</abstract><abstract abstract-type="summary"><title>Author Summary</title>
+<p>Studies correlating genetic variation to disease and other human traits have examined mostly common mutations, partly because of technological restrictions. However, recent advances have resulted in dramatically declining costs of obtaining genomic sequence data, which provides the opportunity to detect rare genetic variation. Existing methods of analysis designed for an earlier era of technology are not optimal for discovering links to rare mutations. We take advantage of 1) the advanced theoretical understanding of evolutionary mechanics and 2) genome-wide evidence about evolutionary forces on the human genome to suggest a framework for understanding observed correlations between rare genetic variation and modern traits. The model leads to a powerful test for genetic association and to an improved interpretation of results. We demonstrate the new method on previously confirmed results in a gene related to high blood cholesterol levels.</p>
+</abstract><funding-group><funding-statement>CRK was supported by Medical Scientist National Research Service Award T 32 GM07281 and 1F30HL103105-01. PJR was supported by R21 MH086099-01. DLN was supported in part by 1RC1HL099619-01 and 1RC2HL101651-01. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="11"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Over the past 20 years, positional cloning guided by linkage analysis and genome wide association studies (GWAS) have identified many loci relevant to human disease and other quantitative phenotypes such as height, body mass index, and serum lipid composition. However, in most cases the total amount of phenotypic variance explained is small compared to the heritability observed in twin or adoption studies <xref ref-type="bibr" rid="pgen.1001202-Maher1">[1]</xref>. Some authors note the possibility that low-frequency genetic variation, which is not measured on standard single nucleotide polymorphism (SNP) arrays, may contribute to this missing heritability <xref ref-type="bibr" rid="pgen.1001202-Pritchard1">[2]</xref>–<xref ref-type="bibr" rid="pgen.1001202-Li1">[7]</xref>. The rapidly decreasing cost of obtaining DNA sequence has prompted several groups to test this hypothesis by sequencing candidate genes in participants of cohort or case-control studies hoping to discover either 1) rare or previously unknown SNPs with large detectable effect sizes, or 2) a correlation between overall number of rare SNPs and phenotype <xref ref-type="bibr" rid="pgen.1001202-Romeo1">[8]</xref>–<xref ref-type="bibr" rid="pgen.1001202-Wang1">[15]</xref>. This research is rapidly approaching a new phase as investigators use next-generation sequencing technology to measure all variation in the exome and wider genome <xref ref-type="bibr" rid="pgen.1001202-Kryukov1">[16]</xref>, <xref ref-type="bibr" rid="pgen.1001202-Roach1">[17]</xref>. Several authors have shown that rare variation is particularly relevant in the case that natural selection has acted to keep variants with large effects rare, and that without action by purifying selection rare variants have effect sizes comparable to common ones <xref ref-type="bibr" rid="pgen.1001202-Pritchard1">[2]</xref>, <xref ref-type="bibr" rid="pgen.1001202-Pritchard2">[3]</xref>, <xref ref-type="bibr" rid="pgen.1001202-Gorlov1">[6]</xref>.</p>
+<p>There are three signatures of association in a resequencing study which we want to use to assess candidate genes. Some SNPs could have effect sizes large enough that they have individually noticeable impact on phenotype; this is the information underlying regression procedures, like those put forward by Hoggart et al <xref ref-type="bibr" rid="pgen.1001202-Hoggart1">[18]</xref> and Kwee et al <xref ref-type="bibr" rid="pgen.1001202-Kwee1">[19]</xref>. This approach is very similar to current tag-SNP based procedures and not designed thinking of resequencing data, since the effects of rare SNPs will not be easy to discern. Depending on the role natural selection has played in the history of the phenotype, two other signatures of association may exist. Second, rare SNPs may tend to have effect sizes in the same direction (e.g. inducing risk), so a measure of overall rare-variant burden could correlate to phenotype; this is the information exploited in allele-count <xref ref-type="bibr" rid="pgen.1001202-Li2">[20]</xref> and rare-variant-burden <xref ref-type="bibr" rid="pgen.1001202-Madsen1">[21]</xref> type methods. That signature may be present if either selection has favored the phenotype (or a correlate) in a particular direction, or if purifying selection has been weak and derived alleles tend to be deleterious to the phenotype. Finally, rare SNPs could tend to have effect sizes which are larger than common ones. This could be the case if selection has tended to stabilize the phenotype. The method of Kwee et al <xref ref-type="bibr" rid="pgen.1001202-Kwee1">[19]</xref> can allow for that possibility, but does not contain guidance on what the structure of the frequency - effect size relationship should be.</p>
+<p>We present a method capable of detecting all three signatures of association. Our method generalizes allele count and rare-variant-burden methods by explicitly constructing a model relating disease impact, selective pressure, and SNP frequency in a candidate gene. By doing so, we will be able to provide intuitive interpretations to detected associations, allowing investigators to answer additional questions with their data. Our approach will yield substantially more power if the model is close to correct without introducing bias or sacrificing much efficiency when our assumptions are not met.</p>
+<p>We propose to estimate the evolutionary fitness burden of each SNP using its observed frequency and population genetic parameters inferred by other authors. That estimate of fitness burden will act as prior information on the variant effect, acting like a burden function <xref ref-type="bibr" rid="pgen.1001202-Madsen1">[21]</xref>. The same estimate will structure the variability of SNP-phenotype correlations, replacing arbitrary weights <xref ref-type="bibr" rid="pgen.1001202-Kwee1">[19]</xref>, and provide robust estimates even if there is no relationship between fitness and effect magnitude. We recognize that for a quantitative trait measured in a prospective cohort, a well-justified approximation of the full model can be fit using a fast and general statistical technique, mixed linear models, and provide software routines to estimate parameters and conduct hypothesis tests. We have named the approach EMMPAT (<italic>E</italic>volutionary <italic>M</italic>ixed <italic>M</italic>odel for <italic>P</italic>ooled <italic>A</italic>ssocation <italic>T</italic>esting)</p>
+<p>In what follows, we will briefly introduce the population genetics ideas which underly our approach. Next, we construct our statistical model and discuss estimation and testing within it. Finally, we illustrate the method both in simulation studies and on a real candidate gene resequencing study examining serum triglyceride levels in a multi-ethnic prospective community-based sample <xref ref-type="bibr" rid="pgen.1001202-Romeo1">[8]</xref>, <xref ref-type="bibr" rid="pgen.1001202-Romeo2">[12]</xref>.</p>
+<sec id="s1a">
+<title>Relating SNP Frequency, Fitness, and Disease Effect</title>
+<p>Several authors have reviewed the potential contribution of low frequency alleles to variation in phenotypes <xref ref-type="bibr" rid="pgen.1001202-Pritchard1">[2]</xref>–<xref ref-type="bibr" rid="pgen.1001202-Li1">[7]</xref>. Absent a change in the properties of new mutations during recent history, which we find implausible, systematic differences between SNPs of varying frequencies must be mediated by natural selection. Since the early 20th century, much work has explicated the evolutionary dynamics of quantitative traits, reviewed by Barton and Johnson <xref ref-type="bibr" rid="pgen.1001202-Barton1">[22]</xref>, <xref ref-type="bibr" rid="pgen.1001202-Johnson1">[23]</xref>. Below we will posit a model of pleiotropic selection whereby the trait under study or a trait with a correlated genetic basis is under purifying selection. More detailed connection and contrast to the existing work on the genetic basis of quantitative traits is found in <xref ref-type="supplementary-material" rid="pgen.1001202.s001">Text S1</xref>.</p>
+<p>In <xref ref-type="fig" rid="pgen-1001202-g001">Figure 1</xref>, we illustrate direct and apparent selection scenarios which give rise to a correlation between fitness effects and phenotype effects. In <xref ref-type="fig" rid="pgen-1001202-g001">Figure 1A</xref>, the phenotype itself is under selective pressure; for example, disease leading to propensity to childhood mortality. <xref ref-type="fig" rid="pgen-1001202-g001">Figure 1B</xref> shows apparent selection by pleiotropy; variants which disrupt an unconstrained role of a gene also tend to disrupt another role which is under selection; for example, variation which increases Alzheimer's Disease risk after reproductive age may relate to other brain function which is relevant for individuals still reproducing.</p>
+<fig id="pgen-1001202-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pgen.1001202.g001</object-id><label>Figure 1</label><caption>
+<title>Hypotheses relating SNP effect and fitness effect.</title>
+<p>Panel A depicts the scenario where the trait is directly under selection. Panel B depicts the scenario where a gene with pleiotropic effects creates fitness-trait correlation via a related phenotype.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.g001" xlink:type="simple"/></fig>
+<p>Hartl and Clark <xref ref-type="bibr" rid="pgen.1001202-Hartl1">[24]</xref> carefully constructs and interprets the concept of fitness-effects in classical population genetics. Briefly, in an idealized population, the relative reproductive advantage of an individual is the product of the fitness effects of each variant that person carries, an additive approximation with no dominance or epistasis. We parameterize the problem in terms of the log of multiplicative fitness effects. That is, the fitness of the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e001" xlink:type="simple"/></inline-formula> person is given by <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e002" xlink:type="simple"/></inline-formula> where the fitness effect of the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e003" xlink:type="simple"/></inline-formula> variant is denoted <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e004" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e005" xlink:type="simple"/></inline-formula> is the unphased genotype at that locus. The fitness effect of a new mutation <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e006" xlink:type="simple"/></inline-formula> determines several of its properties, such as average sojourn time before either going extinct or fixing at 100% prevalence and average frequency when sampled at a point in time <xref ref-type="bibr" rid="pgen.1001202-Hartl1">[24]</xref>.</p>
+<p>Rather than assume that all variants in the region have the same <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e007" xlink:type="simple"/></inline-formula>, we assume that the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e008" xlink:type="simple"/></inline-formula> of new mutations are sampled from a <italic>distribution of fitness effects</italic> (DFE). Just as a fixed <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e009" xlink:type="simple"/></inline-formula> would determine properties of the sampled genotype data for a SNP, a DFE along with mutation, recombination, and demographic parameters induces a distribution on the observed frequency spectrum and polymorphism - divergence ratios in sampled data. Several authors have attempted to fit a parameterized DFE from genomic data <xref ref-type="bibr" rid="pgen.1001202-EyreWalker2">[25]</xref>–<xref ref-type="bibr" rid="pgen.1001202-Torgerson1">[34]</xref>. Boyko et al <xref ref-type="bibr" rid="pgen.1001202-Boyko1">[33]</xref> found that a combination of a point mass at neutrality (not under selection) combined with a gamma distribution for deleterious differences from neutrality to be a good fit for the DFE of non-synonymous mutations.</p>
+<p>With these facts in mind, in what follows we will use fitness effects to operationalize the construct of functional status for each SNP. Whereas Johnson and Barton <xref ref-type="bibr" rid="pgen.1001202-Johnson1">[23]</xref> worked directly with the joint distribution of fitness and phenotype effects, we will use an existing DFE estimate <xref ref-type="bibr" rid="pgen.1001202-Boyko1">[33]</xref> as a marginal distribution for fitness effects and construct the conditional distribution of phenotype effects. Since we do not know the true fitness effects of SNPs, we will estimate them with observed SNP frequency, which is statistically ancillary to phenotype-SNP correlation, using a simulation methodology described below.</p>
+</sec></sec><sec id="s2" sec-type="methods">
+<title>Methods</title>
+<sec id="s2a">
+<title>Model for SNP Effects on Phenotype</title>
+<p>Assume the context of a simple random cross-sectional sample of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e010" xlink:type="simple"/></inline-formula> individuals (indexed by <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e011" xlink:type="simple"/></inline-formula>) studying a quantitative trait <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e012" xlink:type="simple"/></inline-formula> measured once per individual. Assume that these individuals also possess vectors of covariates <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e013" xlink:type="simple"/></inline-formula> and genotypes <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e014" xlink:type="simple"/></inline-formula> at each locus inside a sequenced candidate gene or region. The genotypes are coded such that “0” represents homozygous possession of the ancestral allele, “1” heterozygosity, and “2” homozygous possession of the derived allele at the locus. That is, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e015" xlink:type="simple"/></inline-formula> represents the fourth sampled person possessing two derived alleles at the third locus in the sequenced region.</p>
+<p>We can write a regression model for person <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e016" xlink:type="simple"/></inline-formula>'s phenotype <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e017" xlink:type="simple"/></inline-formula> in terms of deviation <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e018" xlink:type="simple"/></inline-formula> from an average level predicted by covariate effects <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e019" xlink:type="simple"/></inline-formula> and additive genotype effects <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e020" xlink:type="simple"/></inline-formula>,<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.e021" xlink:type="simple"/><label>(1)</label></disp-formula></p>
+<p>Using standard least-squares regression to estimate such a model will pose several problems. First, because there will be many rare variants, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e022" xlink:type="simple"/></inline-formula> will contain many poorly estimated coefficients. The large number of rare variants will give model (1) a large number of degrees of freedom, decreasing its power to detect association with the candidate gene. Some of the variation uncovered may be perfectly correlated in the sample, meaning that those coefficients are not separately estimable in least-squares regression. Additionally, as the amount of the genome sequenced becomes large, there will be more variants than participants, making the entire model unidentified.</p>
+<p>To overcome these problems, we need to make more assumptions and model the <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e023" xlink:type="simple"/></inline-formula> coefficients. We adopt a model where we view the effects of SNPs in the study as a sample from a wider population of SNP effects, and characterize that entire population using only three parameters. To fix ideas, assume for now that we knew the fitness effect of each SNP <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e024" xlink:type="simple"/></inline-formula>. If fitness was perfectly correlated to effect on phenotype, we would use that as a summary for all alleles, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e025" xlink:type="simple"/></inline-formula>, where the parameter <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e026" xlink:type="simple"/></inline-formula> relates the scales of the two measures. As the fitness effect is not perfectly correlated to effect on phenotype, we add a mean <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e027" xlink:type="simple"/></inline-formula> and an error term <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e028" xlink:type="simple"/></inline-formula> acknowledging those limitations to obtain<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.e029" xlink:type="simple"/><label>(2)</label></disp-formula>In applied problems, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e030" xlink:type="simple"/></inline-formula> is not known a-priori, so we will construct a prediction <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e031" xlink:type="simple"/></inline-formula> based on the observed frequency. We denote <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e032" xlink:type="simple"/></inline-formula> for that estimate, and for its prediction error we write <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e033" xlink:type="simple"/></inline-formula>. We plug those estimates in to (2) to obtain<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.e034" xlink:type="simple"/><label>(3)</label></disp-formula>and combine the two uncorrelated error terms to yield<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.e035" xlink:type="simple"/><label>(4)</label></disp-formula>where<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.e036" xlink:type="simple"/><label>(5)</label></disp-formula><disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.e037" xlink:type="simple"/><label>(6)</label></disp-formula>The first term in (4), <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e038" xlink:type="simple"/></inline-formula>, allows derived alleles to on average increase or decrease the phenotype. The second term <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e039" xlink:type="simple"/></inline-formula> is an unscaled correlation between phenotype effects and expected fitness effects <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e040" xlink:type="simple"/></inline-formula>. The error term <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e041" xlink:type="simple"/></inline-formula> is the deviation in SNP <italic>j</italic>'s effect on phenotype from the average of SNPs with the same observed frequency. The variance of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e042" xlink:type="simple"/></inline-formula> in (6) therefore has two components, first <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e043" xlink:type="simple"/></inline-formula> corresponds to prediction error of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e044" xlink:type="simple"/></inline-formula>, and second <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e045" xlink:type="simple"/></inline-formula> is the variance of phenotype effects for SNPs at the same level of true fitness burden <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e046" xlink:type="simple"/></inline-formula>. The function <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e047" xlink:type="simple"/></inline-formula> allows that as average burden changes the variability might also change. Although one could imagine “bad” alleles being more variable in their effects than relatively neutral alleles, implying non-constant <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e048" xlink:type="simple"/></inline-formula>, we propose constant <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e049" xlink:type="simple"/></inline-formula> as a reasonable modeling start. This will still allow for the variance of effect sizes to change with observed frequency because of non-uniformity of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e050" xlink:type="simple"/></inline-formula> with frequency.</p>
+<p>Equation (4) asserts that phenotype-effect and fitness-effect are linearly related; that seems correct for the scenario in <xref ref-type="fig" rid="pgen-1001202-g001">Figure 1A</xref> and a good starting place for the other possibilities. In future work we will be able to empirically examine this assumption by graphical diagnostics and comparing fits using other functional forms. Further discussion of nonlinear relationships is found in <xref ref-type="supplementary-material" rid="pgen.1001202.s001">Text S1</xref>, and we will demonstrate the impact of an incorrect assumption of linearity in our simulation studies.</p>
+<p>Our model is quite general in that existing methods correspond to submodels of (4). An allele count method tests the model with only <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e051" xlink:type="simple"/></inline-formula> allowed to vary; rare alleles below an arbitrary threshold are summarized by an average effect which does not change with frequency, so <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e052" xlink:type="simple"/></inline-formula> and all <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e053" xlink:type="simple"/></inline-formula> are set to zero, and alleles above that threshold are regarded as free parameters. Similarly a weighted-burden method corresponds to the model <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e054" xlink:type="simple"/></inline-formula> with a particular implementation of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e055" xlink:type="simple"/></inline-formula>, such as in Madsen et al <xref ref-type="bibr" rid="pgen.1001202-Madsen1">[21]</xref> where <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e056" xlink:type="simple"/></inline-formula>, and forces all <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e057" xlink:type="simple"/></inline-formula> in the rare alleles to be zero. Our model will not involve an arbitrary threshold for “rare alleles” and will adaptively pool variant effects in a flexible way. As shown in the results, this will create substantial power gains in a variety of settings.</p>
+<p>When <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e058" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e059" xlink:type="simple"/></inline-formula> in (4) are zero, our model reduces to a standard random-effect model identical to that of Kwee et al <xref ref-type="bibr" rid="pgen.1001202-Kwee1">[19]</xref> with all variants given the same weight. That is, regardless of frequency all SNPs have the same likelihood of having large effect sizes, and regardless of frequency SNP effects have zero mean. As a result, our method will be robust to the case that fitness and phenotype effects are unrelated by estimating <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e060" xlink:type="simple"/></inline-formula> and retaining the flexibility of the method of Kwee et al. The major difference between the above and our method is the use of population genetics to suggest the structure of the variance of SNP effects, including a fallback should fitness and phenotype effect not be related. Kwee's method is developed in the context of tag SNPs and suggests an arbitrary variance of SNP effects given as either a constant, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e061" xlink:type="simple"/></inline-formula>, or any prior-information based form. A related method is that of Hoggart et al <xref ref-type="bibr" rid="pgen.1001202-Hoggart1">[18]</xref>. Their approach corresponds to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e062" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e063" xlink:type="simple"/></inline-formula> set to zero (they assume a mean-zero distribution) and a different set of restrictions on the distribution of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e064" xlink:type="simple"/></inline-formula>. Their assumptions about the distribution of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e065" xlink:type="simple"/></inline-formula> were chosen to yield estimates with most variants having zero effect, a feature called model selection which eliminates small effects and correlated variables. In contrast, our model will tend to reign in large effect sizes and split effect size between variants in high linkage disequilibrium, but does not eliminate SNPs from the fit. We prefer our choice for resequencing for several reasons. First, there may well be many effects of small size which are cumulatively important, and we want to retain those small effects in the model. Second, we want an estimate of the effect size of each variant for graphical and diagnostic purposes. Third, we accomplish a similar goal of reducing the model size by rejecting the null on a small number of genes. That is, we want to identify a small number of disease relevant genes with our efficient test; doing so will exclude most SNPs without further model selection procedures. Fourth, by smoothly grouping rare SNPs and summarizing them with only a few parameters, we already greatly reduce the multiple testing burden.</p>
+</sec><sec id="s2b">
+<title>Model Interpretation</title>
+<p>The specification of equations (1), (4), and (6) yields a natural interpretation to the fitted model. After estimating the population parameters of phenotype effects, we will be able to jointly estimate individual SNP effects <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e066" xlink:type="simple"/></inline-formula> and their impact on the phenotype of each person in our sample. By calculating <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e067" xlink:type="simple"/></inline-formula>, we obtain the expected difference between participant <italic>i</italic>'s phenotype and what we would expect were there no effects of this gene. As a result we can empirically estimate the overall phenotypic variability due to observed genetic variants, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e068" xlink:type="simple"/></inline-formula> over study participants. We can similarly estimate the variability dues to rare alleles by including only rare SNPs in the above calculation. The overall effect <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e069" xlink:type="simple"/></inline-formula> is an average change in phenotype per derived allele, perhaps due to inadequate purifying selection. In the variance expression (6), <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e070" xlink:type="simple"/></inline-formula> is the variability of allelic effects for a given level of true fitness. As will be shown below in <xref ref-type="fig" rid="pgen-1001202-g002">Figure 2</xref>, when using the genome-wide distribution of fitness effects for non-synonymous SNPs, common variation is nearly neutral so <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e071" xlink:type="simple"/></inline-formula> can also be thought of as the variability of effects of common alleles. <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e072" xlink:type="simple"/></inline-formula> represents the correlation between fitness burden and phenotypic burden. This parameter's interpretation relies on accurately estimating the scale of fitness effects and has awkward units, but we can avoid this difficulty by noting that (4) can be decomposed into a fitness related portion and a fitness unrelated portion which are independent<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.e073" xlink:type="simple"/><label>(7)</label></disp-formula>By calculating <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e074" xlink:type="simple"/></inline-formula> we can ascribe a proportion of total variation in phenotype to selection-phenotype correlation without worrying about having gotten the scale of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e075" xlink:type="simple"/></inline-formula> correct. Calculations for separating these variance components are found in <xref ref-type="supplementary-material" rid="pgen.1001202.s001">Text S1</xref>. We can use the same technique to compare classes of SNPs, for example non-coding vs missense, by jointly fitting separate <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e076" xlink:type="simple"/></inline-formula> and comparing the attributable variance for each class of SNPs. We will illustrate this idea in our real data example. This decomposition also shows why it is not crucial for our estimates of fitness to be perfect. The model can fall back by setting <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e077" xlink:type="simple"/></inline-formula> to zero and use only <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e078" xlink:type="simple"/></inline-formula> to recover a working model which does not pool information across rare alleles. Doing so will mean that the opportunity to gain information by recognizing structure in phenotype effects will not be realized, but the remaining estimation method is still valid.</p>
+<fig id="pgen-1001202-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pgen.1001202.g002</object-id><label>Figure 2</label><caption>
+<title>Relationship between sampled frequency and mean fitness.</title>
+<p>Simulation results using fitted DFE of non-synonymous variation from <xref ref-type="bibr" rid="pgen.1001202-Boyko1">[33]</xref> and a sample size of 1000 diploids. Red bars are median +−35% of the distribution at that sampled frequency. The x-axis is logarithmic and scaled by 100, i.e., the first point is 1/2000 chromosomes.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.g002" xlink:type="simple"/></fig>
+<p>An important consideration is how to interpret the results when multiple ethnic groups are analyzed simultaneously. Because some genetic variation is fixed between ethnic groups in the sample, the average effect of single-population variation will be absorbed into the fitted mean for that group. As a result, the interpretation for “total explained variation” is actually “total explained within-ethnic-group variation;” genetic variation may explain some of the phenotypic difference between groups, but we do not include it in our estimate because of confounding between environmental exposures and ethnic background.</p>
+<p>Another point requiring clarification is the assumption that genotype effects are independent. In the context of GWAS, nearby SNPs often are thought to have correlated effects because they mutually tag a functional variant. Additionally, estimates of SNP effects will be correlated due to LD making their true separate effects difficult or impossible to identify. However, in the underlying data generating mechanism true genotype effects are independent. Because sequencing identifies all the variation within the region and eliminates much of the correlation due to untyped alleles, we believe that the independence assumption is a useful approximation in this case. Non-independence of the true effects could be accommodated by imposing a covariance structure on SNP effects, for example using their spatial distance in the genome or folded protein. Alternatively, the phylogenetic approach of TreeLD <xref ref-type="bibr" rid="pgen.1001202-Zollner1">[35]</xref> estimates the degree of probable overlap of untyped SNPs.</p>
+</sec><sec id="s2c">
+<title>Computing Fitness Effects</title>
+<p>Model (4) relies on a prediction <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e079" xlink:type="simple"/></inline-formula> of the fitness effect of each variant as well as an estimate <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e080" xlink:type="simple"/></inline-formula> of the error of that prediction. We use the following procedure to calculate such estimates.</p>
+<list list-type="order"><list-item>
+<p>Take as given the fitted distributional form of fitness effects and population history since out-of-Africa <xref ref-type="bibr" rid="pgen.1001202-Boyko1">[33]</xref>, <xref ref-type="bibr" rid="pgen.1001202-Hernandez1">[36]</xref>.</p>
+</list-item><list-item>
+<p>Use existing software SFS_CODE <xref ref-type="bibr" rid="pgen.1001202-Hernandez1">[36]</xref> to simulate new polymorphisms in the gene under study many times, creating pseudo-samples containing true variant-level fitness.</p>
+</list-item><list-item>
+<p>For each variant in the real dataset, find variants in the pseudo-data with the same sampled frequency, and calculate the mean <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e081" xlink:type="simple"/></inline-formula> and variance <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e082" xlink:type="simple"/></inline-formula> of true fitness among those simulated variants.</p>
+</list-item></list>
+<p>To reduce computational requirements, steps 2 and 3 above can be replaced by simulating a smaller number of large populations and calculating the expected mean and variance of fitness using simple random sampling. <xref ref-type="fig" rid="pgen-1001202-g002">Figure 2</xref> depicts the relationship of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e083" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e084" xlink:type="simple"/></inline-formula> to frequency when using a genome-wide fitted DFE <xref ref-type="bibr" rid="pgen.1001202-Boyko1">[33]</xref>. Because much of the variation discovered in our multi-ethnic example dataset is confined to one ethnicity, we use the ethnicity-specific frequency and pseudo-data. Because of admixture in our sample, we use the highest observed frequency (the most skeptical about its being rare) to assign an ethnicity of origin to SNPs appearing in multiple groups.</p>
+<p>An advantage of this method is that because it refers to a feature of genetic history rather than a phenotype, it need only be done once for any trait under study on the same cohort. While the fitness - phenotype relationship will be different for all traits, that is modeled by the fitted parameter <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e085" xlink:type="simple"/></inline-formula> rather than modification of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e086" xlink:type="simple"/></inline-formula>. If the impact of LD structure on the prediction does not vary too much between genes, the calculation can be recycled for multiple genes under study. In some experiments, we found the impact of LD to be minimal (data not shown). Discussion of taking the DFE as known versus estimating or using some other flexible function of frequency it is included in <xref ref-type="supplementary-material" rid="pgen.1001202.s001">Text S1</xref>. Discussion of the quality of the existing DFE estimates are also included in <xref ref-type="supplementary-material" rid="pgen.1001202.s001">Text S1</xref>. We have used the observed frequency to estimate the fitness effect, but there are many other potential predictors of functional status. Discussion of including them in our model is found in <xref ref-type="supplementary-material" rid="pgen.1001202.s001">Text S1</xref>.</p>
+</sec><sec id="s2d">
+<title>Model Fitting and Estimation</title>
+<sec id="s2d1">
+<title>Testing</title>
+<p>Our model fitting procedure will be likelihood-based, so we will use a standard hypothesis testing method: likelihood ratio tests. To improve robustness, our examples will use permutation p-values obtained by comparing the likelihood ratio of the fitted model to that generated under the null hypothesis by randomly swapping genotype vectors between members of the same ethnicity. Permuting genotype labels simulates the null hypothesis that no relationship exists between any genotype and any aspect of the response, which in our parametric setup is equivalent to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e087" xlink:type="simple"/></inline-formula> while retaining the relationship between covariates (such as age and sex) and phenotype. Because the genotypes of members of different ethnicities are not exchangeable even under the null, we only swap genotype vectors among individuals with the same reported ethnicity. In admixed populations where information about local ancestry is available, the permutation should be between individuals with the same local ancestry.</p>
+</sec><sec id="s2d2">
+<title>Estimation</title>
+<p>For numerical convenience and statistical robustness, we will use only the first two moments of the model in equations (1), (4), and (6), and assume <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e088" xlink:type="simple"/></inline-formula> constant in (6). This last restriction yields a mixed-effects regression problem where the genotype effects are crossed random factors, presented in (8) and (9) below. A broad introduction to mixed effects regression and many of the formulas we will use are provided in McCulloch and Searle <xref ref-type="bibr" rid="pgen.1001202-McCulloch1">[37]</xref>. In matrix notation where each participant is a row and effects are column vectors,<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.e089" xlink:type="simple"/><label>(8)</label></disp-formula><disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.e090" xlink:type="simple"/><label>(9)</label></disp-formula></p>
+<p>We allow the procedure to exploit the possibility that individuals with a high burden of rare alleles not only have drift in their mean phenotype because of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e091" xlink:type="simple"/></inline-formula> in (8), but also more variability in phenotype due to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e092" xlink:type="simple"/></inline-formula> in (9). Equations (8) and (9) assert that a single parameter <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e093" xlink:type="simple"/></inline-formula> regulates the change in mean variant effect and effect variability with frequency. However, non-differential error (with respect to phenotype) in imputing covariates biases coefficient estimates towards the null, so if our estimations of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e094" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e095" xlink:type="simple"/></inline-formula> have different levels of error they will experience different such biases. As a result, we will want to fit <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e096" xlink:type="simple"/></inline-formula> in (8) and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e097" xlink:type="simple"/></inline-formula> in (9) separately to check that they are similar before combining them. Because it involves an extra parameter the “split <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e098" xlink:type="simple"/></inline-formula>” calculation will be more variable under the null and less powerful when the model is true. However, it may be more robust when the model is mis-specified, as we will explore in our simulations.</p>
+<p>We will fit the mixed effects model (8)–(9) using modified Newton-Raphson optimization of the implied likelihood. The linear mixed effects approach is equivalent to assuming normality for the error terms <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e099" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e100" xlink:type="simple"/></inline-formula> and fitting via maximum likelihood. A major advantage of this estimation approach is that it allows for very fast computation; the likelihood can be integrated analytically over <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e101" xlink:type="simple"/></inline-formula> when maximizing over parameters <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e102" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e103" xlink:type="simple"/></inline-formula>. We have not optimized our software for speed, but it completes in a few seconds for the large example dataset. Though higher-order expansions are possible, others have shown that most of the information is often contained in the first two moments of the data <xref ref-type="bibr" rid="pgen.1001202-Wedderburn1">[38]</xref>, <xref ref-type="bibr" rid="pgen.1001202-Heyde1">[39]</xref>, and that correct specification of mean and variance models produces correct inference robust to additional details of structure. Assumptions which better match the data at hand will lead to more power, but they will tend to require dramatically more computational effort. For our current example we have considered a single sequenced candidate gene where computational speed is not crucial, but we expect that methods similar to ours will be required for whole-genome or whole-exome resequencing efforts where computational resources will be a limiting factor. Additionally, popular methods such as Markov Chain Monte Carlo and EM which can use arbitrary distributions of residuals and random effects require accurate initial estimates to perform well; MCMC also benefits enormously from a good proposal distribution. Mixed effect regression is a reasonable way to generate these initializations. Whereas using only the first two moments for estimation is only optimal under the normality of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e104" xlink:type="simple"/></inline-formula>, it will still yield consistent estimates if normality does not hold, and we can use use robust methods of testing the null hypothesis such as permutation p-values. This quasi-likelihood-based method also yields best linear unbiased estimates for the SNP phenotype effects <xref ref-type="bibr" rid="pgen.1001202-McCulloch1">[37, chapter 6]</xref>, which we relied upon in “model interpretation”.</p>
+</sec><sec id="s2d3">
+<title>Implementation</title>
+<p>As discussed above, we will be interested in fitting distinct <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e105" xlink:type="simple"/></inline-formula> in (8) and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e106" xlink:type="simple"/></inline-formula> in (9) because of concerns about different magnitudes of error in the computation of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e107" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e108" xlink:type="simple"/></inline-formula>. In such a scenario, we can use the SAS <sc>mixed</sc> procedure <xref ref-type="bibr" rid="pgen.1001202-Littel1">[40]</xref> to estimate the model parameters and check our custom software. Example code implementing this use is maintained at the authors' website. We generate confidence intervals using the standard asymptotic arguments in McCulloch and Searle <xref ref-type="bibr" rid="pgen.1001202-McCulloch1">[37, chapter 6]</xref>, which are built into SAS.</p>
+<p>Alternatively, if we use a single <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e109" xlink:type="simple"/></inline-formula> in the mean and variance models, the result is a model which is not easily fit in any standard statistics package of which the authors are aware. We have created a set of functions in the R programing language <xref ref-type="bibr" rid="pgen.1001202-R1">[41]</xref> to estimate this model using optim to maximize the likelihood, code for which is posted at the authors' web site: <ext-link ext-link-type="uri" xlink:href="http://home.uchicago.edu/~crk8e/papersup.html" xlink:type="simple">http://home.uchicago.edu/~crk8e/papersup.html</ext-link></p>
+</sec><sec id="s2d4">
+<title>Bayesian interpretation</title>
+<p>Our model is easily recast in a purely Bayesian framework. One would need to write priors for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e110" xlink:type="simple"/></inline-formula> and the effects of covariates. The frequentist formulation is just the Bayesian formulation with an improper uniform prior distribution on the variance components. As a result, using Bayesian regression software like R's MCMCglmm package or winBUGs is an alternative for estimation. A reasonable way to generate proper informative priors would be a three step calculation. First, estimate a posterior distribution on variance explained by genetic factors from previous linkage studies. Because many phenotypes may not have available linkage studies or very low resolution, one may have to rely on other phenotypes or animal model results. Second, equate the resulting prior on attributable variance to the expression in <xref ref-type="supplementary-material" rid="pgen.1001202.s001">Text S1</xref> with observed values for the genotype data. Third, assign an arbitrary fraction of the explained variation to each source and back-calculate to find the square of the parameter.</p>
+<p>The Bayesian analyst could continue to use our normal approximation of the distribution of the latent <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e111" xlink:type="simple"/></inline-formula> which allows it to be integrated out, or could model it directly including the point mass at zero and skew distribution from the simulation result. The result would be a large model with many latent variables, some of which are poorly identified.</p>
+</sec></sec></sec><sec id="s3">
+<title>Results/Discussion</title>
+<sec id="s3a">
+<title>Dallas Heart Study: ANGPTL4</title>
+<sec id="s3a1">
+<title>Description of dataset</title>
+<p>About 3500 prospectively sampled individuals from the population in Dallas, Texas, were sequenced at a candidate gene for dyslipidemia: ANGPTL4 (Ensembl Acc:16039). These individuals come primarily from three ethnic backgrounds: non-Hispanic white (N = 1043), non-Hispanic black (N = 1832), and Hispanic (N = 601). We will exclude from our analysis the 75 individuals listed as “Other” ethnicity. Our outcome phenotype is log-transformed serum triglyceride levels. Details of the cohort <xref ref-type="bibr" rid="pgen.1001202-Victor1">[42]</xref>, its metabolic phenotypes <xref ref-type="bibr" rid="pgen.1001202-Browning1">[43]</xref>, and the sequencing methods and discovered genetic variation <xref ref-type="bibr" rid="pgen.1001202-Romeo1">[8]</xref>, <xref ref-type="bibr" rid="pgen.1001202-Romeo2">[12]</xref> have been described previously. We grouped all missense and nonsense mutations into a single category which we label “non-synonymous” in the tables and figures, and we grouped all synonymous and non-coding region mutations into a single category labeled “non-coding.” <xref ref-type="table" rid="pgen-1001202-t001">Table 1</xref> shows the number of discovered SNPs in each category in each ethnic group. We consider age, sex, ethnicity, diabetes status, and self-reported ethanol consumption as adjuster covariates. For age, we use a flexible linear spline model with knots at every ten years to allow for nonlinearity in response. We include all interactions between ethnicity and gender and ethnicity-gender interactions with other covariates. Because statin use is an endogenous variable indicating diagnosed dyslipidemia, we do not adjust for it. We fit models 1) ignoring statin use and 2) increasing triglyceride levels 25% in the treated to approximate their untreated level. Because we obtained qualitatively similar results, we present only the latter.</p>
+<table-wrap id="pgen-1001202-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pgen.1001202.t001</object-id><label>Table 1</label><caption>
+<title>Genetic variation in ANGPTL4.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pgen-1001202-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Population</td>
+<td align="left" colspan="1" rowspan="1">N individuals</td>
+<td align="left" colspan="1" rowspan="1">N Non-synonymous variants</td>
+<td align="left" colspan="1" rowspan="1">N Non-coding variants</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Pooled</td>
+<td align="left" colspan="1" rowspan="1">3476</td>
+<td align="left" colspan="1" rowspan="1">32</td>
+<td align="left" colspan="1" rowspan="1">62</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Non-Hispanic whites</td>
+<td align="left" colspan="1" rowspan="1">1043</td>
+<td align="left" colspan="1" rowspan="1">20</td>
+<td align="left" colspan="1" rowspan="1">23</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Non-Hispanic blacks</td>
+<td align="left" colspan="1" rowspan="1">1832</td>
+<td align="left" colspan="1" rowspan="1">15</td>
+<td align="left" colspan="1" rowspan="1">38</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Hispanic</td>
+<td align="left" colspan="1" rowspan="1">601</td>
+<td align="left" colspan="1" rowspan="1">8</td>
+<td align="left" colspan="1" rowspan="1">17</td>
+</tr>
+</tbody>
+</table></alternatives></table-wrap></sec><sec id="s3a2">
+<title>Model estimates</title>
+<p><xref ref-type="table" rid="pgen-1001202-t002">Table 2</xref> presents model summaries and point estimates with asymptotic standard errors for model parameters, stratified by ethnicity and pooled using ethnicity as an adjuster. <xref ref-type="table" rid="pgen-1001202-t002">Table 2</xref> presents the results setting the offset term <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e112" xlink:type="simple"/></inline-formula> to zero. We found that including <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e113" xlink:type="simple"/></inline-formula> in (4) produced poor fits when there were few variants, for example when using only the Hispanic non-synonymous variants (n = 8). In the pooled estimate, including the offset did not qualitatively change the result.</p>
+<table-wrap id="pgen-1001202-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pgen.1001202.t002</object-id><label>Table 2</label><caption>
+<title>Model fit for ANGPTL4.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pgen-1001202-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Population</td>
+<td align="left" colspan="1" rowspan="1">SNP Type</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e114" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e115" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e116" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">SE</td>
+<td align="left" colspan="1" rowspan="1">nonfitness % variance</td>
+<td align="left" colspan="1" rowspan="1">fitness % variance</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Pooled</td>
+<td align="left" colspan="1" rowspan="1">non-syn</td>
+<td align="left" colspan="1" rowspan="1">0.13</td>
+<td align="left" colspan="1" rowspan="1">0.0</td>
+<td align="left" colspan="1" rowspan="1">2.5</td>
+<td align="left" colspan="1" rowspan="1">8.7</td>
+<td align="left" colspan="1" rowspan="1">0.54</td>
+<td align="left" colspan="1" rowspan="1">0.003</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Pooled</td>
+<td align="left" colspan="1" rowspan="1">non-coding</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+<td align="left" colspan="1" rowspan="1">8.3</td>
+<td align="left" colspan="1" rowspan="1">−9.6</td>
+<td align="left" colspan="1" rowspan="1">6.5</td>
+<td align="left" colspan="1" rowspan="1">0.09</td>
+<td align="left" colspan="1" rowspan="1">0.08</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">NHW</td>
+<td align="left" colspan="1" rowspan="1">non-syn</td>
+<td align="left" colspan="1" rowspan="1">0.15</td>
+<td align="left" colspan="1" rowspan="1">0.0</td>
+<td align="left" colspan="1" rowspan="1">5.8</td>
+<td align="left" colspan="1" rowspan="1">13.5</td>
+<td align="left" colspan="1" rowspan="1">0.53</td>
+<td align="left" colspan="1" rowspan="1">0.03</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">NHW</td>
+<td align="left" colspan="1" rowspan="1">non-coding</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+<td align="left" colspan="1" rowspan="1">0.0</td>
+<td align="left" colspan="1" rowspan="1">1.9</td>
+<td align="left" colspan="1" rowspan="1">7.3</td>
+<td align="left" colspan="1" rowspan="1">0.004</td>
+<td align="left" colspan="1" rowspan="1">0.008</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">NHB</td>
+<td align="left" colspan="1" rowspan="1">non-syn</td>
+<td align="left" colspan="1" rowspan="1">0.08</td>
+<td align="left" colspan="1" rowspan="1">0.0</td>
+<td align="left" colspan="1" rowspan="1">0.5</td>
+<td align="left" colspan="1" rowspan="1">11.4</td>
+<td align="left" colspan="1" rowspan="1">0.42</td>
+<td align="left" colspan="1" rowspan="1">0.0002</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">NHB</td>
+<td align="left" colspan="1" rowspan="1">non-coding</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+<td align="left" colspan="1" rowspan="1">0.0</td>
+<td align="left" colspan="1" rowspan="1">−11.4</td>
+<td align="left" colspan="1" rowspan="1">8.1</td>
+<td align="left" colspan="1" rowspan="1">0.07</td>
+<td align="left" colspan="1" rowspan="1">0.13</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Hispanic</td>
+<td align="left" colspan="1" rowspan="1">non-syn</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+<td align="left" colspan="1" rowspan="1">0.0</td>
+<td align="left" colspan="1" rowspan="1">20.5</td>
+<td align="left" colspan="1" rowspan="1">43.9</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0.03</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Hispanic</td>
+<td align="left" colspan="1" rowspan="1">non-coding</td>
+<td align="left" colspan="1" rowspan="1">0.10</td>
+<td align="left" colspan="1" rowspan="1">19.6</td>
+<td align="left" colspan="1" rowspan="1">−40.8</td>
+<td align="left" colspan="1" rowspan="1">38.2</td>
+<td align="left" colspan="1" rowspan="1">0.08</td>
+<td align="left" colspan="1" rowspan="1">0.66</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label/><p>Parameters are defined in equations (1), (4), and (6). SE is for <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e117" xlink:type="simple"/></inline-formula>. Attributable variance is that due to decomposition (7), see <xref ref-type="supplementary-material" rid="pgen.1001202.s001">Text S1</xref> for calculation. Pooled model <italic>p</italic> = .0064 on 10000 permutations. Pooled model residual variance = 0.29. NHW is non-Hispanic white; NHB is non-Hispanic black.</p></fn></table-wrap-foot></table-wrap>
+<p>For ANGPTL4, we observe a p-value of .006 on 10,000 permutations versus the strong null hypothesis that no SNPs have any effect. Previous authors <xref ref-type="bibr" rid="pgen.1001202-Romeo2">[12]</xref> observed a p-value for a net surplus of non-synonymous variants in low triglyceride participants of .016 and a minimum variant-at-a-time p-value of .019 for E40K corrected for multiple testing. The improvement to the model fit by including <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e118" xlink:type="simple"/></inline-formula> is small in this case; a likelihood-ratio p-value using the asymptotic distribution is non-significant. As seen in <xref ref-type="table" rid="pgen-1001202-t002">Table 2</xref>, a glimmer of a fitness component is only seen in the non-coding variation, and the explained variance is very small. However, to illustrate the interpretation of the plots which our approach generates we'll take the parameter estimates at face value below.</p>
+</sec><sec id="s3a3">
+<title>Interpretation of diagnostic plot</title>
+<p><xref ref-type="fig" rid="pgen-1001202-g003">Figure 3</xref> shows the observed SNPs and estimated effect sizes (non-synonymous in black and non-coding in red) rank ordered by observed frequency (in blue). Variant-at-a-time ordinary least squares (OLS) estimates of effect size are overlaid in green. <xref ref-type="fig" rid="pgen-1001202-g003">Figure 3</xref> displays several interesting features of the data; first there are two low-frequency non-synonymous variants with a strong effect reducing triglyceride levels; the first is E40K (frequency in non-Hispanic whites = .012, frequency in non-Hispanic blacks = .003), the sole variant identified by Romeo et al <xref ref-type="bibr" rid="pgen.1001202-Romeo2">[12]</xref>. However, adjusted for E40K we see that another more common variant R278Q almost exclusive to non-Hispanic blacks (frequency = .055) also appears to decrease triglyceride levels. We observe a weak tendency for all non-synonymous variation to reduce the phenotype; Romeo <xref ref-type="bibr" rid="pgen.1001202-Romeo2">[12]</xref> also noted an excess of rare non-synonymous variants in those with low triglyceride levels. The rare non-coding variation appears to have the opposite sign of effect; it increases triglyceride levels. Referring to <xref ref-type="table" rid="pgen-1001202-t002">Table 2</xref> we see that a fitness-related component of variability (of about the same scale as the change in mean) was detected; this gives rise to the wider spread of point estimates and wider confidence intervals in non-coding variation.</p>
+<fig id="pgen-1001202-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pgen.1001202.g003</object-id><label>Figure 3</label><caption>
+<title>Frequency versus estimated effect size in ANGPTL4 with ordinary least squares estimates.</title>
+<p>The SNPs have been rank-ordered by observed frequency on the x-axis with ties broken by estimated effect size. The left y-axis is the predicted effect (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e119" xlink:type="simple"/></inline-formula> in (4) ) on the log of serum triglycerides. Green solid dots are the point estimate for each variant's effect on log-triglycerides from one variant at a time ordinary least squares adjusted for non-genetic covariates. Open circles are joint point estimates of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e120" xlink:type="simple"/></inline-formula> from our method, and bars 95% prediction intervals on those estimates. Confidence intervals are the elementwise Wald-type estimates described in chapter 6 of <xref ref-type="bibr" rid="pgen.1001202-McCulloch1">[37]</xref> and produced by SAS's estimate command in the mixed procedure. See <xref ref-type="supplementary-material" rid="pgen.1001202.s001">Text S1</xref> for the calculation of point estimates, and the sample code at the author's website for SAS commands. Non-synonymous variation is in black; non-coding variation in red. The right y-axis and blue line depict observed count pooled across ethnicities on a log scale.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.g003" xlink:type="simple"/></fig>
+<p>An interesting data point in <xref ref-type="fig" rid="pgen-1001202-g003">Figure 3</xref> is a single 5% frequency non-coding variant (directly before R278Q) whose OLS effect estimate is quite large (and nominally significant) but whose model-based effect estimate is small. Examining that variant more closely, we found that it is in strong LD with R278Q. Because E40K (which is not strongly correlated to any other variation) had a large effect and non-synonymous variants tended to decrease triglycerides, the model assigned non-synonymous variation as more likely to have non-rare variation with large negative effect sizes and gives the effect to R278Q. Similarly, perfectly correlated rare variants have their combined effect split evenly.</p>
+<p>We can understand this model fit by looking at the green OLS estimates in <xref ref-type="fig" rid="pgen-1001202-g003">Figure 3</xref>. Visually, the estimates for non-synonymous variation tend to be below zero. Comparing the non-synonymous to non-coding singletons, we see more variable estimates in the non-coding singletons as well as a different mean. The model fit identifies this as opposite signs of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e121" xlink:type="simple"/></inline-formula> and a much greater <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e122" xlink:type="simple"/></inline-formula> in non-coding. The non-rare non-synonymous variants with large effects (E40K, R278Q) drive the larger estimate of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e123" xlink:type="simple"/></inline-formula> versus non-coding variants; examining <xref ref-type="fig" rid="pgen-1001202-g002">Figure 2</xref> we see that common variation is essentially neutral with respect to fitness, and as a result non-zero effects in non-rare variants force <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e124" xlink:type="simple"/></inline-formula> away from zero.</p>
+</sec><sec id="s3a4">
+<title>Evolutionary interpretation</title>
+<p>An interesting potential story about natural selection on ANGPTL4 activity emerges from <xref ref-type="fig" rid="pgen-1001202-g003">Figure 3</xref>. First, non-synonymous mutation tended to decrease the effectiveness of ANGPTL4 and decrease serum triglyceride levels <xref ref-type="bibr" rid="pgen.1001202-Romeo1">[8]</xref>, <xref ref-type="bibr" rid="pgen.1001202-honYau1">[44]</xref>, <xref ref-type="bibr" rid="pgen.1001202-Yin1">[45]</xref>. We see no evidence of selection against those mutations; variants which decreased triglycerides became more than rare in both the African and European lineages, and we see no excess of large effects in rare SNPs. On the other hand, non-coding mutations which may alter the regulation of ANGPTL4 on average increased triglycerides. Variants with large effect sizes were preferentially rare, and the apparent selective force was stronger in the non-European lineage, as the demographic history would predict. This meshes well with the finding that ANGPTL4 experienced a Europe specific relaxation of purifying selection <xref ref-type="bibr" rid="pgen.1001202-Romeo2">[12]</xref>. We do not suggest that serum triglyceride levels in themselves were the target of purifying selection; effect on triglycerides may only be correlated to effect on a selected function.</p>
+</sec></sec><sec id="s3b">
+<title>Simulation Studies</title>
+<sec id="s3b1">
+<title>Population parameters</title>
+<p>In order to determine the power and robustness of our procedure, we simulated variation in a gene with the exon structure of the gene ANGPTL4 in a study population using SFS_CODE <xref ref-type="bibr" rid="pgen.1001202-Hernandez1">[36]</xref> and fitted demographic and DFE parameters <xref ref-type="bibr" rid="pgen.1001202-Gutenkunst1">[31]</xref>, <xref ref-type="bibr" rid="pgen.1001202-Boyko1">[33]</xref>. We used 4cM/mb for the local recombination rate and no recombination hotspots. We used <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e125" xlink:type="simple"/></inline-formula> as the mutation rate per-nucleotide-per-generation. From the final simulated population of about 20,000 individuals we sampled 1000 individuals independently for each of 1000 simulation runs. SFS_CODE commands creating the simulated population are available at the authors' web site. We created simulated phenotypes according to (1) and (2) using parameters described below. The total simulated population had 132 coding-region SNPs, 29 of which were at frequency greater than 1%.</p>
+</sec><sec id="s3b2">
+<title>Model parameters</title>
+<p>We chose several levels of the phenotype parameters to correspond to potential cases of interest while keeping the total fraction of variation explained by the gene about the same: a weak mean variant effect, a strong fitness-related component of the phenotype, and a strong fitness independent component of the phenotype. We chose the baseline values such that <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e126" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e127" xlink:type="simple"/></inline-formula> explain about the same amount of variation in phenotype. We also created a scenario with no fitness-phenotype correlation whatsoever. To ensure that type 1 error rates were correct, we include a simulation under the null hypothesis that no variants have any effect on phenotype. <xref ref-type="table" rid="pgen-1001202-t003">Table 3</xref> contains the chosen phenotype parameter values for each set of simulations and the resulting expected percent of variance explained by the SNPs due to fitness-phenotype correlation and percent of variance explained independent of that correlation.</p>
+<table-wrap id="pgen-1001202-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pgen.1001202.t003</object-id><label>Table 3</label><caption>
+<title>Simulation design.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pgen-1001202-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.t003" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">scenario</td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e128" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e129" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1"><inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e130" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">residual standard deviation</td>
+<td align="left" colspan="1" rowspan="1">expected fitness % variance explained</td>
+<td align="left" colspan="1" rowspan="1">expected nonfitness % variance explained</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Base</td>
+<td align="left" colspan="1" rowspan="1">−7.0</td>
+<td align="left" colspan="1" rowspan="1">0.012</td>
+<td align="left" colspan="1" rowspan="1">0.007</td>
+<td align="left" colspan="1" rowspan="1">0.22</td>
+<td align="left" colspan="1" rowspan="1">0.84</td>
+<td align="left" colspan="1" rowspan="1">0.84</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">High <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e131" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">−21.0</td>
+<td align="left" colspan="1" rowspan="1">0.012</td>
+<td align="left" colspan="1" rowspan="1">0.007</td>
+<td align="left" colspan="1" rowspan="1">0.50</td>
+<td align="left" colspan="1" rowspan="1">1.51</td>
+<td align="left" colspan="1" rowspan="1">0.17</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">High <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e132" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">−7.0</td>
+<td align="left" colspan="1" rowspan="1">0.018</td>
+<td align="left" colspan="1" rowspan="1">0.007</td>
+<td align="left" colspan="1" rowspan="1">0.28</td>
+<td align="left" colspan="1" rowspan="1">0.55</td>
+<td align="left" colspan="1" rowspan="1">1.13</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Low <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e133" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">−6.4</td>
+<td align="left" colspan="1" rowspan="1">0.012</td>
+<td align="left" colspan="1" rowspan="1">0.003</td>
+<td align="left" colspan="1" rowspan="1">0.21</td>
+<td align="left" colspan="1" rowspan="1">0.83</td>
+<td align="left" colspan="1" rowspan="1">0.85</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Very high <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e134" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">−63.1</td>
+<td align="left" colspan="1" rowspan="1">0.012</td>
+<td align="left" colspan="1" rowspan="1">0.003</td>
+<td align="left" colspan="1" rowspan="1">1.43</td>
+<td align="left" colspan="1" rowspan="1">1.66</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Zero <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e135" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">0.0</td>
+<td align="left" colspan="1" rowspan="1">0.012</td>
+<td align="left" colspan="1" rowspan="1">0.007</td>
+<td align="left" colspan="1" rowspan="1">0.16</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+<td align="left" colspan="1" rowspan="1">1.68</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt102"><label/><p>Parameters chosen for simulation. Data generated by mechanism of formula (1) and (2). Parameters defined in equations (1), (2), and (6). Explained variance is the average true variance over individuals of fitness component and fitness independent component.</p></fn></table-wrap-foot></table-wrap>
+<p>Two additional batches of simulation examine the robustness of our procedure to incorrect assumptions. First we created violations of the assumed population model. We mis-specified the assumed DFE in our analysis, making the scale parameter a factor of 5 too large or too small and keeping the truth the same. We also simulated violation of our demographic assumptions using a population which experienced an additional 100 fold exponential growth over the last 11% of generations since out-of-Africa. Second we created violations of the assumed statistical model. We simulated three scenarios violating the linearity assumption. First, with <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e136" xlink:type="simple"/></inline-formula> proportional to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e137" xlink:type="simple"/></inline-formula>, second proportional to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e138" xlink:type="simple"/></inline-formula>, and third a 50/50 mixture of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e139" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e140" xlink:type="simple"/></inline-formula>. We simulated <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e141" xlink:type="simple"/></inline-formula> using a highly skewed log-normal distribution which was then standardized to have mean zero and variance <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e142" xlink:type="simple"/></inline-formula>. We also simulated with 20% and 80% of the variants having an effect size of zero.</p>
+</sec><sec id="s3b3">
+<title>Power comparisons</title>
+<p>To compare power with existing methods, we included several proposed methods of analysis. First, we test the method of Bonferroni corrected minimum p-value of SNPs with minor allele frequency &gt;1% or &gt;5%. Other proposed methods using allele counts like CAST <xref ref-type="bibr" rid="pgen.1001202-Morgenthaler1">[46]</xref> CMC <xref ref-type="bibr" rid="pgen.1001202-Li2">[20]</xref> and weighted sums <xref ref-type="bibr" rid="pgen.1001202-Madsen1">[21]</xref> were created for case-control studies, so we alter those methods to be fair in a cohort quantitative-trait context. Our representative of CAST-like analysis is regression with the number of rare variants carried by each participant as a covariate; CMC-like analysis is the same with non-rare SNPs (frequency greater then 1% or 5%) treated as free regression parameters. P-values are then generated by ANOVA against the nested model consisting only of only fitting the mean response. Our representative of weighted-sum type methods is a similar regression analysis where rare variants are collapsed to a mean model with burden proportional to <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e143" xlink:type="simple"/></inline-formula>, which is the same weight used by Madsen et al <xref ref-type="bibr" rid="pgen.1001202-Madsen1">[21]</xref>. Because the simulated response is actually normal, we do not use a rank transformation. We also used the same burden function for only low frequency SNPs and treated common SNPs as regression parameters. P-values are again obtained by ANOVA versus a nested model with no genetic effects.</p>
+<p>To demonstrate the gain (or loss) in information by considering the marginal variance, we apply a similar regression with an optimal mean model, that is (8) either for all SNPs or treating common SNPs as free. We tested our model both with a single <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e144" xlink:type="simple"/></inline-formula> in the mean and variance and the “split <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e145" xlink:type="simple"/></inline-formula>” calculation where separate parameters are fit in (8) and (9).</p>
+<p><xref ref-type="table" rid="pgen-1001202-t004">Table 4</xref> summarizes the power comparisons in each case. Our model is as or more powerful than the existing methods, even when there is substantial violation of its assumptions. The only scenario in which our model loses some power is when there is absolutely no fitness-phenotype correlation. Even in that case, the relative loss is small, much smaller than the gain when <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e146" xlink:type="simple"/></inline-formula> was not zero. The additional utility of the method varies substantially depending on the chosen parameters. For example, when the fitness-phenotype correlation accounts for about half the genetic component of the phenotype (the basic scenario), our method provides a substantial improvement, but when <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e147" xlink:type="simple"/></inline-formula> is large (common variants have large effect sizes) the benefit is less. Our model appears reasonably robust to all the violations of assumptions which we tested, even providing a performance benefit when effect sizes were very skew or the true relationship was nonlinear. In effect, the truth in those cases lined up less well with the implicit assumptions of the competing methods. Perhaps most importantly, even fairly substantial mistakes in the DFE and demographic history did not dramatically reduce the power of our method. The “split <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e148" xlink:type="simple"/></inline-formula>” model appears to perform about the same as a single <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e149" xlink:type="simple"/></inline-formula>. The minimum p-value method's poor showing in some scenarios is explained by the data generating mechanism we chose; when <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e150" xlink:type="simple"/></inline-formula> is small or many SNPs have zero effect there will often be no common variants with appreciable effect sizes.</p>
+<table-wrap id="pgen-1001202-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pgen.1001202.t004</object-id><label>Table 4</label><caption>
+<title>Simulation study power results.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pgen-1001202-t004-4" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.t004" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="2" rowspan="1">Min <italic>p</italic></td>
+<td align="left" colspan="2" rowspan="1">CAST</td>
+<td align="left" colspan="2" rowspan="1">CMC</td>
+<td align="left" colspan="2" rowspan="1">Weighted Sum</td>
+<td align="left" colspan="2" rowspan="1">Optimal Mean</td>
+<td align="left" colspan="2" rowspan="1">EMMPAT</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">scenario</td>
+<td align="left" colspan="1" rowspan="1">1%</td>
+<td align="left" colspan="1" rowspan="1">5%</td>
+<td align="left" colspan="1" rowspan="1">1%</td>
+<td align="left" colspan="1" rowspan="1">5%</td>
+<td align="left" colspan="1" rowspan="1">1%</td>
+<td align="left" colspan="1" rowspan="1">5%</td>
+<td align="left" colspan="1" rowspan="1">All</td>
+<td align="left" colspan="1" rowspan="1">5%</td>
+<td align="left" colspan="1" rowspan="1">All</td>
+<td align="left" colspan="1" rowspan="1">5%</td>
+<td align="left" colspan="1" rowspan="1">Split <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e151" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">One <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e152" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Null</td>
+<td align="left" colspan="1" rowspan="1">.05</td>
+<td align="left" colspan="1" rowspan="1">.05</td>
+<td align="left" colspan="1" rowspan="1">.05</td>
+<td align="left" colspan="1" rowspan="1">.05</td>
+<td align="left" colspan="1" rowspan="1">.04</td>
+<td align="left" colspan="1" rowspan="1">.06</td>
+<td align="left" colspan="1" rowspan="1">.05</td>
+<td align="left" colspan="1" rowspan="1">.04</td>
+<td align="left" colspan="1" rowspan="1">.04</td>
+<td align="left" colspan="1" rowspan="1">.05</td>
+<td align="left" colspan="1" rowspan="1">.05</td>
+<td align="left" colspan="1" rowspan="1">.04</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Base</td>
+<td align="left" colspan="1" rowspan="1">.22</td>
+<td align="left" colspan="1" rowspan="1">.26</td>
+<td align="left" colspan="1" rowspan="1">.30</td>
+<td align="left" colspan="1" rowspan="1">.27</td>
+<td align="left" colspan="1" rowspan="1">.30</td>
+<td align="left" colspan="1" rowspan="1">.36</td>
+<td align="left" colspan="1" rowspan="1">.22</td>
+<td align="left" colspan="1" rowspan="1">.35</td>
+<td align="left" colspan="1" rowspan="1">.45</td>
+<td align="left" colspan="1" rowspan="1">.39</td>
+<td align="left" colspan="1" rowspan="1">.54</td>
+<td align="left" colspan="1" rowspan="1">.56</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">High <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e153" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">.06</td>
+<td align="left" colspan="1" rowspan="1">.08</td>
+<td align="left" colspan="1" rowspan="1">.12</td>
+<td align="left" colspan="1" rowspan="1">.11</td>
+<td align="left" colspan="1" rowspan="1">.08</td>
+<td align="left" colspan="1" rowspan="1">.10</td>
+<td align="left" colspan="1" rowspan="1">.26</td>
+<td align="left" colspan="1" rowspan="1">.13</td>
+<td align="left" colspan="1" rowspan="1">.38</td>
+<td align="left" colspan="1" rowspan="1">.21</td>
+<td align="left" colspan="1" rowspan="1">.48</td>
+<td align="left" colspan="1" rowspan="1">.48</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">High <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e154" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">.28</td>
+<td align="left" colspan="1" rowspan="1">.34</td>
+<td align="left" colspan="1" rowspan="1">.27</td>
+<td align="left" colspan="1" rowspan="1">.27</td>
+<td align="left" colspan="1" rowspan="1">.42</td>
+<td align="left" colspan="1" rowspan="1">.46</td>
+<td align="left" colspan="1" rowspan="1">.18</td>
+<td align="left" colspan="1" rowspan="1">.45</td>
+<td align="left" colspan="1" rowspan="1">.36</td>
+<td align="left" colspan="1" rowspan="1">.47</td>
+<td align="left" colspan="1" rowspan="1">.52</td>
+<td align="left" colspan="1" rowspan="1">.53</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Low <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e155" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">.20</td>
+<td align="left" colspan="1" rowspan="1">.26</td>
+<td align="left" colspan="1" rowspan="1">.21</td>
+<td align="left" colspan="1" rowspan="1">.21</td>
+<td align="left" colspan="1" rowspan="1">.32</td>
+<td align="left" colspan="1" rowspan="1">.36</td>
+<td align="left" colspan="1" rowspan="1">.18</td>
+<td align="left" colspan="1" rowspan="1">.38</td>
+<td align="left" colspan="1" rowspan="1">.36</td>
+<td align="left" colspan="1" rowspan="1">.42</td>
+<td align="left" colspan="1" rowspan="1">.49</td>
+<td align="left" colspan="1" rowspan="1">.48</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Very High <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e156" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">.04</td>
+<td align="left" colspan="1" rowspan="1">.06</td>
+<td align="left" colspan="1" rowspan="1">.06</td>
+<td align="left" colspan="1" rowspan="1">.06</td>
+<td align="left" colspan="1" rowspan="1">.05</td>
+<td align="left" colspan="1" rowspan="1">.06</td>
+<td align="left" colspan="1" rowspan="1">.22</td>
+<td align="left" colspan="1" rowspan="1">.08</td>
+<td align="left" colspan="1" rowspan="1">.32</td>
+<td align="left" colspan="1" rowspan="1">.15</td>
+<td align="left" colspan="1" rowspan="1">.45</td>
+<td align="left" colspan="1" rowspan="1">.45</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Zero <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e157" xlink:type="simple"/></inline-formula></td>
+<td align="left" colspan="1" rowspan="1">.44</td>
+<td align="left" colspan="1" rowspan="1">.52</td>
+<td align="left" colspan="1" rowspan="1">.48</td>
+<td align="left" colspan="1" rowspan="1">.44</td>
+<td align="left" colspan="1" rowspan="1">.61</td>
+<td align="left" colspan="1" rowspan="1">.66</td>
+<td align="left" colspan="1" rowspan="1">.09</td>
+<td align="left" colspan="1" rowspan="1">.62</td>
+<td align="left" colspan="1" rowspan="1">.45</td>
+<td align="left" colspan="1" rowspan="1">.61</td>
+<td align="left" colspan="1" rowspan="1">.58</td>
+<td align="left" colspan="1" rowspan="1">.62</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="12" rowspan="1">violation of population model assumptions</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">DFE*5</td>
+<td align="left" colspan="1" rowspan="1">.23</td>
+<td align="left" colspan="1" rowspan="1">.28</td>
+<td align="left" colspan="1" rowspan="1">.30</td>
+<td align="left" colspan="1" rowspan="1">.27</td>
+<td align="left" colspan="1" rowspan="1">.33</td>
+<td align="left" colspan="1" rowspan="1">.39</td>
+<td align="left" colspan="1" rowspan="1">.24</td>
+<td align="left" colspan="1" rowspan="1">.39</td>
+<td align="left" colspan="1" rowspan="1">.43</td>
+<td align="left" colspan="1" rowspan="1">.42</td>
+<td align="left" colspan="1" rowspan="1">.51</td>
+<td align="left" colspan="1" rowspan="1">.53</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">DFE*.2</td>
+<td align="left" colspan="1" rowspan="1">.22</td>
+<td align="left" colspan="1" rowspan="1">.27</td>
+<td align="left" colspan="1" rowspan="1">.33</td>
+<td align="left" colspan="1" rowspan="1">.30</td>
+<td align="left" colspan="1" rowspan="1">.33</td>
+<td align="left" colspan="1" rowspan="1">.36</td>
+<td align="left" colspan="1" rowspan="1">.24</td>
+<td align="left" colspan="1" rowspan="1">.37</td>
+<td align="left" colspan="1" rowspan="1">.46</td>
+<td align="left" colspan="1" rowspan="1">.39</td>
+<td align="left" colspan="1" rowspan="1">.56</td>
+<td align="left" colspan="1" rowspan="1">.55</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Exponential growth</td>
+<td align="left" colspan="1" rowspan="1">.29</td>
+<td align="left" colspan="1" rowspan="1">.32</td>
+<td align="left" colspan="1" rowspan="1">.37</td>
+<td align="left" colspan="1" rowspan="1">.35</td>
+<td align="left" colspan="1" rowspan="1">.46</td>
+<td align="left" colspan="1" rowspan="1">.51</td>
+<td align="left" colspan="1" rowspan="1">.13</td>
+<td align="left" colspan="1" rowspan="1">.49</td>
+<td align="left" colspan="1" rowspan="1">.38</td>
+<td align="left" colspan="1" rowspan="1">.48</td>
+<td align="left" colspan="1" rowspan="1">.50</td>
+<td align="left" colspan="1" rowspan="1">.53</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="12" rowspan="1">violation of fitness linearity and distribution of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e158" xlink:type="simple"/></inline-formula> assumptions</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Square</td>
+<td align="left" colspan="1" rowspan="1">.20</td>
+<td align="left" colspan="1" rowspan="1">.23</td>
+<td align="left" colspan="1" rowspan="1">.28</td>
+<td align="left" colspan="1" rowspan="1">.23</td>
+<td align="left" colspan="1" rowspan="1">.29</td>
+<td align="left" colspan="1" rowspan="1">.33</td>
+<td align="left" colspan="1" rowspan="1">.12</td>
+<td align="left" colspan="1" rowspan="1">.31</td>
+<td align="left" colspan="1" rowspan="1">.39</td>
+<td align="left" colspan="1" rowspan="1">.39</td>
+<td align="left" colspan="1" rowspan="1">.57</td>
+<td align="left" colspan="1" rowspan="1">.59</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Random sign</td>
+<td align="left" colspan="1" rowspan="1">.20</td>
+<td align="left" colspan="1" rowspan="1">.27</td>
+<td align="left" colspan="1" rowspan="1">.28</td>
+<td align="left" colspan="1" rowspan="1">.25</td>
+<td align="left" colspan="1" rowspan="1">.32</td>
+<td align="left" colspan="1" rowspan="1">.36</td>
+<td align="left" colspan="1" rowspan="1">.10</td>
+<td align="left" colspan="1" rowspan="1">.33</td>
+<td align="left" colspan="1" rowspan="1">.28</td>
+<td align="left" colspan="1" rowspan="1">.34</td>
+<td align="left" colspan="1" rowspan="1">.43</td>
+<td align="left" colspan="1" rowspan="1">.45</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Square root</td>
+<td align="left" colspan="1" rowspan="1">.23</td>
+<td align="left" colspan="1" rowspan="1">.27</td>
+<td align="left" colspan="1" rowspan="1">.35</td>
+<td align="left" colspan="1" rowspan="1">.28</td>
+<td align="left" colspan="1" rowspan="1">.35</td>
+<td align="left" colspan="1" rowspan="1">.34</td>
+<td align="left" colspan="1" rowspan="1">.23</td>
+<td align="left" colspan="1" rowspan="1">.39</td>
+<td align="left" colspan="1" rowspan="1">.43</td>
+<td align="left" colspan="1" rowspan="1">.41</td>
+<td align="left" colspan="1" rowspan="1">.49</td>
+<td align="left" colspan="1" rowspan="1">.48</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Skew effects</td>
+<td align="left" colspan="1" rowspan="1">.22</td>
+<td align="left" colspan="1" rowspan="1">.29</td>
+<td align="left" colspan="1" rowspan="1">.34</td>
+<td align="left" colspan="1" rowspan="1">.31</td>
+<td align="left" colspan="1" rowspan="1">.33</td>
+<td align="left" colspan="1" rowspan="1">.37</td>
+<td align="left" colspan="1" rowspan="1">.24</td>
+<td align="left" colspan="1" rowspan="1">.38</td>
+<td align="left" colspan="1" rowspan="1">.45</td>
+<td align="left" colspan="1" rowspan="1">.41</td>
+<td align="left" colspan="1" rowspan="1">.56</td>
+<td align="left" colspan="1" rowspan="1">.56</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">20% no effect</td>
+<td align="left" colspan="1" rowspan="1">.30</td>
+<td align="left" colspan="1" rowspan="1">.33</td>
+<td align="left" colspan="1" rowspan="1">.31</td>
+<td align="left" colspan="1" rowspan="1">.28</td>
+<td align="left" colspan="1" rowspan="1">.40</td>
+<td align="left" colspan="1" rowspan="1">.45</td>
+<td align="left" colspan="1" rowspan="1">.24</td>
+<td align="left" colspan="1" rowspan="1">.46</td>
+<td align="left" colspan="1" rowspan="1">.45</td>
+<td align="left" colspan="1" rowspan="1">.50</td>
+<td align="left" colspan="1" rowspan="1">.59</td>
+<td align="left" colspan="1" rowspan="1">.60</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">80% no effect</td>
+<td align="left" colspan="1" rowspan="1">.33</td>
+<td align="left" colspan="1" rowspan="1">.33</td>
+<td align="left" colspan="1" rowspan="1">.18</td>
+<td align="left" colspan="1" rowspan="1">.17</td>
+<td align="left" colspan="1" rowspan="1">.35</td>
+<td align="left" colspan="1" rowspan="1">.36</td>
+<td align="left" colspan="1" rowspan="1">.13</td>
+<td align="left" colspan="1" rowspan="1">.36</td>
+<td align="left" colspan="1" rowspan="1">.24</td>
+<td align="left" colspan="1" rowspan="1">.38</td>
+<td align="left" colspan="1" rowspan="1">.44</td>
+<td align="left" colspan="1" rowspan="1">.43</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt103"><label/><p>Simulation parameters are described in <xref ref-type="table" rid="pgen-1001202-t003">Table 3</xref>. 1000 replicates were generated for each scenario. Assumption violating scenarios are described in the text. Simulations on violation of model assumptions use the same parameters as “base”. Where nonlinear transformations of fitness effects are used, the variance of transformed fitness effects is rescaled to be the same. Power is proportion of <italic>p</italic> less than .05. Min <italic>p</italic> is Bonferroni corrected minimum p-value; CMC is the method of <xref ref-type="bibr" rid="pgen.1001202-Li2">[20]</xref>; CAST is the same method ignoring common variants; Weighted is the method of <xref ref-type="bibr" rid="pgen.1001202-Madsen1">[21]</xref>. Optimal Mean uses our implementation of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e159" xlink:type="simple"/></inline-formula>, but not variance components. See methods text “Simulation Studies” for how CAST, CMC, and Weighted were modified to be closer to the data generating mechanism. Columns with “1%” or “5%” involve dichotomizing variants at the specified frequency threshold. CMC, Weighted, and Optimal Mean treat variants above that threshold as free regression parameters. Our method (EMMPAT) likelihood ratio <italic>p</italic> value is estimated from 500 permutations.</p></fn></table-wrap-foot></table-wrap></sec></sec><sec id="s3c">
+<title>Discussion</title>
+<p>We propose a novel method, EMMPAT, for association between sequenced genes and phenotype which utilizes population genetic theory to pool information among rare variants. Our method generalizes allele-count and allele-burden techniques, and presents several advantages. Of greatest importance to the practicing scientist will be increased power and interpretability. As shown above, our method allows us to leverage allele frequency as auxiliary data related to SNP effects and to substantially increase power to detect association in many scenarios. The availability of a well motivated pooling strategy allows an omnibus test which incorporates common and rare variation simultaneously. Our approach provides clear interpretations for the fitted model, such as the attributable variance in phenotype due to all polymorphisms observed in a gene, particular types of SNPs, or only the rare variation. Furthermore it facilitates tests of meaningful parameters (such as mean derived allele burden) and group differences (such as non-synonymous versus non-coding). The regression toolbox allows model checking and exploration, such as in <xref ref-type="fig" rid="pgen-1001202-g003">Figure 3</xref> which presents the data in an informative format. Additional model checking proceeds as usual in linear mixed models, and posterior predictive checks are similarly possible.</p>
+<p>A relevant question is how important our method will be for diseases which have not been strongly selected against. There are three answers to consider. First, when selection and disease effect are completely independent, common SNPs will tend to have just as large effect sizes as rare SNPs and explain much of the heritable variation in phenotype <xref ref-type="bibr" rid="pgen.1001202-Pritchard1">[2]</xref>, <xref ref-type="bibr" rid="pgen.1001202-Pritchard2">[3]</xref>. We believe that most investigators conducting resequencing studies assume rare variation to have larger effect sizes, since that is the best-justified scenario for the expense of sequencing. Second, our method allows for this possibility in the form of estimating <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e160" xlink:type="simple"/></inline-formula> to be zero and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e161" xlink:type="simple"/></inline-formula> non-zero. As demonstrated in our simulations, the loss of power in adding a single unnecessary parameter to describe many SNPs is small. Third, as discussed in the <xref ref-type="sec" rid="s1">Introduction</xref> and <xref ref-type="supplementary-material" rid="pgen.1001202.s001">Text S1</xref>, direct selection against disease is not a necessary condition for correlation between fitness and phenotype; as long as the disease related gene is under selective pressure in any of its functions, we expect a correlation.</p>
+<p>We have planned several extensions to this method. In addition to improved techniques of estimating fitness effects, we need to incorporate evidence for adaptive selection. Signatures of positive selection <xref ref-type="bibr" rid="pgen.1001202-Zeng1">[47]</xref>–<xref ref-type="bibr" rid="pgen.1001202-Voight1">[49]</xref> can be used to prioritize genes for study which may have been more important in differentiating humans from our ancestors and hence contribute to modern phenotypes. We expect positively selected variants to have very different phenotype effects from neutral alleles, but it is not clear a-priori what that relationship should be or if it will be possible to reliably identify positively selected SNPs <xref ref-type="bibr" rid="pgen.1001202-Pennings1">[50]</xref>, <xref ref-type="bibr" rid="pgen.1001202-Pritchard3">[51]</xref>. Second, for mathematical and numerical convenience we have developed this method in the context of a prospective probability sample measuring a quantitative trait. Both these assumptions need to be relaxed for the setting of most resequencing projects. Disease phenotypes are frequently non-normal, binary, or censored such as time-to-event from clinical trials, requiring a generalized linear mixed model. The prospective sampling assumption will also require work to relax. Retrospective sampling such as in case-control designs and extreme-phenotype-based sampling <xref ref-type="bibr" rid="pgen.1001202-Kotowski1">[13]</xref>, <xref ref-type="bibr" rid="pgen.1001202-Ahituv1">[52]</xref> is well known to distort random effect distributions <xref ref-type="bibr" rid="pgen.1001202-Neuhaus1">[53]</xref>. Third, in our example and simulations, we assume that <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e162" xlink:type="simple"/></inline-formula> are independent of one another, but one need not do this. One could add spatial covariance structures between <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pgen.1001202.e163" xlink:type="simple"/></inline-formula> to relax the independence assumption, which would correspond to allowing that variants nearby each other in the genome or folded protein tend to have similar effects. Especially in exome-only resequencing studies, consideration of unobserved linked markers with techniques similar to TreeLD <xref ref-type="bibr" rid="pgen.1001202-Zollner1">[35]</xref> will be important. Our model has not included dominance or epistasis between SNPs or genes, the structure of which is probably not simple, although progress has been made on determining the impact of these features to quantitative traits <xref ref-type="bibr" rid="pgen.1001202-Barton2">[54]</xref>, <xref ref-type="bibr" rid="pgen.1001202-Hill1">[55]</xref>. Finally, because our example dataset comes from high-quality Sanger sequencing, we have ignored nonrandom missing data issues. Future work involving second generation sequencing or beyond must address the complex nature of library coverage, alignment error, and genotyping error inherent in those technologies.</p>
+</sec></sec><sec id="s4">
+<title>Supporting Information</title>
+<supplementary-material id="pgen.1001202.s001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pgen.1001202.s001" xlink:type="simple"><label>Text S1</label><caption>
+<p>Supplementary methods and discussion.</p>
+<p>(0.05 MB PDF)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We would like to thank Dara Torgerson and Ryan Hernandez for their assistance with using SFS_CODE and insightful thoughts on population genetic models and software. We would like to thanks Helen Hobbs and Jonathan Cohen for access to the Dallas Heart Study dataset. We are grateful to Nancy Cox and anonymous reviewers for comments on a draft of the paper.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pgen.1001202-Maher1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Maher</surname><given-names>B</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Personal genomes: The case of the missing heritability.</article-title>             <source>Nature</source>             <volume>456</volume>             <fpage>18</fpage>             <lpage>21</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Pritchard1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Pritchard</surname><given-names>JK</given-names></name>
+<name name-style="western"><surname>Cox</surname><given-names>NJ</given-names></name>
+</person-group>             <year>2002</year>             <article-title>The allelic architecture of human disease genes: common disease-common variant… or not?</article-title>             <source>Hum Mol Genet</source>             <volume>11</volume>             <fpage>2417</fpage>             <lpage>2423</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Pritchard2"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Pritchard</surname><given-names>JK</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Are rare variants responsible for susceptibility to complex diseases?</article-title>             <source>American Journal of Human Genetics</source>             <volume>69</volume>             <fpage>124137</fpage>          </element-citation></ref>
+<ref id="pgen.1001202-Manolio1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Manolio</surname><given-names>TA</given-names></name>
+<name name-style="western"><surname>Collins</surname><given-names>FS</given-names></name>
+<name name-style="western"><surname>Cox</surname><given-names>NJ</given-names></name>
+<name name-style="western"><surname>Goldstein</surname><given-names>DB</given-names></name>
+<name name-style="western"><surname>Hindorff</surname><given-names>LA</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Finding the missing heritability of complex diseases.</article-title>             <source>Nature</source>             <volume>461</volume>             <fpage>747</fpage>             <lpage>753</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-EyreWalker1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Eyre-Walker</surname><given-names>A</given-names></name>
+</person-group>             <year>2010</year>             <article-title>Evolution in health and medicine sackler colloquium: Genetic architecture of a complex trait and its implications for fitness and genome-wide association studies.</article-title>             <source>Proceedings of the National Academy of Sciences</source>             <volume>107</volume>             <fpage>1752</fpage>             <lpage>1756</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Gorlov1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gorlov</surname><given-names>IP</given-names></name>
+<name name-style="western"><surname>Gorlova</surname><given-names>OY</given-names></name>
+<name name-style="western"><surname>Sunyaev</surname><given-names>SR</given-names></name>
+<name name-style="western"><surname>Spitz</surname><given-names>MR</given-names></name>
+<name name-style="western"><surname>Amos</surname><given-names>CI</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Shifting paradigm of association studies: Value of rare Single-Nucleotide polymorphisms.</article-title>             <source>American Journal of Human Genetics</source>             <volume>82</volume>             <fpage>100112</fpage>          </element-citation></ref>
+<ref id="pgen.1001202-Li1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Li</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Leal</surname><given-names>SM</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Discovery of rare variants via sequencing: Implications for the design of complex trait association studies.</article-title>             <source>PLoS Genet</source>             <volume>5</volume>             <fpage>e1000481</fpage>             <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pgen.1000481" xlink:type="simple">10.1371/journal.pgen.1000481</ext-link></comment>          </element-citation></ref>
+<ref id="pgen.1001202-Romeo1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Romeo</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Yin</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Kozlitina</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Pennacchio</surname><given-names>LA</given-names></name>
+<name name-style="western"><surname>Boerwinkle</surname><given-names>E</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Rare loss-of-function mutations in ANGPTL family members contribute to plasma triglyceride levels in humans.</article-title>             <source>The Journal of Clinical Investigation</source>             <volume>119</volume>             <fpage>70</fpage>             <lpage>79</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-PaisnRuiz1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Paisn-Ruiz</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Washecka</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Nath</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Singleton</surname><given-names>AB</given-names></name>
+<name name-style="western"><surname>Corder</surname><given-names>EH</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Parkinson's disease and low frequency alleles found together throughout LRRK2.</article-title>             <source>Annals of Human Genetics</source>             <volume>73</volume>             <fpage>391</fpage>             <lpage>403</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Cohen1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cohen</surname><given-names>JC</given-names></name>
+<name name-style="western"><surname>Pertsemlidis</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Fahmi</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Esmail</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Vega</surname><given-names>GL</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Multiple rare variants in NPC1L1 associated with reduced sterol absorption and plasma low-density lipoprotein levels.</article-title>             <source>Proceedings of the National Academy of Sciences of the United States of America</source>             <volume>103</volume>             <fpage>1810</fpage>             <lpage>1815</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Cohen2"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cohen</surname><given-names>JC</given-names></name>
+<name name-style="western"><surname>Boerwinkle</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Mosley</surname><given-names>TH</given-names></name>
+<name name-style="western"><surname>Hobbs</surname><given-names>HH</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Sequence variations in PCSK9, low LDL, and protection against coronary heart disease.</article-title>             <source>N Engl J Med</source>             <volume>354</volume>             <fpage>1264</fpage>             <lpage>1272</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Romeo2"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Romeo</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Pennacchio</surname><given-names>LA</given-names></name>
+<name name-style="western"><surname>Fu</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Boerwinkle</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Tybjaerg-Hansen</surname><given-names>A</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Population-based resequencing of ANGPTL4 uncovers variations that reduce triglycerides and increase HDL.</article-title>             <source>Nat Genet</source>             <volume>39</volume>             <fpage>513</fpage>             <lpage>516</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Kotowski1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kotowski</surname><given-names>IK</given-names></name>
+<name name-style="western"><surname>Pertsemlidis</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Luke</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Cooper</surname><given-names>RS</given-names></name>
+<name name-style="western"><surname>Vega</surname><given-names>GL</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>A spectrum of PCSK9 alleles contributes to plasma levels of Low-Density lipoprotein cholesterol.</article-title>             <source>The American Journal of Human Genetics</source>             <volume>78</volume>             <fpage>410</fpage>             <lpage>422</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Cohen3"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cohen</surname><given-names>JC</given-names></name>
+<name name-style="western"><surname>Kiss</surname><given-names>RS</given-names></name>
+<name name-style="western"><surname>Pertsemlidis</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Marcel</surname><given-names>YL</given-names></name>
+<name name-style="western"><surname>McPherson</surname><given-names>R</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Multiple rare alleles contribute to low plasma levels of HDL cholesterol.</article-title>             <source>Science</source>             <volume>305</volume>             <fpage>869</fpage>             <lpage>872</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Wang1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wang</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Cao</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Ban</surname><given-names>MR</given-names></name>
+<name name-style="western"><surname>Kennedy</surname><given-names>BA</given-names></name>
+<name name-style="western"><surname>Zhu</surname><given-names>S</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Resequencing genomic DNA of patients with severe hypertriglyceridemia (MIM 144650).</article-title>             <source>Arterioscler Thromb Vasc Biol</source>             <volume>27</volume>             <fpage>2450</fpage>             <lpage>2455</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Kryukov1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kryukov</surname><given-names>GV</given-names></name>
+<name name-style="western"><surname>Shpunt</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Stamatoyannopoulos</surname><given-names>JA</given-names></name>
+<name name-style="western"><surname>Sunyaev</surname><given-names>SR</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Power of deep, all-exon resequencing for discovery of human trait genes.</article-title>             <source>Proceedings of the National Academy of Sciences</source>             <volume>106</volume>             <fpage>3871</fpage>             <lpage>3876</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Roach1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Roach</surname><given-names>JC</given-names></name>
+<name name-style="western"><surname>Glusman</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Smit</surname><given-names>AFA</given-names></name>
+<name name-style="western"><surname>Huff</surname><given-names>CD</given-names></name>
+<name name-style="western"><surname>Hubley</surname><given-names>R</given-names></name>
+<etal/></person-group>             <year>2010</year>             <article-title>Analysis of genetic inheritance in a family quartet by Whole-Genome sequencing.</article-title>             <source>Science</source>             <volume>328</volume>             <fpage>636</fpage>             <lpage>639</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Hoggart1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hoggart</surname><given-names>CJ</given-names></name>
+<name name-style="western"><surname>Whittaker</surname><given-names>JC</given-names></name>
+<name name-style="western"><surname>Iorio</surname><given-names>MD</given-names></name>
+<name name-style="western"><surname>Balding</surname><given-names>DJ</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Simultaneous analysis of all SNPs in Genome-Wide and Re-Sequencing association studies.</article-title>             <source>PLoS Genet</source>             <volume>4</volume>             <fpage>e1000130</fpage>             <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pgen.1000130" xlink:type="simple">10.1371/journal.pgen.1000130</ext-link></comment>          </element-citation></ref>
+<ref id="pgen.1001202-Kwee1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kwee</surname><given-names>LC</given-names></name>
+<name name-style="western"><surname>Liu</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Lin</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Ghosh</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Epstein</surname><given-names>MP</given-names></name>
+</person-group>             <year>2008</year>             <article-title>A powerful and flexible multilocus association test for quantitative traits.</article-title>             <source>American Journal of Human Genetics</source>             <volume>82</volume>             <fpage>386</fpage>             <lpage>397</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Li2"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Li</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Leal</surname><given-names>S</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Methods for detecting associations with rare variants for common diseases: Application to analysis of sequence data.</article-title>             <source>The American Journal of Human Genetics</source>             <volume>83</volume>             <fpage>311</fpage>             <lpage>321</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Madsen1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Madsen</surname><given-names>BE</given-names></name>
+<name name-style="western"><surname>Browning</surname><given-names>SR</given-names></name>
+</person-group>             <year>2009</year>             <article-title>A groupwise association test for rare mutations using a weighted sum statistic.</article-title>             <source>PLoS Genet</source>             <volume>5</volume>             <fpage>e1000384</fpage>             <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pgen.1000384" xlink:type="simple">10.1371/journal.pgen.1000384</ext-link></comment>          </element-citation></ref>
+<ref id="pgen.1001202-Barton1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Barton</surname><given-names>NH</given-names></name>
+<name name-style="western"><surname>Keightley</surname><given-names>PD</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Understanding quantitative genetic variation.</article-title>             <source>Nat Rev Genet</source>             <volume>3</volume>             <fpage>11</fpage>             <lpage>21</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Johnson1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Johnson</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Barton</surname><given-names>N</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Theoretical models of selection and mutation on quantitative traits.</article-title>             <source>Philosophical Transactions of the Royal Society B: Biological Sciences</source>             <volume>360</volume>             <fpage>1411</fpage>             <lpage>1425</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Hartl1"><label>24</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hartl</surname><given-names>DL</given-names></name>
+<name name-style="western"><surname>Clark</surname><given-names>AG</given-names></name>
+<name name-style="western"><surname>Clark</surname><given-names>AG</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Principles of population genetics.</article-title>             <comment>Sinauer Sunderland, MA, USA</comment>          </element-citation></ref>
+<ref id="pgen.1001202-EyreWalker2"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Eyre-Walker</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Woolfit</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Phelps</surname><given-names>T</given-names></name>
+</person-group>             <year>2006</year>             <article-title>The distribution of fitness effects of new deleterious amino acid mutations in humans.</article-title>             <source>Genetics</source>             <volume>173</volume>             <fpage>891</fpage>             <lpage>900</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-EyreWalker3"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Eyre-Walker</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Keightley</surname><given-names>PD</given-names></name>
+</person-group>             <year>2007</year>             <article-title>The distribution of fitness effects of new mutations.</article-title>             <source>Nat Rev Genet</source>             <volume>8</volume>             <fpage>610</fpage>             <lpage>618</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Keightley1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Keightley</surname><given-names>PD</given-names></name>
+<name name-style="western"><surname>Eyre-Walker</surname><given-names>A</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Joint inference of the distribution of fitness effects of deleterious mutations and population demography based on nucleotide polymorphism frequencies.</article-title>             <source>Genetics</source>             <volume>177</volume>             <fpage>2251</fpage>             <lpage>2261</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Welch1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Welch</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Eyre-Walker</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Waxman</surname><given-names>D</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Divergence and polymorphism under the nearly neutral theory of molecular evolution.</article-title>             <source>Journal of Molecular Evolution</source>             <volume>67</volume>             <fpage>418</fpage>             <lpage>426</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Kryukov2"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kryukov</surname><given-names>GV</given-names></name>
+<name name-style="western"><surname>Pennacchio</surname><given-names>LA</given-names></name>
+<name name-style="western"><surname>Sunyaev</surname><given-names>SR</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Most rare missense alleles are deleterious in humans: Implications for complex disease and association studies.</article-title>             <source>American Journal of Human Genetics</source>             <volume>80</volume>             <fpage>727739</fpage>          </element-citation></ref>
+<ref id="pgen.1001202-Yampolsky1"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yampolsky</surname><given-names>LY</given-names></name>
+<name name-style="western"><surname>Kondrashov</surname><given-names>FA</given-names></name>
+<name name-style="western"><surname>Kondrashov</surname><given-names>AS</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Distribution of the strength of selection against amino acid replacements in human proteins.</article-title>             <source>Hum Mol Genet</source>             <volume>14</volume>             <fpage>3191</fpage>             <lpage>3201</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Gutenkunst1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gutenkunst</surname><given-names>RN</given-names></name>
+<name name-style="western"><surname>Hernandez</surname><given-names>RD</given-names></name>
+<name name-style="western"><surname>Williamson</surname><given-names>SH</given-names></name>
+<name name-style="western"><surname>Bustamante</surname><given-names>CD</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Inferring the joint demographic history of multiple populations from multidimensional SNP frequency data.</article-title>             <source>PLoS Genet</source>             <volume>5</volume>             <fpage>e1000695</fpage>             <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pgen.1000695" xlink:type="simple">10.1371/journal.pgen.1000695</ext-link></comment>          </element-citation></ref>
+<ref id="pgen.1001202-Nielsen1"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Nielsen</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Hubisz</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Hellmann</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Torgerson</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Andrés</surname><given-names>AM</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Darwinian and demographic forces affecting human protein coding genes.</article-title>             <source>Genome Research</source>             <volume>19</volume>             <fpage>838</fpage>             <lpage>849</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Boyko1"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Boyko</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Williamson</surname><given-names>SH</given-names></name>
+<name name-style="western"><surname>Indap</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Degenhardt</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>Hernandez</surname><given-names>RD</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Assessing the evolutionary impact of amino acid mutations in the human genome.</article-title>             <source>PLoS Genet</source>             <volume>4</volume>             <fpage>e1000083</fpage>             <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pgen.1000083" xlink:type="simple">10.1371/journal.pgen.1000083</ext-link></comment>          </element-citation></ref>
+<ref id="pgen.1001202-Torgerson1"><label>34</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Torgerson</surname><given-names>DG</given-names></name>
+<name name-style="western"><surname>Boyko</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Hernandez</surname><given-names>RD</given-names></name>
+<name name-style="western"><surname>Indap</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Hu</surname><given-names>X</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Evolutionary processes acting on candidate cis-Regulatory regions in humans inferred from patterns of polymorphism and divergence.</article-title>             <source>PLoS Genet</source>             <volume>5</volume>             <fpage>e1000592</fpage>             <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pgen.1000592" xlink:type="simple">10.1371/journal.pgen.1000592</ext-link></comment>          </element-citation></ref>
+<ref id="pgen.1001202-Zollner1"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zollner</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Wen</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Pritchard</surname><given-names>JK</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Association mapping and fine mapping with TreeLD.</article-title>             <source>Bioinformatics</source>             <volume>21</volume>             <fpage>3168</fpage>             <lpage>3170</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Hernandez1"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hernandez</surname><given-names>RD</given-names></name>
+</person-group>             <year>2008</year>             <article-title>A flexible forward simulator for populations subject to selection and demography.</article-title>             <source>Bioinformatics</source>             <volume>24</volume>             <fpage>2786</fpage>             <lpage>2787</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-McCulloch1"><label>37</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McCulloch</surname><given-names>CE</given-names></name>
+<name name-style="western"><surname>Searle</surname><given-names>SR</given-names></name>
+</person-group>             <year>2000</year>             <source>Generalized, Linear, and Mixed Models</source>             <publisher-loc>Hoboken, NJ, USA</publisher-loc>             <publisher-name>John Wiley &amp; Sons, Inc</publisher-name>          </element-citation></ref>
+<ref id="pgen.1001202-Wedderburn1"><label>38</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wedderburn</surname><given-names>RWM</given-names></name>
+</person-group>             <year>1974</year>             <article-title>Quasi-likelihood functions, generalized linear models, and the Gauss–Newton method.</article-title>             <source>Biometrika</source>             <volume>61</volume>             <fpage>439</fpage>             <lpage>447</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Heyde1"><label>39</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Heyde</surname><given-names>CC</given-names></name>
+</person-group>             <year>1997</year>             <source>Quasi-likelihood and its application</source>             <publisher-name>Springer</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">236</size>           </element-citation></ref>
+<ref id="pgen.1001202-Littel1"><label>40</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Littel</surname><given-names>RC</given-names></name>
+<name name-style="western"><surname>Milliken</surname><given-names>GA</given-names></name>
+<name name-style="western"><surname>Stroup</surname><given-names>WW</given-names></name>
+<name name-style="western"><surname>Wolfinger</surname><given-names>RD</given-names></name>
+</person-group>             <year>1996</year>             <source>SAS system for mixed models</source>             <publisher-name>SAS Inst</publisher-name>          </element-citation></ref>
+<ref id="pgen.1001202-R1"><label>41</label><element-citation publication-type="other" xlink:type="simple">             <collab xlink:type="simple">R Development Core Team</collab>             <year>2009</year>             <article-title>R: A Language and Environment for Statistical Computing.</article-title>             <comment>R Foundation for Statistical Computing, Vienna, Austria. <ext-link ext-link-type="uri" xlink:href="http://www.R-project.org" xlink:type="simple">http://www.R-project.org</ext-link>. ISBN 3-900051-07-0</comment>          </element-citation></ref>
+<ref id="pgen.1001202-Victor1"><label>42</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Victor</surname><given-names>RG</given-names></name>
+<name name-style="western"><surname>Haley</surname><given-names>RW</given-names></name>
+<name name-style="western"><surname>Willett</surname><given-names>DL</given-names></name>
+<name name-style="western"><surname>Peshock</surname><given-names>RM</given-names></name>
+<name name-style="western"><surname>Vaeth</surname><given-names>PC</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>The dallas heart study: a population-based probability sample for the multidisciplinary study of ethnic differences in cardiovascular health.</article-title>             <source>The American Journal of Cardiology</source>             <volume>93</volume>             <fpage>1473</fpage>             <lpage>1480</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Browning1"><label>43</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Browning</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>Szczepaniak</surname><given-names>LS</given-names></name>
+<name name-style="western"><surname>Dobbins</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Nuremberg</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Horton</surname><given-names>JD</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Prevalence of hepatic steatosis in an urban population in the united states: impact of ethnicity.</article-title>             <source>Hepatology (Baltimore, Md)</source>             <volume>40</volume>             <fpage>1387</fpage>             <lpage>1395</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-honYau1"><label>44</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>hon Yau</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Wang</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Lam</surname><given-names>KSL</given-names></name>
+<name name-style="western"><surname>Zhang</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Wu</surname><given-names>D</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>A highly conserved motif within the NH2-terminal coiled-coil domain of angiopoietin-like protein 4 confers its inhibitory effects on lipoprotein lipase by disrupting the enzyme dimerization.</article-title>             <source>The Journal of Biological Chemistry</source>             <volume>284</volume>             <fpage>11942</fpage>             <lpage>11952</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Yin1"><label>45</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yin</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Romeo</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Chang</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Grishin</surname><given-names>NV</given-names></name>
+<name name-style="western"><surname>Hobbs</surname><given-names>HH</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Genetic variation in ANGPTL4 provides insights into protein processing and function.</article-title>             <source>The Journal of Biological Chemistry</source>             <volume>284</volume>             <fpage>13213</fpage>             <lpage>13222</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Morgenthaler1"><label>46</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Morgenthaler</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Thilly</surname><given-names>WG</given-names></name>
+</person-group>             <year>2007</year>             <article-title>A strategy to discover genes that carry multi-allelic or mono-allelic risk for common diseases: a cohort allelic sums test (CAST).</article-title>             <source>Mutation Research</source>             <volume>615</volume>             <fpage>28</fpage>             <lpage>56</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Zeng1"><label>47</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zeng</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Mano</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Shi</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Wu</surname><given-names>C</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Comparisons of site- and Haplotype-Frequency methods for detecting positive selection.</article-title>             <source>Mol Biol Evol</source>             <volume>24</volume>             <fpage>1562</fpage>             <lpage>1574</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Pickrell1"><label>48</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Pickrell</surname><given-names>JK</given-names></name>
+<name name-style="western"><surname>Coop</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Novembre</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Kudaravalli</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Li</surname><given-names>JZ</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Signals of recent positive selection in a worldwide sample of human populations.</article-title>             <source>Genome Research</source>             <volume>19</volume>             <fpage>826</fpage>             <lpage>837</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Voight1"><label>49</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Voight</surname><given-names>BF</given-names></name>
+<name name-style="western"><surname>Kudaravalli</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Wen</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Pritchard</surname><given-names>JK</given-names></name>
+</person-group>             <year>2006</year>             <article-title>A map of recent positive selection in the human genome.</article-title>             <source>PLoS Biol</source>             <volume>4</volume>             <fpage>e72</fpage>             <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.1000072" xlink:type="simple">10.1371/journal.pbio.1000072</ext-link></comment>          </element-citation></ref>
+<ref id="pgen.1001202-Pennings1"><label>50</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Pennings</surname><given-names>PS</given-names></name>
+<name name-style="western"><surname>Hermisson</surname><given-names>J</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Soft sweeps III: the signature of positive selection from recurrent mutation.</article-title>             <source>PLoS Genet</source>             <volume>2</volume>             <fpage>e186</fpage>             <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pgen.0020186" xlink:type="simple">10.1371/journal.pgen.0020186</ext-link></comment>          </element-citation></ref>
+<ref id="pgen.1001202-Pritchard3"><label>51</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Pritchard</surname><given-names>JK</given-names></name>
+<name name-style="western"><surname>Pickrell</surname><given-names>JK</given-names></name>
+<name name-style="western"><surname>Coop</surname><given-names>G</given-names></name>
+</person-group>             <year>2010</year>             <article-title>The genetics of human adaptation: hard sweeps, soft sweeps, and polygenic adaptation.</article-title>             <source>Current Biology: CB</source>             <volume>20</volume>             <fpage>R208</fpage>             <lpage>215</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Ahituv1"><label>52</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ahituv</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Kavaslar</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Schackwitz</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Ustaszewska</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Martin</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Medical sequencing at the extremes of human body mass.</article-title>             <source>American Journal of Human Genetics</source>             <volume>80</volume>             <fpage>779</fpage>             <lpage>791</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Neuhaus1"><label>53</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Neuhaus</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Jewell</surname><given-names>NP</given-names></name>
+</person-group>             <year>1990</year>             <article-title>The effect of retrospective sampling on binary regression models for clustered data.</article-title>             <source>Biometrics</source>             <volume>46</volume>             <fpage>977</fpage>             <lpage>990</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Barton2"><label>54</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Barton</surname><given-names>NH</given-names></name>
+<name name-style="western"><surname>Turelli</surname><given-names>M</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Effects of genetic drift on variance components under a general model of epistasis.</article-title>             <source>Evolution; International Journal of Organic Evolution</source>             <volume>58</volume>             <fpage>2111</fpage>             <lpage>2132</lpage>          </element-citation></ref>
+<ref id="pgen.1001202-Hill1"><label>55</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hill</surname><given-names>WG</given-names></name>
+<name name-style="western"><surname>Goddard</surname><given-names>ME</given-names></name>
+<name name-style="western"><surname>Visscher</surname><given-names>PM</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Data and theory point to mainly additive genetic variance for complex traits.</article-title>             <source>PLoS Genet</source>             <volume>4</volume>             <fpage>e1000008</fpage>             <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pgen.1000008" xlink:type="simple">10.1371/journal.pgen.1000008</ext-link></comment>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

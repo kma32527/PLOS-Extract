@@ -1,0 +1,844 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1d3 20150301//EN" "http://jats.nlm.nih.gov/publishing/1.1d3/JATS-journalpublishing1.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="1.1d3" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1006078</article-id>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-17-01987</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+<subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Database and informatics methods</subject><subj-group><subject>Bioinformatics</subject><subj-group><subject>Sequence analysis</subject><subj-group><subject>Sequence motif analysis</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Proteins</subject><subj-group><subject>RNA-binding proteins</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Molecular biology</subject><subj-group><subject>Macromolecular structure analysis</subject><subj-group><subject>RNA structure</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Nucleic acids</subject><subj-group><subject>RNA</subject><subj-group><subject>RNA structure</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Nucleic acids</subject><subj-group><subject>RNA</subject><subj-group><subject>Double stranded RNA</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Molecular biology</subject><subj-group><subject>Macromolecular structure analysis</subject><subj-group><subject>RNA structure</subject><subj-group><subject>RNA folding</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Nucleic acids</subject><subj-group><subject>RNA</subject><subj-group><subject>RNA structure</subject><subj-group><subject>RNA folding</subject></subj-group></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Physical sciences</subject><subj-group><subject>Mathematics</subject><subj-group><subject>Applied mathematics</subject><subj-group><subject>Algorithms</subject><subj-group><subject>Clustering algorithms</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Simulation and modeling</subject><subj-group><subject>Algorithms</subject><subj-group><subject>Clustering algorithms</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Database and informatics methods</subject><subj-group><subject>Bioinformatics</subject><subj-group><subject>Sequence analysis</subject><subj-group><subject>Sequence alignment</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Research and analysis methods</subject><subj-group><subject>Precipitation techniques</subject><subj-group><subject>Immunoprecipitation</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>SARNAclust: Semi-automatic detection of RNA protein binding motifs from immunoprecipitation data</article-title>
+<alt-title alt-title-type="running-head">SARNAclust RNA motif identification</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Dotu</surname>
+<given-names>Ivan</given-names>
+</name>
+<role content-type="http://credit.casrai.org/">Funding acquisition</role>
+<role content-type="http://credit.casrai.org/">Software</role>
+<role content-type="http://credit.casrai.org/">Supervision</role>
+<role content-type="http://credit.casrai.org/">Writing – original draft</role>
+<role content-type="http://credit.casrai.org/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+<xref ref-type="fn" rid="econtrib001"><sup>‡</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Adamson</surname>
+<given-names>Scott I.</given-names>
+</name>
+<role content-type="http://credit.casrai.org/">Investigation</role>
+<role content-type="http://credit.casrai.org/">Writing – original draft</role>
+<role content-type="http://credit.casrai.org/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+<xref ref-type="fn" rid="econtrib001"><sup>‡</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Coleman</surname>
+<given-names>Benjamin</given-names>
+</name>
+<role content-type="http://credit.casrai.org/">Software</role>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Fournier</surname>
+<given-names>Cyril</given-names>
+</name>
+<role content-type="http://credit.casrai.org/">Software</role>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Ricart-Altimiras</surname>
+<given-names>Emma</given-names>
+</name>
+<role content-type="http://credit.casrai.org/">Software</role>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Eyras</surname>
+<given-names>Eduardo</given-names>
+</name>
+<role content-type="http://credit.casrai.org/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+<xref ref-type="aff" rid="aff004"><sup>4</sup></xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-3298-2358</contrib-id>
+<name name-style="western">
+<surname>Chuang</surname>
+<given-names>Jeffrey H.</given-names>
+</name>
+<role content-type="http://credit.casrai.org/">Funding acquisition</role>
+<role content-type="http://credit.casrai.org/">Project administration</role>
+<role content-type="http://credit.casrai.org/">Resources</role>
+<role content-type="http://credit.casrai.org/">Supervision</role>
+<role content-type="http://credit.casrai.org/">Writing – original draft</role>
+<role content-type="http://credit.casrai.org/">Writing – review &amp; editing</role>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+</contrib-group>
+<aff id="aff001"><label>1</label> <addr-line>The Jackson Laboratory for Genomic Medicine, Farmington, CT, United States of America</addr-line></aff>
+<aff id="aff002"><label>2</label> <addr-line>Research Programme on Biomedical Informatics (GRIB), Hospital del Mar Medical Research Institute (IMIM)–Pompeu Fabra University (UPF), Barcelona, Spain</addr-line></aff>
+<aff id="aff003"><label>3</label> <addr-line>UCONN Health, Department of Genetics and Genome Sciences, Farmington, CT, United States of America</addr-line></aff>
+<aff id="aff004"><label>4</label> <addr-line>Catalan Institution for Research and Advanced Studies (ICREA), Barcelona, Spain</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Wilke</surname>
+<given-names>Claus O.</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>University of Texas at Austin, UNITED STATES</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="other" id="econtrib001">
+<p>‡ These authors share first authorship on this work.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">jeff.chuang@jax.org</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>29</day>
+<month>3</month>
+<year>2018</year>
+</pub-date>
+<pub-date pub-type="collection">
+<month>3</month>
+<year>2018</year>
+</pub-date>
+<volume>14</volume>
+<issue>3</issue>
+<elocation-id>e1006078</elocation-id>
+<history>
+<date date-type="received">
+<day>28</day>
+<month>11</month>
+<year>2017</year>
+</date>
+<date date-type="accepted">
+<day>5</day>
+<month>3</month>
+<year>2018</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2018</copyright-year>
+<copyright-holder>Dotu et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1006078"/>
+<abstract>
+<p>RNA-protein binding is critical to gene regulation, controlling fundamental processes including splicing, translation, localization and stability, and aberrant RNA-protein interactions are known to play a role in a wide variety of diseases. However, molecular understanding of RNA-protein interactions remains limited; in particular, identification of RNA motifs that bind proteins has long been challenging, especially when such motifs depend on both sequence and structure. Moreover, although RNA binding proteins (RBPs) often contain more than one binding domain, algorithms capable of identifying more than one binding motif simultaneously have not been developed. In this paper we present a novel pipeline to determine binding peaks in crosslinking immunoprecipitation (CLIP) data, to discover multiple possible RNA sequence/structure motifs among them, and to experimentally validate such motifs. At the core is a new semi-automatic algorithm SARNAclust, the first unsupervised method to identify and deconvolve multiple sequence/structure motifs simultaneously. SARNAclust computes similarity between sequence/structure objects using a graph kernel, providing the ability to isolate the impact of specific features through the bulge graph formalism. Application of SARNAclust to synthetic data shows its capability of clustering 5 motifs at once with a V-measure value of over 0.95, while GraphClust achieves only a V-measure of 0.083 and RNAcontext cannot detect any of the motifs. When applied to existing eCLIP sets, SARNAclust finds known motifs for SLBP and HNRNPC and novel motifs for several other RBPs such as AGGF1, AKAP8L and ILF3. We demonstrate an experimental validation protocol, a targeted Bind-n-Seq-like high-throughput sequencing approach that relies on RNA inverse folding for oligo pool design, that can validate the components within the SLBP motif. Finally, we use this protocol to experimentally interrogate the SARNAclust motif predictions for protein ILF3. Our results support a newly identified partially double-stranded UUUUUGAGA motif similar to that known for the splicing factor HNRNPC.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author summary</title>
+<p>RNA-protein binding is critical to gene regulation, and aberrant RNA-protein interactions play a role in a wide variety of diseases. However, molecular understanding of these interactions remains limited because of the difficulty of ascertaining the motifs that bind each protein. To address this challenge, we have developed a novel algorithm, SARNAclust, to computationally identify combined structure/sequence motifs from immunoprecipitation data. SARNAclust can deconvolve multiple motifs simultaneously and determine the importance of specific features through a graph kernel and bulge graph formalism. We have verified SARNAclust to be effective on synthetic motif data and also tested it on ENCODE eCLIP datasets, identifying known motifs and novel predictions. We have experimentally validated SARNAclust for two proteins, SLBP and ILF3, using RNA Bind-n-Seq measurements. Applying SARNAclust to ENCODE data provides new evidence for previously unknown regulatory interactions, notably splicing co-regulation by ILF3 and the splicing factor hnRNPC.</p>
+</abstract>
+<funding-group>
+<award-group id="award001">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/100000051</institution-id>
+<institution>National Human Genome Research Institute</institution>
+</institution-wrap>
+</funding-source>
+<award-id>R21 HG007554</award-id>
+<principal-award-recipient>
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-3298-2358</contrib-id>
+<name name-style="western">
+<surname>Chuang</surname>
+<given-names>Jeffrey H.</given-names>
+</name>
+</principal-award-recipient>
+</award-group>
+<award-group id="award002">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/100000065</institution-id>
+<institution>National Institute of Neurological Disorders and Stroke</institution>
+</institution-wrap>
+</funding-source>
+<award-id>R01 NS094637</award-id>
+<principal-award-recipient>
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-3298-2358</contrib-id>
+<name name-style="western">
+<surname>Chuang</surname>
+<given-names>Jeffrey H.</given-names>
+</name>
+</principal-award-recipient>
+</award-group>
+<funding-statement>JHC was supported by NIH grants R21 HG007554 and R01 NS094637. ERA and EE were supported by the MINECO and FEDER (BIO2014-52566-R), AGAUR (SGR2014-1121), and the Sandra Ibarra Foundation for Cancer (FSI2013). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="7"/>
+<table-count count="3"/>
+<page-count count="25"/>
+</counts>
+<custom-meta-group>
+<custom-meta>
+<meta-name>PLOS Publication Stage</meta-name>
+<meta-value>vor-update-to-uncorrected-proof</meta-value>
+</custom-meta>
+<custom-meta>
+<meta-name>Publication Update</meta-name>
+<meta-value>2018-04-10</meta-value>
+</custom-meta>
+<custom-meta id="data-availability">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the paper and its Supporting Information files.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>RNA-protein binding is a fundamental biological interaction vital to the diverse functions of RNA, including key roles in RNA splicing, translation, localization and stability [<xref ref-type="bibr" rid="pcbi.1006078.ref001">1</xref>–<xref ref-type="bibr" rid="pcbi.1006078.ref004">4</xref>]. However, the sequence features that determine affinity to RNA-binding proteins (RBPs) are unknown for most RBPs, including the vast majority of the hundreds of RBPs in the human proteome. Moreover, even for RBPs with known binding motifs, existing sequence motifs are only weakly predictive of which RNA regions will be bound. Deciphering these RNA binding features is crucial for mechanistic understanding of RNA-protein binding and understanding how RNA regulation impacts human health. RNA-protein interactions are known to play a role in a wide variety of diseases including muscular dystrophy, fragile X syndrome, mental retardation, Prader-Willi syndrome, retinitis pigmentosa, spinal muscular atrophy, and cancer [<xref ref-type="bibr" rid="pcbi.1006078.ref001">1</xref>–<xref ref-type="bibr" rid="pcbi.1006078.ref005">5</xref>].</p>
+<p>Short single motifs are usually used to describe RNA-protein binding elements, e.g. as compiled in the RBPDB experimental database [<xref ref-type="bibr" rid="pcbi.1006078.ref006">6</xref>], but such motifs have often had poor predictive power. As an example, Hogan et al identified transcripts bound to 40 yeast RBPs and then searched their UTR regions for overrepresented sequences [<xref ref-type="bibr" rid="pcbi.1006078.ref007">7</xref>]. They were able to find statistically significant motifs for only 21 RBPs, and in many cases previously known motifs could not be found. This issue of poor predictive power for single motifs has continued even with finer resolution assays such as CLIP-seq, which can localize binding sites to within a few nucleotides [<xref ref-type="bibr" rid="pcbi.1006078.ref008">8</xref>,<xref ref-type="bibr" rid="pcbi.1006078.ref009">9</xref>]. For example, in CLIP-seq for <italic>LIN28</italic>–RNA interaction sites in human somatic and embryonic stem cells [<xref ref-type="bibr" rid="pcbi.1006078.ref010">10</xref>], the most overrepresented sequence motif (GGAGA) was found in less than 13% of the sites.</p>
+<p>A possible explanation for this problem is that proteins have the potential to interact with multiple sequence motifs. For instance, it is known that Gemin5, a peripheral protein of the survival of motor neuron (SMN) complex in metazoan organisms [<xref ref-type="bibr" rid="pcbi.1006078.ref011">11</xref>–<xref ref-type="bibr" rid="pcbi.1006078.ref013">13</xref>], is responsible for recognition of the Sm site of snRNA [<xref ref-type="bibr" rid="pcbi.1006078.ref014">14</xref>,<xref ref-type="bibr" rid="pcbi.1006078.ref015">15</xref>]. This recognition is mediated by a WD40 repeat domain located in the N-terminus [<xref ref-type="bibr" rid="pcbi.1006078.ref016">16</xref>–<xref ref-type="bibr" rid="pcbi.1006078.ref018">18</xref>], yet there is also a bi-partite non-canonical RNA-binding domain at the C-terminus which modulates IRES-dependent translation [<xref ref-type="bibr" rid="pcbi.1006078.ref019">19</xref>,<xref ref-type="bibr" rid="pcbi.1006078.ref020">20</xref>]. However, computational methods to distinguish multiple motifs simultaneously have not been developed.</p>
+<p>Existing computational approaches for RNA motif detection, which have been geared toward single motif discrimination, have had moderate success. RNA motif analysis has often been carried out by repurposing DNA motif finder tools such as MEME [<xref ref-type="bibr" rid="pcbi.1006078.ref021">21</xref>], PhyloGibbs [<xref ref-type="bibr" rid="pcbi.1006078.ref022">22</xref>] or cERMIT [<xref ref-type="bibr" rid="pcbi.1006078.ref023">23</xref>], but these methods cannot take into account RNA secondary structure. Many known RBPs do bind to single stranded RNA (ssRNA), but it remains unclear how much secondary structure impacts binding. Some methods have incorporated aspects of RNA structure, e.g. by biasing for single stranded regions [<xref ref-type="bibr" rid="pcbi.1006078.ref024">24</xref>,<xref ref-type="bibr" rid="pcbi.1006078.ref025">25</xref>] or searching over a limited set of structural contexts (paired, loop, unstructured, miscellaneous) [<xref ref-type="bibr" rid="pcbi.1006078.ref026">26</xref>–<xref ref-type="bibr" rid="pcbi.1006078.ref028">28</xref>]. However, the predictive power of these methods remains low, likely because of the limited number of considered contexts compared to the diversity of possible RNA structures. For example, Kazan et al. tested their algorithm on 9 RBP-interaction sets and found an average AUC value of only 0.64 [<xref ref-type="bibr" rid="pcbi.1006078.ref028">28</xref>]. Approaches that consider structural contexts using machine learning algorithms such as Support Vector Machines [<xref ref-type="bibr" rid="pcbi.1006078.ref029">29</xref>], Hidden Markov Models [<xref ref-type="bibr" rid="pcbi.1006078.ref030">30</xref>,<xref ref-type="bibr" rid="pcbi.1006078.ref031">31</xref>] or Deep Learning [<xref ref-type="bibr" rid="pcbi.1006078.ref032">32</xref>–<xref ref-type="bibr" rid="pcbi.1006078.ref034">34</xref>] have been developed. Some have improved cross-validation AUC values to 0.8 to 0.9 [<xref ref-type="bibr" rid="pcbi.1006078.ref034">34</xref>–<xref ref-type="bibr" rid="pcbi.1006078.ref036">36</xref>], though common caveats to current approaches are that they rely on immunoprecipitation training sets with uncertain specificity, that they have not been developed to handle multiple motifs, or that they have abstracted structural constraints rather than considering exact RNA structures.</p>
+<p>Recently, Maticzka and colleagues developed the graph kernel-based GraphProt to handle sequence and structure together and applied it to learn motifs from CLIP-seq data [<xref ref-type="bibr" rid="pcbi.1006078.ref037">37</xref>], finding motifs that were predictive of binding for the protein PTB. However, this approach has not been tested for RBPs that bind to double stranded RNAs, and it is unknown whether the effectiveness would depend on the types of structures to which individual proteins bind. Moreover, GraphProt reports at most one motif and classifies the remaining data as noise. A more general approach would be to use clustering to allow for multiple possible motifs. A related method is GraphClust [<xref ref-type="bibr" rid="pcbi.1006078.ref038">38</xref>], which uses a sequence/structure graph kernel to cluster RNAs, and a recent extension called RNAscClust [<xref ref-type="bibr" rid="pcbi.1006078.ref039">39</xref>] incorporates orthologous sequence conservation to improve the RNA folding estimates into the clustering process. However, these methods are tailored to cluster non-coding RNAs, and it is unknown if they would be effective for the clustering of CLIP-seq sites.</p>
+<p>Here, we propose a method, SARNAclust (Semi-Automatic RNA clustering), to cluster, as opposed to classify, RNA motifs that bind to a given RBP from CLIP-seq data. To our knowledge, this is the first approach to attempt to cluster CLIP-seq peaks in order to discover potentially multiple RNA motifs that bind to a given RBP. The most related approach we know of is AptaTrace [<xref ref-type="bibr" rid="pcbi.1006078.ref040">40</xref>], which uses clustering to identify multiple possible RNA motifs from HT-SELEX experiments. However, AptaTrace is not optimized for CLIP-seq data since it relies on k-mer context information during evolution of a sequence pool over multiple SELEX rounds, while CLIP-seq provides a static snapshot. Another recent method, RNAcompete-S [<xref ref-type="bibr" rid="pcbi.1006078.ref041">41</xref>] clusters multiple components that contribute to a single binding motif, but is not designed to handle distinct motifs arising from separate binding domains.</p>
+<p>Here we present a novel pipeline to address these problems in RNA-protein motif identification. We first describe our pipeline, which consists of 3 steps (peak discovery, motif discovery and motif experimental validation), with particular attention to the novel computational motif discovery algorithm SARNAclust. Next we benchmark SARNAclust on synthetic data and validate our experimental protocol on a known double-stranded RNA motif. We then show SARNAclust motif predictions for a set of RBPs with eCLIP data and experimentally validate the motif of one such RBP. Finally, we discuss the results and implications of this pipeline in the Discussion section.</p>
+</sec>
+<sec id="sec002" sec-type="results">
+<title>Results</title>
+<sec id="sec003">
+<title>Overview of the pipeline</title>
+<p>We present a mixed computational/experimental pipeline to derive RNA motifs that bind to a given RBP based on immunoprecipitation data. The motivation for our pipeline is two-fold: first, to discover motifs where both sequence and structure are necessary; and second, to enable identification of more than one motif per RBP through optimized clustering over the CLIP peaks.</p>
+<p>Our complete software pipeline includes source code to process data files from a CLIP experiment (see <xref ref-type="sec" rid="sec012">Methods</xref>), to calculate secondary structure of the peaks using RNAfold, to cluster peaks according to sequence only, and to cluster peaks according to sequence/structure using SARNAclust. In addition, we provide a protocol for experimental validation of candidate motifs, including <italic>in silico</italic> design of instances of the motif using RNAiFold [<xref ref-type="bibr" rid="pcbi.1006078.ref042">42</xref>,<xref ref-type="bibr" rid="pcbi.1006078.ref043">43</xref>]. <xref ref-type="fig" rid="pcbi.1006078.g001">Fig 1</xref> shows the flowchart of our pipeline. <xref ref-type="supplementary-material" rid="pcbi.1006078.s001">S1 Fig</xref> shows the flowchart of the peak analysis.</p>
+<fig id="pcbi.1006078.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1006078.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>CLIPseq motif finding pipeline.</title>
+<p>Bam files for sample and control are processed through our peak detection module. The structure of each peak is calculated using RNAfold and the resulting sequence/structure peaks are clustered using SARNAclust.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.g001" xlink:type="simple"/>
+</fig>
+<p>A key element of SARNAclust is the graph transformation that allows for the calculation of a similarity value between pairs of sequence/structures. These similarity values provide the input for the clustering of CLIP peaks. Flexible parameters in SARNAclust allow it to be used as a guidance system to identify well-supported motifs and test their key features.</p>
+<sec id="sec004">
+<title>SARNAclust</title>
+<p>Given a set of RNA sequence/structures calculated using RNAfold (or any other RNA structure prediction method), SARNAclust then clusters them. Similarities between pairs of sequence/structures are computed using the graph kernel in EdEN [<xref ref-type="bibr" rid="pcbi.1006078.ref044">44</xref>], which is equivalent to that used in GraphClust [<xref ref-type="bibr" rid="pcbi.1006078.ref038">38</xref>] and GraphProt [<xref ref-type="bibr" rid="pcbi.1006078.ref037">37</xref>]. However, parameter choices before applying this kernel for clustering are critical for accurate detection of motifs, which we have optimized as described below. To use the graph kernel we first transform the sequence/structures into graphs. Our pipeline allows for several different transformations based on either the complete graph or the bulge graph [<xref ref-type="bibr" rid="pcbi.1006078.ref045">45</xref>] (See <xref ref-type="fig" rid="pcbi.1006078.g002">Fig 2</xref>). The complete graph represents the secondary structure with all node connections between consecutive nucleotides or base pairs. The bulge graph is a condensed representation similar to the concept of abstract RNA shape [<xref ref-type="bibr" rid="pcbi.1006078.ref046">46</xref>].</p>
+<fig id="pcbi.1006078.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1006078.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Graph formalisms.</title>
+<p>Complete graph and bulge graph sequence/structure representations used in SARNAclust. (top) complete graph and (bottom) bulge graph for example sequence/structure: <monospace>GGGGAAACCAACCUGU</monospace> and <monospace>((((. . .))..)). . . .</monospace>.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.g002" xlink:type="simple"/>
+</fig>
+<p>In the complete graph (top) nodes are nucleotides and edges between nodes correspond to either base pairing (bp) or backbone links (bb). In the bulge graph (bottom) the structure is collapsed into structural elements, where “h” is hairpin loop, “i” is internal loop or bulge and “s” is stem (double stranded). “t” stands for the 3’ single stranded region.</p>
+<p>SARNAclust provides the following options for graph transformations (see <xref ref-type="supplementary-material" rid="pcbi.1006078.s002">S2 Fig</xref>):</p>
+<list list-type="bullet">
+<list-item><p>Option 1: GraphProt-like consists of the complete graph plus a hypergraph, which is a less condensed version of the bulge graph.</p></list-item>
+<list-item><p>Option 2: GraphProt-like where the hypergraph is substituted by the bulge graph.</p></list-item>
+<list-item><p>Option 3: Bulge graph.</p></list-item>
+<list-item><p>Option 4: Bulge graph plus corresponding sequence in hairpin loops.</p></list-item>
+<list-item><p>Option 5: Bulge graph plus corresponding sequence in internal loops and bulges.</p></list-item>
+<list-item><p>Option 6: Bulge graph plus corresponding sequence in external loops.</p></list-item>
+<list-item><p>Option 7: Bulge graph plus corresponding sequence in base paired regions.</p></list-item>
+<list-item><p>Option 8: Bulge graph plus corresponding sequence in hairpin loops, internal loops and bulges.</p></list-item>
+<list-item><p>Option 9: Bulge graph plus corresponding sequence in all unpaired regions.</p></list-item>
+<list-item><p>Option 10: Bulge graph plus sequence everywhere.</p></list-item>
+<list-item><p>Option 11: Bulge graph plus complete graph where sequence in base paired regions is not taken into account.</p></list-item>
+</list>
+<p>We have provided a range of options because different RNA-binding proteins will vary in their dependence on different structural features, and in many cases such features may be known from the domains in the protein. These include options that exhaustively consider structure but may be more sensitive to noise (e.g. option 1) and those that reduce the set of considered structural contexts (e.g. option 11). For example, for options 9 or 11 to be suitable, the key binding element in the RNA should be expected to occur in unpaired regions but within a precise structural context. Overall, Options 1, 2 and 10 allow arbitrary sequence and structure motifs, but in decreasing order of resolution. The appropriate choice among these is an empirical question related to the noisiness of the data, which we investigate below. All other options consider sequence only within a specified structural context: i.e. internal loops, bulges, external loops, or double stranded regions. Among these, our prior expectation is that Options 9 and 11 would be the most effective, since they focus on sequence effects in single stranded regions. In the following section we show the effect of these transformations when applying our methods to synthetic data for different types of motifs.</p>
+<p>Once the graph transformation has been applied, SARNAclust allows the user to apply one of several clustering algorithms and returns the clusters along with a consensus sequence/structure for each. The inputs to the clustering module are: 1) the file with the sequence/structures, 2) EdEN dimension [<xref ref-type="bibr" rid="pcbi.1006078.ref038">38</xref>], 3) EdEN radius, 4) the clustering method, and 5) the graph transformation option. To retrieve a motif from a cluster, we align the peaks of each cluster by both sequence and structure [<xref ref-type="bibr" rid="pcbi.1006078.ref047">47</xref>] and discard those where the alignment score is 0. Detailed descriptions of the pipeline, manuals, and source code are available at <ext-link ext-link-type="uri" xlink:href="https://github.com/idotu/SARNAclust" xlink:type="simple">https://github.com/idotu/SARNAclust</ext-link>.</p>
+</sec>
+</sec>
+<sec id="sec005">
+<title>Benchmarking on synthetic motif data</title>
+<p>To test the effectiveness of SARNAclust, we generated 100 sequences for each of the 5 synthetic motifs in <xref ref-type="table" rid="pcbi.1006078.t001">Table 1</xref>. We then combined these 500 sequences with 1000 random sequences to act as noise and then tested the ability of SARNAclust to sort these into separate clusters. Each synthetic motif corresponds to a hypothetical RNA motif that would bind a protein binding domain. The 5 motifs represent: a special structure with no sequence conservation (<italic>special_structure</italic>) or a conserved sequence within a certain structural context in a hairpin loop (<italic>GAGA_in_Hairpin</italic>), in a bulge (<italic>AUG_in_Bulge</italic>), in an external loop (<italic>pyrimidine_tract</italic>) or in a double stranded region (<italic>GGUCG_in_left_stem</italic>). Sequences for each motif were generated using RNAdualPF [<xref ref-type="bibr" rid="pcbi.1006078.ref048">48</xref>], which samples from the low energy ensemble of sequences compatible with the given structure and with the corresponding sequence constraints (see <xref ref-type="table" rid="pcbi.1006078.t001">Table 1</xref>). The 1000 random sequences were generated uniformly randomly (i.e. sampling each nucleotide with 0.25 probability) with lengths distributed the same as the lengths of the synthetic motifs. All motif and random sequences can be found in <xref ref-type="supplementary-material" rid="pcbi.1006078.s011">S1 Data</xref>.</p>
+<table-wrap id="pcbi.1006078.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1006078.t001</object-id>
+<label>Table 1</label> <caption><title>Synthetic motifs used to test SARNAclust.</title></caption>
+<alternatives>
+<graphic id="pcbi.1006078.t001g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.t001" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left">Motifs</th>
+<th align="left"/>
+<th align="left"/>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="2"><bold>special_structure</bold></td>
+<td align="center"><monospace>NNNNNNNNNNNNNNNNNNNNNNNNNN</monospace></td>
+<td align="center"><bold>Sequence</bold></td>
+</tr>
+<tr>
+<td align="center"><monospace>((.((((.. ((. . .))..))..))))</monospace></td>
+<td align="center"><bold>Structure</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="2"><bold>AUG_in_Bulge</bold></td>
+<td align="center"><monospace>NNNNAUGNNNNNNNNNNNNN</monospace></td>
+<td align="center"><bold>Sequence</bold></td>
+</tr>
+<tr>
+<td align="center"><monospace>((((. . . (((. . .)))))))</monospace></td>
+<td align="center"><bold>Structure</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="2"><bold>pyrimidine_tract</bold></td>
+<td align="center"><monospace>NNNNNNNNNNNCCUCU</monospace></td>
+<td align="center"><bold>Sequence</bold></td>
+</tr>
+<tr>
+<td align="center"><monospace>((((. . .)))). . . ..</monospace></td>
+<td align="center"><bold>Structure</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="2"><bold>GAGA_in_Hairpin</bold></td>
+<td align="center"><monospace>NNNNNGAGANNNNN</monospace></td>
+<td align="center"><bold>Sequence</bold></td>
+</tr>
+<tr>
+<td align="center"><monospace>(((((. . . .)))))</monospace></td>
+<td align="center"><bold>Structure</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="2"><bold>GGUCG_in_left_stem</bold></td>
+<td align="center"><monospace>NNGGUCGNNNNNNNNNN</monospace></td>
+<td align="center"><bold>Sequence</bold></td>
+</tr>
+<tr>
+<td align="center"><monospace>(((((((. . .)))))))</monospace></td>
+<td align="center"><bold>Structure</bold></td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>Clustering of these 1500 sequences indicated that SARNAclust was able to distinguish multiple clusters corresponding to the original motif groups. As a clustering method we used DBSCAN from the sklearn package, surveying over possible values for the threshold parameter that specifies the minimal similarity for two data points to be in the same cluster, and with graph kernel options R = 2 and D = 2. This threshold is a dissimilarity threshold—at a threshold of x, 2 sequence/structures cannot be in the same cluster if their similarity measure is less than 1-x. <xref ref-type="fig" rid="pcbi.1006078.g003">Fig 3</xref> shows the different V-measure (a measure of clustering quality, see <xref ref-type="sec" rid="sec012">Methods</xref>) values for each graph transformation and each threshold value. <xref ref-type="supplementary-material" rid="pcbi.1006078.s012">S2 Data</xref> shows other measures of quality of clustering (see <xref ref-type="sec" rid="sec012">Methods</xref>) assessed by comparing the true cluster label for each sequence versus the one yielded by the clustering algorithm.</p>
+<fig id="pcbi.1006078.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1006078.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>SARNAclust benchmarking.</title>
+<p>V-measure scores at different threshold values for each of the graph transformation options.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.g003" xlink:type="simple"/>
+</fig>
+<p>We observed that SARNAclust was able to recover each category of motif, though optimization of the choice of graph transformation enhanced detection of each motif class. As can be seen, use of each graph transformation yielded the corresponding motif at low to mid threshold values but false positives increased as the threshold parameter increased. For instance, option 4 finds the GAGA_in_hairpin motif easily at low thresholds. Although option 6 performs well, it benefits from the fact that most motifs do not have external loops and may not be as general as other options. For most motif instances option 6 is only able to use the bulge graph features to discriminate motif instances from one another. The GraphProt-like options (1 and 2) perform well at high threshold values, but cannot successfully cluster at low thresholds. This is due to the excess number of features specified in this graph transformation, making it difficult to cluster instances unless they are nearly identical. Option 2 contains fewer features than option 1 and thus performs better. Options 10 and 11 are simplified GraphProt-like versions and achieve the best results with v-measure values of over 0.95. Option 9 achieves high quality values as well, and for a large range of threshold, especially with respect to FMS.</p>
+<p>For comparison, we also applied GraphClust to the same set of synthetic motifs. We note that we did not choose the GraphClust extension RNAscClust here because the folded structures are pre-determined for these synthetic designed sequences, and therefore the folding improvements of RNAscClust do not offer any advantages. We used the default GraphClust parameters except graph kernel R and D, which were set to the values we used in SARNAclust, and the minimum length of sequence was set so that all the 1500 sequences would be considered. GraphClust returns by default 5 clusters, which we would expect to correspond to the 5 synthetic motifs. GraphClust returns the seed and extended sequences for each instance, and we calculated several clustering quality measures for each (Adjusted Rand Index (ARI), Adjusted Mutual Information (AMI), Homogeneity Score (HS), Completeness Score (CS), V-measure score (VMS) and Fowlkes-Mallows score (FMS)).</p>
+<p>SARNAclust outperformed GraphClust as shown in <xref ref-type="table" rid="pcbi.1006078.t002">Table 2</xref>. Note that the GraphClust v-measure values in both scenarios are under 0.1, while SARNAclust with option 11 achieves better results for almost all thresholds, including &gt;0.95 at threshold 0.5. This indicates that the difference between clustering CLIP peaks and RNAs are substantial enough that the SARNAclust provides superior performance over GraphClust. This is likely due to the large combinatorial complexity of GraphClust’s parameter space.</p>
+<table-wrap id="pcbi.1006078.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1006078.t002</object-id>
+<label>Table 2</label> <caption><title>GraphClust and SARNAclust results on synthetic data.</title></caption>
+<alternatives>
+<graphic id="pcbi.1006078.t002g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.t002" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left">Type of Cluster</th>
+<th align="left">ARI</th>
+<th align="left">AMI</th>
+<th align="left">HS</th>
+<th align="left">CS</th>
+<th align="left">FMS</th>
+<th align="left">VMS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><bold>GraphClust Seed</bold></td>
+<td align="left">0.017</td>
+<td align="left">0.011</td>
+<td align="left">0.012</td>
+<td align="left">0.365</td>
+<td align="left">0.685</td>
+<td align="left">0.024</td>
+</tr>
+<tr>
+<td align="left"><bold>GraphClust Extended</bold></td>
+<td align="left">0.059</td>
+<td align="left">0.043</td>
+<td align="left">0.045</td>
+<td align="left">0.537</td>
+<td align="left">0.693</td>
+<td align="left">0.083</td>
+</tr>
+<tr>
+<td align="left"><bold>SARNAclust Option 2</bold></td>
+<td align="left">0.64</td>
+<td align="left">0.56</td>
+<td align="left">0.56</td>
+<td align="left">0.82</td>
+<td align="left">0.84</td>
+<td align="left">0.84</td>
+</tr>
+<tr>
+<td align="left"><bold>SARNAclust Option 11</bold></td>
+<td align="left">0.96</td>
+<td align="left">0.94</td>
+<td align="left">0.96</td>
+<td align="left">0.94</td>
+<td align="left">0.95</td>
+<td align="left">0.95</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>We also compared whether a classification-based approach to motif detection could identify the synthetic motifs as well as SARNAclust. To handle multiple motifs, we used classification to identify the best motif iteratively, at each step removing the sequences containing the prior best motif. For this comparison we chose RNAcontext [<xref ref-type="bibr" rid="pcbi.1006078.ref028">28</xref>], which uses classification to identify one motif at a time based on sequence and structure. Remarkably, the first iteration of RNAcontext could not find any of the synthetic motifs (<xref ref-type="supplementary-material" rid="pcbi.1006078.s003">S3 Fig</xref>). In fact, the sequence motif (of length 11) returned has a very low information content of 5 bits (when a completely fixed sequence of length 11 would have an information content of 22 bits). This is likely because the RNAcontext approach is not well-suited to the benchmark set as it contains multiple signals from distinct overrepresented motifs as well as noise. Interference among the motifs apparently causes RNAcontext to be unable to report any single motif with high confidence.</p>
+</sec>
+<sec id="sec006">
+<title>Experimental validation with RNA Bind-N-Seq</title>
+<p>As part of our pipeline for identifying binding motifs, we developed a targeted RNA Bind-N-Seq (RBNS) protocol [<xref ref-type="bibr" rid="pcbi.1006078.ref049">49</xref>] to experimentally test motif predictions. We first tested this protocol on Stem Loop Binding Domain Protein (SLBP), which binds a known motif [<xref ref-type="bibr" rid="pcbi.1006078.ref050">50</xref>] found in the 3’UTR of histone mRNAs. In the RNA Bind-N-Seq protocol, randomly generated 40-mers are tested for their efficiency in binding a protein. Because any RNA molecule of length 40 can form over 200 trillion secondary structures, it is not possible to fully sample this space. Therefore, we performed RBNS measurements of SLBP-RNA binding with several thousand designed sequences to ascertain the validity of our experimental validation approach.</p>
+<p>To do this, we first used RNAiFold [<xref ref-type="bibr" rid="pcbi.1006078.ref043">43</xref>] (See <xref ref-type="sec" rid="sec012">Methods</xref>) to design four different types of sequences as illustrated in <xref ref-type="supplementary-material" rid="pcbi.1006078.s007">S1 Table</xref> (153, 4106, 4107 and 4106 sequences of each respectively). These sequences were chosen to test whether binding requires sequence conservation in the loop region or the stem region of the motif, and also whether relocation of the loop sequence to a different structural context (i.e. a bulge) could still lead to protein-RNA binding. We then performed RBNS in duplicate using purified GST-SBP-SLBP (Glutathione-S-transferase Streptavidin-Binding Peptide SLBP) to pull down the designed RNA sequences [<xref ref-type="bibr" rid="pcbi.1006078.ref049">49</xref>]. As a nonspecific binding control, we also performed RBNS with the same RNA against purified GST-SBP. Each protein was expressed in <italic>E</italic>. <italic>coli</italic> and affinity purified (<xref ref-type="supplementary-material" rid="pcbi.1006078.s004">S4 Fig</xref>), and pulled down RNA was reverse transcribed with a primer containing a 10 nt random sequence to enable collapsing of PCR duplicates during data analysis. The resulting cDNA was then PCR amplified to attach Illumina sequencing primers and indices.</p>
+<p>Only the consensus motif [<xref ref-type="bibr" rid="pcbi.1006078.ref050">50</xref>] exhibited a clear shift from the control, indicating that the motif definition is specific and that all the variant versions of the motif have decreased binding. <xref ref-type="fig" rid="pcbi.1006078.g004">Fig 4A</xref> shows the difference between GST-SBP RBNS and GST-SBP-SLBP RBNS, quantified by the shift in percentage of reads of each type. Only the consensus motif has a significant enrichment with respect to the control (t-test p-val = 0.00147). To assess p-values of individual sequences, we used DEseq [<xref ref-type="bibr" rid="pcbi.1006078.ref051">51</xref>] to compare the read counts (<xref ref-type="supplementary-material" rid="pcbi.1006078.s013">S3 Data</xref>) of sequences in the pool to the controls. This analysis showed that only sequences from the consensus motif bind to SLBP significantly. Moreover, all but 7 of these consensus sequences are significantly overrepresented in the SLBP bound pool (Adjusted p-val &gt; 0.01). Furthermore, <xref ref-type="supplementary-material" rid="pcbi.1006078.s005">S5 Fig</xref> shows the sequence logos for all the consensus sequences that bind or do not bind significantly, respectively. The logos indicate that long stretches of U’s near the apical region of the hairpin loop compromise binding affinity, which is to be expected since they are energetically unfavorable and therefore prone to render the hairpin unstable.</p>
+<fig id="pcbi.1006078.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1006078.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>RBNS-like validation using known SLBP motif.</title>
+<p>a) Percentage shift in the sequences of each group of RNAs for SLBP RNA-bind-n-seq. GST-SBP samples are used as a non-specific binding control b) Gel shift results for select probes tested in the RBNS when incubated with purified GST-SBP-SLBP. The Consensus A (CA) probe shows more binding relative to Consensus B (CB), Consensus Loop Only A (CLA), Consensus Loop Only B (CLB), Loop In Bulge (LIB) and Loop Stem Only (LST). Sequences for each probe and their RBNS results can be found in <xref ref-type="supplementary-material" rid="pcbi.1006078.s014">S4 Data</xref>. * indicates p &lt; 0.05, ** indicates p &lt; 0.005 assessed by t-test.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.g004" xlink:type="simple"/>
+</fig>
+<p>To further validate these results and the validity of our RBNS-like experimental protocol, we performed several gel shift experiments (<xref ref-type="fig" rid="pcbi.1006078.g004">Fig 4B</xref>). We incubated 6 RNA probes selected from the RBNS data with purified GST-SBP-SLBP. <xref ref-type="supplementary-material" rid="pcbi.1006078.s013">S3 Data</xref> shows the 6 selected sequences highlighted in red. These include 2 from the consensus binding group, one with strong binding affinity in the RBNS assay (consensus A) and one with no significant binding affinity (consensus B). There are also 4 extra sequences from the remaining types where the RBNS binding signal was not significant. As expected, only the consensus A sequence shows binding to SLBP, confirming our conclusions from the p-value analysis and validating the RBNS protocol.</p>
+</sec>
+<sec id="sec007">
+<title>SARNAclust predicts novel motifs in ENCODE eCLIP data</title>
+<p>Given these validations of the computational and experimental pipeline, we then applied SARNAclust to predict motifs from real immunoprecipitation data. First, we verified that SARNAclust could find the motif for SLBP. In order to do so, we downloaded SLBP eCLIP [<xref ref-type="bibr" rid="pcbi.1006078.ref052">52</xref>] data from the ENCODE project (<ext-link ext-link-type="uri" xlink:href="http://www.encodeproject.org/" xlink:type="simple">www.encodeproject.org</ext-link>). After applying our peak discovery pipeline we were left with only 49 peaks, most of them (i.e. 35) found indeed in histone genes. After calculating the secondary structure of each peak using RNAfold, we ran SARNAclust.</p>
+<p><xref ref-type="fig" rid="pcbi.1006078.g005">Fig 5</xref> shows the motif found for options 1, 2 and 10 at threshold 0.6, as well as option 7 at threshold 0.5. These are the most suited options since they account for sequence in double stranded regions, which is important for SLBP. Options 7 and 10 yield less specific clustering, meaning that they need higher thresholds (i.e. the clusters contain more sequences) to find the motif, consistent with their being coarser representations of the sequence/structure. As can be seen, the motif found is very similar to the canonical motif [<xref ref-type="bibr" rid="pcbi.1006078.ref050">50</xref>]. No other clusters were found, showing SARNAclust is effective even if only one motif exists.</p>
+<fig id="pcbi.1006078.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1006078.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>SARNAclust motif discovered for SLBP.</title>
+<p>Consensus sequence/structure motif found for SLBP by SARNAclust with graph transformation options 7 and 10.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.g005" xlink:type="simple"/>
+</fig>
+<p>We then used SARNAclust to predict motifs for several RBPs from the ENCODE project, which is generating RNA crosslinking immunoprecipitation assays that are expected to eventually cover &gt;200 known human RNA Binding Proteins using eCLIP [<xref ref-type="bibr" rid="pcbi.1006078.ref052">52</xref>]. We downloaded a set of 20 RBPs from ENCODE eCLIP experiments at <ext-link ext-link-type="uri" xlink:href="http://www.encodeproject.org/" xlink:type="simple">www.encodeproject.org</ext-link>, each with 2 replicates and a control. We selected these RBPs due to the fact that they contain either double stranded RNA binding domains or unknown RNA binding domains. We discarded all helicases since they are known to promiscuously bind to double-stranded RNAs with no clear motif. We identified novel motifs with SARNAclust using the same graph kernel parameters as in the synthetic data section (R = 2,D = 2) and the same DBSCAN algorithm for clustering. We used options 9,10, 11 for their overall performance on the synthetic data, along with option 2 for its similarity to GraphClust, at the best performing thresholds (0.3–0.55).</p>
+<p><xref ref-type="table" rid="pcbi.1006078.t003">Table 3</xref> shows the list of RBPs chosen for this study, along with their RNA binding domains and the number of peaks found by our peak discovery pipeline. Note that none of these RBPs had previously known motifs in the two most relevant motif databases: RBPDB [<xref ref-type="bibr" rid="pcbi.1006078.ref006">6</xref>] and ATtRACT [<xref ref-type="bibr" rid="pcbi.1006078.ref053">53</xref>]; and only one RBP (EIF4G) has a motif described in the two recent publications on ENCODE eCLIP [<xref ref-type="bibr" rid="pcbi.1006078.ref054">54</xref>] and RBNS [<xref ref-type="bibr" rid="pcbi.1006078.ref055">55</xref>].</p>
+<table-wrap id="pcbi.1006078.t003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1006078.t003</object-id>
+<label>Table 3</label> <caption><title>ENCODE RBPs analyzed by SARNAclust.</title></caption>
+<alternatives>
+<graphic id="pcbi.1006078.t003g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.t003" xlink:type="simple"/>
+<table>
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left">RBP</th>
+<th align="left">Domains</th>
+<th align="left">#Peaks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">AGGF1</td>
+<td align="left">G-patch</td>
+<td align="left">2207</td>
+</tr>
+<tr>
+<td align="left">AKAP8L</td>
+<td align="left">C2H2 (2)</td>
+<td align="left">2307</td>
+</tr>
+<tr>
+<td align="left">DGCR8</td>
+<td align="left">DRBM (2)</td>
+<td align="left">1929</td>
+</tr>
+<tr>
+<td align="left">DKC1</td>
+<td align="left">PUA</td>
+<td align="left">1573</td>
+</tr>
+<tr>
+<td align="left">DROSHA</td>
+<td align="left">DRBM</td>
+<td align="left">1473</td>
+</tr>
+<tr>
+<td align="left">EFTUD2</td>
+<td align="left">Tr-type G</td>
+<td align="left">2557</td>
+</tr>
+<tr>
+<td align="left">EIF3D</td>
+<td align="left">RNA-gate</td>
+<td align="left">12159</td>
+</tr>
+<tr>
+<td align="left">EIF4G2</td>
+<td align="left">MIF4G</td>
+<td align="left">6415</td>
+</tr>
+<tr>
+<td align="left">FAM120A</td>
+<td align="left">RNA-binding</td>
+<td align="left">27826</td>
+</tr>
+<tr>
+<td align="left">FASTKD2</td>
+<td align="left">RAP</td>
+<td align="left">380</td>
+</tr>
+<tr>
+<td align="left">ILF3</td>
+<td align="left">DRBM (2), DZF</td>
+<td align="left">3410</td>
+</tr>
+<tr>
+<td align="left">NKRF</td>
+<td align="left">R3H</td>
+<td align="left">10681</td>
+</tr>
+<tr>
+<td align="left">SMNDC1</td>
+<td align="left">Tudor</td>
+<td align="left">258</td>
+</tr>
+<tr>
+<td align="left">TBRG4</td>
+<td align="left">RAP</td>
+<td align="left">196</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>We found motifs for several proteins, with results dependent on the choice of options (see <xref ref-type="supplementary-material" rid="pcbi.1006078.s008">S2 Table</xref>). However, analysis of the data under the GraphProt algorithm (equivalent to SARNAclust with option 2) was unable to find any clusters for all but 2 RBPs. Similarly, RNAcontext yielded motif predictions with low Area Under the Receiver Operating Curve values, ranging from 0.111 (NKRF) to 0.546 (AKAP8L), and most motifs had low sequence complexity and information content. In contrast, SARNAclust with options 9, 10 and 11 was able to find clusters almost for all RBPs (all of them for option 9, all but 1 for option 11 and all but 5 for option 10). We focused on clusters with sequence conservation signal in addition to structural information, as those without sequence information would be more difficult to interpret and experimentally validate. This is also why we removed helicases, as we would expect those to lack sequence conservation. Nevertheless, we were able to find several interesting cases, as described below.</p>
+<p>SARNAclust results were consistent with k-mer analysis but provided additional structural context. K-mer overrepresentation results [<xref ref-type="bibr" rid="pcbi.1006078.ref003">3</xref>] for k = 4,5,6,7,8,9 on these RBPs are shown in <xref ref-type="supplementary-material" rid="pcbi.1006078.s009">S3 Table</xref>. Most of the k-mers found were either GU repeats or a stretch of guanines GGGG. SARNAclust was able to find these GU repeat motifs as well simultaneously with structure. However, SARNAclust did not reveal other candidate motifs for those proteins, suggesting that those RBPs with repetitive motifs bind to double stranded structures indiscriminately.</p>
+<sec id="sec008">
+<title>Single stranded motifs</title>
+<p>Although our main interest was to find motifs with secondary structure, we did find several single-stranded motifs. For instance, both AGGF1 and AKAP8L present a motif consisting of a series of CA repeats that are single-stranded (found with both options 9 and 10). Moreover, for AGGF1 we found a second motif consisting of a CCAU repeat that was also single-stranded. Another set of proteins present motifs containing single-stranded GU repeats. These are DKC1 (for which we also find a cluster where the GU repeat is double-stranded), EFTUD2 and EIF4G. For EIF4G, this GU repeat motif is similar to that reported in both ENCODE analysis of eCLIP [<xref ref-type="bibr" rid="pcbi.1006078.ref054">54</xref>] and RBNS [<xref ref-type="bibr" rid="pcbi.1006078.ref055">55</xref>]. However, we also found another motif with greater complexity for EIF4G, namely a single-stranded bipartite motif: GUGUGU-GAGAGA.</p>
+</sec>
+<sec id="sec009">
+<title>A novel ILF3 motif</title>
+<p>Most interestingly we found several motifs for ILF3, including one with both secondary structure and sequence information. These motifs are shown in <xref ref-type="fig" rid="pcbi.1006078.g006">Fig 6</xref>. Note that the motif in <xref ref-type="fig" rid="pcbi.1006078.g006">Fig 6A</xref> is very similar to the one found for the splicing regulator HNRNPC (See Fig 2F in [<xref ref-type="bibr" rid="pcbi.1006078.ref056">56</xref>]). Therefore, we downloaded the HNRNPC eCLIP data from ENCODE and ran it through our peak discovery pipeline and applied SARNAclust. Indeed, we found the same motif as the one in <xref ref-type="fig" rid="pcbi.1006078.g006">Fig 6A</xref>. We did not find the slightly different motif depicted in <xref ref-type="fig" rid="pcbi.1006078.g006">Fig 6B</xref>, indicating that the 6a version is the common motif.</p>
+<fig id="pcbi.1006078.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1006078.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>SARNAclust motifs for ILF3.</title>
+<p>SARNAclust finds 4 different clusters: a) UUUUUGAGA single-stranded motif; b) UUUUUGAGA where GAGA belongs to a stem region; c) GU repeats and d) CU rich region.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.g006" xlink:type="simple"/>
+</fig>
+</sec>
+</sec>
+<sec id="sec010">
+<title>Validation of a novel motif for ILF3</title>
+<p>Because of the strong predictive motif for ILF3 from SARNAclust, as evidenced by its clusters and signal for double-strandedness, we next used the RBNS approach to validate these motifs. ILF3 is known to be involved in many processes such as transcription, translation, regulation of cell cycle or viral replication [<xref ref-type="bibr" rid="pcbi.1006078.ref057">57</xref>]. However splicing has only recently been reported as a possible function [<xref ref-type="bibr" rid="pcbi.1006078.ref058">58</xref>], and confirmation of this HNRNPC-like motif would shed light on a potentially novel function. We therefore used RBNS to test the binding of the predicted motifs with ILF3 and whether it requires a specific RNA structure. Using RNAiFold we designed sequences for 4 different perturbations of the motif as shown in <xref ref-type="supplementary-material" rid="pcbi.1006078.s010">S4 Table</xref> (19, 2680, 2680, and 2680 sequences of each motif class respectively). For each motif class, we attempted to generate a few thousand sequences. However, only 19 designed sequences were obtained for the UUUUUGAGA-unpaired motif class due to the fact that unpaired structures tend to have higher free energies than paired structures (see <xref ref-type="sec" rid="sec012">Methods</xref>). Similarly as for SLBP, we performed RBNS with purified GST-SBP-ILF3 using an RNA pool based on the motifs in <xref ref-type="supplementary-material" rid="pcbi.1006078.s010">S4 Table</xref>.</p>
+<p><xref ref-type="fig" rid="pcbi.1006078.g007">Fig 7</xref> shows the shift in percentage of reads of each type and its difference between GST-SBP-1, GST-SBP-2 non-specific binding controls and ILF3-1, ILF3-2 samples. Only the motif UUUUUGAGA-paired exhibited a significant positive shift from the control (p-val&lt;0.005 using the t-test), supporting the novel motif. We also used DEseq to analyze differential representation of sequences in the ILF3 bound and unbound pools (<xref ref-type="supplementary-material" rid="pcbi.1006078.s014">S4 Data</xref>). Only sequences from the UUUUUGAGA-paired motif showed significant binding to ILF3, confirming and specifying the computationally discovered motif. 1551 out of 2680 sequences showed increased binding (T-test, p-adj&lt;0.05), while only 6 sequences showed decreased binding. These targeted RBNS results suggest that among the motifs tested, that the UUUUUGAGA-paired shows the strongest binding. In comparison, we observed no significant enrichment or depletion in binding from any of the 19 sequences representing the UUUUUGAGA-unpaired motif. The paired and unpaired sets of sequences each spanned a range of base compositions. The only systematic difference in the two sets was that all of the unpaired motif sequences contained a poly-A sequence that bound to the UUUUU region while preventing pairing of the GAGA region. This is likely a structural constraint, though we cannot rule out that the polyA sequence could also have a sequence-dependent effect on binding. Because the sequences from all motif groups were incubated with the protein at the same time, we note that the lack of enrichment of other motifs is a comparative effect impacted by the stronger binding of UUUUUGAGA-paired motif sequences. Another factor is that RNA Bind-n-Seq does not capture indirect binding interactions mediated through multiprotein complexes, which may be relevant for some of the other motifs. A special case is the GU repeat motif predicted by SARNAclust for ILF3 (GU-repeats motif in <xref ref-type="supplementary-material" rid="pcbi.1006078.s008">S2 Table</xref>), which did not show enriched binding. GU-rich motifs were predicted for many other ENCODE RBPs as well ([<xref ref-type="bibr" rid="pcbi.1006078.ref054">54</xref>]and <xref ref-type="supplementary-material" rid="pcbi.1006078.s009">S3 Table</xref>), and we speculate that the presence of such sequences in CLIP data may be due to experimental noise.</p>
+<fig id="pcbi.1006078.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1006078.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>RBNS-like for ILF3 motifs.</title>
+<p>Percentage shift in the sequences of each cluster of RNAs for ILF3 RNA-bind-n-seq. GST-SBP samples are used as a non-specific binding control. * indicates p &lt; 0.05, ** indicates p &lt; 0.005 assessed by T-test.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.g007" xlink:type="simple"/>
+</fig>
+<p>These results indicate that ILF3 binds to a UUUUUGAGA motif with most nucleotides in double-stranded regions. They also suggest a relationship between ILF3 and HNRNPC, which has been reported to have a similar motif, though that motif was reported to be single stranded. To explore this further, we analyzed the overlap of ILF3 and HNRNPC peaks in ENCODE eCLIP data. Overall, ILF3 has 822 peaks that fall in anti-sense Alus. 322 of these peaks are shared with HNRNPC peaks, and 146 of those (45%) contain the UUUUUGAGA sequence. Conversely, ILF3 has 285 peaks in anti-sense Alus covering a UUUUUGAGA sequence, and 146 of such peaks (51%) are shared with HNRNPC. Thus from both perspectives a substantial fraction of sites overlap between ILF3 peaks, HNRNPC peaks, and UUUUUGAGA sequences within anti-sense Alus. Our motif analysis predicts 67 of the 146 common sites (46%) to have the paired version of the UUUUUGAGA motif, suggesting there may be some flexibility in RNA structure at the overlapping sites.</p>
+</sec>
+</sec>
+<sec id="sec011" sec-type="conclusions">
+<title>Discussion</title>
+<p>SARNAclust is a novel computational method that can effectively process and analyze data from CLIP experiments in order to predict RNA motifs likely to bind individual proteins. A key novelty of SARNAclust is that it can assess RNA binding motifs at the level of the complete RNA structure, rather than only taking into account abstractions of structural context. The SARNAclust approach of clustering rather than classifying distinguishes it from prior methods, allowing it to identify motifs even without training data. This is an important aspect for CLIP-seq, for which the specificity of experimental measurements is not well understood due to diverse effects such as multiple binding modalities and sources of noise.</p>
+<p>Application of SARNAclust and the new RBNS validation approach allowed us to experimentally verify ILF3 binding to a newly predicted UUUUUGAGA motif. The signal for this was distinct from repetitive GU or CU motifs, supporting the idea that those repetitive sequences are not true binding sequences. More broadly, SARNAclust allowed us to investigate the relative importance of structure, which has been challenging for RNA-protein interactions, and we found that structure significantly affected the RBNS results for both SLBP and ILF3. Structural changes to each of several components of the SLBP motif reduced binding, and the new motif for ILF3 exhibited a bias for double-strandedness.</p>
+<p>Although identification of RBPs that bind to multiple motifs will require further investigation, the multi-domain structure of many RBPs suggest this is a likely possibility. The combination of SARNAclust and our target RBNS validation already allows us to separate multiple distinct signals from noise, making it suited to this ongoing challenge. In contrast, other methods have more difficulty in resolving multiple signals simultaneously. In addition to our results on synthetic motifs, we found that when we selected 1000 ILF3 peaks at random and inputted them to RNAcontext, we found no similar motif to the ones output by SARNAclust (<xref ref-type="supplementary-material" rid="pcbi.1006078.s006">S6 Fig</xref>).</p>
+<p>The similarity of the new ILF3 motif to that for HNRNPC is intriguing, as it was shown in [<xref ref-type="bibr" rid="pcbi.1006078.ref056">56</xref>] that HNRNPC competes with another protein U2AF2 for binding of 3’ splice sites to regulate the inclusion/exclusion of exons. They concluded that HNRNPC prevents inclusion of cryptic exons while U2AF2 promotes it, with RBP binding often occurring in antisense Alu elements. Based on this competition, we would expect U2AF2 to have a similar binding site to HNRNPC. However, the predicted motif for HNRNPC is much more similar to that for ILF3 than it is to the predicted <italic>U2AF2</italic> motif (<xref ref-type="table" rid="pcbi.1006078.t003">Table 3</xref>). We speculate that ILF3 might compete with either HNRNPC or U2AF2 for binding of similar regions.</p>
+<p>In this paper we have introduced a new pipeline with a powerful clustering algorithm SARNAclust for analyzing CLIP data in order to cluster CLIP peaks into different binding motifs. We have verified the effectiveness of SARNAclust on synthetic data and used RNA Bind-n-Seq to experimentally validate predictions for new and known motif predictions from ENCODE data. These studies included surveying over different biophysical models and clustering thresholds to identify those likely to work best for real datasets (i.e. options 9,10, 11 at clustering thresholds 0.3–0.55). We have also shown the utility of our RBNS approach by validating its results using gel shift experiments. Still we are we are cognizant of the fact that different RBPs will vary in binding affinity and modality, particularly those with different types of RNA recognition motifs, and further studies will be needed to confirm the generality of these methods for all RBPs. In the future and as more eCLIP data sets for double-stranded binding RBPs become available, we expect SARNAclust will be a valuable tool to discover new motifs, to probe the combinatorial interactions of RNA-binding proteins, and to elucidate their functional importance.</p>
+</sec>
+<sec id="sec012" sec-type="materials|methods">
+<title>Methods</title>
+<sec id="sec013">
+<title>ENCODE data</title>
+<p>ENCODE data (<ext-link ext-link-type="uri" xlink:href="http://www.encodeproject.org/" xlink:type="simple">www.encodeproject.org</ext-link>) correspond to a set of CLIP experiments described as enhanced CLIP (eCLIP), which modifies the iCLIP method to include improvements in library preparation of RNA fragments. See [<xref ref-type="bibr" rid="pcbi.1006078.ref052">52</xref>] for details. All data were downloaded through the ENCODE Project website. For proteins with more than one experimental cell type, we used the data from the K562 female cell line.</p>
+</sec>
+<sec id="sec014">
+<title>Computational pipeline</title>
+<sec id="sec015">
+<title>Bam to peaks file processing</title>
+<p>We calculated the set of clusters or peaks for each RBP by running pyicoclip on the ENCODE bam files (2 replicates each). The software pyicoclip is part of the pyicoteo software for analysis of high-throughput sequencing data [<xref ref-type="bibr" rid="pcbi.1006078.ref059">59</xref>] (available at <ext-link ext-link-type="uri" xlink:href="https://bitbucket.org/regulatorygenomicsupf/pyicoteo" xlink:type="simple">https://bitbucket.org/regulatorygenomicsupf/pyicoteo</ext-link>). Pyicoclip implements the modified False Discovery Rate approach proposed in [<xref ref-type="bibr" rid="pcbi.1006078.ref003">3</xref>] to determine significant clusters in a list of genomic regions. Pyicoclip implementation, together with the pyicoteo software, offers a flexible and effective framework for the processing and analysis of different types of CLIP-Seq data, with or without associated controls. We chose pyicoteo for its speed and because its modular architecture allowed us to adapt the CLIP-Seq analyses for data standardization. In order to generate a final set of peaks for each RBP, we used peaks that overlapped both replicates and subtracted peaks overlapping with the control. We chose this approach rather than using enrichment thresholds in order to minimize noise from any systematic measurement biases. For each peak we tracked the gene it overlapped, the type of region within the gene, and the genomic sequence.</p>
+</sec>
+<sec id="sec016">
+<title>Structure prediction</title>
+<p>All structures are predicted using RNAfold from the Vienna Package on the exact binding region without extending it. We chose this after considering an alternative approach with more flexibility in handling edge effects. The other approach would calculate base pairing probabilities of the binding region with 100nt (an adjustable parameter) extended on each end, followed by a form of Nussinov folding. However, we found that such an approach led to comparable results as when RNAfold was simply applied to the binding region alone.</p>
+</sec>
+<sec id="sec017">
+<title>Clustering algorithm</title>
+<p>The clustering algorithm is the main component in our pipeline. Given a set of RNA sequences along with their predicted secondary structures, it identifies clusters of similar RNAs by encoding both sequence and structure as a graph, and using the EdEN kernel similarly as in GraphClust. The pipeline accepts several parameters to control both the graph transformation and the clustering. It also allows for the use of only sequence information in a sliding window fashion. The clustering algorithms supported are: K-means, Mean Shift, DB-Scan, Affinity Propagation and Spectral Clustering from sklearn package (<ext-link ext-link-type="uri" xlink:href="http://scikit-learn.org/stable" xlink:type="simple">http://scikit-learn.org/stable</ext-link>) and Density Clustering [<xref ref-type="bibr" rid="pcbi.1006078.ref060">60</xref>] in an in-house implementation. Details are in the full implementation available at the Github site. For the clustering of the synthetic motif data we used the EdEN graph kernel with DB-SCAN, surveying over possible values for the DB-Scan parameter <italic>threshold</italic> (<ext-link ext-link-type="uri" xlink:href="http://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html" xlink:type="simple">http://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html</ext-link>), which specifies the minimal similarity for two data points to be in the same cluster. Other parameter choices were <italic>radius</italic> = 2 and <italic>distance</italic> = 2 with <italic>min_samples</italic> = 10 (see [<xref ref-type="bibr" rid="pcbi.1006078.ref038">38</xref>]).</p>
+<p>For the ENCODE predictions, to balance memory constraints we limited peaks to those with length between 10 and 80 nucleotides, and we broke down separate stem loops into different derived peaks. Moreover, only 1400 sequences could only be considered at each time, so we extended SARNAclust to deal with multiple iterations and merge similar clusters at the end.</p>
+</sec>
+<sec id="sec018">
+<title>SARNAclust runtime</title>
+<p>In our benchmarking, using DBSCAN for all RBPs with more than 1400 peaks, SARNAclust takes an average of 6 minutes per iteration. Usage times will vary somewhat for different systems, since SARNAclust uses disparate external tools, such as EdEN for the graph transformation, sklearn for the clustering and locarna for the alignment of the clusters. Inside SARNAclust we limit the number of peaks to be analyzed per iteration (1400) due to memory constraints. Therefore, only RBPs with very few peaks end up taking less time per iteration. Runtimes are also impacted by the length of the peaks, the complexity of the predicted structure, the choice of transformation and EdEN parameters, and the choice of clustering algorithm.</p>
+</sec>
+<sec id="sec019">
+<title>Clustering quality measures</title>
+<p>The Adjusted Rand Index (ARI) (<ext-link ext-link-type="uri" xlink:href="http://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation" xlink:type="simple">http://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation</ext-link>) measures the similarity of the two assignments ignoring permutations versus random expectations; Adjusted Mutual Information (AMI) measures the agreement of the two assignments normalized against random expectations; The Homogeneity Score (HS) quantifies the fact that each cluster should contain only members of a single class, while the Completeness Score (CS) is based on whether all members of a given class are assigned to the same cluster; V-measure score (VMS) is the harmonic mean between HS and CS. The Fowlkes-Mallows score (FMS) computes the accuracy of overlap between the found clusters and the original benchmarks, with higher FM values indicating greater overlap.</p>
+</sec>
+<sec id="sec020">
+<title>RNAiFold to generate candidates</title>
+<p>In order to generate candidate RNA sequences for the RBNS experimental validation we used the RNA inverse folding software RNAiFold [<xref ref-type="bibr" rid="pcbi.1006078.ref043">43</xref>]. Given a sequence/structure RNA motif, we attempted to generate thousands of sequences that fold into the given secondary structure and maintain the given sequence constraints. Sequences generated by RNAiFold were used in the design of the RBNS pool. Moreover, we used RNAiFold to generate sequences corresponding to perturbations of the SLBP and ILF3 motifs. This was done by altering constraints and re-running RNAiFold, e.g. for SLBP we moved a sequence motif from a stem loop to a bulge to generate a pool of sequences that would test whether location of the sequence motif within the structure affected binding. One constraint to this design process was that not all motifs were equally easy to design given their sequence/structure requirements and the need to use specific primers. Sequences for the ILF3 UUUUUGAGA-unpaired motif were particularly difficult to design because structures with base pairing tend to have lower energy than unpaired structures, so we were only able to design 19 sequences for that motif.</p>
+</sec>
+</sec>
+<sec id="sec021">
+<title>Experimental pipeline</title>
+<sec id="sec022">
+<title>In vitro protein expression and purification</title>
+<p>A previously generated pGEX6P1-based expression vector containing streptavidin binding peptide (SBP)-tagged ILF3 was used for ILF3 binding experiments. For SLBP experiments, the protein coding sequence for SLBP was codon optimized for <italic>E</italic>. <italic>coli</italic> expression using the IDT Codon Optimization Tool and Gibson assembled into pGEX6P1-SBP, which enhanced solubility compared to the human sequence. Each plasmid was transformed into Rosetta(DE3) pLysS <italic>E</italic>. <italic>coli</italic>. Protein expression was induced with 1mM isopropylthiogalactoside (IPTG) and grown for 4 hours at 16°C. Soluble protein was extracted from the bacteria using the Qproteome Bacterial Protein Prep Kit (QIAGEN). The proteins were then affinity purified using Glutathione Sepharose 4B and eluted in a buffer containing 0.2% Triton X-100 and concentrated using Corning Spin-X UF with a 10 kDa molecular weight cutoff (MWCO). Proteins were then equilibrated into RBNS binding buffer (25mM Tris pH 7.5, 150mM KCl, 0.1% Tween, 0.5 mg/mL BSA, 3mM MgCl<sub>2</sub>, 1mM DTT) using Zeba desalting columns 7KDa MWCO. Purified proteins were then frozen at -80°C for short-term storage. Protein concentrations were obtained using Pierce BCA Protein Assay Kit. Protein purity was assessed using SDS-PAGE.</p>
+</sec>
+<sec id="sec023">
+<title>RNA pool generation for RNA Bind-N-Seq</title>
+<p>Oligonucleotide sequences were ordered from CustomArray Inc. in a 12,472 oligo pool. PCR was used to amplify the ILF3 pool (5’-CCCATAATACTTGTCCCG<italic>-</italic>3’ and 5’-TAATACGACTCACTATAGGG-3’) and the SLBP pool (5’-CTTGACTGCGAGCTGTTGA-3’ and 5’-TAATACGACTCACTATAGGTCACGTC-3’). <italic>In vitro</italic> transcription of the oligo pool was performed using an AmpliScribe T7 High Yield Transcription Kit. The RNA was purified by lithium chloride precipitation and resuspended in RBNS binding buffer.</p>
+</sec>
+<sec id="sec024">
+<title>RNA Bind-N-Seq</title>
+<p>RBNS was performed as described in [<xref ref-type="bibr" rid="pcbi.1006078.ref049">49</xref>]. 27 nM of each protein was incubated with 750 pM of RNA. RNA was reverse transcribed using SuperScript III Reverse Transcriptase and a primer containing a 10 nucleotide barcode for SLBP (5’- GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCTNNNNNNNNNNCTTGACTGCGTGCTGTTGA -3’) and ILF3 (5’-GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCTNNNNNNNNNNCCCATAATACTTGTCCCG-3’). PCR was performed to amplify cDNA derived from the RBNS RNAs and attach Illumina flow cell binding sequences and indices (5’- AATGATACGGCGACCACCGAGATCTACAC-i5_index-ACACTCTTTCCCTACACGACGCTCTTCCGATCT-3’ and 5’- CAAGCAGAAGACGGCATACGAGAT-i7_index-GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT-3’). DNA was sequenced on a MiSeq using a 200 cycle paired end kit.</p>
+</sec>
+<sec id="sec025">
+<title>RBNS data analysis</title>
+<p>FLASH was used to join paired end reads that intersected, which is expected for each of the sequences tested [<xref ref-type="bibr" rid="pcbi.1006078.ref061">61</xref>]. Reads that contained the anticipated primer sequences were aligned using HISAT2 [<xref ref-type="bibr" rid="pcbi.1006078.ref062">62</xref>]. Reads aligning to the same sequence and containing the same 10 nucleotide random sequence were collapsed into one read using a custom python script. The resulting counts were input to DEseq for analysis [<xref ref-type="bibr" rid="pcbi.1006078.ref051">51</xref>].</p>
+</sec>
+</sec>
+<sec id="sec026">
+<title>Gel shift experiments</title>
+<p>Probes were <italic>in vitro</italic> transcribed and biotinylated using the Pierce RNA 3’ end biotinylation kit. 1 nM of biotinylated probe was incubated with or without 320 nM GST-SBP-SLBP in binding buffer consisting of 10 mM HEPES (pH 7.3), 20 mM KCl, 1 mM MgCl<sub>2</sub>, 20 mM DTT, 5% glycerol. The incubation period was 30 minutes, followed by gel electrophoresis on a native TBE 4% polyacrylamide gel and transfer to a nylon membrane, all at 4°C.</p>
+<p>Membranes were processed using the ThermoFisher Scientific Chemiluminescent Nucleic Acid Detection Module Kit. Images were captured on a Kodak ImageStation 4000MM Pro.</p>
+</sec>
+</sec>
+<sec id="sec027">
+<title>Supporting information</title>
+<supplementary-material id="pcbi.1006078.s001" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.s001" xlink:type="simple">
+<label>S1 Fig</label>
+<caption>
+<title>Pipeline for CLIP peak detection.</title>
+<p>Given bam files for samples and control, pyicoclip is used to detect significant peaks in each file. Afterwards, we filter those peaks that do not appear in all the samples and remove those that can be found in the control. The resulting peaks are annotated and the sequences for them (+/- 100 flanking nucleotides) are retrieved.</p>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1006078.s002" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.s002" xlink:type="simple">
+<label>S2 Fig</label>
+<caption>
+<title>Graphical representation of all the graph transformation options.</title>
+<p>SF2.k corresponds to graph transformation option k as explained in the main text. Examples are shown for sequence/structure:</p>
+<p><monospace>GGGGAAACCAACCUGU</monospace></p>
+<p><monospace>((((. . .))..)) . . .</monospace></p>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1006078.s003" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.s003" xlink:type="simple">
+<label>S3 Fig</label>
+<caption>
+<title>Sequence logo and structural context found by RNAcontext on the synthetic dataset.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1006078.s004" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.s004" xlink:type="simple">
+<label>S4 Fig</label>
+<caption>
+<title>SDS-PAGE gel showing the result of GST affinity purification of GST-SBP, GST-SBP-SLBP and GST-SBP-ILF3.</title>
+<p>Proteins of this purity were used in RBNS and gel shift assays.</p>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1006078.s005" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.s005" xlink:type="simple">
+<label>S5 Fig</label>
+<caption>
+<title/>
+<p>Logo for SLBP consensus motif sequences that a) show enriched binding and b) do not show enriched binding.</p>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1006078.s006" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.s006" xlink:type="simple">
+<label>S6 Fig</label>
+<caption>
+<title>Sequence logo and structural context found by RNAcontext on ILF3.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1006078.s007" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.s007" xlink:type="simple">
+<label>S1 Table</label>
+<caption>
+<title>Four different classes of designed sequences used for the RNA Bind-N-Seq validations for SLBP.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1006078.s008" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.s008" xlink:type="simple">
+<label>S2 Table</label>
+<caption>
+<title>Comparison of RBP motifs found per graph transformation option and DBSCAN threshold.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1006078.s009" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.s009" xlink:type="simple">
+<label>S3 Table</label>
+<caption>
+<title>Best k-mer found for all RBPs considered.</title>
+<p>For each RBP, the z-score is given for the k-mer with the maximal value of Z-score*k.</p>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1006078.s010" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.s010" xlink:type="simple">
+<label>S4 Table</label>
+<caption>
+<title>Four different classes of designed sequences used for the RNA Bind-N-Seq validations for ILF3.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1006078.s011" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.s011" xlink:type="simple">
+<label>S1 Data</label>
+<caption>
+<title>All motif and random sequences generated for benchmarking SARNAclust.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1006078.s012" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.s012" xlink:type="simple">
+<label>S2 Data</label>
+<caption>
+<title>Clustering quality measures for each (Adjusted Rand Index (ARI), Adjusted Mutual Information (AMI), Homogeneity Score (HS), Completeness Score (CS), V-measure score (VMS) and Fowlkes-Mallows score (FMS)) for all thresholds and options as described in the benchmarking section.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1006078.s013" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.s013" xlink:type="simple">
+<label>S3 Data</label>
+<caption>
+<title>DEseq2 results for all sequences generated to test SLBP candidate motifs.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1006078.s014" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1006078.s014" xlink:type="simple">
+<label>S4 Data</label>
+<caption>
+<title>DEseq2 results for all sequences generated to test ILF3 candidate motifs.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>The authors thank Gene Yeo for assistance with the ENCODE CLIP-seq data, Chris Burge and Daniel Dominguez for sharing constructs and experimental advice, and Brent Graveley and Olga Anczukow-Camarda for discussions.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1006078.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lukong</surname> <given-names>KE</given-names></name>, <name name-style="western"><surname>Chang</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Khandjian</surname> <given-names>EW</given-names></name>, <name name-style="western"><surname>Richard</surname> <given-names>S</given-names></name>. <article-title>RNA-binding proteins in human genetic disease</article-title>. <source>Trends Genet</source>. <year>2008</year>;<volume>24</volume>: <fpage>416</fpage>–<lpage>425</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.tig.2008.05.004" xlink:type="simple">10.1016/j.tig.2008.05.004</ext-link></comment> <object-id pub-id-type="pmid">18597886</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sanford</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Mort</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Vanduyn</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Cooper</surname> <given-names>DN</given-names></name>, <name name-style="western"><surname>Mooney</surname> <given-names>SD</given-names></name>, <etal>et al</etal>. <article-title>Splicing factor SFRS1 recognizes a functionally diverse landscape of RNA transcripts</article-title>. <source>Genome Res</source>. <year>2009</year>;<volume>19</volume>: <fpage>381</fpage>–<lpage>394</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1101/gr.082503.108" xlink:type="simple">10.1101/gr.082503.108</ext-link></comment> <object-id pub-id-type="pmid">19116412</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yeo</surname> <given-names>GW</given-names></name>, <name name-style="western"><surname>Coufal</surname> <given-names>NG</given-names></name>, <name name-style="western"><surname>Liang</surname> <given-names>TY</given-names></name>, <name name-style="western"><surname>Peng</surname> <given-names>GE</given-names></name>, <name name-style="western"><surname>Fu</surname> <given-names>X-D</given-names></name>, <name name-style="western"><surname>Gage</surname> <given-names>FH</given-names></name>. <article-title>An RNA code for the FOX2 splicing regulator revealed by mapping RNA-protein interactions in stem cells</article-title>. <source>Nat Struct Mol Biol</source>. <year>2009</year>;<volume>16</volume>: <fpage>130</fpage>–<lpage>137</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1038/nsmb.1545" xlink:type="simple">10.1038/nsmb.1545</ext-link></comment> <object-id pub-id-type="pmid">19136955</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hafner</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Landthaler</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Burger</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Khorshid</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Hausser</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Berninger</surname> <given-names>P</given-names></name>, <etal>et al</etal>. <article-title>PAR-CliP—a method to identify transcriptome-wide the binding sites of RNA binding proteins</article-title>. <source>J Vis Exp</source>. <year>2010</year>;<volume>41</volume>: <fpage>2034</fpage>.</mixed-citation></ref>
+<ref id="pcbi.1006078.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wurth</surname> <given-names>L</given-names></name>. <article-title>Versatility of RNA-Binding Proteins in Cancer</article-title>. <source>Comp Funct Genomics</source>. <year>2012</year>;<volume>2012</volume>: <fpage>178525</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1155/2012/178525" xlink:type="simple">10.1155/2012/178525</ext-link></comment> <object-id pub-id-type="pmid">22666083</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cook</surname> <given-names>KB</given-names></name>, <name name-style="western"><surname>Kazan</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Zuberi</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Morris</surname> <given-names>Q</given-names></name>, <name name-style="western"><surname>Hughes</surname> <given-names>TR</given-names></name>. <article-title>RBPDB: a database of RNA-binding specificities</article-title>. <source>Nucleic Acids Res</source>. <year>2011</year>;<volume>39</volume>: <fpage>D301</fpage>–<lpage>308</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/nar/gkq1069" xlink:type="simple">10.1093/nar/gkq1069</ext-link></comment> <object-id pub-id-type="pmid">21036867</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hogan</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Riordan</surname> <given-names>DP</given-names></name>, <name name-style="western"><surname>Gerber</surname> <given-names>AP</given-names></name>, <name name-style="western"><surname>Herschlag</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Brown</surname> <given-names>PO</given-names></name>. <article-title>Diverse RNA-binding proteins interact with functionally related sets of RNAs, suggesting an extensive regulatory system</article-title>. <source>PLoS Biol</source>. <year>2008</year>;<volume>6</volume>: <fpage>e255</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1371/journal.pbio.0060255" xlink:type="simple">10.1371/journal.pbio.0060255</ext-link></comment> <object-id pub-id-type="pmid">18959479</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chi</surname> <given-names>SW</given-names></name>, <name name-style="western"><surname>Zang</surname> <given-names>JB</given-names></name>, <name name-style="western"><surname>Mele</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Darnell</surname> <given-names>RB</given-names></name>. <article-title>Argonaute HITS-CLIP decodes microRNA-mRNA interaction maps</article-title>. <source>Nature</source>. <year>2009</year>;<volume>460</volume>: <fpage>479</fpage>–<lpage>486</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1038/nature08170" xlink:type="simple">10.1038/nature08170</ext-link></comment> <object-id pub-id-type="pmid">19536157</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Darnell</surname> <given-names>RB</given-names></name>. <article-title>Mapping in vivo protein-RNA interactions at single-nucleotide resolution from</article-title>. <source>Nat Biotechnol</source>. <year>2011</year>;<volume>29</volume>: <fpage>607</fpage>–<lpage>614</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1038/nbt.1873" xlink:type="simple">10.1038/nbt.1873</ext-link></comment> <object-id pub-id-type="pmid">21633356</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wilbert</surname> <given-names>ML</given-names></name>, <name name-style="western"><surname>Huelga</surname> <given-names>SC</given-names></name>, <name name-style="western"><surname>Kapeli</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Stark</surname> <given-names>TJ</given-names></name>, <name name-style="western"><surname>Liang</surname> <given-names>TY</given-names></name>, <name name-style="western"><surname>Chen</surname> <given-names>SX</given-names></name>, <etal>et al</etal>. <article-title>LIN28 binds messenger RNAs at GGAGA motifs and regulates splicing factor abundance</article-title>. <source>Mol Cell</source>. <year>2012</year>;<volume>48</volume>: <fpage>195</fpage>–<lpage>206</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.molcel.2012.08.004" xlink:type="simple">10.1016/j.molcel.2012.08.004</ext-link></comment> <object-id pub-id-type="pmid">22959275</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Otter</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Grimmler</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Neuenkirchen</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Chari</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Sickmann</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Fischer</surname> <given-names>U</given-names></name>. <article-title>A comprehensive interaction map of the human survival of motor neuron (SMN) complex</article-title>. <source>J Biol Chem</source>. <year>2007</year>;<volume>282</volume>: <fpage>5825</fpage>–<lpage>5833</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1074/jbc.M608528200" xlink:type="simple">10.1074/jbc.M608528200</ext-link></comment> <object-id pub-id-type="pmid">17178713</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kroiss</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Schultz</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Wiesner</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Chari</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Sickmann</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Fischer</surname> <given-names>U</given-names></name>. <article-title>Evolution of an RNP assembly system: a minimal SMN complex facilitates formation of UsnRNPs in Drosophila melanogaster</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2008</year>;<volume>105</volume>: <fpage>10045</fpage>–<lpage>10050</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1073/pnas.0802287105" xlink:type="simple">10.1073/pnas.0802287105</ext-link></comment> <object-id pub-id-type="pmid">18621711</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Grimm</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Chari</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Pelz</surname> <given-names>J-P</given-names></name>, <name name-style="western"><surname>Kuper</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Kisker</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Diederichs</surname> <given-names>K</given-names></name>, <etal>et al</etal>. <article-title>Structural basis of assembly chaperone- mediated snRNP formation</article-title>. <source>Mol Cell</source>. <year>2013</year>;<volume>49</volume>: <fpage>692</fpage>–<lpage>703</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.molcel.2012.12.009" xlink:type="simple">10.1016/j.molcel.2012.12.009</ext-link></comment> <object-id pub-id-type="pmid">23333303</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Battle</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Lau</surname> <given-names>C-K</given-names></name>, <name name-style="western"><surname>Wan</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Deng</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Lotti</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Dreyfuss</surname> <given-names>G</given-names></name>. <article-title>The Gemin5 protein of the SMN complex identifies snRNAs</article-title>. <source>Mol Cell</source>. <year>2006</year>;<volume>23</volume>: <fpage>273</fpage>–<lpage>279</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.molcel.2006.05.036" xlink:type="simple">10.1016/j.molcel.2006.05.036</ext-link></comment> <object-id pub-id-type="pmid">16857593</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yong</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Kasim</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Bachorik</surname> <given-names>JL</given-names></name>, <name name-style="western"><surname>Wan</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Dreyfuss</surname> <given-names>G</given-names></name>. <article-title>Gemin5 delivers snRNA precursors to the SMN complex for snRNP biogenesis</article-title>. <source>Mol Cell</source>. <year>2010</year>;<volume>38</volume>: <fpage>551</fpage>–<lpage>562</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.molcel.2010.03.014" xlink:type="simple">10.1016/j.molcel.2010.03.014</ext-link></comment> <object-id pub-id-type="pmid">20513430</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xu</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Ishikawa</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Izumikawa</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>He</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Nobe</surname> <given-names>Y</given-names></name>, <etal>et al</etal>. <article-title>Structural insights into Gemin5-guided selection of pre-snRNAs for snRNP assembly</article-title>. <source>Genes Dev</source>. <year>2016</year>;<volume>30</volume>: <fpage>2376</fpage>–<lpage>2390</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1101/gad.288340.116" xlink:type="simple">10.1101/gad.288340.116</ext-link></comment> <object-id pub-id-type="pmid">27881600</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Bharath</surname> <given-names>SR</given-names></name>, <name name-style="western"><surname>Piao</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Tan</surname> <given-names>VQ</given-names></name>, <name name-style="western"><surname>Bowler</surname> <given-names>MW</given-names></name>, <name name-style="western"><surname>Song</surname> <given-names>H</given-names></name>. <article-title>Structural basis for specific recognition of pre-snRNA by Gemin5</article-title>. <source>Cell Res</source>. <year>2016</year>;<volume>26</volume>: <fpage>1353</fpage>–<lpage>1356</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1038/cr.2016.133" xlink:type="simple">10.1038/cr.2016.133</ext-link></comment> <object-id pub-id-type="pmid">27834343</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jin</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>C-P</given-names></name>, <name name-style="western"><surname>Yang</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Jin</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Cong</surname> <given-names>Y</given-names></name>, <etal>et al</etal>. <article-title>Structural basis for snRNA recognition by the double-WD40 repeat domain of Gemin5</article-title>. <source>Genes Dev</source>. <year>2016</year>;<volume>30</volume>: <fpage>2391</fpage>–<lpage>2403</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1101/gad.291377.116" xlink:type="simple">10.1101/gad.291377.116</ext-link></comment> <object-id pub-id-type="pmid">27881601</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fernandez-Chamorro</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Pineiro</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Gordon</surname> <given-names>JMB</given-names></name>, <name name-style="western"><surname>Ramajo</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Francisco-Velilla</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Macias</surname> <given-names>MJ</given-names></name>, <etal>et al</etal>. <article-title>Identification of novel non-canonical RNA-binding sites in Gemin5 involved in internal initiation of translation</article-title>. <source>Nucleic Acids Res</source>. <year>2014</year>;<volume>42</volume>: <fpage>5742</fpage>–<lpage>5754</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/nar/gku177" xlink:type="simple">10.1093/nar/gku177</ext-link></comment> <object-id pub-id-type="pmid">24598255</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pineiro</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Fernandez</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Ramajo</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Martinez-Salas</surname> <given-names>E</given-names></name>. <article-title>Gemin5 promotes IRES interaction and translation control through its C-terminal region</article-title>. <source>Nucleic Acids Res</source>. <year>2013</year>;<volume>41</volume>: <fpage>1017</fpage>–<lpage>1028</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/nar/gks1212" xlink:type="simple">10.1093/nar/gks1212</ext-link></comment> <object-id pub-id-type="pmid">23221641</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bailey</surname> <given-names>TL</given-names></name>, <name name-style="western"><surname>Williams</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Misleh</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>WW</given-names></name>. <article-title>MEME: discovering and analyzing DNA and protein sequence motifs</article-title>. <source>Nucleic Acids Res</source>. <year>2006</year>;<volume>34</volume>: <fpage>W369</fpage>–<lpage>373</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/nar/gkl198" xlink:type="simple">10.1093/nar/gkl198</ext-link></comment> <object-id pub-id-type="pmid">16845028</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Siddharthan</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Siggia</surname> <given-names>ED</given-names></name>, <name name-style="western"><surname>van Nimwegen</surname> <given-names>E</given-names></name>. <article-title>PhyloGibbs: a Gibbs sampling motif finder that incorporates phylogeny</article-title>. <source>PLoS Comput Biol</source>. <year>2005</year>;<volume>1</volume>: <fpage>e67</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1371/journal.pcbi.0010067" xlink:type="simple">10.1371/journal.pcbi.0010067</ext-link></comment> <object-id pub-id-type="pmid">16477324</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Georgiev</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Boyle</surname> <given-names>AP</given-names></name>, <name name-style="western"><surname>Jayasurya</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Ding</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Mukherjee</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Ohler</surname> <given-names>U</given-names></name>. <article-title>Evidence-ranked motif identification</article-title>. <source>Genome Biol</source>. <year>2010</year>;<volume>11</volume>: <fpage>R19</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1186/gb-2010-11-2-r19" xlink:type="simple">10.1186/gb-2010-11-2-r19</ext-link></comment> <object-id pub-id-type="pmid">20156354</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hiller</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Pudimat</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Busch</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Backofen</surname> <given-names>R</given-names></name>. <article-title>Using RNA secondary structures to guide sequence motif finding towards single-stranded regions</article-title>. <source>Nucleic Acids Res</source>. <year>2006</year>;<volume>34</volume>: <fpage>e117</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/nar/gkl544" xlink:type="simple">10.1093/nar/gkl544</ext-link></comment> <object-id pub-id-type="pmid">16987907</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Juan</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Lv</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Sanford</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>Y</given-names></name>. <article-title>Predicting sequence and structural specificities of RNA binding regions recognized by splicing factor SRSF1</article-title>. <source>BMC Genomics</source>. <year>2011</year>;<volume>12</volume> <issue>Suppl 5</issue>: <fpage>S8</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1186/1471-2164-12-S5-S8" xlink:type="simple">10.1186/1471-2164-12-S5-S8</ext-link></comment> <object-id pub-id-type="pmid">22369183</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bahrami-Samani</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Penalva</surname> <given-names>LOF</given-names></name>, <name name-style="western"><surname>Smith</surname> <given-names>AD</given-names></name>, <name name-style="western"><surname>Uren</surname> <given-names>PJ</given-names></name>. <article-title>Leveraging cross-link modification events in CLIP-seq for motif discovery</article-title>. <source>Nucleic Acids Res</source>. <year>2015</year>;<volume>43</volume>: <fpage>95</fpage>–<lpage>103</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/nar/gku1288" xlink:type="simple">10.1093/nar/gku1288</ext-link></comment> <object-id pub-id-type="pmid">25505146</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fukunaga</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Ozaki</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Terai</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Asai</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Iwasaki</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Kiryu</surname> <given-names>H</given-names></name>. <article-title>CapR: revealing structural specificities of RNA-binding protein target recognition using CLIP-seq data</article-title>. <source>Genome Biol</source>. <year>2014</year>;<volume>15</volume>: <fpage>R16</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1186/gb-2014-15-1-r16" xlink:type="simple">10.1186/gb-2014-15-1-r16</ext-link></comment> <object-id pub-id-type="pmid">24447569</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kazan</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Ray</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Chan</surname> <given-names>ET</given-names></name>, <name name-style="western"><surname>Hughes</surname> <given-names>TR</given-names></name>, <name name-style="western"><surname>Morris</surname> <given-names>Q</given-names></name>. <article-title>RNAcontext: a new method for learning the sequence and structure binding preferences of RNA-binding proteins</article-title>. <source>PLoS Comput Biol</source>. <year>2010</year>;<volume>6</volume>: <fpage>e1000832</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1371/journal.pcbi.1000832" xlink:type="simple">10.1371/journal.pcbi.1000832</ext-link></comment> <object-id pub-id-type="pmid">20617199</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Livi</surname> <given-names>CM</given-names></name>, <name name-style="western"><surname>Blanzieri</surname> <given-names>E</given-names></name>. <article-title>Protein-specific prediction of mRNA binding using RNA sequences, binding motifs and predicted secondary structures</article-title>. <source>BMC Bioinformatics</source>. <year>2014</year>;<volume>15</volume>: <fpage>123</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1186/1471-2105-15-123" xlink:type="simple">10.1186/1471-2105-15-123</ext-link></comment> <object-id pub-id-type="pmid">24780077</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Weyn-Vanhentenryck</surname> <given-names>SM</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>C</given-names></name>. <article-title>mCarts: Genome-Wide Prediction of Clustered Sequence Motifs as Binding Sites for</article-title>. <source>Methods Mol Biol Clifton NJ</source>. <year>2016</year>;<volume>1421</volume>: <fpage>215</fpage>–<lpage>226</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1007/978-1-4939-3591-8_17" xlink:type="simple">10.1007/978-1-4939-3591-8_17</ext-link></comment> <object-id pub-id-type="pmid">26965268</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Lee</surname> <given-names>K-Y</given-names></name>, <name name-style="western"><surname>Swanson</surname> <given-names>MS</given-names></name>, <name name-style="western"><surname>Darnell</surname> <given-names>RB</given-names></name>. <article-title>Prediction of clustered RNA-binding protein motif sites in the mammalian genome</article-title>. <source>Nucleic Acids Res</source>. <year>2013</year>;<volume>41</volume>: <fpage>6793</fpage>–<lpage>6807</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/nar/gkt421" xlink:type="simple">10.1093/nar/gkt421</ext-link></comment> <object-id pub-id-type="pmid">23685613</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alipanahi</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Delong</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Weirauch</surname> <given-names>MT</given-names></name>, <name name-style="western"><surname>Frey</surname> <given-names>BJ</given-names></name>. <article-title>Predicting the sequence specificities of DNA- and RNA-binding proteins by deep learning</article-title>. <source>Nat Biotechnol</source>. <year>2015</year>;<volume>33</volume>: <fpage>831</fpage>–<lpage>838</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1038/nbt.3300" xlink:type="simple">10.1038/nbt.3300</ext-link></comment> <object-id pub-id-type="pmid">26213851</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref033"><label>33</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pan</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Shen</surname> <given-names>H-B</given-names></name>. <article-title>RNA-protein binding motifs mining with a new hybrid deep learning based cross-domain knowledge integration approach</article-title>. <source>BMC Bioinformatics</source>. <year>2017</year>;<volume>18</volume>: <fpage>136</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1186/s12859-017-1561-8" xlink:type="simple">10.1186/s12859-017-1561-8</ext-link></comment> <object-id pub-id-type="pmid">28245811</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref034"><label>34</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Zhou</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Hu</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Gong</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Chen</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Cheng</surname> <given-names>C</given-names></name>, <etal>et al</etal>. <article-title>A deep learning framework for modeling structural features of RNA-binding protein targets</article-title>. <source>Nucleic Acids Res</source>. <year>2016</year>;<volume>44</volume>: <fpage>e32</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/nar/gkv1025" xlink:type="simple">10.1093/nar/gkv1025</ext-link></comment> <object-id pub-id-type="pmid">26467480</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref035"><label>35</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pan</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Rijnbeek</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Yan</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Shen</surname> <given-names>H-B</given-names></name>. <article-title>Prediction of RNA-protein sequence and structure binding preferences using deep convolutional and recurrent neural networks</article-title>. <source>bioRxiv</source>. <year>2017</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1101/146175" xlink:type="simple">10.1101/146175</ext-link></comment></mixed-citation></ref>
+<ref id="pcbi.1006078.ref036"><label>36</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Strazar</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Zitnik</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Zupan</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Ule</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Curk</surname> <given-names>T</given-names></name>. <article-title>Orthogonal matrix factorization enables integrative analysis of multiple RNA binding proteins</article-title>. <source>Bioinforma Oxf Engl</source>. <year>2016</year>;<volume>32</volume>: <fpage>1527</fpage>–<lpage>1535</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/bioinformatics/btw003" xlink:type="simple">10.1093/bioinformatics/btw003</ext-link></comment> <object-id pub-id-type="pmid">26787667</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref037"><label>37</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Maticzka</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Lange</surname> <given-names>SJ</given-names></name>, <name name-style="western"><surname>Costa</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Backofen</surname> <given-names>R</given-names></name>. <article-title>GraphProt: modeling binding preferences of RNA-binding proteins</article-title>. <source>Genome Biol</source>. <year>2014</year>;<volume>15</volume>: <fpage>R17</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1186/gb-2014-15-1-r17" xlink:type="simple">10.1186/gb-2014-15-1-r17</ext-link></comment> <object-id pub-id-type="pmid">24451197</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref038"><label>38</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Heyne</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Costa</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Rose</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Backofen</surname> <given-names>R</given-names></name>. <article-title>GraphClust: alignment-free structural clustering of local RNA secondary structures</article-title>. <source>Bioinforma Oxf Engl</source>. <year>2012</year>;<volume>28</volume>: <fpage>i224</fpage>–<lpage>232</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/bioinformatics/bts224" xlink:type="simple">10.1093/bioinformatics/bts224</ext-link></comment> <object-id pub-id-type="pmid">22689765</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref039"><label>39</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Miladi</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Junge</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Costa</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Seemann</surname> <given-names>SE</given-names></name>, <name name-style="western"><surname>Havgaard</surname> <given-names>JH</given-names></name>, <name name-style="western"><surname>Gorodkin</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>RNAscClust: clustering RNA sequences using structure conservation and graph based motifs</article-title>. <source>Bioinforma Oxf Engl</source>. <year>2017</year>;<volume>33</volume>: <fpage>2089</fpage>–<lpage>2096</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/bioinformatics/btx114" xlink:type="simple">10.1093/bioinformatics/btx114</ext-link></comment> <object-id pub-id-type="pmid">28334186</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref040"><label>40</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dao</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Hoinka</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Takahashi</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Zhou</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Ho</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>Y</given-names></name>, <etal>et al</etal>. <article-title>AptaTRACE Elucidates RNA Sequence-Structure Motifs from Selection Trends in HT-SELEX Experiments</article-title>. <source>Cell Syst</source>. <year>2016</year>;<volume>3</volume>: <fpage>62</fpage>–<lpage>70</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.cels.2016.07.003" xlink:type="simple">10.1016/j.cels.2016.07.003</ext-link></comment> <object-id pub-id-type="pmid">27467247</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref041"><label>41</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cook</surname> <given-names>KB</given-names></name>, <name name-style="western"><surname>Vembu</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Ha</surname> <given-names>KCH</given-names></name>, <name name-style="western"><surname>Zheng</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Laverty</surname> <given-names>KU</given-names></name>, <name name-style="western"><surname>Hughes</surname> <given-names>TR</given-names></name>, <etal>et al</etal>. <article-title>RNAcompete-S: Combined RNA sequence/structure preferences for RNA binding proteins derived from a single-step in vitro selection</article-title>. <source>Methods San Diego Calif</source>. <year>2017</year>;<volume>126</volume>: <fpage>18</fpage>–<lpage>28</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.ymeth.2017.06.024" xlink:type="simple">10.1016/j.ymeth.2017.06.024</ext-link></comment> <object-id pub-id-type="pmid">28651966</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref042"><label>42</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Garcia-Martin</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Clote</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Dotu</surname> <given-names>I</given-names></name>. <article-title>RNAiFOLD: a constraint programming algorithm for RNA inverse folding and molecular design</article-title>. <source>J Bioinform Comput Biol</source>. <year>2013</year>;<volume>11</volume>: <fpage>1350001</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1142/S0219720013500017" xlink:type="simple">10.1142/S0219720013500017</ext-link></comment> <object-id pub-id-type="pmid">23600819</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref043"><label>43</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Garcia-Martin</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Dotu</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Clote</surname> <given-names>P</given-names></name>. <article-title>RNAiFold 2.0: a web server and software to design custom and Rfam-based RNA molecules</article-title>. <source>Nucleic Acids Res</source>. <year>2015</year>;<volume>43</volume>: <fpage>W513</fpage>–<lpage>521</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/nar/gkv460" xlink:type="simple">10.1093/nar/gkv460</ext-link></comment> <object-id pub-id-type="pmid">26019176</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref044"><label>44</label><mixed-citation publication-type="other" xlink:type="simple">Costa F, De Grave K. Fast neighborhood subgraph pairwise distance kernel. Proceedings of the 26th International Conference on Machine Learning. Omnipress; 2010. pp. 255–262.</mixed-citation></ref>
+<ref id="pcbi.1006078.ref045"><label>45</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kerpedjiev</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Honer Zu Siederdissen</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Hofacker</surname> <given-names>IL</given-names></name>. <article-title>Predicting RNA 3D structure using a coarse-grain helix-centered model</article-title>. <source>RNA N Y N</source>. <year>2015</year>;<volume>21</volume>: <fpage>1110</fpage>–<lpage>1121</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1261/rna.047522.114" xlink:type="simple">10.1261/rna.047522.114</ext-link></comment> <object-id pub-id-type="pmid">25904133</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref046"><label>46</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Giegerich</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Voss</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Rehmsmeier</surname> <given-names>M</given-names></name>. <article-title>Abstract shapes of RNA</article-title>. <source>Nucleic Acids Res</source>. <year>2004</year>;<volume>32</volume>: <fpage>4843</fpage>–<lpage>4851</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/nar/gkh779" xlink:type="simple">10.1093/nar/gkh779</ext-link></comment> <object-id pub-id-type="pmid">15371549</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref047"><label>47</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Smith</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Heyne</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Richter</surname> <given-names>AS</given-names></name>, <name name-style="western"><surname>Will</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Backofen</surname> <given-names>R</given-names></name>. <article-title>Freiburg RNA Tools: a web server integrating INTARNA, EXPARNA and LOCARNA</article-title>. <source>Nucleic Acids Res</source>. <year>2010</year>;<volume>38</volume>: <fpage>W373</fpage>–<lpage>377</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/nar/gkq316" xlink:type="simple">10.1093/nar/gkq316</ext-link></comment> <object-id pub-id-type="pmid">20444875</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref048"><label>48</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Garcia-Martin</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Bayegan</surname> <given-names>AH</given-names></name>, <name name-style="western"><surname>Dotu</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Clote</surname> <given-names>P</given-names></name>. <article-title>RNAdualPF: software to compute the dual partition function with sample applications in molecular evolution theory</article-title>. <source>BMC Bioinformatics</source>. <year>2016</year>;<volume>17</volume>: <fpage>424</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1186/s12859-016-1280-6" xlink:type="simple">10.1186/s12859-016-1280-6</ext-link></comment> <object-id pub-id-type="pmid">27756204</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref049"><label>49</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lambert</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Robertson</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Jangi</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>McGeary</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Sharp</surname> <given-names>PA</given-names></name>, <name name-style="western"><surname>Burge</surname> <given-names>CB</given-names></name>. <article-title>RNA Bind-n-Seq: quantitative assessment of the sequence and structural binding specificity of RNA binding proteins</article-title>. <source>Mol Cell</source>. <year>2014</year>;<volume>54</volume>: <fpage>887</fpage>–<lpage>900</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.molcel.2014.04.016" xlink:type="simple">10.1016/j.molcel.2014.04.016</ext-link></comment> <object-id pub-id-type="pmid">24837674</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref050"><label>50</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Battle</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Doudna</surname> <given-names>JA</given-names></name>. <article-title>The stem-loop binding protein forms a highly stable and specific complex with the 3’ stem-loop of histone mRNAs</article-title>. <source>RNA</source>. <year>2001</year>;<volume>7</volume>: <fpage>123</fpage>–<lpage>132</lpage>. <object-id pub-id-type="pmid">11214174</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref051"><label>51</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Anders</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Huber</surname> <given-names>W</given-names></name>. <article-title>Differential expression analysis for sequence count data</article-title>. <source>Genome Biol</source>. <year>2010</year>;<volume>11</volume>: <fpage>R106</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1186/gb-2010-11-10-r106" xlink:type="simple">10.1186/gb-2010-11-10-r106</ext-link></comment> <object-id pub-id-type="pmid">20979621</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref052"><label>52</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Van Nostrand</surname> <given-names>EL</given-names></name>, <name name-style="western"><surname>Pratt</surname> <given-names>GA</given-names></name>, <name name-style="western"><surname>Shishkin</surname> <given-names>AA</given-names></name>, <name name-style="western"><surname>Gelboin-Burkhart</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Fang</surname> <given-names>MY</given-names></name>, <name name-style="western"><surname>Sundararaman</surname> <given-names>B</given-names></name>, <etal>et al</etal>. <article-title>Robust transcriptome-wide discovery of RNA-binding protein binding sites with enhanced CLIP (eCLIP)</article-title>. <source>Nat Methods</source>. <year>2016</year>;<volume>13</volume>: <fpage>508</fpage>–<lpage>514</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1038/nmeth.3810" xlink:type="simple">10.1038/nmeth.3810</ext-link></comment> <object-id pub-id-type="pmid">27018577</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref053"><label>53</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Giudice</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Sanchez-Cabo</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Torroja</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Lara-Pezzi</surname> <given-names>E</given-names></name>. <article-title>ATtRACT-a database of RNA-binding proteins and associated motifs</article-title>. <source>Database J Biol Databases Curation</source>. <year>2016</year>;<fpage>2016</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/database/baw035" xlink:type="simple">10.1093/database/baw035</ext-link></comment> <object-id pub-id-type="pmid">27055826</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref054"><label>54</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Van Nostrand</surname> <given-names>EL</given-names></name>, <name name-style="western"><surname>Freese</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Pratt</surname> <given-names>GA</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Wei</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Blue</surname> <given-names>SM</given-names></name>, <etal>et al</etal>. <article-title>A Large-Scale Binding and Functional Map of Human RNA Binding Proteins</article-title>. <source>bioRxiv</source>. <year>2017</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1101/179648" xlink:type="simple">10.1101/179648</ext-link></comment></mixed-citation></ref>
+<ref id="pcbi.1006078.ref055"><label>55</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dominguez</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Freese</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Alexis</surname> <given-names>MS</given-names></name>, <name name-style="western"><surname>Su</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Hochman</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Palden</surname> <given-names>T</given-names></name>, <etal>et al</etal>. <article-title>Sequence, Structure and Context Preferences of Human RNA Binding Proteins</article-title>. <source>bioRxiv</source>. <year>2017</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1101/201996" xlink:type="simple">10.1101/201996</ext-link></comment></mixed-citation></ref>
+<ref id="pcbi.1006078.ref056"><label>56</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zarnack</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Konig</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Tajnik</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Martincorena</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Eustermann</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Stevant</surname> <given-names>I</given-names></name>, <etal>et al</etal>. <article-title>Direct competition between hnRNP C and U2AF65 protects the transcriptome from the exonization of Alu elements</article-title>. <source>Cell</source>. <year>2013</year>;<volume>152</volume>: <fpage>453</fpage>–<lpage>466</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.cell.2012.12.023" xlink:type="simple">10.1016/j.cell.2012.12.023</ext-link></comment> <object-id pub-id-type="pmid">23374342</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref057"><label>57</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Castella</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Bernard</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Corno</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Fradin</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Larcher</surname> <given-names>J-C</given-names></name>. <article-title>Ilf3 and NF90 functions in RNA biology</article-title>. <source>Wiley Interdiscip Rev RNA</source>. <year>2015</year>;<volume>6</volume>: <fpage>243</fpage>–<lpage>256</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1002/wrna.1270" xlink:type="simple">10.1002/wrna.1270</ext-link></comment> <object-id pub-id-type="pmid">25327818</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref058"><label>58</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Damianov</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Ying</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Lin</surname> <given-names>C-H</given-names></name>, <name name-style="western"><surname>Lee</surname> <given-names>J-A</given-names></name>, <name name-style="western"><surname>Tran</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Vashisht</surname> <given-names>AA</given-names></name>, <etal>et al</etal>. <article-title>Rbfox Proteins Regulate Splicing as Part of a Large Multiprotein Complex LASR</article-title>. <source>Cell</source>. <year>2016</year>;<volume>165</volume>: <fpage>606</fpage>–<lpage>619</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1016/j.cell.2016.03.040" xlink:type="simple">10.1016/j.cell.2016.03.040</ext-link></comment> <object-id pub-id-type="pmid">27104978</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref059"><label>59</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Althammer</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Gonzalez-Vallinas</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Ballare</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Beato</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Eyras</surname> <given-names>E</given-names></name>. <article-title>Pyicos: a versatile toolkit for the analysis of high-throughput sequencing data</article-title>. <source>Bioinformatics</source>. <year>2011</year>;<volume>27</volume>: <fpage>3333</fpage>–<lpage>3340</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/bioinformatics/btr570" xlink:type="simple">10.1093/bioinformatics/btr570</ext-link></comment> <object-id pub-id-type="pmid">21994224</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref060"><label>60</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rodriguez</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Laio</surname> <given-names>A</given-names></name>. <article-title>Machine learning. Clustering by fast search and find of density peaks</article-title>. <source>Science</source>. <year>2014</year>;<volume>344</volume>: <fpage>1492</fpage>–<lpage>1496</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1126/science.1242072" xlink:type="simple">10.1126/science.1242072</ext-link></comment> <object-id pub-id-type="pmid">24970081</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref061"><label>61</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Magoc</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Salzberg</surname> <given-names>SL</given-names></name>. <article-title>FLASH: fast length adjustment of short reads to improve genome assemblies</article-title>. <source>Bioinformatics</source>. <year>2011</year>;<volume>27</volume>: <fpage>2957</fpage>–<lpage>2963</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1093/bioinformatics/btr507" xlink:type="simple">10.1093/bioinformatics/btr507</ext-link></comment> <object-id pub-id-type="pmid">21903629</object-id></mixed-citation></ref>
+<ref id="pcbi.1006078.ref062"><label>62</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kim</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Langmead</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Salzberg</surname> <given-names>SL</given-names></name>. <article-title>HISAT: a fast spliced aligner with low memory requirements</article-title>. <source>Nat Methods</source>. <year>2015</year>;<volume>12</volume>: <fpage>357</fpage>–<lpage>360</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="https://doi.org/10.1038/nmeth.3317" xlink:type="simple">10.1038/nmeth.3317</ext-link></comment> <object-id pub-id-type="pmid">25751142</object-id></mixed-citation></ref>
+</ref-list>
+</back>
+</article>

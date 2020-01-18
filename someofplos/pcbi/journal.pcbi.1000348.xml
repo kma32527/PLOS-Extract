@@ -1,0 +1,975 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="review-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Computational Biology</journal-title></journal-title-group><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">08-PLCB-RV-1195R2</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1000348</article-id><article-categories><subj-group subj-group-type="heading"><subject>Review</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Biophysics</subject><subject>Biotechnology/Bioengineering</subject><subject>Computational Biology/Computational Neuroscience</subject><subject>Neuroscience</subject><subject>Neuroscience/Behavioral Neuroscience</subject><subject>Neuroscience/Cognitive Neuroscience</subject><subject>Neuroscience/Neuronal Signaling Mechanisms</subject><subject>Neuroscience/Sensory Systems</subject><subject>Neuroscience/Theoretical Neuroscience</subject><subject>Physics/Interdisciplinary Physics</subject><subject>Physiology/Sensory Systems</subject></subj-group></article-categories><title-group><article-title>What Is Stochastic Resonance? Definitions, Misconceptions, Debates, and Its Relevance to Biology</article-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>McDonnell</surname><given-names>Mark D.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Abbott</surname><given-names>Derek</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>Institute for Telecommunications Research, University of South Australia, Mawson Lakes, South Australia, Australia</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Centre for Biomedical Engineering and School of Electrical &amp; Electronic Engineering, University of Adelaide, Adelaide, South Australia, Australia</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Friston</surname><given-names>Karl J.</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">University College London, United Kingdom</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">mark.mcdonnell@unisa.edu.au</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><month>5</month><year>2009</year></pub-date><pub-date pub-type="epub"><day>29</day><month>5</month><year>2009</year></pub-date><volume>5</volume><issue>5</issue><elocation-id>e1000348</elocation-id><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2009</copyright-year><copyright-holder>McDonnell, Abbott</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>Stochastic resonance is said to be observed when increases in levels of unpredictable fluctuations—e.g., random noise—cause an increase in a metric of the quality of signal transmission or detection performance, rather than a decrease. This counterintuitive effect relies on system nonlinearities and on some parameter ranges being “suboptimal”. Stochastic resonance has been observed, quantified, and described in a plethora of physical and biological systems, including neurons. Being a topic of widespread multidisciplinary interest, the definition of stochastic resonance has evolved significantly over the last decade or so, leading to a number of debates, misunderstandings, and controversies. Perhaps the most important debate is whether the brain has evolved to utilize random noise in vivo, as part of the “neural code”. Surprisingly, this debate has been for the most part ignored by neuroscientists, despite much indirect evidence of a positive role for noise in the brain. We explore some of the reasons for this and argue why it would be more surprising if the brain did not exploit randomness provided by noise—via stochastic resonance or otherwise—than if it did. We also challenge neuroscientists and biologists, both computational and experimental, to embrace a very broad definition of stochastic resonance in terms of signal-processing “noise benefits”, and to devise experiments aimed at verifying that random variability can play a functional role in the brain, nervous system, or other areas of biology.</p>
+</abstract><funding-group><funding-statement>MDM is funded by an Australian Research Council Postdoctoral Fellowship, DP0770747. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="9"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p><italic>Noise</italic> is an all-encompassing term that usually describes undesirable disturbances or fluctuations. In biology, “noise” typically refers to variability in measured data when identical experiments are repeated, or when biosignals cannot be measured without background fluctuations distorting the desired measurement.</p>
+<p>Noise is also the fundamental enemy for communications engineers, whose goal is to ensure messages can be transmitted error-free and efficiently from one place to another, at the fastest possible rate. When <italic>random noise</italic> in the form of electronic fluctuations or electromagnetic interference corrupts transmitted messages, this places limits on the rate at which error-free communication can be achieved. If everything else is ideal, then noise is the enemy.</p>
+<p>But what if not everything is ideal? Can an ideal system always be implemented in practice? The answer is of course <italic>no</italic>; engineering is about designing systems with tradeoffs between different conflicting objectives. The same could be said of evolution. Given this, there are circumstances—see below—where unavoidably present noise or unpredictable fluctuations can be used purposely, or deliberately introduced to lead to a benefit.</p>
+<p><italic>Stochastic Resonance</italic> (SR) is the name for a phenomenon that is a flagship example of this idea. It has mostly been studied by physicists—for more than 25 years—but may also be familiar to some biologists, as well as to those in many other disciplines. Research into SR has had a colorful evolutionary journey, and extracting important principles and results from the literature can be confusing.</p>
+<p>In particular, the paradoxical notion of “good noise” is a double-edged sword for SR researchers. To some, working to understand paradoxes and counterintuitive ideas is a significant curiosity-driven challenge. This has drawn many scientists and engineers to study SR, leading to many interesting and useful theoretical and experimental published results. Others naturally focus only on the ingrained principle of great utility in engineering, where noise needs to be eradicated, and, the more it is present, the more diminished is performance. This preconception can be a sufficient reason for many scientists to ignore or dismiss SR.</p>
+<p>The purpose of this essay is to discuss issues that have sometimes clouded the topic. Our first aim is to bring some clarity to the debate and to illustrate the pitfalls and controversies for biologists unfamiliar with stochastic resonance, or who have held only a peripheral interest in the area.</p>
+<p>The second aim is to advocate to readers that when they come across studies of SR, they should focus less on the counterintuitive idea of “good noise”, and instead understand SR in terms of “randomness that makes a nonlinearity less detrimental to a signal”. Such a change of focus away from “noise” and on to “helpful randomness” may shift the balance away from skepticism of the form “how can <italic>noise</italic> be good?” toward thinking “does this variability have a useful function?”</p>
+<p>Provoking a discussion on this topic is especially timely, given recent increasing interest in the topic of neuronal variability. For example, SR is mentioned in several recent PLoS articles <xref ref-type="bibr" rid="pcbi.1000348-Guantes1">[1]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Tanouchi1">[4]</xref>, while a symposium on “Neuronal Variability and Its Functional Significance” was held in conjunction with the 2008 Society for Neuroscience meeting. Furthermore, a recent review on noise in the nervous system <xref ref-type="bibr" rid="pcbi.1000348-Faisal1">[5]</xref> has highlighted the multiple sources of neuronal noise and recently developed methods for quantifying them. It is sensibly pointed out in <xref ref-type="bibr" rid="pcbi.1000348-Faisal1">[5]</xref> that the nervous system is likely to have evolved methods for both “countering the detrimental effects of noise,” as well as discussing its potential benefits <xref ref-type="bibr" rid="pcbi.1000348-Faisal1">[5]</xref>.</p>
+<p>However, discussion on SR in <xref ref-type="bibr" rid="pcbi.1000348-Faisal1">[5]</xref> focuses on a traditional definition that is restrictive in its scope, where the input signal is periodic, necessarily weak compared to the noise, and nearly always “subthreshold”. This special case where noise allows a weak signal to be “detected” often places a focus on single neurons. The concept of beneficial noise by no means needs to be constrained to such conditions, and we discuss in this essay how the definition of SR has evolved beyond the scope discussed by <xref ref-type="bibr" rid="pcbi.1000348-Faisal1">[5]</xref>.</p>
+<p>Example discussions of the many possible ways in which randomness may be useful in biology and neuroscience appear in <xref ref-type="bibr" rid="pcbi.1000348-Stein1">[6]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Klymkowsky1">[8]</xref>. One particularly important idea is that neuronal variability can provide a “probabilistic population code” <xref ref-type="bibr" rid="pcbi.1000348-Ma1">[9]</xref>, which allows the brain to represent probability distributions, and perform Bayesian inference <xref ref-type="bibr" rid="pcbi.1000348-Knill1">[10]</xref>. Noise can lead to highly complex phenomena, and other very different benefits beyond signal processing <xref ref-type="bibr" rid="pcbi.1000348-Ghosh1">[11]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Deco1">[12]</xref>. See also <xref ref-type="bibr" rid="pcbi.1000348-Blomberg1">[13]</xref> for a review of the physics of biological fluctuations at the molecular level and <xref ref-type="bibr" rid="pcbi.1000348-Kaern1">[14]</xref> regarding stochastic gene expression and its advantages. Many of these “noise benefits” could be described as SR—provided that input and output signals can be defined—simply by showing how performance varies as a function of noise level. When this is the case, techniques employed by engineers and physicists to quantify and understand SR may provide theoretical insights in the biological case.</p>
+<p>Of course, one can have too much of a good thing: in no way do we suggest that all variability is a sign of exploited randomness. It is quite likely that variability in measurements has no significance, and needs to be filtered or otherwise minimized. But we propound that there are sound reasons why the idea encapsulated by SR should be openly considered. The lesson from studies of SR is that observations of random noise or background fluctuations may be evidence of a source of biological randomness that could potentially be exploited for a functional benefit, whether SR or some other effect. Alternatively, measurements of an information-bearing signal with unpredictable variability may be evidence that randomness has already been utilized to assist representation of information.</p>
+<p>We also wish to highlight that unfortunately SR does not always have a good reputation. There are many reasons for this, some of which are touched on in this essay. One reason is that, in the early days of SR research, there was a tendency for perhaps too much enthusiasm, leading to overstatement and exaggeration of what might be achieved by exploiting the idea in applications, and the possibility that it could help us understand brain function. For example, the idea that noise can help “detect weak signals” has sometimes been misstated as proof that our brains may be affected by distant electrical power lines. Even more unfortunately, SR has sometimes been invoked in pseudoscientific contexts, such as explaining why “Native Americans can hear the voices of their ancestors in the noise of the grass”!</p>
+<p>While such events remain scarce exceptions to a large body of high-quality scientific research, anecdotal evidence suggests it is timely to discuss why the idea of “noise benefits” should be taken seriously by biologists, whether labeled as SR or not.</p>
+<p>The remainder of this essay provides a brief overview of SR research, before progressing to discuss some of the debates and controversies, including those regarding the <italic>definition</italic> of SR. We then outline some thoughts on the future of SR-related research in biology and its potential application in biomedical engineering. We end with six recommendations for biologists to consider when thinking about SR or the possible functional role of neuronal variability. Parts of the following discussion follow along similar lines to argumentation contained in <xref ref-type="bibr" rid="pcbi.1000348-McDonnell1">[15]</xref>.</p>
+</sec><sec id="s2">
+<title>A Brief History of Stochastic Resonance</title>
+<p><italic>Stochastic Resonance</italic> (SR), although a term originally used in a very specific context, is now broadly applied to describe any phenomenon where the presence of noise in a nonlinear system is better for output signal quality than its absence. There are several key terms in the previous sentence that require clarification. The first key term is <italic>nonlinear</italic>. Noise cannot be beneficial in a linear system, and it is only the more complex interactions between nonlinearities and randomness that can (sometimes) lead to SR. Another key term is <italic>better</italic>. A wide variety of <italic>performance</italic> measures have been used to quantify <italic>better</italic>, and in nearly all cases it is understood to mean that some aspect of the processing or transmission of a signal is improved. The third key term is the word <italic>noise</italic> itself. Noise is usually associated with words such as <italic>nuisance</italic>, <italic>undesirable</italic>, or <italic>irritating</italic>, and the concept of it being <italic>useful</italic> is apparently contradictory.</p>
+<p>This idea can be distilled into stating that whenever SR occurs, it must be true that<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000348.e001" xlink:type="simple"/></disp-formula></p>
+<p>The term <italic>stochastic resonance</italic> was first used in the context of noise-enhanced signal processing in 1980 by Roberto Benzi, at the 1980 NATO International School of Climatology, as a name for the mechanism suggested to be behind the periodic behavior of the earth's ice ages <xref ref-type="bibr" rid="pcbi.1000348-Benzi1">[16]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Benzi2">17</xref>. The same idea was independently proposed in <xref ref-type="bibr" rid="pcbi.1000348-Nicolis1">[18]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Nicolis2">[19]</xref>. <italic>Stochastic Resonance</italic> has been used—according to the ISI Web of Science database—in more than 2,300 publications—see <xref ref-type="fig" rid="pcbi-1000348-g001">Figure 1</xref>. About 20% of papers on SR also contain a reference in the title, abstract, or keywords to the words <italic>neuron</italic> or <italic>neural</italic>, which illustrates the significant interest in studying a positive role for randomness in neural function.</p>
+<fig id="pcbi-1000348-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000348.g001</object-id><label>Figure 1</label><caption>
+<title>Frequency of stochastic resonance papers by year—between 1981 and 2007—according to the ISI database.</title>
+<p>There are several epochs in which large increases in the frequency of SR papers occurred. The first of these is between 1989 and 1992, when the most significant events were the first papers examining SR in neural models <xref ref-type="bibr" rid="pcbi.1000348-Bulsara2">[47]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Longtin1">[48]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Bulsara5">[118]</xref>. The second epoch is between about 1993 and 1996, when the most significant events were the observation of SR in physiological experiments on neurons <xref ref-type="bibr" rid="pcbi.1000348-Douglass1">[49]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Cordo1">[51]</xref>, the popularization of array-enhanced SR <xref ref-type="bibr" rid="pcbi.1000348-Lindner1">[110]</xref>, and of Aperiodic Stochastic Resonance (ASR) <xref ref-type="bibr" rid="pcbi.1000348-Collins3">[107]</xref>. Around 1997, a steady increase in SR papers occurred, as investigations of SR in neurons and ASR became widespread.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000348.g001" xlink:type="simple"/></fig>
+<p>The word <italic>resonance</italic> in the term <italic>stochastic resonance</italic> was originally used because the signature feature of SR is that a plot of a performance measure—such as output signal-to-noise ratio (SNR)—against input noise “intensity” has a single maximum at a nonzero value. Such a plot, as shown in <xref ref-type="fig" rid="pcbi-1000348-g002">Figure 2</xref>, has a similar appearance to frequency-dependent systems that have a maximum SNR, or output response, for some <italic>resonant frequency</italic>. However, in the case of SR, the resonance is “noise-induced” rather than at a particular frequency.</p>
+<fig id="pcbi-1000348-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000348.g002</object-id><label>Figure 2</label><caption>
+<title>Typical curve of output performance versus input noise magnitude, for systems capable of stochastic resonance.</title>
+<p>For small and large noise, the performance metric (e.g., SNR, mutual information, Fisher information, correlation, discrimination index) is very small, while some intermediate nonzero noise level provides optimal performance.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000348.g002" xlink:type="simple"/></fig>
+<p>Stochastic resonance has been the subject of many thorough technical reviews, some focussing on physical and mathematical descriptions of SR <xref ref-type="bibr" rid="pcbi.1000348-Jung1">[20]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Shatokhin1">[28]</xref>, others on observations of SR in electronic systems and potential applications of SR <xref ref-type="bibr" rid="pcbi.1000348-McDonnell1">[15]</xref>, <xref ref-type="bibr" rid="pcbi.1000348-Luchinsky1">[29]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Harmer1">[32]</xref>, and a third group devoted to SR in biology <xref ref-type="bibr" rid="pcbi.1000348-McDonnell1">[15]</xref>, <xref ref-type="bibr" rid="pcbi.1000348-Ward1">[33]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Moss2">[35]</xref>. For detailed information on theoretical aspects of SR, the reader is referred to these articles. Descriptions of the topic for wider audiences have also appeared <xref ref-type="bibr" rid="pcbi.1000348-Moss3">[36]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-RouvasNicolis1">[40]</xref>.</p>
+<p>Stochastic resonance has been widely observed throughout nature—it has been reported and quantified in such diverse systems as climate models <xref ref-type="bibr" rid="pcbi.1000348-Benzi2">[17]</xref>, electronic circuits <xref ref-type="bibr" rid="pcbi.1000348-Fauve1">[41]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Anishchenko2">[42]</xref>, differential equations <xref ref-type="bibr" rid="pcbi.1000348-Benzi3">[43]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Hu1">[44]</xref>, lasers <xref ref-type="bibr" rid="pcbi.1000348-McNamara1">[45]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Iannelli1">[46]</xref>, neural models <xref ref-type="bibr" rid="pcbi.1000348-Bulsara2">[47]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Longtin1">[48]</xref>, physiological neural populations <xref ref-type="bibr" rid="pcbi.1000348-Douglass1">[49]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Cordo1">[51]</xref> and networks <xref ref-type="bibr" rid="pcbi.1000348-Gluckman1">[52]</xref>, chemical reactions <xref ref-type="bibr" rid="pcbi.1000348-Leonard1">[53]</xref>, ion channels <xref ref-type="bibr" rid="pcbi.1000348-Bezrukov1">[54]</xref>, SQUIDs (superconducting quantum interference devices) <xref ref-type="bibr" rid="pcbi.1000348-Hibbs1">[55]</xref>, the behavior of feeding paddlefish <xref ref-type="bibr" rid="pcbi.1000348-Russell1">[56]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Freund1">[58]</xref>, ecological models <xref ref-type="bibr" rid="pcbi.1000348-Blarer1">[59]</xref>, cell biology <xref ref-type="bibr" rid="pcbi.1000348-Paulsson1">[60]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Paulsson2">[61]</xref>, financial models <xref ref-type="bibr" rid="pcbi.1000348-Mao1">[62]</xref>, psychophysics <xref ref-type="bibr" rid="pcbi.1000348-Collins1">[63]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Ward3">[66]</xref>, carbon-nanotube transistors <xref ref-type="bibr" rid="pcbi.1000348-Lee1">[67]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Lee2">[68]</xref>, nanomechanical oscillators <xref ref-type="bibr" rid="pcbi.1000348-Badzey1">[69]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Bulsara3">[70]</xref>, organic semiconductor chemistry <xref ref-type="bibr" rid="pcbi.1000348-Tao1">[71]</xref>, and even social systems <xref ref-type="bibr" rid="pcbi.1000348-Wallace1">[72]</xref>.</p>
+<p>In its early years, SR was defined only in the very specific context of a bistable system acting on a combination of a <italic>periodic</italic> input signal and random noise. Its definition later evolved to broader contexts, enabling the explosion of interest in the late 1990s—see <xref ref-type="fig" rid="pcbi-1000348-g001">Figure 1</xref>. Interestingly, while SR has been observed in many other systems, its explanatory power for the periodicity of ice ages is still a subject of debate.</p>
+<sec id="s2a">
+<title>Questions Concerning Stochastic Resonance</title>
+<p>There are a number of misconceptions and controversies about stochastic resonance that are apparent in the literature. The following list of questions encapsulates the main points of contention: (i) What is the definition of stochastic resonance?; (ii) Is stochastic resonance exploited by the nervous system and brain as part of the neural code?; (iii) Does stochastic resonance only occur if a signal's power is weak compared to the power of the noise in a system?; (iv) Can stochastic resonance lead to a signal-to-noise ratio gain, and is this consistent with information theory?; (v) Was stochastic resonance known about prior to the first use of the term “stochastic resonance” in 1980?; (vi) How is stochastic resonance different from a signal-processing technique called <italic>dithering</italic>?</p>
+<p>Although question (ii) is quite clearly the most interesting scientific question, and seemingly the motivation behind much SR research, the literature reveals that the other questions in the above list have sometimes provided a diversion. The problem is that reaching a consensus on the answers to questions (ii)–(vi) really depends on an agreed-upon answer to question (i).</p>
+<p>The broadest possible definition of stochastic resonance is that it occurs when randomness has a positive role in a signal-processing context. Given this definition, <italic>we believe</italic> that the answers to these questions are (ii) yes, although it is difficult to prove, the brain would almost certainly not function as it does if it operated completely deterministically; (iii) no, randomness can have a positive role even if it is only a small amount of randomness; (iv) yes, in the information-theoretic sense, random noise in a system's input signal can lead to a less-noisy output signal, provided that the system is nonlinear and suboptimal; (v) yes, randomness has been known to have a positive role in many circumstances for decades, if not centuries; and (vi) stochastic resonance occurs when dithering is used—dithering can be described as the exploitation of SR <xref ref-type="bibr" rid="pcbi.1000348-McDonnell1">[15]</xref>.</p>
+<p>On the other hand, if the definition of stochastic resonance is restricted to its original narrow context, then the answers to questions (ii)–(vi) change to: (ii) maybe—this is yet to be conclusively answered <xref ref-type="bibr" rid="pcbi.1000348-Moss2">[35]</xref>, (iii) yes, (iv) no, (v) no, and (vi) dithering is quite different from SR <xref ref-type="bibr" rid="pcbi.1000348-Gammaitoni2">[73]</xref>.</p>
+<p>This discussion is intended to illustrate that the debate on the topics listed above can depend crucially on what one means by <italic>stochastic resonance</italic>.</p>
+</sec><sec id="s2b">
+<title>Defining Stochastic Resonance</title>
+<p>Stochastic resonance is often described as a counterintuitive phenomenon. This is largely due to its historical background, since in the first decade and a half since the coining of the term in 1980, virtually all research into SR considered only systems where the input was a combination of a periodic single-frequency input signal and broadband noise. In such systems, a natural measure of system performance is the output signal-to-noise ratio (SNR), or, more precisely, often the ratio of the output power-spectral-density at the input frequency, to the output noise-floor power-spectral-density measured with the signal present. The noise floor is measured with the signal present, rather than absent, as the output noise may change if the signal is not present. This is because the signal and output noise are generally not additive in a nonlinear system, or, in other words, the output noise is signal-dependent.</p>
+<p>For linear signal-processing systems, it is well-known that output SNR is maximized in the absence of noise. This means that observations of the presence of noise in a system providing the maximum output SNR are often seen to be highly counterintuitive—see <xref ref-type="bibr" rid="pcbi.1000348-Kosko1">[39]</xref> (p. 149) for further discussion. When it is noted that there are many examples of systems or algorithms where randomness is of benefit, SR does not seem quite so counterintuitive. Examples include: a) Brownian ratchets <xref ref-type="bibr" rid="pcbi.1000348-Doering1">[74]</xref>—mechanical applications of this idea include self-winding (batteryless) wristwatches <xref ref-type="bibr" rid="pcbi.1000348-Paradiso1">[75]</xref>; b) dithering in signal processing and analog-to-digital conversion <xref ref-type="bibr" rid="pcbi.1000348-Schuchman1">[76]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Wannamaker1">[78]</xref>; c) coherence resonance <xref ref-type="bibr" rid="pcbi.1000348-Pikovsky1">[79]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Lee3">[80]</xref>; d) Parrondo's games—the random combination of losing games to produce a winning game <xref ref-type="bibr" rid="pcbi.1000348-Harmer2">[81]</xref>; e) random links between clusters of nodes in networks to enhance “small world network” effects <xref ref-type="bibr" rid="pcbi.1000348-Watts1">[82]</xref>; f) noise-induced linearization <xref ref-type="bibr" rid="pcbi.1000348-Yu1">[83]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Dykman2">[84]</xref>, noise-induced stabilization <xref ref-type="bibr" rid="pcbi.1000348-Basak1">[85]</xref>, noise-induced synchronization <xref ref-type="bibr" rid="pcbi.1000348-Neiman1">[86]</xref>, and noise-induced order <xref ref-type="bibr" rid="pcbi.1000348-Matsumoto1">[87]</xref>; g) the use of mixed (probabilistic) optimal strategies in game theory <xref ref-type="bibr" rid="pcbi.1000348-vonNeumann1">[88]</xref>; h) random switching to control electromagnetic compatibility performance <xref ref-type="bibr" rid="pcbi.1000348-Allison1">[89]</xref>; i) random search optimization techniques, including genetic algorithms <xref ref-type="bibr" rid="pcbi.1000348-Gershenfeld1">[90]</xref> and simulated annealing <xref ref-type="bibr" rid="pcbi.1000348-Kirkpatrick1">[91]</xref>; j) random noise radars—that is, radars that transmit random-noise waveforms in order to provide immunity from jamming, detection, and interference <xref ref-type="bibr" rid="pcbi.1000348-Narayanan1">[92]</xref>. Further discussion and other examples appear in <xref ref-type="bibr" rid="pcbi.1000348-McDonnell1">[15]</xref>, <xref ref-type="bibr" rid="pcbi.1000348-Kosko1">[39]</xref>, <xref ref-type="bibr" rid="pcbi.1000348-Harmer3">[93]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Zozor1">[95]</xref>.</p>
+<p>Note that while noise or variability, whether in biology or in engineered systems, may not be truly random—it can, for example, be constant or deterministic (even chaotic)—it is often possible to characterize observations by modeling it as random. Consequently, SR research has tended to focus on the stochastic case. The most common assumption is that the noise is white—that is, constant in power across all frequencies—and Gaussian-distributed. In most cases, changing the distribution or power spectrum of the noise does not change the fact that SR occurs. In this essay, fine details about the noise process are not significant; the important point is that unpredictable variability or fluctuations can be said to be present.</p>
+<p>While SR was initially considered to be restricted to the case of periodic input signals, the literature reveals that it now is widely used as an all-encompassing term, whether the input signal is a periodic sine wave, a periodic broadband signal, or aperiodic. An appropriate measure of output performance depends on the task at hand, and the form of input signal. For example, for periodic signals and broadband noise, SNR is often used <xref ref-type="bibr" rid="pcbi.1000348-Gammaitoni1">[24]</xref>. When the signal is random and aperiodic, SR can be observed by calculating the mutual information <xref ref-type="bibr" rid="pcbi.1000348-Bulsara4">[96]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Heneghan1">[97]</xref> or correlation <xref ref-type="bibr" rid="pcbi.1000348-Collins2">[98]</xref> between the input and output signals, as a function of noise intensity. Another often-used measure is Fisher information <xref ref-type="bibr" rid="pcbi.1000348-Greenwood1">[57]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Stemmler1">[99]</xref>, which is useful when the goal is to estimate an input signal (or its parameters) from an observed output signal.</p>
+<p>These alterations to the original definition have sometimes led to confusion, so we now explicitly discuss the two competing definitions of SR: the conventional definition, and what we contend is the contemporary and more useful definition.</p>
+<sec id="s2b1">
+<title>Conventional SR: A “bona fide” resonance</title>
+<p>The definition of SR, and the word <italic>resonance</italic> itself, have both been objects of debate. In particular, “resonance” is usually thought of in the sense of a resonant frequency, rather than an optimal noise intensity. For the typical early assumptions of periodic signals and small SNRs, “resonance” was more or less resolved as being appropriate, after a new way—using residence time distributions—of looking at SR found that the effect was a bona fide resonance <xref ref-type="bibr" rid="pcbi.1000348-Gammaitoni3">[100]</xref>. The reasoning was that <italic>resonance</italic> means a matching of two characteristic frequencies (or physical time scales), and residence time distribution provided a way of interpreting SR in this way <xref ref-type="bibr" rid="pcbi.1000348-Bulsara1">[37]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Gammaitoni2">[73]</xref>.</p>
+<p>However, there was also some debate about this <xref ref-type="bibr" rid="pcbi.1000348-Choi1">[101]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Marchesoni1">[103]</xref>, and although this definition satisfactorily characterized SR in a manner that allowed “resonance” to be phenomenologically accurate for dynamical bistable systems energized by periodic input signals, it implied that “stochastic resonance” was no longer appropriate for systems consisting of simple “static threshold” nonlinearities. Many papers on SR use the term <italic>static threshold</italic> to describe the nonlinearity being studied. It is used to differentiate between dynamical systems—such as the bistable potential wells typically used in traditional studies of SR—and nondynamical “static” systems <xref ref-type="bibr" rid="pcbi.1000348-Gingl1">[104]</xref>. A system is called static when nonlinear deformation—SR cannot occur in a linear system—of an input signal is not governed by time-evolving differential equations, but by simple rules that produce an output signal based on the instantaneous value of the input signal. There are at least two reasons why this has been debated.</p>
+<p>First, noise-enhanced behavior in static threshold nonlinearities also occurs in a signal-processing technique known as dithering. Dithering involves deliberately adding a random—or pseudo-random—signal to another signal, prior to its digitization or quantization <xref ref-type="bibr" rid="pcbi.1000348-Schuchman1">[76]</xref>. It is most often associated with audio or image processing, where the effect of the added noise signal, called the <italic>dither signal</italic>, is to randomize the error signal introduced by quantization. This randomization, although increasing the total power of the noise at the output, reduces undesirable harmonic distortion effects introduced by quantization. As discussed in <xref ref-type="bibr" rid="pcbi.1000348-McDonnell1">[15]</xref>, we believe that the contemporary definition of SR is such that dithering can be described as a technique that <italic>exploits</italic> SR, and the two terms are not mutually exclusive. See also <xref ref-type="bibr" rid="pcbi.1000348-Wannamaker2">[105]</xref>.</p>
+<p>Secondly, the initial questions about whether noise-enhanced behavior in static threshold systems should be called stochastic resonance relate to whether a bona fide resonance occurs, since no frequency matching occurs for threshold systems <xref ref-type="bibr" rid="pcbi.1000348-Gammaitoni2">[73]</xref>. Although this point is technically reasonable, we take the point of view that such questions of semantic nomenclature are no longer relevant. While the “time-scale matching” definition of SR is a satisfactory way of ensuring that “resonance” truly can be said to occur in a restricted subset of noise-enhanced scenarios, it is incongruous with the fact that widespread interest in “stochastic resonance” comes not from whether the term is semantically accurate, but instead from the notion of beneficial randomness.</p>
+<p>Furthermore, the strict definition in <xref ref-type="bibr" rid="pcbi.1000348-Gammaitoni3">[100]</xref> excludes a significant amount of the content—which could be described in terms of static nonlinearities—of the single most highly cited nonreview paper on SR <xref ref-type="bibr" rid="pcbi.1000348-McNamara2">[106]</xref>, which was published in 1989 and helped lead to the first great acceleration in SR research, and the first investigations of SR in neurons.</p>
+</sec><sec id="s2b2">
+<title>Stochastic resonance as “noise benefits”</title>
+<p>The term <italic>stochastic resonance</italic> is now used so frequently in the much wider sense of being the occurrence of any kind of noise-enhanced signal processing, that we believe this common usage has, by “weight of numbers”, led to a redefinition. Indeed, electrical engineer Bart Kosko, who made pioneering developments in fuzzy logic and neural networks, concisely defines SR in his popular science book <italic>Noise</italic> as meaning “noise benefit” <xref ref-type="bibr" rid="pcbi.1000348-Kosko1">[39]</xref> (pp. 148–149). Kosko also states the caveat that the noise interferes with a “signal of interest”, and we concur that SR can be defined as a “noise benefit in a signal-processing system”, or alternatively “noise-enhanced signal processing”. Put another way, SR occurs when the output signal from a system provides a better representation of the input signal (or of some useful aspect of it) than it would in the complete absence of noise.</p>
+<p>Evidence for the emergence of a wider definition includes the many “flavors” of SR that have been described, e.g., aperiodic SR (ASR) <xref ref-type="bibr" rid="pcbi.1000348-Collins3">[107]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Collins4">[108]</xref>, array-enhanced SR (AESR) <xref ref-type="bibr" rid="pcbi.1000348-Wiesenfeld3">[109]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Lindner1">[110]</xref>, suprathreshold SR (SSR) <xref ref-type="bibr" rid="pcbi.1000348-McDonnell1">[15]</xref>, <xref ref-type="bibr" rid="pcbi.1000348-Stocks1">[111]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Rousseau1">[114]</xref>, system size SR <xref ref-type="bibr" rid="pcbi.1000348-Tessone1">[115]</xref>, ghost SR <xref ref-type="bibr" rid="pcbi.1000348-Lopera1">[116]</xref>, and diversity-induced resonance <xref ref-type="bibr" rid="pcbi.1000348-Tessone2">[117]</xref>. Although many authors still define SR only in its original narrow context where a resonance effect can be considered to be bona fide, in line with the evolution of languages, words or phrases often end up with a different meaning from their original roots. All the variations mentioned are extensions beyond the original definition of SR, yet they can be classified as “noise benefits” phenomena (in terms of signal enhancement), and our experience is that a majority of researchers are comfortable using the term SR to describe this broadened and richer scope.</p>
+<p>We emphasize here the fact that SR occurs only in the context of <italic>signal</italic> enhancement, as this is the feature that sets it apart from many of the list of randomness-enhanced phenomena above, which could all be described as benefiting in some way from noise, and yet cannot all be defined in terms of an enhanced signal. Furthermore, SR is usually understood to occur in systems where there are both well-defined <italic>input</italic> and <italic>output</italic> signals, and the optimal output signal, according to some measure of quality, occurs for some nonzero level and type of noise. In particular, note that <italic>coherence resonance</italic> is often confused with SR. While similar to SR in that an optimum level of noise leads to a benefit in terms of maximally coherent oscillations <xref ref-type="bibr" rid="pcbi.1000348-Pikovsky1">[79]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Lee3">[80]</xref>, there is no concept of an <italic>input</italic> signal being converted to an <italic>output</italic> signal.</p>
+</sec></sec></sec><sec id="s3">
+<title>The Future of “Noise Benefits” Research in Biology and Biomedical Engineering</title>
+<p>While SR has been observed in an increasingly diverse range of biological research areas, such as ion channels <xref ref-type="bibr" rid="pcbi.1000348-Bezrukov1">[54]</xref>, behavior <xref ref-type="bibr" rid="pcbi.1000348-Russell1">[56]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Freund1">[58]</xref>, ecological models <xref ref-type="bibr" rid="pcbi.1000348-Blarer1">[59]</xref>, and cell biology <xref ref-type="bibr" rid="pcbi.1000348-Paulsson1">[60]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Paulsson2">[61]</xref>, interest has mostly focused on neuroscience. We therefore restrict our remaining discussion to the question of how noise—whether thought of in the context of stochastic resonance, or instead as a source of beneficial randomness—may be demonstrated as having functional utility in the brain.</p>
+<sec id="s3a">
+<title>Does Stochastic Resonance Occur In Vivo in Biological Neurons and Brain Function?</title>
+<p>We begin by giving a brief literature review of the main studies on SR that are often cited as indirect evidence for its biological utility. A recent summary of progress for sensory neurons was published in <xref ref-type="bibr" rid="pcbi.1000348-Moss2">[35]</xref>.</p>
+<p>The first papers investigating SR in neuron models appeared in 1991 <xref ref-type="bibr" rid="pcbi.1000348-Bulsara2">[47]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Longtin1">[48]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Bulsara5">[118]</xref>, with the broader scientific community being introduced to the topic after <xref ref-type="bibr" rid="pcbi.1000348-Longtin1">[48]</xref> was discussed by a widely read news article <xref ref-type="bibr" rid="pcbi.1000348-Maddox1">[119]</xref>. Research into SR in neurons accelerated—for example, <xref ref-type="bibr" rid="pcbi.1000348-Bulsara4">[96]</xref>, <xref ref-type="bibr" rid="pcbi.1000348-Longtin2">[120]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Longtin3">[123]</xref>—after the 1993 observation of SR in physiological experiments where external signal and noise were applied to crayfish mechanoreceptors <xref ref-type="bibr" rid="pcbi.1000348-Douglass1">[49]</xref>. Later experimental studies also demonstrated that SR can occur in neurons in the cercal sensory system of a cricket when noise is applied externally <xref ref-type="bibr" rid="pcbi.1000348-Levin1">[50]</xref>, and in the human proprioceptive system <xref ref-type="bibr" rid="pcbi.1000348-Cordo1">[51]</xref>.</p>
+<p>Crucially, none of the above-cited papers have been able to prove that neurons “use” SR in a natural setting—the evidence for neurons exploiting SR is only indirect. It can be convincingly argued that these experiments do not prove that neurons utilize SR in any way, because both the signal and the noise were applied <italic>externally</italic> to sensory receptors and neurons. The fact that SR occurs only demonstrates that these cells are nonlinear dynamical systems for which SR effects occur when signal and noise are both added externally. It remains an open question as to whether neurons make use of <italic>internally</italic> generated noise and SR effects. A direct observation of SR would require an external signal, and measurements of <italic>internal</italic> neuronal noise, in vivo <xref ref-type="bibr" rid="pcbi.1000348-Emberson1">[124]</xref>. One possibility is that synaptic background activity is a source of beneficial noise <xref ref-type="bibr" rid="pcbi.1000348-Fellous1">[125]</xref>—see <xref ref-type="bibr" rid="pcbi.1000348-Faisal1">[5]</xref> for related discussion.</p>
+<p>One theme of this essay is that it is not paradoxical that randomness may provide benefits in neurons and the brain. It is hardly surprising that the same idea was noticed prior to the first papers on SR and neurons in 1991, as well as in contexts other than SR. For example, in 1971 the first comprehensive analytical studies of the effects of noise on neuron firing demonstrated that noise “smoothes” the firing response of neurons <xref ref-type="bibr" rid="pcbi.1000348-Lecar1">[126]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Lecar2">[127]</xref>. Later, <xref ref-type="bibr" rid="pcbi.1000348-Horsthemke1">[128]</xref> discusses noise-induced transitions in neural models, and in particular <xref ref-type="bibr" rid="pcbi.1000348-Yu1">[83]</xref> advocates noise as being an important element in signal modulation by neurons.</p>
+<p>Interestingly, a constructive role for noise in the context of <italic>neuronal oscillations</italic> in the brain was reported around the same time as the first observations of SR in neural models <xref ref-type="bibr" rid="pcbi.1000348-Braun1">[129]</xref>. Today there is accelerating interest in establishing the function of neuronal oscillations, and the mechanisms that give rise to them <xref ref-type="bibr" rid="pcbi.1000348-Ermentrout1">[7]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Buzski1">[130]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Sejnowski1">[131]</xref>. Various theories have been proposed, and random variability may have an essential role in ensuring the robustness of either synchronized oscillating populations <xref ref-type="bibr" rid="pcbi.1000348-Ermentrout1">[7]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Ghosh1">[11]</xref> or the emergence of fast oscillations in local field potentials <xref ref-type="bibr" rid="pcbi.1000348-Brunel1">[132]</xref>. It may also be the case that variability in the spike-trains of individual sensory neurons is important for ensuring that an overall population produces tuning curves optimized for information transmission <xref ref-type="bibr" rid="pcbi.1000348-McDonnell3">[133]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Lansky1">[134]</xref>.</p>
+<p>Whether a positive role for random noise in such contexts can be called SR or not depends, even with the broad definition used in this paper, on whether it is useful to define an input and output signal. The big picture, though, is independent of whether it should be called SR or not. Instead, the fact that random noise can provide a benefit is the key idea, regardless of what one calls it. This essay is placed in the context of SR, since it provides a paradigm for understanding why it should not be surprising that random variability can have a function.</p>
+</sec><sec id="s3b">
+<title>Debates about SR and Detection Theory</title>
+<p>We now briefly outline one of the central arguments for dismissing SR, i.e., the conclusion that <italic>optimal</italic> signal detection is incompatible with the fact that SR is observed when detection performance is non-monotonically decreasing with increasing input SNR. This difficulty has been discussed several times in the literature. Of particular relevance to biologists are the opposing viewpoints of Tougaard and Ward et. al. Tougaard's initial critique concluded that “Improving detection by means of stochastic resonance is thus a suboptimal strategy” <xref ref-type="bibr" rid="pcbi.1000348-Tougaard1">[135]</xref>. Ward et al. rebutted the idea that SR is always such an “epiphenomenon of nonoptimal criterion placement”, using counterexamples beyond the scope of <xref ref-type="bibr" rid="pcbi.1000348-Tougaard1">[135]</xref>, and also a focus on whole organism performance rather than on single neurons <xref ref-type="bibr" rid="pcbi.1000348-Ward2">[65]</xref>.</p>
+<p>In response <xref ref-type="bibr" rid="pcbi.1000348-Tougaard2">[136]</xref>, Tougaard revisited the problem, and conceded that the models of <xref ref-type="bibr" rid="pcbi.1000348-Ward2">[65]</xref> led to SR due to nonlinearities in the production of neural action-potentials, while detection theory based on the “receiver” part of the neuron still decreased monotonically with increasing noise. Tougaard's conclusion was that “the role of the noise is to compensate for the inherent nonlinear process of spike generation … ” and “The detectability … decreases monotonically with input noise level, in full correspondence with the central dogma of signal detection theory”.</p>
+<p>Largely overshadowed—although touched upon—by the focus of this debate, is the fact that “optimal detectors” may not be efficiently implemented, and that optimal detection may not have been the primary driving factor of evolution. Furthermore, the focus of Tougaard is on single detectors, rather than on populations of them. This is also a limitation in a similar discussion of the fact that SR is a suboptimal strategy <xref ref-type="bibr" rid="pcbi.1000348-DeWeese1">[137]</xref>. The conclusion that SR in threshold systems is simply a way to overcome the incorrect threshold setting seems to have led many to think that making use of noise is a suboptimal means of designing a system. The contrasting viewpoint is that noise is ubiquitous; since it is virtually impossible to remove all noise completely from systems, design methods should consider the effects of SR, and that various design parameters, such as a threshold value, may in some circumstances need to be set in ways that make use of the inherent noise to obtain an optimal response.</p>
+<p>One example of this is suprathreshold stochastic resonance (SSR) <xref ref-type="bibr" rid="pcbi.1000348-McDonnell1">[15]</xref>, <xref ref-type="bibr" rid="pcbi.1000348-Stocks1">[111]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Rousseau1">[114]</xref>. In this variant of SR, which relies on a parallel population of “sensors” or neurons collectively encoding a common stimulus—see, e.g., <xref ref-type="bibr" rid="pcbi.1000348-McDonnell4">[138]</xref> for illustration—noise benefits do disappear if the overall population is optimized <xref ref-type="bibr" rid="pcbi.1000348-McDonnell5">[139]</xref>. However, the optimal solution is extremely complex and not plausibly achievable by real neurons. A much simpler and robust solution is to maintain a configuration that while suboptimal and exhibiting noise benefits is close enough to optimal over a large range of input SNRs. Furthermore, SSR is a form of aperiodic stochastic resonance, meaning that detection is not at stake, but instead the goal could be information transmission, signal classification, or signal compression <xref ref-type="bibr" rid="pcbi.1000348-McDonnell6">[140]</xref>.</p>
+<p>So, while Tougaard's analysis is an important reminder that SR “… is not, as is sometimes misunderstood, able to make otherwise nondetectable signals detectable”—see also <xref ref-type="bibr" rid="pcbi.1000348-Dykman3">[141]</xref>—it seems clear from this debate that while detection theory might suggest that increasing noise can never improve detection, this in no way implies that noise cannot have a useful role, due to (i) the complexities of combining detection with nonlinear information encoding; (ii) the possibility that the theoretically “optimal” detector is by no means optimal in a broad sense; and (iii) that <italic>detection</italic> is not necessarily the signal-processing goal. See <xref ref-type="bibr" rid="pcbi.1000348-Inchiosa1">[142]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Hnggi2">[144]</xref> for some related discussion.</p>
+<p>Indeed, very recently electronic engineers have started exploring the possibility of improving necessarily suboptimal detectors by randomizing them <xref ref-type="bibr" rid="pcbi.1000348-Zozor2">[145]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-ChapeauBlondeau1">[148]</xref>, and of deliberately employing noise when device limitations do not allow any other kind of detector optimization <xref ref-type="bibr" rid="pcbi.1000348-Lee2">[68]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Martorell1">[149]</xref>.</p>
+</sec><sec id="s3c">
+<title>Biomedical Applications of SR</title>
+<p>A different form of indirect evidence for SR existing naturally in biology is successful biomedical applications. A particularly notable example is the use of electrically generated subthreshold stimuli in biomedical prosthetics to improve human balance control and somatosensation <xref ref-type="bibr" rid="pcbi.1000348-Priplata1">[150]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Hijmans1">[156]</xref>. This work led to James J. Collins winning a prestigious MacArthur Fellowship in October 2003 <xref ref-type="bibr" rid="pcbi.1000348-Harry1">[154]</xref>.</p>
+<p>Another proposed application inspired by SR, as first suggested by Morse and Evans in 1996 <xref ref-type="bibr" rid="pcbi.1000348-Morse1">[157]</xref>, is that of enhanced cochlear implant stimulation strategies. Cochlear implants can restore hearing to the profoundly deaf by direct electronic stimulation of the auditory nerve using a surgically implanted electrode array <xref ref-type="bibr" rid="pcbi.1000348-Dorman1">[158]</xref>. Numerous authors have since advocated the exploitation of SR in this area, e.g., <xref ref-type="bibr" rid="pcbi.1000348-Hohn1">[159]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Morse2">[162]</xref>.</p>
+<p>The basic idea is that several sources of unpredictable variability present in fibers of the auditory nerve during normal hearing <xref ref-type="bibr" rid="pcbi.1000348-Hudspeth1">[163]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Lewis1">[164]</xref> are known to be absent in deafened ears. It is hypothesized that a well-controlled random component in the output of cochlear implant electrical signals would therefore stimulate nerve fibers in a more natural way that may lead to improved hearing. It has been proposed that healthy hearing exploits SSR as a way of enabling the afferent nerve fibres that synapse with inner hair cells to encode more information about sound waveforms than would be possible in the absence of randomness <xref ref-type="bibr" rid="pcbi.1000348-McDonnell1">[15]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Stocks2">[160]</xref>. The prospect of reintroducing natural variability to more closely mimic the natural activity of healthy nerve fibres is taken very seriously, with at least two independent approaches to practical implementation <xref ref-type="bibr" rid="pcbi.1000348-Morse3">[165]</xref>–<xref ref-type="bibr" rid="pcbi.1000348-Morse4">[167]</xref>.</p>
+<p>The same principle of making the output of biomedical prosthetics more like biology has also been applied in mechanical life-support ventilators. In order to more closely replicate natural breathing, random noise was introduced into the operation of the artificial ventilator, and it was found that it enhanced performance in several ways <xref ref-type="bibr" rid="pcbi.1000348-Lefevre1">[168]</xref>. Later modeling supported this result, and interpreted it as a form of SR <xref ref-type="bibr" rid="pcbi.1000348-Suki1">[169]</xref>. See <xref ref-type="bibr" rid="pcbi.1000348-Brewster1">[170]</xref> for a review.</p>
+<p>The current acceleration of research into medical bionics such as brain–machine interfaces, and electronic sensory prosthetics (e.g., cochlear implants, auditory brainstem implants, and retinal implants for restoring vision), means there is an increasing need to understand how unpredictable fluctuations may be exploited in biology. Such understanding may be critical for the successful design of some types of future bionics.</p>
+</sec><sec id="s3d">
+<title>Concluding Remarks: Six Recommendations for Biologists</title>
+<p>From an engineer's perspective, if it can be established that SR plays an important role in the encoding and processing of information in the brain, and that it somehow provides part of the brain's superior performance to computers and artificial intelligence in some areas, then using this knowledge in engineering systems may revolutionize the way we design computers, sensors, and communications systems.</p>
+<p>For biological science, rather than view SR as a specifically defined phenomenon of limited scope, we advocate thinking about SR in terms of the broad idea of “noise benefits”, and as a reminder that ideal systems often cannot be engineered in practice. When this is the case, it is necessary to make the best of a suboptimal situation, such as exploiting noise to advantage. This principle holds for evolution as well. If there are nonlinearities involved, then it is easy to imagine that organisms evolved to make the best possible use of noise and fluctuations that are unavoidably present.</p>
+<p>With this in mind, we present six recommendations for biologists to consider when performing literature searches on stochastic resonance or noise in biology, and when trying to understand whether biological noise may have some useful functional role.</p>
+<list list-type="order"><list-item>
+<p>It is not necessary, and indeed often meaningless, to define performance in terms of signal-to-noise ratio (SNR) <xref ref-type="bibr" rid="pcbi.1000348-Inchiosa2">[171]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Galdi1">[172]</xref>. Likewise, it is not necessary to focus on <italic>detection</italic>. Output SNR is unlikely to be a useful way of quantifying SR in biology, since it is a measure designed for linear systems and artificial electronic systems. If instead the goal is to prove that biological function may rely on random noise, it makes more sense to measure variations in function with changing internal or input noise level, in whatever manner would normally be the case.</p>
+</list-item><list-item>
+<p>Adding noise to external stimuli cannot prove that neurons or brain function depend on consistently available internal sources of randomness, i.e., on <italic>endogenous neural noise</italic> <xref ref-type="bibr" rid="pcbi.1000348-Emberson1">[124]</xref>. The challenge is to devise an experiment that can remove naturally occurring healthy variability and demonstrate that function is impaired solely due to that removal. This has been termed <italic>intrinsic stochastic resonance</italic>—see <xref ref-type="bibr" rid="pcbi.1000348-Emberson1">[124]</xref> for discussion. Alternatively, it may be possible to empirically verify that function or performance is impaired due to the loss of a source of variability through disease or accident.</p>
+</list-item><list-item>
+<p>It is not necessary to focus on periodic input signals. For example, for experiments on sensory neurons, it would be most useful to utilize stimuli based on “natural scenes” <xref ref-type="bibr" rid="pcbi.1000348-Olshausen1">[173]</xref>,<xref ref-type="bibr" rid="pcbi.1000348-Smith1">[174]</xref> that mimic the inputs expected to be processed by those neurons, and to assess how noise might benefit coding of such signals.</p>
+</list-item><list-item>
+<p>It is not necessary to focus on subthreshold signals. Noise benefits can occur for suprathreshold signals, in particular if a common signal is processed by a population of neurons <xref ref-type="bibr" rid="pcbi.1000348-Stocks1">[111]</xref>. Further, a “hard-threshold” is by no means a necessary condition for SR—see <xref ref-type="bibr" rid="pcbi.1000348-Greenwood2">[175]</xref> and references therein.</p>
+</list-item><list-item>
+<p>If noise benefits are found, explaining why they occur will likely be in terms of constraints that mean an alternative, superior, non-noisy mechanism is not efficiently feasible or robust <xref ref-type="bibr" rid="pcbi.1000348-Bulsara4">[96]</xref>.</p>
+</list-item><list-item>
+<p>Describing SR as a <italic>technique</italic> is misleading. This is because it implies that SR is a signal-processing strategy in its own right, and confuses cause with effect. Instead, by recalling that observations of frequency resonance in oscillators are analogous to SR, we suggest SR can instead be accurately referred to as an <italic>observed phenomenon</italic> that can potentially be exploited—e.g., “stochastic resonance was observed to occur when the level of random noise was changed, with peak performance occurring when the noise variance was <italic>x</italic>”. In this circumstance, the system itself is capable of SR, and the <italic>technique</italic> that is employed is that of modifying the noise intensity.</p>
+</list-item></list>
+</sec></sec></body>
+<back>
+<ack>
+<p>Many discussions have been influential in crystallizing various matters in this paper, and we would like to acknowledge all our colleagues with whom we have discussed stochastic resonance over the years, and the anonymous reviewers for valuable comments and suggestions.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1000348-Guantes1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Guantes</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Poyatos</surname><given-names>JF</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Dynamical principles of two-component genetic oscillators.</article-title>             <source>PLoS Comput Biol</source>             <volume>2</volume>             <fpage>e30</fpage>             <comment>doi:10.1371/journal.pcbi.0020030</comment>          </element-citation></ref>
+<ref id="pcbi.1000348-Bhalla1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bhalla</surname><given-names>US</given-names></name>
+</person-group>             <year>2008</year>             <article-title>How to record a million synaptic weights in a hippocampal slice.</article-title>             <source>PLoS Comput Biol</source>             <volume>4</volume>             <fpage>e1000098</fpage>             <comment>doi:10.1371/journal.pcbi.1000098</comment>          </element-citation></ref>
+<ref id="pcbi.1000348-McIntosh1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McIntosh</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Kovacevic</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Itier</surname><given-names>RJ</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Increased brain signal variability accompanies lower behavioral variability in development.</article-title>             <source>PLoS Comput Biol</source>             <volume>4</volume>             <fpage>e1000106</fpage>             <comment>doi:10.1371/journal.pcbi.1000106</comment>          </element-citation></ref>
+<ref id="pcbi.1000348-Tanouchi1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tanouchi</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Tu</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Kim</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>You</surname><given-names>L</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Noise reduction by diffusional dissipation in a minimal quorum sensing motif.</article-title>             <source>PLoS Comput Biol</source>             <volume>4</volume>             <fpage>e1000167</fpage>             <comment>doi:10.1371/journal.pcbi.1000167</comment>          </element-citation></ref>
+<ref id="pcbi.1000348-Faisal1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Faisal</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Selen</surname><given-names>LPJ</given-names></name>
+<name name-style="western"><surname>Wolpert</surname><given-names>DM</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Noise in the nervous system.</article-title>             <source>Nature Reviews Neuroscience</source>             <volume>9</volume>             <fpage>292</fpage>             <lpage>303</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Stein1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stein</surname><given-names>RB</given-names></name>
+<name name-style="western"><surname>Roderich Gossen</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Jones</surname><given-names>KE</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Neuronal variability: noise or part of the signal?</article-title>             <source>Nature Reviews Neuroscience</source>             <volume>6</volume>             <fpage>389</fpage>             <lpage>397</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Ermentrout1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ermentrout</surname><given-names>GB</given-names></name>
+<name name-style="western"><surname>Galán</surname><given-names>RF</given-names></name>
+<name name-style="western"><surname>Urban</surname><given-names>NN</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Reliability, synchrony and noise.</article-title>             <source>Trends in Neurosciences</source>             <volume>31</volume>             <fpage>428</fpage>             <lpage>434</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Klymkowsky1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Klymkowsky</surname><given-names>MW</given-names></name>
+<name name-style="western"><surname>Garvin-Doxas</surname><given-names>K</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Recognizing student misconceptions through ed's tools and the biology concept inventory.</article-title>             <source>PLoS Biol</source>             <volume>6</volume>             <fpage>e3</fpage>             <comment>doi:10.1371/journal.pbio.0060003</comment>          </element-citation></ref>
+<ref id="pcbi.1000348-Ma1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ma</surname><given-names>WJ</given-names></name>
+<name name-style="western"><surname>Beck</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Latham</surname><given-names>PE</given-names></name>
+<name name-style="western"><surname>Pouget</surname><given-names>A</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Bayesian inference with probabilistic population codes.</article-title>             <source>Nature Neuroscience</source>             <volume>9</volume>             <fpage>1432</fpage>             <lpage>1438</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Knill1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Knill</surname><given-names>DC</given-names></name>
+<name name-style="western"><surname>Pouget</surname><given-names>A</given-names></name>
+</person-group>             <year>2004</year>             <article-title>The bayesian brain: the role of uncertainty in neural coding and computation.</article-title>             <source>Trends in Neuroscience</source>             <volume>27</volume>             <fpage>712</fpage>             <lpage>719</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Ghosh1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ghosh</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Rho</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>McIntosh</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Kötter</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Jirsa</surname><given-names>VK</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Noise during rest enables the exploration of the brain's dynamic repertoire.</article-title>             <source>PLoS Comput Biol</source>             <volume>4</volume>             <fpage>e1000196</fpage>             <comment>doi:10.1371/journal.pcbi.1000196</comment>          </element-citation></ref>
+<ref id="pcbi.1000348-Deco1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Deco</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Jirsa</surname><given-names>VK</given-names></name>
+<name name-style="western"><surname>Robinson</surname><given-names>PA</given-names></name>
+<name name-style="western"><surname>Breakspear</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Friston</surname><given-names>K</given-names></name>
+</person-group>             <year>2008</year>             <article-title>The dynamic brain: From spiking neurons to neural masses and cortical fields.</article-title>             <source>PLoS Comput Biol</source>             <volume>4</volume>             <fpage>e1000092</fpage>             <comment>doi:10.1371/journal.pcbi.1000092</comment>          </element-citation></ref>
+<ref id="pcbi.1000348-Blomberg1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Blomberg</surname><given-names>C</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Fluctuations for good and bad: The role of noise in living systems.</article-title>             <source>Physics of Life Reviews</source>             <volume>3</volume>             <fpage>133</fpage>             <lpage>161</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Kaern1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kaern</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Elston</surname><given-names>TC</given-names></name>
+<name name-style="western"><surname>Blake</surname><given-names>WJ</given-names></name>
+<name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Stochasticity in gene expression: from theories to phenotypes.</article-title>             <source>Nature Reviews Genetics</source>             <volume>6</volume>             <fpage>451</fpage>             <lpage>464</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-McDonnell1"><label>15</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McDonnell</surname><given-names>MD</given-names></name>
+<name name-style="western"><surname>Stocks</surname><given-names>NG</given-names></name>
+<name name-style="western"><surname>Pearce</surname><given-names>CEM</given-names></name>
+<name name-style="western"><surname>Abbott</surname><given-names>D</given-names></name>
+</person-group>             <year>2008</year>             <source>Stochastic Resonance: From Suprathreshold Stochastic Resonance to Stochastic Signal Quantisation</source>             <publisher-name>Cambridge University Press</publisher-name>          </element-citation></ref>
+<ref id="pcbi.1000348-Benzi1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Benzi</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Sutera</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Vulpiani</surname><given-names>A</given-names></name>
+</person-group>             <year>1981</year>             <article-title>The mechanism of stochastic resonance.</article-title>             <source>Journal of Physics A: Mathematical and General</source>             <volume>14</volume>             <fpage>L453</fpage>             <lpage>L457</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Benzi2"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Benzi</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Parisi</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Sutera</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Vulpiani</surname><given-names>A</given-names></name>
+</person-group>             <year>1982</year>             <article-title>Stochastic resonance in climatic change.</article-title>             <source>Tellus</source>             <volume>34</volume>             <fpage>10</fpage>             <lpage>16</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Nicolis1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Nicolis</surname><given-names>C</given-names></name>
+</person-group>             <year>1981</year>             <article-title>Solar variability and stochastic effects on climate.</article-title>             <source>Solar Physics</source>             <volume>74</volume>             <fpage>473</fpage>             <lpage>478</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Nicolis2"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Nicolis</surname><given-names>C</given-names></name>
+</person-group>             <year>1982</year>             <article-title>Stochastic aspects of climatic transitions—response to a periodic forcing.</article-title>             <source>Tellus</source>             <volume>34</volume>             <fpage>1</fpage>             <lpage>9</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Jung1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jung</surname><given-names>P</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Periodically driven stochastic systems.</article-title>             <source>Physics Reports—Review Section of Physics Letters</source>             <volume>234</volume>             <fpage>175</fpage>             <lpage>295</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Moss1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Moss</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Pierson</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Ogorman</surname><given-names>D</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Stochastic resonance—tutorial and update.</article-title>             <source>International Journal of Bifurcation and Chaos</source>             <volume>4</volume>             <fpage>1383</fpage>             <lpage>1397</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Dykman1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dykman</surname><given-names>MI</given-names></name>
+<name name-style="western"><surname>Luchinsky</surname><given-names>DG</given-names></name>
+<name name-style="western"><surname>Mannella</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>McClintock</surname><given-names>PVE</given-names></name>
+<name name-style="western"><surname>Stein</surname><given-names>ND</given-names></name>
+<etal/></person-group>             <year>1995</year>             <article-title>Stochastic resonance in perspective.</article-title>             <source>Il Nuovo Cimento</source>             <volume>17</volume>             <fpage>661</fpage>             <lpage>683</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Wiesenfeld1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wiesenfeld</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Moss</surname><given-names>F</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Stochastic resonance and the benefits of noise: From ice ages to crayfish and SQUIDS.</article-title>             <source>Nature</source>             <volume>373</volume>             <fpage>33</fpage>             <lpage>36</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Gammaitoni1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gammaitoni</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Hänggi</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Jung</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Marchesoni</surname><given-names>F</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Stochastic resonance.</article-title>             <source>Reviews of Modern Physics</source>             <volume>70</volume>             <fpage>223</fpage>             <lpage>287</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Wiesenfeld2"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wiesenfeld</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Jaramillo</surname><given-names>F</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Minireview of stochastic resonance.</article-title>             <source>Chaos</source>             <volume>8</volume>             <fpage>539</fpage>             <lpage>548</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Anishchenko1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Anishchenko</surname><given-names>VS</given-names></name>
+<name name-style="western"><surname>Neiman</surname><given-names>AB</given-names></name>
+<name name-style="western"><surname>Moss</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Schimansky-Geier</surname><given-names>L</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Stochastic resonance: Noise enhanced order.</article-title>             <source>Uspekhi Fizicheskikh Nauk</source>             <volume>169</volume>             <fpage>7</fpage>             <lpage>38</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Wellens1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wellens</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Shatokhin</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Buchleitner</surname><given-names>A</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Stochastic resonance.</article-title>             <source>Reports on Progress in Physics</source>             <volume>67</volume>             <fpage>45</fpage>             <lpage>105</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Shatokhin1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Shatokhin</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Wellens</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Buchleitner</surname><given-names>A</given-names></name>
+</person-group>             <year>2004</year>             <article-title>The noise makes the signal: What a small fry should know about stochastic resonance.</article-title>             <source>Journal of Modern Optics</source>             <volume>51</volume>             <fpage>851</fpage>             <lpage>860</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Luchinsky1"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Luchinsky</surname><given-names>DG</given-names></name>
+<name name-style="western"><surname>Mannella</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>McClintock</surname><given-names>PVE</given-names></name>
+<name name-style="western"><surname>Stocks</surname><given-names>NG</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Stochastic resonance in electrical circuits—I: Conventional stochastic resonance.</article-title>             <source>IEEE Transactions on Circuits and Systems—II: Analog and Digital Signal Processing</source>             <volume>46</volume>             <fpage>1205</fpage>             <lpage>1214</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Luchinsky2"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Luchinsky</surname><given-names>DG</given-names></name>
+<name name-style="western"><surname>Mannella</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>McClintock</surname><given-names>PVE</given-names></name>
+<name name-style="western"><surname>Stocks</surname><given-names>NG</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Stochastic resonance in electrical circuits—II: Nonconventional stochastic resonance.</article-title>             <source>IEEE Transactions on Circuits and Systems—II: Analog and Digital Signal Processing</source>             <volume>46</volume>             <fpage>1215</fpage>             <lpage>1224</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-And1"><label>31</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Andò</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Graziani</surname><given-names>S</given-names></name>
+</person-group>             <year>2000</year>             <source>Stochastic Resonance: Theory and Applications</source>             <publisher-name>Kluwer Academic Publishers</publisher-name>          </element-citation></ref>
+<ref id="pcbi.1000348-Harmer1"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Harmer</surname><given-names>GP</given-names></name>
+<name name-style="western"><surname>Davis</surname><given-names>BR</given-names></name>
+<name name-style="western"><surname>Abbott</surname><given-names>D</given-names></name>
+</person-group>             <year>2002</year>             <article-title>A review of stochastic resonance: Circuits and measurement.</article-title>             <source>IEEE Transactions on Instrumentation and Measurement</source>             <volume>51</volume>             <fpage>299</fpage>             <lpage>309</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Ward1"><label>33</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ward</surname><given-names>LM</given-names></name>
+</person-group>             <year>2002</year>             <source>Dynamical Cognitive Science</source>             <publisher-loc>Cambridge (Massachusetts)</publisher-loc>             <publisher-name>MIT Press</publisher-name>          </element-citation></ref>
+<ref id="pcbi.1000348-Hnggi1"><label>34</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hänggi</surname><given-names>P</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Stochastic resonance in biology: How noise can enhance detection of weak signals and help improve biological information processing.</article-title>             <source>Chemphyschem</source>             <volume>3</volume>             <fpage>285</fpage>             <lpage>290</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Moss2"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Moss</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Ward</surname><given-names>LM</given-names></name>
+<name name-style="western"><surname>Sannita</surname><given-names>WG</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Stochastic resonance and sensory information processing: a tutorial and review of application.</article-title>             <source>Clinical Neurophysiology</source>             <volume>115</volume>             <fpage>267</fpage>             <lpage>281</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Moss3"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Moss</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Wiesenfeld</surname><given-names>K</given-names></name>
+</person-group>             <year>1995</year>             <article-title>The benefits of background noise.</article-title>             <source>Scientific American</source>             <volume>273</volume>             <fpage>50</fpage>             <lpage>53</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Bulsara1"><label>37</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bulsara</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Gammaitoni</surname><given-names>L</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Tuning in to noise.</article-title>             <source>Physics Today</source>             <volume>49</volume>             <fpage>39</fpage>             <lpage>45</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-vonBaeyer1"><label>38</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>von Baeyer</surname><given-names>HC</given-names></name>
+</person-group>             <year>2003</year>             <source>Information: The New Language of Science</source>             <publisher-loc>London</publisher-loc>             <publisher-name>Orion Books Ltd</publisher-name>          </element-citation></ref>
+<ref id="pcbi.1000348-Kosko1"><label>39</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kosko</surname><given-names>B</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Noise.</article-title>             <source>Viking</source>          </element-citation></ref>
+<ref id="pcbi.1000348-RouvasNicolis1"><label>40</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rouvas-Nicolis</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Nicolis</surname><given-names>G</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Stochastic resonance.</article-title>             <source>Scholarpedia</source>             <volume>2</volume>             <fpage>1474</fpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Fauve1"><label>41</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Fauve</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Heslot</surname><given-names>F</given-names></name>
+</person-group>             <year>1983</year>             <article-title>Stochastic resonance in a bistable system.</article-title>             <source>Physics Letters A</source>             <volume>97A</volume>             <fpage>5</fpage>             <lpage>7</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Anishchenko2"><label>42</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Anishchenko</surname><given-names>VS</given-names></name>
+<name name-style="western"><surname>Safonova</surname><given-names>MA</given-names></name>
+<name name-style="western"><surname>Chua</surname><given-names>LO</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Stochastic resonance in Chua's circuit driven by amplitude or frequency-modulated signals.</article-title>             <source>International Journal of Bifurcation and Chaos</source>             <volume>4</volume>             <fpage>441</fpage>             <lpage>446</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Benzi3"><label>43</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Benzi</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Sutera</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Vulpiani</surname><given-names>A</given-names></name>
+</person-group>             <year>1985</year>             <article-title>Stochastic resonance in the Landau-Ginzburg equation.</article-title>             <source>Journal of Physics A: Mathematical and General</source>             <volume>18</volume>             <fpage>2239</fpage>             <lpage>2245</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Hu1"><label>44</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hu</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Nicolis</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Nicolis</surname><given-names>C</given-names></name>
+</person-group>             <year>1990</year>             <article-title>Periodically forced Fokker-Planck equation and stochastic resonance.</article-title>             <source>Physical Review A</source>             <volume>42</volume>             <fpage>2030</fpage>             <lpage>2041</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-McNamara1"><label>45</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McNamara</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Wiesenfeld</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Roy</surname><given-names>R</given-names></name>
+</person-group>             <year>1988</year>             <article-title>Observation of stochastic resonance in a ring laser.</article-title>             <source>Physical Review Letters</source>             <volume>60</volume>             <fpage>2626</fpage>             <lpage>2629</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Iannelli1"><label>46</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Iannelli</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Yariv</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Chen</surname><given-names>TR</given-names></name>
+<name name-style="western"><surname>Zhuang</surname><given-names>YH</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Stochastic resonance in a semiconductor distributed feedback laser.</article-title>             <source>Applied Physics Letters</source>             <volume>65</volume>             <fpage>1983</fpage>             <lpage>1985</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Bulsara2"><label>47</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bulsara</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Jacobs</surname><given-names>EW</given-names></name>
+<name name-style="western"><surname>Zhou</surname><given-names>T</given-names></name>
+</person-group>             <year>1991</year>             <article-title>Stochastic resonance in a single neuron model—theory and analog simulation.</article-title>             <source>Journal of Theoretical Biology</source>             <volume>152</volume>             <fpage>531</fpage>             <lpage>555</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Longtin1"><label>48</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Longtin</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Bulsara</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Moss</surname><given-names>F</given-names></name>
+</person-group>             <year>1991</year>             <article-title>Time-interval sequences in bistable systems and the noise-induced transmission of information by sensory neurons.</article-title>             <source>Physical Review Letters</source>             <volume>67</volume>             <fpage>656</fpage>             <lpage>659</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Douglass1"><label>49</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Douglass</surname><given-names>JK</given-names></name>
+<name name-style="western"><surname>Wilkens</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Pantazelou</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Moss</surname><given-names>F</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Noise enhancement of information transfer in crayfish mechanoreceptors by stochastic resonance.</article-title>             <source>Nature</source>             <volume>365</volume>             <fpage>337</fpage>             <lpage>339</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Levin1"><label>50</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Levin</surname><given-names>JE</given-names></name>
+<name name-style="western"><surname>Miller</surname><given-names>JP</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Broadband neural encoding in the cricket cercal sensory system enhanced by stochastic resonance.</article-title>             <source>Nature</source>             <volume>380</volume>             <fpage>165</fpage>             <lpage>168</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Cordo1"><label>51</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cordo</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Inglis</surname><given-names>JT</given-names></name>
+<name name-style="western"><surname>Verschueren</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Merfeld</surname><given-names>DM</given-names></name>
+<etal/></person-group>             <year>1996</year>             <article-title>Noise in human muscle spindles.</article-title>             <source>Nature</source>             <volume>383</volume>             <fpage>769</fpage>             <lpage>770</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Gluckman1"><label>52</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gluckman</surname><given-names>BJ</given-names></name>
+<name name-style="western"><surname>Netoff</surname><given-names>TI</given-names></name>
+<name name-style="western"><surname>Neel</surname><given-names>EJ</given-names></name>
+<name name-style="western"><surname>Ditto</surname><given-names>WL</given-names></name>
+<name name-style="western"><surname>Spano</surname><given-names>ML</given-names></name>
+<etal/></person-group>             <year>1996</year>             <article-title>Stochastic resonance in a neuronal network from mammalian brain.</article-title>             <source>Physical Review Letters</source>             <volume>77</volume>             <fpage>4098</fpage>             <lpage>4101</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Leonard1"><label>53</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Leonard</surname><given-names>DS</given-names></name>
+<name name-style="western"><surname>Reichl</surname><given-names>LE</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Stochastic resonance in a chemical-reaction.</article-title>             <source>Physical Review E</source>             <volume>49</volume>             <fpage>1734</fpage>             <lpage>1737</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Bezrukov1"><label>54</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bezrukov</surname><given-names>SM</given-names></name>
+<name name-style="western"><surname>Voydanoy</surname><given-names>I</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Noise-induced enhancement of signal transduction across voltage-dependent ion channels.</article-title>             <source>Nature</source>             <volume>378</volume>             <fpage>362</fpage>             <lpage>364</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Hibbs1"><label>55</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hibbs</surname><given-names>AD</given-names></name>
+<name name-style="western"><surname>Singsaas</surname><given-names>AL</given-names></name>
+<name name-style="western"><surname>Jacobs</surname><given-names>EW</given-names></name>
+<name name-style="western"><surname>Bulsara</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Bekkedahl</surname><given-names>JJ</given-names></name>
+<etal/></person-group>             <year>1995</year>             <article-title>Stochastic resonance in a superconducting loop with a Josephson-junction.</article-title>             <source>Journal of Applied Physics</source>             <volume>77</volume>             <fpage>2582</fpage>             <lpage>2590</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Russell1"><label>56</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Russell</surname><given-names>DF</given-names></name>
+<name name-style="western"><surname>Wilkens</surname><given-names>LA</given-names></name>
+<name name-style="western"><surname>Moss</surname><given-names>F</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Use of behavioural stochastic resonance by paddle fish for feeding.</article-title>             <source>Nature</source>             <volume>402</volume>             <fpage>291</fpage>             <lpage>294</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Greenwood1"><label>57</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Greenwood</surname><given-names>PE</given-names></name>
+<name name-style="western"><surname>Ward</surname><given-names>LM</given-names></name>
+<name name-style="western"><surname>Russell</surname><given-names>DF</given-names></name>
+<name name-style="western"><surname>Neiman</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Moss</surname><given-names>F</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Stochastic resonance enhances the electrosensory information available to paddlefish for prey capture.</article-title>             <source>Physical Review Letters</source>             <volume>84</volume>             <fpage>4773</fpage>             <lpage>4776</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Freund1"><label>58</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Freund</surname><given-names>JA</given-names></name>
+<name name-style="western"><surname>Schimansky-Geier</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Beisner</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Neiman</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Russell</surname><given-names>DF</given-names></name>
+<etal/></person-group>             <year>2002</year>             <article-title>Behavioral stochastic resonance: How the noise from a daphnia swarm enhances individual prey capture by juvenile paddlefish.</article-title>             <source>Journal of Theoretical Biology</source>             <volume>214</volume>             <fpage>71</fpage>             <lpage>83</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Blarer1"><label>59</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Blarer</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Doebeli</surname><given-names>M</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Resonance effects and outbreaks in ecological time series.</article-title>             <source>Ecology Letters</source>             <volume>2</volume>             <fpage>167</fpage>             <lpage>177</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Paulsson1"><label>60</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Paulsson</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Ehrenberg</surname><given-names>M</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Random signal fluctuations can reduce random fluctuations in regulated components of chemical regulatory networks.</article-title>             <source>Physical Review Letters</source>             <volume>84</volume>             <fpage>5447</fpage>             <lpage>5450</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Paulsson2"><label>61</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Paulsson</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Berg</surname><given-names>OG</given-names></name>
+<name name-style="western"><surname>Ehrenberg</surname><given-names>M</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Stochastic focusing: Fluctuation-enhanced sensitivity of intracellular regulation.</article-title>             <source>Proceedings of the National Academy of Sciences of the USA</source>             <volume>97</volume>             <fpage>7148</fpage>             <lpage>7153</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Mao1"><label>62</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mao</surname><given-names>XM</given-names></name>
+<name name-style="western"><surname>Sun</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Ouyang</surname><given-names>Q</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Stochastic resonance in a financial model.</article-title>             <source>Chinese Physics</source>             <volume>11</volume>             <fpage>1106</fpage>             <lpage>1110</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Collins1"><label>63</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Imhoff</surname><given-names>TT</given-names></name>
+<name name-style="western"><surname>Grigg</surname><given-names>P</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Noise-enhanced tactile sensation.</article-title>             <source>Nature</source>             <volume>383</volume>             <fpage>770</fpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Simonotto1"><label>64</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Simonotto</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Riani</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Seife</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Roberts</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Twitty</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>1997</year>             <article-title>Visual perception of stochastic resonance.</article-title>             <source>Physical Review Letters</source>             <volume>78</volume>             <fpage>1186</fpage>             <lpage>1189</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Ward2"><label>65</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ward</surname><given-names>LM</given-names></name>
+<name name-style="western"><surname>Nieman</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Moss</surname><given-names>F</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Stochastic resonance in psychophysics and in animal behavior.</article-title>             <source>Biological Cybernetics</source>             <volume>87</volume>             <fpage>91</fpage>             <lpage>101</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Ward3"><label>66</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ward</surname><given-names>LM</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Psychophysics of stochastic resonance.</article-title>             <source>Fluctuation and Noise Letters</source>             <volume>4</volume>             <fpage>L11</fpage>             <lpage>L21</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Lee1"><label>67</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lee</surname><given-names>IY</given-names></name>
+<name name-style="western"><surname>Liu</surname><given-names>XL</given-names></name>
+<name name-style="western"><surname>Kosko</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Zhou</surname><given-names>CW</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Nanosignal processing: Stochastic resonance in carbon nanotubes that detect subthreshold signals.</article-title>             <source>Nano Letters</source>             <volume>3</volume>             <fpage>1683</fpage>             <lpage>1686</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Lee2"><label>68</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lee</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Liu</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Zhou</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Kosko</surname><given-names>B</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Noise-enhanced detection of subthreshold signals with carbon nanotubes.</article-title>             <source>IEEE Transactions on Nanotechnology</source>             <volume>5</volume>             <fpage>613</fpage>             <lpage>627</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Badzey1"><label>69</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Badzey</surname><given-names>RL</given-names></name>
+<name name-style="western"><surname>Mohanty</surname><given-names>P</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Coherent signal amplification in bistable nanomechanical oscillators by stochastic resonance.</article-title>          </element-citation></ref>
+<ref id="pcbi.1000348-Bulsara3"><label>70</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bulsara</surname><given-names>AR</given-names></name>
+</person-group>             <year>2005</year>             <article-title>No-nuisance noise.</article-title>             <source>Nature</source>             <volume>437</volume>             <fpage>962</fpage>             <lpage>963</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Tao1"><label>71</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tao</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Liu</surname><given-names>Q</given-names></name>
+<name name-style="western"><surname>Riddick</surname><given-names>BS</given-names></name>
+<name name-style="western"><surname>Cullen</surname><given-names>WG</given-names></name>
+<name name-style="western"><surname>Reutt-Robey</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Dynamic interfaces in an organic thin film.</article-title>             <source>Proceedings of the National Academy of Sciences of the USA</source>             <volume>105</volume>             <fpage>16418</fpage>             <lpage>16425</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Wallace1"><label>72</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wallace</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Wallace</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Andrews</surname><given-names>H</given-names></name>
+</person-group>             <year>1997</year>             <article-title>AIDS, tuberculosis, violent crime, and low birthweight in eight US metropolitan areas: Public policy, stochastic resonance, and the regional diffusion of inner-city markers.</article-title>             <source>Environment and Planning A</source>             <volume>29</volume>             <fpage>525</fpage>             <lpage>555</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Gammaitoni2"><label>73</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gammaitoni</surname><given-names>L</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Stochastic resonance and the dithering effect in threshold physical systems.</article-title>             <source>Physical Review E</source>             <volume>52</volume>             <fpage>4691</fpage>             <lpage>4698</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Doering1"><label>74</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Doering</surname><given-names>CR</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Randomly rattled ratchets.</article-title>             <source>Il Nuovo Cimento</source>             <volume>17</volume>             <fpage>685</fpage>             <lpage>697</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Paradiso1"><label>75</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Paradiso</surname><given-names>JA</given-names></name>
+<name name-style="western"><surname>Starner</surname><given-names>T</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Energy scavenging for mobile and wireless electronics.</article-title>             <source>IEEE Pervasive Computing</source>             <volume>4</volume>             <fpage>18</fpage>             <lpage>27</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Schuchman1"><label>76</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schuchman</surname><given-names>L</given-names></name>
+</person-group>             <year>1964</year>             <article-title>Dither signals and their effect on quantization noise.</article-title>             <source>IEEE Transactions on Communications</source>             <volume>COM-12</volume>             <fpage>162</fpage>             <lpage>165</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Gray1"><label>77</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gray</surname><given-names>RM</given-names></name>
+<name name-style="western"><surname>Stockham</surname><given-names>TG</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Dithered quantizers.</article-title>             <source>IEEE Transactions on Information Theory</source>             <volume>39</volume>             <fpage>805</fpage>             <lpage>812</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Wannamaker1"><label>78</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wannamaker</surname><given-names>RA</given-names></name>
+<name name-style="western"><surname>Lipshitz</surname><given-names>SP</given-names></name>
+<name name-style="western"><surname>Vanderkooy</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Wright</surname><given-names>JN</given-names></name>
+</person-group>             <year>2000</year>             <article-title>A theory of non-subtractive dither.</article-title>             <source>IEEE Transactions on Signal Processing</source>             <volume>48</volume>             <fpage>499</fpage>             <lpage>516</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Pikovsky1"><label>79</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Pikovsky</surname><given-names>AS</given-names></name>
+<name name-style="western"><surname>Kurths</surname><given-names>J</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Coherence resonance in a noise-driven excitable system.</article-title>             <source>Physical Review Letters</source>             <volume>78</volume>             <fpage>775</fpage>             <lpage>778</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Lee3"><label>80</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lee</surname><given-names>SG</given-names></name>
+<name name-style="western"><surname>Neiman</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Kim</surname><given-names>S</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Coherence resonance in a Hodgkin-Huxley neuron.</article-title>             <source>Physical Review E</source>             <volume>57</volume>             <fpage>3292</fpage>             <lpage>3297</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Harmer2"><label>81</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Harmer</surname><given-names>GP</given-names></name>
+<name name-style="western"><surname>Abbott</surname><given-names>D</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Losing strategies can win by Parrondo's paradox.</article-title>             <source>Nature</source>             <volume>402</volume>             <fpage>864</fpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Watts1"><label>82</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Watts</surname><given-names>DJ</given-names></name>
+<name name-style="western"><surname>Strogatz</surname><given-names>SH</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Collective dynamics of “small-world” networks.</article-title>             <source>Nature</source>             <volume>393</volume>             <fpage>440</fpage>             <lpage>442</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Yu1"><label>83</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yu</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Lewis</surname><given-names>ER</given-names></name>
+</person-group>             <year>1989</year>             <article-title>Studies with spike initiators: Linearization by noise allows continuous signal modulation in neural networks.</article-title>             <source>IEEE Transactions on Biomedical Engineering</source>             <volume>36</volume>             <fpage>36</fpage>             <lpage>43</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Dykman2"><label>84</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dykman</surname><given-names>MI</given-names></name>
+<name name-style="western"><surname>Luchinsky</surname><given-names>DG</given-names></name>
+<name name-style="western"><surname>Mannella</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>McClintock</surname><given-names>PVE</given-names></name>
+<name name-style="western"><surname>Short</surname><given-names>HE</given-names></name>
+<etal/></person-group>             <year>1994</year>             <article-title>Noise-induced linearisation.</article-title>             <source>Physics Letters A</source>             <volume>193</volume>             <fpage>61</fpage>             <lpage>66</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Basak1"><label>85</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Basak</surname><given-names>GK</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Stabilization of dynamical systems by adding a colored noise.</article-title>             <source>IEEE Transactions on Automatic Control</source>             <volume>46</volume>             <fpage>1107</fpage>             <lpage>1111</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Neiman1"><label>86</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Neiman</surname><given-names>A</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Synchronization-like phenomena in coupled stochastic bistable systems.</article-title>             <source>Physical Review E</source>             <volume>49</volume>             <fpage>3484</fpage>             <lpage>3487</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Matsumoto1"><label>87</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Matsumoto</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Tsuda</surname><given-names>I</given-names></name>
+</person-group>             <year>1985</year>             <article-title>Information theoretical approach to noisy dynamics.</article-title>             <source>Journal of Physics A: Mathematical and General</source>             <volume>18</volume>             <fpage>3561</fpage>             <lpage>3566</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-vonNeumann1"><label>88</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>von Neumann</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Morgenstern</surname><given-names>O</given-names></name>
+</person-group>             <year>1944</year>             <source>Theory of Games and Economic Behaviour.</source>             <publisher-name>Princeton University Press</publisher-name>          </element-citation></ref>
+<ref id="pcbi.1000348-Allison1"><label>89</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Allison</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Abbott</surname><given-names>D</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Some benefits of random variables in switched control systems.</article-title>             <source>Microelectronics Journal</source>             <volume>31</volume>             <fpage>515</fpage>             <lpage>522</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Gershenfeld1"><label>90</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gershenfeld</surname><given-names>N</given-names></name>
+</person-group>             <year>1999</year>             <source>The Nature of Mathematical Modeling</source>             <publisher-loc>Cambridge (United Kingdom)</publisher-loc>             <publisher-name>Cambridge University Press</publisher-name>          </element-citation></ref>
+<ref id="pcbi.1000348-Kirkpatrick1"><label>91</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kirkpatrick</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Gelatt</surname><given-names>CD</given-names></name>
+<name name-style="western"><surname>Vecchi</surname><given-names>MP</given-names></name>
+</person-group>             <year>1983</year>             <article-title>Optimisation by simulated annealing.</article-title>             <source>Science</source>             <volume>220</volume>             <fpage>671</fpage>             <lpage>680</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Narayanan1"><label>92</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Narayanan</surname><given-names>RM</given-names></name>
+<name name-style="western"><surname>Kumru</surname><given-names>C</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Implementation of fully polarimetric random noise radar.</article-title>             <source>IEEE Antennas and Wireless Propagation Letters</source>             <volume>4</volume>             <fpage>125</fpage>             <lpage>128</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Harmer3"><label>93</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Harmer</surname><given-names>GP</given-names></name>
+<name name-style="western"><surname>Abbott</surname><given-names>D</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Motion detection and stochastic resonance in noisy environments.</article-title>             <source>Microelectronics Journal</source>             <volume>32</volume>             <fpage>959</fpage>             <lpage>967</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Abbott1"><label>94</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Abbott</surname><given-names>D</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Overview: Unsolved problems of noise and fluctuations.</article-title>             <source>Chaos</source>             <volume>11</volume>             <fpage>526</fpage>             <lpage>538</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Zozor1"><label>95</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zozor</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Amblard</surname><given-names>PO</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Noise-aided processing: revisiting dithering in a sigma-delta quantizer.</article-title>             <source>IEEE Transactions on Signal Processing</source>             <volume>53</volume>             <fpage>3202</fpage>             <lpage>3210</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Bulsara4"><label>96</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bulsara</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Zador</surname><given-names>A</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Threshold detection of wideband signals: A noise induced maximum in the mutual information.</article-title>             <source>Physical Review E</source>             <volume>54</volume>             <fpage>R2185</fpage>             <lpage>R2188</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Heneghan1"><label>97</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Heneghan</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Chow</surname><given-names>CC</given-names></name>
+<name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Imhoff</surname><given-names>TT</given-names></name>
+<name name-style="western"><surname>Lowen</surname><given-names>SB</given-names></name>
+<etal/></person-group>             <year>1996</year>             <article-title>Information measures quantifying aperiodic stochastic resonance.</article-title>             <source>Physical Review E</source>             <volume>54</volume>             <fpage>R2228</fpage>             <lpage>R2231</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Collins2"><label>98</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Chow</surname><given-names>CC</given-names></name>
+<name name-style="western"><surname>Capela</surname><given-names>AC</given-names></name>
+<name name-style="western"><surname>Imhoff</surname><given-names>TT</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Aperiodic stochastic resonance.</article-title>             <source>Physical Review E</source>             <volume>54</volume>             <fpage>5575</fpage>             <lpage>5584</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Stemmler1"><label>99</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stemmler</surname><given-names>M</given-names></name>
+</person-group>             <year>1996</year>             <article-title>A single spike suffices: The simplest form of stochastic resonance in model neurons.</article-title>             <source>Network: Computation in Neural Systems</source>             <volume>7</volume>             <fpage>687</fpage>             <lpage>716</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Gammaitoni3"><label>100</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gammaitoni</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Marchesoni</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Santucci</surname><given-names>S</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Stochastic resonance as a bona fide resonance.</article-title>             <source>Physical Review Letters</source>             <volume>74</volume>             <fpage>1052</fpage>             <lpage>1055</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Choi1"><label>101</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Choi</surname><given-names>MH</given-names></name>
+<name name-style="western"><surname>Fox</surname><given-names>RF</given-names></name>
+<name name-style="western"><surname>Jung</surname><given-names>P</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Quantifying stochastic resonance in bistable systems: Response vs residence-time distribution functions.</article-title>             <source>Physical Review E</source>             <volume>57</volume>             <fpage>6335</fpage>             <lpage>6344</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Giacomelli1"><label>102</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Giacomelli</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Marin</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Rabbiosi</surname><given-names>I</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Stochastic and bona fide resonance: An experimental investigation.</article-title>             <source>Physical Review Letters</source>             <volume>82</volume>             <fpage>675</fpage>             <lpage>678</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Marchesoni1"><label>103</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Marchesoni</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Gammaitoni</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Apostolico</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Santucci</surname><given-names>S</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Numerical verification of bona fide stochastic resonance.</article-title>             <source>Physical Review E</source>             <volume>62</volume>             <fpage>146</fpage>             <lpage>149</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Gingl1"><label>104</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gingl</surname><given-names>Z</given-names></name>
+<name name-style="western"><surname>Kiss</surname><given-names>LB</given-names></name>
+<name name-style="western"><surname>Moss</surname><given-names>F</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Non-dynamical stochastic resonance: Theory and experiments with white and arbitrarily coloured noise.</article-title>             <source>Europhysics Letters</source>             <volume>29</volume>             <fpage>191</fpage>             <lpage>196</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Wannamaker2"><label>105</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wannamaker</surname><given-names>RA</given-names></name>
+<name name-style="western"><surname>Lipshitz</surname><given-names>SP</given-names></name>
+<name name-style="western"><surname>Vanderkooy</surname><given-names>J</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Stochastic resonance as dithering.</article-title>             <source>Physical Review E</source>             <volume>61</volume>             <fpage>233</fpage>             <lpage>236</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-McNamara2"><label>106</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McNamara</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Wiesenfeld</surname><given-names>K</given-names></name>
+</person-group>             <year>1989</year>             <article-title>Theory of stochastic resonance.</article-title>             <source>Physical Review A</source>             <volume>39</volume>             <fpage>4854</fpage>             <lpage>4869</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Collins3"><label>107</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Chow</surname><given-names>CC</given-names></name>
+<name name-style="western"><surname>Imhoff</surname><given-names>TT</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Aperiodic stochastic resonance in excitable systems.</article-title>             <source>Physical Review E</source>             <volume>52</volume>             <fpage>R3321</fpage>             <lpage>R3324</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Collins4"><label>108</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Imhoff</surname><given-names>TT</given-names></name>
+<name name-style="western"><surname>Grigg</surname><given-names>P</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Noise-enhanced information transmission in rat SA1 cutaneous mechanoreceptors via aperiodic stochastic resonance.</article-title>             <source>Journal of Neurophysiology</source>             <volume>76</volume>             <fpage>642</fpage>             <lpage>645</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Wiesenfeld3"><label>109</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wiesenfeld</surname><given-names>K</given-names></name>
+</person-group>             <year>1991</year>             <article-title>Amplification by globally coupled arrays—coherence and symmetry.</article-title>             <source>Physical Review A</source>             <volume>44</volume>             <fpage>3543</fpage>             <lpage>3551</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Lindner1"><label>110</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lindner</surname><given-names>JF</given-names></name>
+<name name-style="western"><surname>Meadows</surname><given-names>BK</given-names></name>
+<name name-style="western"><surname>Ditto</surname><given-names>WL</given-names></name>
+<name name-style="western"><surname>Inchiosa</surname><given-names>ME</given-names></name>
+<name name-style="western"><surname>Bulsara</surname><given-names>AR</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Array enhanced stochastic resonance and spatiotemporal synchronization.</article-title>             <source>Physical Review Letters</source>             <volume>75</volume>             <fpage>3</fpage>             <lpage>6</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Stocks1"><label>111</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stocks</surname><given-names>NG</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Suprathreshold stochastic resonance in multilevel threshold systems.</article-title>             <source>Physical Review Letters</source>             <volume>84</volume>             <fpage>2310</fpage>             <lpage>2313</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-McDonnell2"><label>112</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McDonnell</surname><given-names>MD</given-names></name>
+<name name-style="western"><surname>Abbott</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Pearce</surname><given-names>CEM</given-names></name>
+</person-group>             <year>2002</year>             <article-title>A characterization of suprathreshold stochastic resonance in an array of comparators by correlation coefficient.</article-title>             <source>Fluctuation and Noise Letters</source>             <volume>2</volume>             <fpage>L205</fpage>             <lpage>L220</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Hoch1"><label>113</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hoch</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Wenning</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Obermayer</surname><given-names>K</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Optimal noise-aided signal transmission through populations of neurons.</article-title>             <source>Physical Review E</source>             <volume>68</volume>             <fpage>011911</fpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Rousseau1"><label>114</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rousseau</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Duan</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Chapeau-Blondeau</surname><given-names>F</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Suprathreshold stochastic resonance and noise-enhanced Fisher information in arrays of threshold devices.</article-title>             <source>Physical Review E</source>             <volume>68</volume>             <fpage>031107</fpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Tessone1"><label>115</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tessone</surname><given-names>CJ</given-names></name>
+<name name-style="western"><surname>Toral</surname><given-names>R</given-names></name>
+</person-group>             <year>2005</year>             <article-title>System size stochastic resonance in a model for opinion formation.</article-title>             <source>Physica A—Statistical Mechanics and Its Applications</source>             <volume>351</volume>             <fpage>106</fpage>             <lpage>116</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Lopera1"><label>116</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lopera</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Buldù</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Torrent</surname><given-names>MC</given-names></name>
+<name name-style="western"><surname>Chialvo</surname><given-names>DR</given-names></name>
+<name name-style="western"><surname>Garcia-Ojalvo</surname><given-names>J</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Ghost stochastic resonance with distributed inputs in pulse-coupled electronic neurons.</article-title>             <source>Physical Review E</source>             <volume>73</volume>             <fpage>021101</fpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Tessone2"><label>117</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tessone</surname><given-names>CJ</given-names></name>
+<name name-style="western"><surname>Mirasso</surname><given-names>CR</given-names></name>
+<name name-style="western"><surname>Toral</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Gunton</surname><given-names>JD</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Diversity-induced resonance.</article-title>             <source>Physical Review Letters</source>             <volume>97</volume>             <fpage>194101</fpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Bulsara5"><label>118</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bulsara</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Moss</surname><given-names>FE</given-names></name>
+</person-group>             <year>1991</year>             <article-title>Single neuron dynamics: Noise-enhanced signal processing.</article-title>             <source>IEEE International Joint Conference on Neural Networks. Volume 1</source>             <fpage>420</fpage>             <lpage>425</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Maddox1"><label>119</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Maddox</surname><given-names>J</given-names></name>
+</person-group>             <year>1991</year>             <article-title>Towards the brain-computer's code?</article-title>             <source>Nature</source>             <volume>352</volume>             <fpage>469</fpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Longtin2"><label>120</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Longtin</surname><given-names>A</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Stochastic resonance in neuron models.</article-title>             <source>Journal of Statistical Physics</source>             <volume>70</volume>             <fpage>309</fpage>             <lpage>327</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Chialvo1"><label>121</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chialvo</surname><given-names>DR</given-names></name>
+<name name-style="western"><surname>Apkarian</surname><given-names>AV</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Modulated noisy biological dynamics—three examples.</article-title>             <source>Journal of Statistical Physics</source>             <volume>70</volume>             <fpage>375</fpage>             <lpage>391</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Bulsara6"><label>122</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bulsara</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Maren</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Schmera</surname><given-names>G</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Single effective neuron: Dendritic coupling effect and stochastic resonance.</article-title>             <source>Biological Cybernetics</source>             <volume>70</volume>             <fpage>145</fpage>             <lpage>156</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Longtin3"><label>123</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Longtin</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Bulsara</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Pierson</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Moss</surname><given-names>F</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Bistability and the dynamics of periodically forced sensory neurons.</article-title>             <source>Biological Cybernetics</source>             <volume>70</volume>             <fpage>569</fpage>             <lpage>578</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Emberson1"><label>124</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Emberson</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Kitajo</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Ward</surname><given-names>LM</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Endogenous neural noise and stochastic resonance. SPIE Noise and Fluctuations in Biological, Biophysical, and Biomedical Systems; 21–23 May 2007; Florence, Italy.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Bezrukov</surname><given-names>SM</given-names></name>
+</person-group>             <source>Proceedings SPIE Noise and Fluctuations in Biological, Biophysical, and Biomedical Systems</source>             <volume>6602</volume>             <fpage>66020T(1–12)</fpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Fellous1"><label>125</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Fellous</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Rudolph</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Destexhe</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Sejnowski</surname><given-names>TJ</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Synaptic background noise controls the input/output characteristics of single cells in an in vitro model of in vivo activity.</article-title>             <source>Neuroscience</source>             <volume>122</volume>             <fpage>811</fpage>             <lpage>829</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Lecar1"><label>126</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lecar</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Nossal</surname><given-names>R</given-names></name>
+</person-group>             <year>1971</year>             <article-title>Theory of threshold fluctuations in nerves. I. Relationships between electrical noise and fluctuations in axon firing.</article-title>             <source>Biophysical Journal</source>             <volume>11</volume>             <fpage>1048</fpage>             <lpage>1067</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Lecar2"><label>127</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lecar</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Nossal</surname><given-names>R</given-names></name>
+</person-group>             <year>1971</year>             <article-title>Theory of threshold fluctuations in nerves. II. Analysis of various sources of membrane noise.</article-title>             <source>Biophysical Journal</source>             <volume>11</volume>             <fpage>1068</fpage>             <lpage>1084</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Horsthemke1"><label>128</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Horsthemke</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Lefever</surname><given-names>R</given-names></name>
+</person-group>             <year>1980</year>             <article-title>Voltage-noise–induced transitions in electrically excitable membranes.</article-title>             <source>Biophysical Journal</source>             <volume>35</volume>             <fpage>415</fpage>             <lpage>432</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Braun1"><label>129</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Braun</surname><given-names>HA</given-names></name>
+<name name-style="western"><surname>Wissing</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Schäfer</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Hirsch</surname><given-names>MC</given-names></name>
+</person-group>             <year>1994</year>             <article-title>Oscillation and noise determine signal transduction in shark multimodal sensory cells.</article-title>             <source>Nature</source>             <volume>367</volume>             <fpage>270</fpage>             <lpage>273</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Buzski1"><label>130</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Buzsáki</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Draguhn</surname><given-names>A</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Neuronal oscillations in cortical networks.</article-title>             <source>Science</source>             <volume>304</volume>             <fpage>1926</fpage>             <lpage>1929</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Sejnowski1"><label>131</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sejnowski</surname><given-names>TJ</given-names></name>
+<name name-style="western"><surname>Paulsen</surname><given-names>O</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Network oscillations: Emerging computational principles.</article-title>             <source>The Journal of Neuroscience</source>             <volume>26</volume>             <fpage>1673</fpage>             <lpage>1676</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Brunel1"><label>132</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Brunel</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Wang</surname><given-names>XJ</given-names></name>
+</person-group>             <year>2003</year>             <article-title>What determines the frequency of fast network oscillations with irregular neural discharges? I. Synaptic dynamics and excitation–inhibition balance.</article-title>             <source>Journal of Neurophysiology</source>             <volume>90</volume>             <fpage>415</fpage>             <lpage>430</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-McDonnell3"><label>133</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McDonnell</surname><given-names>MD</given-names></name>
+<name name-style="western"><surname>Stocks</surname><given-names>NG</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Maximally informative stimuli and tuning curves for sigmoidal rate-coding neurons and populations.</article-title>             <source>Physical Review Letters</source>             <volume>101</volume>             <fpage>058103</fpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Lansky1"><label>134</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lansky</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Greenwood</surname><given-names>PE</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Optimal signal in sensory neurons under an extended rate coding concept.</article-title>             <source>BioSystems</source>             <volume>89</volume>             <fpage>10</fpage>             <lpage>15</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Tougaard1"><label>135</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tougaard</surname><given-names>J</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Stochastic resonance and signal detection in an energy detector—implications for biological receptor systems.</article-title>             <source>Biological Cybernetics</source>             <volume>83</volume>             <fpage>471</fpage>             <lpage>480</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Tougaard2"><label>136</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tougaard</surname><given-names>J</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Signal detection theory, detectability and stochastic resonance effects.</article-title>             <source>Biological Cybernetics</source>             <volume>87</volume>             <fpage>79</fpage>             <lpage>90</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-DeWeese1"><label>137</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>DeWeese</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Bialek</surname><given-names>W</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Information flow in sensory neurons.</article-title>             <source>Il Nuovo Cimento</source>             <volume>17</volume>             <fpage>733</fpage>             <lpage>741</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-McDonnell4"><label>138</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McDonnell</surname><given-names>MD</given-names></name>
+<name name-style="western"><surname>Stocks</surname><given-names>NG</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Suprathreshold stochastic resonance.</article-title>             <source>Scholarpedia</source>             <comment>(submitted)</comment>          </element-citation></ref>
+<ref id="pcbi.1000348-McDonnell5"><label>139</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McDonnell</surname><given-names>MD</given-names></name>
+<name name-style="western"><surname>Stocks</surname><given-names>NG</given-names></name>
+<name name-style="western"><surname>Pearce</surname><given-names>CEM</given-names></name>
+<name name-style="western"><surname>Abbott</surname><given-names>D</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Optimal information transmission in nonlinear arrays through suprathreshold stochastic resonance.</article-title>             <source>Physics Letters A</source>             <volume>352</volume>             <fpage>183</fpage>             <lpage>189</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-McDonnell6"><label>140</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McDonnell</surname><given-names>MD</given-names></name>
+<name name-style="western"><surname>Stocks</surname><given-names>NG</given-names></name>
+<name name-style="western"><surname>Amblard</surname><given-names>PO</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Stochastic pooling networks.</article-title>             <source>Journal of Statistical Mechanics: Theory and Experiment: Art. No. P01012</source>          </element-citation></ref>
+<ref id="pcbi.1000348-Dykman3"><label>141</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dykman</surname><given-names>MI</given-names></name>
+<name name-style="western"><surname>McClintock</surname><given-names>PVE</given-names></name>
+</person-group>             <year>1998</year>             <article-title>What can stochastic resonance do?</article-title>             <source>Nature</source>             <volume>391</volume>             <fpage>344</fpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Inchiosa1"><label>142</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Inchiosa</surname><given-names>ME</given-names></name>
+<name name-style="western"><surname>Robinson</surname><given-names>JWC</given-names></name>
+<name name-style="western"><surname>Bulsara</surname><given-names>AR</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Information-theoretic stochastic resonance in noise-floor limited systems: The case for adding noise.</article-title>             <source>Physical Review Letters</source>             <volume>85</volume>             <fpage>3369</fpage>             <lpage>3372</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Kay1"><label>143</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kay</surname><given-names>S</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Can detectability be improved by adding noise?</article-title>             <source>IEEE Signal Processing Letters</source>             <volume>7</volume>             <fpage>8</fpage>             <lpage>10</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Hnggi2"><label>144</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hänggi</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Inchiosa</surname><given-names>ME</given-names></name>
+<name name-style="western"><surname>Fogliatti</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Bulsara</surname><given-names>AR</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Nonlinear stochastic resonance: The saga of anomalous output–input gain.</article-title>             <source>Physical Review E</source>             <volume>62</volume>             <fpage>6155</fpage>             <lpage>6163</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Zozor2"><label>145</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zozor</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Amblard</surname><given-names>PO</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Stochastic resonance in locally optimal detectors.</article-title>             <source>IEEE Transactions on Signal Processing</source>             <volume>51</volume>             <fpage>3177</fpage>             <lpage>3181</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Zozor3"><label>146</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zozor</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Amblard</surname><given-names>PO</given-names></name>
+<name name-style="western"><surname>Duchêne</surname><given-names>C</given-names></name>
+</person-group>             <year>2007</year>             <article-title>On pooling networks and fluctuation in suboptimal detection framework.</article-title>             <source>Fluctuation and Noise Letters</source>             <volume>7</volume>             <fpage>L39</fpage>             <lpage>L60</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Chen1"><label>147</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chen</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Varshney</surname><given-names>PK</given-names></name>
+<name name-style="western"><surname>Kay</surname><given-names>SM</given-names></name>
+<name name-style="western"><surname>Michels</surname><given-names>JH</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Theory of the stochastic resonance effect in signal detection: Part I: fixed detectors.</article-title>             <source>IEEE Transactions on Signal Processing</source>             <volume>55</volume>             <fpage>3172</fpage>             <lpage>3184</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-ChapeauBlondeau1"><label>148</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chapeau-Blondeau</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Rousseau</surname><given-names>D</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Injecting noise to improve performance of optimal detector.</article-title>             <source>Electronics Letters</source>             <volume>43</volume>             <fpage>897</fpage>             <lpage>898</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Martorell1"><label>149</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Martorell</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Rubio</surname><given-names>A</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Cell architecture for nanoelectronic design.</article-title>             <source> Microelectronics Journal</source>             <volume>39</volume>             <fpage>1041</fpage>             <lpage>1050</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Priplata1"><label>150</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Priplata</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Niemi</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Salen</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Harry</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Lipsitz</surname><given-names>LA</given-names></name>
+<etal/></person-group>             <year>2002</year>             <article-title>Noise-enhanced human balance control.</article-title>             <source>Physical Review Letters</source>             <volume>89</volume>             <fpage>238101</fpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Priplata2"><label>151</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Priplata</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Niemi</surname><given-names>JB</given-names></name>
+<name name-style="western"><surname>Harry</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>Lipsitz</surname><given-names>LA</given-names></name>
+<name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Vibrating insoles and balance control in elderly people.</article-title>             <source>Lancet</source>             <volume>362</volume>             <fpage>1123</fpage>             <lpage>1124</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Collins5"><label>152</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name>
+<name name-style="western"><surname>Priplata</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Gravelle</surname><given-names>DC</given-names></name>
+<name name-style="western"><surname>Niemi</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Harry</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Noise-enhanced human sensorimotor control.</article-title>             <source>IEEE Engineering in Medicine and Biology Magazine</source>             <volume>22</volume>             <fpage>76</fpage>             <lpage>83</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Moss4"><label>153</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Moss</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Milton</surname><given-names>JG</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Balancing the unbalanced.</article-title>             <source>Nature</source>             <volume>425</volume>             <fpage>911</fpage>             <lpage>912</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Harry1"><label>154</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Harry</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>Niemi</surname><given-names>JB</given-names></name>
+<name name-style="western"><surname>Priplata</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Balancing act (noise based sensory enhancement technology).</article-title>             <source>IEEE Spectrum</source>             <volume>42</volume>             <fpage>36</fpage>             <lpage>41</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Priplata3"><label>155</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Priplata</surname><given-names>AA</given-names></name>
+<name name-style="western"><surname>Patritti</surname><given-names>BL</given-names></name>
+<name name-style="western"><surname>Niemi</surname><given-names>JB</given-names></name>
+<name name-style="western"><surname>Hughes</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Gravelle</surname><given-names>DC</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Noise-enhanced balance control in patients with diabetes and patients with stroke.</article-title>             <source>Annals of Neurology</source>             <volume>59</volume>             <fpage>4</fpage>             <lpage>12</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Hijmans1"><label>156</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hijmans</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Geertzen</surname><given-names>JHB</given-names></name>
+<name name-style="western"><surname>Schokker</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Postema</surname><given-names>K</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Development of vibrating insoles.</article-title>             <source>International Journal of Rehabilitation Research</source>             <volume>30</volume>             <fpage>343</fpage>             <lpage>345</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Morse1"><label>157</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Morse</surname><given-names>RP</given-names></name>
+<name name-style="western"><surname>Evans</surname><given-names>EF</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Enhancement of vowel coding for cochlear implants by addition of noise.</article-title>             <source>Nature Medicine</source>             <volume>2</volume>             <fpage>928</fpage>             <lpage>932</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Dorman1"><label>158</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dorman</surname><given-names>MF</given-names></name>
+<name name-style="western"><surname>Wilson</surname><given-names>BS</given-names></name>
+</person-group>             <year>2004</year>             <article-title>The design and function of cochlear implants.</article-title>             <source>American Scientist</source>             <volume>92</volume>             <fpage>436</fpage>             <lpage>445</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Hohn1"><label>159</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hohn</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Burkitt</surname><given-names>AN</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Shot noise in the leaky integrate-and-fire neuron.</article-title>             <source>Physical Review E</source>             <volume>63</volume>             <fpage>031902</fpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Stocks2"><label>160</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stocks</surname><given-names>NG</given-names></name>
+<name name-style="western"><surname>Allingham</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Morse</surname><given-names>RP</given-names></name>
+</person-group>             <year>2002</year>             <article-title>The application of suprathreshold stochastic resonance to cochlear implant coding.</article-title>             <source>Fluctuation and Noise Letters</source>             <volume>2</volume>             <fpage>L169</fpage>             <lpage>L181</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Chatterjee1"><label>161</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chatterjee</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Robert</surname><given-names>ME</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Noise enhances modulation sensitivity in cochlear implant listeners: Stochastic resonance in a prosthetic sensory system?</article-title>             <source>Journal of the Association for Research in Otolaryngology</source>             <volume>2</volume>             <fpage>159</fpage>             <lpage>171</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Morse2"><label>162</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Morse</surname><given-names>RP</given-names></name>
+<name name-style="western"><surname>Morse</surname><given-names>PF</given-names></name>
+<name name-style="western"><surname>Nunn</surname><given-names>TB</given-names></name>
+<name name-style="western"><surname>Archer</surname><given-names>KAM</given-names></name>
+<name name-style="western"><surname>Boyle</surname><given-names>P</given-names></name>
+</person-group>             <year>2007</year>             <article-title>The effect of Gaussian noise on the threshold, dynamic range, and loudness of analogue cochlear implant stimuli.</article-title>             <source>J Assoc Res Otolaryngol</source>             <volume>8</volume>             <fpage>42</fpage>             <lpage>53</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Hudspeth1"><label>163</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hudspeth</surname><given-names>AJ</given-names></name>
+</person-group>             <year>1989</year>             <article-title>How the ear's works work.</article-title>             <source>Nature</source>             <volume>341</volume>             <fpage>397</fpage>             <lpage>404</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Lewis1"><label>164</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lewis</surname><given-names>ER</given-names></name>
+<name name-style="western"><surname>Henry</surname><given-names>KR</given-names></name>
+<name name-style="western"><surname>Yamada</surname><given-names>WM</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Essential roles of noise in neural coding and in studies of neural coding.</article-title>             <source>Biosystems</source>             <volume>58</volume>             <fpage>109</fpage>             <lpage>115</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Morse3"><label>165</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Morse</surname><given-names>RP</given-names></name>
+<name name-style="western"><surname>Allingham</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Stocks</surname><given-names>NG</given-names></name>
+</person-group>             <year>2002</year>             <article-title>An information-theoretic approach to cochlear implant coding.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Bezrukov</surname><given-names>SM</given-names></name>
+</person-group>             <source>UPoN 2002. Proceedings of the Third International Conference on Unsolved Problems of Noise and Fluctuations in Physics, Biology, and High Technology; Washington, D.C.; 3–6 September 2002. Am Inst Phys Conf Proc</source>             <volume>665</volume>             <fpage>125</fpage>             <lpage>132</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Rubinstein1"><label>166</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rubinstein</surname><given-names>JT</given-names></name>
+<name name-style="western"><surname>Hong</surname><given-names>R</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Signal coding in cochlear implants: exploiting stochastic effects of electrical stimulation.</article-title>             <source>Ann Otol Rhinol Laryngol</source>             <volume>112</volume>             <fpage>14</fpage>             <lpage>19. Ann Otol Rhinol Laryngol Suppl</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Morse4"><label>167</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Morse</surname><given-names>RP</given-names></name>
+<name name-style="western"><surname>Holmes</surname><given-names>SD</given-names></name>
+<name name-style="western"><surname>Shulgin</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Nikitin</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Stocks</surname><given-names>NG</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Stochastic beamforming for cochlear implant coding. SPIE Noise and Fluctuations in Biological, Biophysical, and Biomedical Systems; 21–23 May 2007; Florence, Italy.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Bezrukov</surname><given-names>SM</given-names></name>
+</person-group>             <source>Proc SPIE Noise Fluct Biological Biophysical Biomedical Sys</source>             <volume>6602</volume>             <fpage>66020U</fpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Lefevre1"><label>168</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lefevre</surname><given-names>GR</given-names></name>
+<name name-style="western"><surname>Kowalski</surname><given-names>SE</given-names></name>
+<name name-style="western"><surname>Girling</surname><given-names>LG</given-names></name>
+<name name-style="western"><surname>Thiessen</surname><given-names>DB</given-names></name>
+<name name-style="western"><surname>Mutch</surname><given-names>WAC</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Improved arterial oxygenation after oleic acid lung injury in the pig using a computer-controlled mechanical ventilator.</article-title>             <source>Am Respir Crit Care Med</source>             <volume>154</volume>             <fpage>1567</fpage>             <lpage>1572</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Suki1"><label>169</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Suki</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Alencar</surname><given-names>AM</given-names></name>
+<name name-style="western"><surname>Sujeer</surname><given-names>MK</given-names></name>
+<name name-style="western"><surname>Lutchen</surname><given-names>KR</given-names></name>
+<name name-style="western"><surname>Collins</surname><given-names>JJ</given-names></name>
+<etal/></person-group>             <year>1998</year>             <article-title>Life-support system benefits from noise.</article-title>             <source>Nature</source>             <volume>393</volume>             <fpage>127</fpage>             <lpage>128</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Brewster1"><label>170</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Brewster</surname><given-names>JF</given-names></name>
+<name name-style="western"><surname>Graham</surname><given-names>MR</given-names></name>
+<name name-style="western"><surname>Mutch</surname><given-names>WAC</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Convexity, Jensen's inequality and benefits of noisy mechanical ventilation.</article-title>             <source>J Royal Society Interface</source>             <volume>2</volume>             <fpage>393</fpage>             <lpage>396</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Inchiosa2"><label>171</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Inchiosa</surname><given-names>ME</given-names></name>
+<name name-style="western"><surname>Bulsara</surname><given-names>AR</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Nonlinear dynamic elements with noisy sinusoidal forcing: Enhancing response via nonlinear coupling.</article-title>             <source>Phys Rev E</source>             <volume>52</volume>             <fpage>327</fpage>             <lpage>339</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Galdi1"><label>172</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Galdi</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Pierro</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Pinto</surname><given-names>IM</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Evaluation of stochastic-resonance–based detectors of weak harmonic signals in additive white Gaussian noise.</article-title>             <source>Phys Rev E</source>             <volume>57</volume>             <fpage>6470</fpage>             <lpage>6479</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Olshausen1"><label>173</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Olshausen</surname><given-names>BA</given-names></name>
+<name name-style="western"><surname>Field</surname><given-names>DJ</given-names></name>
+</person-group>             <year>1996</year>             <article-title>Emergence of simple-cell receptive field properties by learning a sparse code for natural images.</article-title>             <source>Nature</source>             <volume>381</volume>             <fpage>607</fpage>             <lpage>609</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Smith1"><label>174</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Smith</surname><given-names>EC</given-names></name>
+<name name-style="western"><surname>Lewicki</surname><given-names>MS</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Efficient auditory coding.</article-title>             <source>Nature</source>             <volume>439</volume>             <fpage>978</fpage>             <lpage>982</lpage>          </element-citation></ref>
+<ref id="pcbi.1000348-Greenwood2"><label>175</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Greenwood</surname><given-names>PE</given-names></name>
+<name name-style="western"><surname>Müller</surname><given-names>UU</given-names></name>
+<name name-style="western"><surname>Ward</surname><given-names>LM</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Soft threshold stochastic resonance.</article-title>             <source>Phys Rev E</source>             <volume>70</volume>             <fpage>051110</fpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

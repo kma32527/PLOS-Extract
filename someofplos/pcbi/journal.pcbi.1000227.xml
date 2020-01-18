@@ -1,0 +1,2221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="discussion" dtd-version="3.0" xml:lang="EN">
+    <front>
+        <journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Computational Biology</journal-title></journal-title-group><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+                <publisher-name>Public Library of Science</publisher-name>
+                <publisher-loc>San Francisco, USA</publisher-loc>
+            </publisher></journal-meta>
+        <article-meta><article-id pub-id-type="publisher-id">08-PLCB-EN-0543R3</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1000227</article-id><article-categories>
+                <subj-group subj-group-type="heading">
+                    <subject>Education</subject>
+                </subj-group>
+                <subj-group subj-group-type="Discipline">
+                    <subject>Computational Biology/Genomics</subject>
+                    <subject>Genetics and Genomics/Bioinformatics</subject>
+                    <subject>Genetics and Genomics/Epigenetics</subject>
+                    <subject>Computer Science/Applications</subject>
+                </subj-group>
+                
+            </article-categories><title-group><article-title>Analyzing ChIP-chip Data Using Bioconductor</article-title></title-group><contrib-group>
+                <contrib contrib-type="author" xlink:type="simple">
+                    <name name-style="western">
+                        <surname>Toedling</surname>
+                        <given-names>Joern</given-names>
+                    </name>
+                    <xref ref-type="aff" rid="aff1"/>
+                    <xref ref-type="corresp" rid="cor1">
+                        <sup>*</sup>
+                    </xref>
+                </contrib>
+                <contrib contrib-type="author" xlink:type="simple">
+                    <name name-style="western">
+                        <surname>Huber</surname>
+                        <given-names>Wolfgang</given-names>
+                    </name>
+                    <xref ref-type="aff" rid="aff1"/>
+                </contrib>
+            </contrib-group><aff id="aff1">
+                <addr-line>EMBL European Bioinformatics Institute, Wellcome Trust Genome Campus,
+                    Hinxton, United Kingdom</addr-line>
+            </aff><contrib-group>
+                <contrib contrib-type="editor" xlink:type="simple">
+                    <name name-style="western">
+                        <surname>Lewitter</surname>
+                        <given-names>Fran</given-names>
+                    </name>
+                    <role>Editor</role>
+                    <xref ref-type="aff" rid="edit1"/>
+                </contrib>
+            </contrib-group><aff id="edit1">Whitehead Institute, United States of America</aff><author-notes>
+                <corresp id="cor1">* E-mail: <email xlink:type="simple">toedling@ebi.ac.uk</email></corresp>
+            <fn fn-type="conflict">
+                <p>The authors have declared that no competing interests exist.</p>
+            </fn></author-notes><pub-date pub-type="collection">
+                <month>11</month>
+                <year>2008</year>
+            </pub-date><pub-date pub-type="epub">
+                <day>28</day>
+                <month>11</month>
+                <year>2008</year>
+            </pub-date><volume>4</volume><issue>11</issue><elocation-id>e1000227</elocation-id><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2008</copyright-year><copyright-holder>Toedling, Huber</copyright-holder><license><license-p>This is an open-access article distributed under
+                the terms of the Creative Commons Attribution License, which permits unrestricted
+                use, distribution, and reproduction in any medium, provided the original author and
+                source are credited.</license-p></license></permissions><funding-group><funding-statement>This work was supported by the European Union (FP6 HeartRepair,
+                    LSHM-CT-2005-018630).</funding-statement></funding-group><counts>
+                <page-count count="9"/>
+            </counts></article-meta>
+    </front>
+    <body>
+        <p>
+            <graphic mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1000227.tutorial_logo" xlink:type="simple"/>
+        </p>
+        <sec id="s1">
+            <title>Introduction</title>
+            <p>ChIP-chip, chromatin immunoprecipitation combined with DNA microarrays, is a widely
+                used assay for DNA–protein binding and chromatin plasticity, which are of
+                fundamental interest for the understanding of gene regulation.</p>
+            <p>The interpretation of ChIP-chip data poses two computational challenges: first, what
+                can be termed primary statistical analysis, which includes quality assessment, data
+                normalization and transformation, and the calling of regions of interest; second,
+                integrative bioinformatic analysis, which interprets the data in the context of
+                existing genome annotation and of related experimental results obtained, for
+                example, from other ChIP-chip or (m)RNA abundance microarray experiments.</p>
+            <p>Both tasks rely heavily on visualization, which helps to explore the data as well as
+                to present the analysis results. For the primary statistical analysis, some
+                standardization is possible and desirable: commonly used experimental designs and
+                microarray platforms allow the development of relatively standard workflows and
+                statistical procedures. Most software available for ChIP-chip data analysis can be
+                employed in such standardized approaches <xref ref-type="bibr" rid="pcbi.1000227-Buck1">[1]</xref>–<xref ref-type="bibr" rid="pcbi.1000227-Zheng1">[6]</xref>. Yet even
+                for primary analysis steps, it may be beneficial to adapt them to specific
+                experiments, and hence it is desirable that software offers flexibility in the
+                choice of algorithms for normalization, visualization, and identification of
+                enriched regions.</p>
+            <p>For the second task, integrative bioinformatic analysis, the datasets, questions, and
+                applicable methods are diverse, and a degree of flexibility is needed that often can
+                only be achieved in a programmable environment. In such an environment, users are
+                not limited to predefined functions, such as the ones made available as
+                “buttons” in a GUI, but can supply custom functions that are
+                designed toward the analysis at hand.</p>
+            <p>Bioconductor <xref ref-type="bibr" rid="pcbi.1000227-Gentleman1">[7]</xref> is an open source and open development software
+                project for the analysis and comprehension of genomic data, and it offers tools that
+                cover a broad range of computational methods, visualizations, and experimental data
+                types, and is designed to allow the construction of scalable, reproducible, and
+                interoperable workflows. A consequence of the wide range of functionality of
+                Bioconductor and its concurrency with research progress in biology and computational
+                statistics is that using its tools can be daunting for a new user. Various books
+                provide a good general introduction to R and Bioconductor (e.g., <xref ref-type="bibr" rid="pcbi.1000227-Gentleman2">[8]</xref>–<xref ref-type="bibr" rid="pcbi.1000227-Hahne1">[10]</xref>), and most Bioconductor
+                packages are accompanied by extensive documentation. This tutorial covers basic
+                ChIP-chip data analysis with Bioconductor. Among the packages used are <italic>Ringo</italic>
+                <xref ref-type="bibr" rid="pcbi.1000227-Toedling1">[5]</xref>,
+                    <italic>biomaRt</italic>
+                <xref ref-type="bibr" rid="pcbi.1000227-Durinck1">[11]</xref>, and
+                    <italic>topGO</italic>
+                <xref ref-type="bibr" rid="pcbi.1000227-Alexa1">[12]</xref>.</p>
+            <p>We wrote this document in the Sweave <xref ref-type="bibr" rid="pcbi.1000227-Gentleman4">[13]</xref> format, which
+                combines explanatory text and the actual R source code used in this analysis <xref ref-type="bibr" rid="pcbi.1000227-Knuth1">[14]</xref>. Thus,
+                the analysis can be reproduced by the reader. An R package
+                <italic>ccTutorial</italic> that contains the data, the text, and code presented
+                here, and supplementary text and code, is available from the Bioconductor Web site.</p>
+            <p>
+                <monospace>&gt;
+                <italic>library(“Ringo”</italic>)</monospace>
+            </p>
+            <p>
+                <monospace>&gt;
+                <italic>library(“biomaRt”</italic>)</monospace>
+            </p>
+            <p>
+                <monospace>&gt;
+                <italic>library(“topGO”</italic>)</monospace>
+            </p>
+            <p>
+                <monospace>&gt;
+                <italic>library(“ccTutorial”</italic>)</monospace>
+            </p>
+            <p><bold>Terminology.</bold> <italic>Reporters</italic> are the DNA sequences
+                fixed to the microarray; they are designed to specifically hybridize with
+                corresponding genomic fragments from the immunoprecipitate. A reporter has a unique
+                identifier and a unique sequence, and it can appear in one or multiple
+                    <italic>features</italic> on the array surface <xref ref-type="bibr" rid="pcbi.1000227-The1">[15]</xref>. The
+                <italic>sample</italic> is the aliquot of immunoprecipitated or
+                <italic>input</italic> DNA that is hybridized to the microarray. We shall call a
+                genomic region apparently enriched by ChIP a <italic>ChIP-enriched region</italic>.</p>
+            <p><bold>The data.</bold> We consider a ChIP-chip dataset on a post-translational
+                modification of histone protein H3, namely tri-methylation of its Lysine residue 4,
+                in short H3K4me3. H3K4me3 has been associated with active transcription (e.g., <xref ref-type="bibr" rid="pcbi.1000227-SantosRosa1">[16]</xref>,<xref ref-type="bibr" rid="pcbi.1000227-Fischer1">[17]</xref>). Here, enrichment for H3K4me3 was investigated
+                in <italic>Mus musculus</italic> brain and heart cells. The microarray platform is a
+                set of four arrays manufactured by NimbleGen containing 390 k reporters each. The
+                reporters were designed to tile 32,482 selected regions of the <italic>Mus
+                musculus</italic> genome (assembly mm5) with one base every 100 bp, with a different
+                set of promoters represented on each of the four arrays (<xref ref-type="bibr" rid="pcbi.1000227-Barrera1">[18]</xref>, Methods: Condensed
+                array ChIP-chip). We obtained the data from the GEO repository <xref ref-type="bibr" rid="pcbi.1000227-Edgar1">[19]</xref> (accession GSE7688).</p>
+        </sec>
+        <sec id="s2">
+            <title>Importing the Data into R</title>
+            <p>For each microarray, the scanner output consists of two files, one holding the Cy3
+                intensities (the untreated <italic>input</italic> sample), the other one the Cy5
+                intensities, coming from the immunoprecipitated sample. These files are
+                tab-delimited text files in NimbleGen's <italic>pair</italic> format. Since
+                the reporters are distributed over four arrays, we have 16 files (4
+                microarrays×2 dyes×2 tissues).</p>
+            <p>
+                <monospace>&gt;<italic> pairDir </italic>&lt;<italic>-
+                        system.file(“PairData”,package = “ccTutorial”</italic>)</monospace>
+            </p>
+            <p>
+                <monospace>&gt;<italic> list.files(pairDir,
+                        pattern = “pair$”)</italic></monospace>
+            </p>
+            <p>
+                <monospace>[1] “47101_532.pair”
+                    “47101_635.pair” “48153_532.pair”
+                    “48153_635.pair”</monospace>
+            </p>
+            <p>
+                <monospace>[5] “48158_532.pair”
+                    “48158_635.pair” “48170_532.pair”
+                    “48170_635.pair”</monospace>
+            </p>
+            <p>
+                <monospace>[9] “48175_532.pair”
+                    “48175_635.pair” “48180_532.pair”
+                    “48180_635.pair”</monospace>
+            </p>
+            <p>
+                <monospace>[13] “48182_532.pair”
+                    “48182_635.pair” “49728_532.pair”
+                    “49728_635.pair”</monospace>
+            </p>
+            <p>One text file per array describes the samples, including which two
+                <italic>pair</italic> files belong to which sample. Another file, spottypes.text,
+                describes the reporter categories on the arrays.</p>
+            <p>We read in the raw reporter intensities and obtain four objects of class
+                    <italic>RGList</italic>, a class defined in package <italic>limma</italic>
+                <xref ref-type="bibr" rid="pcbi.1000227-Smyth1">[20]</xref>, one
+                object per array type.</p>
+            <p>
+                <monospace>&gt;<italic> RGs </italic>&lt;<italic>-
+                        lapply(sprintf(“files_array%d.txt”,1:4</italic>),</monospace>
+            </p>
+            <p>
+                <monospace>+ <italic>readNimblegen, “spottypes.txt”,
+                        path = pairDir)</italic></monospace>
+            </p>
+            <p>See <xref ref-type="supplementary-material" rid="pcbi.1000227.s001">Text S1</xref>
+                for an extended description of the data import.</p>
+        </sec>
+        <sec id="s3">
+            <title>Quality Assessment</title>
+            <p>In this step, we check the arrays for obvious artifacts and inconsistencies between
+                array subsets.</p>
+            <p>First, we look at the spatial distribution of the intensities on each array. See
+                    <xref ref-type="supplementary-material" rid="pcbi.1000227.s001">Text S1</xref>
+                for the figure and the source code. We do not see any artifacts such as scratches,
+                bright spots, or scanning-induced patterns that would render parts of the readouts
+                useless.</p>
+            <p>On all arrays in our set, the Cy3 channel holds the intensities from the untreated
+                    <italic>input</italic> sample, and the Cy5 channel holds the immunoprecipitate
+                from brain and heart, respectively. This experiment setup is reflected in the
+                reporter intensity correlation per channel (see <xref ref-type="supplementary-material" rid="pcbi.1000227.s001">Text S1</xref>). The
+                correlation between the intensities of the <italic>input</italic> samples is higher
+                than between the ChIP samples (0.877 versus 0.734).</p>
+            <p>The Bioconductor package <italic>arrayQualityMetrics</italic> offers an extensive set
+                of visualizations and metrics for assessing microarray data quality. Applied to this
+                dataset, <italic>arrayQualityMetrics</italic> also indicates that the data are of
+                good quality.</p>
+        </sec>
+        <sec id="s4">
+            <title>Mapping Reporters to the Genome</title>
+            <p>A mapping of reporters to genomic coordinates is usually provided by the array
+                manufacturer. Often, however, remapping the reporter sequences to the genome may be
+                required. Here, the microarray had been designed on an outdated assembly of the
+                mouse genome (mm5, May 2004). We remapped the reporter sequences to the current
+                assembly (mm9, July 2007).</p>
+            <p>We used <italic>Exonerate</italic>
+                <xref ref-type="bibr" rid="pcbi.1000227-Slater1">[21]</xref> for
+                the remapping, requiring 97% sequence similarity for a match. See <xref ref-type="supplementary-material" rid="pcbi.1000227.s001">Text S1</xref> for
+                details and the scripts used.</p>
+            <p>In <italic>Ringo</italic>, the mapping of reporters to the genome is stored in a
+                    <italic>probeAnno</italic> class object. <xref ref-type="supplementary-material" rid="pcbi.1000227.s001">Text S1</xref> contains details on its construction.</p>
+            <p>
+                <monospace>&gt;
+                data(<italic>“probeAnno”</italic>)</monospace>
+            </p>
+            <p>
+                <monospace>&gt; <italic>allChrs </italic>&lt;<italic>-
+                        chromosomeNames(probeAnno)</italic></monospace>
+            </p>
+        </sec>
+        <sec id="s5">
+            <title>Genome Annotation</title>
+            <p>We want to relate ChIP-enriched regions to annotated genome elements, such as
+                potential regulatory regions and transcripts. Using the Bioconductor package
+                    <italic>biomaRt</italic>
+                <xref ref-type="bibr" rid="pcbi.1000227-Durinck1">[11]</xref>, we
+                obtain an up-to-date annotation of the mouse genome from the Ensembl database <xref ref-type="bibr" rid="pcbi.1000227-Birney1">[22]</xref>.</p>
+            <p>The source code for creating the annotation table mm9genes is given in <xref ref-type="supplementary-material" rid="pcbi.1000227.s001">Text S1</xref>. The
+                table holds the coordinates, Ensembl gene identifiers, MGI symbols, and description
+                of all genes annotated for the <italic>mm9</italic> mouse assembly.</p>
+            <p>
+                <monospace>&gt;
+                data(<italic>“mm9genes”</italic>)</monospace>
+            </p>
+            <p>
+                <monospace>&gt; <italic>mm9genes[sample(nrow(mm9genes),
+                4),</italic></monospace>
+            </p>
+            <p>
+                <monospace>+ c(<italic>“name”,
+                        “chr”, “strand”,
+                        “start”, “end”,
+                        “symbol”</italic>)]</monospace>
+            </p>
+            <p>See <xref ref-type="table" rid="pcbi-1000227-t001">Table 1</xref>.</p>
+            <table-wrap id="pcbi-1000227-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000227.t001</object-id><label>Table 1</label><caption>
+                    <title>An excerpt of object ‘mm9genes’.</title>
+                </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000227-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000227.t001" xlink:type="simple"/><table>
+                    <colgroup span="1">
+                        <col align="left" span="1"/>
+                        <col align="center" span="1"/>
+                        <col align="center" span="1"/>
+                        <col align="center" span="1"/>
+                        <col align="center" span="1"/>
+                        <col align="center" span="1"/>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <td align="left" colspan="1" rowspan="1">Name</td>
+                            <td align="left" colspan="1" rowspan="1">Chr</td>
+                            <td align="left" colspan="1" rowspan="1">Strand</td>
+                            <td align="left" colspan="1" rowspan="1">Start</td>
+                            <td align="left" colspan="1" rowspan="1">End</td>
+                            <td align="left" colspan="1" rowspan="1">Symbol</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td align="left" colspan="1" rowspan="1">ENSMUSG00000057903</td>
+                            <td align="left" colspan="1" rowspan="1">14</td>
+                            <td align="left" colspan="1" rowspan="1">1</td>
+                            <td align="left" colspan="1" rowspan="1">51044196</td>
+                            <td align="left" colspan="1" rowspan="1">51045125</td>
+                            <td align="left" colspan="1" rowspan="1">Olfr739</td>
+                        </tr>
+                        <tr>
+                            <td align="left" colspan="1" rowspan="1">ENSMUSG00000039615</td>
+                            <td align="left" colspan="1" rowspan="1">17</td>
+                            <td align="left" colspan="1" rowspan="1">−1</td>
+                            <td align="left" colspan="1" rowspan="1">25967581</td>
+                            <td align="left" colspan="1" rowspan="1">25970306</td>
+                            <td align="left" colspan="1" rowspan="1">Stub1</td>
+                        </tr>
+                        <tr>
+                            <td align="left" colspan="1" rowspan="1">ENSMUSG00000068823</td>
+                            <td align="left" colspan="1" rowspan="1">3</td>
+                            <td align="left" colspan="1" rowspan="1">1</td>
+                            <td align="left" colspan="1" rowspan="1">102824530</td>
+                            <td align="left" colspan="1" rowspan="1">102862108</td>
+                            <td align="left" colspan="1" rowspan="1">Csde1</td>
+                        </tr>
+                        <tr>
+                            <td align="left" colspan="1" rowspan="1">ENSMUSG00000006241</td>
+                            <td align="left" colspan="1" rowspan="1">9</td>
+                            <td align="left" colspan="1" rowspan="1">1</td>
+                            <td align="left" colspan="1" rowspan="1">21731915</td>
+                            <td align="left" colspan="1" rowspan="1">21740316</td>
+                            <td align="left" colspan="1" rowspan="1">2510048L02Rik</td>
+                        </tr>
+                    </tbody>
+                </table></alternatives></table-wrap>
+            <p>Moreover, we used <italic>biomaRt</italic> to retrieve the Gene Ontology (GO) <xref ref-type="bibr" rid="pcbi.1000227-Ashburner1">[23]</xref>
+                annotation for all genes in the table. Find the source code and further details in
+                    <xref ref-type="supplementary-material" rid="pcbi.1000227.s001">Text S1</xref>.</p>
+            <p>
+                <monospace>&gt;
+                data(<italic>“mm9.gene2GO”</italic>)</monospace>
+            </p>
+            <p>For all genes, we stored which reporters, if any, are mapped inside the gene or in
+                its 5 kb upstream region.</p>
+            <p>
+                <monospace>&gt; data(<italic>“mm9.g2p”</italic>)</monospace>
+            </p>
+            <p>For later use, we determine which genes have a sufficient
+                number—arbitrarily we say five—of reporters mapped to their
+                upstream region or inside and which genes also have one or more GO terms annotated
+                to them.</p>
+            <p>
+                <monospace>&gt; <italic>arrayGenes</italic>&lt;<italic>- names(mm9.g2p)
+                        [listLen(mm9.g2p)&gt; = 5]</italic></monospace>
+            </p>
+            <p>
+                <monospace>&gt;<italic> arrayGenesWithGO </italic>&lt;<italic>-
+                        intersect(arrayGenes, names(mm9.gene2GO))</italic></monospace>
+            </p>
+        </sec>
+        <sec id="s6">
+            <title>Preprocessing</title>
+            <p>For each sample, we compute the log ratios log<sub>2</sub>(Cy5/Cy3) for all
+                reporters. To adjust for systematic dye and labeling biases, we compute
+                Tukey's biweight mean across each sample's log<sub>2</sub> ratios
+                and subtract it from the individual log<sub>2</sub> ratios. Each of the four
+                microarray types contains a unique set of reporters. Thus, we preprocess the arrays
+                separately by type and combine the results into one object holding the preprocessed
+                readouts for all reporters.</p>
+            <p>
+                <monospace>&gt; <italic>MAs </italic>&lt;<italic>- lapply(RGs,
+                        function(thisRG)</italic></monospace>
+            </p>
+            <p>
+                <monospace>+<italic> preprocess(thisRG[thisRG$genes$Status =  = “Probe”,],</italic></monospace>
+            </p>
+            <p>
+                <monospace>+<italic>  method = “nimblegen”,
+                        returnMAList = TRUE))</italic></monospace>
+            </p>
+            <p>
+                <monospace>&gt; <italic>MA </italic>&lt;<italic>- do.call(rbind,
+                    MAs)</italic></monospace>
+            </p>
+            <p>
+                <monospace>&gt; <italic>X </italic>&lt;<italic>-
+                asExprSet(MA)</italic></monospace>
+            </p>
+            <p>
+                <monospace>&gt; <italic>sampleNames(X) </italic>&lt;<italic>-
+                        paste(X$Cy5, X$Tissue,
+                        sep = “.”</italic>)</monospace>
+            </p>
+            <p>The result is an object of class <italic>ExpressionSet</italic>, the Bioconductor
+                class for storing preprocessed microarray data. Note that first creating a
+                    <italic>MAList</italic> for each array type, combining them with rbind, and then
+                converting the result into an <italic>ExpressionSet</italic> is only necessary if
+                the reporters are distributed over more than one microarray type. For data of one
+                microarray type only, you can call preprocess with argument
+                ‘returnMAList = FALSE’ and
+                directly obtain the result as an <italic>ExpressionSet</italic>.</p>
+            <p>The above procedure is the standard method suggested by NimbleGen for ChIP-chip. The
+                appropriate choice of normalization method generally depends on the data at hand,
+                and the need for normalization is inversely related to the quality of the data.
+                    <italic>Ringo</italic> and Bioconductor offer many alternative and more
+                sophisticated normalization methods, e.g., using the genomic DNA hybridization as
+                reference <xref ref-type="bibr" rid="pcbi.1000227-Huber1">[24]</xref>. However, due to the smaller dynamic range of the
+                data in the <italic>input</italic> channel, such additional effort seems less
+                worthwhile than, say, for transcription microarrays.</p>
+        </sec>
+        <sec id="s7">
+            <title>Visualizing Intensities along the Chromosome</title>
+            <p>We visualize the preprocessed H3K4me3 ChIP-chip reporter levels around the start of
+                the <italic>Actc1</italic> gene, which encodes the cardiac actin protein.</p>
+            <p>
+                <monospace>&gt; <italic>chipAlongChrom(X,
+                        chrom = “2”,
+                        xlim = c(113.8725e6,113.8835e6),
+                        ylim = c(−3,5),</italic></monospace>
+            </p>
+            <p>
+                <monospace>+<italic> probeAnno = probeAnno,
+                        gff = mm9genes,
+                        paletteName = ‘Set2’</italic>)</monospace>
+            </p>
+            <p>The degree of H3K4me3 enrichment over the reporters mapped to this region seems
+                stronger in heart cells than in brain cells (see <xref ref-type="fig" rid="pcbi-1000227-g001">Figure 1</xref>). However, the signal is highly
+                variable, and individual reporters give different readouts from reporters matching
+                genomic positions only 100 bp away, even though the DNA fragments after sonication
+                are hundreds of base pairs long.</p>
+            <fig id="pcbi-1000227-g001" position="float">
+                <object-id pub-id-type="doi">10.1371/journal.pcbi.1000227.g001</object-id>
+                <label>Figure 1</label>
+                <caption>
+                    <title>Normalized reporter intensities for H3K4me3 ChIP around the TSS of the
+                            <italic>Actc1</italic> gene in <italic>M. musculus</italic> brain and
+                        heart cells.</title>
+                    <p>The ticks below the genomic coordinate axis on top indicate genomic positions
+                        matched by reporters on the microarray. The blue arrows on the bottom mark
+                        the <italic>Actc1</italic> gene, with the arrow direction indicating that
+                        the gene is located on the Crick strand.</p>
+                </caption>
+                <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000227.g001" xlink:type="simple"/>
+            </fig>
+            <p>See <xref ref-type="supplementary-material" rid="pcbi.1000227.s001">Text S1</xref>
+                for the corresponding intensities around the start of the brain-specific gene
+                    <italic>Crpm1</italic>
+                <xref ref-type="bibr" rid="pcbi.1000227-Hamajima1">[25]</xref>.</p>
+            <p>When multiple replicates are available, it is instructive to compare these
+                visualizations to assess the agreement between replicates.</p>
+        </sec>
+        <sec id="s8">
+            <title>Smoothing of Reporter Intensities</title>
+            <p>The signal variance arises from systematic and stochastic noise. Individual reporters
+                measure the same amount of DNA with different efficiency due to reporter sequence
+                characteristics <xref ref-type="bibr" rid="pcbi.1000227-Royce1">[26]</xref>, such as GC content, secondary structure, and
+                cross-hybridization. To ameliorate these reporter effects as well as the stochastic
+                noise, we perform a smoothing over of individual reporter intensities before looking
+                for ChIP-enriched regions. We slide a window of 900 bp width along the chromosome
+                and replace the intensity at genomic position <italic>x</italic><sub>0</sub> by the
+                median over the intensities of those reporters mapped inside the window centered at
+                    <italic>x</italic><sub>0</sub>. Factors to take into account when choosing the
+                width of the sliding window are the size distribution of DNA fragments after
+                sonication and the spacing between reporter matches on the genome.</p>
+            <p>
+                <monospace>&gt; <italic>smoothX </italic>&lt;<italic>-
+                        computeRunningMedians(X,
+                        probeAnno = probeAnno,</italic></monospace>
+            </p>
+            <p>
+                <monospace>+<italic> modColumn = “Tissue”,
+                        allChr = allChrs,
+                        winHalfSize = 450,
+                        min.probes = 5)</italic></monospace>
+            </p>
+            <p>
+                <monospace>&gt; <italic>sampleNames(smoothX) </italic>&lt;<italic>-
+                        paste(sampleNames(X),
+                        “smoothed”,sep = “.”</italic>)</monospace>
+            </p>
+            <p>Compare the smoothed reporter intensities with the original ones around the start of
+                the gene <italic>Actc1</italic>.</p>
+            <p>
+                <monospace>&gt; <italic>chipAlongChrom(X,
+                        chrom = “2”,
+                        xlim = c(113.8725e6,113.8835e6),
+                        ylim = c(−3,5),</italic></monospace>
+            </p>
+            <p>
+                <monospace>+<italic> probeAnno = probeAnno,
+                        gff = mm9genes,
+                        paletteName = ‘Set2’</italic>)</monospace>
+            </p>
+            <p>
+                <monospace>&gt; <italic>chipAlongChrom(smoothX,
+                        chrom = “2”,
+                        xlim = c(113.8725e6,113.8835e6),
+                        ilwd = 4,</italic></monospace>
+            </p>
+            <p>
+                <monospace>+<italic> probeAnno = probeAnno,
+                        paletteName = ‘Dark2’,
+                        add = TRUE)</italic></monospace>
+            </p>
+            <p>See the result in <xref ref-type="fig" rid="pcbi-1000227-g002">Figure 2</xref>. After
+                smoothing, the reporters give a more concise picture that there is H3K4me3
+                enrichment inside and upstream of <italic>Actc1</italic> in heart but not in brain
+                cells.</p>
+            <fig id="pcbi-1000227-g002" position="float">
+                <object-id pub-id-type="doi">10.1371/journal.pcbi.1000227.g002</object-id>
+                <label>Figure 2</label>
+                <caption>
+                    <title>Normalized and smoothed reporter intensities for H3K4me3 ChIP around the
+                        TSS of the <italic>Actc1</italic> gene in <italic>M. musculus</italic> brain
+                        and heart cells.</title>
+                </caption>
+                <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000227.g002" xlink:type="simple"/>
+            </fig>
+        </sec>
+        <sec id="s9">
+            <title>Finding ChIP-Enriched Regions</title>
+            <p>We would like to determine a discrete set of regions that appear antibody-enriched,
+                together with a quantitative score of our confidence in that and a measure of their
+                enrichment strength. Which approach is best for this purpose depends on the
+                microarray design, on the biological question, and on the subsequent use of the
+                regions, e.g., in a follow-up experiment or computational analysis. Below, we
+                describe one possible approach, but, before that, we discuss two more conceptual
+                aspects.</p>
+            <p>In the literature, a computed confidence score is often mixed up with the term
+                    “<italic>p</italic>-value”. Speaking of a
+                <italic>p</italic>-value is meaningful only if there is a defined null hypothesis
+                and a probability interpretation; these complications are not necessary if the goal
+                is simply to find and rank regions in some way that can be reasonably calibrated.</p>
+            <p>Furthermore, it is helpful to distinguish between our confidence in an enrichment
+                being present, and the strength of the enrichment. Although stronger enrichments
+                tend to result in stronger signals and hence less ambiguous calls, our certainty
+                about an enrichment should also be affected by reporter coverage, sequence,
+                cross-hybridization, etc.</p>
+            <p>Let us now consider the following simple approach: for an enriched region, require
+                that the smoothed reporter levels all exceed a certain threshold
+                    <italic>y</italic><sub>0</sub>, that the region contains at least
+                    <italic>n</italic><sub>min</sub> reporter match positions, and that each of
+                these is less than <italic>d</italic><sub>max</sub> basepairs apart from the nearest
+                other affected position in the region.</p>
+            <p>The minimum number of reporters rule (<italic>n</italic><sub>min</sub>) might seem
+                redundant with the smoothing median computation (since a smoothed reporter intensity
+                is already the median of all the reporter intensities in the window), but it plays
+                its role in reporter sparse regions, where a window may only contain one or a few
+                reporters. One wants to avoid making calls supported by only few reporters.</p>
+            <p>The <italic>d</italic><sub>max</sub> rule prevents us from calling disconnected
+                regions.</p>
+            <sec id="s9a">
+                <title/>
+                <sec id="s9a1">
+                    <title>Setting the enrichment threshold</title>
+                    <p>The optimal approach for setting the enrichment threshold
+                            <italic>y</italic><sub>0</sub> would be to tune it by considering sets
+                        of positive and negative control regions. As such control regions are often
+                        not available, as with the current data, we choose a mixture modeling
+                        approach.</p>
+                    <p>The distribution of the smoothed reporter levels <italic>y</italic> can be
+                        modeled as a mixture of two underlying distributions. One is the null
+                        distribution <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000227.e001" xlink:type="simple"/></inline-formula> of reporter levels in non-enriched regions; the other is
+                        the alternative distribution <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000227.e002" xlink:type="simple"/></inline-formula> of the levels in enriched regions.</p>
+                    <p>The challenge is to estimate the null distribution <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000227.e003" xlink:type="simple"/></inline-formula>. In <italic>Ringo</italic>, an estimate <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000227.e004" xlink:type="simple"/></inline-formula> is derived based on the empirical distribution of smoothed
+                        reporter levels, as visualized in <xref ref-type="fig" rid="pcbi-1000227-g003">Figure 3</xref>.</p>
+                    <fig id="pcbi-1000227-g003" position="float">
+                        <object-id pub-id-type="doi">10.1371/journal.pcbi.1000227.g003</object-id>
+                        <label>Figure 3</label>
+                        <caption>
+                            <title>Histograms of reporter intensities after smoothing of reporter
+                                levels, measured in <italic>M. musculus</italic> heart and brain
+                                cells.</title>
+                            <p>The red vertical lines are the cutoff values suggested by the
+                                algorithm described in the text.</p>
+                        </caption>
+                        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000227.g003" xlink:type="simple"/>
+                    </fig>
+                    <p>
+                        <monospace>&gt;<italic> myPanelHistogram </italic>&lt;<italic>-
+                                function(x,…</italic>){</monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic> panel.histogram(x,
+                                col = brewer.pal(8,“Dark2”)[panel.number()],…</italic>)</monospace>
+                    </p>
+                    <p>
+                        <monospace><italic>+ panel.abline(v = y0[panel.number()],
+                                col = “red”</italic>)</monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic> }</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>&gt;<italic> h  = 
+                                    histogram(<sup>∼</sup>y | z,</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic> data
+                                 = 
+                        data.frame(</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic>  y
+                                 = 
+                            as.vector(exprs(smoothX)),</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic>  z
+                                 = 
+                                rep(X$Tissue,each = nrow(smoothX))),</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic> layout
+                                 =  c(1,2),nint
+                                 =  50,</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic> xlab
+                                 =  “smoothed reporter
+                                level [log2]”,</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic> panel
+                                 = 
+                        myPanelHistogram)</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>&gt; <italic>print(h)</italic></monospace>
+                    </p>
+                    <p>The histograms motivate the following assumptions on the two mixture
+                        components <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000227.e005" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000227.e006" xlink:type="simple"/></inline-formula>: the null distribution <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000227.e007" xlink:type="simple"/></inline-formula> has most of its mass close to its mode
+                            <italic>m</italic><sub>0</sub>, which is close to
+                        <italic>y</italic> = 0, and it is symmetric
+                        about <italic>m</italic><sub>0</sub>; the alternative distribution <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000227.e008" xlink:type="simple"/></inline-formula> is more spread out and has almost all of its mass to the
+                        right of <italic>m</italic><sub>0</sub>.</p>
+                    <p>Based on these assumptions, we can estimate <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000227.e009" xlink:type="simple"/></inline-formula> as follows. The mode <italic>m</italic><sub>0</sub> can be
+                        found by the midpoint of the shorth of those <italic>y</italic> that fall
+                        into the interval [−1,1] (on a
+                        log<sub>2</sub>scale). The distribution <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000227.e010" xlink:type="simple"/></inline-formula> is then estimated from the empirical distribution of
+                            <italic>m</italic><sub>0</sub>−|<italic>y</italic>−<italic>m</italic><sub>0</sub>|,
+                        i.e., by reflecting <italic>y</italic>&lt;<italic>m</italic><sub>0</sub>
+                        onto <italic>y</italic>&gt;<italic>m</italic><sub>0</sub>. From the
+                        estimated null distribution, an enrichment threshold
+                            <italic>y</italic><sub>0</sub> can be determined, for example the
+                        99.9% quantile.</p>
+                    <p>&gt;<italic> y0 </italic>&lt;<italic>- apply(exprs(smoothX), 2,
+                            upperBoundNull, prob = 0.99)</italic></p>
+                    <p>The values <italic>y</italic><sub>0</sub> estimated in this way are indicated
+                        by red vertical lines in the histograms in <xref ref-type="fig" rid="pcbi-1000227-g003">Figure 3</xref>. Antibodies vary in their
+                        efficiency to bind to their target epitope, and the noise level in the data
+                        depends on the sample DNA. Thus, <italic>y</italic><sub>0</sub> should be
+                        computed separately for each antibody and cell type, as the null and
+                        alternative distributions, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000227.e011" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000227.e012" xlink:type="simple"/></inline-formula>, may vary.</p>
+                    <p>This algorithm has been used in previous studies <xref ref-type="bibr" rid="pcbi.1000227-Schwartz1">[27]</xref>. A critical
+                        parameter in algorithms for the detection of ChIP-enriched regions is the
+                        fraction of reporters on the array that are expected to show enrichment. For
+                        the detection of in-vivo TF binding sites, it is reasonable to assume that
+                        this fraction is small, and most published algorithms rely on this
+                        assumption. However, the assumption does not necessarily hold for ChIP
+                        against histone modifications. The algorithm presented works as long as
+                        there is a discernible population of non-enriched reporter levels, even if
+                        the fraction of enriched levels is quite large.</p>
+                    <p>Another aspect of ChIP-chip data is the serial correlation between reporters,
+                        and there are approaches that aim to model such correlations <xref ref-type="bibr" rid="pcbi.1000227-Bourgon1">[28]</xref>,<xref ref-type="bibr" rid="pcbi.1000227-Kuan1">[29]</xref>.</p>
+                </sec>
+                <sec id="s9a2">
+                    <title>ChIP-enriched regions</title>
+                    <p>We are now ready to identify H3K4me3 ChIP-enriched regions in the data. We
+                        set <italic>n</italic><sub>min</sub> = 5
+                        and <italic>d</italic><sub>max</sub> = 450.</p>
+                    <p>
+                        <monospace>&gt; <italic>chersX </italic>&lt;<italic>-
+                                findChersOnSmoothed(smoothX,</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic> probeAnno
+                                 =  probeAnno,</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic> thresholds
+                                 =  y0,</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic> allChr
+                                 =  allChrs,</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic> distCutOff
+                                 =  450,</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic> minProbesInRow
+                                 =  5,</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic> cellType
+                                 = 
+                        X$Tissue)</italic></monospace>
+                    </p>
+                    <p>We relate found ChIP-enriched regions to gene coordinates retrieved from the
+                        Ensembl database (see above). An enriched region is regarded as
+                            <italic>related</italic> to a gene if its center position is located
+                        less than 5 kb upstream of a gene's start coordinate or between a
+                        gene's start and end coordinates.</p>
+                    <p>
+                        <monospace>&gt; <italic>chersX </italic>&lt;<italic>-
+                                relateChers(chersX, mm9genes,
+                                upstream = 5000)</italic></monospace>
+                    </p>
+                    <p>One characteristic of enriched regions that can be used for ranking them is
+                        the <italic>area under the curve</italic> score, that is, the sum of the
+                        smoothed reporter levels, each minus the threshold. Alternatively, one can
+                        rank them by the highest smoothed reporter level in the enriched region.</p>
+                    <p>
+                        <monospace>&gt; <italic>chersXD </italic>&lt;<italic>-
+                                as.data.frame(chersX)</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>&gt; <italic>head(chersXD[</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic> order(chersXD$maxLevel,
+                                decreasing = TRUE),</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic> c(“chr”,
+                                “start”, “end”,
+                                “cellType”, “features”,
+                                “maxLevel”,
+                                “score”)]</italic>)</monospace>
+                    </p>
+                    <p>See <xref ref-type="table" rid="pcbi-1000227-t002">Table 2</xref>.</p>
+                    <table-wrap id="pcbi-1000227-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000227.t002</object-id><label>Table 2</label><caption>
+                            <title>The six ChIP-enriched regions with the highest smoothed reporter
+                                levels.</title>
+                        </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000227-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000227.t002" xlink:type="simple"/><table>
+                            <colgroup span="1">
+                                <col align="left" span="1"/>
+                                <col align="center" span="1"/>
+                                <col align="center" span="1"/>
+                                <col align="center" span="1"/>
+                                <col align="center" span="1"/>
+                                <col align="center" span="1"/>
+                                <col align="center" span="1"/>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">Chr</td>
+                                    <td align="left" colspan="1" rowspan="1">Start</td>
+                                    <td align="left" colspan="1" rowspan="1">End</td>
+                                    <td align="left" colspan="1" rowspan="1">Cell Type</td>
+                                    <td align="left" colspan="1" rowspan="1">Features</td>
+                                    <td align="left" colspan="1" rowspan="1">Max. Level</td>
+                                    <td align="left" colspan="1" rowspan="1">Score</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">X</td>
+                                    <td align="left" colspan="1" rowspan="1">7338726</td>
+                                    <td align="left" colspan="1" rowspan="1">7343630</td>
+                                    <td align="left" colspan="1" rowspan="1">Heart</td>
+                                    <td align="left" colspan="1" rowspan="1">ENSMUSG00000000134</td>
+                                    <td align="left" colspan="1" rowspan="1">5.56</td>
+                                    <td align="left" colspan="1" rowspan="1">83.6</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">X</td>
+                                    <td align="left" colspan="1" rowspan="1">98834348</td>
+                                    <td align="left" colspan="1" rowspan="1">98838572</td>
+                                    <td align="left" colspan="1" rowspan="1">Heart</td>
+                                    <td align="left" colspan="1" rowspan="1">ENSMUSG00000034160</td>
+                                    <td align="left" colspan="1" rowspan="1">5.45</td>
+                                    <td align="left" colspan="1" rowspan="1">93.1</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">17</td>
+                                    <td align="left" colspan="1" rowspan="1">10508374</td>
+                                    <td align="left" colspan="1" rowspan="1">10511376</td>
+                                    <td align="left" colspan="1" rowspan="1">Heart</td>
+                                    <td align="left" colspan="1" rowspan="1">ENSMUSG00000062078</td>
+                                    <td align="left" colspan="1" rowspan="1">5.44</td>
+                                    <td align="left" colspan="1" rowspan="1">76.3</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">X</td>
+                                    <td align="left" colspan="1" rowspan="1">148236854</td>
+                                    <td align="left" colspan="1" rowspan="1">148239554</td>
+                                    <td align="left" colspan="1" rowspan="1">Heart</td>
+                                    <td align="left" colspan="1" rowspan="1">ENSMUSG00000025261</td>
+                                    <td align="left" colspan="1" rowspan="1">5.40</td>
+                                    <td align="left" colspan="1" rowspan="1">80.3</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">15</td>
+                                    <td align="left" colspan="1" rowspan="1">10414592</td>
+                                    <td align="left" colspan="1" rowspan="1">10416734</td>
+                                    <td align="left" colspan="1" rowspan="1">Heart</td>
+                                    <td align="left" colspan="1" rowspan="1">ENSMUSG00000022248 ENSMUSG00000022247</td>
+                                    <td align="left" colspan="1" rowspan="1">5.39</td>
+                                    <td align="left" colspan="1" rowspan="1">53.2</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">17</td>
+                                    <td align="left" colspan="1" rowspan="1">35972156</td>
+                                    <td align="left" colspan="1" rowspan="1">35975830</td>
+                                    <td align="left" colspan="1" rowspan="1">Heart</td>
+                                    <td align="left" colspan="1" rowspan="1">ENSMUSG00000061607 ENSMUSG00000001525</td>
+                                    <td align="left" colspan="1" rowspan="1">5.37</td>
+                                    <td align="left" colspan="1" rowspan="1">62.1</td>
+                                </tr>
+                            </tbody>
+                        </table></alternatives></table-wrap>
+                    <p>We visualize the intensities around the region with the highest smoothed
+                        level.</p>
+                    <p>
+                        <monospace>&gt;
+                                <italic>plot(chersX[[which.max(chersXD$maxLevel)]],
+                                smoothX,
+                            probeAnno = probeAnno,</italic></monospace>
+                    </p>
+                    <p>
+                        <monospace>+<italic> gff = mm9genes,
+                                paletteName = “Dark2”,
+                                ylim = c(−1,6))</italic></monospace>
+                    </p>
+                    <p><xref ref-type="fig" rid="pcbi-1000227-g004">Figure 4</xref> displays this
+                        region, which covers the gene <italic>Tcfe3</italic>.</p>
+                    <fig id="pcbi-1000227-g004" position="float">
+                        <object-id pub-id-type="doi">10.1371/journal.pcbi.1000227.g004</object-id>
+                        <label>Figure 4</label>
+                        <caption>
+                            <title>This genomic region is the H3K4me3 ChIP-enriched region with the
+                                highest smoothed reporter level.</title>
+                        </caption>
+                        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000227.g004" xlink:type="simple"/>
+                    </fig>
+                </sec>
+            </sec>
+            <sec id="s10">
+                <title>Comparing ChIP-Enrichment between the Tissues</title>
+                <p>There are several ways to compare the H3K4me3 enrichment between the two tissues.
+                    How many ChIP-enriched regions do we find in each tissue?</p>
+                <p>
+                    <monospace>&gt;
+                    <italic>table(chersXD$cellType)</italic></monospace>
+                </p>
+                <p>
+                    <monospace>brain heart</monospace>
+                </p>
+                <p>
+                    <monospace>11852 10391</monospace>
+                </p>
+                <p>Brain cells show a higher number of H3K4me3-enriched regions than heart cells.
+                    Which genes show tissue-specific association to H3K4me3 ChIP-enriched regions?</p>
+                <p>
+                    <monospace>&gt; <italic>brainGenes </italic>&lt;<italic>-
+                            getFeats(chersX[sapply(chersX,
+                            cellType) =  = “brain”]</italic>)</monospace>
+                </p>
+                <p>
+                    <monospace>&gt; <italic>heartGenes </italic>&lt;<italic>-
+                            getFeats(chersX[sapply(chersX,
+                            cellType) =  = “heart”]</italic>)</monospace>
+                </p>
+                <p>
+                    <monospace>&gt; <italic>brainOnlyGenes </italic>&lt;<italic>-
+                            setdiff(brainGenes, heartGenes)</italic></monospace>
+                </p>
+                <p>
+                    <monospace>&gt; <italic>heartOnlyGenes </italic>&lt;<italic>-
+                            setdiff(heartGenes, brainGenes)</italic></monospace>
+                </p>
+                <p>We use the Bioconductor package <italic>topGO</italic>
+                    <xref ref-type="bibr" rid="pcbi.1000227-Alexa1">[12]</xref> to
+                    investigate whether tissue-specific H3K4me3-enriched genes can be summarized by
+                    certain biological themes. <italic>topGO</italic> employs the Fisher test to
+                    assess whether among a list of genes, the fraction annotated with a certain GO
+                    term is significantly higher than expected by chance, considering all genes that
+                    are represented on the microarrays and have GO annotation. We set a
+                    <italic>p</italic>-value cutoff of 0.001, and the evaluation starts from the
+                    most specific GO nodes in a bottom-up approach. Genes that are used for
+                    evaluating a node are not used for evaluating any of its ancestor nodes
+                        [<xref ref-type="bibr" rid="pcbi.1000227-Alexa1">12</xref>]<italic>elim</italic> algorithm.</p>
+                <p>
+                    <monospace>&gt; <italic>sigGOTable </italic>&lt;<italic>-
+                            function(selGenes,
+                            GOgenes = arrayGenesWithGO,</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> gene2GO = mm9.gene2GO[arrayGenesWithGO],
+                            ontology = “BP”,maxP = 0.001)</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> {</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> inGenes </italic>&lt;<italic>-
+                            factor(as.integer(GOgenes%in%selGenes))</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> names(inGenes) </italic>&lt;<italic>-
+                            GOgenes</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> GOdata </italic>&lt;<italic>-
+                            new(“topGOdata”,
+                            ontology = ontology,
+                            allGenes = inGenes,</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic>  annot = annFUN.gene2GO,
+                            gene2GO = gene2GO)</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> myTestStat </italic>&lt;<italic>-
+                            new(“elimCount”,
+                            testStatistic = GOFisherTest,</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic>  name = “Fishertest”,
+                            cutOff = maxP)</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> mySigGroups </italic>&lt;<italic>-
+                            getSigGroups(GOdata, myTestStat)</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> sTab </italic>&lt;<italic>-
+                            GenTable(GOdata, mySigGroups,
+                            topNodes = length(usedGO(GOdata)))</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> names(sTab)[length(sTab)]
+                            </italic>&lt;<italic>-
+                    “p.value”</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> sTab </italic>&lt;<italic>-
+                            subset(sTab, as.numeric(p.value) </italic>&lt;<italic>
+                        maxP)</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> sTab$Term
+                            </italic>&lt;<italic>- sapply(mget(sTab$GO.ID,
+                            env = GOTERM),
+                    Term)</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> return(sTab)</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> }</italic></monospace>
+                </p>
+                <p>
+                    <monospace>&gt; <italic>brainRes </italic>&lt;<italic>-
+                            sigGOTable(brainOnlyGenes)</italic></monospace>
+                </p>
+                <p>
+                    <monospace>&gt; <italic>print(brainRes)</italic></monospace>
+                </p>
+                <p>See the result GO terms in <xref ref-type="table" rid="pcbi-1000227-t003">Table
+                    3</xref>. We perform the same analysis for genes showing heart-specific relation
+                    to H3K4me3 enrichment.</p>
+                <table-wrap id="pcbi-1000227-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000227.t003</object-id><label>Table 3</label><caption>
+                        <title>GO terms that are significantly over-represented among genes showing
+                            H3K4me3 enrichment specifically in brain cells.</title>
+                    </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000227-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000227.t003" xlink:type="simple"/><table>
+                        <colgroup span="1">
+                            <col align="left" span="1"/>
+                            <col align="center" span="1"/>
+                            <col align="center" span="1"/>
+                            <col align="center" span="1"/>
+                            <col align="center" span="1"/>
+                            <col align="center" span="1"/>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GO ID</td>
+                                <td align="left" colspan="1" rowspan="1">Term</td>
+                                <td align="left" colspan="1" rowspan="1">Annotated</td>
+                                <td align="left" colspan="1" rowspan="1">Significant</td>
+                                <td align="left" colspan="1" rowspan="1">Expected</td>
+                                <td align="left" colspan="1" rowspan="1"><italic>p</italic>-Value</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GO:0007268</td>
+                                <td align="left" colspan="1" rowspan="1">Synaptic transmission</td>
+                                <td align="left" colspan="1" rowspan="1">137</td>
+                                <td align="left" colspan="1" rowspan="1">44</td>
+                                <td align="left" colspan="1" rowspan="1">24.75</td>
+                                <td align="left" colspan="1" rowspan="1">4.1e-05</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GO:0007610</td>
+                                <td align="left" colspan="1" rowspan="1">Behavior</td>
+                                <td align="left" colspan="1" rowspan="1">180</td>
+                                <td align="left" colspan="1" rowspan="1">54</td>
+                                <td align="left" colspan="1" rowspan="1">32.52</td>
+                                <td align="left" colspan="1" rowspan="1">4.9e-05</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GO:0007409</td>
+                                <td align="left" colspan="1" rowspan="1">Axonogenesis</td>
+                                <td align="left" colspan="1" rowspan="1">119</td>
+                                <td align="left" colspan="1" rowspan="1">38</td>
+                                <td align="left" colspan="1" rowspan="1">21.50</td>
+                                <td align="left" colspan="1" rowspan="1">0.00016</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GO:0006887</td>
+                                <td align="left" colspan="1" rowspan="1">Exocytosis</td>
+                                <td align="left" colspan="1" rowspan="1">40</td>
+                                <td align="left" colspan="1" rowspan="1">17</td>
+                                <td align="left" colspan="1" rowspan="1">7.23</td>
+                                <td align="left" colspan="1" rowspan="1">0.00027</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GO:0007420</td>
+                                <td align="left" colspan="1" rowspan="1">Brain development</td>
+                                <td align="left" colspan="1" rowspan="1">136</td>
+                                <td align="left" colspan="1" rowspan="1">40</td>
+                                <td align="left" colspan="1" rowspan="1">24.57</td>
+                                <td align="left" colspan="1" rowspan="1">0.00072</td>
+                            </tr>
+                        </tbody>
+                    </table></alternatives></table-wrap>
+                <p>
+                    <monospace>&gt; <italic>heartRes </italic>&lt;<italic>-
+                            sigGOTable(heartOnlyGenes)</italic></monospace>
+                </p>
+                <p>
+                    <monospace>&gt; <italic>print(heartRes)</italic></monospace>
+                </p>
+                <p>See the result in <xref ref-type="table" rid="pcbi-1000227-t004">Table 4</xref>.
+                    Genes that show H3K4me3 in brain but not in heart cells are significantly often
+                    involved in neuron-specific biological processes. Genes marked by H3K4me3
+                    specifically in heart cells show known cardiomyocyte functions, amongst others.</p>
+                <table-wrap id="pcbi-1000227-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000227.t004</object-id><label>Table 4</label><caption>
+                        <title>GO terms that are significantly over-represented among genes showing
+                            H3K4me3 enrichment specifically in heart cells.</title>
+                    </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000227-t004-4" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000227.t004" xlink:type="simple"/><table>
+                        <colgroup span="1">
+                            <col align="left" span="1"/>
+                            <col align="center" span="1"/>
+                            <col align="center" span="1"/>
+                            <col align="center" span="1"/>
+                            <col align="center" span="1"/>
+                            <col align="center" span="1"/>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GO ID</td>
+                                <td align="left" colspan="1" rowspan="1">Term</td>
+                                <td align="left" colspan="1" rowspan="1">Annotated</td>
+                                <td align="left" colspan="1" rowspan="1">Significant</td>
+                                <td align="left" colspan="1" rowspan="1">Expected</td>
+                                <td align="left" colspan="1" rowspan="1"><italic>p</italic>-Value</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GO:0006936</td>
+                                <td align="left" colspan="1" rowspan="1">Muscle contraction</td>
+                                <td align="left" colspan="1" rowspan="1">56</td>
+                                <td align="left" colspan="1" rowspan="1">13</td>
+                                <td align="left" colspan="1" rowspan="1">2.97</td>
+                                <td align="left" colspan="1" rowspan="1">4.7e-06</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GO:0002526</td>
+                                <td align="left" colspan="1" rowspan="1">Acute inflammatory response</td>
+                                <td align="left" colspan="1" rowspan="1">17</td>
+                                <td align="left" colspan="1" rowspan="1">6</td>
+                                <td align="left" colspan="1" rowspan="1">0.90</td>
+                                <td align="left" colspan="1" rowspan="1">0.00016</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GO:0009887</td>
+                                <td align="left" colspan="1" rowspan="1">Organ morphogenesis</td>
+                                <td align="left" colspan="1" rowspan="1">339</td>
+                                <td align="left" colspan="1" rowspan="1">34</td>
+                                <td align="left" colspan="1" rowspan="1">17.95</td>
+                                <td align="left" colspan="1" rowspan="1">0.00019</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GO:0008016</td>
+                                <td align="left" colspan="1" rowspan="1">Regulation of heart contraction</td>
+                                <td align="left" colspan="1" rowspan="1">32</td>
+                                <td align="left" colspan="1" rowspan="1">8</td>
+                                <td align="left" colspan="1" rowspan="1">1.69</td>
+                                <td align="left" colspan="1" rowspan="1">0.00019</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GO:0030878</td>
+                                <td align="left" colspan="1" rowspan="1">Thyroid gland development</td>
+                                <td align="left" colspan="1" rowspan="1">7</td>
+                                <td align="left" colspan="1" rowspan="1">4</td>
+                                <td align="left" colspan="1" rowspan="1">0.37</td>
+                                <td align="left" colspan="1" rowspan="1">0.00024</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GO:0007512</td>
+                                <td align="left" colspan="1" rowspan="1">Adult heart development</td>
+                                <td align="left" colspan="1" rowspan="1">8</td>
+                                <td align="left" colspan="1" rowspan="1">4</td>
+                                <td align="left" colspan="1" rowspan="1">0.42</td>
+                                <td align="left" colspan="1" rowspan="1">0.00046</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GO:0055003</td>
+                                <td align="left" colspan="1" rowspan="1">Cardiac myofibril assembly</td>
+                                <td align="left" colspan="1" rowspan="1">4</td>
+                                <td align="left" colspan="1" rowspan="1">3</td>
+                                <td align="left" colspan="1" rowspan="1">0.21</td>
+                                <td align="left" colspan="1" rowspan="1">0.00057</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GO:0007507</td>
+                                <td align="left" colspan="1" rowspan="1">Heart development</td>
+                                <td align="left" colspan="1" rowspan="1">148</td>
+                                <td align="left" colspan="1" rowspan="1">21</td>
+                                <td align="left" colspan="1" rowspan="1">7.84</td>
+                                <td align="left" colspan="1" rowspan="1">0.00090</td>
+                            </tr>
+                        </tbody>
+                    </table></alternatives></table-wrap>
+                <p>This analysis could be repeated for the <italic>cellular component</italic> and
+                        <italic>molecular function</italic> ontologies of the GO. Besides GO, other
+                    databases that collect gene lists can be used for this kind of gene set
+                    enrichment analysis. For, example, the Kyoto Encyclopedia of Genes and Genomes
+                    (KEGG) <xref ref-type="bibr" rid="pcbi.1000227-Kanehisa1">[30]</xref> is also available in Bioconductor.</p>
+                <p>In <xref ref-type="supplementary-material" rid="pcbi.1000227.s001">Text
+                    S1</xref>, we present an additional way for comparing H3K4me3 enrichment between
+                    the two tissues, an enriched-region–wise comparison considering the
+                    actual overlap of the enriched regions.</p>
+            </sec>
+            <sec id="s11">
+                <title>ChIP Results and Expression Microarray Data</title>
+                <p>We compare the H3K4me3 ChIP-chip results with the expression microarray data,
+                    which Barrera et al. <xref ref-type="bibr" rid="pcbi.1000227-Barrera1">[18]</xref> provide for the same <italic>M.
+                    musculus</italic> tissues they analyzed with ChIP-chip.</p>
+                <p>
+                    <monospace>&gt;
+                        data(<italic>“barreraExpressionX”</italic>)</monospace>
+                </p>
+                <p>The data were generated using the Mouse_430_2 oligonucleotide microarray platform
+                    from Affymetrix and preprocessed using Affymetrix's MAS5 method. Using
+                        <italic>biomaRt</italic>, we created a mapping of Ensembl gene identifiers
+                    to the probe set identifiers on that microarray platform (see <xref ref-type="supplementary-material" rid="pcbi.1000227.s001">Text S1</xref> for
+                    the source code).</p>
+                <p>
+                    <monospace>&gt;
+                        data(<italic>“arrayGenesToProbeSets”</italic>)</monospace>
+                </p>
+                <p>We obtain the expression values for genes related to H3K4me3-enriched regions in
+                    heart or brain cells.</p>
+                <p>
+                    <monospace>&gt; <italic>bX </italic>&lt;<italic>-
+                            exprs(barreraExpressionX)</italic></monospace>
+                </p>
+                <p>
+                    <monospace>&gt; <italic>allH3K4me3Genes </italic>&lt;<italic>-
+                            union(brainGenes, heartGenes)</italic></monospace>
+                </p>
+                <p>
+                    <monospace>&gt; <italic>allH3K4ProbeSets </italic>&lt;<italic>-
+                            unlist(arrayGenesToProbeSets[allH3K4me3Genes]</italic>)</monospace>
+                </p>
+                <p>
+                    <monospace>&gt; <italic>noH3K4ProbeSets </italic>&lt;<italic>-
+                            setdiff(rownames(bX), allH3K4ProbeSets)</italic></monospace>
+                </p>
+                <p>
+                    <monospace>&gt; <italic>brainH3K4ExclProbeSets </italic>&lt;<italic>-
+                            unlist(arrayGenesToProbeSets[brainOnlyGenes]</italic>)</monospace>
+                </p>
+                <p>
+                    <monospace>&gt; <italic>heartH3K4ExclProbeSets </italic>&lt;<italic>-
+                            unlist(arrayGenesToProbeSets[heartOnlyGenes]</italic>)</monospace>
+                </p>
+                <p>
+                    <monospace>&gt; <italic>brainIdx </italic>&lt;<italic>-
+                            barreraExpressionX$Tissue =  = “Brain”</italic></monospace>
+                </p>
+                <p>
+                    <monospace>&gt; <italic>brainExpression </italic>&lt;<italic>-
+                        list(</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> H3K4me3BrainNoHeartNo
+                             =  bX[noH3K4ProbeSets,
+                            brainIdx],</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> H3K4me3BrainYes
+                             =  bX[allH3K4ProbeSets,
+                            brainIdx],</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> H3K4me3BrainYesHeartNo
+                             =  bX[brainH3K4ExclProbeSets,
+                            brainIdx],</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> H3K4me3BrainNoHeartYes
+                             =  bX[heartH3K4ExclProbeSets,
+                            brainIdx]</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> )</italic></monospace>
+                </p>
+                <p>We use boxplots to compare the brain expression levels of genes with and without
+                    H3K4me3-enriched regions in brain/heart cells.</p>
+                <p>
+                    <monospace>&gt; <italic>boxplot(brainExpression,
+                            col = c(“#666666”,
+                            “#999966”, “#669966”,
+                            “#996666”</italic>),</monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> names = NA,
+                            varwidth = TRUE,
+                            log = “y”,</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> ylab = ‘geneexpressionlevelinbraincells’</italic>)</monospace>
+                </p>
+                <p>
+                    <monospace>&gt; <italic>mtext(side = 1,
+                            at = 1:length(brainExpression),
+                            padj = 1,
+                            font = 2,</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> text = rep(“H3K4me3”,4),
+                            line = 1)</italic></monospace>
+                </p>
+                <p>
+                    <monospace>&gt; <italic>mtext(side = 1,
+                            at = c(0.2,1:length(brainExpression)),
+                            padj = 1,
+                            font = 2,</italic></monospace>
+                </p>
+                <p>
+                    <monospace>+<italic> text = c(“brain/heart”,
+                            “−/−”,
+                            “+/+”,
+                            “+/−”,
+                            “−/+”),
+                            line = 2)</italic></monospace>
+                </p>
+                <p>See the boxplots in <xref ref-type="fig" rid="pcbi-1000227-g005">Figure 5</xref>.
+                    Genes related to H3K4me3 ChIP-enriched regions show higher expression levels
+                    than those that are not, as we can assess using the Wilcoxon rank sum test.</p>
+                <fig id="pcbi-1000227-g005" position="float">
+                    <object-id pub-id-type="doi">10.1371/journal.pcbi.1000227.g005</object-id>
+                    <label>Figure 5</label>
+                    <caption>
+                        <title>Boxplots for comparing gene expression levels in brain cells.</title>
+                        <p>Genes are stratified by whether or not they are related to H3K4me3
+                            ChIP-enriched regions in brain and/or heart cells according to
+                            ChIP-chip. The width of the boxes is proportional to the number of genes
+                            in each stratification group.</p>
+                    </caption>
+                    <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000227.g005" xlink:type="simple"/>
+                </fig>
+                <p>
+                    <monospace>
+                        <italic>&gt; with(brainExpression,</italic>
+                    </monospace>
+                </p>
+                <p>
+                    <monospace>
+                        <italic>+ wilcox.test(H3K4me3BrainYesHeartNo,
+                            H3K4me3BrainNoHeartNo,</italic>
+                    </monospace>
+                </p>
+                <p>
+                    <monospace>
+                        <italic>+  alternative = “greater”))</italic>
+                    </monospace>
+                </p>
+                <p>
+                    <monospace> Wilcoxon rank sum test with continuity
+                    correction</monospace>
+                </p>
+                <p>
+                    <monospace>data: H3K4me3BrainYesHeartNoandH3K4me3BrainNoHeartNo</monospace>
+                </p>
+                <p>
+                    <monospace>W  =  88159233, p-value &lt;
+                        2.2e-16</monospace>
+                </p>
+                <p>
+                    <monospace>alternative hypothesis: true location shift is greater than
+                    0</monospace>
+                </p>
+            </sec>
+            <sec id="s12">
+                <title>Discussion</title>
+                <p>The analysis of the ChIP-chip and transcription data of Barrera et al. <xref ref-type="bibr" rid="pcbi.1000227-Barrera1">[18]</xref>
+                    showed that genes that are expressed in specific tissues are marked by
+                    tissue-specific H3K4me3 modification. This finding agrees with previous reports
+                    that H3K4me3 is a marker of active gene transcription <xref ref-type="bibr" rid="pcbi.1000227-SantosRosa1">[16]</xref>.</p>
+                <p>We have shown how to use the freely available tools R and Bioconductor for the
+                    analysis of ChIP-chip data. We demonstrated ways to assess data quality, to
+                    visualize the data, and to find ChIP-enriched regions.</p>
+                <p>As with any high-throughput technology, there are aspects of ChIP-chip
+                    experiments that need close attention, such as specificity and sensitivity of
+                    the antibodies, and potential cross-hybridization of the microarray reporters.
+                    Good experiments will contain appropriate controls, in the presence of which the
+                    software can be used to monitor and assess these issues.</p>
+                <p>In addition to the ones introduced here, there are other Bioconductor packages
+                    that provide further functionality, e.g., <italic>ACME</italic>
+                    <xref ref-type="bibr" rid="pcbi.1000227-Scacheri1">[31]</xref>, <italic>oligo</italic>, and <italic>tilingArray</italic>
+                    <xref ref-type="bibr" rid="pcbi.1000227-Huber1">[24]</xref>.
+                    For analyses that go beyond pairwise comparisons of samples and use more complex
+                    (multi-)factorial experimental designs or retrospective studies of collections
+                    of tissues from patients, the package <italic>limma</italic>
+                    <xref ref-type="bibr" rid="pcbi.1000227-Smyth1">[20]</xref>
+                    offers a powerful statistical modeling interface and facilitates computation of
+                    appropriate reporter-wise statistics.</p>
+                <p>We also demonstrated a few conceivable follow-up investigations. Bioconductor
+                    allows for easy integration of ChIP-chip results with other resources, such as
+                    annotated genome elements, gene expression data, or DNA–protein
+                    interaction networks.</p>
+            </sec>
+            <sec id="s13">
+                <title>Software Versions</title>
+                <p>This tutorial was generated using the following package versions:</p>
+                <list list-type="bullet">
+                    <list-item>
+                        <p>R version 2.8.0 Under development (unstable) (2008-09-13 r46541),
+                            x86_64-unknown-linux-gnu</p>
+                    </list-item>
+                    <list-item>
+                        <p>Locale:
+                                <monospace>LC_CTYPE = en_US.ISO-8859-1;LC_NUMERIC = C;LC_TIME = en_US.ISO-8859-1;LC_COLLATE = en_US.ISO-8859-1;LC_MONETARY = C;LC_MESSAGES = en_US.ISO-8859-1;LC_PAPER = en_US.ISO-8859-1;LC_NAME = C;LC_ADDRES8859-1;LC_IDENTIFICATION = C</monospace></p>
+                    </list-item>
+                    <list-item>
+                        <p>Base packages: base, datasets, graphics, grDevices, methods, splines,
+                            stats, tools, utils</p>
+                    </list-item>
+                    <list-item>
+                        <p>Other packages: affy 1.19.4, affyio 1.9.1, annotate 1.19.2, AnnotationDbi
+                            1.3.9, Biobase 2.1.7, biomaRt 1.15.1, ccTutorial 0.9.5, codetools 0.2-1,
+                            DBI 0.2-4, digest 0.3.1, fortunes 1.3-5, genefilter 1.21.3, geneplotter
+                            1.19.5, GO.db 2.2.3, graph 1.19.5, lattice 0.17-15, limma 2.15.11,
+                            preprocessCore 1.3.4, RColorBrewer 1.0-2, RCurl 0.9-4, Ringo 1.5.13,
+                            RSQLite 0.7-0, SparseM 0.78, survival 2.34-1, topGO 1.9.0, vsn 3.7.6,
+                            weaver 1.7.0, xtable 1.5-3</p>
+                    </list-item>
+                    <list-item>
+                        <p>Loaded via a namespace (and not attached): cluster 1.11.11, grid 2.8.0,
+                            KernSmooth 2.22-22, XML 1.96-0</p>
+                    </list-item>
+                </list>
+            </sec>
+            <sec id="s14">
+                <title>Supporting Information</title>
+                <supplementary-material id="pcbi.1000227.s001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000227.s001" xlink:type="simple">
+                    <label>Text S1</label>
+                    <caption>
+                        <p>Analyzing ChIP-chip data using Bioconductor. This document contains
+                            supplementary text, source code, and figures.</p>
+                        <p>(5.11 MB PDF)</p>
+                    </caption>
+                </supplementary-material>
+            </sec>
+        </sec>
+    </body>
+    <back>
+        <ack>
+            <p>We thank Richard Bourgon and two reviewers for valuable comments on the manuscript,
+                and Leah O. Barrera, Bing Ren, and co-workers for making their ChIP-chip data
+                publicly available.</p>
+        </ack>
+        <ref-list>
+            <title>References</title>
+            <ref id="pcbi.1000227-Buck1">
+                <label>1</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Buck</surname>
+                            <given-names>MJ</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Nobel</surname>
+                            <given-names>AB</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Lieb</surname>
+                            <given-names>JD</given-names>
+                        </name>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>ChIPOTle: a user-friendly tool for the analysis of ChIP-chip
+                        data.</article-title>
+                    <source>Genome Biology</source>
+                    <volume>6</volume>
+                    <fpage>R97</fpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Ji1">
+                <label>2</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Ji</surname>
+                            <given-names>H</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Wong</surname>
+                            <given-names>WH</given-names>
+                        </name>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>TileMap: create chromosomal map of tiling array hybridizations.</article-title>
+                    <source>Bioinformatics</source>
+                    <volume>21</volume>
+                    <fpage>3629</fpage>
+                    <lpage>3636</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Johnson1">
+                <label>3</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Johnson</surname>
+                            <given-names>WE</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Li</surname>
+                            <given-names>W</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Meyer</surname>
+                            <given-names>CA</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Gottardo</surname>
+                            <given-names>R</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Carroll</surname>
+                            <given-names>JS</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2006</year>
+                    <article-title>Model-based analysis of tiling-arrays for ChIP-chip.</article-title>
+                    <source>Proc Natl Acad Sci USA</source>
+                    <volume>103</volume>
+                    <fpage>12457</fpage>
+                    <lpage>12462</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Kele1">
+                <label>4</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Keleş</surname>
+                            <given-names>S</given-names>
+                        </name>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>Mixture modeling for genome-wide localization of transcription
+                        factors.</article-title>
+                    <source>Biometrics</source>
+                    <volume>63</volume>
+                    <fpage>10</fpage>
+                    <lpage>21</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Toedling1">
+                <label>5</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Toedling</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Sklyar</surname>
+                            <given-names>O</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Krueger</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Sperling</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Fischer</surname>
+                            <given-names>JJ</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>Ringo—an R/Bioconductor package for analyzing ChIP-chip
+                        readouts.</article-title>
+                    <source>BMC Bioinformatics</source>
+                    <volume>8</volume>
+                    <fpage>221</fpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Zheng1">
+                <label>6</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Zheng</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Barrera</surname>
+                            <given-names>LO</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Ren</surname>
+                            <given-names>B</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Wu</surname>
+                            <given-names>YN</given-names>
+                        </name>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>ChIP-chip: data, model, and analysis.</article-title>
+                    <source>Biometrics</source>
+                    <volume>63</volume>
+                    <fpage>787</fpage>
+                    <lpage>796</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Gentleman1">
+                <label>7</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Gentleman</surname>
+                            <given-names>RC</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Carey</surname>
+                            <given-names>VJ</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Bates</surname>
+                            <given-names>DJ</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Bolstad</surname>
+                            <given-names>BM</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Dettling</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2004</year>
+                    <article-title>Bioconductor: Open software development for computational biology
+                        and bioinformatics.</article-title>
+                    <source>Genome Biology</source>
+                    <volume>5</volume>
+                    <fpage>R80</fpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Gentleman2">
+                <label>8</label>
+                <element-citation publication-type="other" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Gentleman</surname>
+                            <given-names>R</given-names>
+                        </name>
+                    </person-group>
+                    <year>2008</year>
+                    <source>R Programming for Bioinformatics. Computer Science and Data Analysis</source>
+                    <publisher-name>Chapman &amp; Hall/CRC</publisher-name>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Gentleman3">
+                <label>9</label>
+                <element-citation publication-type="other" xlink:type="simple">
+                    <person-group person-group-type="editor">
+                        <name name-style="western">
+                            <surname>Gentleman</surname>
+                            <given-names>R</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Carey</surname>
+                            <given-names>V</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Huber</surname>
+                            <given-names>W</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Irizarry</surname>
+                            <given-names>R</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Dudoit</surname>
+                            <given-names>S</given-names>
+                        </name>
+                    </person-group>
+                    <year>2005</year>
+                    <source>Bioinformatics and Computational Biology Solutions Using R and
+                        Bioconductor</source>
+                    <publisher-name>Springer</publisher-name>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Hahne1">
+                <label>10</label>
+                <element-citation publication-type="other" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Hahne</surname>
+                            <given-names>F</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Huber</surname>
+                            <given-names>W</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Gentleman</surname>
+                            <given-names>R</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Falcon</surname>
+                            <given-names>S</given-names>
+                        </name>
+                    </person-group>
+                    <year>2008</year>
+                    <source>Bioconductor Case Studies</source>
+                    <publisher-name>Use R. Springer</publisher-name>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Durinck1">
+                <label>11</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Durinck</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Moreau</surname>
+                            <given-names>Y</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Kasprzyk</surname>
+                            <given-names>A</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Davis</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Moor</surname>
+                            <given-names>BD</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>BioMart and Bioconductor: a powerful link between biological
+                        databases and microarray data analysis.</article-title>
+                    <source>Bioinformatics</source>
+                    <volume>21</volume>
+                    <fpage>3439</fpage>
+                    <lpage>3440</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Alexa1">
+                <label>12</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Alexa</surname>
+                            <given-names>A</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Rahnenführer</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Lengauer</surname>
+                            <given-names>T</given-names>
+                        </name>
+                    </person-group>
+                    <year>2006</year>
+                    <article-title>Improved scoring of functional groups from gene expression data
+                        by decorrelating GO graph structure.</article-title>
+                    <source>Bioinformatics</source>
+                    <volume>22</volume>
+                    <fpage>1600</fpage>
+                    <lpage>1607</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Gentleman4">
+                <label>13</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Gentleman</surname>
+                            <given-names>R</given-names>
+                        </name>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>Reproducible research: A bioinformatics case study.</article-title>
+                    <source>Statistical Applications in Genetics and Molecular Biology</source>
+                    <volume>4</volume>
+                    <fpage>2</fpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Knuth1">
+                <label>14</label>
+                <element-citation publication-type="other" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Knuth</surname>
+                            <given-names>D</given-names>
+                        </name>
+                    </person-group>
+                    <year>1992</year>
+                    <source>Literate programming. Technical report</source>
+                    <publisher-loc>Stanford, California</publisher-loc>
+                    <publisher-name>Center for the Study of Language and
+                    Information</publisher-name>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-The1">
+                <label>15</label>
+                <element-citation publication-type="other" xlink:type="simple">
+                    <collab xlink:type="simple">The Microarray and Gene Expression Data (MGED) Society</collab>
+                    <year>2005</year>
+                    <article-title>MIAME Glossary.</article-title>
+                    <comment>Available: <ext-link ext-link-type="uri" xlink:href="http://www.mged.org/Workgroups/MIAME/miame_glossary.html" xlink:type="simple">http://www.mged.org/Workgroups/MIAME/miame_glossary.html</ext-link>.
+                        Accessed 20 October 2008.</comment>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-SantosRosa1">
+                <label>16</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Santos-Rosa</surname>
+                            <given-names>H</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Schneider</surname>
+                            <given-names>R</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Bannister</surname>
+                            <given-names>AJ</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Sherriff</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Bernstein</surname>
+                            <given-names>BE</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2002</year>
+                    <article-title>Active genes are tri-methylated at K4 of histone H3.</article-title>
+                    <source>Nature</source>
+                    <volume>419</volume>
+                    <fpage>407</fpage>
+                    <lpage>411</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Fischer1">
+                <label>17</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Fischer</surname>
+                            <given-names>JJ</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Toedling</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Krueger</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Schueler</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Huber</surname>
+                            <given-names>W</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2008</year>
+                    <article-title>Combinatorial effects of four histone modifications in
+                        transcription and differentiation.</article-title>
+                    <source>Genomics</source>
+                    <volume>91</volume>
+                    <fpage>41</fpage>
+                    <lpage>51</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Barrera1">
+                <label>18</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Barrera</surname>
+                            <given-names>LO</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Li</surname>
+                            <given-names>Z</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Smith</surname>
+                            <given-names>AD</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Arden</surname>
+                            <given-names>KC</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Cavenee</surname>
+                            <given-names>WK</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2008</year>
+                    <article-title>Genome-wide mapping and analysis of active promoters in mouse
+                        embryonic stem cells and adult organs.</article-title>
+                    <source>Genome Res</source>
+                    <volume>18</volume>
+                    <fpage>46</fpage>
+                    <lpage>59</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Edgar1">
+                <label>19</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Edgar</surname>
+                            <given-names>R</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Domrachev</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Lash</surname>
+                            <given-names>AE</given-names>
+                        </name>
+                    </person-group>
+                    <year>2002</year>
+                    <article-title>Gene Expression Omnibus: NCBI gene expression and hybridization
+                        array data repository.</article-title>
+                    <source>Nucleic Acids Res</source>
+                    <volume>30</volume>
+                    <fpage>207</fpage>
+                    <lpage>210</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Smyth1">
+                <label>20</label>
+                <element-citation publication-type="other" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Smyth</surname>
+                            <given-names>GK</given-names>
+                        </name>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>Limma: linear models for microarray data.</article-title>
+                    <person-group person-group-type="editor">
+                        <name name-style="western">
+                            <surname>Gentleman</surname>
+                            <given-names>R</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Carey</surname>
+                            <given-names>V</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Huber</surname>
+                            <given-names>W</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Irizarry</surname>
+                            <given-names>R</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Dudoit</surname>
+                            <given-names>S</given-names>
+                        </name>
+                    </person-group>
+                    <source>Bioinformatics and Computational Biology Solutions Using R and
+                        Bioconductor</source>
+                    <source>Springer</source>
+                    <fpage>397</fpage>
+                    <lpage>420</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Slater1">
+                <label>21</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Slater</surname>
+                            <given-names>GSC</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Birney</surname>
+                            <given-names>E</given-names>
+                        </name>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>Automated generation of heuristics for biological sequence
+                        comparison.</article-title>
+                    <source>BMC Bioinformatics</source>
+                    <volume>6</volume>
+                    <fpage>31</fpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Birney1">
+                <label>22</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Birney</surname>
+                            <given-names>E</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Andrews</surname>
+                            <given-names>TD</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Bevan</surname>
+                            <given-names>P</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Caccamo</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Chen</surname>
+                            <given-names>Y</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2004</year>
+                    <article-title>An overview of Ensembl.</article-title>
+                    <source>Genome Res</source>
+                    <volume>14</volume>
+                    <fpage>925</fpage>
+                    <lpage>928</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Ashburner1">
+                <label>23</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Ashburner</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Ball</surname>
+                            <given-names>CA</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Blake</surname>
+                            <given-names>JA</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Botstein</surname>
+                            <given-names>D</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Butler</surname>
+                            <given-names>H</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2000</year>
+                    <article-title>Gene ontology: tool for the unification of biology. The Gene
+                        Ontology Consortium.</article-title>
+                    <source>Nat Genet</source>
+                    <volume>25</volume>
+                    <fpage>25</fpage>
+                    <lpage>29</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Huber1">
+                <label>24</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Huber</surname>
+                            <given-names>W</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Toedling</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Steinmetz</surname>
+                            <given-names>LM</given-names>
+                        </name>
+                    </person-group>
+                    <year>2006</year>
+                    <article-title>Transcript mapping with high-density oligonucleotide tiling
+                        arrays.</article-title>
+                    <source>Bioinformatics</source>
+                    <volume>22</volume>
+                    <fpage>1963</fpage>
+                    <lpage>1970</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Hamajima1">
+                <label>25</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Hamajima</surname>
+                            <given-names>N</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Matsuda</surname>
+                            <given-names>K</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Sakata</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Tamaki</surname>
+                            <given-names>N</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Sasaki</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>1996</year>
+                    <article-title>A novel gene family defined by human dihydropyrimidinase and
+                        three related proteins with differential tissue distribution.</article-title>
+                    <source>Gene</source>
+                    <volume>180</volume>
+                    <fpage>157</fpage>
+                    <lpage>163</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Royce1">
+                <label>26</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Royce</surname>
+                            <given-names>TE</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Rozowsky</surname>
+                            <given-names>JS</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Gerstein</surname>
+                            <given-names>MB</given-names>
+                        </name>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>Assessing the need for sequence-based normalization in tiling
+                        microarray experiments.</article-title>
+                    <source>Bioinformatics</source>
+                    <volume>23</volume>
+                    <fpage>988</fpage>
+                    <lpage>997</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Schwartz1">
+                <label>27</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Schwartz</surname>
+                            <given-names>YB</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Kahn</surname>
+                            <given-names>TG</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Nix</surname>
+                            <given-names>DA</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Li</surname>
+                            <given-names>XY</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Bourgon</surname>
+                            <given-names>R</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2006</year>
+                    <article-title>Genome-wide analysis of Polycomb targets in Drosophila
+                        melanogaster.</article-title>
+                    <source>Nat Genet</source>
+                    <volume>38</volume>
+                    <fpage>700</fpage>
+                    <lpage>705</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Bourgon1">
+                <label>28</label>
+                <element-citation publication-type="other" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Bourgon</surname>
+                            <given-names>RW</given-names>
+                        </name>
+                    </person-group>
+                    <year>2006</year>
+                    <article-title>Chromatin-immunoprecipitation and high-density tiling
+                        microarrays: a generative model, methods for analysis, and methodology
+                        assessment in the absence of a “gold standard”.</article-title>
+                    <comment>Ph.D. thesis, University of California Berkeley, Berkeley, California,
+                        United States of America. Available: <ext-link ext-link-type="uri" xlink:href="http://www.ebi.ac.uk/~bourgon/papers/bourgon_dissertation_public.pdf" xlink:type="simple">http://www.ebi.ac.uk/̃bourgon/papers/bourgon_dissertation_public.pdf</ext-link>.
+                        Accessed 20 October 2008.</comment>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Kuan1">
+                <label>29</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Kuan</surname>
+                            <given-names>PF</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Chun</surname>
+                            <given-names>H</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Keleş</surname>
+                            <given-names>S</given-names>
+                        </name>
+                    </person-group>
+                    <year>2008</year>
+                    <article-title>CMARRT: a tool for the analysis of ChIP-chip data from tiling
+                        arrays by incorporating the correlation structure.</article-title>
+                    <source>Pac Symp Biocomput</source>
+                    <volume>2008</volume>
+                    <fpage>515</fpage>
+                    <lpage>526</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Kanehisa1">
+                <label>30</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Kanehisa</surname>
+                            <given-names>M</given-names>
+                        </name>
+                    </person-group>
+                    <year>1997</year>
+                    <article-title>A database for post-genome analysis.</article-title>
+                    <source>Trends Genet</source>
+                    <volume>13</volume>
+                    <fpage>375</fpage>
+                    <lpage>376</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000227-Scacheri1">
+                <label>31</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Scacheri</surname>
+                            <given-names>PC</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Crawford</surname>
+                            <given-names>GE</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Davis</surname>
+                            <given-names>S</given-names>
+                        </name>
+                    </person-group>
+                    <year>2006</year>
+                    <article-title>Statistics for ChIP-chip and DNase hypersensitivity experiments
+                        on NimbleGen arrays.</article-title>
+                    <source>Methods Enzymol</source>
+                    <volume>411</volume>
+                    <fpage>270</fpage>
+                    <lpage>282</lpage>
+                </element-citation>
+            </ref>
+        </ref-list>
+        
+    </back>
+</article>

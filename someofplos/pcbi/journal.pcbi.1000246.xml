@@ -1,0 +1,2528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+    <front>
+        <journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Computational Biology</journal-title></journal-title-group><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+                <publisher-name>Public Library of Science</publisher-name>
+                <publisher-loc>San Francisco, USA</publisher-loc>
+            </publisher></journal-meta>
+        <article-meta><article-id pub-id-type="publisher-id">08-PLCB-RA-0703R2</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1000246</article-id><article-categories>
+                <subj-group subj-group-type="heading">
+                    <subject>Research Article</subject>
+                </subj-group>
+                <subj-group subj-group-type="Discipline">
+                    <subject>Computational Biology</subject>
+                    <subject>Immunology/Antigen Processing and Recognition</subject>
+                    <subject>Immunology/Immune Response</subject>
+                    <subject>Public Health and Epidemiology/Immunization</subject>
+                    <subject>Virology/Vaccines</subject>
+                </subj-group>
+            </article-categories><title-group><article-title>A Mathematical Framework for the Selection of an Optimal Set of
+                    Peptides for Epitope-Based Vaccines</article-title><alt-title alt-title-type="running-head">Selection of Optimal Peptide Sets for
+                    Vaccines</alt-title></title-group><contrib-group>
+                <contrib contrib-type="author" xlink:type="simple">
+                    <name name-style="western">
+                        <surname>Toussaint</surname>
+                        <given-names>Nora C.</given-names>
+                    </name>
+                    <xref ref-type="aff" rid="aff1"/>
+                    <xref ref-type="corresp" rid="cor1">
+                        <sup>*</sup>
+                    </xref>
+                </contrib>
+                <contrib contrib-type="author" xlink:type="simple">
+                    <name name-style="western">
+                        <surname>Dönnes</surname>
+                        <given-names>Pierre</given-names>
+                    </name>
+                    <xref ref-type="aff" rid="aff1"/>
+                    <xref ref-type="fn" rid="fn1">
+                        <sup>¤</sup>
+                    </xref>
+                </contrib>
+                <contrib contrib-type="author" xlink:type="simple">
+                    <name name-style="western">
+                        <surname>Kohlbacher</surname>
+                        <given-names>Oliver</given-names>
+                    </name>
+                    <xref ref-type="aff" rid="aff1"/>
+                </contrib>
+            </contrib-group><aff id="aff1">
+                <addr-line>Simulation of Biological Systems, Center for Bioinformatics, Eberhard
+                    Karls University Tübingen, Tübingen, Germany</addr-line>
+            </aff><contrib-group>
+                <contrib contrib-type="editor" xlink:type="simple">
+                    <name name-style="western">
+                        <surname>De Boer</surname>
+                        <given-names>Rob J.</given-names>
+                    </name>
+                    <role>Editor</role>
+                    <xref ref-type="aff" rid="edit1"/>
+                </contrib>
+            </contrib-group><aff id="edit1">Utrecht University, Netherlands</aff><author-notes>
+                <corresp id="cor1">* E-mail: <email xlink:type="simple">toussaint@informatik.uni-tuebingen.de</email></corresp>
+                <fn fn-type="current-aff" id="fn1">
+                    <label>¤</label>
+                    <p>Current address: Molecular Toxicology, Safety Assessment, AstraZeneca
+                        R&amp;D, Södertälje, Sweden</p>
+                </fn>
+                <fn fn-type="con">
+                    <p>Conceived and designed the experiments: NCT PD OK. Performed the experiments:
+                        NCT. Analyzed the data: NCT OK. Wrote the paper: NCT PD OK.</p>
+                </fn>
+            <fn fn-type="conflict">
+                <p>The authors have declared that no competing interests exist.</p>
+            </fn></author-notes><pub-date pub-type="collection">
+                <month>12</month>
+                <year>2008</year>
+            </pub-date><pub-date pub-type="epub">
+                <day>26</day>
+                <month>12</month>
+                <year>2008</year>
+            </pub-date><volume>4</volume><issue>12</issue><elocation-id>e1000246</elocation-id><history>
+                <date date-type="received">
+                    <day>19</day>
+                    <month>8</month>
+                    <year>2008</year>
+                </date>
+                <date date-type="accepted">
+                    <day>6</day>
+                    <month>11</month>
+                    <year>2008</year>
+                </date>
+            </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2008</copyright-year><copyright-holder>Toussaint et al</copyright-holder><license><license-p>This is an open-access article distributed under
+                the terms of the Creative Commons Attribution License, which permits unrestricted
+                use, distribution, and reproduction in any medium, provided the original author and
+                source are credited.</license-p></license></permissions><abstract>
+                <p>Epitope-based vaccines (EVs) have a wide range of applications: from therapeutic
+                    to prophylactic approaches, from infectious diseases to cancer. The development
+                    of an EV is based on the knowledge of target-specific antigens from which
+                    immunogenic peptides, so-called epitopes, are derived. Such epitopes form the
+                    key components of the EV. Due to regulatory, economic, and practical concerns
+                    the number of epitopes that can be included in an EV is limited. Furthermore, as
+                    the major histocompatibility complex (MHC) binding these epitopes is highly
+                    polymorphic, every patient possesses a set of MHC class I and class II molecules
+                    of differing specificities. A peptide combination effective for one person can
+                    thus be completely ineffective for another. This renders the optimal selection
+                    of these epitopes an important and interesting optimization problem. In this
+                    work we present a mathematical framework based on integer linear programming
+                    (ILP) that allows the formulation of various flavors of the vaccine design
+                    problem and the efficient identification of optimal sets of epitopes. Out of a
+                    user-defined set of predicted or experimentally determined epitopes, the
+                    framework selects the set with the maximum likelihood of eliciting a broad and
+                    potent immune response. Our ILP approach allows an elegant and flexible
+                    formulation of numerous variants of the EV design problem. In order to
+                    demonstrate this, we show how common immunological requirements for a good EV
+                    (e.g., coverage of epitopes from each antigen, coverage of all MHC alleles in a
+                    set, or avoidance of epitopes with high mutation rates) can be translated into
+                    constraints or modifications of the objective function within the ILP framework.
+                    An implementation of the algorithm outperforms a simple greedy strategy as well
+                    as a previously suggested evolutionary algorithm and has runtimes on the order
+                    of seconds for typical problem sizes.</p>
+            </abstract><abstract abstract-type="summary">
+                <title>Author Summary</title>
+                <p>Over the last decade the design of tailor-made vaccines for prophylactic
+                    applications (e.g., prevention of infection) and therapeutic applications (e.g.,
+                    cancer therapy) has attracted significant interest. Epitope-based vaccines are
+                    good candidates for such tailor-made approaches. They trigger an immune response
+                    by confronting the immune system with immunogenic peptides derived from, e.g.,
+                    viral- or cancer-specific proteins. These peptides bind to major
+                    histocompatibility complex (MHC) molecules in a specific manner. The resulting
+                    complex is crucial for immune system activation. However, there are many allelic
+                    variants of MHC molecules, meaning that different patients typically bind
+                    different repertoires of peptides. Nevertheless, due to economical and
+                    regulatory issues one cannot simply add all immunogenic peptides to such a
+                    peptide mix. Hence, it is crucial to identify the optimal set of peptides for a
+                    vaccine, given constraints such as MHC allele frequencies in the target
+                    population, peptide mutation rates, and maximum number of selected peptides. In
+                    this work we formalize this problem, and variants thereof, in a mathematical
+                    framework. The resulting optimization problem can be solved efficiently and
+                    yields a provably optimal peptide combination. We can show that the method
+                    performs better than existing solutions. Furthermore, the framework is highly
+                    flexible and can easily handle additional criteria.</p>
+            </abstract><funding-group><funding-statement>This work was funded in part by the Deutsche Forschungsgemeinschaft (Grant
+                    SFB685/B1).</funding-statement></funding-group><counts>
+                <page-count count="10"/>
+            </counts></article-meta>
+    </front>
+    <body>
+        <sec id="s1">
+            <title>Introduction</title>
+            <p>The development of vaccines and their subsequent large-scale prophylactic use was
+                undoubtedly one of the most important developments in medicine. Vaccines make use of
+                the adaptive part of the human immune system to protect from future infections
+                (e.g., prophylactic vaccines used against viruses) as well as to fight chronic
+                diseases and cancer.</p>
+            <p>Cellular adaptive immunity is, at its core, triggered by the recognition of
+                immunogenic peptides bound to MHC class I (MHC I) and II molecules by T-cell
+                receptors located on the surface of T cells. These peptides are derived from
+                antigens, i.e., proteins that can cause an immune response, as a result of rather
+                complex antigen processing pathways <italic>in vivo</italic>. Peptides capable of
+                causing such an immune response are called epitopes and represent the smallest
+                subunits that may be used therapeutically.</p>
+            <p>There are numerous options for constructing a vaccine once a set of potential
+                antigens is known. The antigens or parts thereof can be used as intact proteins
+                    <xref ref-type="bibr" rid="pcbi.1000246-Moutschen1">[1]</xref>,<xref ref-type="bibr" rid="pcbi.1000246-Goepfert1">[2]</xref>, they can be administered as RNA or DNA coding for
+                the antigen <xref ref-type="bibr" rid="pcbi.1000246-Nemunaitis1">[3]</xref>,<xref ref-type="bibr" rid="pcbi.1000246-ManciniBourgine1">[4]</xref>, or the
+                epitopes contained in the antigens may be used for vaccines. As discussed in detail
+                in <xref ref-type="bibr" rid="pcbi.1000246-Purcell1">[5]</xref>
+                the use of epitope-based vaccines (EVs) brings about manifold advantages, e.g.,
+                safety, ease of production, analytical control, and distribution. Skilled selection
+                of epitopes can precisely direct the evoked immune response at conserved and highly
+                immunogenic regions of several antigens. Due to these advantages and the
+                applicability in personalized vaccination, EVs have recently been getting more and
+                more attention. The recent review of EVs by Purcell <italic>et al.</italic>
+                <xref ref-type="bibr" rid="pcbi.1000246-Purcell1">[5]</xref> gives
+                a good overview of the state of the art as well as its achievements. We will thus
+                only point out some recent studies.</p>
+            <p>EVs have proven successful in preclinical trials in mice <xref ref-type="bibr" rid="pcbi.1000246-Depil1">[6]</xref>, on which many of the
+                preliminary studies have been conducted. A large number of clinical studies, both
+                from academia and industry, have also been successful and have entered and/or
+                completed clinical phase I and II trials <xref ref-type="bibr" rid="pcbi.1000246-ChianeseBullock1">[7]</xref>–<xref ref-type="bibr" rid="pcbi.1000246-Slingluff2">[11]</xref>.
+                Several commercial products have now entered clinical phase III trials. The
+                indications for the vaccines in trial are mostly various cancers (e.g., leukemia,
+                colorectal cancer, gastric cancer, lung cancer) and infectious diseases
+                (predominantly HIV and hepatitis C virus).</p>
+            <p>The design of an EV entails one critical step, the selection of the epitopes. From
+                the set of antigens, one can experimentally determine or computationally predict
+                epitopes for a variety of MHC alleles. The crucial task is to select the set of
+                epitopes which yields the best immune response in a given population while at the
+                same time keeping the number of epitopes low. This step is of course critical to the
+                success of the vaccine. The selection is usually made on a case-by-case basis
+                considering key properties for each epitope: overall immunogenicity, mutation
+                tolerance, population coverage, antigen coverage, and antigen processing.</p>
+            <p>The selection methods used by the pharmaceutical industry are manifold. In 2004,
+                Singh-Jasuja <italic>et al.</italic> presented the Tübingen approach <xref ref-type="bibr" rid="pcbi.1000246-SinghJasuja1">[12]</xref> to
+                acquire an experimentally validated initial list of epitopes from tumor associated
+                antigens. In this work, the incorporation of computational methods for prediction of
+                MHC-peptide binding in the process is proposed. Since they help to reduce the number
+                of experiments to be performed, such prediction methods have become standard tools
+                in immunology. Commonly used methods are SYFPEITHI <xref ref-type="bibr" rid="pcbi.1000246-Rammensee1">[13]</xref>, HLA_BIND/Bimas
+                    <xref ref-type="bibr" rid="pcbi.1000246-Parker1">[14]</xref>,
+                SVMHC <xref ref-type="bibr" rid="pcbi.1000246-Dnnes1">[15]</xref>,
+                NetMHC <xref ref-type="bibr" rid="pcbi.1000246-Buus1">[16]</xref>–<xref ref-type="bibr" rid="pcbi.1000246-Nielsen2">[18]</xref>, EpiMatrix <xref ref-type="bibr" rid="pcbi.1000246-Schafer1">[19]</xref>, and
+                the methods <xref ref-type="bibr" rid="pcbi.1000246-Bui1">[20]</xref>–<xref ref-type="bibr" rid="pcbi.1000246-Sturniolo1">[23]</xref> provided by the
+                Immune Epitope Database <xref ref-type="bibr" rid="pcbi.1000246-Peters2">[24]</xref>.</p>
+            <p>Given the set of candidate peptides, computational methods can be used to determine
+                the relevant attributes of each candidate. However, the final choice of the set of
+                epitopes to be used in the vaccine is typically performed manually. Several groups
+                have addressed this problem computationally. In 2005, DeGroot <italic>et al.</italic>
+                <xref ref-type="bibr" rid="pcbi.1000246-Groot1">[25]</xref>
+                published an approach to creating highly immunogenic and conserved epitopes to be
+                used in EVs. The authors use EpiMatrix <xref ref-type="bibr" rid="pcbi.1000246-Schafer1">[19]</xref> to estimate the MHC
+                class II binding affinity of highly conserved 9mers from HIV-1 proteins. Peptides
+                with high binding affinities are then used to construct extended peptides containing
+                multiple overlapping 9mers. <italic>In vitro</italic> evaluation of the
+                immunogenicity of a selected set of these extended peptides yielded positive
+                results.</p>
+            <p>Recently, Vider-Shalit <italic>et al.</italic>
+                <xref ref-type="bibr" rid="pcbi.1000246-ViderShalit1">[26]</xref>
+                proposed using a genetic algorithm to design an ordered sequence of epitopes to be
+                used in an EV. Information on peptide conservation and similarity to self-peptides
+                is used to pre-filter the set of candidates, while information on MHC allele
+                frequencies is used to select alleles of interest. The scoring function used for the
+                heuristic takes into account the number of covered MHC alleles, the number of
+                covered antigens, the number of covered MHC/antigen combinations, and the
+                probability of each epitope to be properly cleaved in the sequence.</p>
+            <p>Two related approaches were published by Fischer <italic>et al.</italic>
+                <xref ref-type="bibr" rid="pcbi.1000246-Fischer1">[27]</xref> and
+                Nickle <italic>et al.</italic>
+                <xref ref-type="bibr" rid="pcbi.1000246-Nickle1">[28]</xref>. Both
+                groups focus on designing vaccine antigens capable of protecting against diverse
+                HIV-1 strains. In order to do so, they use computational methods to compress the
+                variation found in naturally occurring antigens into a small number of composite
+                antigens.</p>
+            <p>Common to the computational approaches above (and of course manual selection) is the
+                fact that the solutions are not necessarily optimal. None of the approaches can
+                guarantee that there is not a better vaccine possible from the given set of
+                epitopes. In this work we propose an integer linear programming approach to finding
+                a provably optimal set of epitopes for an EV. Given a set of candidate peptides, a
+                set of MHC alleles of interest, information on the peptides' respective
+                immunogenicities along with other information to be incorporated into the selection
+                process, our framework is capable of finding the set of epitopes yielding the
+                highest possible overall immunogenicity (<xref ref-type="fig" rid="pcbi-1000246-g001">Figure 1</xref>). The resulting integer linear program
+                can be solved very efficiently for all practical problem sizes (runtimes of a few
+                seconds) and can thus be readily applied. With respect to various quality criteria
+                (population coverage, antigen coverage, overall immunogenicity), the approach
+                outperforms a simple greedy heuristic (‘pick the <italic>k</italic> best
+                epitopes’) and also a genetic algorithm. The elegant mathematical
+                formulation turns out to be flexible enough to also account for variants of the
+                problem, e.g., the application to personalized vaccines. To our knowledge, this is
+                the first epitope selection framework that finds the optimal solution.</p>
+            <fig id="pcbi-1000246-g001" position="float">
+                <object-id pub-id-type="doi">10.1371/journal.pcbi.1000246.g001</object-id>
+                <label>Figure 1</label>
+                <caption>
+                    <title>Basic idea behind this work.</title>
+                    <p>Starting from target antigens, a list of properties of interest, and a target
+                        population the information necessary to determine an optimal set of epitopes
+                        is derived (gray boxes). Given this information, a mathematical framework
+                        can conveniently be used to find the set of epitopes that is optimal with
+                        respect to the target population and the properties of interest.</p>
+                </caption>
+                <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.g001" xlink:type="simple"/>
+            </fig>
+        </sec>
+        <sec id="s2">
+            <title>Materials and Methods</title>
+            <sec id="s2a">
+                <title>Approach</title>
+                <p>In order to find an optimal set of epitopes, we first have to define what
+                    characterizes a <italic>good</italic> vaccine or, correspondingly, a
+                        <italic>good</italic> set of epitopes. This issue is highly controversial in
+                    the literature and only large-scale data from vaccination trials will provide
+                    sufficient data to validate the different approaches retrospectively. With this
+                    in mind, we do not suggest one optimal epitope selection strategy, but instead
+                    suggest a mathematical framework that allows working with various definitions of
+                    the term ‘good vaccine’. For a chosen definition, however,
+                    the algorithms will yield a combination of epitopes that is provably optimal.</p>
+                <p>In the following, we will introduce a ‘reasonable’ definition
+                    of a good vaccine. This will allow us to present the mathematical formulation
+                    and to illustrate how immunological requirements can be translated into
+                    mathematical constraints. For specific applications, the requirements and
+                    constraints may of course deviate from those given. For example, sequence
+                    variation in an antigen would be much more important for an HIV vaccine than for
+                    a cancer vaccine. The framework is flexible enough to allow for such different
+                    requirements, as we will illustrate towards the end of the work.</p>
+                <p>A good vaccine displays a high overall immunogenicity, which means it is capable
+                    of inducing potent immunity in a large fraction of the target population. This
+                    basic definition forms the basis of our mathematical formulation which aims at
+                    maximizing overall immunogenicity of the selected epitopes. We extend this
+                    definition by additionally requiring high mutation tolerance as well as a
+                    certain degree of allele and antigen coverage. Furthermore, the selected
+                    epitopes should display a high probability of passing through the antigen
+                    processing pathway. We thus obtain a brief list of basic requirements:</p>
+                <sec id="s2a1">
+                    <title>Mutation tolerance</title>
+                    <p>Mutations within the targeted antigen regions can lead to an escape from
+                        immune response. High genetic variability as observed in, e.g., HIV, the
+                        hepatitis C virus, and influenza can thus affect protection by a vaccine.
+                        Selection of highly conserved non-overlapping epitopes reduces the chance of
+                        immune escape.</p>
+                </sec>
+                <sec id="s2a2">
+                    <title>Allele coverage</title>
+                    <p>Because the MHC is polygenic, every individual possesses a set of MHC loci.
+                        Due to the high polymorphicity of these loci, the pool of MHC molecules
+                        varies from individual to individual. The allelic form of an MHC molecule
+                        determines the spectrum of peptides the molecule can bind. Within a
+                        population alleles occur with different frequencies. Hence, requiring a
+                        certain number of alleles to be covered is equivalent to requiring a certain
+                        degree of population coverage. An MHC allele is said to be covered by a set
+                        of epitopes if at least one of the epitopes is capable of inducing an immune
+                        response when bound to the corresponding MHC molecule.</p>
+                </sec>
+                <sec id="s2a3">
+                    <title>Antigen coverage</title>
+                    <p>The expression frequencies of viral proteins differ. Selecting epitopes from
+                        a wide variety of antigens increases the chance of detecting a virus at any
+                        developmental stage.</p>
+                </sec>
+                <sec id="s2a4">
+                    <title>Antigen processing</title>
+                    <p>Before a peptide is presented by an MHC molecule on the cell surface it
+                        passes through an antigen processing pathway, which includes proteasomal
+                        cleavage and TAP transport. Knowledge of these steps' specificities
+                        allows exclusion of peptides which are unlikely to ever be presented to a T
+                        cell.</p>
+                    <p>From all possible epitope combinations, the ones with a maximum overall
+                        immunogenicity will be called ‘optimal’ (there may be
+                        more than one optimal epitope combination). Hence, the search for an optimal
+                        epitope set for an EV can be interpreted as an optimization problem: out of
+                        a given set of epitopes, choose a subset which, out of all subsets meeting
+                        the above-named requirements, displays maximum overall immunogenicity. Since
+                        health agencies such as the FDA require proof of the effectiveness and
+                        safety of every individual component of a vaccine, the size of such a subset
+                        is usually kept rather small (up to a dozen peptides).</p>
+                </sec>
+            </sec>
+            <sec id="s2b">
+                <title>Mathematical Abstraction</title>
+                <p>Given a set of epitopes and a set of MHC alleles we assume a linear relationship
+                    to exist between (a) the immune response induced by all epitopes with respect to
+                    all alleles and (b) the immune responses induced by every single one of the
+                    epitopes with respect to each of the alleles. Thus, the overall immunogenicity
+                    of a set of epitopes depends on the immunogenicity of its components with
+                    respect to the different MHC alleles. Furthermore, the contribution of an allele
+                    directly depends on its probability of occurring within the target population.
+                    (In this context <italic>probability</italic> is commonly referred to as
+                        <italic>frequency</italic>. We use <italic>probability</italic> since it is
+                    the mathematically correct term.) More common alleles are weighted more than
+                    uncommon ones. Thus, overall immunogenicity <italic>I</italic> can be derived
+                    mathematically as a weighted sum over immunogenicities of epitopes
+                    <italic>E</italic> with respect to the given MHC alleles <italic>A</italic>:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e001" xlink:type="simple"/></disp-formula>where <italic>p<sub>a</sub></italic> corresponds to the
+                    probability of allele <italic>a</italic> in the target population and
+                            <italic>i<sub>e</sub></italic><sub>,<italic>a</italic></sub> to a
+                    measure of the immunogenicity of epitope <italic>e</italic> when bound to allele
+                        <italic>a</italic> (either experimentally determined or predicted).</p>
+            </sec>
+            <sec id="s2c">
+                <title>Integer Linear Programming</title>
+                <p>Our goal is to maximize overall immunogenicity while constraining the possible
+                    solutions to sets of peptides which satisfy the above mentioned requirements for
+                    a good vaccine. This problem can be conveniently formulated as an integer linear
+                    program (ILP). Linear programming deals with the optimization of linear
+                    objective functions subject to linear constraints <xref ref-type="bibr" rid="pcbi.1000246-Schrijver1">[29]</xref>. An ILP is a
+                    linear program with integral unknowns. While linear programs without integral
+                    unknowns can be solved efficiently, ILPs are NP-complete. Nevertheless, there
+                    are tools available that find optimal solutions quite efficiently.</p>
+                <p>We restate the problem of choosing the optimal set of epitopes as an ILP. Solving
+                    the ILP will render an optimal solution according to our definition of an
+                    optimal epitope set. (Adapting the ILP to a different definition is
+                    straightforward.) For the sake of clarity, we start out with the very basic
+                    definition of an optimal epitope set. In the next step the resulting ILP will be
+                    extended to represent the more refined definition.</p>
+                <p>The set of candidate epitopes is <italic>E</italic>. Each epitope
+                        <italic>e</italic>∈<italic>E</italic> is associated with a binary
+                    decision variable x<sub>e</sub>, where
+                    <italic>x<sub>e</sub></italic> = 1 if the
+                    respective epitope belongs to the optimal set and
+                    <italic>x<sub>e</sub></italic> = 0 otherwise.
+                    The ILP corresponding to the basic definition of an optimal epitope set is shown
+                    in <xref ref-type="table" rid="pcbi-1000246-t001">Table 1</xref>. This ILP
+                    maximizes overall immunogenicity: epitope immunogenicity with respect to a
+                    specific MHC allele is weighted by the allele's probability. The only
+                    constraint is the number of epitopes to select.</p>
+                <table-wrap id="pcbi-1000246-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000246.t001</object-id><label>Table 1</label><caption>
+                        <title>ILP corresponding to the basic definition of an optimal epitope
+                        set.</title>
+                    </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000246-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.t001" xlink:type="simple"/><table>
+                        <colgroup span="1">
+                            <col align="left" span="1"/>
+                            <col align="center" span="1"/>
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td align="left" colspan="2" rowspan="1">
+                                    <bold>Definitions</bold>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>A</italic>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">Set of observed MHC alleles</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>E</italic>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">Set of candidate epitopes</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="2" rowspan="1">
+                                    <bold>Parameters</bold>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>i<sub>e</sub></italic>
+                                    <sub>,<italic>a</italic></sub>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">Immunogenicity of epitope <italic>e</italic> with
+                                    respect to allele <italic>a</italic></td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>k</italic>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">Number of epitopes to select</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>p<sub>a</sub></italic>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">Probability of MHC allele <italic>a</italic>
+                                    occurring in the target population</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="2" rowspan="1">
+                                    <bold>Variables</bold>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">x<sub>e</sub> = 1</td>
+                                <td align="left" colspan="1" rowspan="1">If epitope <italic>e</italic> belongs to the
+                                    optimal set, otherwise
+                                    x<sub>e</sub> = 0</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="2" rowspan="1">
+                                    <bold>Integer Linear Program</bold>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>Maximize</italic>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">Maximize …</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">∑<italic>
+                                        <sub>e</sub>
+                                    </italic><sub>∈<italic>E</italic></sub>x<sub>e</sub>∑<italic>
+                                        <sub>a</sub>
+                                    </italic><sub>∈<italic>A</italic></sub><italic>p<sub>a</sub>
+                                            i<sub>e</sub></italic><sub>,<italic>a</italic></sub></td>
+                                <td align="left" colspan="1" rowspan="1">… Overall immunogenicity</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="2" rowspan="1">
+                                    <italic>subject to</italic>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">∑<italic>
+                                        <sub>e</sub>
+                                    </italic><sub>∈<italic>E</italic></sub>x<sub>e</sub> = <italic>k</italic></td>
+                                <td align="left" colspan="1" rowspan="1">… And select exactly <italic>k</italic>
+                                    peptides.</td>
+                            </tr>
+                        </tbody>
+                    </table></alternatives></table-wrap>
+                <p>We will now extend this basic ILP to represent a more refined definition of a
+                    good epitope set. In order to implement the additional requirements we introduce
+                    another set of binary decision variables: each MHC allele <italic>a</italic> is
+                    associated with a variable y<sub>a</sub>. If allele <italic>a</italic> is
+                    covered, meaning that an epitope which is sufficiently immunogenic with respect
+                    to allele <italic>a</italic> belongs to the optimal set,
+                    y<sub>a</sub> = 1, otherwise
+                    y<sub>a</sub> = 0. The extended ILP is shown in
+                        <xref ref-type="table" rid="pcbi-1000246-t002">Table 2</xref>. It accounts
+                    for mutation tolerance by selecting only non-overlapping conserved epitopes, and
+                    for allele and antigen coverage. Additional constraints prevent the selection of
+                    peptides which are unlikely to result from antigen processing.</p>
+                <table-wrap id="pcbi-1000246-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000246.t002</object-id><label>Table 2</label><caption>
+                        <title>ILP corresponding to the extended definition of an optimal epitope
+                            set.</title>
+                    </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000246-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.t002" xlink:type="simple"/><table>
+                        <colgroup span="1">
+                            <col align="left" span="1"/>
+                            <col align="center" span="1"/>
+                            <col align="center" span="1"/>
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td align="left" colspan="3" rowspan="1">
+                                    <bold>Definitions</bold>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>A</italic>
+                                </td>
+                                <td align="left" colspan="2" rowspan="1">Set of observed MHC alleles</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>E<sub>i</sub></italic>
+                                </td>
+                                <td align="left" colspan="2" rowspan="1">Set of epitopes from the
+                                    <italic>i</italic>-th antigen</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>E</italic>
+                                </td>
+                                <td align="left" colspan="2" rowspan="1">Set of all candidate epitopes
+                                        (<italic>E</italic> = <italic>E</italic><sub>1</sub>
+                                    ∪…∪
+                                <italic>E<sub>n</sub></italic>)</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>I<sub>a</sub></italic>
+                                </td>
+                                <td align="left" colspan="2" rowspan="1">Set of epitopes which, when bound to an
+                                    MHC allele <italic>a</italic>, display an immunogenicity greater
+                                    than or equal to a given threshold
+                                    <italic>τ<sup>I</sup></italic></td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>I</italic>
+                                </td>
+                                <td align="left" colspan="2" rowspan="1">Set of all sufficiently immunogenic
+                                    epitopes (<italic>I</italic> = ∪<italic>
+                                        <sub>a</sub>
+                                    </italic><sub>∈<italic>A</italic></sub><italic>I<sub>a</sub></italic>)</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>O</italic>
+                                </td>
+                                <td align="left" colspan="2" rowspan="1">Set of overlapping pairs of
+                                epitopes</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="3" rowspan="1">
+                                    <bold>Parameters</bold>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>c<sub>e</sub></italic>
+                                </td>
+                                <td align="left" colspan="2" rowspan="1">Conservation of epitope
+                                    <italic>e</italic></td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>i<sub>e</sub></italic>
+                                    <sub>,<italic>a</italic></sub>
+                                </td>
+                                <td align="left" colspan="2" rowspan="1">Immunogenicity of epitope
+                                    <italic>e</italic> with respect to allele
+                                <italic>a</italic></td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>k</italic>
+                                </td>
+                                <td align="left" colspan="2" rowspan="1">Number of epitopes to select</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>p<sub>a</sub></italic>
+                                </td>
+                                <td align="left" colspan="2" rowspan="1">Probability of MHC allele
+                                    <italic>a</italic> occurring in the target population</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e002" xlink:type="simple"/></inline-formula>
+                                </td>
+                                <td align="left" colspan="2" rowspan="1">Probability that epitope
+                                    <italic>e</italic> will be produced during antigen
+                                processing</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>τ<sup>A</sup></italic>
+                                </td>
+                                <td align="left" colspan="2" rowspan="1">Minimum number of epitopes from each
+                                    antigen to be included</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>τ<sup>AP</sup></italic>
+                                </td>
+                                <td align="left" colspan="2" rowspan="1">Antigen processing threshold</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>τ<sup>C</sup></italic>
+                                </td>
+                                <td align="left" colspan="2" rowspan="1">Conservation threshold</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>τ<sup>MHC</sup></italic>
+                                </td>
+                                <td align="left" colspan="2" rowspan="1">Minimum number of MHC alleles to be
+                                    covered</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="3" rowspan="1">
+                                    <bold>Variables</bold>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">x<sub>e</sub> = 1</td>
+                                <td align="left" colspan="2" rowspan="1">If epitope <italic>e</italic> belongs
+                                    to the optimal set, otherwise
+                                    x<sub>e</sub> = 0</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">y<sub>a</sub> = 1</td>
+                                <td align="left" colspan="2" rowspan="1">If allele <italic>a</italic> is covered
+                                    by the optimal set, otherwise
+                                    y<sub>a</sub> = 0</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="3" rowspan="1">
+                                    <bold>Integer Linear Program</bold>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1"/>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>Maximize</italic>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">Maximize …</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1"/>
+                                <td align="left" colspan="1" rowspan="1">∑<italic>
+                                        <sub>e</sub>
+                                    </italic><sub>∈<italic>E</italic></sub>x<sub>e</sub>∑<italic>
+                                        <sub>a</sub>
+                                    </italic><sub>∈<italic>A</italic></sub><italic>p<sub>a</sub>
+                                            i<sub>e</sub></italic><sub>,<italic>a</italic></sub></td>
+                                <td align="left" colspan="1" rowspan="1">… Overall immunogenicity.</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1"/>
+                                <td align="left" colspan="2" rowspan="1">
+                                    <italic>subject to</italic>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1"/>
+                                <td align="left" colspan="1" rowspan="1">∑<italic>
+                                        <sub>e</sub>
+                                    </italic><sub>∈<italic>E</italic></sub>x<sub>e</sub> = <italic>k</italic></td>
+                                <td align="left" colspan="1" rowspan="1">Selects exactly <italic>k</italic> epitopes.</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">∀<italic>e</italic>∈<italic>E</italic>:</td>
+                                <td align="left" colspan="1" rowspan="1">(1−<italic>c<sub>e</sub></italic>)x<sub>e</sub>≤(1−<italic>τ<sup>C</sup></italic>)</td>
+                                <td align="left" colspan="1" rowspan="1">Ensures certain degree of epitope
+                                conservation.</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">∀(<italic>p</italic>,
+                                        <italic>r</italic>)∈<italic>O</italic>:</td>
+                                <td align="left" colspan="1" rowspan="1">x<sub>p</sub>+x<sub>r</sub>≤1</td>
+                                <td align="left" colspan="1" rowspan="1">Guarantees that selected epitopes do not
+                                overlap.</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">∀<italic>a</italic>∈<italic>A</italic>:</td>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e003" xlink:type="simple"/></inline-formula>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">Guarantees that
+                                    y<sub>a</sub> = 1 only if
+                                    allele <italic>a</italic> is covered.</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1"/>
+                                <td align="left" colspan="1" rowspan="1">∑<italic>
+                                        <sub>a</sub>
+                                    </italic><sub>∈<italic>A</italic></sub>y<sub>a</sub>≥<italic>τ<sup>MHC</sup></italic></td>
+                                <td align="left" colspan="1" rowspan="1">Enforces required allele coverage.</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">∀<italic>i</italic>∈{1,…,<italic>n</italic>}:</td>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e004" xlink:type="simple"/></inline-formula>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">Enforces required antigen coverage.</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">∀<italic>e</italic>∈<italic>E</italic>:</td>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e005" xlink:type="simple"/></inline-formula>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">Selects only epitopes which have a chance of at
+                                    least <italic>τ<sup>AP</sup></italic> to result from
+                                    antigen processing.</td>
+                            </tr>
+                        </tbody>
+                    </table></alternatives></table-wrap>
+                <p>It might be desirable to obtain several optimal or nearly optimal epitope sets.
+                    As proposed in <xref ref-type="bibr" rid="pcbi.1000246-Kingsford1">[30]</xref>, this can be achieved by adding the
+                    constraints given in eq. (1), where <italic>S<sub>j</sub></italic> represents
+                    the optimal set of epitopes found in iteration <italic>j</italic> and
+                    <italic>s</italic> represents the number of solutions to be obtained. The ILP
+                    has to be solved iteratively <italic>s</italic> times. After each iteration, the
+                    ILP for the next iteration <italic>j</italic>+1 is created by adding
+                    the corresponding constraint to the ILP of iteration <italic>j</italic>.<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e006" xlink:type="simple"/><label>(1)</label></disp-formula></p>
+                <p>Every resulting epitope set differs from all other solutions in at least
+                        <italic>q</italic> peptides,
+                    1≤<italic>q</italic>≤<italic>k</italic>.</p>
+            </sec>
+            <sec id="s2d">
+                <title>Nonlinear Requirements</title>
+                <p>In order to incorporate a requirement into the ILP framework it must be
+                    formulated as a linear constraint. There are, however, reasonable requirements
+                    which are non-linear. These cannot be incorporated directly. It is possible
+                    though to search a sufficiently large set of optimal and suboptimal solutions
+                    for the best set of epitopes that yields the required
+                    properties—provided that the requirements are feasible. Two examples
+                    of reasonable non-linear requirements will be discussed below.</p>
+                <sec id="s2d1">
+                    <title>Example 1: Population coverage</title>
+                    <p>A major interest in vaccine design is population coverage: For what fraction
+                        of a target population will the resulting EV be effective? In theory this
+                        corresponds to the probability of an individual in the population carrying
+                        at least one MHC allele covered by the epitopes in the EV. Given a set of
+                        MHC alleles <italic>A</italic> as before and their distribution within a
+                        population, the population coverage of a particular set of epitopes can be
+                        computed. For this computation the polygenicity of the MHC has to be taken
+                        into account. It is
+                            <italic>A</italic> = <italic>A</italic><sub>1</sub>
+                        ∪…∪ <italic>A<sub>m</sub></italic> with
+                                <italic>A<sub>i</sub></italic> being the alleles at locus
+                        <italic>i</italic>. Let <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e007" xlink:type="simple"/></inline-formula> be the probability of an allele <italic>a</italic>
+                        occurring at the corresponding MHC locus. Then the probability of an
+                        individual in the population carrying an allele from the set
+                            <italic>A<sub>i</sub></italic> at locus <italic>i</italic> corresponds to<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e008" xlink:type="simple"/></disp-formula>Let y<sub>a</sub> be as described above. It follows that the
+                        probability of an individual carrying at least one MHC allele covered by the
+                        epitopes in <italic>E</italic>, and thus the population coverage of
+                            <italic>E</italic>, is<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e009" xlink:type="simple"/></disp-formula></p>
+                </sec>
+                <sec id="s2d2">
+                    <title>Example 2: Average number of epitopes per individual</title>
+                    <p>Population coverage of an epitope set states what fraction of a population
+                        carries an MHC allele associated with one of the epitopes. It does not give
+                        any information on the number of active epitopes per individual. The number
+                        of epitopes within a set which are active for a specific individual depends
+                        on the individual's MHC genotype. Given the haploidic probabilities
+                        of MHC alleles within a population the probability of MHC genotypes can be
+                        calculated. Alleles not included in the set <italic>A</italic> are accounted
+                        for by adding a representative allele <italic>X</italic> to each locus. The
+                        frequency of the representative at locus <italic>i</italic> results from <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e010" xlink:type="simple"/></inline-formula>.</p>
+                    <p>Let <italic>G</italic> be the set of genotypes within the population of
+                        interest and <italic>p<sub>g</sub></italic> the probability of genotype
+                            <italic>g</italic>. Furthermore, let <italic>b<sub>g</sub></italic> be
+                        the number of epitopes in an epitope set <italic>E</italic> which are
+                        immunogenic with respect to an MHC allele in <italic>g</italic>. The average
+                        number of active epitopes per individual results from<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e011" xlink:type="simple"/></disp-formula></p>
+                </sec>
+            </sec>
+            <sec id="s2e">
+                <title>Evaluation</title>
+                <p>Vider-Shalit <italic>et al.</italic>
+                    <xref ref-type="bibr" rid="pcbi.1000246-ViderShalit1">[26]</xref> applied their evolutionary-algorithm-based
+                    vaccine design method to hepatitis C virus (HCV). We used our framework on
+                    similar data and compared the results of both approaches.</p>
+                <sec id="s2e1">
+                    <title>Data</title>
+                    <p>HCV protein sequences (amino acid frame 1) for ten different proteins (C, E1,
+                        E2, p7, NS2, NS3, NS4A, NS4B, NS5A, NS5B) and four different subtypes (1a,
+                        1b, 2a, 3a) were retrieved from the Los Alamos hepatitis C sequence database
+                            <xref ref-type="bibr" rid="pcbi.1000246-Kuiken1">[31]</xref>. For each protein of each subtype a multiple
+                        sequence alignment (MSA) was created using MUSCLE <xref ref-type="bibr" rid="pcbi.1000246-Edgar1">[32]</xref>, resulting in 40
+                        MSAs. From each MSA a consensus sequence was created. All 9mers from these
+                        consensus sequences were regarded as potential epitopes. <italic>In
+                        silico</italic> predicted MHC binding affinities using BIMAS matrices <xref ref-type="bibr" rid="pcbi.1000246-Parker1">[14]</xref>
+                        are utilized as a measure of immunogenicity. MHC alleles, their probability
+                        of occurring in the human population, and binding affinity score thresholds
+                        were directly taken from Vider-Shalit <italic>et al.</italic> To allow a
+                        comparison of our results with those of Vider-Shalit <italic>et
+                        al.</italic>, we adopt their simplistic definition of peptide conservation
+                        (A peptide is considered to be at least <italic>x</italic>%
+                        conserved if all of its amino acids display a conservation of at least
+                            <italic>x</italic>%.) and disregard all insufficiently
+                        conserved (&lt;90%) peptides. To score the probability of a
+                        peptide being a result of antigen processing, we used the proteasomal
+                        cleavage matrix from the supplementary material of <xref ref-type="bibr" rid="pcbi.1000246-ViderShalit1">[26]</xref>. As noted
+                        in several places, the influence of TAP transport is often rather limited
+                            <xref ref-type="bibr" rid="pcbi.1000246-ViderShalit1">[26]</xref>,<xref ref-type="bibr" rid="pcbi.1000246-Dnnes2">[33]</xref>. Consideration
+                        of TAP transport is thus omitted for this example.</p>
+                    <p>It has to be noted that the accuracies of the prediction methods cause some
+                        limitations. MHC-peptide binding can be predicted with relatively high
+                        accuracy for many alleles, whereas proteasomal cleavage prediction leaves
+                        more room for improvement.</p>
+                </sec>
+                <sec id="s2e2">
+                    <title>Incorporating the scoring function</title>
+                    <p>The scoring function <italic>S</italic> of Vider-Shalit <italic>et
+                        al.</italic> takes into account the number of covered MHC alleles, the
+                        number of covered antigens, the number of covered MHC/antigen combinations,
+                        and a score for the probability of each epitope in the ordered sequence
+                        being properly cleaved:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e012" xlink:type="simple"/></disp-formula>Here, <italic>s</italic> represents the ordered sequence of
+                        epitopes to be scored. In order to show the flexibility of our approach we
+                        incorporate aspects of this function in our ILP. Since the aim of our
+                        framework is to select a set of epitopes and not to create an epitope
+                        sequence, we omit the factor <italic>p</italic>(<italic>cleave</italic>).</p>
+                    <p>Binary variables have to be introduced in order to count the number of
+                        covered antigens and the number of covered MHC/antigen combinations:
+                        z<sub>i</sub> = 1 if an epitope from the
+                            <italic>i</italic>-th antigen belongs to the optimal set and
+                        z<sub>i</sub> = 0 otherwise.
+                        w<sub>a,i</sub> = 1 if an epitope from the
+                            <italic>i</italic>-th antigen, which is sufficiently immunogenic with
+                        respect to MHC allele <italic>a</italic>, belongs to the optimal set and
+                            w<sub>a,i</sub> = 0 otherwise. Since
+                        immunogenicity scores tend to be higher than the weighted sums of the
+                        coverage scores and would therefore outweigh them, we scale the
+                        immunogenicity by a (purely empirical) factor of 0.1. The resulting ILP
+                        still aims at high overall immunogenicity while at the same time extending
+                        the coverage of antigens, MHC alleles, and MHC/antigen combinations. The ILP
+                        is shown in <xref ref-type="table" rid="pcbi-1000246-t003">Table 3</xref>.</p>
+                    <table-wrap id="pcbi-1000246-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000246.t003</object-id><label>Table 3</label><caption>
+                            <title>ILP corresponding to the combined optimization problem.</title>
+                        </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000246-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.t003" xlink:type="simple"/><table>
+                            <colgroup span="1">
+                                <col align="left" span="1"/>
+                                <col align="center" span="1"/>
+                                <col align="center" span="1"/>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <td align="left" colspan="3" rowspan="1">
+                                        <bold>Definitions</bold>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">
+                                        <italic>A</italic>
+                                    </td>
+                                    <td align="left" colspan="2" rowspan="1">Set of observed MHC alleles</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">
+                                        <italic>E<sub>i</sub></italic>
+                                    </td>
+                                    <td align="left" colspan="2" rowspan="1">Set of epitopes from the
+                                        <italic>i</italic>-th antigen</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">
+                                        <italic>E</italic>
+                                    </td>
+                                    <td align="left" colspan="2" rowspan="1">Set of all candidate epitopes
+                                            (<italic>E</italic> = <italic>E</italic><sub>1</sub>
+                                        ∪…∪
+                                    <italic>E<sub>n</sub></italic>)</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">
+                                        <italic>I<sub>a</sub></italic>
+                                    </td>
+                                    <td align="left" colspan="2" rowspan="1">Set of epitopes which, when bound
+                                        to an MHC allele <italic>a</italic>, display an
+                                        immunogenicity greater than or equal to a given threshold
+                                                <italic>τ<sup>I</sup></italic></td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">
+                                        <italic>I</italic>
+                                    </td>
+                                    <td align="left" colspan="2" rowspan="1">Set of all sufficiently immunogenic
+                                        epitopes (<italic>I</italic> = ∪<italic>
+                                            <sub>a</sub>
+                                        </italic><sub>∈<italic>A</italic></sub><italic>I<sub>a</sub></italic>)</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="3" rowspan="1">
+                                        <bold>Parameters</bold>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">
+                                        <italic>i<sub>e</sub></italic>
+                                        <sub>,<italic>a</italic></sub>
+                                    </td>
+                                    <td align="left" colspan="2" rowspan="1">Immunogenicity of epitope
+                                        <italic>e</italic> with respect to allele
+                                    <italic>a</italic></td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">
+                                        <italic>p<sub>a</sub></italic>
+                                    </td>
+                                    <td align="left" colspan="2" rowspan="1">Probability of MHC allele
+                                        <italic>a</italic> occurring in the target population</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="3" rowspan="1">
+                                        <bold>Variables</bold>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">w<sub>a,i</sub> = 1</td>
+                                    <td align="left" colspan="2" rowspan="1">If allele <italic>a</italic> is
+                                        covered by an epitope from the <italic>i</italic>-th
+                                        antigen, otherwise
+                                        w<sub>a,i</sub> = 0</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">x<sub>e</sub> = 1</td>
+                                    <td align="left" colspan="2" rowspan="1">If epitope <italic>e</italic>
+                                        belongs to the optimal set, otherwise
+                                        x<sub>e</sub> = 0</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">y<sub>a</sub> = 1</td>
+                                    <td align="left" colspan="2" rowspan="1">If allele <italic>a</italic> is
+                                        covered by the optimal set, otherwise
+                                        y<sub>a</sub> = 0</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">z<sub>i</sub> = 1</td>
+                                    <td align="left" colspan="2" rowspan="1">If an epitope from the
+                                        <italic>i</italic>-th antigen belongs to the optimal set,
+                                        otherwise
+                                    z<sub>i</sub> = 0</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="3" rowspan="1">
+                                        <bold>Integer Linear Program</bold>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1"/>
+                                    <td align="left" colspan="1" rowspan="1">
+                                        <italic>Maximize</italic>
+                                    </td>
+                                    <td align="left" colspan="1" rowspan="1">Maximize …</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1"/>
+                                    <td align="left" colspan="1" rowspan="1">0.1·∑<italic>
+                                            <sub>e</sub>
+                                        </italic><sub>∈<italic>E</italic></sub>x<sub>e</sub>∑<italic>
+                                            <sub>a</sub>
+                                        </italic><sub>∈<italic>A</italic></sub><italic>p<sub>a</sub>
+                                                i<sub>e</sub></italic><sub>,<italic>a</italic></sub>
+                                        +</td>
+                                    <td align="left" colspan="1" rowspan="1">… Overall immunogenicity and
+                                        …</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1"/>
+                                    <td align="left" colspan="1" rowspan="1">
+                                        <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e013" xlink:type="simple"/></inline-formula>
+                                    </td>
+                                    <td align="left" colspan="1" rowspan="1">… Extend coverage of antigens, MHC
+                                        alleles, …</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1"/>
+                                    <td align="left" colspan="1" rowspan="1">
+                                        <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e014" xlink:type="simple"/></inline-formula>
+                                    </td>
+                                    <td align="left" colspan="1" rowspan="1">… And MHC/antigen combinations.</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1"/>
+                                    <td align="left" colspan="2" rowspan="1">
+                                        <italic>Subject to</italic>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1"/>
+                                    <td align="left" colspan="2" rowspan="1">All constraints from the extended
+                                        ILP (<xref ref-type="table" rid="pcbi-1000246-t002">Table
+                                        2</xref>)</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">∀<italic>i</italic>∈{1,…,<italic>n</italic>}</td>
+                                    <td align="left" colspan="1" rowspan="1">
+                                        <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e015" xlink:type="simple"/></inline-formula>
+                                    </td>
+                                    <td align="left" colspan="1" rowspan="1">Ensures that
+                                        z<sub>i</sub> = 1 only if
+                                        the <italic>i</italic>-th antigen is covered.</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" colspan="1" rowspan="1">∀<italic>i</italic>∈{1,…,<italic>n</italic>}
+                                            <italic>a</italic>∈<italic>A</italic></td>
+                                    <td align="left" colspan="1" rowspan="1">
+                                        <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000246.e016" xlink:type="simple"/></inline-formula>
+                                    </td>
+                                    <td align="left" colspan="1" rowspan="1">Ensures that
+                                        w<sub>a,i</sub> = 1 only if
+                                        allele <italic>a</italic> is covered by an epitope from the
+                                            <italic>i</italic>-th antigen.</td>
+                                </tr>
+                            </tbody>
+                        </table></alternatives></table-wrap>
+                </sec>
+            </sec>
+            <sec id="s2f">
+                <title>Implementation</title>
+                <p>We used ILOG CPLEX 9.1 <xref ref-type="bibr" rid="pcbi.1000246-ILOG1">[34]</xref> with its C++ interface ILOG
+                    Concert Technology 2.1 to formulate and solve the ILP. It is, however, possible
+                    to solve the ILPs with most other ILP solvers, e.g., MOSEK <xref ref-type="bibr" rid="pcbi.1000246-MOSEK1">[35]</xref> or freely available
+                    packages like SCIP <xref ref-type="bibr" rid="pcbi.1000246-Achterberg1">[36]</xref>,<xref ref-type="bibr" rid="pcbi.1000246-Achterberg2">[37]</xref>.</p>
+                <p>A formulation of the extended ILP (<xref ref-type="table" rid="pcbi-1000246-t002">Table 2</xref>) as ILOG CPLEX input, the required data for the comparison
+                    with Vider-Shalit <italic>et al.</italic>
+                    <xref ref-type="bibr" rid="pcbi.1000246-ViderShalit1">[26]</xref> as well as the corresponding ILOG CPLEX output
+                    can be found in the supplementary material (<xref ref-type="supplementary-material" rid="pcbi.1000246.s001">Texts S1</xref>,
+                        <xref ref-type="supplementary-material" rid="pcbi.1000246.s002">S2</xref>,
+                        <xref ref-type="supplementary-material" rid="pcbi.1000246.s003">S3</xref>).</p>
+            </sec>
+        </sec>
+        <sec id="s3">
+            <title>Results</title>
+            <sec id="s3a">
+                <title>Immunogenicity</title>
+                <p>In order to show the effectiveness of the above-mentioned approach, we compare
+                    our strategy with other published approaches and determine the theoretical gain
+                    in immunogenicity or the number of epitopes required to achieve a similar
+                    immunogenicity. While an experimental validation of this approach would be
+                    valuable, it is beyond the scope of this paper, which focuses on the theoretical
+                    foundations of the epitope selection. We compare our optimal strategy (best
+                    overall immunogenicity, BOI) with two simple approaches:</p>
+                <list list-type="bullet">
+                    <list-item>
+                        <p>randomly select <italic>k</italic> peptides out of a pool of good
+                            epitopes (random set of epitopes, RSE) and</p>
+                    </list-item>
+                    <list-item>
+                        <p>a simple greedy approach: pick the <italic>k</italic> best epitopes from
+                            the set (best epitope-wise immunogenicity, BEI).</p>
+                    </list-item>
+                </list>
+                <p>These three epitope selection strategies were used to select different-sized sets
+                    of epitopes from a set of 4461 conserved (≥90%) HCV 9mers. For
+                    BOI the basic ILP (<xref ref-type="table" rid="pcbi-1000246-t001">Table
+                    1</xref>) was used to maximize overall immunogenicity. BEI selects the epitopes
+                    with the highest sum of immunogenicities irrespective of the probabilities of
+                    the corresponding MHC alleles. The overall immunogenicity of each epitope set
+                    was determined and is displayed in <xref ref-type="fig" rid="pcbi-1000246-g002">Figure 2</xref>. For RSE, mean and standard deviation of 100 random
+                    selections of different-sized epitope sets from the 100 most immunogenic
+                    peptides are shown. The BEI curve shows sudden increases in overall
+                    immunogenicity from 0 to 1, 10 to 13, and from 20 to 21 epitopes. This is caused
+                    by the selection of epitopes which are highly immunogenic with respect to
+                    HLA-A*0201, which is the most common
+                    (<italic>p<sup>L</sup></italic> = 0.145) among
+                    the considered alleles. All other selected epitopes are highly immunogenic with
+                    respect to less common alleles like HLA-B*2705
+                    (<italic>p<sup>L</sup></italic> = 0.015) or
+                    HLA-B*5102
+                    (<italic>p<sup>L</sup></italic> = 0.003). Thus
+                    the former contribute more extensively to the overall immunogenicity than the
+                    latter.</p>
+                <fig id="pcbi-1000246-g002" position="float">
+                    <object-id pub-id-type="doi">10.1371/journal.pcbi.1000246.g002</object-id>
+                    <label>Figure 2</label>
+                    <caption>
+                        <title>Comparison of different epitope selection strategies with respect to
+                            overall immunogenicity.</title>
+                        <p>(A) Overall immunogenicity of different-sized epitope sets. (B) Overall
+                            immunogenicity of a set of 10 epitopes. (C) Number of epitopes required
+                            to achieve an overall immunogenicity of at least 2,699.</p>
+                    </caption>
+                    <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.g002" xlink:type="simple"/>
+                </fig>
+                <p>The average overall immunogenicity of the randomly chosen epitope sets is rather
+                    low: scores range from about 308 for five epitopes, to 1,763 for 25 epitopes, to
+                    2,699 for 40 epitopes. The other two approaches start from a minimum overall
+                    immunogenicity of more than 900 and reach immunogenicities of 4,502 (BEI) and
+                    6,142 (BOI), respectively. To achieve an immunogenicity of at least 2,699, BOI
+                    requires five and BEI 12 epitopes (<xref ref-type="fig" rid="pcbi-1000246-g002">Figure 2</xref>).</p>
+                <p>For sets with more than one epitope, the scores yielded by the BOI strategy are
+                    between about 20% (13 epitopes) and 120% (6 epitopes)
+                    higher than those of the BEI strategy.</p>
+            </sec>
+            <sec id="s3b">
+                <title>Comparison with Vider-Shalit <italic>et al.</italic> on HCV</title>
+                <p>In order to compare our approach to the work of Vider-Shalit <italic>et al.</italic>
+                    <xref ref-type="bibr" rid="pcbi.1000246-ViderShalit1">[26]</xref> we applied the ILP given in <xref ref-type="table" rid="pcbi-1000246-t002">Table 2</xref> to the HCV data and
+                    27 of the 29 alleles from <xref ref-type="bibr" rid="pcbi.1000246-ViderShalit1">[26]</xref>. The alleles HLA-B<sup>*</sup>0702
+                    and HLA-B<sup>*</sup>3501 were omitted, since none of the candidate
+                    peptides binds to them. Probably due to an error in sequence processing
+                    (personal communication with Yoram Louzoun), a peptide (AALENLVTL) which does
+                    not belong to any of the proteins under consideration was included in the 25
+                    epitopes selected by Vider-Shalit <italic>et al.</italic> We exclude this
+                    peptide and base our comparison on sets of 24 epitopes.</p>
+                <p>For the 24 epitopes to be selected, we require a minimum conservation of
+                    90%, an allele coverage of 27, and an antigen coverage of at least
+                    one epitope per antigen. Furthermore, only epitopes with antigen processing
+                    scores within the top 30% of all sufficiently conserved candidate
+                    peptides were allowed to be selected. The following 24 epitopes (hereafter
+                            <italic>E<sub>ILP</sub></italic>) were selected:</p>
+                <table-wrap id="pcbi-1000246-t005" position="float"><table>
+                        <colgroup span="1">
+                            <col align="left" span="1"/>
+                            <col align="center" span="1"/>
+                            <col align="center" span="1"/>
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">SFSIFLLAL<sup>*</sup></td>
+                                <td align="left" colspan="1" rowspan="1">GHRMAWDMM<sup>+</sup></td>
+                                <td align="left" colspan="1" rowspan="1">VYEADDVIL</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">YLYDHLAPM</td>
+                                <td align="left" colspan="1" rowspan="1">GLRDLAVAV<sup>+</sup></td>
+                                <td align="left" colspan="1" rowspan="1">GPTPLLYRL<sup>+</sup></td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">QYLAGLSTL<sup>+</sup></td>
+                                <td align="left" colspan="1" rowspan="1">NFVSGIQYL</td>
+                                <td align="left" colspan="1" rowspan="1">VLSDFKTWL<sup>*</sup></td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">GLYLFNWAV</td>
+                                <td align="left" colspan="1" rowspan="1">ALYDVVSTL<sup>*</sup></td>
+                                <td align="left" colspan="1" rowspan="1">RRCRASGVL<sup>+</sup></td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">CFTPSPVVV<sup>+</sup></td>
+                                <td align="left" colspan="1" rowspan="1">FLLLADARV<sup>*</sup></td>
+                                <td align="left" colspan="1" rowspan="1">GPADGMVSK<sup>+</sup></td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">TWVLVGGVL<sup>+</sup></td>
+                                <td align="left" colspan="1" rowspan="1">IELGGKPAL<sup>+</sup></td>
+                                <td align="left" colspan="1" rowspan="1">LAGGVLAAV</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">ARPDYNPPL<sup>+</sup></td>
+                                <td align="left" colspan="1" rowspan="1">KLLPRLPGV</td>
+                                <td align="left" colspan="1" rowspan="1">RHTPVNSWL<sup>+</sup></td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">WPLLLLLLA</td>
+                                <td align="left" colspan="1" rowspan="1">VTYSLTGLW</td>
+                                <td align="left" colspan="1" rowspan="1">YFVIFFVAA</td>
+                            </tr>
+                        </tbody>
+                    </table></table-wrap>
+                <p>Four epitopes (marked with *) are known HCV epitopes and can be found in
+                    the Immune Epitope Database (IEDB, release 2008_4_1_3_28) <xref ref-type="bibr" rid="pcbi.1000246-Peters2">[24]</xref>. Another 11
+                    epitopes (marked with +) are contained in known longer epitopes. The
+                    overall immunogenicity of the selected set is 2,549. It includes binders for all
+                    27 alleles with all 40 antigens being represented and covers 22.7% of
+                    all MHC/antigen combinations. The average number of epitopes per individual of
+                    the population is 13.3. The corresponding values of the epitope set selected by
+                    Vider-Shalit <italic>et al.</italic> (hereafter <italic>E<sub>VS</sub></italic>)
+                    are listed in <xref ref-type="table" rid="pcbi-1000246-t004">Table 4</xref>.</p>
+                <table-wrap id="pcbi-1000246-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000246.t004</object-id><label>Table 4</label><caption>
+                        <title>Overview over properties of HCV epitope sets selected using different
+                            strategies.</title>
+                    </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000246-t004-4" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.t004" xlink:type="simple"/><table>
+                        <colgroup span="1">
+                            <col align="left" span="1"/>
+                            <col align="center" span="1"/>
+                            <col align="center" span="1"/>
+                            <col align="center" span="1"/>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1"/>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>E<sub>ILP</sub></italic>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>E<sub>VS</sub></italic>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <italic>E<sub>Comb</sub></italic>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">Overall immunogenicity</td>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <bold>2,549</bold>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">125</td>
+                                <td align="left" colspan="1" rowspan="1">2,177</td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">Allele coverage</td>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <bold>100%</bold>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">96.3%</td>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <bold>100%</bold>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">Antigen coverage</td>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <bold>100%</bold>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">87.5%</td>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <bold>100%</bold>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">MHC/antigen coverage</td>
+                                <td align="left" colspan="1" rowspan="1">22.7%</td>
+                                <td align="left" colspan="1" rowspan="1">19.2%</td>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <bold>30.5%</bold>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">Population coverage</td>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <bold>96.0%</bold>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">95.6%</td>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <bold>96.0%</bold>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">Avg. number of epitopes per individual</td>
+                                <td align="left" colspan="1" rowspan="1">13.3</td>
+                                <td align="left" colspan="1" rowspan="1">11.4</td>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <bold>17.3</bold>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="left" colspan="1" rowspan="1">Number of epitopes in IEDB</td>
+                                <td align="left" colspan="1" rowspan="1">
+                                    <bold>4</bold>
+                                </td>
+                                <td align="left" colspan="1" rowspan="1">1</td>
+                                <td align="left" colspan="1" rowspan="1">1</td>
+                            </tr>
+                        </tbody>
+                    </table></alternatives><table-wrap-foot>
+                        <fn id="nt101">
+                            <label/>
+                            <p>Number of epitopes per set: 24. <italic>E<sub>ILP</sub></italic>: set
+                                selected by our ILP, <italic>E<sub>VS</sub></italic>: set selected
+                                by Vider-Shalit <italic>et al.</italic> without peptide AALENLVTL,
+                                        <italic>E<sub>Comb</sub></italic>: set selected by our ILP
+                                extended by aspects of the scoring function of Vider-Shalit
+                                    <italic>et al.</italic></p>
+                        </fn>
+                    </table-wrap-foot></table-wrap>
+                <p>To improve the MHC/antigen coverage while still aiming at high overall
+                    immunogenicity we included the central part of the scoring function of
+                    Vider-Shalit <italic>et al.</italic> in the objective function of our ILP. The
+                    optimal epitope set with respect to the modified objective function (hereafter
+                            <italic>E<sub>Comb</sub></italic>) is only 15% less
+                    immunogenic than the original epitope set <italic>E<sub>ILP</sub></italic> and
+                    more than 17 times more immunogenic than <italic>E<sub>VS</sub></italic>. As for
+                    MHC/antigen coverage, it outperforms both (<xref ref-type="table" rid="pcbi-1000246-t004">Table 4</xref>). <italic>E<sub>Comb</sub></italic>
+                    includes one epitope which is already known and 14 epitopes which are contained
+                    in longer epitopes listed in the IEDB. <xref ref-type="fig" rid="pcbi-1000246-g003">Figure 3</xref> shows that when using the combined
+                    objective function, 18 epitopes suffice to cover all alleles and antigens and
+                    furthermore to outperform <italic>E<sub>VS</sub></italic> in terms of
+                    immunogenicity (371) and MHC/antigen coverage (22.8%).</p>
+                <fig id="pcbi-1000246-g003" position="float">
+                    <object-id pub-id-type="doi">10.1371/journal.pcbi.1000246.g003</object-id>
+                    <label>Figure 3</label>
+                    <caption>
+                        <title>Comparison of properties of HCV epitope sets selected using different
+                            strategies.</title>
+                        <p>(A) Overall immunogenicity. (B) Coverage of MHC/antigen pairs.</p>
+                    </caption>
+                    <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.g003" xlink:type="simple"/>
+                </fig>
+            </sec>
+        </sec>
+        <sec id="s4">
+            <title>Discussion</title>
+            <p>The selection of an epitope set with very high overall immunogenicity is crucial for
+                the efficacy of an EV. Depending on the number of candidate epitopes to choose from,
+                the number of alleles to be considered, as well as on the additional requirements,
+                this problem can become very complex. In this work we propose a mathematical
+                framework that can be used to solve this problem quickly for practical problem
+                sizes. For several characteristic examples, we show that immunological requirements
+                can be conveniently formulated as an ILP. The solution of this ILP yields an optimal
+                set of epitopes: the set of epitopes that displays the highest overall
+                immunogenicity of all sets which meet the pre-defined requirements. To our
+                knowledge, this is the only approach that yields provably optimal solutions to the
+                vaccine design problem for EVs. In contrast to previous heuristics, the optimal
+                solution yields either significantly better overall immunogenicity for the same
+                number of epitopes or a smaller number of required epitopes to reach the same level
+                of immunogenicity. The flexibility of the framework allows selecting other objective
+                functions, too, for example, maximizing antigen or allele coverage.</p>
+            <p>The optimal selection of epitopes yields—in theory—significantly
+                higher overall immunogenicities than other strategies (e.g., selection of the best
+                epitopes or evolutionary algorithms). However, one should keep in mind that the
+                selection of the epitopes is still a difficult and controversial issue since the
+                underlying processes are not yet fully understood. In particular, the interplay of
+                different epitopes poses a difficult problem. Competition between epitopes will
+                probably result in reduced immunogenicity of peptide cocktails, an effect that has
+                been observed in various studies.</p>
+            <p>On the one hand, this represents a problem, because the assumption of independence
+                between epitopes is one of the key assumptions made in this work (and in all related
+                approaches). Lacking an accurate model of these competition effects, however, it
+                seems like the best assumption one can make. On the other hand, the effects of
+                competition are a compelling reason to employ this type of selection approach.
+                Competition effects will be less severe for fewer peptides, therefore a selection
+                procedure that yields the same overall immunogenicity with fewer peptides can in
+                fact mitigate this problem. Assuming that competition primarily arises between
+                epitopes binding to the same MHC allele, one can also introduce additional
+                constraints to reduce competition (e.g., find the best combination that contains at
+                most two epitopes per allele). In the long run, a thorough quantitative analysis of
+                larger vaccination studies might shed some light on these effects and their
+                importance.</p>
+            <p>Also, the notion of immunogenicity alone, or the ability to evoke an immune response
+                in a certain fraction of patients, is not necessarily a true measure of quality for
+                a vaccine. In their recent review on the quality of the T-cell response <xref ref-type="bibr" rid="pcbi.1000246-Seder1">[38]</xref>, Seder
+                    <italic>et al.</italic> argue that protective T-cell responses are too complex
+                to be sufficiently described by a measure of magnitude alone. An adequate metric
+                would thus not only account for the magnitude but also for the multifunctional
+                quality of the response. The flexibility of our framework allows for the
+                incorporation of a different quality measure for immunogenicity and a careful
+                comparison of the peptide cocktails suggested by different objective functions would
+                be very interesting.</p>
+            <p>In their review of EVs, Purcell <italic>et al.</italic>
+                <xref ref-type="bibr" rid="pcbi.1000246-Purcell1">[5]</xref> point
+                out that, to date, there are no human EVs on the market. This is mainly attributed
+                to the difficulties associated with peptide stability and delivery. Various delivery
+                strategies <xref ref-type="bibr" rid="pcbi.1000246-Sette1">[39]</xref> are being explored in clinical studies. In an
+                extension of this work, one might therefore also include considerations related to
+                the peptide delivery. For <italic>beads-on-a-string</italic> type vaccines, the
+                selected epitopes are combined into one larger polypeptide. As the specificities of
+                the antigen processing pathway have to be taken into account when constructing the
+                polypeptide, the order of the epitopes as well as possible spacer sequences need to
+                be optimized (e.g. through incorporation of a proteasomal cleavage matrix).</p>
+        </sec>
+        <sec id="s5">
+            <title>Supporting Information</title>
+            <supplementary-material id="pcbi.1000246.s001" mimetype="text/plain" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.s001" xlink:type="simple">
+                <label>Text S1</label>
+                <caption>
+                    <p>ILOG CPLEX input. AMPL formulation of the extended ILP given in <xref ref-type="table" rid="pcbi-1000246-t002">Table 2</xref> adapted for the
+                        comparison with Vider-Shalit et al.</p>
+                    <p>(3.00 KB TXT)</p>
+                </caption>
+            </supplementary-material>
+            <supplementary-material id="pcbi.1000246.s002" mimetype="text/plain" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.s002" xlink:type="simple">
+                <label>Text S2</label>
+                <caption>
+                    <p>HCV data (in AMPL format) used for the comparison with Vider-Shalit et al.
+                        Only highly conserved peptides
+                        (&gt; = 90%) were considered
+                        when generating this file.</p>
+                    <p>(1.70 MB TXT)</p>
+                </caption>
+            </supplementary-material>
+            <supplementary-material id="pcbi.1000246.s003" mimetype="text/plain" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000246.s003" xlink:type="simple">
+                <label>Text S3</label>
+                <caption>
+                    <p>ILOG CPLEX output.</p>
+                    <p>(2.00 KB TXT)</p>
+                </caption>
+            </supplementary-material>
+        </sec>
+    </body>
+    <back>
+        <ack>
+            <p>We thank Andreas Kämper and Magdalena Feldhahn for comments on the
+                manuscript.</p>
+        </ack>
+        <ref-list>
+            <title>References</title>
+            <ref id="pcbi.1000246-Moutschen1">
+                <label>1</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Moutschen</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Léonard</surname>
+                            <given-names>P</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Sokal</surname>
+                            <given-names>EM</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Smets</surname>
+                            <given-names>F</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Haumont</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>Phase I/II studies to evaluate safety and immunogenicity of a
+                        recombinant gp350 Epstein-Barr virus vaccine in healthy adults.</article-title>
+                    <source>Vaccine</source>
+                    <volume>25</volume>
+                    <fpage>4697</fpage>
+                    <lpage>4705</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Goepfert1">
+                <label>2</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Goepfert</surname>
+                            <given-names>PA</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Tomaras</surname>
+                            <given-names>GD</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Horton</surname>
+                            <given-names>H</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Montefiori</surname>
+                            <given-names>D</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Ferrari</surname>
+                            <given-names>G</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>Durable HIV-1 antibody and T-cell responses elicited by an
+                        adjuvanted multi-protein recombinant vaccine in uninfected human volunteers.</article-title>
+                    <source>Vaccine</source>
+                    <volume>25</volume>
+                    <fpage>510</fpage>
+                    <lpage>518</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Nemunaitis1">
+                <label>3</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Nemunaitis</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Meyers</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Senzer</surname>
+                            <given-names>N</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Cunningham</surname>
+                            <given-names>C</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>West</surname>
+                            <given-names>H</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2006</year>
+                    <article-title>Phase I Trial of sequential administration of recombinant DNA and
+                        adenovirus expressing L523S protein in early stage nonsmall-cell lung
+                        cancer.</article-title>
+                    <source>Mol Ther</source>
+                    <volume>13</volume>
+                    <fpage>1185</fpage>
+                    <lpage>1191</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-ManciniBourgine1">
+                <label>4</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Mancini-Bourgine</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Fontaine</surname>
+                            <given-names>H</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Bréchot</surname>
+                            <given-names>C</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Pol</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Michel</surname>
+                            <given-names>ML</given-names>
+                        </name>
+                    </person-group>
+                    <year>2006</year>
+                    <article-title>Immunogenicity of a hepatitis B DNA vaccine administered to
+                        chronic HBV carriers.</article-title>
+                    <source>Vaccine</source>
+                    <volume>24</volume>
+                    <fpage>4482</fpage>
+                    <lpage>4489</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Purcell1">
+                <label>5</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Purcell</surname>
+                            <given-names>AW</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>McCluskey</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Rossjohn</surname>
+                            <given-names>J</given-names>
+                        </name>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>More than one reason to rethink the use of peptides in vaccine
+                        design.</article-title>
+                    <source>Nat Rev Drug Discov</source>
+                    <volume>6</volume>
+                    <fpage>404</fpage>
+                    <lpage>414</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Depil1">
+                <label>6</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Depil</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Moralès</surname>
+                            <given-names>O</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Castelli</surname>
+                            <given-names>FA</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Delhem</surname>
+                            <given-names>N</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>François</surname>
+                            <given-names>V</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>Determination of a HLA II promiscuous peptide cocktail as
+                        potential vaccine against EBV latency II malignancies.</article-title>
+                    <source>J Immunother</source>
+                    <volume>30</volume>
+                    <fpage>215</fpage>
+                    <lpage>226</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-ChianeseBullock1">
+                <label>7</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Chianese-Bullock</surname>
+                            <given-names>KA</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Irvin</surname>
+                            <given-names>WP</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Petroni</surname>
+                            <given-names>GR</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Murphy</surname>
+                            <given-names>C</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Smolkin</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2008</year>
+                    <article-title>A multipeptide vaccine is safe and elicits T-cell responses in
+                        participants with advanced stage ovarian cancer.</article-title>
+                    <source>J Immunother</source>
+                    <volume>31</volume>
+                    <fpage>420</fpage>
+                    <lpage>430</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Kenter1">
+                <label>8</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Kenter</surname>
+                            <given-names>GG</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Welters</surname>
+                            <given-names>MJP</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Valentijn</surname>
+                            <given-names>ARPM</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Lowik</surname>
+                            <given-names>MJG</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>van der Meer</surname>
+                            <given-names>DMAB</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2008</year>
+                    <article-title>Phase I immunotherapeutic trial with long peptides spanning the
+                        E6 and E7 sequences of high-risk human papillomavirus 16 in end-stage
+                        cervical cancer patients shows low toxicity and robust immunogenicity.</article-title>
+                    <source>Clin Cancer Res</source>
+                    <volume>14</volume>
+                    <fpage>169</fpage>
+                    <lpage>177</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Yajima1">
+                <label>9</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Yajima</surname>
+                            <given-names>N</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Yamanaka</surname>
+                            <given-names>R</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Mine</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Tsuchiya</surname>
+                            <given-names>N</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Homma</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>Immunologic evaluation of personalized peptide vaccination for
+                        patients with advanced malignant glioma.</article-title>
+                    <source>Clin Cancer Res</source>
+                    <volume>11</volume>
+                    <fpage>5900</fpage>
+                    <lpage>5911</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Slingluff1">
+                <label>10</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Slingluff</surname>
+                            <given-names>CL</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Petroni</surname>
+                            <given-names>GR</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Yamshchikov</surname>
+                            <given-names>GV</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Barnd</surname>
+                            <given-names>DL</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Eastham</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2003</year>
+                    <article-title>Clinical and immunologic results of a randomized phase II trial
+                        of vaccination using four melanoma peptides either administered in
+                        granulocyte-macrophage colony-stimulating factor in adjuvant or pulsed on
+                        dendritic cells.</article-title>
+                    <source>J Clin Oncol</source>
+                    <volume>21</volume>
+                    <fpage>4016</fpage>
+                    <lpage>4026</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Slingluff2">
+                <label>11</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Slingluff</surname>
+                            <given-names>CL</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Petroni</surname>
+                            <given-names>GR</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Chianese-Bullock</surname>
+                            <given-names>KA</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Smolkin</surname>
+                            <given-names>ME</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Hibbitts</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>Immunologic and clinical outcomes of a randomized phase II trial
+                        of two multipeptide vaccines for melanoma in the adjuvant setting.</article-title>
+                    <source>Clin Cancer Res</source>
+                    <volume>13</volume>
+                    <fpage>6386</fpage>
+                    <lpage>6395</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-SinghJasuja1">
+                <label>12</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Singh-Jasuja</surname>
+                            <given-names>H</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Emmerich</surname>
+                            <given-names>NPN</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Rammensee</surname>
+                            <given-names>HG</given-names>
+                        </name>
+                    </person-group>
+                    <year>2004</year>
+                    <article-title>The Tübingen approach: identification, selection, and
+                        validation of tumor-associated HLA peptides for cancer therapy.</article-title>
+                    <source>Cancer Immunol Immunother</source>
+                    <volume>53</volume>
+                    <fpage>187</fpage>
+                    <lpage>195</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Rammensee1">
+                <label>13</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Rammensee</surname>
+                            <given-names>H</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Bachmann</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Emmerich</surname>
+                            <given-names>NP</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Bachor</surname>
+                            <given-names>OA</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Stevanovic</surname>
+                            <given-names>S</given-names>
+                        </name>
+                    </person-group>
+                    <year>1999</year>
+                    <article-title>SYFPEITHI: database for MHC ligands and peptide motifs.</article-title>
+                    <source>Immunogenetics</source>
+                    <volume>50</volume>
+                    <fpage>213</fpage>
+                    <lpage>219</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Parker1">
+                <label>14</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Parker</surname>
+                            <given-names>KC</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Bednarek</surname>
+                            <given-names>MA</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Coligan</surname>
+                            <given-names>JE</given-names>
+                        </name>
+                    </person-group>
+                    <year>1994</year>
+                    <article-title>Scheme for ranking potential HLA-A2 binding peptides based on
+                        independent binding of individual peptide side-chains.</article-title>
+                    <source>J Immunol</source>
+                    <volume>152</volume>
+                    <fpage>163</fpage>
+                    <lpage>175</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Dnnes1">
+                <label>15</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Dönnes</surname>
+                            <given-names>P</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Kohlbacher</surname>
+                            <given-names>O</given-names>
+                        </name>
+                    </person-group>
+                    <year>2006</year>
+                    <article-title>SVMHC: a server for prediction of MHC-binding peptides.</article-title>
+                    <source>Nucleic Acids Res</source>
+                    <volume>34</volume>
+                    <fpage>W194</fpage>
+                    <lpage>W197</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Buus1">
+                <label>16</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Buus</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Lauemøller</surname>
+                            <given-names>SL</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Worning</surname>
+                            <given-names>P</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Kesmir</surname>
+                            <given-names>C</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Frimurer</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2003</year>
+                    <article-title>Sensitive quantitative predictions of peptide-MHC binding by a
+                        ‘Query by Committee’ artificial neural network approach.</article-title>
+                    <source>Tissue Antigens</source>
+                    <volume>62</volume>
+                    <fpage>378</fpage>
+                    <lpage>384</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Nielsen1">
+                <label>17</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Nielsen</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Lundegaard</surname>
+                            <given-names>C</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Worning</surname>
+                            <given-names>P</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Lauemøller</surname>
+                            <given-names>SL</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Lamberth</surname>
+                            <given-names>K</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2003</year>
+                    <article-title>Reliable prediction of T-cell epitopes using neural networks with
+                        novel sequence representations.</article-title>
+                    <source>Protein Sci</source>
+                    <volume>12</volume>
+                    <fpage>1007</fpage>
+                    <lpage>1017</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Nielsen2">
+                <label>18</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Nielsen</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Lundegaard</surname>
+                            <given-names>C</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Worning</surname>
+                            <given-names>P</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Hvid</surname>
+                            <given-names>CS</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Lamberth</surname>
+                            <given-names>K</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2004</year>
+                    <article-title>Improved prediction of MHC class I and class II epitopes using a
+                        novel gibbs sampling approach.</article-title>
+                    <source>Bioinformatics</source>
+                    <volume>20</volume>
+                    <fpage>1388</fpage>
+                    <lpage>1397</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Schafer1">
+                <label>19</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Schafer</surname>
+                            <given-names>JR</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Jesdale</surname>
+                            <given-names>BM</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>George</surname>
+                            <given-names>JA</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Kouttab</surname>
+                            <given-names>NM</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Groot</surname>
+                            <given-names>ASD</given-names>
+                        </name>
+                    </person-group>
+                    <year>1998</year>
+                    <article-title>Prediction of well-conserved HIV-1 ligands using a matrix-based
+                        algorithm, EpiMatrix.</article-title>
+                    <source>Vaccine</source>
+                    <volume>16</volume>
+                    <fpage>1880</fpage>
+                    <lpage>1884</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Bui1">
+                <label>20</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Bui</surname>
+                            <given-names>HH</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Sidney</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Peters</surname>
+                            <given-names>B</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Sathiamurthy</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Sinichi</surname>
+                            <given-names>A</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>Automated generation and evaluation of specific mhc binding
+                        predictive tools: Arb matrix applications.</article-title>
+                    <source>Immunogenetics</source>
+                    <volume>57</volume>
+                    <fpage>304</fpage>
+                    <lpage>314</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Peters1">
+                <label>21</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Peters</surname>
+                            <given-names>B</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Sette</surname>
+                            <given-names>A</given-names>
+                        </name>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>Generating quantitative models describing the sequence
+                        specificity of biological processes with the stabilized matrix method.</article-title>
+                    <source>BMC Bioinformatics</source>
+                    <volume>6</volume>
+                    <fpage>132</fpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Nielsen3">
+                <label>22</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Nielsen</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Lundegaard</surname>
+                            <given-names>C</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Lund</surname>
+                            <given-names>O</given-names>
+                        </name>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>Prediction of MHC class II binding affinity using SMM-align, a
+                        novel stabilization matrix alignment method.</article-title>
+                    <source>BMC Bioinformatics</source>
+                    <volume>8</volume>
+                    <fpage>238</fpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Sturniolo1">
+                <label>23</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Sturniolo</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Bono</surname>
+                            <given-names>E</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Ding</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Raddrizzani</surname>
+                            <given-names>L</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Tuereci</surname>
+                            <given-names>O</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>1999</year>
+                    <article-title>Generation of tissue-specific and promiscuous HLA ligand
+                        databases using DNA microarrays and virtual HLA class II matrices.</article-title>
+                    <source>Nat Biotechnol</source>
+                    <volume>17</volume>
+                    <fpage>555</fpage>
+                    <lpage>561</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Peters2">
+                <label>24</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Peters</surname>
+                            <given-names>B</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Bui</surname>
+                            <given-names>HH</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Frankild</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Nielson</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Lundegaard</surname>
+                            <given-names>C</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2006</year>
+                    <article-title>A community resource benchmarking predictions of peptide binding
+                        to MHC-I molecules.</article-title>
+                    <source>PLoS Comput Biol</source>
+                    <volume>2</volume>
+                    <fpage>e65</fpage>
+                    <comment>doi:10.1371/journal.pcbi.0020065</comment>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Groot1">
+                <label>25</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Groot</surname>
+                            <given-names>ASD</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Marcon</surname>
+                            <given-names>L</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Bishop</surname>
+                            <given-names>EA</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Rivera</surname>
+                            <given-names>D</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Kutzler</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>HIV vaccine development by computer assisted design: the GAIA
+                        vaccine.</article-title>
+                    <source>Vaccine</source>
+                    <volume>23</volume>
+                    <fpage>2136</fpage>
+                    <lpage>2148</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-ViderShalit1">
+                <label>26</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Vider-Shalit</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Raffaeli</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Louzoun</surname>
+                            <given-names>Y</given-names>
+                        </name>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>Virus-epitope vaccine design: informatic matching the HLA-I
+                        polymorphism to the virus genome.</article-title>
+                    <source>Mol Immunol</source>
+                    <volume>44</volume>
+                    <fpage>1253</fpage>
+                    <lpage>1261</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Fischer1">
+                <label>27</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Fischer</surname>
+                            <given-names>W</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Perkins</surname>
+                            <given-names>S</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Theiler</surname>
+                            <given-names>J</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Bhattacharya</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Yusim</surname>
+                            <given-names>K</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>Polyvalent vaccines for optimal coverage of potential T-cell
+                        epitopes in global HIV-1 variants.</article-title>
+                    <source>Nat Med</source>
+                    <volume>13</volume>
+                    <fpage>100</fpage>
+                    <lpage>106</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Nickle1">
+                <label>28</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Nickle</surname>
+                            <given-names>DC</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Rolland</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Jensen</surname>
+                            <given-names>MA</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Pond</surname>
+                            <given-names>SLK</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Deng</surname>
+                            <given-names>W</given-names>
+                        </name>
+                        <etal/>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>Coping with viral diversity in HIV vaccine design.</article-title>
+                    <source>PLoS Comput Biol</source>
+                    <volume>3</volume>
+                    <fpage>e75</fpage>
+                    <comment>doi:10.1371/journal.pcbi.0030075</comment>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Schrijver1">
+                <label>29</label>
+                <element-citation publication-type="other" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Schrijver</surname>
+                            <given-names>A</given-names>
+                        </name>
+                    </person-group>
+                    <year>1986</year>
+                    <source>Theory of linear and integer programming</source>
+                    <publisher-loc>New York</publisher-loc>
+                    <publisher-name>John Wiley &amp; Sons</publisher-name>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Kingsford1">
+                <label>30</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Kingsford</surname>
+                            <given-names>CL</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Chazelle</surname>
+                            <given-names>B</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Singh</surname>
+                            <given-names>M</given-names>
+                        </name>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>Solving and analyzing side-chain positioning problems using
+                        linear and integer programming.</article-title>
+                    <source>Bioinformatics</source>
+                    <volume>21</volume>
+                    <fpage>1028</fpage>
+                    <lpage>1036</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Kuiken1">
+                <label>31</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Kuiken</surname>
+                            <given-names>C</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Yusim</surname>
+                            <given-names>K</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Boykin</surname>
+                            <given-names>L</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Richardson</surname>
+                            <given-names>R</given-names>
+                        </name>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>The Los Alamos hepatitis C sequence database.</article-title>
+                    <source>Bioinformatics</source>
+                    <volume>21</volume>
+                    <fpage>379</fpage>
+                    <lpage>384</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Edgar1">
+                <label>32</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Edgar</surname>
+                            <given-names>RC</given-names>
+                        </name>
+                    </person-group>
+                    <year>2004</year>
+                    <article-title>MUSCLE: multiple sequence alignment with high accuracy and high
+                        throughput.</article-title>
+                    <source>Nucleic Acids Res</source>
+                    <volume>32</volume>
+                    <fpage>1792</fpage>
+                    <lpage>1797</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Dnnes2">
+                <label>33</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Dönnes</surname>
+                            <given-names>P</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Kohlbacher</surname>
+                            <given-names>O</given-names>
+                        </name>
+                    </person-group>
+                    <year>2005</year>
+                    <article-title>Integrated modeling of the major events in the MHC class I
+                        antigen processing pathway.</article-title>
+                    <source>Protein Sci</source>
+                    <volume>14</volume>
+                    <fpage>2132</fpage>
+                    <lpage>2140</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-ILOG1">
+                <label>34</label>
+                <element-citation publication-type="other" xlink:type="simple">
+                    <collab xlink:type="simple">ILOG, Inc</collab>
+                    <year>2005</year>
+                    <article-title>ILOG CPLEX, version 9.1.</article-title>
+                    <comment>
+                        <ext-link ext-link-type="uri" xlink:href="http://www.ilog.com" xlink:type="simple">http://www.ilog.com</ext-link>
+                    </comment>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-MOSEK1">
+                <label>35</label>
+                <element-citation publication-type="other" xlink:type="simple">
+                    <collab xlink:type="simple">MOSEK ApS</collab>
+                    <article-title>Mosek.</article-title>
+                    <comment>
+                        <ext-link ext-link-type="uri" xlink:href="http://www.mosek.com" xlink:type="simple">http://www.mosek.com</ext-link>
+                    </comment>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Achterberg1">
+                <label>36</label>
+                <element-citation publication-type="other" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Achterberg</surname>
+                            <given-names>T</given-names>
+                        </name>
+                    </person-group>
+                    <year>2007</year>
+                    <article-title>Constraint Integer Programming.</article-title>
+                    <comment>Ph.D. thesis, Technische Universität Berlin</comment>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Achterberg2">
+                <label>37</label>
+                <element-citation publication-type="other" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Achterberg</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Berthold</surname>
+                            <given-names>T</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Pfetsch</surname>
+                            <given-names>M</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Wolter</surname>
+                            <given-names>K</given-names>
+                        </name>
+                    </person-group>
+                    <article-title>SCIP (Solving Constraint Integer Programs).</article-title>
+                    <comment>
+                        <ext-link ext-link-type="uri" xlink:href="http://scip.zib.de" xlink:type="simple">http://scip.zib.de</ext-link>
+                    </comment>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Seder1">
+                <label>38</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Seder</surname>
+                            <given-names>RA</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Darrah</surname>
+                            <given-names>PA</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Roederer</surname>
+                            <given-names>M</given-names>
+                        </name>
+                    </person-group>
+                    <year>2008</year>
+                    <article-title>T-cell quality in memory and protection: implications for vaccine
+                        design.</article-title>
+                    <source>Nat Rev Immunol</source>
+                    <volume>8</volume>
+                    <fpage>247</fpage>
+                    <lpage>258</lpage>
+                </element-citation>
+            </ref>
+            <ref id="pcbi.1000246-Sette1">
+                <label>39</label>
+                <element-citation publication-type="journal" xlink:type="simple">
+                    <person-group person-group-type="author">
+                        <name name-style="western">
+                            <surname>Sette</surname>
+                            <given-names>A</given-names>
+                        </name>
+                        <name name-style="western">
+                            <surname>Fikes</surname>
+                            <given-names>J</given-names>
+                        </name>
+                    </person-group>
+                    <year>2003</year>
+                    <article-title>Epitope-based vaccines: an update on epitope identification,
+                        vaccine design and delivery.</article-title>
+                    <source>Curr Opin Immunol</source>
+                    <volume>15</volume>
+                    <fpage>461</fpage>
+                    <lpage>470</lpage>
+                </element-citation>
+            </ref>
+        </ref-list>
+        
+    </back>
+</article>

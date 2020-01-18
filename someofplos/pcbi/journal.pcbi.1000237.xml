@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Computational Biology</journal-title></journal-title-group><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">08-PLCB-RA-0359R3</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1000237</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Computational Biology/Genomics</subject><subject>Computational Biology/Systems Biology</subject></subj-group></article-categories><title-group><article-title>Dynamic Changes in Protein Functional Linkage Networks Revealed by Integration with Gene Expression Data</article-title><alt-title alt-title-type="running-head">Dynamics of Protein Functional Linkage Networks</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Hegde</surname><given-names>Shubhada R.</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Manimaran</surname><given-names>Palanisamy</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Mande</surname><given-names>Shekhar C.</given-names></name><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group><aff id="aff1">          <addr-line>Centre for DNA Fingerprinting and Diagnostics, Nacharam, Hyderabad, India</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Lai</surname><given-names>Luhua</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">Peking University, China</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">shekhar@cdfd.org.in</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: SRH. Performed the experiments: SRH. Analyzed the data: SRH PM SCM. Contributed reagents/materials/analysis tools: SRH PM. Wrote the paper: SRH PM SCM.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><month>11</month><year>2008</year></pub-date><pub-date pub-type="epub"><day>28</day><month>11</month><year>2008</year></pub-date><volume>4</volume><issue>11</issue><elocation-id>e1000237</elocation-id><history>
+<date date-type="received"><day>8</day><month>5</month><year>2008</year></date>
+<date date-type="accepted"><day>20</day><month>10</month><year>2008</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2008</copyright-year><copyright-holder>Hegde et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>Response of cells to changing environmental conditions is governed by the dynamics of intricate biomolecular interactions. It may be reasonable to assume, proteins being the dominant macromolecules that carry out routine cellular functions, that understanding the dynamics of protein∶protein interactions might yield useful insights into the cellular responses. The large-scale protein interaction data sets are, however, unable to capture the changes in the profile of protein∶protein interactions. In order to understand how these interactions change dynamically, we have constructed conditional protein linkages for <italic>Escherichia coli</italic> by integrating functional linkages and gene expression information. As a case study, we have chosen to analyze UV exposure in wild-type and SOS deficient <italic>E. coli</italic> at 20 minutes post irradiation. The conditional networks exhibit similar topological properties. Although the global topological properties of the networks are similar, many subtle local changes are observed, which are suggestive of the cellular response to the perturbations. Some such changes correspond to differences in the path lengths among the nodes of carbohydrate metabolism correlating with its loss in efficiency in the UV treated cells. Similarly, expression of hubs under unique conditions reflects the importance of these genes. Various centrality measures applied to the networks indicate increased importance for replication, repair, and other stress proteins for the cells under UV treatment, as anticipated. We thus propose a novel approach for studying an organism at the systems level by integrating genome-wide functional linkages and the gene expression data.</p>
+</abstract><abstract abstract-type="summary"><title>Author Summary</title>
+<p>Many cellular processes and the response of cells to environmental cues are determined by the intricate protein∶protein interactions. These cellular protein interactions can be represented in the form of a graph, where the nodes represent the proteins and the edges signify the interactions between them. However, the available protein functional linkage maps do not incorporate the dynamics of gene expression and thus do not portray the dynamics of true protein∶protein interactions in vivo. We have used gene expression data as well as the available protein functional interaction information for <italic>Escherichia coli</italic> to build the protein interaction networks for expressed genes in a given condition. These networks, named conditional networks, capture the differences in the protein interaction networks and hence the cell physiology. Thus, by exploring the dynamics of protein interaction profiles, we hope to understand the response of cells to environmental changes.</p>
+</abstract><funding-group><funding-statement>Department of Biotechnology Centre of Excellence grant on Microbial Biology, India; UGC Junior Research Fellowship to SRH; and Wellcome Trust International Senior Research Fellowship to SCM.</funding-statement></funding-group><counts><page-count count="9"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Gene expression pattern in all organisms is a property of the environmental conditions in which they grow. Expression of a large number of genes is turned on or off conditionally and temporally allowing the organisms to adapt to different growth or changing environmental conditions. While some genes are constitutively expressed under many different conditions, presumably being essential for the organism to carry out basic cellular processes for growth and sustenance, many genes are expressed only under defined conditions. DNA microarray offers a powerful tool to study such gene expression profiling. Studying the gene expression pattern under different conditions therefore offers an attractive approach to study the response of an organism to changing environmental conditions.</p>
+<p>The traditional analysis of microarray data involves measuring differential expression between two samples after background elimination and data normalization. An unsupervised classification method such as clustering or principal component analysis is popularly used to identify genes that have a similar regulation pattern <xref ref-type="bibr" rid="pcbi.1000237-Murphy1">[1]</xref>,<xref ref-type="bibr" rid="pcbi.1000237-Slonim1">[2]</xref>. Although measuring relative gene expression levels is the preferred method of analysis, the individual signal intensities, which contain valuable information on absolute gene expression, are often not considered. Studying the pattern of absolute expression of genes, rather than relative expression between two conditions, might provide an alternate useful approach for comparative analysis.</p>
+<p>A few attempts have been made to analyze differences in gene expression arising out of different conditions of growth. The gene expression profiling in <italic>E. coli</italic> has revealed varied mRNA transcripts in the cells growing in minimal and rich media as well as in their exponential and transitional phases of growth <xref ref-type="bibr" rid="pcbi.1000237-Wei1">[3]</xref>. In a similar line, the gene expression dynamics and its relevance to <italic>E. coli</italic> physiology is shown by the protein expression profiles and their correlation with the gene expression profiles <xref ref-type="bibr" rid="pcbi.1000237-Champion1">[4]</xref>,<xref ref-type="bibr" rid="pcbi.1000237-Corbin1">[5]</xref>. Absolute gene expression analysis in fission yeast has shown that the basic cellular functions are carried out by the conserved genes and that the organism specific genes are expressed conditionally for the specialized processes <xref ref-type="bibr" rid="pcbi.1000237-Mata1">[6]</xref>. These studies have provided a wealth of data on the molecular and genetic basis of response of organisms to changing environmental conditions.</p>
+<p>While the analysis of gene expression data provides useful insights into the adaptation process, it is believed that the response of organisms is dictated by the dynamics of biomolecular interactions profile. One of the inspirations to carry out the present study was to understand the changing landscape of protein-protein interactions under different environmental conditions. The protein-protein interaction studies carried out experimentally usually represent only a fraction of all the possible interactions among different cellular proteins <xref ref-type="bibr" rid="pcbi.1000237-vonMering1">[7]</xref>. Moreover, the protein interaction networks available, for example in <italic>E. coli</italic> <xref ref-type="bibr" rid="pcbi.1000237-Butland1">[8]</xref>,<xref ref-type="bibr" rid="pcbi.1000237-Arifuzzaman1">[9]</xref>, represent only the static protein interaction networks and are able to capture the interactions involving only those genes whose products are expressed under the unique experimental conditions. On the other hand, understanding of the dynamics of protein interaction networks demands profiling genome-wide protein-protein interactions under many different experimental conditions. Such experiments are currently prohibitive in time and resources. Therefore, profiling interactions under changing environmental conditions presents enormous challenge to the experimental biologists.</p>
+<p>There have been a few attempts to combine protein: protein interaction networks and gene expression data <xref ref-type="bibr" rid="pcbi.1000237-Horvath1">[10]</xref>. The dynamics of yeast interactome studied using mRNA expression revealed two kinds of hubs namely, “date hubs” and “party hubs” <xref ref-type="bibr" rid="pcbi.1000237-Han1">[11]</xref>. The former are believed to bind different proteins at different time or location, and the latter are believed to bind to their partners simultaneously. Also, the hub proteins were shown to have lower levels of differential expression compared to the non-hub proteins <xref ref-type="bibr" rid="pcbi.1000237-Lu1">[12]</xref>. Further, it was observed that static and dynamic proteins cluster into different modules in yeast protein interaction network <xref ref-type="bibr" rid="pcbi.1000237-Komurov1">[13]</xref>. In another study the PPI networks were studied in the context of genes expressed during aging <xref ref-type="bibr" rid="pcbi.1000237-Xue1">[14]</xref>. These sub-networks and the modules therein were examined for understanding the aging process. Thus, although a few attempts have been made in integrating the gene expression data with protein interaction networks, the analysis of differential gene expression in the context of corresponding networks remains an underexplored area. Our study is an attempt in this direction.</p>
+</sec><sec id="s2">
+<title>Results/Discussion</title>
+<p>We have used gene expression information of <italic>E. coli</italic> to identify the genes that are expressed in the prevailing conditions and constructed reduced networks from the predicted genome-wide parent functional linkage network. <xref ref-type="supplementary-material" rid="pcbi.1000237.s006">Figure S1A</xref> schematically shows our approach, which we intend to use for the analysis of <italic>E. coli</italic> expression data. The sub-networks thus constructed are hypothesized to represent a real functional interaction picture of the cell. We have further applied various graph theoretical measures to extract the relevant biological information from these sub-networks. This we propose to be a novel methodology in which a raw microarray data can be analyzed by incorporating molecular interaction information with gene expression.</p>
+<sec id="s2a">
+<title>Construction of the Conditional Protein–Protein Interaction Networks</title>
+<p>Predicted functional interaction network for <italic>E. coli</italic>, which comprises 78,048 interactions among 3,682 proteins, was used as the parent network <xref ref-type="bibr" rid="pcbi.1000237-Yellaboina1">[15]</xref>. This functional linkages network was obtained by training a Support Vector Machine on high confidence interactions in the EcoCyc database and assuming that cytoplasmic and periplasmic protein do not interact with each other. The predicted data set has fewer interactions in common with the experimentally derived networks <xref ref-type="bibr" rid="pcbi.1000237-Butland1">[8]</xref>,<xref ref-type="bibr" rid="pcbi.1000237-Arifuzzaman1">[9]</xref>. However, the overlap increases significantly if the indirect interactions are taken into consideration.</p>
+<p>As a case study, we have chosen to study the gene expression data from UV exposure in wild type and SOS deficient <italic>E. coli</italic> at 20 minutes post irradiation <xref ref-type="bibr" rid="pcbi.1000237-Courcelle1">[16]</xref>. The four conditions studied are Untreated Wild Type (UWT), UV treated Wild Type (TWT), untreated <italic>lexA</italic> mutant (UML) and UV treated <italic>lexA</italic> mutant (TML). Graph theoretical measures were applied to the four sub-networks that were derived by this methodology, and then compared amongst each other (<xref ref-type="supplementary-material" rid="pcbi.1000237.s006">Figure S1B</xref>).</p>
+<p>The <italic>E. coli</italic> genome has the capability to encode more than 4000 genes. Out of these, approximately 40–60% are likely to be expressed under any defined condition <xref ref-type="bibr" rid="pcbi.1000237-Champion1">[4]</xref>. Using the methodology described in <xref ref-type="sec" rid="s3">Materials and Methods</xref>, our processing of the raw microarray data revealed expression of around 2000 genes (<xref ref-type="supplementary-material" rid="pcbi.1000237.s001">Table S1</xref>), which is in close agreement with the earlier studies on absolute gene expression <xref ref-type="bibr" rid="pcbi.1000237-Corbin1">[5]</xref>. Networks under each of the four conditions (henceforth referred to as conditional networks) were constructed by mapping the expressed proteins on the parent network. The conditional networks possess around 30,000 interactions among the expressed proteins.</p>
+</sec><sec id="s2b">
+<title>Global Properties of the Conditional Networks</title>
+<p>It is anticipated that the effect of turning off or on of the genes expressed under the four conditions will be reflected in the conditional networks. While, this is likely to lead to many local perturbations in the network, the global properties of the four networks are not likely to change significantly. Various topological properties of the conditional networks under the perturbations such as mutation (<italic>lexA</italic>) or UV treatment along with the network corresponding to wild-type were therefore studied.</p>
+<p>The four conditional networks exhibit similar network parameters (<xref ref-type="table" rid="pcbi-1000237-t001">Table 1</xref>). The core cluster comprises &gt;95% of the nodes in the network. The overlap of the interactions and the nodes in UWT-TWT and UML-TML is shown in <xref ref-type="supplementary-material" rid="pcbi.1000237.s007">Figure S2</xref>. The degree distributions in all the four conditional networks show power law behavior with the degree exponent of 1.1. Therefore, the networks are scale-free, indicating that these are similar to other real world networks. The scale-free property also is suggestive of their resistance to random node failure <xref ref-type="bibr" rid="pcbi.1000237-Albert1">[17]</xref>. The network diameters for the studied graphs imply the small-world property where the number of steps required for reaching from one node to the other is not more than 9. Other properties such as average clustering coefficient and mean eccentricity are similar in all the graphs (<xref ref-type="table" rid="pcbi-1000237-t001">Table 1</xref>). The fractal dimensions calculated using cluster growing method indicates that the networks are self similar with all the four conditional networks possessing similar fractal dimensions. Similarly, network efficiency is also comparable in the conditional networks in spite of the imposed perturbations. Thus, we do not find any significant difference in the global network properties of the four conditional networks.</p>
+<table-wrap id="pcbi-1000237-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000237.t001</object-id><label>Table 1</label><caption>
+<title>Global properties of the sub-networks.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000237-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Property</td>
+<td align="left" colspan="1" rowspan="1">Parent Network</td>
+<td align="left" colspan="1" rowspan="1">UWT</td>
+<td align="left" colspan="1" rowspan="1">TWT</td>
+<td align="left" colspan="1" rowspan="1">UML</td>
+<td align="left" colspan="1" rowspan="1">TML</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Nodes</td>
+<td align="left" colspan="1" rowspan="1">3,682</td>
+<td align="left" colspan="1" rowspan="1">1,899</td>
+<td align="left" colspan="1" rowspan="1">1,865</td>
+<td align="left" colspan="1" rowspan="1">1,957</td>
+<td align="left" colspan="1" rowspan="1">1,947</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Edges</td>
+<td align="left" colspan="1" rowspan="1">78,048</td>
+<td align="left" colspan="1" rowspan="1">34,893</td>
+<td align="left" colspan="1" rowspan="1">34,680</td>
+<td align="left" colspan="1" rowspan="1">31,900</td>
+<td align="left" colspan="1" rowspan="1">33,513</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Percentage core nodes</td>
+<td align="left" colspan="1" rowspan="1">96.9</td>
+<td align="left" colspan="1" rowspan="1">97.4</td>
+<td align="left" colspan="1" rowspan="1">97.9</td>
+<td align="left" colspan="1" rowspan="1">96.1</td>
+<td align="left" colspan="1" rowspan="1">95.5</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Average degree</td>
+<td align="left" colspan="1" rowspan="1">42.4</td>
+<td align="left" colspan="1" rowspan="1">36.7</td>
+<td align="left" colspan="1" rowspan="1">37.2</td>
+<td align="left" colspan="1" rowspan="1">32.6</td>
+<td align="left" colspan="1" rowspan="1">34.4</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Degree exponent</td>
+<td align="left" colspan="1" rowspan="1">1.2</td>
+<td align="left" colspan="1" rowspan="1">1.1</td>
+<td align="left" colspan="1" rowspan="1">1.1</td>
+<td align="left" colspan="1" rowspan="1">1.1</td>
+<td align="left" colspan="1" rowspan="1">1.1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Diameter</td>
+<td align="left" colspan="1" rowspan="1">11</td>
+<td align="left" colspan="1" rowspan="1">8</td>
+<td align="left" colspan="1" rowspan="1">8</td>
+<td align="left" colspan="1" rowspan="1">8</td>
+<td align="left" colspan="1" rowspan="1">9</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Mean eccentricity</td>
+<td align="left" colspan="1" rowspan="1">7.99</td>
+<td align="left" colspan="1" rowspan="1">5.66</td>
+<td align="left" colspan="1" rowspan="1">5.78</td>
+<td align="left" colspan="1" rowspan="1">5.89</td>
+<td align="left" colspan="1" rowspan="1">6.07</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Average clustering coefficient</td>
+<td align="left" colspan="1" rowspan="1">0.23</td>
+<td align="left" colspan="1" rowspan="1">0.21</td>
+<td align="left" colspan="1" rowspan="1">0.21</td>
+<td align="left" colspan="1" rowspan="1">0.22</td>
+<td align="left" colspan="1" rowspan="1">0.22</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Fractal dimension</td>
+<td align="left" colspan="1" rowspan="1">3.9</td>
+<td align="left" colspan="1" rowspan="1">3.5</td>
+<td align="left" colspan="1" rowspan="1">3.4</td>
+<td align="left" colspan="1" rowspan="1">3.5</td>
+<td align="left" colspan="1" rowspan="1">3.5</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Network efficiency</td>
+<td align="left" colspan="1" rowspan="1">0.36</td>
+<td align="left" colspan="1" rowspan="1">0.37</td>
+<td align="left" colspan="1" rowspan="1">0.38</td>
+<td align="left" colspan="1" rowspan="1">0.36</td>
+<td align="left" colspan="1" rowspan="1">0.37</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><p>Global network parameters for the parent network (15) and the conditional networks. UWT, UV Untreated Wild Type; TWT, UV Treated Wild Type; UML, UV Untreated <italic>lexA</italic> mutant; TML, UV Treated <italic>lexA</italic> mutant.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s2c">
+<title>Unique Nodes of the Conditional Networks</title>
+<p>Each of the four conditional networks possesses unique nodes corresponding to the genes that are expressed differentially. Interestingly, the uniquely expressed genes include a few hubs and transcription factors. The lists of proteins that are identified to be uniquely expressed are listed in the <xref ref-type="supplementary-material" rid="pcbi.1000237.s002">Table S2</xref>. As anticipated, some of the proteins involved in DNA repair, recombination and cell structure determination are observed only in the UV treated wild type network in comparison with the untreated wild type network. In addition to the UV damage response genes, other environmental stress related genes are also uniquely expressed in the UV treated wild type cells. Thus, the comparative analysis of PPI networks appears to identify a few crucial features that might be physiologically relevant.</p>
+<p>Mapping of the unique nodes of each of the four comparison sets to different metabolic pathways for <italic>E. coli</italic>, as enlisted in KEGG database <xref ref-type="bibr" rid="pcbi.1000237-Kanehisa1">[18]</xref>, revealed that replication and repair proteins, as expected, are more in number in the UV treated networks compared to their untreated counterparts (<xref ref-type="supplementary-material" rid="pcbi.1000237.s008">Figure S3</xref>). Interestingly, many genes coded on carbohydrate metabolism operons are seen only in the untreated wild type network. The presence of these gene clusters in the untreated wild type cells and their absence in UV irradiated cells appears to suggest the repression of sugar metabolism in UV treated <italic>E. coli</italic> cells. Earlier study has shown that a few carbohydrate metabolism operons indeed exhibit reduced expression under UV exposure <xref ref-type="bibr" rid="pcbi.1000237-Courcelle1">[16]</xref>. Similarly, we observe genes belonging to membrane transport more in number as uniquely expressed in the <italic>lexA</italic> mutant cells when compared with the respective wild type cells. Thus, the four-way comparisons of expressed genes, as anticipated, highlight the importance of DNA repair and replication processes under UV exposure.</p>
+<p>One of the interesting genes that we observed to be expressed only in the UV treated cells is the <italic>hda</italic> gene, protein product of which is involved in DnaA inactivation. It has been demonstrated earlier that cells suppress replication upon DNA damage. As Hda is known to repress hyper initiation of DNA replication by inactivating DnaA <xref ref-type="bibr" rid="pcbi.1000237-Banack1">[19]</xref>, the criticality for Hda in the UV treated networks appears to be significant. Interestingly, this protein has a high degree in the UV treated networks (<xref ref-type="supplementary-material" rid="pcbi.1000237.s003">Table S3</xref>). Since high degree nodes are believed to be important in maintaining robustness of graphs <xref ref-type="bibr" rid="pcbi.1000237-Albert1">[17]</xref>, the high degree of Hda and its unique expression in UV treated cells signifies its importance when the cells are treated with UV radiation. Furthermore, this gene is observed to be expressed under UV exposure, both in the wild type as well as in the <italic>lexA</italic> mutant, suggesting that its expression is independent of the well characterized SOS response.</p>
+<p>Another interesting example is the unique expression of genes involved in the iron uptake system in the untreated wild type cells. The proteins EntA, EntB and EntF function in the pathway of enterobactin synthesis and the proteins FepA and FepB form a part of the channel to transport Fe-enterobactin complex inside the cell. When cells are UV treated, reactive oxygen species (ROSs) are synthesized via photo-Fenton reaction which leads to oxidative damage of structural proteins, enzymes, DNA and lipids. Thus, it is likely that cells repress iron uptake to protect cellular macromolecules from damage. The absence of these iron uptake proteins from UV treated wild type network supports this idea.</p>
+<p>The analysis of uniquely expressed nodes under one condition, but not in another condition, indicates some of the possible effects of UV radiation on <italic>E. coli</italic>. The importance of repression of carbohydrate metabolism and iron uptake upon exposure to UV is apparent in the networks. Similarly, an important hub, Hda, is also apparently expressed only upon UV exposure. Thus, the uniquely expressed nodes in the networks indicate of how <italic>E. coli</italic> might respond to UV, thereby suggesting that such an analysis might be useful in other similar studies.</p>
+</sec><sec id="s2d">
+<title>Analysis of the Path Length Differences</title>
+<p>An interesting aspect in systems analysis is to study the effect of selective removal of nodes on modifications in the shortest path lengths in the conditional networks. The shortest path lengths in a network signify the efficiency of communication between the nodes, and any alteration in these paths might suggest significance of these nodes under the two conditions. Importantly, the overall diameter of the four conditional networks is identical, indicating that diameter as a global property of the network is not subject to change. Moreover, all the networks have small world property; almost all nodes can be reached from every other in a small number of steps. This is not surprising, considering the biological robustness that is reflected in these networks. Thus, analysis of shortest path lengths might yield interesting insights into the relative importance of communication networks in the four sub-networks.</p>
+<p>In order to analyze local changes in pathlength differences, the reduced pathlength matrices were constructed for the common nodes in network pairs under study. The pathlength difference of more than or equal to 3 for each node pair in two reduced networks were considered significant. As expected, for most of the node pairs, there is no change in the pathlength as there are multiple paths to reach from one node to another node even in the event of a collapse of a particular path. Interestingly, we observe considerable variation in the path for some node pairs, manifesting their reduced connectivity in terms of efficient information exchange, two examples of which are discussed in detail below.</p>
+<p>The shortest pathlength from AmyA, a cytoplasmic α-amylase to many of the glycogen metabolism enzymes is observed to be increased in UV treated wild type network (<xref ref-type="fig" rid="pcbi-1000237-g001">Figure 1</xref>). In the untreated wild type subgraph, AmyA is connected to glycogen metabolism enzymes through MalZ, which functions as a maltodextrin glucosidase. The increase in the path length is due to the absence of MalZ node in the cells treated with UV and thereby resulting in isolation of AmyA with respect to proteins belonging to starch and sucrose metabolism in <italic>E. coli</italic>. Thus, the importance of repression of carbohydrate metabolism upon UV treatment is highlighted not only by the repression of a few carbohydrate metabolism operons <xref ref-type="bibr" rid="pcbi.1000237-Courcelle1">[16]</xref>, but also by the reduced efficiency of communication between different glycogen metabolism genes.</p>
+<fig id="pcbi-1000237-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000237.g001</object-id><label>Figure 1</label><caption>
+<title>Path length analysis for the starch and sugar metabolism genes.</title>
+<p>In the untreated wild type network, the subgraph for starch and sucrose metabolism pathway proteins is well connected. The absence of MalZ in treated wild type network increases the path from AmyA to some of the glycogen metabolism proteins significantly.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.g001" xlink:type="simple"/></fig>
+<p>Another interesting example pertains to the phosphotransferase system in <italic>E. coli</italic>. The sub-network corresponding to a part of phosphotransferase (PTS) system in <italic>E. coli</italic> in the untreated mutant network is very well connected, whereas the mutant UV treated network lacks CmtB, a component of mannitol PTS permease (<xref ref-type="fig" rid="pcbi-1000237-g002">Figure 2</xref>). This results in the increased shortest paths from YggD, which is a hypothetical transcriptional regulator of <italic>cmt</italic> operon, to other proteins which are part of the phosphotransferase system in <italic>E. coli</italic>. Since PTS regulates the uptake and metabolism of several sugars, we speculate that the increased paths between YggD and other PTS components might be a strong indication for the temporal repression of sugar metabolism in cells treated with UV radiation.</p>
+<fig id="pcbi-1000237-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000237.g002</object-id><label>Figure 2</label><caption>
+<title>Path length analysis for the nodes of phosphotransferase system.</title>
+<p>The absence of CmtB in the UV treated <italic>lexA</italic> mutant network increases the pathlength from YggD, a putative <italic>cmt</italic> operon transcriptional regulator to other phospho transferase system (PTS) enzymes.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.g002" xlink:type="simple"/></fig></sec><sec id="s2e">
+<title>Expression of the Hubs</title>
+<p>It has been reported that the highly connected nodes of the network (hubs) are three times more likely to be essential than the poorly connected nodes <xref ref-type="bibr" rid="pcbi.1000237-Jeong1">[20]</xref>. Moreover, dynamics of yeast interactome has revealed two kinds of hubs, ones which are present under a variety of conditions, and the ones which appear only under certain specific conditions <xref ref-type="bibr" rid="pcbi.1000237-Han1">[11]</xref>. Thus, it is important to analyze the presence or absence of hubs under the four conditions. We have defined hubs of the parent network as the nodes having degree more than 60 and thereby identified 736 hubs in the network. We find that around 70–75% of the hubs of the parental network are expressed in the conditional networks. As a null hypothesis, when test networks are constructed by choosing random nodes of the parent network, we find only 50% hubs (<xref ref-type="supplementary-material" rid="pcbi.1000237.s009">Figure S4</xref>). Thus, essentiality of the hubs appears to manifest itself by the expression of a large number of hubs under all the four different conditions. One such example of the Hda hub was described above.</p>
+</sec><sec id="s2f">
+<title>Centrality Measures</title>
+<p>It is likely that the importance of a functional role of a gene might differ according to the prevailing condition of growth. The relative importance of a node in graph theory can be assessed by calculating various centrality measures. We have therefore analyzed different centrality measures of graph theory with respect to their relevance to the four sub-networks.</p>
+<p>Degree centrality is based on how well the node is connected in a graph. Degree centrality thus states that a node tends to be essential in a network if it is highly connected and its removal has severe impact on the overall topology and connectedness of the network <xref ref-type="bibr" rid="pcbi.1000237-Albert1">[17]</xref>,<xref ref-type="bibr" rid="pcbi.1000237-Jeong1">[20]</xref>. Similarly, if a node is positioned in such a way that it can communicate with other nodes quickly then the node is considered to be important in terms of closeness centrality. Betweenness centrality, on the other hand measures the number of shortest paths that traverse through a node. Both closeness and betweenness centrality have also been reported to be good measures to assess gene essentiality <xref ref-type="bibr" rid="pcbi.1000237-Hahn1">[21]</xref>–<xref ref-type="bibr" rid="pcbi.1000237-Yu1">[23]</xref>. Based on these observations, we calculated the three centrality values for the nodes in the conditional networks, and then for each of the nodes we computed the pair wise difference between the different conditions.</p>
+<p>To address conditional or relative criticality of a node, we calculated the difference in the centrality measures for the common nodes in the comparison set. The centrality measure difference is approximately normally distributed, thus about 99.7% values are expected to lie within 3 standard deviations of the mean value. For most of the nodes, there is no change in the centrality value as expected. We have chosen to study those proteins whose centrality measure difference is more than 3 times the standard deviation of the distribution. When untreated wild type and UV treated wild type networks are compared, the proteins belonging to carbohydrate metabolism and energy metabolism such as BglX, Dld, GatB, GlgA, CydA, CydB and YneH have greater centrality measure in the untreated wild type network. The replication and repair proteins, namely RecN, RecO, Tag, HepA and HolC on the other hand have greater centrality values in the UV treated wild type network. Likewise, DnaA, DnaE, Mfd, RecJ and SbcB functioning in the replication and repair machinery possess significantly higher centrality values in UV treated mutant networks compared to their untreated counterparts. We observe no considerable change in the centrality measure for the proteins of the pathways such as polyketide biosynthesis, cell motility and xenobiotics biodegradation. A detailed list of proteins with significant difference in centrality along with their functions in UWT- TWT and UML- TML comparison set is given as <xref ref-type="supplementary-material" rid="pcbi.1000237.s004">Table S4</xref>. In order to check if the standard deviation cutoff (3.0) has any effect on our overall conclusions, we reanalyzed the data on the centrality using a cutoff of 2.0. However, the overall conclusions on the importance of carbohydrate metabolism in untreated cells, and those of DNA replication and repair in the UV-treated cells, remain the same. We may thus conclude that the cutoff value of standard deviation, if modified, does not appear to alter the overall biological conclusions.</p>
+<p>Further, to study the essentiality of the nodes depending on the UV treatment or the <italic>lexA</italic> mutation, we undertook degree centrality analysis of top 30% nodes in each of the conditional networks. Using these criterion more than 550 nodes can be classified as high degree nodes under each condition (<xref ref-type="table" rid="pcbi-1000237-t002">Table 2</xref>). When the common high degree nodes of wild-type networks (untreated as well as UV treated) and the common high degree nodes of <italic>lexA</italic> mutant (untreated as well as UV treated) networks are compared, interestingly 104 high degree nodes are unique to the wild type networks but are absent in either one or both mutant networks. Similarly 100 high degree nodes are unique to the mutant networks but are absent in either one or both wild type networks. We therefore consider them as the nodes that are essential in a mutation independent and mutation dependent manner respectively. A similar comparison for the high degree nodes in the context of UV treatment revealed 42 nodes as essential depending on UV treatment and 57 nodes as essential when there is no UV treatment (<xref ref-type="table" rid="pcbi-1000237-t002">Table 2</xref>). We further mapped these proteins onto different metabolic pathways in the KEGG database and classified them as <italic>lexA</italic> mutation independent, <italic>lexA</italic> mutation dependent, UV treatment dependent and UV treatment independent (<xref ref-type="fig" rid="pcbi-1000237-g003">Figure 3</xref> and <xref ref-type="supplementary-material" rid="pcbi.1000237.s005">Table S5</xref>). Some specific examples of this analysis are discussed below.</p>
+<fig id="pcbi-1000237-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000237.g003</object-id><label>Figure 3</label><caption>
+<title>Classification of hubs according to the KEGG metabolic pathways.</title>
+<p>The high degree nodes of each of the four conditions are classified as critical in a UV treatment dependent or independent manner and <italic>lexA</italic> mutation dependent or independent manner, and they are mapped onto different metabolic pathways of <italic>E. coli</italic> as enlisted in the KEGG database.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.g003" xlink:type="simple"/></fig><table-wrap id="pcbi-1000237-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000237.t002</object-id><label>Table 2</label><caption>
+<title>Degree centrality of the conditional networks.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000237-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Conditional Networks</td>
+<td align="left" colspan="1" rowspan="1">Number of High Degree Nodes</td>
+<td align="left" colspan="1" rowspan="1">Networks Compared</td>
+<td align="left" colspan="1" rowspan="1">Common Nodes</td>
+<td align="left" colspan="1" rowspan="1">Criticality</td>
+<td align="left" colspan="1" rowspan="1">Number of Proteins</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">UWT</td>
+<td align="left" colspan="1" rowspan="1">570</td>
+<td align="left" colspan="1" rowspan="1">UWT-TWT</td>
+<td align="left" colspan="1" rowspan="1">527</td>
+<td align="left" colspan="1" rowspan="1">Mutation independent</td>
+<td align="left" colspan="1" rowspan="1">104</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">TWT</td>
+<td align="left" colspan="1" rowspan="1">560</td>
+<td align="left" colspan="1" rowspan="1">UML-TML</td>
+<td align="left" colspan="1" rowspan="1">523</td>
+<td align="left" colspan="1" rowspan="1">Mutation dependent</td>
+<td align="left" colspan="1" rowspan="1">100</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">UML</td>
+<td align="left" colspan="1" rowspan="1">587</td>
+<td align="left" colspan="1" rowspan="1">UWT-UML</td>
+<td align="left" colspan="1" rowspan="1">465</td>
+<td align="left" colspan="1" rowspan="1">UV independent</td>
+<td align="left" colspan="1" rowspan="1">42</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">TML</td>
+<td align="left" colspan="1" rowspan="1">584</td>
+<td align="left" colspan="1" rowspan="1">TWT-TML</td>
+<td align="left" colspan="1" rowspan="1">480</td>
+<td align="left" colspan="1" rowspan="1">UV dependent</td>
+<td align="left" colspan="1" rowspan="1">57</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt102"><p>The analysis of the top 30% nodes in terms of degree centrality alone in each conditional network revealed the nodes that are proposed to be essential depending on the UV treatment or the mutation. UWT, UV Untreated Wild Type; TWT, UV Treated Wild Type; UML, UV Untreated <italic>lexA</italic> mutant; TML, UV Treated <italic>lexA</italic> mutant.</p></fn></table-wrap-foot></table-wrap>
+<p>We are able to identify many repair proteins such as DinG, DnaN, MutM, MutS, RuvC, Rep and RecF that are likely to be indispensable for the UV treated networks in terms of degree centrality. The criticality of some of the proteins that belong to lipid metabolism and cofactors and vitamins metabolism seems to be UV treatment dependent. One of the proteins that appears to be important from our anslysis in UV treated cells is UspA, the universal stress protein. Earlier study has shown the role of UspA in resistance to DNA damaging agents and that its regulation is <italic>lexA</italic> independent <xref ref-type="bibr" rid="pcbi.1000237-Diez1">[24]</xref>. The mutants lacking <italic>uspA</italic> were shown to be sensitive to UV irradiation. It is interesting to observe the importance of this protein through network centrality studies, which was otherwise not obvious from the classical microarray analysis. Similarly, our analysis also suggests the importance of the protein, ApaH. ApaH functions as a diadenosine tetraphosphatase and its substrate AppppA has been reported to regulate cell division <xref ref-type="bibr" rid="pcbi.1000237-Nishimura1">[25]</xref>, affect cell motility and catabolite repression <xref ref-type="bibr" rid="pcbi.1000237-Farr1">[26]</xref> and shown to bind to several heat shock and oxidative stress proteins <xref ref-type="bibr" rid="pcbi.1000237-Johnstone1">[27]</xref>. Our observation that ApaH is critical in the studied networks in an UV dependent manner seems to be relevant in this regard.</p>
+<p>The analysis carried out by us is based on the predicted genome-wide functional linkages <xref ref-type="bibr" rid="pcbi.1000237-Yellaboina1">[15]</xref>. In order to examine if the properties observed for the conditional sub-networks are consistent with those obtained from experimentally validated protein∶protein interactions, we further carried out similar analysis for the two available experimental protein∶protein interaction networks <xref ref-type="bibr" rid="pcbi.1000237-Butland1">[8]</xref>,<xref ref-type="bibr" rid="pcbi.1000237-Arifuzzaman1">[9]</xref>. The core protein interactions in the network reported by Butland <italic>et al.</italic> covers 1,255 proteins and 5,395 interactions among them <xref ref-type="bibr" rid="pcbi.1000237-Butland1">[8]</xref>. The average degree for the core network is approximately 8.5 and the clustering coefficient is ∼0.085. Similarly, the core protein interactions in the network reported by Arifuzzaman <italic>et al.</italic> covers 2,927 proteins and 11,105 interactions <xref ref-type="bibr" rid="pcbi.1000237-Arifuzzaman1">[9]</xref>. The average degree for the core network is approximately 8.5 and the clustering coefficient is ∼0.065. The low average degree and clustering coefficient for the experimental networks compared to the predicted functional linkages might be due to the inability of experimental methods to saturate the genome-wide interaction networks.</p>
+<p>The obtained conditional networks derived from the experimental interactions show topological robustness similar to their parent networks. Interestingly, similar to the conclusions that we have drawn based on the analyses derived from functional linkages network, we observe the UV-dependent criticality of many of the replication and repair proteins through network centrality analysis as well as the analysis of unique nodes of the networks. We also observe the expression of ∼65% hubs in conditional networks derived from Arifuzzaman <italic>et al.</italic> data <xref ref-type="bibr" rid="pcbi.1000237-Arifuzzaman1">[9]</xref> and ∼85% hubs in the ones obtained from Butland <italic>et al.</italic> data <xref ref-type="bibr" rid="pcbi.1000237-Butland1">[8]</xref>. These numbers being significantly higher than those by choosing nodes in the networks randomly, suggest that one may obtain biologically important insights through such an analysis.</p>
+<p>Some of the cutoffs applied in our study might appear to be superficially arbitrary. For example, a gene was considered to be expressed if the net signal intensity corresponding to its spot was more than or equal to the median signal intensity of the spots within the sector. Although this cutoff might seem arbitrary, the rationale for using median was based on the observation that gene expression is a stochastic event and hence the expression of a gene as well as copy number of the expressed protein differs from cell to cell even in an isogenic cell population <xref ref-type="bibr" rid="pcbi.1000237-Elowitz1">[28]</xref>,<xref ref-type="bibr" rid="pcbi.1000237-Cai1">[29]</xref>. Despite the inherent stochasticity, the response of a colony of bacteria to external stimuli is based on simultaneous expression of a set of genes. It is reported that the noise in gene expression is inversely proportional to the mean expression level <xref ref-type="bibr" rid="pcbi.1000237-BarEven1">[30]</xref> and also that essential genes have lower noise in their expression <xref ref-type="bibr" rid="pcbi.1000237-Fraser1">[31]</xref>. Therefore, with median as our cutoff, we can eliminate the noisy expression and identify those as genes as expressed which have: (i) high expression levels and (ii) respond to the growth condition. In order to minimize noise in such an identification process we have considered each sector of the chip independently to overcome the differences in the environments within the chip that contribute to expression variances. Thus, with our cutoff of 1.0, we see a reasonable of number of genes being expressed, i.e. ∼40–60% <xref ref-type="bibr" rid="pcbi.1000237-Champion1">[4]</xref>, and also expression of approximately 75% of hub proteins.</p>
+<p>We further tested the effect of different cutoffs on the overall conclusions of our analysis. With the cutoff of 0.9 and 1.1, we observe that our earlier conclusions, such as increased importance of replication and repair proteins, and cofactor metabolism proteins in the UV treated cells, repression of carbohydrate metabolism upon UV treatment and importance of unique nodes of the conditional networks, remain identical. With further modification of these cutoff values to 1.2, we observe approximately 1600 genes being expressed which might be considered fewer than anticipated <xref ref-type="bibr" rid="pcbi.1000237-Champion1">[4]</xref>. Similarly with modification of the cutoff value to 0.8, many more proteins are considered to be expressed, which might lead to noise in the expression analysis. Thus, although the cutoff value of 1.0 appears arbitrary, it leads to reasonable hypothesis on the response of <italic>E. coli</italic> to UV.</p>
+<p>Thus, the comparative analysis does indeed reveal physiologically important changes in the four networks. Some of these changes would not have been apparent by measuring gene expression alone, or by the standard analysis of microarray data. This is partly due to the fact that the levels of expression of many genes do not change under different conditions, but nonetheless the profile of interactions surrounding them changes significantly, thereby altering their significance in the broader picture of the cell. In this manner, studying the dynamics of protein∶protein interactions appears to hold promise for the systems level understanding of an organism.</p>
+<p>The analysis proposed in this study can also be potentially applied to disease interaction networks. For example, understanding how the interactions within a pathogen or a host change during the disease process, and the implications of these changes might yield useful insights into the disease. Further, this information can be used to deriving novel therapies against the diseases.</p>
+</sec></sec><sec id="s3">
+<title>Methods</title>
+<sec id="s3a">
+<title>Microarray Data Processing and PPI Network Construction</title>
+<p>The raw microarray data for <italic>E. coli</italic> were downloaded from the Stanford Microarray Database (SMD, <ext-link ext-link-type="uri" xlink:href="http://smd.stanford.edu/" xlink:type="simple">http://smd.stanford.edu/</ext-link>) <xref ref-type="bibr" rid="pcbi.1000237-Demeter1">[32]</xref>. The SMD lists sector information of the chip, and it is likely that environments within the chip differ considerably. Each spot was therefore assigned to one of sixteen possible sectors in the chip using sector information given in the raw data. A gene was considered to be expressed if the net signal intensity (i.e. background corrected) corresponding to its spot was more than or equal to the median signal intensity of the spots within the sector.</p>
+<p>The conditional protein interaction network was built for the expressed genes by mapping them onto an existing predicted functional interaction network for <italic>E. coli</italic> <xref ref-type="bibr" rid="pcbi.1000237-Yellaboina1">[15]</xref>. All orphan nodes were removed from the obtained network and the core interaction network was used for further analysis.</p>
+</sec><sec id="s3b">
+<title>Global Properties of the Network</title>
+<p>Network properties such as average degree, degree exponent, diameter, average clustering coefficient were calculated according to <xref ref-type="bibr" rid="pcbi.1000237-Dorogovtsev1">[33]</xref>. The mean eccentricity was calculated according to <xref ref-type="bibr" rid="pcbi.1000237-Dankelmann1">[34]</xref>. Fractal dimension was measured using cluster growing method <xref ref-type="bibr" rid="pcbi.1000237-Song1">[35]</xref>. Network efficiency is the property that quantifies how well the nodes of the network exchange information, and this parameter was calculated according to <xref ref-type="bibr" rid="pcbi.1000237-Latora1">[36]</xref>.</p>
+</sec><sec id="s3c">
+<title>Path Length Analysis</title>
+<p>The shortest paths for all pairs of nodes in the network were calculated by Dijkstra's algorithm <xref ref-type="bibr" rid="pcbi.1000237-Dijkstra1">[37]</xref>. The difference in the path for a node pair in two different networks was analyzed.</p>
+</sec><sec id="s3d">
+<title>Centrality Measures</title>
+<p>Network centrality measures like degree centrality, closeness centrality and betweenness centrality were calculated <xref ref-type="bibr" rid="pcbi.1000237-Latora1">[36]</xref>. The definitions of these centrality measures are as follows:</p>
+<p>Degree centrality of a node <italic>i</italic> in the network G is<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.e001" xlink:type="simple"/></disp-formula>where, <italic>A<sub>i,j</sub></italic> is the element in the adjacency matrix A for the nodes <italic>i</italic> and <italic>j</italic>, and N is the total number of nodes in G.</p>
+<p>Closeness centrality of a node <italic>i</italic> in the network G is<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.e002" xlink:type="simple"/></disp-formula>where <italic>d<sub>i,j</sub></italic> is the shortest path between <italic>i</italic> and <italic>j</italic>.</p>
+<p>Betweenness centrality of a node <italic>i</italic> in the network is<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.e003" xlink:type="simple"/></disp-formula>where, <italic>n<sub>jk</sub></italic>(<italic>i</italic>) is the number of shortest paths between <italic>j</italic> and <italic>k</italic> that traverse through <italic>i</italic> and <italic>n<sub>jk</sub></italic> is the total number of shortest paths between <italic>j</italic> and <italic>k</italic>.</p>
+</sec><sec id="s3e">
+<title>Sub-Network Visualization</title>
+<p>Sub-networks were visualized and analyzed using Cytoscape 2.4.1 <xref ref-type="bibr" rid="pcbi.1000237-Shannon1">[38]</xref> and NAViGaTOR (<ext-link ext-link-type="uri" xlink:href="http://ophid.utoronto.ca/navigator/" xlink:type="simple">http://ophid.utoronto.ca/navigator/</ext-link>).</p>
+</sec></sec><sec id="s4">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1000237.s001" mimetype="application/rtf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.s001" xlink:type="simple"><label>Table S1</label><caption>
+<p>Microarray data processing and network information for the conditional networks.</p>
+<p>(0.05 MB RTF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000237.s002" mimetype="application/x-excel" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.s002" xlink:type="simple"><label>Table S2</label><caption>
+<p>Uniquely expressed genes list: Four-way comparison.</p>
+<p>(0.09 MB XLS)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000237.s003" mimetype="application/rtf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.s003" xlink:type="simple"><label>Table S3</label><caption>
+<p>Interacting partners of Hda in the UV treated wild-type network with their functions, classified according to functional classes.</p>
+<p>(0.06 MB RTF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000237.s004" mimetype="application/rtf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.s004" xlink:type="simple"><label>Table S4</label><caption>
+<p>Functions of the high centrality measure nodes in the comparison set UWT-TWT and UML-TML.</p>
+<p>(0.07 MB RTF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000237.s005" mimetype="application/x-excel" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.s005" xlink:type="simple"><label>Table S5</label><caption>
+<p>List of mutation dependent/independent and UV treatment dependent/independent proteins</p>
+<p>(0.03 MB XLS)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000237.s006" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.s006" xlink:type="simple"><label>Figure S1</label><caption>
+<p>Differential gene expression and comparison of networks. (A) Pictorial representation of differential gene expression in the network context. Red and green represent the nodes expressed uniquely under the defined conditions, whereas blue nodes are expressed under both the conditions. (B) Four-way comparison of the networks. UWT, wild type; TWT, UV treated wild type; UML, lexA mutant; TML, UV-treated lexA mutant.</p>
+<p>(0.47 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000237.s007" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.s007" xlink:type="simple"><label>Figure S2</label><caption>
+<p>The overlap of the interactions and the nodes in UWT-TWT and UML-TML.</p>
+<p>(0.76 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000237.s008" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.s008" xlink:type="simple"><label>Figure S3</label><caption>
+<p>Mapping of unique nodes to different metabolic pathways.</p>
+<p>(0.45 MB TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000237.s009" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000237.s009" xlink:type="simple"><label>Figure S4</label><caption>
+<p>Expression of the hubs.</p>
+<p>(0.23 MB TIF)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We thank the SUN Centre of Excellence in Medical Bioinformatics, Centre for DNA Fingerprinting and Diagnostics (CDFD), for access to computational facilities.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1000237-Murphy1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Murphy</surname><given-names>D</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Gene expression studies using microarrays: Principles, problems and prospects.</article-title>             <source>Advan Physiol Educ</source>             <volume>26</volume>             <fpage>256</fpage>             <lpage>270</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Slonim1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Slonim</surname><given-names>DK</given-names></name>
+</person-group>             <year>2002</year>             <article-title>From patterns to pathways: gene expression data analysis comes of age.</article-title>             <source>Nat Genet</source>             <volume>32</volume>             <fpage>502</fpage>             <lpage>508</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Wei1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wei</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Lee</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Richmond</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Blattner</surname><given-names>FR</given-names></name>
+<name name-style="western"><surname>Rafalski</surname><given-names>JA</given-names></name>
+<etal/></person-group>             <year>2001</year>             <article-title>High-Density Microarray mediated gene expression profiling of <italic>Escherichia coli</italic>.</article-title>             <source>J Bacteriol</source>             <volume>183</volume>             <fpage>545</fpage>             <lpage>556</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Champion1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Champion</surname><given-names>MM</given-names></name>
+<name name-style="western"><surname>Campbell</surname><given-names>CS</given-names></name>
+<name name-style="western"><surname>Siegele</surname><given-names>DA</given-names></name>
+<name name-style="western"><surname>Russell</surname><given-names>DH</given-names></name>
+<name name-style="western"><surname>Hu</surname><given-names>JC</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Proteome analysis of <italic>Escherichia coli</italic> K-12 by two-dimensional native-state chromatography and MALDI-MS.</article-title>             <source>Mol Microbiol</source>             <volume>47</volume>             <fpage>383</fpage>             <lpage>396</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Corbin1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Corbin</surname><given-names>RW</given-names></name>
+<name name-style="western"><surname>Paliy</surname><given-names>O</given-names></name>
+<name name-style="western"><surname>Yang</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Shabanowitz</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Platt</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Toward a protein profile of <italic>Escherichia coli</italic>: Comparison to its transcription profile.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>100</volume>             <fpage>9232</fpage>             <lpage>9237</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Mata1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mata</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Bahler</surname><given-names>J</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Correlation Between Gene expression and Gene conservation in Fission yeast.</article-title>             <source>Genome Res</source>             <volume>13</volume>             <fpage>2686</fpage>             <lpage>2690</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-vonMering1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>von Mering</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Krause</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Snel</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Cornell</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Oliver</surname><given-names>SG</given-names></name>
+<etal/></person-group>             <year>2002</year>             <article-title>Comparative assessment of large-scale data sets of protein-protein interactions.</article-title>             <source>Nature</source>             <volume>417</volume>             <fpage>399</fpage>             <lpage>403</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Butland1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Butland</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Peregrin-Alvarez</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Li</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Yang</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Yang</surname><given-names>X</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Interaction network containing conserved and essential protein complexes in <italic>Eschericha coli</italic>.</article-title>             <source>Nature</source>             <volume>433</volume>             <fpage>531</fpage>             <lpage>537</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Arifuzzaman1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Arifuzzaman</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Maeda</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Itoh</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Nishikata</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Takita</surname><given-names>C</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Large-scale identification of protein-protein intractions of <italic>Escherichia coli</italic> K-12.</article-title>             <source>Genome Res</source>             <volume>16</volume>             <fpage>686</fpage>             <lpage>691</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Horvath1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Horvath</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Dong</surname><given-names>J</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Geometric interpretation of gene co-expression network analysis.</article-title>             <source>PLoS Comput Biol</source>             <volume>4</volume>             <fpage>1</fpage>             <lpage>27</lpage><comment>doi:10.1371/journal.pcbi.1000117</comment>          </element-citation></ref>
+<ref id="pcbi.1000237-Han1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Han</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>Bertin</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Hao</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Goldberg</surname><given-names>DS</given-names></name>
+<name name-style="western"><surname>Berriz</surname><given-names>GF</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Evidence for dynamically organized modularity in the yeast protein-protein interaction network.</article-title>             <source>Nature</source>             <volume>430</volume>             <fpage>88</fpage>             <lpage>93</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Lu1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lu</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Jain</surname><given-names>VV</given-names></name>
+<name name-style="western"><surname>Finn</surname><given-names>PW</given-names></name>
+<name name-style="western"><surname>Perkins</surname><given-names>DL</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Hubs in biological networks exhibit low changes in expression in experimental asthma.</article-title>             <source>Mol Syst Biol</source>             <volume>3</volume>             <fpage>98</fpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Komurov1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Komurov</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>White</surname><given-names>M</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Revealing static and dynamic modular architecture of the eukaryotic protein interaction network.</article-title>             <source>Mol Syst Biol</source>             <volume>3</volume>             <fpage>110</fpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Xue1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Xue</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Xian</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Dong</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Xia</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Zhu</surname><given-names>S</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>A modular network model of aging.</article-title>             <source>Mol Syst Biol</source>             <volume>3</volume>             <fpage>147</fpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Yellaboina1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yellaboina</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Goyal</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Mande</surname><given-names>SC</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Inferring genome-wide functional linkages in <italic>E. coli</italic> by combining improved genome context methods: Comparison with high-throughput experimental data.</article-title>             <source>Genome Res</source>             <volume>17</volume>             <fpage>527</fpage>             <lpage>535</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Courcelle1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Courcelle</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Khodursky</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Peter</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Brown</surname><given-names>PO</given-names></name>
+<name name-style="western"><surname>Hanawalt</surname><given-names>PC</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Comparative Gene Expression Profiles Following UV Exposure in Wild-type and SOS-deficient <italic>Escherichia coli</italic>.</article-title>             <source>Genetics</source>             <volume>158</volume>             <fpage>41</fpage>             <lpage>64</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Albert1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Albert</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Jeong</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Barabasi</surname><given-names>AL</given-names></name>
+</person-group>             <year>2000</year>             <article-title>Error and attack tolerance of complex networks.</article-title>             <source>Nature</source>             <volume>406</volume>             <fpage>378</fpage>             <lpage>382</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Kanehisa1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kanehisa</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Goto</surname><given-names>S</given-names></name>
+</person-group>             <year>2000</year>             <article-title>KEGG: Kyoto Encyclopedia of Genes and Genomes.</article-title>             <source>Nucleic Acids Res</source>             <volume>28</volume>             <fpage>27</fpage>             <lpage>30</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Banack1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Banack</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Clauson</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Ogbaa</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Villar</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Oliver</surname><given-names>D</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Overexpression of the Hda DnaA-Related Protein in <italic>Eshcerichia coli</italic> inhibits Multiplication, Affects membrane permeability, and induces SOS response.</article-title>             <source>J Bacteriol</source>             <volume>187</volume>             <fpage>8507</fpage>             <lpage>8510</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Jeong1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jeong</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Mason</surname><given-names>SP</given-names></name>
+<name name-style="western"><surname>Barabasi</surname><given-names>AL</given-names></name>
+<name name-style="western"><surname>Oltvai</surname><given-names>ZN</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Lethality and centrality in protein networks.</article-title>             <source>Nature</source>             <volume>411</volume>             <fpage>41</fpage>             <lpage>42</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Hahn1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hahn</surname><given-names>MW</given-names></name>
+<name name-style="western"><surname>Kern</surname><given-names>AD</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Comparative Genomics of Centrality and Essentiality in Three Eukaryotic Protein-Interaction Networks.</article-title>             <source>Mol Biol Evol</source>             <volume>22</volume>             <fpage>803</fpage>             <lpage>806</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Joy1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Joy</surname><given-names>MP</given-names></name>
+<name name-style="western"><surname>Brock</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Ingber</surname><given-names>DE</given-names></name>
+<name name-style="western"><surname>Huang</surname><given-names>S</given-names></name>
+</person-group>             <year>2005</year>             <article-title>High-Betweenness proteins in the Yeast Protein Interaction network.</article-title>             <source>J Biomed Biotechnol</source>             <volume>2</volume>             <fpage>96</fpage>             <lpage>103</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Yu1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yu</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Kim</surname><given-names>PM</given-names></name>
+<name name-style="western"><surname>Sprecher</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Trifonov</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Gerstein</surname><given-names>M</given-names></name>
+</person-group>             <year>2007</year>             <article-title>The Importance of Bottlenecks in Protein Networks: Correlation with Gene Essentiality and Expression Dynamics.</article-title>             <source>PLoS Comput Biol</source>             <volume>3</volume>             <fpage>713</fpage>             <lpage>720</lpage><comment>doi:10.1371/journal.pcbi.0030059</comment>          </element-citation></ref>
+<ref id="pcbi.1000237-Diez1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Diez</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Gustavsson</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Nystrom</surname><given-names>T</given-names></name>
+</person-group>             <year>2000</year>             <article-title>The universal stress protein A of Escherichia coli is required for resistance to DNA damaging agents and is regulated by a RecA/FtsK-dependent regulatory pathway.</article-title>             <source>Mol Microbiol</source>             <volume>36</volume>             <fpage>1494</fpage>             <lpage>1503</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Nishimura1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Nishimura</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Moriya</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Ukai</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Nagai</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Wachi</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>1997</year>             <article-title>Diadenosine 5′,5′″-P1,P4-tetraphosphate (Ap4A) controls the timing of cell division in <italic>Escherichia coli</italic>.</article-title>             <source>Genes Cells</source>             <volume>2</volume>             <fpage>401</fpage>             <lpage>413</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Farr1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Farr</surname><given-names>SB</given-names></name>
+<name name-style="western"><surname>Arnosti</surname><given-names>DN</given-names></name>
+<name name-style="western"><surname>Chamberlin</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Ames</surname><given-names>BN</given-names></name>
+</person-group>             <year>1989</year>             <article-title>An apaH mutation causes AppppA to accumulate and affects motility and catabolite repression in <italic>Escherichia coli</italic>.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>86</volume>             <fpage>5010</fpage>             <lpage>5014</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Johnstone1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Johnstone</surname><given-names>DB</given-names></name>
+<name name-style="western"><surname>Farr</surname><given-names>SB</given-names></name>
+</person-group>             <year>1991</year>             <article-title>AppppA binds to several proteins in <italic>Escherichia coli</italic>, including the heat shock and oxidative stress proteins DnaK, GroEL, E89, C45 and C40.</article-title>             <source>EMBO</source>             <volume>10</volume>             <fpage>3897</fpage>             <lpage>3904</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Elowitz1"><label>28</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Elowitz</surname><given-names>MB</given-names></name>
+<name name-style="western"><surname>Levine</surname><given-names>AJ</given-names></name>
+<name name-style="western"><surname>Siggia</surname><given-names>ED</given-names></name>
+<name name-style="western"><surname>Swain</surname><given-names>PS</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Stochastic Gene Expression in a Single Cell.</article-title>             <source>Science</source>             <volume>297</volume>             <fpage>1183</fpage>             <lpage>1186</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Cai1"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cai</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Friedman</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Xie</surname><given-names>XS</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Stochastic protein expression in individual cells at the single molecule level.</article-title>             <source>Nature</source>             <volume>440</volume>             <fpage>358</fpage>             <lpage>362</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-BarEven1"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bar-Even</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Paulsson</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Maheshri</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Carmi</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>O'Shea</surname><given-names>E</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Noise in protein expression scales with natural protein abundance.</article-title>             <source>Nat Genet</source>             <volume>38</volume>             <fpage>636</fpage>             <lpage>43</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Fraser1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Fraser</surname><given-names>HB</given-names></name>
+<name name-style="western"><surname>Hirsh</surname><given-names>AE</given-names></name>
+<name name-style="western"><surname>Giaever</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Kumm</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Eisen</surname><given-names>MB</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Noise Minimization in Eukaryotic Gene Expression.</article-title>             <source>PloS Biol</source>             <volume>2</volume>             <fpage>834</fpage>             <lpage>838</lpage><comment>doi:10.1371/journal.pbio.00200137</comment>          </element-citation></ref>
+<ref id="pcbi.1000237-Demeter1"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Demeter</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Beauheim</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Gollub</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Hernandez-Boussard</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Jin</surname><given-names>H</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>The Stanford Microarray Database: implementation of new analysis tools and open source release of software.</article-title>             <source>Nucleic Acids Res</source>             <volume>35</volume>             <fpage>D766</fpage>             <lpage>D770</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Dorogovtsev1"><label>33</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dorogovtsev</surname><given-names>SN</given-names></name>
+<name name-style="western"><surname>Mendes</surname><given-names>JF</given-names></name>
+</person-group>             <year>2003</year>             <source>Evolution of Networks: From Biological Nets to Internet and WWW</source>             <publisher-loc>Oxford</publisher-loc>             <publisher-name>Oxford University Press</publisher-name>          </element-citation></ref>
+<ref id="pcbi.1000237-Dankelmann1"><label>34</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dankelmann</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Goddard</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Swart</surname><given-names>CS</given-names></name>
+</person-group>             <year>2004</year>             <article-title>The Average Eccentricity of a Graph and its Subgraphs.</article-title>             <source>Utilitas Math</source>             <volume>65</volume>             <fpage>41</fpage>             <lpage>52</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Song1"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Song</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Havlin</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Makse</surname><given-names>HA</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Self-similarity of complex networks.</article-title>             <source>Nature</source>             <volume>433</volume>             <fpage>392</fpage>             <lpage>395</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Latora1"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Latora</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>Marchiori</surname><given-names>M</given-names></name>
+</person-group>             <year>2004</year>             <article-title>How the science of complex networks can help developing strategies against terrorism.</article-title>             <source>Chaos, Solitons and Fractals</source>             <volume>20</volume>             <fpage>69</fpage>             <lpage>75</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Dijkstra1"><label>37</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Dijkstra</surname><given-names>EW</given-names></name>
+</person-group>             <year>1959</year>             <article-title>A note on two problems in connexion with graphs.</article-title>             <source>Numer Math</source>             <volume>1</volume>             <fpage>263</fpage>             <lpage>271</lpage>          </element-citation></ref>
+<ref id="pcbi.1000237-Shannon1"><label>38</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Shannon</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Markiel</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Ozier</surname><given-names>O</given-names></name>
+<name name-style="western"><surname>Baliga</surname><given-names>NS</given-names></name>
+<name name-style="western"><surname>Wang</surname><given-names>JT</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Cytoscape: a software environment for integrated models of biomolecular interaction networks.</article-title>             <source>Genome Res</source>             <volume>13</volume>             <fpage>2498</fpage>             <lpage>2504</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

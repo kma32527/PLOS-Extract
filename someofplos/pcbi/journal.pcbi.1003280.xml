@@ -1,0 +1,847 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id><journal-title-group>
+<journal-title>PLoS Computational Biology</journal-title></journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-13-00508</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1003280</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group></article-categories>
+<title-group>
+<article-title>Comprehensive Repertoire of Foldable Regions within Whole Genomes</article-title>
+<alt-title alt-title-type="running-head">Prediction of the Protein Foldome</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Faure</surname><given-names>Guilhem</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Callebaut</surname><given-names>Isabelle</given-names></name><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><addr-line>CNRS, UPMC Univ Paris 6, IMPMC, UMR7590 - IUC, Paris, France</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Radivojac</surname><given-names>Predrag</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Indiana University, United States of America</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">isabelle.callebaut@impmc.upmc.fr</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: GF IC. Performed the experiments: GF. Analyzed the data: GF IC. Contributed reagents/materials/analysis tools: GF. Wrote the paper: GF IC.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><month>10</month><year>2013</year></pub-date>
+<pub-date pub-type="epub"><day>24</day><month>10</month><year>2013</year></pub-date>
+<volume>9</volume>
+<issue>10</issue>
+<elocation-id>e1003280</elocation-id>
+<history>
+<date date-type="received"><day>26</day><month>3</month><year>2013</year></date>
+<date date-type="accepted"><day>15</day><month>8</month><year>2013</year></date>
+</history>
+<permissions>
+<copyright-year>2013</copyright-year>
+<copyright-holder>Faure, Callebaut</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>In order to get a comprehensive repertoire of foldable domains within whole proteomes, including orphan domains, we developed a novel procedure, called SEG-HCA. From only the information of a single amino acid sequence, SEG-HCA automatically delineates segments possessing high densities in hydrophobic clusters, as defined by Hydrophobic Cluster Analysis (HCA). These hydrophobic clusters mainly correspond to regular secondary structures, which together form structured or foldable regions. Genome-wide analyses revealed that SEG-HCA is opposite of disorder predictors, both addressing distinct structural states. Interestingly, there is however an overlap between the two predictions, including small segments of disordered sequences, which undergo coupled folding and binding. SEG-HCA thus gives access to these specific domains, which are generally poorly represented in domain databases. Comparison of the whole set of SEG-HCA predictions with the Conserved Domain Database (CDD) also highlighted a wide proportion of predicted large (length &gt;50 amino acids) segments, which are CDD orphan. These orphan sequences may either correspond to highly divergent members of already known families or belong to new families of domains. Their comprehensive description thus opens new avenues to investigate new functional and/or structural features, which remained so far uncovered. Altogether, the data described here provide new insights into the protein architecture and organization throughout the three kingdoms of life.</p>
+</abstract>
+<abstract abstract-type="summary"><title>Author Summary</title>
+<p>Spontaneous or induced folding into a specific 3D structure is a key property of proteins to perform their biological functions. Folded 3D structures of proteins perform specific functions, including interactions with other proteins. Intrinsically disordered regions also mediate interaction, gaining structure only when bound to a target protein. In both cases, hydrophobicity generally plays a major role in the protein segment “foldability”. Here, we developed an original procedure to identify foldable segments from only the information of a single amino acid sequence and to explore protein structures at a proteomic scale. Our approach goes beyond the simple consideration of mean hydrophobicity, by including the secondary structure information through the use of a two-dimensional transposition of the sequence. The developed procedure, combined with disorder predictors, may facilitate the specific identification of small segments that undergo coupled folding and binding. Combined with the analysis of specific domain databases, it also highlights orphan foldable segments, which remain yet uncharacterized.</p>
+</abstract>
+<funding-group><funding-statement>This work was supported by grants from the Agence Nationale de la Recherche (ANR Blanc-SVSE-8-2011-TELO&amp;DICENs) and from the Institut National du Cancer (INCa Di-REP). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="14"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Domains are the modular building blocks of proteins and correspond to recurring, fundamental units of both protein structure and evolution. Protein domains may exist alone, but frequently are part of larger, multi-domain proteins <xref ref-type="bibr" rid="pcbi.1003280-Chothia1">[1]</xref>. The advent of complete genomes sequences has led to the estimation that 40% of prokaryotic proteins are multidomain, whereas this number increases to about two thirds in eukaryotes <xref ref-type="bibr" rid="pcbi.1003280-Ekman1">[2]</xref>. Protein domains are classified into families; several domain families are common to most species, indicating that there is a limited repertoire, which is used to create the large functional space of proteins <xref ref-type="bibr" rid="pcbi.1003280-Apic1">[3]</xref>. Some domain families, considered as “promiscuous”, occur in diverse protein domain architectures (which are defined as the linear orders of the individual domains in multi-domain proteins) and are especially involved in interaction networks <xref ref-type="bibr" rid="pcbi.1003280-Basu1">[4]</xref>.</p>
+<p>The recognition of domain family membership for uncharacterized proteins is often a first step towards the understanding of their biological roles. Information about protein domains is stored in dedicated databases, in the form of profiles or hidden Markov models (HMMs), which are constructed through sequence similarity searches. These profiles and HMMs can be searched for detecting the domain composition of proteins, starting from their amino acid sequences <xref ref-type="bibr" rid="pcbi.1003280-Moore1">[5]</xref>. By this way, approximately half of the residues of proteomes can be assigned to well-classified domains, such as those stored in the PfamA classification <xref ref-type="bibr" rid="pcbi.1003280-Ekman1">[2]</xref>. The percentage of assigned residues increases when less well-characterized domain databases, such as PfamB, are searched. The remaining residues, representing 10–20% of the proteomes and referred to as “orphan” domains, do not match any known domains <xref ref-type="bibr" rid="pcbi.1003280-Ekman1">[2]</xref>. These sequences include disordered structures, among which are found linkers between structured domains, but also folded units, which are difficult to characterize, principally due to their small size or their fast evolution relative to an ancestral protein. These can thus not be easily predicted by these sequence similarity-based methods. The prediction of domain boundaries can also be approached through <italic>ab-initio</italic> methods, which don't have such restrictions as they consider solely the protein sequence. These focus on either globular domains or disordered regions and are based on learning models, using a series of proteins for which information on residue properties is known and algorithms such as artificial neural networks and support vector machines (e.g. <xref ref-type="bibr" rid="pcbi.1003280-Galzitskaya1">[6]</xref>–<xref ref-type="bibr" rid="pcbi.1003280-Wheelan1">[11]</xref>). However, the accuracy of domain boundary prediction is often too low for general, practical use. Improvement of the quality of <italic>ab-initio</italic> predictions has been obtained by hybrid methods, adding evolutionary information (e.g. <xref ref-type="bibr" rid="pcbi.1003280-Cheng1">[12]</xref>, <xref ref-type="bibr" rid="pcbi.1003280-Walsh1">[13]</xref>).</p>
+<p>Here, in order to get insight into orphan regions corresponding to foldable regions, without consideration of any evolutionary information, we have developed a strategy inspired from our experience in Hydrophobic Cluster Analysis (HCA). This two-dimensional method is used for (i) delineating the position of globular-like domains and (ii) comparing fold signatures at low levels of sequence identity (<xref ref-type="fig" rid="pcbi-1003280-g001">Fig. 1</xref>). HCA is based on the physico-chemical and topological principles underlying the fold of globular domains (dichotomy between hydrophobic/non-hydrophobic amino acids, overall compactness) <xref ref-type="bibr" rid="pcbi.1003280-Callebaut1">[14]</xref>, <xref ref-type="bibr" rid="pcbi.1003280-Gaboriaud1">[15]</xref>. It allows a direct statistical access to regular secondary structures gravity centers for a single amino acid sequence through the hydrophobic clusters defined in this way <xref ref-type="bibr" rid="pcbi.1003280-Hennetin1">[16]</xref>, <xref ref-type="bibr" rid="pcbi.1003280-Woodcock1">[17]</xref>. The immediate information available from this lexical analysis of the protein sequence text is a direct, comprehensive analysis of the protein texture, revealing in particular structured and non-structured regions. Structured regions contain typical hydrophobic clusters, the length of which is similar to those of regular secondary structures, whereas non-structured regions lack or have less and smaller hydrophobic clusters. This property has led to the manual identification of a lot of domain boundaries, constituting crucial starting points for experimental and computational investigations (<italic>see examples at the following url</italic> <ext-link ext-link-type="uri" xlink:href="http://www.impmc.upmc.fr/~callebau/HCA.html" xlink:type="simple">http://www.impmc.upmc.fr/~callebau/HCA.html</ext-link>). Besides this property, the HCA hydrophobic clusters constitute efficient signatures for comparing remote sequences, allowing to link orphan sequences to known families of domains (<italic>e.g.</italic> <xref ref-type="bibr" rid="pcbi.1003280-Callebaut2">[18]</xref>) or identify new families of domains (<italic>e.g.</italic> <xref ref-type="bibr" rid="pcbi.1003280-Callebaut3">[19]</xref>–<xref ref-type="bibr" rid="pcbi.1003280-Callebaut5">[21]</xref>).</p>
+<fig id="pcbi-1003280-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003280.g001</object-id><label>Figure 1</label><caption>
+<title>Delineation and comparison of globular domains using HCA.</title>
+<p>The sequence is written on a duplicated alpha helical net and the hydrophobic amino acids (V, I, L, M, F, W, Y) are contoured <xref ref-type="bibr" rid="pcbi.1003280-Callebaut1">[14]</xref>, <xref ref-type="bibr" rid="pcbi.1003280-Gaboriaud1">[15]</xref>. These form hydrophobic clusters, which mainly correspond to regular secondary structures <xref ref-type="bibr" rid="pcbi.1003280-Woodcock1">[17]</xref>. This is illustrated here with the chromo and chromo-shadow domains of the mouse chromobox homolog 1 (CBX1_MOUSE, UniProt P83917), for which the observed secondary and tertiary structures are shown below the HCA plot (pdb identifiers: 1AP0 and 1DZ1) <xref ref-type="bibr" rid="pcbi.1003280-Ye1">[66]</xref>. Globular domains (boxed), containing approximately one third of hydrophobic amino acids gathered into clusters, are separated by a hinge, which is clearly less hydrophobic. The comparison of the HCA plots of the two domains indicates similar shapes of clusters (shaded green and red), suggesting a structural relationship. This potential relationship is further strengthened by sequence identities (shaded yellow) identified relative to the conserved positions of hydrophobic amino acids within clusters and is supported at the 3D level. The hydrophobic clusters shaded in green and red correspond to the internal strand beta2 and to the C-terminal alpha helix, respectively. In the chromo shadow domain, the loop linking strand beta3 and the C-terminal alpha helix includes a short alpha helix, containing two alanine residues.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003280.g001" position="float" xlink:type="simple"/></fig>
+<p>On this basis, we developed a fast and automated procedure, called segmentation-HCA (SEG-HCA) in order to delineate the foldable domains within proteins from the knowledge of their sequences alone and applied it to the characterization of whole proteomes. This approach is distinct from Scooby-Domain <xref ref-type="bibr" rid="pcbi.1003280-George2">[22]</xref>, <xref ref-type="bibr" rid="pcbi.1003280-Pang1">[23]</xref>, which uses the distribution of observed lengths and hydrophobicity in domains with known 3D structures. SEG-HCA also uses a simple binary hydrophobic scale, but enriched from the two-dimensional information highlighting regular secondary structures through the hydrophobic clusters defined by this way. Moreover, SEG-HCA is not limited to the observed lengths in domains with known 3D structures, but cover any foldable region of any length. The information provided by SEG-HCA can then be compared with that included into structural databases, in order to support the structural meaning of the predictions. It can also be compared with that provided by the NCBI's conserved domain database (CDD) <xref ref-type="bibr" rid="pcbi.1003280-MarchlerBauer1">[24]</xref> in order to highlight «orphan» domains, <italic>i.e.</italic> predicted globular-like domains that don't match any conserved domain (CD). Finally, this information also merits consideration with regard to protein disorder. Intrinsically disordered proteins (IDPs) or Intrinsically unstructured proteins (IUPs) do not, by themselves, assume any stable 3D structures, under physiological conditions <xref ref-type="bibr" rid="pcbi.1003280-Dyson1">[25]</xref>–<xref ref-type="bibr" rid="pcbi.1003280-Uversky2">[29]</xref>. IUPs however cover different forms of disorder, from totally unfolded chains (“coil”-like or natively unfolded), to coupled folding and binding (<italic>i.e.</italic> disorder-to-order transition), and to pre-molten or molten globules having well-developed secondary structures <xref ref-type="bibr" rid="pcbi.1003280-Uversky2">[29]</xref>. We thus also investigated here how eventually a distinction between these different disordered states can be made using the SEG-HCA predictions.</p>
+</sec><sec id="s2">
+<title>Results</title>
+<sec id="s2a">
+<title>SEG-HCA H2CD predictions applied to whole proteomes</title>
+<p>So far, analysis of HCA plots was manual and thus limited to small sets of protein sequences. The SEG-HCA procedure now allows the automation of one aspect of the HCA plot analysis by delineating, from the consideration of a single protein sequence, the positions of segments having a high density in hydrophobic clusters (H2CD segments, <xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2</xref>). The methodology is fully described in the <xref ref-type="sec" rid="s4">Material and Methods</xref> section. Briefly (<xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2</xref>), SEG-HCA first defines hydrophobic clusters into a protein sequence, using the current HCA rules, and calculates the percentage of positions included in these hydrophobic clusters (HCP, after Hydrophobic Cluster Positions, shaded green and blue on <xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2B</xref>), within a sliding window of 17 amino acids (1-amino acid increment). Note that this is not equivalent to a simple calculation of mean hydrophobicity, because non-hydrophobic amino acids within clusters (blue on <xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2B</xref>) are also taken into account. Hence, the HCP percentage approximates, from the consideration of a single sequence, the density in regular secondary structures. Then, a HCP threshold value of 10% is chosen to define potential hinge regions between segments having a high density in hydrophobic clusters (H2CD), whose positions are then refined through the consideration of a sequence based-hydrophobic cluster distance tree (see <xref ref-type="sec" rid="s4">Material and Methods</xref> for the details).</p>
+<fig id="pcbi-1003280-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003280.g002</object-id><label>Figure 2</label><caption>
+<title>SEG-HCA methodology.</title>
+<p>(A and B) Hydrophobic amino acids (green) are highlighted in the sequence of <italic>S. cerevisiae</italic> TAF14. At least four consecutive non-hydrophobic amino acids or a proline constitute breakers (red). Hydrophobic amino acids not separated by breaker positions constitute hydrophobic clusters (numbered here 1 to 21), which thus include hydrophobic (green) as well as non-hydrophobic amino acids (green-blue). A single hydrophobic amino acid, which does not contain in its close neighborhood (7 amino acids downstream and upstream) any other hydrophobic cluster is considered as an isolated small cluster and included in the breaker (blue star). The percentage of positions included in hydrophobic clusters (HCP, after hydrophobic cluster position; shaded green and blue) is computed within a sliding window of 17 consecutive residues (one amino acid increment). This interval is represented by the hexagon at the beginning of the sequence, including the second amino acid neighborhood at the HCA 2D level. For the sequence segment included in the hexagon (IKTQQHILPEVPPVENF), the HCP percentage is 47% (8/17). A minimum is identified when this percentage is below 10%. Here, two segments are identified, as a minimum is reached at amino acid 150 (labeled 1). A distance tree is then calculated between hydrophobic clusters. This allows the definition of the limits of regions having high density in hydrophobic clusters (H2CD, after high hydrophobic cluster density), by comparing the different nodes with the segments defined before. Here, the best correspondence is observed between segment 1 and the node including clusters 1 to 16 (labeled 3 brown) and segment 2 and the node including clusters 17 to 21 (labeled 3 green). (C) The predicted H2CD are then compared to the domains assigned by RPS-BLAST from the Conserved Domain Database (CDD). In this example, only the first domain is assigned from CDD (YEATS domain), while the second one remains unassigned by CDD (CD-orphan).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003280.g002" position="float" xlink:type="simple"/></fig>
+<p>SEG-HCA now gives access to the analysis of whole proteomes. We collected here the H2CD segments (as predicted by SEG-HCA) for the entire, archetypal proteomes of <italic>Homo sapiens, Saccharomyces cerevisiae, Plasmodium falciparum, Escherichia coli</italic> and <italic>Archeoglobus fulgidus</italic>. The number of predicted H2CD, as well as the total number of amino acids predicted in H2CD, are given in <xref ref-type="table" rid="pcbi-1003280-t001">Table 1</xref>. The proportion of amino acids in H2CD is higher in Bacteria and Archaea than in Eukarya. In the following text, results will be illustrated for the human proteome, except in some special cases where a different behavior is observed for specific species.</p>
+<table-wrap id="pcbi-1003280-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003280.t001</object-id><label>Table 1</label><caption>
+<title>H2CD and CD segments within proteomes.</title>
+</caption><alternatives><graphic id="pcbi-1003280-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003280.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><italic>H. sapiens</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>S. cerevisiae</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>P. falciparum</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>E. coli</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>A. fulgidus</italic></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Sequences</bold></td>
+<td align="left" rowspan="1" colspan="1">34521</td>
+<td align="left" rowspan="1" colspan="1">5907</td>
+<td align="left" rowspan="1" colspan="1">5337</td>
+<td align="left" rowspan="1" colspan="1">4128</td>
+<td align="left" rowspan="1" colspan="1">2420</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Residues</bold></td>
+<td align="left" rowspan="1" colspan="1">18395802</td>
+<td align="left" rowspan="1" colspan="1">2828010</td>
+<td align="left" rowspan="1" colspan="1">3979079</td>
+<td align="left" rowspan="1" colspan="1">1251206</td>
+<td align="left" rowspan="1" colspan="1">655015</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Mean length (aa)</bold></td>
+<td align="left" rowspan="1" colspan="1">533</td>
+<td align="left" rowspan="1" colspan="1">479</td>
+<td align="left" rowspan="1" colspan="1">746</td>
+<td align="left" rowspan="1" colspan="1">303</td>
+<td align="left" rowspan="1" colspan="1">271</td>
+</tr>
+<tr>
+<td colspan="6" align="left" rowspan="1"><bold>H2CD</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Number of H2CD</bold></td>
+<td align="left" rowspan="1" colspan="1">137655</td>
+<td align="left" rowspan="1" colspan="1">18555</td>
+<td align="left" rowspan="1" colspan="1">22939</td>
+<td align="left" rowspan="1" colspan="1">6745</td>
+<td align="left" rowspan="1" colspan="1">3075</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Number of large H2CD (&gt;50 aa)</bold></td>
+<td align="left" rowspan="1" colspan="1">72851</td>
+<td align="left" rowspan="1" colspan="1">10732</td>
+<td align="left" rowspan="1" colspan="1">15348</td>
+<td align="left" rowspan="1" colspan="1">5439</td>
+<td align="left" rowspan="1" colspan="1">2747</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Number of residues in H2CD</bold></td>
+<td align="left" rowspan="1" colspan="1">15879870</td>
+<td align="left" rowspan="1" colspan="1">2550812</td>
+<td align="left" rowspan="1" colspan="1">3558433</td>
+<td align="left" rowspan="1" colspan="1">1223971</td>
+<td align="left" rowspan="1" colspan="1">650868</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Percentage of residues in H2CD</bold></td>
+<td align="left" rowspan="1" colspan="1">86.3</td>
+<td align="left" rowspan="1" colspan="1">90.2</td>
+<td align="left" rowspan="1" colspan="1">89.4</td>
+<td align="left" rowspan="1" colspan="1">97.8</td>
+<td align="left" rowspan="1" colspan="1">99.4</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Mean H2CD length (aa)</bold></td>
+<td align="left" rowspan="1" colspan="1">115</td>
+<td align="left" rowspan="1" colspan="1">137</td>
+<td align="left" rowspan="1" colspan="1">155</td>
+<td align="left" rowspan="1" colspan="1">181</td>
+<td align="left" rowspan="1" colspan="1">212</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Mean percentage of residues in H2CD per sequence</bold></td>
+<td align="left" rowspan="1" colspan="1">77% (5.2)</td>
+<td align="left" rowspan="1" colspan="1">80% (5)</td>
+<td align="left" rowspan="1" colspan="1">86% (2.8)</td>
+<td align="left" rowspan="1" colspan="1">90% (3.5)</td>
+<td align="left" rowspan="1" colspan="1">94% (2.6)</td>
+</tr>
+<tr>
+<td colspan="6" align="left" rowspan="1"><bold>CD</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Number of CD</bold></td>
+<td align="left" rowspan="1" colspan="1">69348</td>
+<td align="left" rowspan="1" colspan="1">7251</td>
+<td align="left" rowspan="1" colspan="1">5161</td>
+<td align="left" rowspan="1" colspan="1">5497</td>
+<td align="left" rowspan="1" colspan="1">2679</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Number of residues in CD</bold></td>
+<td align="left" rowspan="1" colspan="1">7359656</td>
+<td align="left" rowspan="1" colspan="1">1170126</td>
+<td align="left" rowspan="1" colspan="1">740778</td>
+<td align="left" rowspan="1" colspan="1">894558</td>
+<td align="left" rowspan="1" colspan="1">415889</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Pecentage of residues in CD</bold></td>
+<td align="left" rowspan="1" colspan="1">40</td>
+<td align="left" rowspan="1" colspan="1">41</td>
+<td align="left" rowspan="1" colspan="1">19</td>
+<td align="left" rowspan="1" colspan="1">71</td>
+<td align="left" rowspan="1" colspan="1">63</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Mean CD length (aa)</bold></td>
+<td align="left" rowspan="1" colspan="1">106</td>
+<td align="left" rowspan="1" colspan="1">161</td>
+<td align="left" rowspan="1" colspan="1">144</td>
+<td align="left" rowspan="1" colspan="1">163</td>
+<td align="left" rowspan="1" colspan="1">155</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Mean percentage of residues in CD per sequence</bold></td>
+<td align="left" rowspan="1" colspan="1">44% (9.3)</td>
+<td align="left" rowspan="1" colspan="1">45% (11.2)</td>
+<td align="left" rowspan="1" colspan="1">29% (10.4)</td>
+<td align="left" rowspan="1" colspan="1">74% (8.6)</td>
+<td align="left" rowspan="1" colspan="1">62% (13.2)</td>
+</tr>
+<tr>
+<td colspan="6" align="left" rowspan="1"><bold>Coverage</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>CD coverage by H2CD (up to 95%)</bold></td>
+<td align="left" rowspan="1" colspan="1">74,8%</td>
+<td align="left" rowspan="1" colspan="1">75,5%</td>
+<td align="left" rowspan="1" colspan="1">82,1%</td>
+<td align="left" rowspan="1" colspan="1">75,2%</td>
+<td align="left" rowspan="1" colspan="1">86,5%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>CD not covered by large H2CD</bold></td>
+<td align="left" rowspan="1" colspan="1">3078</td>
+<td align="left" rowspan="1" colspan="1">253</td>
+<td align="left" rowspan="1" colspan="1">82</td>
+<td align="left" rowspan="1" colspan="1">132</td>
+<td align="left" rowspan="1" colspan="1">33</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>CD not covered by any H2CD</bold></td>
+<td align="left" rowspan="1" colspan="1">435</td>
+<td align="left" rowspan="1" colspan="1">7</td>
+<td align="left" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">4</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Number of CD orphans (&gt;50 aa)</bold></td>
+<td align="left" rowspan="1" colspan="1">27316</td>
+<td align="left" rowspan="1" colspan="1">4126</td>
+<td align="left" rowspan="1" colspan="1">12459</td>
+<td align="left" rowspan="1" colspan="1">525</td>
+<td align="left" rowspan="1" colspan="1">500</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Percentage of CD orphans (&gt;50 aa)</bold></td>
+<td align="left" rowspan="1" colspan="1">19.8</td>
+<td align="left" rowspan="1" colspan="1">22.2</td>
+<td align="left" rowspan="1" colspan="1">54.3</td>
+<td align="left" rowspan="1" colspan="1">7.8</td>
+<td align="left" rowspan="1" colspan="1">16.2</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Number of CD orphans in NR70 (&gt;50 aa)</bold></td>
+<td align="left" rowspan="1" colspan="1">16562</td>
+<td align="left" rowspan="1" colspan="1">3929</td>
+<td align="left" rowspan="1" colspan="1">12205</td>
+<td align="left" rowspan="1" colspan="1">499</td>
+<td align="left" rowspan="1" colspan="1">492</td>
+</tr>
+<tr>
+<td colspan="6" align="left" rowspan="1"><bold>CD/H2CD architecture of proteins</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>CD orphan proteins</bold></td>
+<td align="left" rowspan="1" colspan="1">5848 (17%)</td>
+<td align="left" rowspan="1" colspan="1">1188 (20%)</td>
+<td align="left" rowspan="1" colspan="1">2035(38%)</td>
+<td align="left" rowspan="1" colspan="1">271(7%)</td>
+<td align="left" rowspan="1" colspan="1">438(18%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>H2CD orphan proteins (&gt;50 aa)</bold></td>
+<td align="left" rowspan="1" colspan="1">916 (3%)</td>
+<td align="left" rowspan="1" colspan="1">185 (3%)</td>
+<td align="left" rowspan="1" colspan="1">49 (1%)</td>
+<td align="left" rowspan="1" colspan="1">118 (3%)</td>
+<td align="left" rowspan="1" colspan="1">55 (2%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Mono CD proteins</bold></td>
+<td align="left" rowspan="1" colspan="1">14859 (43%)</td>
+<td align="left" rowspan="1" colspan="1">3125 (53%)</td>
+<td align="left" rowspan="1" colspan="1">2230 (42%)</td>
+<td align="left" rowspan="1" colspan="1">2722 (66%)</td>
+<td align="left" rowspan="1" colspan="1">1509 (62%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Mono H2CD proteins (50 aa)</bold></td>
+<td align="left" rowspan="1" colspan="1">15588 (45%)</td>
+<td align="left" rowspan="1" colspan="1">2981 (41%)</td>
+<td align="left" rowspan="1" colspan="1">2270 (43%)</td>
+<td align="left" rowspan="1" colspan="1">2920 (71%)</td>
+<td align="left" rowspan="1" colspan="1">2040 (84%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Multiple CD proteins</bold></td>
+<td align="left" rowspan="1" colspan="1">13814 (40%)</td>
+<td align="left" rowspan="1" colspan="1">1594 (27%)</td>
+<td align="left" rowspan="1" colspan="1">1072 (20%)</td>
+<td align="left" rowspan="1" colspan="1">1135 (27%)</td>
+<td align="left" rowspan="1" colspan="1">473 (20%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Multiple H2CD proteins (50 aa)</bold></td>
+<td align="left" rowspan="1" colspan="1">18017 (52%)</td>
+<td align="left" rowspan="1" colspan="1">2741 (46%)</td>
+<td align="left" rowspan="1" colspan="1">3011 (56%)</td>
+<td align="left" rowspan="1" colspan="1">1090 (26%)</td>
+<td align="left" rowspan="1" colspan="1">325 (14%)</td>
+</tr>
+</tbody>
+</table>
+</alternatives></table-wrap></sec><sec id="s2b">
+<title>SEG-HCA H2CD predictions are more than the converse of disorder predictions and may be used for defining categories in disorder</title>
+<p>The prediction of structured regions might be considered as the simple converse of disorder predictions. We thus compared the SEG-HCA predictions to the disorder predictions performed by IUPRED <xref ref-type="bibr" rid="pcbi.1003280-Dosztnyi1">[30]</xref>, <xref ref-type="bibr" rid="pcbi.1003280-Dosztnyi2">[31]</xref>. IUPRED is an available well-recognized method, which considers interaction energies for predicting stretches of amino acids that should not contribute to stable structures. According to the D<sub>2</sub>P<sub>2</sub> database <xref ref-type="bibr" rid="pcbi.1003280-Oates1">[32]</xref>, IUPRED provides among the lowest estimation of global percentage disorder.</p>
+<p>We achieved this comparison according two different, but parallel routes.</p>
+<p>First, we compared the total number of amino acids predicted in H2CD segments to those predicted as disordered by IUPRED (IUPREDdis). We used for this prediction the long (L) variant of IUPRED, which has been trained on long forms of disorder. These IUPRED-L predictions are in agreement with those reported in the D<sub>2</sub>P<sub>2</sub> database <xref ref-type="bibr" rid="pcbi.1003280-Oates1">[32]</xref>. According to the current view <xref ref-type="bibr" rid="pcbi.1003280-Oates1">[32]</xref>, <xref ref-type="bibr" rid="pcbi.1003280-Pancsa1">[33]</xref>, Eukarya have a higher content in disorder than the two species chosen here for illustrating Bacteria and Archaea (<xref ref-type="table" rid="pcbi-1003280-t002">Table 2</xref>). However, Bacteria and Archaea show wide disorder distribution, with very low level of predicted disorder for some species, such here observed with the <italic>A. fulgidus</italic> proteome. We show (<xref ref-type="fig" rid="pcbi-1003280-g003">Fig. 3A</xref> and <xref ref-type="table" rid="pcbi-1003280-t002">Table 2</xref>) that to a large extent, there is a clear relationship between the two predictions, which are opposite. However, SEG-HCA H2CD predictions are not the simple converse of disorder predictions, as the overlap between the two sets constitutes 13.8% of the total number of amino acids in the human proteome (<xref ref-type="fig" rid="pcbi-1003280-g003">Fig. 3A</xref>). Similar overlap percentages are observed for other eukarya (10.9% (<italic>S. cerevisiae</italic>), 13.8% (<italic>P. falciparum</italic>), <xref ref-type="table" rid="pcbi-1003280-t002">Table 2</xref>). For <italic>E. coli</italic> and especially for <italic>A. fuldigus</italic>, the overlaps are much lower (3% and 0.9%, respectively), but represent similar ratios of the total number of amino acids predicted as disordered by IUPRED. We made several additional statistics, especially in order to clarify the structural meaning of these three distinct datasets (H2CD, IUPREDdis and H2CD ∩ IUPREDdis).</p>
+<fig id="pcbi-1003280-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003280.g003</object-id><label>Figure 3</label><caption>
+<title>Comparison of SEG-HCA and IUPREDdis predictions.</title>
+<p>(A) Percentages of amino acids covered by SEG-HCA and IUPRED-L predictions in the human proteome (18395802 residues). Each class (SEG-HCA, IUPREDdis and SEG-HCA∩IUPREDdis) has been searched for coverage by PDB assignments, Mobi-DB-filtered PDB assignments and SCOP assignments (B), as well as ANCHOR predictions (C) and CDD assignments (D).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003280.g003" position="float" xlink:type="simple"/></fig><table-wrap id="pcbi-1003280-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003280.t002</object-id><label>Table 2</label><caption>
+<title>Comparison of SEG-HCA and IUPRED predictions.</title>
+</caption><alternatives><graphic id="pcbi-1003280-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003280.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><italic>H. sapiens</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>S. cerevisiae</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>P. falciparum</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>E. coli</italic></td>
+<td align="left" rowspan="1" colspan="1"><italic>A. fulgidus</italic></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Residues in H2CD</bold></td>
+<td align="left" rowspan="1" colspan="1">86.3%</td>
+<td align="left" rowspan="1" colspan="1">90.2%</td>
+<td align="left" rowspan="1" colspan="1">89.4%</td>
+<td align="left" rowspan="1" colspan="1">97.8%</td>
+<td align="left" rowspan="1" colspan="1">99.4%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Disordered residues (IUPRED-L)</bold></td>
+<td align="left" rowspan="1" colspan="1">27.5%</td>
+<td align="left" rowspan="1" colspan="1">20.7%</td>
+<td align="left" rowspan="1" colspan="1">24.4%</td>
+<td align="left" rowspan="1" colspan="1">5.3%</td>
+<td align="left" rowspan="1" colspan="1">1.5%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Residues in the H2CD ∩ IUPRED set (overlap)</bold></td>
+<td align="left" rowspan="1" colspan="1">13.8%</td>
+<td align="left" rowspan="1" colspan="1">10.9%</td>
+<td align="left" rowspan="1" colspan="1">13.8%</td>
+<td align="left" rowspan="1" colspan="1">3.2%</td>
+<td align="left" rowspan="1" colspan="1">0.9%</td>
+</tr>
+<tr>
+<td colspan="6" align="left" rowspan="1"><bold>PDB (relative to the total PDB residues)</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>H2CD only</bold></td>
+<td align="left" rowspan="1" colspan="1">89.7%</td>
+<td align="left" rowspan="1" colspan="1">91.2%</td>
+<td align="left" rowspan="1" colspan="1">96.3%</td>
+<td align="left" rowspan="1" colspan="1">94.6%</td>
+<td align="left" rowspan="1" colspan="1">98.8%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>H2CD ∩ IUPRED</bold></td>
+<td align="left" rowspan="1" colspan="1">6.4%</td>
+<td align="left" rowspan="1" colspan="1">4.9%</td>
+<td align="left" rowspan="1" colspan="1">2.2%</td>
+<td align="left" rowspan="1" colspan="1">3.5%</td>
+<td align="left" rowspan="1" colspan="1">0.7%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>IUPRED only</bold></td>
+<td align="left" rowspan="1" colspan="1">3.9%</td>
+<td align="left" rowspan="1" colspan="1">3.9%</td>
+<td align="left" rowspan="1" colspan="1">1.5%</td>
+<td align="left" rowspan="1" colspan="1">1.9%</td>
+<td align="left" rowspan="1" colspan="1">0.5%</td>
+</tr>
+<tr>
+<td colspan="6" align="left" rowspan="1"><bold>PDB-MOBI (relative to the total PDB-MOBI residues)</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>H2CD only</bold></td>
+<td align="left" rowspan="1" colspan="1">92.4%</td>
+<td align="left" rowspan="1" colspan="1">94.1%</td>
+<td align="left" rowspan="1" colspan="1">99.8%</td>
+<td align="left" rowspan="1" colspan="1">95.3%</td>
+<td align="left" rowspan="1" colspan="1">99.1%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>H2CD ∩ IUPRED</bold></td>
+<td align="left" rowspan="1" colspan="1">5.4%</td>
+<td align="left" rowspan="1" colspan="1">3.9%</td>
+<td align="left" rowspan="1" colspan="1">0.2%</td>
+<td align="left" rowspan="1" colspan="1">3.3%</td>
+<td align="left" rowspan="1" colspan="1">0.6%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>IUPRED only</bold></td>
+<td align="left" rowspan="1" colspan="1">2.4%</td>
+<td align="left" rowspan="1" colspan="1">2%</td>
+<td align="left" rowspan="1" colspan="1">0.1%</td>
+<td align="left" rowspan="1" colspan="1">1.4%</td>
+<td align="left" rowspan="1" colspan="1">0.3%</td>
+</tr>
+<tr>
+<td colspan="6" align="left" rowspan="1"><bold>SCOP (relative to the total SCOP residues)</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>H2CD only</bold></td>
+<td align="left" rowspan="1" colspan="1">92.1%</td>
+<td align="left" rowspan="1" colspan="1">94.3%</td>
+<td align="left" rowspan="1" colspan="1">97.5%</td>
+<td align="left" rowspan="1" colspan="1">95.2%</td>
+<td align="left" rowspan="1" colspan="1">98.6%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>H2CD ∩ IUPRED</bold></td>
+<td align="left" rowspan="1" colspan="1">5.4%</td>
+<td align="left" rowspan="1" colspan="1">3.8%</td>
+<td align="left" rowspan="1" colspan="1">1.7%</td>
+<td align="left" rowspan="1" colspan="1">3.3%</td>
+<td align="left" rowspan="1" colspan="1">0.9%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>IUPRED only</bold></td>
+<td align="left" rowspan="1" colspan="1">2.4%</td>
+<td align="left" rowspan="1" colspan="1">1.9%</td>
+<td align="left" rowspan="1" colspan="1">0.8%</td>
+<td align="left" rowspan="1" colspan="1">1.5%</td>
+<td align="left" rowspan="1" colspan="1">0.5%</td>
+</tr>
+<tr>
+<td colspan="6" align="left" rowspan="1"><bold>ANCHOR (relative to the total residues in the set)</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>H2CD only</bold></td>
+<td align="left" rowspan="1" colspan="1">6.4%</td>
+<td align="left" rowspan="1" colspan="1">4.4%</td>
+<td align="left" rowspan="1" colspan="1">7.5%</td>
+<td align="left" rowspan="1" colspan="1">1.3%</td>
+<td align="left" rowspan="1" colspan="1">0.3%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>H2CD ∩ IUPRED</bold></td>
+<td align="left" rowspan="1" colspan="1">46.1%</td>
+<td align="left" rowspan="1" colspan="1">44.7%</td>
+<td align="left" rowspan="1" colspan="1">39.8%</td>
+<td align="left" rowspan="1" colspan="1">11.1%</td>
+<td align="left" rowspan="1" colspan="1">9%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>IUPRED only</bold></td>
+<td align="left" rowspan="1" colspan="1">32.6%</td>
+<td align="left" rowspan="1" colspan="1">24.4%</td>
+<td align="left" rowspan="1" colspan="1">15.5%</td>
+<td align="left" rowspan="1" colspan="1">10%</td>
+<td align="left" rowspan="1" colspan="1">1.8%</td>
+</tr>
+<tr>
+<td colspan="6" align="left" rowspan="1"><bold>ANCHOR (relative to the total ANCHOR residues)</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>H2CD only</bold></td>
+<td align="left" rowspan="1" colspan="1">29.9%</td>
+<td align="left" rowspan="1" colspan="1">32.7%</td>
+<td align="left" rowspan="1" colspan="1">44.1%</td>
+<td align="left" rowspan="1" colspan="1">68.9%</td>
+<td align="left" rowspan="1" colspan="1">77.2%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>H2CD ∩ IUPRED</bold></td>
+<td align="left" rowspan="1" colspan="1">41.2%</td>
+<td align="left" rowspan="1" colspan="1">45.1%</td>
+<td align="left" rowspan="1" colspan="1">43.1%</td>
+<td align="left" rowspan="1" colspan="1">18.9%</td>
+<td align="left" rowspan="1" colspan="1">20%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>IUPRED only</bold></td>
+<td align="left" rowspan="1" colspan="1">28.9%</td>
+<td align="left" rowspan="1" colspan="1">22.2%</td>
+<td align="left" rowspan="1" colspan="1">12.8%</td>
+<td align="left" rowspan="1" colspan="1">12.3%</td>
+<td align="left" rowspan="1" colspan="1">2.8%</td>
+</tr>
+<tr>
+<td colspan="6" align="left" rowspan="1"><bold>CD (relative to the total residues in the set)</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>H2CD only</bold></td>
+<td align="left" rowspan="1" colspan="1">50.6%</td>
+<td align="left" rowspan="1" colspan="1">49.1%</td>
+<td align="left" rowspan="1" colspan="1">23.4%</td>
+<td align="left" rowspan="1" colspan="1">72.6%</td>
+<td align="left" rowspan="1" colspan="1">63.8%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>H2CD ∩ IUPRED</bold></td>
+<td align="left" rowspan="1" colspan="1">15.4%</td>
+<td align="left" rowspan="1" colspan="1">14.1%</td>
+<td align="left" rowspan="1" colspan="1">3.8%</td>
+<td align="left" rowspan="1" colspan="1">60.5%</td>
+<td align="left" rowspan="1" colspan="1">49.2%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>IUPRED only</bold></td>
+<td align="left" rowspan="1" colspan="1">8.7%</td>
+<td align="left" rowspan="1" colspan="1">9.4%</td>
+<td align="left" rowspan="1" colspan="1">3.5%</td>
+<td align="left" rowspan="1" colspan="1">40.4%</td>
+<td align="left" rowspan="1" colspan="1">34.5%</td>
+</tr>
+<tr>
+<td colspan="6" align="left" rowspan="1"><bold>CD (relative to the total CD residues)</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>H2CD only</bold></td>
+<td align="left" rowspan="1" colspan="1">91.7%</td>
+<td align="left" rowspan="1" colspan="1">94.1%</td>
+<td align="left" rowspan="1" colspan="1">95.2%</td>
+<td align="left" rowspan="1" colspan="1">96.1%</td>
+<td align="left" rowspan="1" colspan="1">99%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>H2CD ∩ IUPRED</bold></td>
+<td align="left" rowspan="1" colspan="1">5.3%</td>
+<td align="left" rowspan="1" colspan="1">3.7%</td>
+<td align="left" rowspan="1" colspan="1">2.8%</td>
+<td align="left" rowspan="1" colspan="1">2.7%</td>
+<td align="left" rowspan="1" colspan="1">0.7%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>IUPRED only</bold></td>
+<td align="left" rowspan="1" colspan="1">3.0%</td>
+<td align="left" rowspan="1" colspan="1">2.2%</td>
+<td align="left" rowspan="1" colspan="1">2%</td>
+<td align="left" rowspan="1" colspan="1">1.2%</td>
+<td align="left" rowspan="1" colspan="1">0.7%</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>Percentages of amino acids covered by SEG-HCA and IUPRED-L predictions in the proteomes of <italic>H. sapiens</italic> (18395802 residues), <italic>S. cerevisiae</italic> (2828010 residues), <italic>P. falciparum</italic> (3979079 residues), <italic>E. coli</italic> (1251206 residues) and <italic>A. fulgidus</italic> (655015 residues). Each class (SEG-HCA, IUPRED and SEG-HCA∩IUPRED) has been searched for coverage by 3D structures (PDB, SCOP classes A to F and PDB filtered with MOBI-DB), ANCHOR predictions and CDD assignments.</p></fn></table-wrap-foot></table-wrap>
+<p>We first evaluated the overall match of protein sequences included in the three datasets with PDB information. Most of the regions (96.1%) covered by PDB (14.4% of the total number of amino acids) are included in the H2CD sets (H2CD and H2CD ∩ IUPREDdis), indicating that most of the 3D structures included in PDB well cover H2CD predictions (<xref ref-type="fig" rid="pcbi-1003280-g003">Fig. 3B</xref> and <xref ref-type="table" rid="pcbi-1003280-t002">Table 2</xref>). However, PDB files may include some disordered regions. Then, in order to select only regions with defined 3D structures, we filtered the PDB assignments for disorder using MobiDB, a recent comprehensive centralized database on different flavors of disorder <xref ref-type="bibr" rid="pcbi.1003280-DiDomenico1">[34]</xref>, including the well-known DisProt database <xref ref-type="bibr" rid="pcbi.1003280-Sickmeier1">[35]</xref>. We also considered classes A to F of the SCOP database <xref ref-type="bibr" rid="pcbi.1003280-Andreeva1">[36]</xref>, covering globular as well as transmembrane domains. Although these procedures are likely not sufficient to completely remove all disordered regions, the results clearly show that amino acids from PDB-filtered files and SCOP A to F classes are well covered by amino acids in H2CD (97.8% and 97.5%, respectively, <xref ref-type="fig" rid="pcbi-1003280-g003">Fig. 3B</xref>). This is confirmed on the different proteomes analyzed here (<xref ref-type="table" rid="pcbi-1003280-t002">Table 2</xref>). We further examined examples of PDB sequences included into each set. Pure H2CD are found associated with 3D structures of globular or membrane domains, whereas pure IUPREDdis mainly correspond to small segments without regular secondary structures (<italic>e.g.</italic> linker between two domains, pdb 3qp5(A) (aa 312–321), or unstructured interacting peptide, pdb 1e4g(P) (aa881–895)). In contrast, many examples were found In the H2CD ∩ IUPREDdis set, where the binding of a partner is coupled to folding (<italic>e.g.</italic> the alpha helix of the p53 TAD, which folds upon Tfb1 binding (pdb 2gs0(B) <xref ref-type="bibr" rid="pcbi.1003280-DiLello1">[37]</xref>, <xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4D</xref>), the CREB KID domain interacting with the KIX domain of CBP (pdb 1kdx(B) <xref ref-type="bibr" rid="pcbi.1003280-Radhakrishnan1">[38]</xref>) and the BH3 domain from PUMA interacting with Mcl-1 (pdb 2roc(B) <xref ref-type="bibr" rid="pcbi.1003280-Day1">[39]</xref>, <xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4F</xref>)). The two complementary interaction domains of mouse CBP and human ACTR, which undergo synergistic folding, were also detected in the H2CD ∩ IUPREDdis set (pdb: 1kbh <xref ref-type="bibr" rid="pcbi.1003280-Demarest1">[40]</xref>). Some rare examples were also found of small stable globular domains, as illustrated in <xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4A</xref>. Worth noting is that small sequence segments of the same ET domain structural family <xref ref-type="bibr" rid="pcbi.1003280-Faure1">[41]</xref>, also falling in this H2CD ∩ IUPREDdis category, behave either as stable domains (BRD4 ET domain, pdb 2jns(A) <xref ref-type="bibr" rid="pcbi.1003280-Lin1">[42]</xref>) or as IDP undergoing coupled folding and binding (AF9 ET-like domain 2lm0(A) <xref ref-type="bibr" rid="pcbi.1003280-Leach1">[43]</xref>). This indicates that for small domains, the distinction between stable and unstable 3D structures may be tenuous. Of note is that the H2CD ∩ IUPREDdis set principally contains small H2CD (mean length 28 amino acids, versus 159 amino acids for H2CD not covered by IUPREDdis predictions (70% coverage), also see below).</p>
+<fig id="pcbi-1003280-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003280.g004</object-id><label>Figure 4</label><caption>
+<title>Structural features of small H2CD.</title>
+<p>Small H2CD represent a large part of the total number of the predicted H2CD (64814 (47%) in the human proteome). In order to understand their structural behavior, we searched for small H2CD (length &lt;50 amino acids), which are covered by CD and show significant sequence similarities with experimental 3D structures. Several cases are illustrated here, from panel A to I. Panels A, D, E, F, H are included in the SEG-HCA∩IUPREDdis set, whereas panels B, C, G and I are found in the “SEG-HCA only” set.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003280.g004" position="float" xlink:type="simple"/></fig>
+<p>As shown above, known 3D structures in the H2CD ∩ IUPREDdis set include several segments that undergo coupled folding and binding. We thus wondered if the overlap between H2CD and IUPREDdis may actually correspond to regions predominantly predicted by ANCHOR, a predictor of disordered regions that undergo binding transitions during protein-protein interaction, using the same energy estimation than IUPRED <xref ref-type="bibr" rid="pcbi.1003280-Dosztnyi3">[44]</xref>, <xref ref-type="bibr" rid="pcbi.1003280-Mszros1">[45]</xref>. ANCHOR predictions fall in the three sets, but represent the highest ratio in the H2CD-IUPREDdis set (46.1%, versus 32.6% and 6.4% in the IUPREDdis and H2CD sets, respectively, <xref ref-type="fig" rid="pcbi-1003280-g003">Fig. 3C</xref>). This strongly supports that the overlap between H2CD and disordered predictions is enriched in segments that fold on binding and that the comparison between H2CD and IUPREDdis may allow the definition of distinct categories within disorder.</p>
+<p>Second, we also estimated the coverage of order predicted by different approaches: a) H2CD prediction, b) IUPRED prediction of order (ordIUPRED), c) converse of IUPRED prediction of disorder (convdisIUPRED) and d) ANCHOR prediction. H2CD predictions well cover the ordIUPRED and convdisIUPRED predictions (95% and 95% coverage, respectively). However, the ordIUPRED and convdisIUPRED predictions cover only partially the H2CD predictions (59% and 63% coverage, respectively), highlighting a larger coverage of order by SEG-HCA predictions, consistently with results presented in <xref ref-type="fig" rid="pcbi-1003280-g003">Fig. 3A</xref> (H2CD-IUPREDdis overlap). 80% of the amino acids highlighted by ANCHOR are covered by H2CD, indicating that ANCHOR predictions include a large proportion of segments with high density in hydrophobic clusters. ANCHOR predictions not covered by H2CD are generally small (mean length 13 amino acids) and have few hydrophobic amino acids (mean 18%). We also calculated the proportion of small H2CD (length ≤50 amino acids) which are covered by ANCHOR predictions and observed that these cover only 60% of H2CD. On average, small H2CD not covered by ANCHOR predictions are 19 amino acids long and possess 29% hydrophobic residues.</p>
+<p>A propensity for folding might thus be predicted for H2CD with a strong IUPREDdis signal, as it is the case for the four examples of coupled folding and binding mentioned above or that shown in <xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4E</xref>. Using this rule, small stable 3D structures, such as the UBA domain of Rad23 (<xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4A</xref>) may also be picked out. In contrast, regions without any H2CD signal might be then classified as “non foldable” segments. This represents on average 23% of the protein residues in the human proteome, in agreement with previous estimations (21.6% in Ward 2004). Similar trends were observed for <italic>S. cerevisiae</italic> and <italic>P. falciparum</italic>, whereas in <italic>E. coli</italic> and <italic>A. fulgidus</italic>, this percentage is lower (10% and 6%, respectively) (<xref ref-type="table" rid="pcbi-1003280-t001">Table 1</xref>).</p>
+</sec><sec id="s2c">
+<title>Comparison with domains assigned from the Conserved Domain Database gives access to orphan sequences</title>
+<p>We collected for each protein the CDD assignments (as found using RPS-BLAST <xref ref-type="bibr" rid="pcbi.1003280-MarchlerBauer1">[24]</xref>) and discarded multi-domains, as these are already counted with domains. 69348, 7251, 5161, 5497 and 2679 CD were identified in the proteomes of <italic>H. sapiens</italic>, <italic>S. cerevisiae</italic>, <italic>P. falciparum E. coli</italic> and <italic>A. fulgidus</italic>, respectively (<xref ref-type="table" rid="pcbi-1003280-t001">Table 1</xref>).</p>
+<p>The number of predicted H2CD is approximately twice higher than the number of CD: 137665 and 18555 for <italic>H. sapiens</italic> and <italic>S. cerevisiae</italic>, respectively, whereas it is nearly similar (6745 and 3075) for <italic>E. coli</italic> and <italic>A. fulgidus</italic>, respectively (<xref ref-type="table" rid="pcbi-1003280-t001">Table 1</xref>). Interestingly, the number of H2CD (22939) is more than 4 four times higher than the number of CD (5161) for the <italic>P. falciparum</italic> proteome. Most (97%) of the CD amino acids (40% of the total number of amino acids) are included in the H2CD set (human proteome H2CD and H2CD ∩ IUPREDdis, <xref ref-type="fig" rid="pcbi-1003280-g003">Fig. 3D</xref> and <xref ref-type="table" rid="pcbi-1003280-t002">Table 2</xref>). As regards to the highlighted relationship between H2CD and foldable regions (see above), this indicates that CD mainly include foldable domains. The similarity in hydrophobic cluster composition between the CD and H2CD databases, as well as with the SCOP database (classes A to F) further supports their relationship (<xref ref-type="supplementary-material" rid="pcbi.1003280.s001">Fig. S1</xref>).</p>
+<p>We wondered whether CD, as assigned from CDD, are well detected and covered by H2CD, as predicted by SEG-HCA (<xref ref-type="table" rid="pcbi-1003280-t001">Table 1</xref>, <xref ref-type="fig" rid="pcbi-1003280-g005">Fig. 5</xref>). First, we calculated the percentages of CD positions, which are predicted as H2CD (<xref ref-type="fig" rid="pcbi-1003280-g005">Fig. 5A</xref> and <xref ref-type="table" rid="pcbi-1003280-t001">Table 1</xref>). 75% of the CD have up to 95% of their length covered by H2CD in all the proteomes, except <italic>for P. falciparum</italic> and <italic>A. fulgidus</italic>, for which the coverage is even higher (82 and 86%, respectively). These high percentages thus demonstrated that the vast majority of CD are well identified by SEG-HCA, as already observed in <xref ref-type="fig" rid="pcbi-1003280-g003">Fig. 3D</xref>. Only a few number of CD (435 (1,2%) in the <italic>H. sapiens</italic> proteome (star in <xref ref-type="fig" rid="pcbi-1003280-g005">Fig. 5A</xref> and <xref ref-type="fig" rid="pcbi-1003280-g003">Fig. 3D</xref>), and between 0 and 9 in other ones (<xref ref-type="table" rid="pcbi-1003280-t001">Table 1</xref>)) are not covered by H2CD. These are logically less hydrophobic, with in average 28% of hydrophobic amino acids. Metal ions or disulfide bridges often stabilize some of these domains. Hence, 194 of the <italic>H. sapiens</italic> CD that are not covered by H2CD (45%) correspond to zinc fingers, as deduced from the CDD annotations. We looked more precisely at positions of CD that are not covered by H2CD, either in upstream, downstream or in the middle of CD (<xref ref-type="fig" rid="pcbi-1003280-g005">Fig. 5B</xref>), and observed high peaks for a value of 0, meaning that the limits of CD are well covered by H2CD. The extent of non-coverage appears more pronounced for internal segments of limited length, probably highlighting large loops and/or poorly hydrophobic segments within domains, which are not predicted by SEG-HCA. CD, which don't match any H2CD or match multiple H2CD, can also be highlighted on <xref ref-type="fig" rid="pcbi-1003280-g005">Fig. 5E</xref> and <xref ref-type="supplementary-material" rid="pcbi.1003280.s002">Fig. S2</xref> (white bars).</p>
+<fig id="pcbi-1003280-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003280.g005</object-id><label>Figure 5</label><caption>
+<title>Characterization of segments with high hydrophobic cluster density (H2CD) in the human proteome, relative to CD extracted from CDD.</title>
+<p>(A) Distribution of the coverage rate of CD by H2CD (N/l<sub>CD</sub>). (C) Distribution of the coverage rate of H2CD by CD (N/l<sub>H2CD</sub>). N is the number of common positions and l<sub>CD</sub> and l<sub>H2CD</sub> the total length (in amino acids) of the CD and H2CD, respectively. The star and circle point out CD and H2CD with no or low coverage by H2CD and by CD, respectively. Over-coverage of H2CD by CD and of CD by H2CD are reported in panels (B) and (D), respectively. (E) Number of large H2CD (&gt;50 amino acids) matching a CD (white), number of CD matching a large H2CD (&gt;50 amino acids) (black).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003280.g005" position="float" xlink:type="simple"/></fig>
+<p>We also looked at the converse information, <italic>i.e.</italic> the extent to which H2CD are covered by CD. We calculated the percentages of H2CD positions, which are assigned as CD (<xref ref-type="fig" rid="pcbi-1003280-g005">Fig. 5C</xref>). Only 22.4% of the H2CD have up to 95% of their length covered by CD, indicating that CD only partially cover H2CD, as already observed in <xref ref-type="fig" rid="pcbi-1003280-g003">Fig. 3D</xref>. A large number of H2CD have no CD assignment, meaning that they are orphans. They constitute 34% of the H2CD in the human proteome, and up to 72.8% in the <italic>P. falciparum</italic> proteome (72.8%, <xref ref-type="table" rid="pcbi-1003280-t002">Table 2</xref>). These percentages slightly decreased when considering only large H2CD (&gt;50 amino acids, 19.8% of the total number of H2CD, white circle in <xref ref-type="fig" rid="pcbi-1003280-g005">Fig. 5C</xref> and <xref ref-type="fig" rid="pcbi-1003280-g005">Fig. 5E</xref> (black bar at 0) ; <xref ref-type="table" rid="pcbi-1003280-t001">Table 1</xref>). These large H2CD have 31% hydrophobic amino acids and an average length of 139 amino acids. These features are very close to those of CD domains (31% hydrophobic amino acids and 111 amino acids long). Only a weak decrease is observed when considering multi-domains, for the definition of CD domains from CDD. The percentage of CD-orphan H2CD range between 8% (<italic>E. coli</italic>) and 22% (<italic>S. cerevisiae</italic>), with the outstanding exception of <italic>P. falciparum</italic>, for which this percentage rises to 54% (<xref ref-type="table" rid="pcbi-1003280-t001">Table 1</xref>). For this proteome, we further investigated whether amino acid compositions are different within and outside H2CD. As shown in <xref ref-type="supplementary-material" rid="pcbi.1003280.s003">Fig. S3</xref>, no clear difference can be highlighted between the <italic>P. falciparum</italic> and <italic>S. cerevisiae</italic> sequences, indicating that the codon usage bias and associated biased amino acid composition affect foldable segments in a similar way than the rest of the protein sequences. Consequently, this biased amino acid composition may explain the resistance of <italic>Plasmodium</italic> H2CD sequences to the detection by CD profiles.</p>
+<p>As before, we determined the positions of H2CD, which do not correspond to CD assignments (<xref ref-type="fig" rid="pcbi-1003280-g005">Fig. 5D</xref>), and also observed main peaks for a value of 0, meaning that the limits of H2CD are well covered by CD. Moreover, a higher peak is observed for no mismatch in intermediate positions, likely indicating the preference of 1 CD for 1 H2CD, as also observed in <xref ref-type="fig" rid="pcbi-1003280-g005">Fig. 5E</xref> and <xref ref-type="supplementary-material" rid="pcbi.1003280.s002">Fig. S2</xref> (black bars). However, mismatch occurrences decrease more slowly with the length of the mismatch, likely revealing the importance of partial CD orphans in H2CD.</p>
+<p>From <xref ref-type="fig" rid="pcbi-1003280-g005">Fig. 5E</xref> and <xref ref-type="supplementary-material" rid="pcbi.1003280.s002">Fig. S2</xref>, it is obvious that most of CD are covered by a single H2CD and vice versa. A small proportion of CD are covered by two distinct H2CD and vice-versa. This can be explained by the fact that SEG-HCA considers either two distinct segments, when large loops or regular secondary structures with few strong hydrophobic amino acids are present within CD (<xref ref-type="supplementary-material" rid="pcbi.1003280.s004">Fig. S4A</xref>), or a unique domain when too short or too hydrophobic segments separate two distinct CD (<xref ref-type="supplementary-material" rid="pcbi.1003280.s004">Fig. S4B</xref>). Examination of particular cases of non-detected linkers suggests that some improvement of the SEG-HCA prediction tool might be yet expected, by considering for the definition of hydrophobic clusters within potential linkers, alanine residues, which have the highest preference for αlpha-helices.</p>
+</sec><sec id="s2d">
+<title>Lengths of H2CD segments: Emphasis on small, likely foldable segments, which are not described in CDD</title>
+<p>We calculated the distributions of CD and H2CD lengths (<xref ref-type="fig" rid="pcbi-1003280-g006">Fig. 6</xref> and <xref ref-type="supplementary-material" rid="pcbi.1003280.s005">Fig. S5</xref>). Above 50 amino acids, the distributions are quite similar. However, SEG-HCA predicts a lot of small H2CD (length ≤50 amino acids), which are not observed in the CD distribution. Indeed, 64804 (47%), 7823 (42%) and 7591 (33%) of the H2CD from the <italic>H. sapiens</italic>, <italic>S. cerevisiae</italic> and <italic>P. falciparum</italic> proteomes, respectively, have less than 50 amino acids. By comparison, only 27%, 9% and 31% of CD are small-sized. Our results thus also showed that, in three distinct eukaryotic proteomes, it exists a considerable number of short segments, rich in hydrophobic clusters. An in-depth examination of PDB entries matching these segments revealed that they constitute small stable domains (<italic>e.g.</italic> UBA and Zinc-finger domains (<xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4A and 4B</xref>)), linear interaction motif likely embedded in a small stable domain (<xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4C</xref>), segments that fold upon contact with partners (<xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4D to 4F</xref>) or that they are included in larger domains, surrounded by large loops (<xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4F</xref>), in C-terminal tails (<xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4G</xref>) and in structured linkers (<xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4H</xref>). A distinction of segments that may undergo coupled folding and binding could be made by considering overlaps with disorder predictions (see before). The large proportion of small H2CD seems to be specific for eukaryotic genomes. Indeed, in the <italic>E. coli</italic> genome these small H2CD represent 19% of all H2CD and this number decreases to 11% in the <italic>A. fulgidus</italic> genome (<xref ref-type="table" rid="pcbi-1003280-t001">Table 1</xref> and <xref ref-type="supplementary-material" rid="pcbi.1003280.s005">Fig. S5</xref>). Interestingly, SEG-HCA thus provides a way to access to this information, which is generally missed by standard methods of profile construction (due to their limited size and/or high sequence divergence), as those contributing to CDD.</p>
+<fig id="pcbi-1003280-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003280.g006</object-id><label>Figure 6</label><caption>
+<title>Comparison of H2CD and CD lengths in the human proteome.</title>
+<p>The frequencies of H2CD and CD extracted from the human proteome are reported as a function of their lengths.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003280.g006" position="float" xlink:type="simple"/></fig></sec><sec id="s2e">
+<title>CD and H2CD architecture of proteins</title>
+<p>The percentages of amino acids included in H2CD or CD segments are clearly different (<xref ref-type="table" rid="pcbi-1003280-t001">Table 1</xref>, <xref ref-type="fig" rid="pcbi-1003280-g007">Fig. 7A</xref> and <xref ref-type="supplementary-material" rid="pcbi.1003280.s006">Fig. S6</xref>). On average, 44% of the amino acids of a human protein are included in CD segments, against 77% in H2CD segments. These amino acid coverage values are similar to those found by Ekman and colleagues <xref ref-type="bibr" rid="pcbi.1003280-Ekman1">[2]</xref>, when considering only the Pfam-A/SCOP assignments or the whole set of predicted domains. The CD amino acid coverage values vary from 29% (<italic>Plasmodium</italic>) to 74% (<italic>E.coli</italic>), whereas elevated H2CD amino acid coverage values are observed in any cases (86% (<italic>Plasmodium</italic>) and 90% (<italic>E.coli</italic>)).</p>
+<fig id="pcbi-1003280-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003280.g007</object-id><label>Figure 7</label><caption>
+<title>Distribution of H2CD and CD segments among proteins from the human proteome.</title>
+<p>(A) Number of CD (white) and H2CD (black) assignments per protein. Only H2CD of more than 50 amino acids are considered. (B) Distribution of the number of amino acids (in percentage of the total number of amino acids within a protein) included in CD (white) and H2CD (black) segments.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003280.g007" position="float" xlink:type="simple"/></fig>
+<p>The distributions of CD and H2CD segments within proteins (protein coverage) are also different. Indeed, whereas 17% of the human proteins do not have any CD, only are found 2.6% with no H2CD longer than 50 amino acids (<xref ref-type="table" rid="pcbi-1003280-t001">Table 1</xref> and <xref ref-type="fig" rid="pcbi-1003280-g007">Fig. 7A</xref>). This indicates that the number of wholly disordered proteins is very low and that 14% of human proteins contain large foldable domains, which remain uncharacterized (CD-orphan domains). The number of orphan proteins is lower than that reported by Ekman and colleagues, which described that 93% of the eukaryotic proteins could be assigned with a (known or unknown) domain. More generally, the very low percentage of H2CD orphan proteins contrast with previous estimations of fully disordered proteins <xref ref-type="bibr" rid="pcbi.1003280-Dunker1">[46]</xref>, which are much higher, but these ones include all types of disorder, including regions that are predicted as foldable, and not only natively unfolded segments.</p>
+<p>One can also consider the coverage of proteins by only one domain or multiple domains, being advised that one H2CD may cover multiple domains, as discussed from <xref ref-type="fig" rid="pcbi-1003280-g005">Fig. 5E</xref>. Hence, we estimated that the human proteome has 45% and 52% single- and multi-H2CD domain proteins, respectively, whereas bacteria/archaea proteomes have 71%/84% and 26%/14% single- and multi-H2CD domain proteins, respectively (<xref ref-type="table" rid="pcbi-1003280-t001">Table 1</xref>, <xref ref-type="fig" rid="pcbi-1003280-g007">Fig. 7A</xref> and <xref ref-type="supplementary-material" rid="pcbi.1003280.s006">Fig. S6</xref>). This is consistent with the study of Ekman and colleagues <xref ref-type="bibr" rid="pcbi.1003280-Ekman1">[2]</xref>, which however tipped the balance in favor of multi-domains proteins (65% versus 35% of mono-domain proteins in the human proteome). This last study however fixed the cut-off at 100 residues, and thus did not consider small domains, which are well documented here.</p>
+<p>The proportions of proteins with multiple, unique or no H2CD are similar in <italic>Plasmodium falciparum</italic> (56%, 42% and 1%), although the percentages of proteins with multiple and no CD are different (20% and 38% versus 40% and 17% in human proteins) (<xref ref-type="table" rid="pcbi-1003280-t001">Table 1</xref> and <xref ref-type="supplementary-material" rid="pcbi.1003280.s006">Fig. S6</xref>). This suggests that the higher number of CD orphan sequences in <italic>Plasmodium</italic> sequences may be distantly related to domains existing in other species.</p>
+</sec></sec><sec id="s3">
+<title>Discussion</title>
+<p>The study presented here provides access to a whole repertoire of foldable H2CD segments in proteomes from the three kingdoms (the eukaryotic genomes of <italic>H. sapiens, S. cerevisiae</italic>, and <italic>P. falciparum</italic>, as well as those of the eubacteria <italic>E. coli</italic> and of the archaea <italic>A. fulgidus</italic>). By a mirror effect, this also gives new insight into disordered regions located outside foldable segments, which are devoid of fold-promoting hydrophobic clusters. Consistently with numerous reports <xref ref-type="bibr" rid="pcbi.1003280-Dunker2">[47]</xref>, <xref ref-type="bibr" rid="pcbi.1003280-Ward1">[48]</xref>, the content in disorder, or precisely non-foldable segments if we consider the converse of SEG-HCA predictions, increases with evolutionary complexity. The major point that our study now highlights is that in eukaryotes, there are many small H2CD segments, whose limited length makes them generally difficult to characterize. This information is in particular absent from or poorly represented in domain databases. Some of these small H2CD segments correspond to isolated stable domains (as exemplified in <xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4A and 4B</xref>). However, as observed from several case studies (<xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4D to 4F</xref>), small H2CD segments may also be intrinsically disordered and undergo coupled folding and binding. These segments are generally predicted as IUPs or IDPs by current disorder predictors, and the overlap between disorder and H2CD predictions may thus provide a new interesting way to highlight disorder-to-order transitions, which play key roles for molecular recognition. These segments, which are characterized by structural plasticity and make weak and transient binding, play important roles in regulatory and signaling process <xref ref-type="bibr" rid="pcbi.1003280-Uversky2">[29]</xref>. Tools, such as ANCHOR <xref ref-type="bibr" rid="pcbi.1003280-Mszros1">[45]</xref> and MorFPred <xref ref-type="bibr" rid="pcbi.1003280-Disfani1">[49]</xref>, have been developed for detecting such segments, but are based on different principles. MoRFPred is based on a machine learning classifier, based on a comprehensive datasets of MoRFs (Molecular Recognition Features, <xref ref-type="bibr" rid="pcbi.1003280-Disfani1">[49]</xref>), whereas ANCHOR relies on pairwise energy estimation, which is also the basis of the disorder predictor IUPred <xref ref-type="bibr" rid="pcbi.1003280-Mszros1">[45]</xref>. ANCHOR segments are likely to gain stabilizing energy by interacting with a globular partner. As shown here, ANCHOR predictions are especially found in the overlap between IUPRED (a current disorder predictor) and SEG-HCA predictions. SEG-HCA appears thus well adapted to detect such foldable segments, which have been also named protean segments (ProS, <xref ref-type="bibr" rid="pcbi.1003280-Fukuchi1">[50]</xref>), as it highlights specific features of their interface, enriched in hydrophobic amino acids <xref ref-type="bibr" rid="pcbi.1003280-Mszros1">[45]</xref>, <xref ref-type="bibr" rid="pcbi.1003280-Gunasekaran1">[51]</xref>–<xref ref-type="bibr" rid="pcbi.1003280-Vacic1">[53]</xref>. The binding of some foldable segments, such as a beta-strand of MCAF1 (<xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4E</xref>) and an alpha-helix of BH3 (<xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4F</xref>), is similar to the folding process and the interface between protein and ligand, richer in hydrophobic residues than the surrounding surface, is similar to the hydrophobic core. In both cases, hydrophobic amino acids participate in the binding interfaces and the hydrophobic cluster has a shape typical of the formed secondary structures. In other situations, such as those presented in <xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4C and 4D</xref>, the foldable segments are included in small globular-like regions. Hydrophobic amino acids are here likely to participate in both the binding interface and the hydrophobic core of the small globular-like domain in which the peptide is embedded, and the shape of the corresponding hydrophobic clusters deviates from the observed secondary structures <xref ref-type="bibr" rid="pcbi.1003280-Eudes1">[54]</xref>. A “folding propensity” may thus be deduced from the consideration of small H2CD, especially included in the H2CD ∩ IUPRED set, provided that these can be distinguished from artifacts (partial domains, as illustrated in <xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4G</xref>). However, such cases could be solved using evolutionary information.</p>
+<p>The residues undergoing coupled folding and binding and participating in the interaction with the partner can usually be mapped in a single continuous segment, and hence, have been connected through common examples to linear motifs <xref ref-type="bibr" rid="pcbi.1003280-Weatheritt1">[55]</xref>. These are collected in the ELM database <xref ref-type="bibr" rid="pcbi.1003280-Dinkel1">[56]</xref>, which captures sequence features shared by common interacting partners. An example is shown here with a peptide of the Apollo (SNM1B) protein (<xref ref-type="fig" rid="pcbi-1003280-g004">Fig. 4C</xref>), a member of the beta-CASP family <xref ref-type="bibr" rid="pcbi.1003280-Callebaut6">[57]</xref>, which form small alpha helices upon binding to the telomere repeat binding factor TRF2 <xref ref-type="bibr" rid="pcbi.1003280-Chen1">[58]</xref>, <xref ref-type="bibr" rid="pcbi.1003280-Touzot1">[59]</xref>. This peptide is included in a small, 32 amino acid long H2CD. The simplicity of linear motifs offers a good tool for identifying possible partners but generally results in a large amount of false positives. The complementary nature of the two concepts has been recently explored through the comparison of the generic ELM ligand binding motifs (LIG) and ANCHOR predictions <xref ref-type="bibr" rid="pcbi.1003280-Mszros3">[60]</xref>, indicating that ANCHOR can be used as a structural filter to improve the predictive power of linear motifs. A similar effect or an alternative analysis can be expected from the consideration of the SEG-HCA predictions, which also give information about the structural context of linear motifs. A first calculation made on the ELM LIG motifs showed a mean coverage by H2CD predictions of 67% (with more than a half being predicted as disordered by IUPRED, data not shown). SEG-HCA is however limited to linear motifs including hydrophobic amino acids and thus does not address hydrophilic linear motifs.</p>
+<p>Another major observation of our work is that in eukaryotic proteomes, the number of H2CD is approximately higher than the number of domains assigned from the conserved domain database, revealing a lot of CD-orphan domains, which are otherwise not considered by other predictive methods based on homology searches. Orphans domains have either evolved too far from the nearest neighbors to be assigned to a domain or they have been created by some <italic>de novo</italic> mechanisms. Studies have however indicated that most of the solved structures of orphan proteins show structural similarity to already known proteins domains, suggesting that the fraction of orphan domains that have distant homologs is high <xref ref-type="bibr" rid="pcbi.1003280-Siew1">[61]</xref>. A preliminary study on a small set of human CD-orphan H2CD segments reveals that approximately one fifth of them can be assigned by direct inference (from the PSI-BLAST significant results) to already known families of domains (Faure and Callebaut, unpublished data). This study has been performed using the TREMOLO-HCA tool, which combines sequence similarity searches with information on domain architecture and amino acids likely participating in the hydrophobic core <xref ref-type="bibr" rid="pcbi.1003280-Faure1">[41]</xref>. This first emphasizes the sequence divergence of some domain families and the necessity to improve the specificity of associated CD profiles. This also highlights the large amount of putative domains without any known characterized function. These orphan domains are particularly abundant in proteomes from genomes with extreme compositional bias, such as that of the apicomplexan <italic>P. falciparum</italic> (12459 CD-orphan H2CD (81%), <xref ref-type="table" rid="pcbi-1003280-t001">Table 1</xref>). Previous analyses have already shown the interest of HCA for revealing functional features of such segments <xref ref-type="bibr" rid="pcbi.1003280-Callebaut7">[62]</xref>, which can be now analyzed in a systematic and comprehensive manner.</p>
+<p>A recent study <xref ref-type="bibr" rid="pcbi.1003280-Fukuchi2">[63]</xref>, <xref ref-type="bibr" rid="pcbi.1003280-Fukuchi3">[64]</xref> has also addressed the problem of regions with no structural domain (SD) assignment (named cryptic domains), through an approach, called DICHOT, for determining structured domains and intrinsically disordered (ID) regions in proteomes. This approach uses sequence conservation in order to distinguish between cryptic structured domains, with no known 3D structures, and disorder. This is fundamentally different from the SEG-HCA approach, which does not use at all sequence conservation for the definition of H2CD segments. Consideration of sequence conservation does not take into account that i) CD domains can have diverged so far that the sequence similarity between family members can be difficult to detect, ii) the sequence of some IDs may share significant similarities with other sequences (this is particularly true for ID sequences undergoing coupled folding and binding). As a consequence, the two approaches are difficult to compare and led to different results, especially for the estimation of the frequency of disordered amino acids, which is much higher in the DICHOT approach (35%, for the human genome).</p>
+<p>The comprehensive repertoire described here thus opens new perspectives for the genome-wise characterization of structured domains or potentially foldable regions, as well as for the identification of new domains or motifs, which may play critical functional roles.</p>
+</sec><sec id="s4" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="s4a">
+<title>SEG-HCA</title>
+<p>SEG-HCA (after SEGmentation through HCA) first identifies the strong hydrophobic amino acids of the sequence, considering for their definition the HCA alphabet (V, I, L, M, F, Y, W) and including cysteine (C) (green in <xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2A and B</xref>). This alphabet has proven to be optimal, providing the best correspondence between hydrophobic clusters and regular secondary structures <xref ref-type="bibr" rid="pcbi.1003280-Woodcock1">[17]</xref>. Then, the definition of HCA hydrophobic clusters relies on the consideration of a minimal distance between two hydrophobic amino acids, which is necessary to assign them to separate clusters. This minimal distance, called connectivity distance, is 4 sequential amino acids when the alpha-helix is used as a 2D support for the 2D HCA transposition of the sequence and allows to delineate cluster breakers. These breakers are thus composed of at least four consecutive non-hydrophobic amino acids or a proline (red in <xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2A and B</xref>). The groups of amino acids between the breakers define hydrophobic clusters, which contain hydrophobic residues (green in <xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2A and B</xref>), but also may include non-hydrophobic residues (blue-green in <xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2A and B</xref>), provided the connectivity distance between hydrophobic residues is not reached. As small hydrophobic clusters, containing only one or two hydrophobic amino acids, are not frequently associated with regular secondary structures, these were not considered in our counting if there is no other hydrophobic cluster within their first close neighborhood (7 amino acids) (star in <xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2A and 2B</xref>). An artificial, simplified binary sequence is then built, where the amino acids composing hydrophobic clusters are represented by 1 and those composing the breakers (which essentially contain non-hydrophobic amino acids) are represented by 0.</p>
+<p>From the binary sequence, the percentage of positions included in hydrophobic clusters (HCP, after Hydrophobic Cluster Positions) is computed using an overlapping window of length 17 and assigned to the central position of this window (hexagon in <xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2B</xref>). This window size was chosen as it corresponds to the segment length encompassing the close neighbors of a central residue on the 2D HCA plot (two rings encircling one central amino acid). This value is similar to the window of 15 amino acids currently used by secondary structure predictors <xref ref-type="bibr" rid="pcbi.1003280-Jones1">[65]</xref>. For the N- and C-terminal eight residues, values were set to those assigned to the ninth and n-8th positions of the sequence, respectively (n being the total length of the considered sequence). The HCP percentages can be plotted, giving a view of the hydrophobic cluster profile of the protein sequence (<xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2B</xref>). High and low values are associated with high and low densities of hydrophobic clusters, respectively.</p>
+<p>SEG-HCA next identifies areas of high hydrophobic cluster density (H2CD), typical of structured or folded regions (<xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2B</xref>). To that aim, HCP minimal values are identified for a threshold level of 10%, defining thereby potential hinge regions separating these areas of high hydrophobic cluster density (first rough limits, labeled 1 in <xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2B</xref>). This level is considered as the minimal value, for which and below which a linker is predicted to separate two distinct H2CD. This value was first fixed according to numerous case studies. Optimization of this threshold was considered using a non-redundant (40% sequence identity) SCOP database, downloaded from ASTRAL (<ext-link ext-link-type="uri" xlink:href="http://scop.berkeley.edu/" xlink:type="simple">http://scop.berkeley.edu/</ext-link>). SEG-HCA was used at different HCP threshold and for each 3D structure, we looked at the values that yield only one H2CD. The distribution of the HCP threshold values was then analyzed, showing an optimum at 22%, thus slightly above 10%. On average, 1.1 H2CD are observed, with 78% coverage. However, it should be noted that the optimization is made on well-stable, already large globular domains. The used threshold is intended to detect such canonical domains, but also small segments, which may be structured and are not (or poorly) represented in the SCOP structural database. Therefore, as supported by several case studies, using the lower threshold of 10% allows the detection of these small segments, in addition to larger ones. At this level, 1.04 H2CD are observed, with 86% coverage (thus values close to those observed for the optimized threshold). Increasing this threshold value may allow the split of multi-domains into domains, but lead to loose small segments, as these last ones generally have low HCP values.</p>
+<p>Then, SEG-HCA builds a tree, starting from the observed distances between hydrophobic clusters (leafs). The closest hydrophobic clusters are grouped, constituting nodes, the root (labeled 2 in <xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2B</xref>), gathering the whole set of hydrophobic clusters contained within the analyzed sequence. SEG-HCA then compares each of the regions identified as the first rough limits (labeled 1 in <xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2B</xref>) to those defined by the different nodes of the tree. The best overlap between the two is chosen to define the refined limits of the H2CD segment (labeled 3 in <xref ref-type="fig" rid="pcbi-1003280-g002">Fig. 2B</xref>).</p>
+<p>SEG-HCA is fully implemented in python v2.7. Scripts are available in Supporting Information (<xref ref-type="supplementary-material" rid="pcbi.1003280.s007">Software S1</xref>).</p>
+</sec><sec id="s4b">
+<title>Datasets</title>
+<p>Proteome sequences were downloaded from the National Center for Biological Information (NCBI) (<ext-link ext-link-type="uri" xlink:href="ftp://ftp.ncbi.nlm.nih.gov/genomes/" xlink:type="simple">ftp://ftp.ncbi.nlm.nih.gov/genomes/</ext-link>): Hsapiens, Scerevisiae_uid128, Ecoli_042_uid161985, Archeoglobus_fulgidus_DSM_4304_uid57717 and Pfalciparum.</p>
+</sec><sec id="s4c">
+<title>Comparison with assignments from the Protein Data Bank (PDB), Mobi-DB and SCOP, from the Conserved Domain Database (CDD) and with other predictive tools (IUPRED, ANCHOR)</title>
+<p>Each sequence from each proteome was searched for similarities either with the Protein Data Bank (PDB), using the BLASTPGP program version 2.26. Only one iteration was done from each entire protein sequence. Hits sharing more than 95% of sequence identity were selected. The disorder was then filtered by using Mobi-DB (<xref ref-type="bibr" rid="pcbi.1003280-DiDomenico1">[34]</xref>, <ext-link ext-link-type="uri" xlink:href="http://mobidb.bio.unipd.it/" xlink:type="simple">http://mobidb.bio.unipd.it/</ext-link>), which extends the experimental disorder observations found Disprot database to the whole PDB, or by only considering the classes a, b, c, d, e, f from the SCOP structural databases (<xref ref-type="bibr" rid="pcbi.1003280-Andreeva1">[36]</xref>, <ext-link ext-link-type="uri" xlink:href="http://scop.mrc-lmb.cam.ac.uk/scop/" xlink:type="simple">http://scop.mrc-lmb.cam.ac.uk/scop/</ext-link>). These classes correspond to all alpha protein, all beta protein, all alpha and beta protein (mainly parallel beta sheet), all alpha and beta protein (mainly anti-parallel beta sheet), multi-domain proteins, membrane and cell surface proteins and peptides, respectively.</p>
+<p>We obtained information on Conserved Domain(s) (CD) for each protein sequence through the NCBI server (<ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/Structure/cdd/cdd.shtml" xlink:type="simple">http://www.ncbi.nlm.nih.gov/Structure/cdd/cdd.shtml</ext-link>), which has pre-computed domain architectures. These pre-computed architectures were fixed using the RPBLASTprogram (blast tools version 2.26) with the Conserved Domain Database (version 3.1) <xref ref-type="bibr" rid="pcbi.1003280-MarchlerBauer1">[24]</xref>.</p>
+<p>IUPRED was used as a disorder predictor (<xref ref-type="bibr" rid="pcbi.1003280-Dosztnyi1">[30]</xref>, <xref ref-type="bibr" rid="pcbi.1003280-Dosztnyi2">[31]</xref>, <ext-link ext-link-type="uri" xlink:href="http://iupred.enzim.hu/" xlink:type="simple">http://iupred.enzim.hu/</ext-link>). We used the “long” mode (IUPRED-L) to predict disordered segments. A probability to be disordered up to 0.5 was used to consider a position to be disordered. The “glob” mode (IUPRED-G) was used to predict globular domain boundaries from the disordered positions. The “short” mode was not used as it focuses on small disordered regions such as both loops and termini tails.</p>
+<p>We used ANCHOR to predict disorder to order transitions (<xref ref-type="bibr" rid="pcbi.1003280-Dosztnyi3">[44]</xref>, <xref ref-type="bibr" rid="pcbi.1003280-Mszros1">[45]</xref> <ext-link ext-link-type="uri" xlink:href="http://anchor.enzim.hu/" xlink:type="simple">http://anchor.enzim.hu/</ext-link>). ANCHOR is developed from the IUPRED program, and was used with default parameters.</p>
+</sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1003280.s001" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003280.s001" position="float" xlink:type="simple"><label>Figure S1</label><caption>
+<p><bold>Characterization of segments with high hydrophobic cluster density (H2CD).</bold> Distribution of hydrophobic clusters relative to their length and to the number of hydrophobic amino acids for segments assigned by CDD (A) and predicted by SEG-HCA (H2CD) (B). Hydrophobic clusters whose lengths are greater than 20 amino acids (right part of the figure) are characterized by their percentages in hydrophobic amino acids, rather than by the total number of these amino acids. The two distributions are clearly similar and are typical of that of globular and membrane domains, found the SCOP first classes A to F (C). The longer and more hydrophobic clusters are also present in the three distributions are typical of membrane-spanning domains.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003280.s002" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003280.s002" position="float" xlink:type="simple"><label>Figure S2</label><caption>
+<p><bold>Characterization of segments with high hydrophobic cluster density (H2CD) in the </bold><bold><italic>S. cerevisiae</italic></bold><bold>, </bold><bold><italic>P. falciparum</italic></bold><bold>, </bold><bold><italic>E. coli</italic></bold><bold> and </bold><bold><italic>A. fulgidus</italic></bold><bold> proteomes, relative to CD extracted from CDD.</bold> Number of large H2CD (&gt;50 amino acids) matching a CD (white), number of CD matching a large H2CD (&gt;50 amino acids) (black).</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003280.s003" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003280.s003" position="float" xlink:type="simple"><label>Figure S3</label><caption>
+<p><bold>Comparative analysis of the amino acid composition in the </bold><bold><italic>P. falciparum</italic></bold><bold> and </bold><bold><italic>S. cerevisiae</italic></bold><bold> proteomes.</bold> The relative frequencies of amino acids of <italic>P. falciparum</italic> versus <italic>S. cerevisiae</italic> proteomes are reported in black. 1 was substracted to each reported value, for improving readability. Positive and negative values are associated with over- and under-representation of the considered amino acid in the P. falciparum proteome, respectively. The four colors are used to highlight the frequencies observed over the whole proteins (black), in regions not included in H2CD (red), within hydrophobic clusters in H2CD (green) and outside hydrophobic clusters in H2CD (blue).</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003280.s004" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003280.s004" position="float" xlink:type="simple"><label>Figure S4</label><caption>
+<p><bold>Correspondence between H2CD and CD.</bold> Examples (<bold>A</bold>) of two predicted H2CD for one CD (large loops (relative to the canonical HCA definition) are present within CD domains) and (<bold>B</bold>) of one predicted H2CD for two distinct CD. In the first case (<bold>A</bold>), a secondary structure lacking strong hydrophobic amino acids (but including alanine residues instead), is considered by SEG-HCA as a potential hinge between two distinct globular-like regions. The same wrong prediction can be observed for very large loops linking two regular secondary structures. In the second situation (<bold>B</bold>), the prediction of a single H2CD is due to a too short or too hydrophobic linker.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003280.s005" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003280.s005" position="float" xlink:type="simple"><label>Figure S5</label><caption>
+<p><bold>Comparison of H2CD and CD lengths in the proteomes of </bold><bold><italic>S. cerevisiae</italic></bold><bold>, </bold><bold><italic>P. falciparum, E. coli</italic></bold><bold> and </bold><bold><italic>A. fulgidus</italic></bold><bold>.</bold> The frequencies of H2CD and CD extracted from the <italic>S. cerevisiae</italic>, <italic>E. coli</italic> and <italic>A. fulgidus</italic> proteomes are reported as a function of their lengths.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003280.s006" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003280.s006" position="float" xlink:type="simple"><label>Figure S6</label><caption>
+<p><bold>Distribution of H2CD and CD segments among proteins from the </bold><bold><italic>S. cerevisiae</italic></bold><bold>, </bold><bold><italic>P. falciparum, E. coli</italic></bold><bold> and </bold><bold><italic>A. fulgidus</italic></bold><bold> proteomes.</bold> (Top) Number of CD (white) and H2CD (black) assignments per protein. Only H2CD of more than 50 amino acids are considered. (Bottom) Distribution of the number of amino acids (in percentage of the total number of amino acids within a protein) included in CD (white) and H2CD (black) segments.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003280.s007" mimetype="application/x-gzip" xlink:href="info:doi/10.1371/journal.pcbi.1003280.s007" position="float" xlink:type="simple"><label>Software S1</label><caption>
+<p><bold>SEG-HCA identifies segments with high hydrophobic cluster density (H2CD) as deduced from HCA approach.</bold></p>
+<p>(GZ)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We thank Jean-Paul Mornon for insightful developments associated with Hydrophobic Cluster Analysis, his enthusiastic suggestions and comments. We also thank Raphaël Guerois and Stéphane Marcand for critical reading of this manuscript, the three reviewers for their constructive remarks, as well as Jean-Pierre de Villartay and Patrick Revy for their interest in our methodological approach.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1003280-Chothia1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chothia</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Gough</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Vogel</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Teichmann</surname><given-names>SA</given-names></name> (<year>2003</year>) <article-title>Evolution of the protein repertoire</article-title>. <source>Science</source> <volume>300</volume>: <fpage>1701</fpage>–<lpage>1703</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Ekman1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ekman</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Björklund</surname><given-names>AK</given-names></name>, <name name-style="western"><surname>Frey-Skött</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Elofsson</surname><given-names>A</given-names></name> (<year>2005</year>) <article-title>Multi-domain proteins in the three kingdoms of life: orphan domains and other unassigned regions</article-title>. <source>J Mol Biol</source> <volume>348</volume>: <fpage>231</fpage>–<lpage>243</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Apic1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Apic</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Gough</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Teichmann</surname><given-names>SA</given-names></name> (<year>2001</year>) <article-title>Domain combinations in archaeal, eubacterial and eukaryotic proteomes</article-title>. <source>J Mol Biol</source> <volume>310</volume>: <fpage>311</fpage>–<lpage>325</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Basu1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Basu</surname><given-names>MK</given-names></name>, <name name-style="western"><surname>Carmel</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Rogozin</surname><given-names>IB</given-names></name>, <name name-style="western"><surname>Koonin</surname><given-names>EV</given-names></name> (<year>2008</year>) <article-title>Evolution of protein domain promiscuity in eukaryotes</article-title>. <source>Genome Res</source> <volume>18</volume>: <fpage>449</fpage>–<lpage>461</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Moore1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Moore</surname><given-names>AD</given-names></name>, <name name-style="western"><surname>Björklund</surname><given-names>AK</given-names></name>, <name name-style="western"><surname>Ekman</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Bornberg-Bauer</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Elofsson</surname><given-names>A</given-names></name> (<year>2008</year>) <article-title>Arrangements in the modular evolution of proteins</article-title>. <source>Trends Biochem Sci</source> <volume>33</volume>: <fpage>444</fpage>–<lpage>51</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Galzitskaya1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Galzitskaya</surname><given-names>OV</given-names></name>, <name name-style="western"><surname>Melnik</surname><given-names>BS</given-names></name> (<year>2003</year>) <article-title>Prediction of protein domain boundaries from sequence alone</article-title>. <source>Protein Sci</source> <volume>12</volume>: <fpage>696</fpage>–<lpage>701</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-George1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>George</surname><given-names>RA</given-names></name>, <name name-style="western"><surname>Heringa</surname><given-names>J</given-names></name> (<year>2002</year>) <article-title>SnapDRAGON: a method to delineate protein structural domains from sequence data</article-title>. <source>J Mol Biol</source> <volume>316</volume>: <fpage>839</fpage>–<lpage>851</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Linding1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Linding</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Russell</surname><given-names>RB</given-names></name>, <name name-style="western"><surname>Neduva</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Gibson</surname><given-names>TJ</given-names></name> (<year>2003</year>) <article-title>GlobPlot: Exploring protein sequences for globularity and disorder</article-title>. <source>Nucleic Acids Res</source> <volume>31</volume>: <fpage>3701</fpage>–<lpage>3708</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Marsden1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Marsden</surname><given-names>RL</given-names></name>, <name name-style="western"><surname>McGuffin</surname><given-names>LJ</given-names></name>, <name name-style="western"><surname>Jones</surname><given-names>DT</given-names></name> (<year>2002</year>) <article-title>Rapid protein domain assignment from amino acid sequence using predicted secondary structure</article-title>. <source>Protein Sci</source> <volume>11</volume>: <fpage>2814</fpage>–<lpage>2824</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Suyama1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Suyama</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Ohara</surname><given-names>O</given-names></name> (<year>2003</year>) <article-title>DomCut: prediction of inter-domain linker regions in amino acid sequences</article-title>. <source>Bioinformatics</source> <volume>19</volume>: <fpage>673</fpage>–<lpage>674</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Wheelan1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wheelan</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Marchler-Bauer</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Bryant</surname><given-names>SH</given-names></name> (<year>2000</year>) <article-title>Domain size distributions can predict domain boundaries</article-title>. <source>Bioinformatics</source> <volume>16</volume>: <fpage>613</fpage>–<lpage>618</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Cheng1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cheng</surname><given-names>J</given-names></name> (<year>2007</year>) <article-title>DOMAC: an accurate, hybrid protein domain prediction server</article-title>. <source>Nucleic Acids Res</source> <volume>35</volume>: <fpage>W354</fpage>–<lpage>W356</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Walsh1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Walsh</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Martin</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Mooney</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Rubagotti</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Vullo</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Ab initio and homology based prediction of protein domains by recursive neural networks</article-title>. <source>BMC Bioinformatics</source> <volume>10</volume>: <fpage>195</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Callebaut1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Callebaut</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Labesse</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Durand</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Poupon</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Canard</surname><given-names>L</given-names></name>, <etal>et al</etal>. (<year>1997</year>) <article-title>Deciphering protein sequence information through hydrophobic cluster analysis (HCA): current status and perspectives</article-title>. <source>Cell Mol Life Sci</source> <volume>53</volume>: <fpage>621</fpage>–<lpage>645</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Gaboriaud1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gaboriaud</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Bissery</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Benchetrit</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Mornon</surname><given-names>JP</given-names></name> (<year>1987</year>) <article-title>Hydrophobic cluster analysis: an efficient new way to compare and analyse amino acid sequences</article-title>. <source>FEBS Lett</source> <volume>224</volume>: <fpage>149</fpage>–<lpage>155</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Hennetin1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hennetin</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Le Tuan</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Canard</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Colloc'h</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Mornon</surname><given-names>JP</given-names></name>, <etal>et al</etal>. (<year>2003</year>) <article-title>Non-intertwined binary patterns of hydrophobic/nonhydrophobic amino acids are considerably better markers of regular secondary structures than nonconstrained patterns</article-title>. <source>Proteins</source> <volume>51</volume>: <fpage>236</fpage>–<lpage>244</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Woodcock1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Woodcock</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Mornon</surname><given-names>JP</given-names></name>, <name name-style="western"><surname>Henrissat</surname><given-names>B</given-names></name> (<year>1992</year>) <article-title>Detection of secondary structure elements in proteins by hydrophobic cluster analysis</article-title>. <source>Protein Eng</source> <volume>5</volume>: <fpage>629</fpage>–<lpage>635</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Callebaut2"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Callebaut</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Malivert</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Fischer</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Mornon</surname><given-names>JP</given-names></name>, <name name-style="western"><surname>Revy</surname><given-names>P</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Cernunnos interacts with the XRCC4 x DNA-ligase IV complex and is homologous to the yeast nonhomologous end-joining factor Nej1</article-title>. <source>J Biol Chem</source> <volume>281</volume>: <fpage>13857</fpage>–<lpage>13860</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Callebaut3"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Callebaut</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Courvalin</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>Mornon</surname><given-names>JP</given-names></name> (<year>1999</year>) <article-title>The BAH (bromo-adjacent homology) domain: a link between DNA methylation, replication and transcriptional regulation</article-title>. <source>FEBS Lett</source> <volume>446</volume>: <fpage>189</fpage>–<lpage>193</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Callebaut4"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Callebaut</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Mornon</surname><given-names>JP</given-names></name> (<year>1997</year>) <article-title>From BRCA1 to RAP1: a widespread BRCT module closely associated with DNA repair</article-title>. <source>FEBS Lett</source> <volume>400</volume>: <fpage>25</fpage>–<lpage>30</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Callebaut5"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Callebaut</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Mornon</surname><given-names>JP</given-names></name> (<year>1997</year>) <article-title>The human EBNA-2 coactivator p100: multidomain organization and relationship to the staphylococcal nuclease fold and to the tudor protein involved in <italic>Drosophila melanogaster</italic> development</article-title>. <source>Biochem J</source> <volume>321</volume>: <fpage>125</fpage>–<lpage>132</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-George2"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>George</surname><given-names>RA</given-names></name>, <name name-style="western"><surname>Lin</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Heringa</surname><given-names>J</given-names></name> (<year>2005</year>) <article-title>Scooby-domain: prediction of globular domains in protein sequence</article-title>. <source>Nucleic Acids Res</source> <volume>33</volume>: <fpage>W160</fpage>–<lpage>W163</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Pang1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pang</surname><given-names>CNI</given-names></name>, <name name-style="western"><surname>Lin</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Wouters</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Heringa</surname><given-names>J</given-names></name>, <name name-style="western"><surname>George</surname><given-names>RA</given-names></name> (<year>2008</year>) <article-title>Identifying foldable regions in protein sequence from the hydrophobic signal</article-title>. <source>Nucleic Acids Res</source> <volume>36</volume>: <fpage>578</fpage>–<lpage>588</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-MarchlerBauer1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Marchler-Bauer</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Zheng</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Chitsaz</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Derbyshire</surname><given-names>MK</given-names></name>, <name name-style="western"><surname>Geer</surname><given-names>LY</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>CDD: conserved domains and protein three-dimensional structure</article-title>. <source>Nucleic Acids Res</source> <volume>41</volume>: <fpage>D348</fpage>–<lpage>D352</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Dyson1"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dyson</surname><given-names>HJ</given-names></name>, <name name-style="western"><surname>Wright</surname><given-names>PE</given-names></name> (<year>2005</year>) <article-title>Intrinsically unstructured proteins and their functions</article-title>. <source>Nat Rev Mol Cell Biol</source> <volume>6</volume>: <fpage>197</fpage>–<lpage>208</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Tompa1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tompa</surname><given-names>P</given-names></name> (<year>2005</year>) <article-title>The interplay between structure and function in intrinsically unstructured proteins</article-title>. <source>FEBS Lett</source> <volume>579</volume>: <fpage>3346</fpage>–<lpage>3354</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Tompa2"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tompa</surname><given-names>P</given-names></name> (<year>2011</year>) <article-title>Unstructural biology coming of age</article-title>. <source>Curr Opin Struct Biol</source> <volume>21</volume>: <fpage>419</fpage>–<lpage>425</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Uversky1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Uversky</surname><given-names>VN</given-names></name> (<year>2002</year>) <article-title>Natively unfolded proteins: a point where biology waits for physics</article-title>. <source>Protein Sci</source> <volume>11</volume>: <fpage>739</fpage>–<lpage>756</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Uversky2"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Uversky</surname><given-names>VN</given-names></name>, <name name-style="western"><surname>Dunker</surname><given-names>AK</given-names></name> (<year>2010</year>) <article-title>Understanding protein non-folding</article-title>. <source>Biochim Biophys Acta</source> <volume>1804</volume>: <fpage>1231</fpage>–<lpage>1264</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Dosztnyi1"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dosztányi</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Csizmok</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Tompa</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Simon</surname><given-names>I</given-names></name> (<year>2005</year>) <article-title>IUPred: web server for the prediction of intrinsically unstructured regions of proteins based on estimated energy content</article-title>. <source>Bioinformatics</source> <volume>21</volume>: <fpage>3433</fpage>–<lpage>3434</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Dosztnyi2"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dosztányi</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Csizmók</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Tompa</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Simon</surname><given-names>I</given-names></name> (<year>2005</year>) <article-title>The pairwise energy content estimated from amino acid composition discriminates between folded and intrinsically unstructured proteins</article-title>. <source>J Mol Biol</source> <volume>347</volume>: <fpage>827</fpage>–<lpage>839</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Oates1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Oates</surname><given-names>ME</given-names></name>, <name name-style="western"><surname>Romero</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Ishida</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Ghalwash</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Mizianty</surname><given-names>MJ</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>D<sup>2</sup>P<sup>2</sup>: database of disordered protein predictions</article-title>. <source>Nucleic Acids Res</source> <volume>41</volume>: <fpage>D508</fpage>–<lpage>D516</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Pancsa1"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pancsa</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Tompa</surname><given-names>P</given-names></name> (<year>2012</year>) <article-title>Structural didorder in Eukaryotes</article-title>. <source>PLOS One</source> <volume>7</volume>: <fpage>e34687</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-DiDomenico1"><label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Di Domenico</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Walsh</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Martin</surname><given-names>AJ</given-names></name>, <name name-style="western"><surname>Tosatto</surname><given-names>SC</given-names></name> (<year>2012</year>) <article-title>MobiDB: a comprehensive database of intrinsic protein disorder annotations</article-title>. <source>Nucleic Acids Res</source> <volume>28</volume>: <fpage>2080</fpage>–<lpage>2081</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Sickmeier1"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sickmeier</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Hamilton</surname><given-names>J</given-names></name>, <name name-style="western"><surname>LeGall</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Vacic</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Cortese</surname><given-names>MS</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>DisProt: the Database of Disordered Proteins</article-title>. <source>Nucleic Acids Res</source> <volume>35</volume>: <fpage>D786</fpage>–<lpage>D793</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Andreeva1"><label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Andreeva</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Howorth</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Chandonia</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>Brenner</surname><given-names>SE</given-names></name>, <name name-style="western"><surname>Hubbard</surname><given-names>TJ</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Data growth and its impact on the SCOP database: new developments</article-title>. <source>Nucleic Acids Res</source> <volume>36</volume>: <fpage>D419</fpage>–<lpage>D425</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-DiLello1"><label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Di Lello</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Jenkins</surname><given-names>LM</given-names></name>, <name name-style="western"><surname>Jones</surname><given-names>TN</given-names></name>, <name name-style="western"><surname>Nguyen</surname><given-names>BD</given-names></name>, <name name-style="western"><surname>Hara</surname><given-names>T</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Structure of the Tfb1/p53 complex: Insights into the interaction between the p62/Tfb1 subunit of TFIIH and the activation domain of p53</article-title>. <source>Mol Cell</source> <volume>22</volume>: <fpage>731</fpage>–<lpage>740</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Radhakrishnan1"><label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Radhakrishnan</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Pérez-Alvarado</surname><given-names>GC</given-names></name>, <name name-style="western"><surname>Parker</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Dyson</surname><given-names>HJ</given-names></name>, <name name-style="western"><surname>Montminy</surname><given-names>MR</given-names></name>, <etal>et al</etal>. (<year>1997</year>) <article-title>Solution structure of the KIX domain of CBP bound to the transactivation domain of CREB: a model for activator:coactivator interactions</article-title>. <source>Cell</source> <volume>91</volume>: <fpage>741</fpage>–<lpage>752</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Day1"><label>39</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Day</surname><given-names>CL</given-names></name>, <name name-style="western"><surname>Smits</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Fan</surname><given-names>FC</given-names></name>, <name name-style="western"><surname>Lee</surname><given-names>EF</given-names></name>, <name name-style="western"><surname>Fairlie</surname><given-names>WD</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Structure of the BH3 domains from the p53-inducible BH3-only proteins Noxa and Puma in complex with Mcl-1</article-title>. <source>J Mol Biol</source> <volume>380</volume>: <fpage>958</fpage>–<lpage>971</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Demarest1"><label>40</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Demarest</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Martinez-Yamout</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Chung</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Xu</surname><given-names>W</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>Mutual synergistic folding in recruitment of CBP/p300 by p160 nuclear receptor coactivators</article-title>. <source>Nature</source> <volume>415</volume>: <fpage>549</fpage>–<lpage>553</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Faure1"><label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Faure</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Callebaut</surname><given-names>I</given-names></name> (<year>2013</year>) <article-title>Identification of hidden relationships from the coupling of Hydrophobic Cluster Analysis and Domain Architecture information</article-title>. <source>Bioinformatics</source> <volume>29</volume> <fpage>1726</fpage>–<lpage>1733</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Lin1"><label>42</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lin</surname><given-names>YJ</given-names></name>, <name name-style="western"><surname>Umehara</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Inoue</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Saito</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Kigawa</surname><given-names>T</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Solution structure of the extraterminal domain of the bromodomain-containing protein BRD4</article-title>. <source>Protein Sci</source> <volume>17</volume>: <fpage>2174</fpage>–<lpage>2179</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Leach1"><label>43</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Leach</surname><given-names>BI</given-names></name>, <name name-style="western"><surname>Kuntimaddi</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Schmidt</surname><given-names>CR</given-names></name>, <name name-style="western"><surname>Cierpicki</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Johnson</surname><given-names>SA</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Leukemia fusion target AF9 is an intrinsically disordered transcriptional regulator that recruits multiple partners via coupled folding and binding</article-title>. <source>Structure</source> <volume>21</volume>: <fpage>176</fpage>–<lpage>183</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Dosztnyi3"><label>44</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dosztányi</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Mészáros</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Simon</surname><given-names>I</given-names></name> (<year>2009</year>) <article-title>ANCHOR: web server for predicting protein binding regions in disordered proteins</article-title>. <source>Bioinformatics</source> <volume>25</volume>: <fpage>2745</fpage>–<lpage>2746</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Mszros1"><label>45</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mészáros</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Simon</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Dosztányi</surname><given-names>Z</given-names></name> (<year>2009</year>) <article-title>Prediction of protein binding regions in disordered proteins</article-title>. <source>PLoS Comput Biol</source> <volume>5</volume>: <fpage>e1000376</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Dunker1"><label>46</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dunker</surname><given-names>AK</given-names></name>, <name name-style="western"><surname>SiIman</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Uversky</surname><given-names>VN</given-names></name>, <name name-style="western"><surname>Sussman</surname><given-names>JL</given-names></name> (<year>2008</year>) <article-title>Function and structure of inherently disordered proteins</article-title>. <source>Curr Opin Struct Biol</source> <volume>18</volume>: <fpage>756</fpage>–<lpage>764</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Dunker2"><label>47</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dunker</surname><given-names>AK</given-names></name>, <name name-style="western"><surname>Obradovic</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Romero</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Garner</surname><given-names>EC</given-names></name>, <name name-style="western"><surname>Brown</surname><given-names>CJ</given-names></name> (<year>2000</year>) <article-title>Intrinsic protein disorder in complete genomes</article-title>. <source>Genome Inform Ser Workshop Genome Inform</source> <volume>11</volume>: <fpage>161</fpage>–<lpage>171</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Ward1"><label>48</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ward</surname><given-names>JJ</given-names></name>, <name name-style="western"><surname>Sodhi</surname><given-names>JS</given-names></name>, <name name-style="western"><surname>McGuffin</surname><given-names>LJ</given-names></name>, <name name-style="western"><surname>Buxton</surname><given-names>BF</given-names></name>, <name name-style="western"><surname>Jones</surname><given-names>DT</given-names></name> (<year>2004</year>) <article-title>Prediction and functional analysis of native disorder in proteins from the three kingdoms of life</article-title>. <source>J Mol Biol</source> <volume>337</volume>: <fpage>635</fpage>–<lpage>645</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Disfani1"><label>49</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Disfani</surname><given-names>FM</given-names></name>, <name name-style="western"><surname>Hsu</surname><given-names>WL</given-names></name>, <name name-style="western"><surname>Mizianty</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Oldfield</surname><given-names>CJ</given-names></name>, <name name-style="western"><surname>Xue</surname><given-names>B</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>MoRFpred, a computational tool for sequence-based prediction and characterization of short disorder-to-order transitioning binding regions in proteins</article-title>. <source>Bioinformatics</source> <volume>28</volume>: <fpage>i75</fpage>–<lpage>i83</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Fukuchi1"><label>50</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fukuchi</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Sakamoto</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Nobe</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Murakami</surname><given-names>SD</given-names></name>, <name name-style="western"><surname>Amemiya</surname><given-names>T</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>IDEAL: Intrinsically Disordered proteins with Extensive Annotations and Literature</article-title>. <source>Nucleic Acids Res</source> <volume>40</volume>: <fpage>D507</fpage>–<lpage>D511</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Gunasekaran1"><label>51</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gunasekaran</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Tsai</surname><given-names>CJ</given-names></name>, <name name-style="western"><surname>Nussinov</surname><given-names>R</given-names></name> (<year>2004</year>) <article-title>Analysis of ordered and disordered protein complexes reveals structural features discriminating between stable and unstable monomers</article-title>. <source>J Mol Biol</source> <volume>341</volume>: <fpage>1327</fpage>–<lpage>1341</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Mszros2"><label>52</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mészáros</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Tompa</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Simon</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Dosztányi</surname><given-names>Z</given-names></name> (<year>2007</year>) <article-title>Molecular principles of the interactions of disordered proteins</article-title>. <source>J Mol Biol</source> <volume>372</volume>: <fpage>549</fpage>–<lpage>561</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Vacic1"><label>53</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vacic</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Oldfield</surname><given-names>CJ</given-names></name>, <name name-style="western"><surname>Mohan</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Radivojac</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Cortese</surname><given-names>MS</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Characterization of molecular recognition features, MoRFs, and their binding partners</article-title>. <source>J Proteome Res</source> <volume>6</volume>: <fpage>2351</fpage>–<lpage>2366</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Eudes1"><label>54</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Eudes</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Le Tuan</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Delettre</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Mornon</surname><given-names>JP</given-names></name>, <name name-style="western"><surname>Callebaut</surname><given-names>I</given-names></name> (<year>2007</year>) <article-title>A generalized analysis of hydrophobic and loop clusters within globular protein sequences</article-title>. <source>BMC Struct Biol</source> <volume>7</volume>: <fpage>2</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Weatheritt1"><label>55</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Weatheritt</surname><given-names>RJ</given-names></name>, <name name-style="western"><surname>Gibson</surname><given-names>TJ</given-names></name> (<year>2012</year>) <article-title>Linear motis: lost in (pre)translation</article-title>. <source>Trends Biochem Sci</source> <volume>37</volume>: <fpage>333</fpage>–<lpage>341</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Dinkel1"><label>56</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dinkel</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Michael</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Weatheritt</surname><given-names>RJ</given-names></name>, <name name-style="western"><surname>Daveyk</surname><given-names>NE</given-names></name>, <name name-style="western"><surname>Van Roeyk</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>ELM–the database of eukaryotic linear motifs</article-title>. <source>Nucleic Acids Res</source> <volume>40</volume>: <fpage>D242</fpage>–<lpage>D251</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Callebaut6"><label>57</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Callebaut</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Moshous</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Mornon</surname><given-names>JP</given-names></name>, <name name-style="western"><surname>de Villartay</surname><given-names>JP</given-names></name> (<year>2002</year>) <article-title>Metallo-beta-lactamase fold within nucleic acids processing enzymes: the beta-CASP family</article-title>. <source>Nucleic Acids Res</source> <volume>30</volume>: <fpage>3592</fpage>–<lpage>3601</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Chen1"><label>58</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chen</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>van Overbeek</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Donigian</surname><given-names>JR</given-names></name>, <name name-style="western"><surname>Baciu</surname><given-names>P</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>A shared docking motif in TRF1 and TRF2 used for differential recruitment of telomeric proteins</article-title>. <source>Science</source> <volume>319</volume>: <fpage>1092</fpage>–<lpage>1096</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Touzot1"><label>59</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Touzot</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Callebaut</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Soulier</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Gaillard</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Azerrad</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Function of Apollo (SNM1B) at telomere highlighted by a splice variant identified in a patient with Hoyeraal-Hreidarsson syndrome</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>107</volume>: <fpage>10097</fpage>–<lpage>10102</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Mszros3"><label>60</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mészáros</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Dosztányi</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Simon</surname><given-names>I</given-names></name> (<year>2012</year>) <article-title>Disordered binding regions and linear motifs–bridging the gap between two models of molecular recognition</article-title>. <source>PLoS One</source> <volume>7</volume>: <fpage>e46829</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Siew1"><label>61</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Siew</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Fischer</surname><given-names>D</given-names></name> (<year>2004</year>) <article-title>Structural biology sheds light on the puzzle of genomic ORFans</article-title>. <source>J Mol Biol</source> <volume>342</volume>: <fpage>369</fpage>–<lpage>373</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Callebaut7"><label>62</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Callebaut</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Prat</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Meurice</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Mornon</surname><given-names>JP</given-names></name>, <name name-style="western"><surname>Tomavo</surname><given-names>S</given-names></name> (<year>2005</year>) <article-title>Prediction of the general transcription factors associated with RNA polymerase II in <italic>Plasmodium falciparum</italic>: conserved features and differences relative to other eukaryotes</article-title>. <source>BMC Genomics</source> <volume>6</volume>: <fpage>100</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Fukuchi2"><label>63</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fukuchi</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Homma</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Minezaki</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Gojobori</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Nishikawa</surname><given-names>K</given-names></name> (<year>2009</year>) <article-title>Development of an accurate classification system of proteins into structured and unstructured regions that uncovers novel structural domains: its application to human transcription factors</article-title>. <source>BMC Struct Biol</source> <volume>9</volume>: <fpage>26</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Fukuchi3"><label>64</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fukuchi</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Hosoda</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Homma</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Gojobori</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Nishikawa</surname><given-names>K</given-names></name> (<year>2011</year>) <article-title>Binary classification of protein molecules into intrinsically disordered and ordered segments</article-title>. <source>BMC Struct Biol</source> <volume>11</volume>: <fpage>29</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Jones1"><label>65</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jones</surname><given-names>DT</given-names></name> (<year>1999</year>) <article-title>Protein secondary structure prediction based on position-specific scoring matrices</article-title>. <source>J Mol Biol</source> <volume>292</volume>: <fpage>195</fpage>–<lpage>202</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003280-Ye1"><label>66</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ye</surname><given-names>Q</given-names></name>, <name name-style="western"><surname>Callebaut</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Pezhman</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Courvalin</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>Worman</surname><given-names>HJ</given-names></name> (<year>1997</year>) <article-title>Domain-specific interactions of human HP1-type chromodomain proteins and inner nuclear membrane protein LBR</article-title>. <source>J Biol Chem</source> <volume>272</volume>: <fpage>14983</fpage>–<lpage>14989</lpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

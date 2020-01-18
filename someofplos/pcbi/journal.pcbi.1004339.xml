@@ -1,0 +1,793 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" dtd-version="3.0" xml:lang="en" article-type="research-article">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-14-01288</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004339</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>A Bio-inspired Collision Avoidance Model Based on Spatial Information Derived from Motion Detectors Leads to Common Routes</article-title>
+<alt-title alt-title-type="running-head">A Bio-inspired Collision Avoidance Model Leads to Common Routes</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Bertrand</surname> <given-names>Olivier J. N.</given-names></name>
+<xref ref-type="corresp" rid="cor001">*</xref>
+<xref ref-type="aff" rid="aff001"/>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Lindemann</surname> <given-names>Jens P.</given-names></name>
+<xref ref-type="aff" rid="aff001"/>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Egelhaaf</surname> <given-names>Martin</given-names></name>
+<xref ref-type="aff" rid="aff001"/>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<addr-line>Neurobiologie &amp; CITEC, Bielefeld University, Bielefeld, Germany</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Einhäuser</surname> <given-names>Wolfgang</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>Technische Universitat Chemnitz, GERMANY</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: OJNB JPL ME. Performed the experiments: OJNB. Analyzed the data: OJNB. Contributed reagents/materials/analysis tools: OJNB JPL. Wrote the paper: OJNB JPL ME.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">olivier.bertrand@uni-bielefeld.de</email></corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<month>11</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>19</day>
+<month>11</month>
+<year>2015</year>
+</pub-date>
+<volume>11</volume>
+<issue>11</issue>
+<elocation-id>e1004339</elocation-id>
+<history>
+<date date-type="received">
+<day>14</day>
+<month>7</month>
+<year>2014</year>
+</date>
+<date date-type="accepted">
+<day>13</day>
+<month>5</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Bertrand et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004339" xlink:type="simple"/>
+<abstract>
+<p>Avoiding collisions is one of the most basic needs of any mobile agent, both biological and technical, when searching around or aiming toward a goal. We propose a model of collision avoidance inspired by behavioral experiments on insects and by properties of optic flow on a spherical eye experienced during translation, and test the interaction of this model with goal-driven behavior. Insects, such as flies and bees, actively separate the rotational and translational optic flow components via behavior, i.e. by employing a saccadic strategy of flight and gaze control. Optic flow experienced during translation, i.e. during intersaccadic phases, contains information on the depth-structure of the environment, but this information is entangled with that on self-motion. Here, we propose a simple model to extract the depth structure from translational optic flow by using local properties of a spherical eye. On this basis, a motion direction of the agent is computed that ensures collision avoidance. Flying insects are thought to measure optic flow by correlation-type elementary motion detectors. Their responses depend, in addition to velocity, on the texture and contrast of objects and, thus, do not measure the velocity of objects veridically. Therefore, we initially used geometrically determined optic flow as input to a collision avoidance algorithm to show that depth information inferred from optic flow is sufficient to account for collision avoidance under closed-loop conditions. Then, the collision avoidance algorithm was tested with bio-inspired correlation-type elementary motion detectors in its input. Even then, the algorithm led successfully to collision avoidance and, in addition, replicated the characteristics of collision avoidance behavior of insects. Finally, the collision avoidance algorithm was combined with a goal direction and tested in cluttered environments. The simulated agent then showed goal-directed behavior reminiscent of components of the navigation behavior of insects.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>The number of robots in our surroundings is increasing continually. They are used to rescue humans, inspect hazardous terrain or clean our homes. Over the past few decades, they have become more autonomous, safer and cheaper to build. Every autonomous robot needs to navigate in sometimes complex environments without colliding with obstacles along its route. Nowadays, they mostly use active sensors, which induce relatively high energetic costs, to solve this task. Flying insects, however, are able to solve this task by mainly relying on vision. Any agent, both biological and technical, experiences an apparent motion of the environment on the retina, when moving through the environment. The apparent motion contains entangled information of self-motion and of the distance of the agent to objects in the environment. The later is essential for collision avoidance. Extracting the relative distance to objects from geometrical apparent motion is a relatively simple task. However, trying to accomplish this with biological movement detectors, i.e. movement detectors found in the animal kingdom, is tricky, because they do not provide unambiguous velocity information, but are much affected also by the textural properties of the environment. Inspired by the abilities of insects, we developed a parsimonious algorithm to avoid collisions in challenging environments solely based on elementary motion detectors. We coupled our algorithm to a goal direction and then tested it in cluttered environments. The trajectories resulting from this algorithm show interesting goal-directed behavior, such as the formation of a small number of routes, also observed in navigating insects.</p>
+</abstract>
+<funding-group>
+<funding-statement>The project is funded by the Deutsche Forschungsgemeinschaft (DFG). The publication fee has been paid by the Deutsche Forschungsgemeinschaft and the Open Access Publication Funds of Bielefeld University. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="12"/>
+<table-count count="0"/>
+<page-count count="28"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>All source codes of the insect simulator (CyberFly) will be available from a branch of the ivrender repository All source codes of the optic-flow toolbox will be available from a CITEC/Uni-bielefeld repository. All data can be found at doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.4119/unibi/2757868" xlink:type="simple">10.4119/unibi/2757868</ext-link>.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Anyone who has tried to catch flying flies will be familiar with their amazing performance. Within a fraction of a second, flies perform high-speed turns to avoid a predator or a collision with an obstacle. The collision avoidance decisions are produced in a fly’s brain with very limited neural resources [<xref ref-type="bibr" rid="pcbi.1004339.ref001">1</xref>, <xref ref-type="bibr" rid="pcbi.1004339.ref002">2</xref>] and are transformed into an evasive turn within only a few milliseconds, a rather short time compared to human reaction times [<xref ref-type="bibr" rid="pcbi.1004339.ref003">3</xref>]. As such, flying insects have become an important model system for understanding the minimal computation requirements for spatial vision tasks, such as collision avoidance [<xref ref-type="bibr" rid="pcbi.1004339.ref004">4</xref>]. Engineers are also looking for fast and cheap collision avoidance algorithms, without the use of expensive devices, e.g. 3D laser rangefinders [<xref ref-type="bibr" rid="pcbi.1004339.ref005">5</xref>], or extensive computations, e.g. Lucas-Kanade optic-flow computation [<xref ref-type="bibr" rid="pcbi.1004339.ref006">6</xref>]. Any motion of an agent, such as an insect or a robot, induces apparent movement of the retinal image of the surroundings, i.e. optic flow. The optic flow experienced during translations in a static environment depends on the agent’s speed, its nearness to objects and its motion direction. When the agent moves fast or close to objects, the optic flow amplitude will be high. By contrast, the rotational optic flow depends only on the ego-motion of the agent and, thus, is independent of the spatial layout of the environment. Information on the nearness of objects is relevant for determining a collision avoidance direction. Therefore, the translational optic flow can be exploited for collision avoidance. Flies, and also other insects and some birds, show an active gaze strategy, which separates the self-motion into saccades (i.e. mainly rotation) and intersaccades (i.e. mainly translation) [<xref ref-type="bibr" rid="pcbi.1004339.ref007">7</xref>–<xref ref-type="bibr" rid="pcbi.1004339.ref015">15</xref>]. The saccade amplitude of an insect or a bird is thought to be driven, at least in the vicinity of potential obstacles, by the optic flow gathered during the translation preceding the saccade.</p>
+<p>Insects estimate the optic flow with correlation-type elementary motion detectors (EMDs), a concept first introduced by Reichardt and Hassenstein in the 1950s [<xref ref-type="bibr" rid="pcbi.1004339.ref016">16</xref>]. A characteristic property of the EMD is that its output does not exclusively depend on velocity, but also on the pattern properties of the stimulus, such as its contrast and spatial frequency content. Therefore, the nearness, extracted from optic flow estimated by insects, is expected to be entangled with properties of the textures of the environment. Visual-oriented tasks based on optic flow, such as collision avoidance, might, therefore, be a challenge. Several mechanisms of collision avoidance have been proposed based on behavioral experiments on various insect species [<xref ref-type="bibr" rid="pcbi.1004339.ref014">14</xref>, <xref ref-type="bibr" rid="pcbi.1004339.ref017">17</xref>–<xref ref-type="bibr" rid="pcbi.1004339.ref023">23</xref>]. However, these models have not yet been shown to be functional under a wide range of conditions, or do not use optic flow measured by correlation-type elementary motion detectors.</p>
+<p>In the present paper, we propose a model of collision avoidance based on EMDs which will be shown to be successful in various environments. The model of collision avoidance can be subdivided into three processing steps: (1) extraction of nearness from optic flow, (2) determination of a collision avoidance direction from the map of nearness estimations, i.e. where to go, and (3) determining a collision avoidance necessity, i.e. whether it is dangerous not to follow the collision avoidance direction. The nearness measurements will be shown to be proportional to a pseudo-norm of the optic flow, independent of the direction of motion, as long as the agent moves in a plane and has a spherical eye. The collision avoidance direction and necessity will be computed via spatial integration of the nearness. The collision avoidance algorithm will, firstly, be tested with geometrical optic flow, i.e. a measure of optic flow independent of object texture, to build a benchmark and show that optic flow information is sufficient to solve the problem. Then, EMDs will be used and the algorithm will be challenged in different environments. Finally, we will show that the collision avoidance algorithm based on EMDs can be coupled with a navigation direction in order to reach a given location without colliding with obstacles along the trajectory.</p>
+</sec>
+<sec id="sec002" sec-type="results">
+<title>Results</title>
+<sec id="sec003">
+<title>Optic flow and relative nearness</title>
+<p>When a distant object is approached at a high speed, the situation might be as dangerous as when a close object is approached at a slower speed. The relative nearness, i.e. the nearness times the agent’s speed, can be seen as a measure of how soon the agent will collide with the object when the agent moves in the direction towards where the measurement was performed. This information is highly relevant for collision avoidance. Since the relative nearness is linked to the optic flow, the first step of the collision avoidance algorithm is to transform the optic flow into relative nearness. The translational optic flow, i.e. the optic flow experienced during the brief translatory phases of self-motion modeled after the intersaccadic intervals of insect flight, is determined jointly by the agent’s self-motion and the three-dimensional structure of the environment. The independent extraction of these two parameters entangled in the optic flow field is challenging [<xref ref-type="bibr" rid="pcbi.1004339.ref024">24</xref>]. We will show that the three-dimensional structure of the environment can be extracted from translational optic flow if the translation is confined to a plane and the eye of the agent is spherical.</p>
+<p>The optic flow field is a two-dimensional vector field, where each vector is the apparent velocity of the objects on the eyes of the agent. The optic-flow field experienced during translation results from the product of the relative nearness of objects in the environment and a factor depending on the angle between the direction of self-motion and the direction in which these objects are seen (“viewing angle”). A transformation removing the factor depending on the viewing angle is required to extract relative nearness from optic flow. The dependence of this factor on the viewing angle can be understood best when the relative nearness is constant for the entire visual field, i.e. when the agent is placed in the center of a sphere and moves in the equatorial plane. The optic-flow field for a spherical eye can be expressed for each point in the visual field in terms of the vertical flow component, i.e. the flow along the elevation, and the horizontal flow component, i.e. the flow along the azimuth. The horizontal flow component, experienced during a translation in the equatorial plane in the center of a sphere, increases from the front to the side (i.e. 90° away from the motion direction) and then decreases again towards the back (<xref ref-type="supplementary-material" rid="pcbi.1004339.s003">S1B Fig</xref>). The horizontal flow is independent of the elevation (see <xref ref-type="supplementary-material" rid="pcbi.1004339.s001">S1 Text</xref>,Eq.S5). Respectively, the vertical optic-flow component decreases from the front to the side, and then, increases again towards the back. By contrast, the vertical flow is not symmetric by rotation around the direction of motion and, therefore, depends on the elevation (see <xref ref-type="supplementary-material" rid="pcbi.1004339.s001">S1 Text</xref>,Eq.S5). It increases from the equator to the poles (<xref ref-type="supplementary-material" rid="pcbi.1004339.s003">S1A Fig</xref>). Therefore, the horizontal flow and the vertical flow have an antagonistic variation from the front to the back. Due to the assumption that the movement of the agent is constrained to the equatorial plane, the variation of the vertical flow with elevation does not depend on the direction of motion. This variation can, therefore, be corrected (see <xref ref-type="supplementary-material" rid="pcbi.1004339.s001">S1 Text</xref>, and <xref ref-type="supplementary-material" rid="pcbi.1004339.s003">S1C Fig</xref>). Interestingly, the sum of the horizontal flow squared and the corrected vertical flow squared can be shown to be independent of the viewing angle (see <xref ref-type="supplementary-material" rid="pcbi.1004339.s001">S1 Text</xref>, Eq. S8). The transformation will be called a retinotopically modified norm of the optic-flow field. When the agent does not move within a sphere, the result of this transformation will not be constant for every viewing angle, but equal to the product of speed (<italic>v</italic>) and nearness (<italic>μ</italic>), i.e. the relative nearness. The optic flow has two singular points, the focus of expansion (FOE) and the focus of contraction (FOC). At these two points, the result of the retinotopically modified norm of the optic flow will be null, independent of the nearness of objects.</p>
+<p>The relative nearness can be extracted from the optic flow independent of the viewing angle, except for the FOE and the FOC. This problem can be solved by combining translational flow-fields arising from different directions of translational movement and, thus, with different FOCs and FOEs. However, an agent cannot easily obtain several translational flow fields centered at a given point in the world. On the other hand, the nearness to objects does not strongly differ in realistic environments for two sufficiently close points in space. Therefore, let us consider an agent performing a translation composed of sub-translations in different motion directions, i.e. a combination of different forward and sideways motion components (<xref ref-type="fig" rid="pcbi.1004339.g001">Fig 1</xref> part 1). Each sub-translation leads to an optic-flow field which has the retinotopically modified norm properties. The average optic-flow component obtained from the series of sub-translations also has the retinotopically modified norm properties, but does not have singular points (<xref ref-type="fig" rid="pcbi.1004339.g001">Fig 1</xref> part 3). The agent can then compute the relative nearness to objects within its entire visual field by using the retinotopically modified norm of the averaged squared optic flow (<xref ref-type="fig" rid="pcbi.1004339.g001">Fig 1</xref> part 4). When the object nearness for a viewing direction changes during the translation, the relative nearness map will be blurred. The longer the spatial lengths of the sub-translations are, the more the relative nearness map is blurred. This effect does not necessarily cause problems for collision avoidance, because the blurred relative nearness map still represents the overall depth-structure of the environment, though on a slightly coarser scale (<xref ref-type="fig" rid="pcbi.1004339.g002">Fig 2</xref>). <xref ref-type="fig" rid="pcbi.1004339.g002">Fig 2</xref> shows the nearness map computed from the geometrical optic flow in an environment containing two objects. At a higher speed, the nearness map is blurred due to the integration of the geometrical optic flow over time.</p>
+<fig id="pcbi.1004339.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004339.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Sketch of the algorithm from motion to CAD.</title>
+<p>1) The motion of the agent consists of a series of translations in the null elevation plane. 2) Optic-flow fields along the trajectory contain FOEs and FOCs. 3) The time-integrated optic flow squared does not contain FOC and FOE. Inset is a 10× zoom at the mean motion direction of the agent. 4) Nearness map computed from time-integrated optic flow squared. 5) Nearness map averaged along the elevation. 6) Computation of the COMANV. Blue: representation of the vertically integrated nearness map in polar coordinates. Red: vectorial sum of the vertically integrated nearness vectors (COMANV). Green: vector directed opposite to the COMANV.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.g001"/>
+</fig>
+<fig id="pcbi.1004339.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004339.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Blurred relative nearness of two cylindrical obstacles at high speed of the agent.</title>
+<p>Left panels: Nearness maps computed from optic flow experienced during translation at a speed of 0.3ms<sup>−1</sup> and 3ms<sup>−1</sup>. Right panel: Trajectory at the speed of 3ms<sup>−1</sup> towards one obstacle. Black circle and black line represent the head and the body of the agent, respectively. Gray circles represent the objects seen from above.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.g002"/>
+</fig>
+</sec>
+<sec id="sec004">
+<title>Collision avoidance with geometrical optic flow</title>
+<p>Once the relative nearness map is known, in which direction the agent should move to avoid a collision (collision avoidance direction, CAD) and how important it will be to follow this direction (collision avoidance necessity, CAN) need to be determined. Based on this information, the amplitude of the necessary saccade-like turn was determined. In order to establish a benchmark for the performance of this algorithm, it was developed, firstly, on the basis of the geometrical optic flow. Only the shape of the environment along the azimuth is required to perform collision avoidance for movements in a plane. Therefore, averaging the relative nearness map along the elevation does not lead to a loss in spatial resolution along the azimuth (<xref ref-type="fig" rid="pcbi.1004339.g001">Fig 1</xref> part 5) and, thus, should not affect the collision avoidance performance. As will be shown below, this averaging was especially relevant when the relative nearness map was estimated on the basis of EMD responses (see CAD and CAN from EMD). The averaged relative nearness can be represented by vectors in polar coordinates with the argument of the vectors being the azimuth and their length the relative nearness averaged along the elevation (<xref ref-type="fig" rid="pcbi.1004339.g001">Fig 1</xref> part 6). The vector sum of all averaged relative nearness vectors will be termed the Center-Of-Mass Average Nearness Vector (COMANV). It points towards the average direction of close objects in the environment (<xref ref-type="fig" rid="pcbi.1004339.g003">Fig 3</xref>). It may, therefore, be a plausible strategy to turn in the opposite direction to the COMANV, i.e. the CAD, to avoid obstacles. This zero-order approach is, to some extent, similar to the collision avoidance algorithm used by 3D range finder robots [<xref ref-type="bibr" rid="pcbi.1004339.ref025">25</xref>]. It may lead to suboptimal trajectories. A more optimal strategy would be to pick a direction without obstructions [<xref ref-type="bibr" rid="pcbi.1004339.ref026">26</xref>]. However, this strategy would require a reliable relative nearness map provided by local self-localization and mapping [<xref ref-type="bibr" rid="pcbi.1004339.ref027">27</xref>].</p>
+<fig id="pcbi.1004339.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004339.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Direction and norm of COMANV.</title>
+<p>Left panel: Direction of the COMANV. Blue, red and green vectors are nearness vector, +COMANV, and -COMANV, respectively. Red disks represent the objects. (The norms of the vectors have been scaled.) Right panel: Norm of COMANV as a function of the distance to the box wall. Box height: 390mm (solid line) and 3900mm (dashed line).</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.g003"/>
+</fig>
+<p>The argument of the COMANV provides the agent with a direction to avoid a collision by pushing it away from obstacles. <xref ref-type="fig" rid="pcbi.1004339.g004">Fig 4A</xref> shows a closed-loop simulation of collision avoidance in a box. The agent trajectories converge at the center of the box. Indeed, if an agent is pushed away from obstacles at every location in an environment, it ends at a point in the environment equilibrating object distances. However, collision avoidance behavior is not necessary if the obstacles are sufficiently far from the agent. To allow the agent to assess when it has to avoid an object, a measurement of CAN is required. The argument of the COMANV, the CAD, has been used, so far, to compute the saccade amplitude and, thus, to determine the agent’s new direction of motion. However, the norm of the COMANV also has interesting properties: It has the same unit as the relative nearness, i.e. the inverse of a time. Hence, the norm of the COMANV can be regarded as a measurement of the CAN: the larger the norm of COMANV, the larger is the necessity for the agent to make an evasive behavioral response. To assess the relationship between the distance to objects and the norm of the COMANV, the relative nearness map has been extracted at different distances to the wall. Since the apparent size of the objects might also affect the norm of the COMANV, different wall heights were used (<xref ref-type="fig" rid="pcbi.1004339.g003">Fig 3</xref>). The norm of COMANV increases with both the apparent size of an object and the nearness to it. The apparent size of the object has a smaller effect on the norm than the nearness. Thus, the norm can be used as a measurement of CAN.</p>
+<fig id="pcbi.1004339.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004339.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Closed-loop simulations of trajectories of the agent equipped with the collision avoidance algorithm in a cubic box.</title>
+<p>Blue and red lines are intersaccades and saccades, respectively. A) The saccade amplitudes were computed such that the agent moves in the CAD after the saccade. B, C and D) The saccade amplitudes were computed such that the agent moves in a direction corresponding to only a fraction of the CAD after the saccade. The fraction of the CAD was computed with a sigmoid function, parameterized by a gain and a threshold, of the CAN. B) Gain = 2, Threshold = 1.6. C) Gain = 2, Threshold = 3.2 D) Gain = 10<sup>6</sup>, Threshold = 3.2.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.g004"/>
+</fig>
+<p>Depending on the amplitude of the CAN, the agent may have one of two behavioral options. It should turn via a saccade toward the CAD calculated if the CAN is sufficiently high. Alternatively, it should continue moving straight if the CAN is smaller than a critical value. However, the CAN does not necessarily affect the behavior of the agent in an all-or-nothing fashion, i.e. making a turn according to CAD or making no turn at all. Rather, a kind of compromise may also be possible. Since the CAN is a continuous variable, the agent may turn, via a saccade, towards a direction which is a compromise between CAD and the previous direction of motion. The compromise can be modeled as a weight given by a sigmoid function of the CAN (see <xref ref-type="sec" rid="sec013">Materials and Methods</xref>). The saccade amplitude is then the product of this weight and CAD. The sigmoid function of CAN is parameterized by a threshold and a gain. The gain controls how much the saccade amplitude corresponds to CAD. A high gain will approximate a behavior with two distinct states: “turn, by a saccade, toward CAD” or “continue moving straight” (<xref ref-type="fig" rid="pcbi.1004339.g004">Fig 4D</xref>). A small gain will, however, generate a smooth transition between the two behaviors, modeling a decreasing saccade amplitude with decreasing CAN (<xref ref-type="fig" rid="pcbi.1004339.g004">Fig 4C</xref>). The threshold determines the border between the zone in the environment where saccade amplitudes are mainly driven by CAD, i.e. collision avoidance is necessary, and the zone where the saccade amplitudes are mainly driven by the previous direction of motion, i.e. collision avoidance is not necessary (<xref ref-type="supplementary-material" rid="pcbi.1004339.s005">S3 Fig</xref>). The effect of the threshold can be seen by comparison <xref ref-type="fig" rid="pcbi.1004339.g004">Fig 4B and 4C</xref>.</p>
+<p>In summary, the collision avoidance algorithm uses the COMANV to determine the collision avoidance direction CAD and to change the behavior of the agent. The algorithm can be subdivided into five steps.</p>
+<list list-type="order">
+<list-item>
+<p>Extract relative nearness map from optic flow during an intersaccade composed of a mixture of different forward and sideways motion components.</p>
+</list-item>
+<list-item>
+<p>Compute the COMANV from the relative nearness map.</p>
+</list-item>
+<list-item>
+<p>Extract the CAD (i.e. <italic>arg</italic>(<italic>COMANV</italic>)) and the CAN (i.e. ||<italic>COMANV</italic>||).</p>
+</list-item>
+<list-item>
+<p>Compute the saccade amplitude from CAD and CAN.</p>
+</list-item>
+<list-item>
+<p>Generate the saccade</p>
+</list-item>
+</list>
+</sec>
+<sec id="sec005">
+<title>CAD and CAN from EMD</title>
+<p>The collision avoidance algorithm has been designed on the basis of geometrical optic flow and operates successfully on this basis. However, the properties of the optic flow, as measured by EMDs, differ considerably from the geometrical optic flow. Several model variants of EMDs have been developed (e.g. [<xref ref-type="bibr" rid="pcbi.1004339.ref028">28</xref>–<xref ref-type="bibr" rid="pcbi.1004339.ref030">30</xref>]). We used a rather simple EMD model version (similar to [<xref ref-type="bibr" rid="pcbi.1004339.ref031">31</xref>, <xref ref-type="bibr" rid="pcbi.1004339.ref032">32</xref>]) in this study, because we wanted to test whether collision avoidance can already be accomplished by the basic correlation-type motion detection mechanisms with as few model parameters as possible. The drawback with EMDs, at least from the perspective of velocity estimation, is that their responses do not only depend on the velocity of the retinal images, but also on their contrast and other textural properties [<xref ref-type="bibr" rid="pcbi.1004339.ref033">33</xref>, <xref ref-type="bibr" rid="pcbi.1004339.ref034">34</xref>]. Therefore, it is not clear in advance whether the collision avoidance algorithm, as described above and being successful based on geometrical optic flow, will also work with optic-flow estimates based on EMDs. The collision avoidance algorithm based on EMDs will be tested in two steps. In this section, we will assess to what extent the COMAMV derived from EMD measurements matches the COMAMV based on geometrical optic flow. In the next section, we will test the collision avoidance algorithm equipped with EMDs under closed-loop conditions.</p>
+<p>As the first essential step, the relative nearness map is extracted from EMD responses. The texture dependence of the EMD measurements is somewhat reduced by spatial averaging along the elevation of the visual field (see above). The consequences of this averaging are shown in <xref ref-type="fig" rid="pcbi.1004339.g005">Fig 5</xref> for an exemplary simulation (see also <xref ref-type="supplementary-material" rid="pcbi.1004339.s009">S7 Fig</xref>). The agent performed a translation inside a box covered with natural images of grass. The relative nearness map obtained from EMDs does not only depend on the geometrical nearness, but also on the texture of the wall (<xref ref-type="fig" rid="pcbi.1004339.g005">Fig 5</xref>). Although integration along elevation reduces the pattern dependence to some extent, the integrated relative nearness map still contains “fake holes” (e.g. those that result from extended vertical contrast borders; <xref ref-type="fig" rid="pcbi.1004339.g005">Fig 5</xref>). These “fake holes” may mislead the agent when looking for relative nearness lower than a certain threshold. As the second step of the collision avoidance algorithm, the COMANV and the CAD have to be computed from the EMD-based relative nearness map. Ideally, the CAD based on EMDs should coincide with the one determined from the geometrical optic flow. The CADs determined in both ways are the same for the example shown in <xref ref-type="fig" rid="pcbi.1004339.g005">Fig 5</xref>. To assess whether this finding also generalizes to other environments, the simulations were extended to cubic boxes with the agent translating parallel to one wall of the box from different starting positions. The angle between the CAD based on EMDs and the one based on geometrical optic flow were computed for every starting position. <xref ref-type="fig" rid="pcbi.1004339.g006">Fig 6</xref> shows that the CADs based on geometrical optic flow are similar to the CADs based on EMDs if the agent is not too close to the wall and not too close to the center of the box (<xref ref-type="supplementary-material" rid="pcbi.1004339.s006">S4 Fig</xref>). Moreover, the higher the walls of the box are, the more CADs determined in the two ways coincide (<xref ref-type="fig" rid="pcbi.1004339.g006">Fig 6</xref>).</p>
+<fig id="pcbi.1004339.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004339.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>EMD responses and nearness map.</title>
+<p>A) Panoramic view of the environment, consisting of a cubic box covered with a natural grass texture, from the location where the nearness map was computed (front is azimuth 0°). B) log-scaled nearness map computed on the basis of EMD responses. C) Nearness map at the same location computed from the geometrical optic flow. D) Vertically integrated nearness map extracted respectively from EMD responses (solid line) and geometrical optic flow (dotted line). The vertical dashed line shows the CAD computed from the vertically integrated nearness map based on EMD responses. The direction matches the one computed with geometrical optic flow.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.g005"/>
+</fig>
+<fig id="pcbi.1004339.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004339.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>COMANV versus wall distance in a cubic box.</title>
+<p>The box (height: 390mm) was covered with random checkerboard patterns of either 1mm (blue) or 4mm (green). Red: the box had a height of 3900mm and was covered with a 1mm random checkerboard pattern. Left panel shows the norm of the COMANV computed on the basis of EMD responses. Right panel shows the angle between the COMANV computed from EMD responses and the control based on geometrical optic flow. Thick lines and shaded area represent the mean and the standard deviation, respectively, computed at a given distance from the wall.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.g006"/>
+</fig>
+<p>The collision avoidance algorithm requires an increasing length of the COMANV with an increasing relative nearness to objects, in order to provide a good estimate of the CAN. The variation of the length of the COMANV with the distance to the wall has been studied with geometrical optic flow in a cubic box. The same environment has been tested with EMDs, but with several different patterns. Similar to the simulation of CAD, the length of the COMANV has been computed for several points in the corridor. <xref ref-type="fig" rid="pcbi.1004339.g006">Fig 6</xref> shows the dependence of the CAN on the nearness to the wall. As expected, the wall texture changes the CAN, as does the nearness to the wall. However, the CAN is still an increasing function of the nearness to the wall as long as the agent is not too close to the wall (<xref ref-type="supplementary-material" rid="pcbi.1004339.s006">S4 Fig</xref> and <xref ref-type="supplementary-material" rid="pcbi.1004339.s008">S6 Fig</xref>). Therefore, the norm can be used as a reasonable estimate of CAN in this range.</p>
+</sec>
+<sec id="sec006">
+<title>Collision avoidance with EMD</title>
+<p>As shown above, information about the three-dimensional shape of the environment around the agent derived from EMD responses leads to appropriate CADs and a reliable estimate of CAN, as long as the agent is not too close to an obstacle, such as the wall of a flight arena. These results were obtained in open-loop simulations. Since EMDs use temporal filters, their responses also depend to some extent on the signal history. The time constant of the low-pass filter in one of the EMD branches is 35ms, i.e. in roughly the same range as the time between subsequent saccades of insects (20 to 100ms in flight arenas [<xref ref-type="bibr" rid="pcbi.1004339.ref008">8</xref>, <xref ref-type="bibr" rid="pcbi.1004339.ref014">14</xref>] and 50 ms in our simulation). Thus, the EMD response during a given intersaccade also depends on the signals generated during the previous saccade, resulting in a somehow disturbed nearness map. Taking all this into account, open-loop simulations do not allow the collision avoidance performance under closed-loop conditions to be predicted.</p>
+<p>A relatively simple and commonly used environment for experiments on collision avoidance behavior of insects are cubic or cylindrical flight arenas [<xref ref-type="bibr" rid="pcbi.1004339.ref008">8</xref>, <xref ref-type="bibr" rid="pcbi.1004339.ref035">35</xref>–<xref ref-type="bibr" rid="pcbi.1004339.ref037">37</xref>]. In such an environment, the agent has to avoid only the wall. Thus, the task is easier to accomplish than if objects are also present. <xref ref-type="fig" rid="pcbi.1004339.g007">Fig 7</xref> shows closed-loop simulations in boxes covered with six different wall patterns (see also <xref ref-type="supplementary-material" rid="pcbi.1004339.s010">S8 Fig</xref>). The agent is able to avoid collisions for all wall pattern conditions except the random pattern with relatively large (35mm) pixels. However, the area covered by the flight trajectories varies tremendously with the pattern. The saccade amplitude depends on the gain and the threshold, which parameterize the sigmoid function of the CAN. These parameters have been kept constant for the different pattern conditions. By adjusting the threshold and the gain individually for each pattern condition, collision avoidance may be successfully performed by the agent, as long as the CAN increases with the nearness to objects and the CAD points away from obstacles (<xref ref-type="supplementary-material" rid="pcbi.1004339.s006">S4 Fig</xref> and <xref ref-type="supplementary-material" rid="pcbi.1004339.s007">S5 Fig</xref>).</p>
+<fig id="pcbi.1004339.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004339.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Trajectories of the agent with a collision avoidance system based on EMDs in a box (40 × 40 × 40cm) covered with different patterns (seen from above).</title>
+<p>Trajectories with four different starting positions are shown (see <xref ref-type="supplementary-material" rid="pcbi.1004339.s014">S12 Fig</xref> for different starting position). The simulation time was 10sec or until the agent crashed. Walls of the box are covered with a natural pattern (A), a 1mm random checkerboard (B), a 4mm random checkerboard (C), an 8mm random checkerboard (D), a 35mm random checkerboard (E), and a random pattern with 1/<italic>f</italic> statistic (F). The gain and the threshold of the weighting function was 2 and 4, respectively, for all cases.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.g007"/>
+</fig>
+<p>Until now, we have used a rather simple environment compared to those experienced by an agent under more natural conditions. Objects were added to the flight box to increase the complexity of the collision avoidance task. The objects had the same sizes, shapes and textures. They were camouflaged, i.e. covered with similar patterns to the background, to increase the difficulty for the collision avoidance algorithm. Such situations occur frequently in nature, e.g. when a particular leaf is located in front of similar leaves. To discriminate such an object and to avoid a collision with it, relative motion on the eyes induced by self-motion of the animal and, thus, the relative nearness to the object as obtained from optic flow is the only cue available. Up to four objects were inserted into the box and covered with the same pattern as the walls. The agent was able to avoid collisions successfully, even in the box with four objects (<xref ref-type="fig" rid="pcbi.1004339.g008">Fig 8</xref>, <xref ref-type="supplementary-material" rid="pcbi.1004339.s011">S9 Fig</xref> and <xref ref-type="supplementary-material" rid="pcbi.1004339.s012">S10 Fig</xref>). However, collisions were observed in boxes containing two and four objects each covered with a 4mm random checkerboard pattern (<xref ref-type="supplementary-material" rid="pcbi.1004339.s012">S10 Fig</xref>).</p>
+<fig id="pcbi.1004339.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004339.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>Trajectories of the agent with a collision avoidance system based on EMDs in a box (40 × 40 × 40cm) containing up to four objects and covered with different patterns (seen from above).</title>
+<p>The pattern on the objects and wall were 1mm and 4mm random checkerboards for the top and bottom panels, respectively. A, D) One object in the center of the box. B, E) Two objects on one diagonal. C, F) Four objects on the diagonals. The objects were vertical bars with a quadratic base with a side length of 3cm and a height of 40cm. The gain and the threshold of the weighting function was 2 and 4, respectively, for all cases.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.g008"/>
+</fig>
+</sec>
+<sec id="sec007">
+<title>Collision avoidance with a goal direction</title>
+<p>Agents in natural environments may have to face even more complex situations than those tested so far, such as avoiding collisions in a cluttered environment with many objects. A forest is an example which contains many trees, i.e. many objects to avoid. Two different artificial environments with 35 randomly placed objects have been used to test the collision avoidance performance in cluttered environments. Again the objects were camouflaged with the same texture that covered the floor and the confinement of the environment. The agent tended to stay in a relatively small area of the environment where the walls were sufficiently distant (<xref ref-type="fig" rid="pcbi.1004339.g009">Fig 9</xref>). Hence, an agent equipped with only a collision avoidance algorithm did not travel through the artificial forest.</p>
+<fig id="pcbi.1004339.g009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004339.g009</object-id>
+<label>Fig 9</label>
+<caption>
+<title>Trajectories of the agent equipped with an EMD-based collision avoidance system in two different cluttered environments with objects and the walls covered by 1mm random checkerboard patterns (seen from above).</title>
+<p>Fifty-one starting positions were tested, and simulations were run for 100sec or until the agent crashed. The trajectories are color-coded depending on their starting position. Objects are indicated by filled black squares. The gain and the threshold of the weighting function was 2 and 4, respectively, for all cases. (see also <xref ref-type="supplementary-material" rid="pcbi.1004339.s018">S1 Video</xref>).</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.g009"/>
+</fig>
+<p>This task was only accomplished if the collision avoidance algorithm was slightly modified to support a goal direction. The saccade amplitude, so far, was the result of a compromise, based on the CAN, between the CAD and the tendency to keep the previous direction of motion. If this direction was replaced by the direction toward a goal, the saccade amplitude became a compromise between the CAD and the goal direction, depending on the CAN. When the CAN was below the threshold, as parameterized by the sigmoid function of the CAN, the saccade amplitude is mainly driven by the goal direction. By contrast, when the CAN is higher than this threshold, saccades would be mainly driven by the CAD. The significance of the CAN could clearly be seen for trajectories close to objects. Far from the object, the agent moved toward the goal, but when it came close to the object, saccade amplitudes tended to be driven by the collision avoidance algorithm, pushing the agent in the opposite direction (<xref ref-type="fig" rid="pcbi.1004339.g010">Fig 10</xref>). When the goal was located at the other end of the corridor, the agent was efficiently, i.e. without making many detours, and reliably, i.e. with a low rate of collisions, able to reach the goal (<xref ref-type="fig" rid="pcbi.1004339.g010">Fig 10</xref>,<xref ref-type="supplementary-material" rid="pcbi.1004339.s002">S2 Text</xref>,<xref ref-type="supplementary-material" rid="pcbi.1004339.s013">S11 Fig</xref>).</p>
+<fig id="pcbi.1004339.g010" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004339.g010</object-id>
+<label>Fig 10</label>
+<caption>
+<title>Trajectories of the agent equipped with an EMD-based collision avoidance system, but also relying on the goal direction, in two different cluttered environments with objects and walls covered by 1mm (right column) or 4mm (left column) random checkerboard patterns.</title>
+<p>The goal is indicated by the green dot. Two hundred one starting positions were tested and simulations were run either for 100sec (gray lines, i.e. dead-end), until the goal was reached (colored lines) or until a crash occurred (black lines). Note that the individual trajectories converge to only a small number of distinct routes. Apart from taking the goal direction into account, the simulations, parameters and environments are identical to those used for <xref ref-type="fig" rid="pcbi.1004339.g009">Fig 9</xref>. (see also <xref ref-type="supplementary-material" rid="pcbi.1004339.s019">S2 Video</xref>,<xref ref-type="supplementary-material" rid="pcbi.1004339.s020">S3 Video</xref>).</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.g010"/>
+</fig>
+</sec>
+<sec id="sec008">
+<title>Route similarity in cluttered environments</title>
+<p>The number of different trajectories close to the goal location in cluttered environments is much lower than the number of starting conditions. Therefore, agents, starting from different locations, but heading towards the same goal location, have trajectories converging to similar routes. This behavior is not only a consequence of the walls confining the cluttered environment. Indeed, a similar behavior is observed in a cluttered environment without confining outer walls (<xref ref-type="supplementary-material" rid="pcbi.1004339.s013">S11 Fig</xref>). In order to classify the similarity of the different trajectories, each trajectory was first simplified into a sequence based on the position of the agent relative to the objects in the environment. Trajectories sharing the same sequence formed one class, i.e. a route [see material and methods]. In the first (resp. second) cluttered environment, 8 (resp. 11) and 4 (resp. 3) distinct routes were found for objects and walls covered with 1mm and 4mm random checkerboard patterns, respectively (<xref ref-type="supplementary-material" rid="pcbi.1004339.s014">S12 Fig</xref>, <xref ref-type="supplementary-material" rid="pcbi.1004339.s015">S13 Fig</xref>, <xref ref-type="supplementary-material" rid="pcbi.1004339.s016">S14 Fig</xref>, <xref ref-type="supplementary-material" rid="pcbi.1004339.s017">S15 Fig</xref>)</p>
+<p>The routes followed by the agent may be determined by its starting position, i.e. neighboring starting positions may lead to the same route. Indeed, when an agent approaches an object from the right (resp. left), it tends to avoid it by a left (resp. right) turn. This “decision” will be taken for every obstacle along the trajectory taken by the agent, but each “decision” depends sensibly on the position of the agent relative to the object and the goal location. Therefore, the route followed by an agent may be sensitive to the starting position. <xref ref-type="fig" rid="pcbi.1004339.g011">Fig 11</xref> shows that neighboring starting locations may lead to different routes.</p>
+<fig id="pcbi.1004339.g011" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004339.g011</object-id>
+<label>Fig 11</label>
+<caption>
+<title>A selection of the routes shown in <xref ref-type="fig" rid="pcbi.1004339.g010">Fig 10</xref>) for the two environments.</title>
+<p>Although the area of starting positions greatly overlap for a given environment, the trajectories converge on two different routes (compare A with B, and C with D). The simulations, parameters and environments are identical to those used for the right panel of <xref ref-type="fig" rid="pcbi.1004339.g009">Fig 9</xref>.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.g011"/>
+</fig>
+<p>The number of different routes close to the goal location is lower than the number of possible routes in a given environment. This indicates that, on the one hand, routes starting at different locations tend to converge into common routes and, on the other hand, different routes may share similar parts, i.e. sub-routes. As a measure of similarity between routes, the number of single sequence elements differing between two routes was used. Routes may be very similar to each other with less than five different single sequence elements (e.g. compare route #8 and route #10 in <xref ref-type="supplementary-material" rid="pcbi.1004339.s016">S14 Fig</xref>). Different routes, therefore, share similar sub-routes. This indicates that a rather small number of locations exist where the agent “decides” to take a particular sub-route, e.g. avoid an object towards the left or the right, respectively.</p>
+<p>The collision avoidance algorithm is affected by the pattern covering the walls and the objects in the environment. This dependency may lead to different routes. Therefore, routes obtained in an environment with given object locations have been compared after changing the texture of the environment to pinpoint texture-dependent effects. Interestingly, certain classes of routes are indeed the same for the different patterns, e.g. the second route for a 1mm random checkerboard texture matches the third route for a 4mm random checkerboard texture (<xref ref-type="fig" rid="pcbi.1004339.g012">Fig 12</xref>). Three routes (resp. one) out of the four (resp. three) routes for the 4mm random checkerboard textures are indeed found also for the 1mm random checkerboard textures covering the first (resp. second) environment. This finding indicates that, despite pronounced pattern effects resulting from the properties of EMDs, the performance of the collision avoidance algorithm is, on the whole, quite stable and, to a large extent, depends on the spatial structure of the environment.</p>
+<fig id="pcbi.1004339.g012" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004339.g012</object-id>
+<label>Fig 12</label>
+<caption>
+<title>Dendrogramm of route similarity for the two different cluttered environments, top and bottom row, respectively.</title>
+<p>The routes followed by the agent (see <xref ref-type="fig" rid="pcbi.1004339.g009">Fig 9</xref>) are characterized by a cell sequence. Here, each cell is a triangle formed by neighboring objects. The route similarity is defined by the number of cells not shared by routes. First and second columns, path-similarity for 1mm and 4mm random checkerboard patterns, respectively. Third column, path-similarity across patterns. Note that identical routes are found for different patterns: for example, route #3 and route #2 in the first environment (top row) are identical to those for the environment covered by 1 mm and 4 mm random checkerboards, respectively. The routes are shown in <xref ref-type="supplementary-material" rid="pcbi.1004339.s014">S12 Fig</xref>,<xref ref-type="supplementary-material" rid="pcbi.1004339.s015">S13 Fig</xref>,<xref ref-type="supplementary-material" rid="pcbi.1004339.s016">S14 Fig</xref>,<xref ref-type="supplementary-material" rid="pcbi.1004339.s017">S15 Fig</xref>.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.g012"/>
+</fig>
+</sec>
+</sec>
+<sec id="sec009" sec-type="conclusions">
+<title>Discussion</title>
+<p>We developed a model of collision avoidance based on correlation-type elementary motion detectors (EMDs), which accounts for the fundamental abilities of insects to avoid collisions with obstacles in simple and also complex cluttered environments. The model has been developed with geometrical optic flow, showing that apparent motion as the only source of information about the depth structure of the environment is sufficient to accomplish collision avoidance tasks. The transfer from geometrical optic flow to bio-inspired correlation-type EMDs has been shown to be successful in a range of environments. Moreover, when the collision avoidance algorithm is coupled to a goal direction, the coupling between goal-directed behavior and collision avoidance allowed the agent to move through cluttered environments, even if the objects, floor and the background were covered with the same texture. Interestingly, the trajectories traveled in the cluttered environment were very similar, irrespective of the starting condition.</p>
+<p>In the following, we discuss three key aspects of this work: (1) the duration of the intersaccades and their shape and, thus, the conditions under which spatial information about the environment can be obtained; (2) the nearness measurements obtained from EMDs; and (3) how the convergence of individual trajectories into a small number of routes can arise from collision avoidance while the agent is heading towards a goal.</p>
+<sec id="sec010">
+<title>Changes in intersaccadic translation direction</title>
+<p>The assumptions underlying our algorithm to extract a nearness map from optic flow are: (i) a spherical eye, (ii) a translation phase combining several directions of motion (i.e. a mixture of different forward and sideways motions), and (iii) all movements of the agent take place in the null elevation plane. The second assumption is required in order to average out the characteristic singularities in translational optic-flow fields, i.e. the FOE and the FOC, by integrating the optic-flow amplitudes obtained during translations in slightly different directions (i.e. a mixture of forward and sideways motions). Indeed, the direction of translational movements between saccades of flying insects is not always constant with respect to the orientation of the body long axis. This means that the relationship between the forward and sideways motion components may change systematically even between two consecutive saccades. Extreme examples in this regard are shown in Fig.3 of [<xref ref-type="bibr" rid="pcbi.1004339.ref008">8</xref>]. However, more moderate continual changes in the ratio between forward and sideways translational components occur, as a consequence of inertia, after virtually all saccades, with the strength of these changes depending on saccade amplitude [<xref ref-type="bibr" rid="pcbi.1004339.ref008">8</xref>, <xref ref-type="bibr" rid="pcbi.1004339.ref014">14</xref>]. Therefore, flying insects could average the optic flow generated on the eyes during these continual intersaccadic changes in flight direction and then extract the relative nearness to determine the direction and amplitude of the next saccade. However, as a consequence of the inevitable time constants of the motion detection system, the EMD responses following a saccade might also be affected by the rotational optic flow of the previous saccade. Although the rotational part of the optic flow could, in principle, be removed if the angular velocity of the agent was known, this transformation would not be straightforward on the basis of motion measurements based on EMDs [<xref ref-type="bibr" rid="pcbi.1004339.ref038">38</xref>], given their dependency on the texture of the environment.</p>
+<p>The integration of the optic-flow amplitudes along intersaccades is also important to decrease the dependency on the texture in the environment characteristic of EMD responses. For simplicity, the intersaccade duration has been kept constant in our simulations, although in free-flying flies, it was found to vary from 20 to 100ms [<xref ref-type="bibr" rid="pcbi.1004339.ref008">8</xref>, <xref ref-type="bibr" rid="pcbi.1004339.ref014">14</xref>]. By increasing the duration of an intersaccade, the dependency on the texture in the environment can be further decreased if the integration time is increased accordingly. An increase in integration time has similar effects to increasing the extent of spatial integration along the direction of motion [<xref ref-type="bibr" rid="pcbi.1004339.ref039">39</xref>]. However, the longer the duration of the intersaccadic translation is, the more blurred the relative points of nearness are, as shown in <xref ref-type="fig" rid="pcbi.1004339.g002">Fig 2</xref>. On the other hand, the intersaccade duration might be linked to the collision avoidance necessity. Indeed, collision avoidance may be unnecessary when no obstacles are encountered, as shown by the closed-loop simulations of goal-oriented behavior (<xref ref-type="fig" rid="pcbi.1004339.g009">Fig 9</xref> and <xref ref-type="fig" rid="pcbi.1004339.g010">Fig 10</xref>). If the collision avoidance necessity is low, long intersaccades are possible. However, if the collision avoidance necessity is high, short intersaccades followed by an evasive turn are required.</p>
+<p>The third assumption of the algorithm of nearness calculation, i.e. that the agent only moves in the null elevation plane, is certainly not exactly satisfied in free-flying insects. However, during most flight manoeuvres, changes in height occur to a much smaller extent than changes in the horizontal plane. Nonetheless, if an agent moves in another direction than in the null elevation plane and estimates the nearness with our algorithm, its estimation will have an error proportional to the upward component (<xref ref-type="supplementary-material" rid="pcbi.1004339.s001">S1 Text</xref>). As long as this component is small, the estimated nearness map will not be strongly affected. We are currently investigating how our algorithm for nearness estimation can be extended to arbitrary movements in three dimensions.</p>
+</sec>
+<sec id="sec011">
+<title>Nearness from measured optic flow</title>
+<p>We have shown that relative nearness can be extracted from geometrical optic flow. However, if the nearness algorithm receives its input from correlation-type EMDs, complications arise from the dependence of the EMD responses on (i) the contrast of the stimulus pattern, (ii) its spatial frequency content, and (iii) the fact that it is not related to velocity in a linear way, but first increases, reaches an optimum value and then decreases again [<xref ref-type="bibr" rid="pcbi.1004339.ref040">40</xref>]. Indeed, these dependencies are somehow reflected in the extracted relative nearness (see, for example, <xref ref-type="fig" rid="pcbi.1004339.g005">Fig 5D</xref>). The EMD has a quadratic response dependence on contrast if no additional nonlinearities are inserted in its input lines [<xref ref-type="bibr" rid="pcbi.1004339.ref016">16</xref>]. Indeed, it has been recently shown that the norm of the EMD response is correlated to the nearness times the local contrast or, in other words, EMDs have been shown to respond best to the contrast contours of nearby objects (see also, <xref ref-type="fig" rid="pcbi.1004339.g005">Fig 5</xref>) [<xref ref-type="bibr" rid="pcbi.1004339.ref041">41</xref>]. The dependency on contrast can, in principle, be reduced by applying a nonlinearity before the multiplication stage of an EMD [<xref ref-type="bibr" rid="pcbi.1004339.ref028">28</xref>, <xref ref-type="bibr" rid="pcbi.1004339.ref029">29</xref>, <xref ref-type="bibr" rid="pcbi.1004339.ref033">33</xref>]. Nonlinearities tend, however, to complicate the mathematical analysis of the EMD response. Therefore, we have chosen to use a simple EMD version. Moreover, we wanted to test how well the collision avoidance algorithm performs on the basis of the basic correlation-type motion detection mechanism with as few model parameters as possible.</p>
+<p>The average output of an EMD depends on the temporal frequency of a motion stimulus (i.e. the ratio of angular velocity and wavelength of its spatial Fourier components) rather than its real velocity [<xref ref-type="bibr" rid="pcbi.1004339.ref033">33</xref>, <xref ref-type="bibr" rid="pcbi.1004339.ref034">34</xref>]. To extract the real angular velocity from EMD responses, the dependency on temporal frequency needs to be reduced. Plett et al. suggested using the spatial power spectrum of a panorama to extract the angular velocity from EMD responses during rotation [<xref ref-type="bibr" rid="pcbi.1004339.ref038">38</xref>]. However this transformation is not suitable for translation, because the spatial frequency content of the panorama is not related unambiguously to the temporal frequency observed during translation. Therefore, it is not easily possible to compensate for these dependencies.</p>
+<p>Nearness extracted from the nonlinear, but monotonic response range of the EMDs may lead to a distorted representation of the depth-structure of the environment. Nevertheless, larger EMD responses still correspond to greater nearness. Ambiguous nearness estimates will arise for the nonlinear and non-monotonic, i.e. the ambiguous, response range of the EMD. Therefore, close objects leading to large retinal velocities might be mistaken for far objects. In the context of nearness extraction during translation, this problem will arise for objects on the lateral side of the agent. To avoid this problem, an agent has two possibilities: reduce its translational speed or extract nearness information only in the more frontal parts of the visual field. The agent in our simulations was moving at a relatively slow speed. Therefore, this ambiguity was not observed. Moreover, flying insects have been concluded to use the frontal part of their visual field to compute saccade amplitudes (flies, [<xref ref-type="bibr" rid="pcbi.1004339.ref014">14</xref>]) and to reduce their flight speed when the clearance to objects in the environment gets small (e.g. bumblebees [<xref ref-type="bibr" rid="pcbi.1004339.ref042">42</xref>]; flies: [<xref ref-type="bibr" rid="pcbi.1004339.ref014">14</xref>]). It is, however, unclear how flying insects compute the CAD only taking into account motion measurements in the frontal part of the visual field.</p>
+<p>A robot does not need to estimate optic flow with EMDs. The estimation can be carried out with image-based methods, e.g. the Lucas Kanade algorithm [<xref ref-type="bibr" rid="pcbi.1004339.ref006">6</xref>], or event-based methods [<xref ref-type="bibr" rid="pcbi.1004339.ref043">43</xref>]. Image-based methods are, however, time-consuming and, therefore, are not really suitable for applications in real-time. However, event-based flow-field detectors are fast and reliable. Our algorithm to extract nearness from optic flow is only local, i.e. it only uses the optic-flow vector in a given viewing direction to compute the relative nearness in this direction. Therefore, our collision avoidance algorithm could be easily coupled with EMDs to determine the nearness around the robot in real-time as a cheap alternative to a 3D laser rangefinder.</p>
+</sec>
+<sec id="sec012">
+<title>Goal-directed collision avoidance and route following</title>
+<p>Both biological and technical agents often need to reach a goal, e.g. their nest in the case of many insects or a charging station in the case of a robot, without colliding with the objects along their trajectory. This goal direction in a real world could be provided by path integration and visual navigation [<xref ref-type="bibr" rid="pcbi.1004339.ref044">44</xref>] or, in the case of a technical agent, by GPS. Therefore, when the agent is in cluttered environments, it needs to somehow integrate the goal direction and the collision avoidance direction. Our collision avoidance algorithm has been shown to support a goal direction by using CAN, leading to a behavior that represents a kind of compromise between collision avoidance and reaching the goal. Interestingly, the trajectories of the agent, even in complex cluttered environments, tend to converge on a limited number of distinct routes largely independent of the starting position (see <xref ref-type="fig" rid="pcbi.1004339.g010">Fig 10</xref>) when coupled to a goal direction. The appearance of routes is not a unique property of our collision avoidance algorithm. Similar trajectories are also followed by an agent with different control strategies and different collision avoidance algorithms (e.g. see Fig.6. in [<xref ref-type="bibr" rid="pcbi.1004339.ref019">19</xref>], and Fig.4. in [<xref ref-type="bibr" rid="pcbi.1004339.ref023">23</xref>]). Ants perform in a similar way and also follow similar trajectories in cluttered environments when returning to their nest (e.g. [<xref ref-type="bibr" rid="pcbi.1004339.ref045">45</xref>–<xref ref-type="bibr" rid="pcbi.1004339.ref048">48</xref>]). We could show that this type of behavior can be explained in a relatively simple way by combining our local collision avoidance algorithm only with an overall goal direction. By contrast, the similarities of trajectories of ants have often been interpreted within the conceptual framework of a route-following paradigm. According to this paradigm, the agent is assumed to store local information along the trajectory during an outbound run (e.g. leaving the nest), which will be used to determine the direction to follow during an inbound run (e.g. returning to the nest) [<xref ref-type="bibr" rid="pcbi.1004339.ref049">49</xref>, <xref ref-type="bibr" rid="pcbi.1004339.ref050">50</xref>]. In our simulations, we observed that trajectories which may be interpreted as resulting from route-following could, alternatively, arise just from a collision avoidance algorithm coupled to a goal direction. Therefore, part of the route-following behavior observed in insects could be a consequence of a collision avoidance algorithm. Hence, the route-following direction does not need to be determined at every point along the trajectory, but its determination may be sparsely spaced.</p>
+<p>The routes to the goal followed by our agent depend on the starting location, i.e. neighboring starting locations may lead to different routes (<xref ref-type="fig" rid="pcbi.1004339.g011">Fig 11</xref>). The same behavior has been observed in ants [<xref ref-type="bibr" rid="pcbi.1004339.ref048">48</xref>]. However, the different routes are not equivalent in term of efficiency. Indeed, in <xref ref-type="fig" rid="pcbi.1004339.g011">Fig 11A and 11B</xref>, the route #2 is dead-end, and route #3 reaches the goal. An agent may need to use the most efficient route, i.e. add waypoints in the environment indicating which route to follow. The routes #2 and #3 (resp. #1 and #2) shown in <xref ref-type="fig" rid="pcbi.1004339.g011">Fig 11</xref>, for example, could be merged by adding only one waypoint just where the two routes emerge. Therefore, insects may place a small number of well chosen waypoints in the environment to prevent the dead-end problem observed in our simulations 10 and possibly to select the most efficient routes (<xref ref-type="supplementary-material" rid="pcbi.1004339.s004">S2 Fig</xref>) without requiring a large memory.</p>
+</sec>
+</sec>
+<sec id="sec013" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<p>The simulations have been inspired by the flight and gaze strategies of flies and other insects. The trajectories have, thus, been separated into saccadic and intersaccadic phases. The intersaccade, i.e. a translation of 50ms at 0.1ms<sup>−1</sup>, is used to gather information about the depth-structure of the environment from optic-flow measurements and to provide a CAD. The CAD controls the amplitude of the saccade following the translation phase. The yaw velocity of the saccade is computed according to a Gaussian velocity profile. This profile fits the experimentally determined template of saccades [<xref ref-type="bibr" rid="pcbi.1004339.ref008">8</xref>, <xref ref-type="bibr" rid="pcbi.1004339.ref031">31</xref>]. Therefore, the saccade duration and the peak yaw velocity are given by the template and the saccade amplitude. Closed-loop simulations were performed in environments of different complexity, which were covered with different textures. The simulations were mainly written in MATLAB, with part of the code written in C for computational efficiency, and run at a sampling rate of 1kHz.</p>
+<sec id="sec014">
+<title>The simulation environment</title>
+<p>The environments used in our simulations have been inspired by previous behavioral experiments on flies and bees. Schilstra and van Hateren used a cubic box with an edge length of 40cm [<xref ref-type="bibr" rid="pcbi.1004339.ref008">8</xref>, <xref ref-type="bibr" rid="pcbi.1004339.ref009">9</xref>]. This box was covered with natural images on its side walls and with a black/gray and a white/gray irregular pattern on the floor and the ceiling, respectively. The side walls of the box were covered alternatively by 1mm, 8mm or 35mm black and white random checkerboard patterns to investigate the effect of the texture in another set of simulations. Simulations were also done in boxes with one, two or four obstacles covered with 1mm black and white random checkerboard patterns to make the collision avoidance task more difficult. The obstacles had the same height as the box and a square cross-section with an edge length of 30mm. The wall of the box had the same texture as the objects. The obstacles were placed at positions as shown in <xref ref-type="fig" rid="pcbi.1004339.g008">Fig 8</xref>; they were vertical bars of 40cm height and a quadratic base with a side length of 3cm.</p>
+<p>Cluttered environments with 35 obstacles of different sizes were used in another set of simulations. Every wall in the environment (object sides and corridor walls) was covered by either a 1 mm or a 4 mm random checkerboard pattern. The obstacles had a square base and a height five times their side length, and were randomly positioned in the inner part of a 2000 × 1000 × 400mm box. Two environments were selected based on the homogeneity of the obstacle positions. The first environment was composed of five objects with an edge length of 80mm, five with an edge length of 72mm, ten with an edge length of 64mm, five with an edge length of 56mm, five with an edge length of 48mm, and five with an edge length of 40mm. The second environment was composed of the same number of objects, except that ten objects with an edge length of 72mm and five objects with an edge length of 64mm were used.</p>
+</sec>
+<sec id="sec015">
+<title>Visual system and motion detection</title>
+<p>Once the environment had been created, a panoramic view from any position within the environment could be generated and the distance to objects determined. The set of vertices X,Y,Z that define an object, as well as the floor and the ceiling, were translated to the current position of the agent. An environment map was rendered using OpenGL. The input image was sampled by Gaussian-shaped spatial low-pass filters (<italic>σ</italic> = 2°). The output of these filters formed the input to the photoreceptors that were equally spaced at 2° along the elevation and azimuth of the eye. The array of photoreceptors formed a rectangular grid in the cylindrical projection with 91rows and 181columns. The temporal properties of the peripheral visual system was modeled as a temporal filter with a kernel that was derived from an electrophysiological analysis of the responses of second-order visual interneurons in the fly visual system to white-noise brightness fluctuations [<xref ref-type="bibr" rid="pcbi.1004339.ref051">51</xref>, <xref ref-type="bibr" rid="pcbi.1004339.ref052">52</xref>]. The filter kernel is a kind of temporal band-pass filter with a DC component (for a formal description, see [<xref ref-type="bibr" rid="pcbi.1004339.ref031">31</xref>]). The outputs were, furthermore, filtered with a first-order temporal high-pass filter (time constant 20ms) to remove the DC component. The filtered outputs of neighboring elements were fed into elementary motion detectors of the correlation type with a first-order temporal low-pass filter (time constant 35ms) in one of its branches. Each local movement detector consisted of two mirror-symmetrical subunits. In each subunit, the low-pass filtered signal of one input channel was multiplied with the high-pass filtered signal of the neighboring input channel. Elementary motion detector signals depend on the scenery (e.g. [<xref ref-type="bibr" rid="pcbi.1004339.ref033">33</xref>]). Therefore, a benchmark of optic-flow measurement independent of scenery was necessary. The optic flow can be computed when the self-motion of the agent and the nearness to objects is known. In a virtual environment, both pieces of information are accessible. The set of vertices X,Y,Z, that defines the object were translated to the current position of the agent. Then, the nearest point on the retina for each viewing direction was extracted. The geometrical optic flow was then computed from the nearness and the self-motion [<xref ref-type="bibr" rid="pcbi.1004339.ref024">24</xref>], giving a motion measurement independent of the texture of the scenery.</p>
+</sec>
+<sec id="sec016">
+<title>From EMD responses to nearness estimates</title>
+<p>The optic flow experienced during translation is linked to the nearness of the agent to objects in the environment and its self-motion. Assuming that the agent moves in the null elevation plane and uses a spherical eye, it can be shown that the relative nearness (<italic>vμ</italic>) is linked to a retinopically modified norm of the optic flow:
+<disp-formula id="pcbi.1004339.e001"><alternatives><graphic id="pcbi.1004339.e001g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004339.e001"/><mml:math id="M1" display="block" overflow="scroll"><mml:mrow><mml:msup><mml:mrow><mml:mo stretchy="false">(</mml:mo><mml:mi>v</mml:mi><mml:mi>μ</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>ϵ</mml:mi><mml:mo>,</mml:mo><mml:mi>ϕ</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo stretchy="false">)</mml:mo></mml:mrow><mml:mn>2</mml:mn></mml:msup><mml:mo>=</mml:mo><mml:mi>O</mml:mi><mml:mi>F</mml:mi><mml:msubsup><mml:mrow><mml:mo stretchy="false">(</mml:mo><mml:mi>ϵ</mml:mi><mml:mo>,</mml:mo><mml:mi>ϕ</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow><mml:mover accent="true"><mml:mi>ϕ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mn>2</mml:mn></mml:msubsup><mml:mo>+</mml:mo><mml:mfrac><mml:mrow><mml:mi>O</mml:mi><mml:mi>F</mml:mi><mml:msubsup><mml:mrow><mml:mo stretchy="false">(</mml:mo><mml:mi>ϵ</mml:mi><mml:mo>,</mml:mo><mml:mi>ϕ</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow><mml:mover accent="true"><mml:mi>ϵ</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mn>2</mml:mn></mml:msubsup></mml:mrow><mml:mrow><mml:msup><mml:mrow><mml:mi>sin</mml:mi></mml:mrow><mml:mn>2</mml:mn></mml:msup><mml:mo stretchy="false">(</mml:mo><mml:mi>ϵ</mml:mi><mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives> <label>(1)</label></disp-formula>
+where <italic>v</italic> is the speed, <italic>μ</italic> is the nearness to the object in the viewing direction (<italic>ϵ</italic>, <italic>ϕ</italic>), <italic>ϵ</italic> the elevation, <italic>ϕ</italic> the azimuth, and <italic>OF</italic> the optic-flow vector. This function holds as long as the elevation is not zero, but a similar equation can be used for null elevation (<xref ref-type="supplementary-material" rid="pcbi.1004339.s001">S1 Text</xref>). The relative nearness cannot be computed at the FOE or the FOC due to the singularity, i.e. absence of apparent motion, in the flow field. To remove these singularities, the flow fields resulting in two different motion directions at the same location in the environment might be averaged. However, insects are unlikely to fly twice at the same position in the environment. However, they can fly subsequently in two different directions at two nearby points in space. The nearness at those points will be almost equal as long as the distance between these points is relatively small. Therefore, the agent performed a translation, composed of 50 segments with different motion directions. The motion direction of each segment followed a normal distribution centered at zero with a standard deviation of 18° (<xref ref-type="fig" rid="pcbi.1004339.g001">Fig 1</xref> part 1). The translation is thought to correspond to an intersaccade of insect flight. A stack of optic-flow fields along the time, i.e. during the intersaccade, was gathered (<xref ref-type="fig" rid="pcbi.1004339.g001">Fig 1</xref> part 2). Although it is possible to compute the nearness for each optic-flow field and then integrate the nearness over time, we used an alternative, but equivalent approach. The optic-flow fields were squared and integrated over time (<xref ref-type="fig" rid="pcbi.1004339.g001">Fig 1</xref> part 3). Then, the integrated squared optic flow was used to compute the nearness map of the environment (<xref ref-type="fig" rid="pcbi.1004339.g001">Fig 1</xref> part 4).</p>
+<p>When the optic-flow field is estimated by EMDs, the estimations also depend on the motion history due to the temporal filters in the EMD. The saccade preceding the translation, therefore, interferes with the optic-flow measurements during the intersaccadic interval. This effect decreases over time. Therefore, the optic-flow field was not integrated during the entire intersaccadic phase, but only for the last five segments (i.e. last 5 ms).</p>
+</sec>
+<sec id="sec017">
+<title>Nearness and collision avoidance</title>
+<p>Once the nearness map is known, it is an obvious strategy to avoid collisions by moving away from the maximum nearness value. However, the nearness map derived from the EMDs also depends on pattern properties. Thus, the nearness map was averaged along the elevation, giving the average nearness for a given azimuth and, thus, reducing the texture dependence (<xref ref-type="fig" rid="pcbi.1004339.g001">Fig 1</xref> part 5). Each of these averaged nearness values could be represented by a vector in polar coordinates, where the norm of the vector is the averaged nearness and its argument the azimuth. The sum of these vectors points towards the average direction of close objects in the environment when the effect of the pattern on the EMD responses is sufficiently averaged out. Thus, the opposite of this vector will point away from the closest object and, thus, is selected as the motion direction of the agent in order to avoid a collision (<xref ref-type="fig" rid="pcbi.1004339.g001">Fig 1</xref> part 6).</p>
+<p>Moreover, the length of the vector increases with the nearness to objects and the apparent size of the object. Thus, its length can be used as a measure of the collision avoidance necessity. This measure drives the state of the animal between “collision avoidance” and “move in the previous direction” according to the following equation:
+<disp-formula id="pcbi.1004339.e002"><alternatives><graphic id="pcbi.1004339.e002g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004339.e002"/><mml:math id="M2" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mi>γ</mml:mi></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mo>=</mml:mo> <mml:mi>W</mml:mi> <mml:mfenced separators="" open="(" close=")"><mml:mo>∥</mml:mo> <mml:mi>C</mml:mi> <mml:mi>O</mml:mi> <mml:mi>M</mml:mi> <mml:mi>A</mml:mi> <mml:mi>N</mml:mi> <mml:mi>V</mml:mi> <mml:mo>∥</mml:mo></mml:mfenced> <mml:mtext>arg</mml:mtext> <mml:mfenced separators="" open="(" close=")"><mml:mi>C</mml:mi> <mml:mi>O</mml:mi> <mml:mi>M</mml:mi> <mml:mi>A</mml:mi> <mml:mi>N</mml:mi> <mml:mi>V</mml:mi></mml:mfenced> <mml:mo>+</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:mi>W</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>α</mml:mi> <mml:mo>+</mml:mo> <mml:mi>σ</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>W</mml:mi> <mml:mfenced separators="" open="(" close=")"><mml:mo>∥</mml:mo> <mml:mi>C</mml:mi> <mml:mi>O</mml:mi> <mml:mi>M</mml:mi> <mml:mi>A</mml:mi> <mml:mi>N</mml:mi> <mml:mi>V</mml:mi> <mml:mo>∥</mml:mo></mml:mfenced></mml:mrow></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mrow><mml:mn>1</mml:mn> <mml:mo>+</mml:mo> <mml:msup><mml:mrow><mml:mfenced separators="" open="(" close=")"><mml:mfrac><mml:mrow><mml:mo>∥</mml:mo> <mml:mi>C</mml:mi> <mml:mi>O</mml:mi> <mml:mi>M</mml:mi> <mml:mi>A</mml:mi> <mml:mi>N</mml:mi> <mml:mi>V</mml:mi> <mml:mo>∥</mml:mo></mml:mrow> <mml:msub><mml:mi>n</mml:mi> <mml:mn>0</mml:mn></mml:msub></mml:mfrac></mml:mfenced></mml:mrow> <mml:mrow><mml:mo>-</mml:mo> <mml:mi>g</mml:mi></mml:mrow></mml:msup></mml:mrow></mml:mfrac></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(2)</label></disp-formula>
+where, <italic>COMANV</italic> is the vectorial sum of the vertically integrated nearness values, <italic>W</italic> is the weighting function based on the norm of the COMANV, <italic>α</italic> the goal direction and <italic>σ</italic> is a goal direction noise. The weighting function used in the simulation is a sigmoid function, which is driven by a gain <italic>g</italic> and a threshold <italic>n</italic><sub>0</sub>.</p>
+<p>The goal direction has been fixed to zero for the simulation in boxes. The agent, thus, continues moving straight, i.e. a saccade with null amplitude, when the CAN is zero. In other simulations, the goal direction is different from zero. The agent then performs a saccade amplitude driven by the goal direction when the CAN is zero.</p>
+</sec>
+<sec id="sec018">
+<title>Cluster of trajectories and route similarities</title>
+<p>Even when the starting position of different runs of the agent differ, the trajectories that are taken by the agent in a given cluttered environment tend to converge to similar routes. When approaching an obstacle, an agent may avoid it by a left or right turn, leading to either of two different routes. Therefore, the obstacles are the main factors affecting the overall structure of the trajectories and, thus, their similarity. In order to cluster trajectories into routes, a triangular meshing (Delaunay triangulation [<xref ref-type="bibr" rid="pcbi.1004339.ref053">53</xref>, p. 513-529]) of the environment was calculated with the nodes of the meshing corresponding to the center of mass of the obstacles. The meshing is, thus, composed of triangular cells formed by three neighboring obstacles. The cells in the meshing do not overlap. A trajectory of the agent crosses a succession of triangular cells and can, therefore, be associated to a sequence. Here, each element in the sequence represents a given cell in the meshing, i.e. a given region of the environment. The agent may visit a region more than once, by making detours or oscillating between two neighboring cells. The sequence was simplified in order to remove multiple visit by suppressing subsequences between identical sequence elements.</p>
+<p>Once each trajectory has been associated to a sequence of cell occupancy, the trajectories sharing exactly the same sequence were attributed to a cluster, i.e. a route. Each route corresponds, therefore, to a unique sequence. Different routes may be similar. To quantify the similarity between routes, the number of single sequence elements, i.e. a cell, not shared by two routes was used. This measure of route similarity is similar to the Hamming distance [<xref ref-type="bibr" rid="pcbi.1004339.ref054">54</xref>] between route sequences.</p>
+</sec>
+</sec>
+<sec id="sec019">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1004339.s001" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s001" mimetype="application/pdf" xlink:type="simple">
+<label>S1 Text</label>
+<caption>
+<title>From optic-flow to relative nearness.</title>
+<p>Advantage of a spherical eye: Derivation of a link between relative nearness and optic-flow for motion constrained in the null elevation plane of the agent. Error on relative nearness: Study the error on the extraction of relative nearness when the motion deviates from the constrain. Finally the limitations of a cylindrical eye compare to a spherical one are reported.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s002" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s002" mimetype="application/pdf" xlink:type="simple">
+<label>S2 Text</label>
+<caption>
+<title>Performance of the algorithm in cluttered environments.</title>
+<p>The performance is quantified in term of its reliability, i.e. the percentage of trajectories with a collision occurring before the goal is reached, and its efficiency, i.e. the distance traveled needed to reach the goal. The later is compared to the shortest path, and a collision proof path, both derived from the object positions in the environment.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s003" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s003" mimetype="application/eps" xlink:type="simple">
+<label>S1 Fig</label>
+<caption>
+<title>Variation of horizontal and vertical color-coded optic-flow component squared for a motion in the null elevation plane in the center of a sphere.</title>
+<p>A) Vertical optic-flow component squared. B) Horizontal optic-flow component squared. C) Vertical optic-flow component squared divided by the sine squared of the elevation of the viewing direction, i.e. the retinotopically corrected vertical optic-flow component. The null azimuth corresponds to the motion direction of the agent. Note that the horizontal component and the retinotopically corrected vertical optic-flow component have an antagonistic variation (compare B and C). The color code marks larger optic-flow values with warmer colors, and represents angular velocity in rad.s-1.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s004" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s004" mimetype="application/eps" xlink:type="simple">
+<label>S2 Fig</label>
+<caption>
+<title>Performances of our algorithm based on the distances of travel to reach the goal in a cluttered environment relative to the distance of the shortest trajectories.</title>
+<p>The performance is the length of the shortest trajectory divided by the length of the trajectory followed by the agent. A, D) Relative distances of travel to reach the goal as a function of the starting position. Trajectories for the environments covered by a 1 mm and 4 mm random checkerboard pattern, respectively, are shown in <xref ref-type="fig" rid="pcbi.1004339.g010">Fig 10B and 10E</xref>) Voronoi trajectories in the environments. C, F) Shortest trajectories in the environments. A, B and C (resp. D, E and F) are for the first (resp. second) environment. Note that the performance is above 60%, except for the trajectory with a dead-end.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s005" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s005" mimetype="application/eps" xlink:type="simple">
+<label>S3 Fig</label>
+<caption>
+<title>Norm of the COMANV in cluttered environment covered with 1 mm (left panels) and 4 mm (right panels) random checkerboard patterns.</title>
+<p>Top panels: Color-coded norm of the COMANV. Bottom panels: The red line delimits the zone where the weighting function is equal to 0:5. Here, the gain and the threshold of the weighting function are 2 and 4, respectively. Saccade amplitudes are mainly driven by the CAD when the agent is inside a contour (threshold line) containing an object. The contour represents the switch in behavior. Objects are indicated by black squares.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s006" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s006" mimetype="application/eps" xlink:type="simple">
+<label>S4 Fig</label>
+<caption>
+<title>CAD in a cubic box covered with different patterns.</title>
+<p>The agent moved toward the north wall. The color represents the angle (in degrees) between the CAD and the direction of motion of the agent. Walls of the box are covered with a natural grass pattern (A), a 1 mm random checkerboard (B), a 4 mm random checkerboard (C), an 8 mm random checkerboard (D), a 35 mm random checkerboard (E), and a random pattern with 1 = f statistic (F). Note that the CAD for the 35 mm random checkerboard points in many places toward the wall of the box (E).</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s007" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s007" mimetype="application/eps" xlink:type="simple">
+<label>S5 Fig</label>
+<caption>
+<title>Norm of the COMANV in a cubic box covered with different patterns.</title>
+<p>The agent moved towards the north wall. The color represents the norm of the COMANV, i.e. the collision avoidance necessity. Walls of the box are covered with a natural grass pattern (A), a 1 mm random checkerboard (B), a 4 mm random checkerboard (C), an 8 mm random checkerboard (D), a 35 mm random checkerboard (E), and a random pattern with 1/<italic>f</italic> statistic (F). Note that the CAN is higher close to the wall than at the center of the box. The CAN remains low for the box covered with natural grass pattern in some places close to the wall, due to large leaves in the pattern.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s008" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s008" mimetype="application/eps" xlink:type="simple">
+<label>S6 Fig</label>
+<caption>
+<title>COMANV versus the distance to the closest wall in a cubic box covered with different patterns. Top row shows the norm of the COMANV computed with EMD responses.</title>
+<p>Bottom row shows the angle between the COMANV computed with EMD responses and the control based on geometrical optic flow. Here <italic>α</italic> is the CAD. Thick lines and shaded area represent the mean and the standard deviation, respectively, computed at a given distance from the wall. Note that the norm of the COMANV is an increasing function of the distance as long as the agent is not too close to the wall.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s009" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s009" mimetype="application/eps" xlink:type="simple">
+<label>S7 Fig</label>
+<caption>
+<title>COMANV versus the distance to the closest object in cluttered environments.</title>
+<p>Left panels: Average of the error angle between the COMANV and the vector between the agent and the closest object. Right panels: Norm of the COMANV. The averages are computed with a sliding window with a window size corresponding to 10% of the distance to the closest object. A, B) Effect of the height of the closest object for an agent with a field of view (FOV) along the elevation of ±90°, and moving at an altitude of 100mm above the ground. Note that the height of the object does not strongly influence the COMANV. C, D) Effect of the moving altitude of an agent with a FOV along the elevation of ±90°. Note that the error angle far from the object is higher for motion close to the ground than far from the ground. E, F) Effect of the FOV of the agent. The agent moved at an altitude of 100mm above the ground. Note that the norm of the COMANV is strongly affected by the FOV along the elevation. The FOV along the elevation was ±180° for all cases.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s010" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s010" mimetype="application/eps" xlink:type="simple">
+<label>S8 Fig</label>
+<caption>
+<title>Trajectories of the agent with a collision avoidance system based on EMDs in a box (40 × 40 × 40 × cm) covered with different patterns (seen from above).</title>
+<p>Trajectories with 40 different starting positions are shown. The simulation time was 10sec or until the agent crashed. Walls of the box covered with a natural pattern (A), a 1mm random checkerboard (B), a 4mm random checkerboard (C), an 8mm random checkerboard (D), a 35mm random checkerboard (E), and a random pattern with 1/<italic>f</italic> statistic (F). The simulations, parameters and environments are identical to those used for <xref ref-type="fig" rid="pcbi.1004339.g007">Fig 7</xref>.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s011" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s011" mimetype="application/eps" xlink:type="simple">
+<label>S9 Fig</label>
+<caption>
+<title>Trajectories of the agent with a collision avoidance system based on EMDs in a box (40 × 40 × 40 × cm) containing up to four objects and covered with different patterns (seen from above).</title>
+<p>The pattern on the objects and walls is a 1mm random checkerboard. Top panels: Goal direction is moving forward. Bottom row: Goal direction is the right wall. A, E) No object in the box. B, F) One object in the center of the box. C, G) Two objects on one diagonal. D, H) Four objects on the diagonals. The objects were vertical bars with a quadratic base with a side length of 3cm and a height of 40cm. Apart from taking the goal direction into account for the bottom panels, the simulations, parameters and environments are identical to those used for the top panels of <xref ref-type="fig" rid="pcbi.1004339.g008">Fig 8</xref>.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s012" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s012" mimetype="application/eps" xlink:type="simple">
+<label>S10 Fig</label>
+<caption>
+<title>Trajectories of the agent with a collision avoidance system based on EMDs in a box (40 × 40 × 40 × cm) containing up to four objects and covered with different patterns (seen from above).</title>
+<p>The pattern on the objects and walls is a 4mm random checkerboard. Top panels: Goal direction is moving forward. Bottom row: Goal direction is the right wall. A, E) No object in the box. B, F) One object in the center of the box. C, G) Two objects on one diagonal. D, H) Four objects on the diagonals. The objects were vertical bars with a quadratic base with a side length of 3cm and a height of 40cm. Apart from taking the goal direction into account for the bottom panels, the simulations, parameters and environments are identical to those used for the bottom panels of <xref ref-type="fig" rid="pcbi.1004339.g008">Fig 8</xref>.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s013" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s013" mimetype="application/eps" xlink:type="simple">
+<label>S11 Fig</label>
+<caption>
+<title>Trajectories of the agent equipped with an EMD-based collision avoidance system, but also relying on the goal direction in two different cluttered environments without walls.</title>
+<p>Objects were covered by a 1mm (left column) or 4mm (right column) random checkerboard pattern. The goal was pinpointed in the environments (Green dot). Two hundred one starting positions were tested, and simulations were run either for 100s (gray lines, i.e. dead-end), until the goal was reached (colored lines) or until a crash (black lines). Wall of the corridors of <xref ref-type="fig" rid="pcbi.1004339.g011">Fig 11</xref> are represented by thick dotted gray lines and objects by filled black squares. The gain was 2 and the threshold 4 for all cases.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s014" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s014" mimetype="application/eps" xlink:type="simple">
+<label>S12 Fig</label>
+<caption>
+<title>The routes, extracted from the trajectories shown in <xref ref-type="fig" rid="pcbi.1004339.g011">Fig 11</xref>, in the first cluttered environment which is covered by 1 mm random checkerboard.</title>
+<p>Several routes are found for neighboring starting locations, e.g. routes #4, #5 and #6. Certain routes share common subroutea, e.g. the end of route #7 and #8 are similar. The route similarities are shown in <xref ref-type="fig" rid="pcbi.1004339.g012">Fig 12</xref>. Walls of the corridors are represented by thick black lines, and objects by filled black squares. Same colors as <xref ref-type="fig" rid="pcbi.1004339.g011">Fig 11</xref>.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s015" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s015" mimetype="application/eps" xlink:type="simple">
+<label>S13 Fig</label>
+<caption>
+<title>The routes, extracted from the trajectories shown in <xref ref-type="fig" rid="pcbi.1004339.g011">Fig 11</xref>, in the first cluttered environment which is covered by 4mm random checkerboard pattern.</title>
+<p>Routes #1 and #2 overlap in their starting locations. However, route #2 is shorter than route #1. Note that routes #2, #3 and #4 are identical to routes #3, #1 and #6, respectively, in the environment covered by a 1mm random checkerboard pattern <xref ref-type="fig" rid="pcbi.1004339.g012">Fig 12</xref>. The route similarities are shown in <xref ref-type="fig" rid="pcbi.1004339.g012">Fig 12</xref>. Walls of the corridors are represented by thick black lines, and objects by filled black squares. Same colors as <xref ref-type="fig" rid="pcbi.1004339.g012">Fig 12</xref>.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s016" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s016" mimetype="application/eps" xlink:type="simple">
+<label>S14 Fig</label>
+<caption>
+<title>The routes, extracted from the trajectories shown in <xref ref-type="fig" rid="pcbi.1004339.g011">Fig 11</xref>, in the second cluttered environment which is covered by 1mm random checkerboard pattern.</title>
+<p>Note that routes #5–11 and routes #1–4 form two distinct classes (see <xref ref-type="fig" rid="pcbi.1004339.g012">Fig 12</xref>). The route similarities are shown in <xref ref-type="fig" rid="pcbi.1004339.g012">Fig 12</xref>. Walls of the corridors are represented by thick black lines, and objects by filled black squares. Same colors as <xref ref-type="fig" rid="pcbi.1004339.g011">Fig 11</xref>.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s017" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s017" mimetype="application/eps" xlink:type="simple">
+<label>S15 Fig</label>
+<caption>
+<title>Routes in the second cluttered environment, which is covered by a 4mm random checkerboard pattern.</title>
+<p>Routes #2 and #3 are very similar (see <xref ref-type="fig" rid="pcbi.1004339.g012">Fig 12</xref>) and lead to a crash of the agent. The remaining route (route #1) is identical to route #5 in the environment covered by 1mm random checkerboard (<xref ref-type="supplementary-material" rid="pcbi.1004339.s016">S14 Fig</xref>). Walls of the corridors are represented by thick black lines, and objects by filled black squares. Same colors as <xref ref-type="fig" rid="pcbi.1004339.g011">Fig 11</xref>.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s018" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s018" mimetype="video/mp4" xlink:type="simple">
+<label>S1 Video</label>
+<caption>
+<title>Simulation of agents without goal direction in the second cluttered environment.</title>
+<p>The trajectories are shown in <xref ref-type="fig" rid="pcbi.1004339.g009">Fig 9</xref>, bottom. Objects and walls are covered by a 1mm random checkerboard pattern. Objects are represented by black squares, agent’s current positions are represented by colored circles and agent’s past positions are represented by a colored line.</p>
+<p>(MP4)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s019" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s019" mimetype="video/mp4" xlink:type="simple">
+<label>S2 Video</label>
+<caption>
+<title>Simulation of agents with goal direction in the second cluttered environment.</title>
+<p>The trajectories are shown in <xref ref-type="fig" rid="pcbi.1004339.g010">Fig 10</xref>, bottom right. Apart from taking the goal direction into account, the simulations, parameters and environments are identical to those used for <xref ref-type="supplementary-material" rid="pcbi.1004339.s018">S1 Video</xref>.</p>
+<p>(MP4)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004339.s020" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004339.s020" mimetype="video/mp4" xlink:type="simple">
+<label>S3 Video</label>
+<caption>
+<title>The agent’s view while moving through a cluttered environment.</title>
+<p>The trajectory is shown in <xref ref-type="fig" rid="pcbi.1004339.g010">Fig 10</xref>, top-left. Objects and walls are covered with a 4mm random checkerboard pattern. Top: Agent’s view. Overlay: The relative points of nearness along the azimuth extracted from EMD responses during the last intersaccade. The goal direction and CAD are indicated by the green and red line, respectively. The length of the red and green line indicate the necessity to follow the CAD or goal direction based on the weighting function. The dotted line is the saccade direction. Bottom: The agent’s position and orientation in the environment. Objects are represented by black squares, agent’s current position and orientation in blue and agent’s past position in gray. The behavioral state of the agent, saccade or intersaccade is indicated by a white circle.</p>
+<p>(MP4)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>We thank Moritz Milde for helpful preliminary simulations.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004339.ref001">
+<label>1</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Chiang</surname> <given-names>AS</given-names></name>, <name name-style="western"><surname>Lin</surname> <given-names>CY</given-names></name>, <name name-style="western"><surname>Chuang</surname> <given-names>CC</given-names></name>, <name name-style="western"><surname>Chang</surname> <given-names>HM</given-names></name>, <name name-style="western"><surname>Hsieh</surname> <given-names>CH</given-names></name>, <name name-style="western"><surname>Yeh</surname> <given-names>CW</given-names></name>, <etal>et al</etal>. <article-title>Three-Dimensional Reconstruction of Brain-wide Wiring Networks in Drosophila at Single-Cell Resolution</article-title>. <source>Current Biology</source>. <year>2011</year>;<volume>21</volume>(<issue>1</issue>):<fpage>1</fpage>–<lpage>11</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cub.2010.11.056" xlink:type="simple">10.1016/j.cub.2010.11.056</ext-link></comment> <object-id pub-id-type="pmid">21129968</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref002">
+<label>2</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Witthöft</surname> <given-names>W</given-names></name>. <article-title>Absolute anzahl und verteilung der zellen im him der honigbiene</article-title>. <source>Zeitschrift für Morphologie der Tiere</source>. <year>1967</year>;<volume>61</volume>(<issue>1</issue>):<fpage>160</fpage>–<lpage>184</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/BF00298776" xlink:type="simple">10.1007/BF00298776</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref003">
+<label>3</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Warzecha</surname> <given-names>AK</given-names></name>, <name name-style="western"><surname>Egelhaaf</surname> <given-names>M</given-names></name>. <article-title>Response latency of a motion-sensitive neuron in the fly visual system: dependence on stimulus parameters and physiological conditions</article-title>. <source>Vision research</source>. <year>2000</year>;<volume>40</volume>(<issue>21</issue>):<fpage>2973</fpage>–<lpage>2983</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0042-6989(00)00147-4" xlink:type="simple">10.1016/S0042-6989(00)00147-4</ext-link></comment> <object-id pub-id-type="pmid">11000395</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref004">
+<label>4</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Egelhaaf</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Boeddeker</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Kern</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Kurtz</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Lindemann</surname> <given-names>JP</given-names></name>. <article-title>Spatial vision in insects is facilitated by shaping the dynamics of visual input through behavioral action</article-title>. <source>Frontiers in neural circuits</source>. <year>2012</year>;<volume>6</volume>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3389/fncir.2012.00108" xlink:type="simple">10.3389/fncir.2012.00108</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref005">
+<label>5</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Surmann</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Lingemann</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Nüchter</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Hertzberg</surname> <given-names>J</given-names></name>. <article-title>A 3D laser range finder for autonomous mobile robots</article-title>. In: <source>Proceedings of the 32nd ISR (International Symposium on Robotics)</source>. <volume>vol. 19</volume>; <year>2001</year>. p. <fpage>153</fpage>–<lpage>158</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref006">
+<label>6</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Lucas</surname> <given-names>BD</given-names></name>, <name name-style="western"><surname>Kanade</surname> <given-names>T</given-names></name>. <chapter-title>An iterative image registration technique with an application to stereo vision</chapter-title>. In: <source>Proceedings of the 7th international joint conference on Artificial intelligence—Volume 2. IJCAI’81</source>. <publisher-loc>San Francisco, CA, USA</publisher-loc>: <publisher-name>Morgan Kaufmann Publishers Inc.</publisher-name>; <year>1981</year>. p. <fpage>674</fpage>–<lpage>679</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref007">
+<label>7</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Schilstra</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Van Hateren</surname> <given-names>JH</given-names></name>. <article-title>Stabilizing gaze in flying blowflies</article-title>. <source>Nature</source>. <year>1998</year>;<volume>395</volume>(<issue>6703</issue>):<fpage>654</fpage>–<lpage>654</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/27114" xlink:type="simple">10.1038/27114</ext-link></comment> <object-id pub-id-type="pmid">9790186</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref008">
+<label>8</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Schilstra</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Hateren</surname> <given-names>JH</given-names></name>. <article-title>Blowfly flight and optic flow. I. Thorax kinematics and flight dynamics</article-title>. <source>Journal of Experimental Biology</source>. <year>1999</year> <month>Jun</month>;<volume>202</volume>(<issue>11</issue>):<fpage>1481</fpage>–<lpage>1490</lpage>. <object-id pub-id-type="pmid">10229694</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref009">
+<label>9</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Hateren</surname> <given-names>Jv</given-names></name>, <name name-style="western"><surname>Schilstra</surname> <given-names>C</given-names></name>. <article-title>Blowfly flight and optic flow. II. Head movements during flight</article-title>. <source>Journal of Experimental Biology</source>. <year>1999</year>;<volume>202</volume>(<issue>11</issue>):<fpage>1491</fpage>–<lpage>1500</lpage>. <object-id pub-id-type="pmid">10229695</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref010">
+<label>10</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Boeddeker</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Dittmar</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Stürzl</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Egelhaaf</surname> <given-names>M</given-names></name>. <article-title>The fine structure of honeybee head and body yaw movements in a homing task</article-title>. <source>Proceedings Biological sciences / The Royal Society</source>. <year>2010</year> <month>Jun</month>;<volume>277</volume>(<issue>1689</issue>):<fpage>1899</fpage>–<lpage>1906</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rspb.2009.2326" xlink:type="simple">10.1098/rspb.2009.2326</ext-link></comment> <object-id pub-id-type="pmid">20147329</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref011">
+<label>11</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Braun</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Geurten</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Egelhaaf</surname> <given-names>M</given-names></name>. <article-title>Identifying prototypical components in behaviour using clustering algorithms</article-title>. <source>PloS one</source>. <year>2010</year>;<volume>5</volume>(<issue>2</issue>):<fpage>e9361</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0009361" xlink:type="simple">10.1371/journal.pone.0009361</ext-link></comment> <object-id pub-id-type="pmid">20179763</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref012">
+<label>12</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Braun</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Dittmar</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Boeddeker</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Egelhaaf</surname> <given-names>M</given-names></name>. <article-title>Prototypical components of honeybee homing flight behavior depend on the visual appearance of objects surrounding the goal</article-title>. <source>Frontiers in behavioral neuroscience</source>. <year>2012</year>;<volume>6</volume>:<fpage>1</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3389/fnbeh.2012.00001" xlink:type="simple">10.3389/fnbeh.2012.00001</ext-link></comment> <object-id pub-id-type="pmid">22279431</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref013">
+<label>13</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Geurten</surname> <given-names>BR</given-names></name>, <name name-style="western"><surname>Kern</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Braun</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Egelhaaf</surname> <given-names>M</given-names></name>. <article-title>A syntax of hoverfly flight prototypes</article-title>. <source>The Journal of experimental biology</source>. <year>2010</year>;<volume>213</volume>(<issue>14</issue>):<fpage>2461</fpage>–<lpage>2475</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1242/jeb.036079" xlink:type="simple">10.1242/jeb.036079</ext-link></comment> <object-id pub-id-type="pmid">20581276</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref014">
+<label>14</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Kern</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Boeddeker</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Dittmar</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Egelhaaf</surname> <given-names>M</given-names></name>. <article-title>Blowfly flight characteristics are shaped by environmental features and controlled by optic flow information</article-title>. <source>The Journal of experimental biology</source>. <year>2012</year> <month>Jul</month>;<volume>215</volume>(<issue>Pt 14</issue>):<fpage>2501</fpage>–<lpage>2514</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1242/jeb.061713" xlink:type="simple">10.1242/jeb.061713</ext-link></comment> <object-id pub-id-type="pmid">22723490</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref015">
+<label>15</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Eckmeier</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Geurten</surname> <given-names>BRH</given-names></name>, <name name-style="western"><surname>Kress</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Mertes</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Kern</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Egelhaaf</surname> <given-names>M</given-names></name>, <etal>et al</etal>. <article-title>Gaze Strategy in the Free Flying Zebra Finch (Taeniopygia guttata)</article-title>. <source>PLoS ONE</source>. <year>2008</year> <month>Dec</month>;<volume>3</volume>(<issue>12</issue>):<fpage>e3956</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0003956" xlink:type="simple">10.1371/journal.pone.0003956</ext-link></comment> <object-id pub-id-type="pmid">19107185</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref016">
+<label>16</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Reichardt</surname> <given-names>W</given-names></name>. <article-title>Autokorrelationsauswertung als Funktionsprinzip des Zentralnervensystems</article-title>. <source>Z Naturforsch</source>. <year>1957</year>;<volume>12</volume>:<fpage>447</fpage>–<lpage>457</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1515/znb-1957-0707" xlink:type="simple">10.1515/znb-1957-0707</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref017">
+<label>17</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Tammero</surname> <given-names>LF</given-names></name>, <name name-style="western"><surname>Dickinson</surname> <given-names>MH</given-names></name>. <article-title>Collision-avoidance and landing responses are mediated by separate pathways in the fruit fly, Drosophila melanogaster</article-title>. <source>Journal of Experimental Biology</source>. <year>2002</year> <month>Sep</month>;<volume>205</volume>(<issue>18</issue>):<fpage>2785</fpage>–<lpage>2798</lpage>. <object-id pub-id-type="pmid">12177144</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref018">
+<label>18</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Lindemann</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Weiss</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Möller</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Egelhaaf</surname> <given-names>M</given-names></name>. <article-title>Saccadic flight strategy facilitates collision avoidance: closed-loop performance of a cyberfly</article-title>. <source>Biological Cybernetics</source>. <year>2008</year>;<volume>98</volume>(<issue>3</issue>):<fpage>213</fpage>–<lpage>227</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00422-007-0205-x" xlink:type="simple">10.1007/s00422-007-0205-x</ext-link></comment> <object-id pub-id-type="pmid">18180948</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref019">
+<label>19</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Pichon</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Blanes</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Franceschini</surname> <given-names>N</given-names></name>. <article-title>Visual guidance of a mobile robot equipped with a network of selfmotion sensors</article-title>. In: <source>1989 Advances in Intelligent Robotics Systems Conference</source>. <publisher-name>International Society for Optics and Photonics</publisher-name>; <year>1990</year>. p. <fpage>44</fpage>–<lpage>55</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref020">
+<label>20</label>
+<mixed-citation xlink:type="simple" publication-type="other">Martin N, Franceschini N. Obstacle avoidance and speed control in a mobile vehicle equipped with a compound eye. In: Intelligent Vehicles’ 94 Symposium, Proceedings of the. IEEE; 1994. p. 381–386.</mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref021">
+<label>21</label>
+<mixed-citation xlink:type="simple" publication-type="other">Muratet L, Doncieux S, Meyer JA. A biomimetic reactive navigation system using the optical flow for a rotary-wing uav in urban environment. Proceedings of the International Session on Robotics. 2004;.</mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref022">
+<label>22</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Hyslop</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Krapp</surname> <given-names>HG</given-names></name>, <name name-style="western"><surname>Humbert</surname> <given-names>JS</given-names></name>. <article-title>Control theoretic interpretation of directional motion preferences in optic flow processing interneurons</article-title>. <source>Biological cybernetics</source>. <year>2010</year>;<volume>103</volume>(<issue>5</issue>):<fpage>353</fpage>–<lpage>364</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00422-010-0404-8" xlink:type="simple">10.1007/s00422-010-0404-8</ext-link></comment> <object-id pub-id-type="pmid">20694561</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref023">
+<label>23</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Serres</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Ruffier</surname> <given-names>F</given-names></name>. <article-title>Biomimetic Autopilot Based on Minimalistic Motion Vision for Navigating along Corridors Comprising U-shaped and S-shaped Turns</article-title>. <source>Journal of Bionic Engineering</source>. <year>2015</year>;<volume>12</volume>(<issue>1</issue>):<fpage>47</fpage>–<lpage>60</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S1672-6529(14)60099-8" xlink:type="simple">10.1016/S1672-6529(14)60099-8</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref024">
+<label>24</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Koenderink</surname> <given-names>JJ</given-names></name>, <name name-style="western"><surname>Doorn</surname> <given-names>AJ</given-names></name>. <article-title>Facts on optic flow</article-title>. <source>Biological Cybernetics</source>. <year>1987</year>;<volume>56</volume>(<issue>4</issue>):<fpage>247</fpage>–<lpage>254</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/BF00365219" xlink:type="simple">10.1007/BF00365219</ext-link></comment> <object-id pub-id-type="pmid">3607100</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref025">
+<label>25</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Montano</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Asensio</surname> <given-names>JR</given-names></name>. <article-title>Real-time robot navigation in unstructured environments using a 3D laser rangefinder. In: Intelligent Robots and Systems, 1997. IROS’97</article-title>., <source>Proceedings of the 1997 IEEE/RSJ International Conference on</source>. <volume>vol. 2</volume>; <year>1997</year>. p. <fpage>526</fpage>–<lpage>532</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref026">
+<label>26</label>
+<mixed-citation xlink:type="simple" publication-type="other">Koren Y, Borenstein J. Potential field methods and their inherent limitations for mobile robot navigation. In: Robotics and Automation, 1991. Proceedings., 1991 IEEE International Conference on. IEEE; 1991. p. 1398–1404.</mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref027">
+<label>27</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Borenstein</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Koren</surname> <given-names>Y</given-names></name>. <article-title>The vector field histogram-fast obstacle avoidance for mobile robots</article-title>. <source>Robotics and Automation, IEEE Transactions on</source>. <year>1991</year>;<volume>7</volume>(<issue>3</issue>):<fpage>278</fpage>–<lpage>288</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1109/70.88137" xlink:type="simple">10.1109/70.88137</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref028">
+<label>28</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Babies</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Lindemann</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Egelhaaf</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Möller</surname> <given-names>R</given-names></name>. <article-title>Contrast-Independent Biologically Inspired Motion Detection</article-title>. <source>Sensors</source>. <year>2011</year> <month>Mar</month>;<volume>11</volume>(<issue>3</issue>):<fpage>3303</fpage>–<lpage>3326</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3390/s110303303" xlink:type="simple">10.3390/s110303303</ext-link></comment> <object-id pub-id-type="pmid">22163800</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref029">
+<label>29</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Brinkworth</surname> <given-names>RSA</given-names></name>, <name name-style="western"><surname>O’Carroll</surname> <given-names>DC</given-names></name>. <article-title>Robust Models for Optic Flow Coding in Natural Scenes Inspired by Insect Biology</article-title>. <source>PLoS Comput Biol</source>. <year>2009</year> <month>Nov</month>;<volume>5</volume>(<issue>11</issue>):<fpage>e1000555</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1000555" xlink:type="simple">10.1371/journal.pcbi.1000555</ext-link></comment> <object-id pub-id-type="pmid">19893631</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref030">
+<label>30</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Shoemaker</surname> <given-names>PA</given-names></name>, <name name-style="western"><surname>O’Carroll</surname> <given-names>DC</given-names></name>, <name name-style="western"><surname>Straw</surname> <given-names>AD</given-names></name>. <article-title>Velocity constancy and models for wide-field visual motion detection in insects</article-title>. <source>Biological cybernetics</source>. <year>2005</year>;<volume>93</volume>(<issue>4</issue>):<fpage>275</fpage>–<lpage>287</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00422-005-0007-y" xlink:type="simple">10.1007/s00422-005-0007-y</ext-link></comment> <object-id pub-id-type="pmid">16151841</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref031">
+<label>31</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Lindemann</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Kern</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>van Hateren</surname> <given-names>JH</given-names></name>, <name name-style="western"><surname>Ritter</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Egelhaaf</surname> <given-names>M</given-names></name>. <article-title>On the computations analyzing natural optic flow: quantitative model analysis of the blowfly motion vision pathway</article-title>. <source>The Journal of neuroscience</source>. <year>2005</year>;<volume>25</volume>(<issue>27</issue>):<fpage>6435</fpage>–<lpage>6448</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1523/JNEUROSCI.1132-05.2005" xlink:type="simple">10.1523/JNEUROSCI.1132-05.2005</ext-link></comment> <object-id pub-id-type="pmid">16000634</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref032">
+<label>32</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Hennig</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Kern</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Egelhaaf</surname> <given-names>M</given-names></name>. <article-title>Binocular Integration of Visual Information: A Model Study on Naturalistic Optic Flow Processing</article-title>. <source>Frontiers in Neural Circuits</source>. <year>2011</year> <month>Apr</month>;<volume>5</volume>. PMCID: PMC3078557. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3389/fncir.2011.00004" xlink:type="simple">10.3389/fncir.2011.00004</ext-link></comment> <object-id pub-id-type="pmid">21519385</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref033">
+<label>33</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Egelhaaf</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Borst</surname> <given-names>A</given-names></name>. <article-title>Transient and steady-state response properties of movement detectors</article-title>. <source>Journal of the Optical Society of America A, Optics and image science</source>. <year>1989</year> <month>Jan</month>;<volume>6</volume>(<issue>1</issue>):<fpage>116</fpage>–<lpage>127</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1364/JOSAA.6.000116" xlink:type="simple">10.1364/JOSAA.6.000116</ext-link></comment> <object-id pub-id-type="pmid">2921651</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref034">
+<label>34</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Borst</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Reisenman</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Haag</surname> <given-names>J</given-names></name>. <article-title>Adaptation of response transients in fly motion vision. II: Model studies</article-title>. <source>Vision research</source>. <year>2003</year> <month>May</month>;<volume>43</volume>(<issue>11</issue>):<fpage>1309</fpage>–<lpage>1322</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0042-6989(03)00092-0" xlink:type="simple">10.1016/S0042-6989(03)00092-0</ext-link></comment> <object-id pub-id-type="pmid">12726836</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref035">
+<label>35</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Tammero</surname> <given-names>LF</given-names></name>, <name name-style="western"><surname>Dickinson</surname> <given-names>MH</given-names></name>. <article-title>The influence of visual landscape on the free flight behavior of the fruit fly Drosophila melanogaster</article-title>. <source>Journal of Experimental Biology</source>. <year>2002</year> <month>Feb</month>;<volume>205</volume>(<issue>3</issue>):<fpage>327</fpage>–<lpage>343</lpage>. <object-id pub-id-type="pmid">11854370</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref036">
+<label>36</label>
+<mixed-citation xlink:type="simple" publication-type="other">Martin E, Jens PL. Texture dependance of motion sensing and free flight behavior in blowflies. 2012 Jul;.</mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref037">
+<label>37</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Mronz</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Lehmann</surname> <given-names>FO</given-names></name>. <article-title>The free-flight response of Drosophila to motion of the visual environment</article-title>. <source>Journal of Experimental Biology</source>. <year>2008</year>;<volume>211</volume>(<issue>13</issue>):<fpage>2026</fpage>–<lpage>2045</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1242/jeb.008268" xlink:type="simple">10.1242/jeb.008268</ext-link></comment> <object-id pub-id-type="pmid">18552291</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref038">
+<label>38</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Plett</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Bahl</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Buss</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Kühnlenz</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Borst</surname> <given-names>A</given-names></name>. <article-title>Bio-inspired visual ego-rotation sensor for MAVs</article-title>. <source>Biological cybernetics</source>. <year>2012</year> <month>Jan</month>;<volume>106</volume>(<issue>1</issue>):<fpage>51</fpage>–<lpage>63</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00422-012-0478-6" xlink:type="simple">10.1007/s00422-012-0478-6</ext-link></comment> <object-id pub-id-type="pmid">22350507</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref039">
+<label>39</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Meyer</surname> <given-names>HG</given-names></name>, <name name-style="western"><surname>Lindemann</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Egelhaaf</surname> <given-names>M</given-names></name>. <article-title>Pattern-Dependent Response Modulations in Motion-Sensitive Visual Interneurons—A Model Study</article-title>. <source>PLoS ONE</source>. <year>2011</year> <month>Jul</month>;<volume>6</volume>(<issue>7</issue>):<fpage>e21488</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0021488" xlink:type="simple">10.1371/journal.pone.0021488</ext-link></comment> <object-id pub-id-type="pmid">21760894</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref040">
+<label>40</label>
+<mixed-citation xlink:type="simple" publication-type="other">Borst A, Egelhaaf M. Detecting visual motion: theory and models. Visual motion and its role in the stabilization of gaze. 1993;.</mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref041">
+<label>41</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Schwegmann</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Lindemann</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Egelhaaf</surname> <given-names>M</given-names></name>. <article-title>Depth information in natural environments derived from optic flow by insect motion detection system: a model analysis</article-title>. <source>Frontiers in computational neuroscience</source>. <year>2014</year>;<volume>8</volume>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3389/fncom.2014.00083" xlink:type="simple">10.3389/fncom.2014.00083</ext-link></comment> <object-id pub-id-type="pmid">25136314</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref042">
+<label>42</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Baird</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Kornfeldt</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Dacke</surname> <given-names>M</given-names></name>. <article-title>Minimum viewing angle for visually guided ground speed control in bumblebees</article-title>. <source>The Journal of experimental biology</source>. <year>2010</year>;<volume>213</volume>(<issue>10</issue>):<fpage>1625</fpage>–<lpage>1632</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1242/jeb.038802" xlink:type="simple">10.1242/jeb.038802</ext-link></comment> <object-id pub-id-type="pmid">20435812</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref043">
+<label>43</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Ryad</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Charles</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Xavier</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Sio-Hoi</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Chiara</surname> <given-names>B</given-names></name>. <article-title>Event-Based Visual Flow</article-title>. <source>IEEE Transactions on neural networks and learning systems</source>. <year>2014</year> <month>Feb</month>;<volume>25</volume>(<issue>2</issue>).</mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref044">
+<label>44</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Wehner</surname> <given-names>R</given-names></name>. <article-title>The architecture of the desert ant’s navigational toolkit (Hymenoptera: Formicidae)</article-title>. <source>Myrmecol News</source>. <year>2009</year>;<volume>12</volume>:<fpage>85</fpage>–<lpage>96</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref045">
+<label>45</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Wehner</surname> <given-names>R</given-names></name>. <article-title>Desert ant navigation: how miniature brains solve complex tasks</article-title>. <source>Journal of Comparative Physiology A</source>. <year>2003</year>;<volume>189</volume>(<issue>8</issue>):<fpage>579</fpage>–<lpage>588</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00359-003-0431-1" xlink:type="simple">10.1007/s00359-003-0431-1</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref046">
+<label>46</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Kohler</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Wehner</surname> <given-names>R</given-names></name>. <source>Idiosyncratic route-based memories in desert ants, Melophorus bagoti: how do they interact with path-integration vectors? Neurobiology of learning and memory</source>. <year>2005</year>;<volume>83</volume>(<issue>1</issue>):<fpage>1</fpage>–<lpage>12</lpage>. <object-id pub-id-type="pmid">15607683</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref047">
+<label>47</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Zeil</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Narendra</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Stürzl</surname> <given-names>W</given-names></name>. <article-title>Looking and homing: how displaced ants decide where to go</article-title>. <source>Philosophical Transactions of the Royal Society B: Biological Sciences</source>. <year>2014</year> <month>Feb</month>;<volume>369</volume>(<issue>1636</issue>):<fpage>20130034</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rstb.2013.0034" xlink:type="simple">10.1098/rstb.2013.0034</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref048">
+<label>48</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Mangan</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Webb</surname> <given-names>B</given-names></name>. <article-title>Spontaneous formation of multiple routes in individual desert ants (Cataglyphis velox)</article-title>. <source>Behavioral Ecology</source>. <year>2012</year>;<volume>23</volume>(<issue>5</issue>):<fpage>944</fpage>–<lpage>954</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/beheco/ars051" xlink:type="simple">10.1093/beheco/ars051</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref049">
+<label>49</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Baddeley</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Graham</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Husbands</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Philippides</surname> <given-names>A</given-names></name>. <article-title>A Model of Ant Route Navigation Driven by Scene Familiarity</article-title>. <source>PLoS Comput Biol</source>. <year>2012</year> <month>Jan</month>;<volume>8</volume>(<issue>1</issue>):<fpage>e1002336</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1002336" xlink:type="simple">10.1371/journal.pcbi.1002336</ext-link></comment> <object-id pub-id-type="pmid">22241975</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref050">
+<label>50</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Basten</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Mallot</surname> <given-names>HA</given-names></name>. <article-title>Simulated visual homing in desert ant natural environments: efficiency of skyline cues</article-title>. <source>Biological cybernetics</source>. <year>2010</year>;<volume>102</volume>(<issue>5</issue>):<fpage>413</fpage>–<lpage>425</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00422-010-0375-9" xlink:type="simple">10.1007/s00422-010-0375-9</ext-link></comment> <object-id pub-id-type="pmid">20300942</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref051">
+<label>51</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>James</surname> <given-names>AC</given-names></name>. <chapter-title>Nonlinear operator network models of processing in the fly lamina</chapter-title>. <source>Nonlinear Vision: Determination of Neural Receptive Fields, Function, and Networks</source> <name name-style="western"><surname>Pinter</surname> <given-names>RB</given-names></name> and <name name-style="western"><surname>Nabet</surname> <given-names>B</given-names></name>, editors <publisher-name>CRC Press</publisher-name>, <publisher-loc>Boca Raton</publisher-loc>. <year>1992</year>;p. <fpage>39</fpage>–<lpage>72</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref052">
+<label>52</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Juusola</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Uusitalo</surname> <given-names>RO</given-names></name>, <name name-style="western"><surname>Weckström</surname> <given-names>M</given-names></name>. <article-title>Transfer of graded potentials at the photoreceptor-interneuron synapse</article-title>. <source>The Journal of General Physiology</source>. <year>1995</year> <month>Jan</month>;<volume>105</volume>(<issue>1</issue>):<fpage>117</fpage>–<lpage>148</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1085/jgp.105.1.117" xlink:type="simple">10.1085/jgp.105.1.117</ext-link></comment> <object-id pub-id-type="pmid">7537323</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref053">
+<label>53</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Goodman</surname> <given-names>JE</given-names></name>, <name name-style="western"><surname>O’Rourke</surname> <given-names>J</given-names></name>. <source>Handbook of discrete and computational geometry</source>. <publisher-name>CRC press</publisher-name>; <year>2010</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004339.ref054">
+<label>54</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Hamming</surname> <given-names>RW</given-names></name>. <article-title>Error detecting and error correcting codes</article-title>. <source>Bell System technical journal</source>. <year>1950</year>;<volume>29</volume>(<issue>2</issue>):<fpage>147</fpage>–<lpage>160</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/j.1538-7305.1950.tb00463.x" xlink:type="simple">10.1002/j.1538-7305.1950.tb00463.x</ext-link></comment></mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

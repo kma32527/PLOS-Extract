@@ -1,0 +1,924 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" dtd-version="3.0" xml:lang="en" article-type="research-article">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-14-01439</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004094</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Improved Statistical Methods Enable Greater Sensitivity in Rhythm Detection for Genome-Wide Data</article-title>
+<alt-title alt-title-type="running-head">Improved Statistical Methods Enable Better Rhythm Detection</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Hutchison</surname> <given-names>Alan L.</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+<xref ref-type="fn" rid="econtrib001"><sup>‡</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Maienschein-Cline</surname> <given-names>Mark</given-names></name>
+<xref ref-type="aff" rid="aff004"><sup>4</sup></xref>
+<xref ref-type="fn" rid="econtrib001"><sup>‡</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Chiang</surname> <given-names>Andrew H.</given-names></name>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+<xref ref-type="fn" rid="econtrib001"><sup>‡</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Tabei</surname> <given-names>S. M. Ali</given-names></name>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+<xref ref-type="fn" rid="currentaff001"><sup>¤</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Gudjonson</surname> <given-names>Herman</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Bahroos</surname> <given-names>Neil</given-names></name>
+<xref ref-type="aff" rid="aff004"><sup>4</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Allada</surname> <given-names>Ravi</given-names></name>
+<xref ref-type="aff" rid="aff005"><sup>5</sup></xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Dinner</surname> <given-names>Aaron R.</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+<xref ref-type="aff" rid="aff006"><sup>6</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<label>1</label>
+<addr-line>Medical Scientist Training Program, University of Chicago, Chicago, Illinois, United States of America</addr-line>
+</aff>
+<aff id="aff002">
+<label>2</label>
+<addr-line>Graduate Program in the Biophysical Sciences, University of Chicago, Chicago, Illinois, United States of America</addr-line>
+</aff>
+<aff id="aff003">
+<label>3</label>
+<addr-line>James Franck Institute, University of Chicago, Chicago, Illinois, United States of America</addr-line>
+</aff>
+<aff id="aff004">
+<label>4</label>
+<addr-line>Center for Research Informatics, University of Illinois at Chicago, Chicago, Illinois, United States of America</addr-line>
+</aff>
+<aff id="aff005">
+<label>5</label>
+<addr-line>Department of Neurobiology, Northwestern University, Evanston, Illinois, United States of America</addr-line>
+</aff>
+<aff id="aff006">
+<label>6</label>
+<addr-line>Department of Chemistry, University of Chicago, Chicago, Illinois, United States of America</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Kosakovsky Pond</surname> <given-names>Sergei L.</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>University of California San Diego, UNITED STATES</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: ALH MMC AHC RA ARD. Analyzed the data: ALH MMC AHC. Contributed reagents/materials/analysis tools: ALH MMC AHC HG SMAT NB. Wrote the paper: ALH MMC AHC RA ARD.</p>
+</fn>
+<fn fn-type="current-aff" id="currentaff001">
+<label>¤</label>
+<p>Present address: Physics Department University of Northern Iowa Cedar Falls, Iowa 50614</p>
+</fn>
+<fn fn-type="other" id="econtrib001">
+<p>‡ These authors contributed equally to the manuscript.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">dinner@uchicago.edu</email></corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<month>3</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>20</day>
+<month>3</month>
+<year>2015</year>
+</pub-date>
+<volume>11</volume>
+<issue>3</issue>
+<elocation-id>e1004094</elocation-id>
+<history>
+<date date-type="received">
+<day>5</day>
+<month>8</month>
+<year>2014</year>
+</date>
+<date date-type="accepted">
+<day>16</day>
+<month>12</month>
+<year>2014</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Hutchison et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004094" xlink:type="simple"/>
+<abstract>
+<p>Robust methods for identifying patterns of expression in genome-wide data are important for generating hypotheses regarding gene function. To this end, several analytic methods have been developed for detecting periodic patterns. We improve one such method, JTK_CYCLE, by explicitly calculating the null distribution such that it accounts for multiple hypothesis testing and by including non-sinusoidal reference waveforms. We term this method empirical JTK_CYCLE with asymmetry search, and we compare its performance to JTK_CYCLE with Bonferroni and Benjamini-Hochberg multiple hypothesis testing correction, as well as to five other methods: cyclohedron test, address reduction, stable persistence, ANOVA, and F24. We find that ANOVA, F24, and JTK_CYCLE consistently outperform the other three methods when data are limited and noisy; empirical JTK_CYCLE with asymmetry search gives the greatest sensitivity while controlling for the false discovery rate. Our analysis also provides insight into experimental design and we find that, for a fixed number of samples, better sensitivity and specificity are achieved with higher numbers of replicates than with higher sampling density. Application of the methods to detecting circadian rhythms in a metadataset of microarrays that quantify time-dependent gene expression in whole heads of Drosophila melanogaster reveals annotations that are enriched among genes with highly asymmetric waveforms. These include a wide range of oxidation reduction and metabolic genes, as well as genes with transcripts that have multiple splice forms.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>Much biomedical research focuses on how the expression of genes changes over time. Many genes’ activities vary periodically. For example, circadian rhythms repeat daily with the light-dark cycle. Understanding how such rhythms couple to biological processes requires statistical methods that can identify cycling time series in typical genome-wide data. In this paper, we improve on a method used to identify cycling time series by better estimating the statistical significance of periodic patterns and, in turn, by searching for a wider range of patterns than traditionally investigated. We apply these methods to a compilation of data on gene expression in fruit flies, an important model organism. We find that our method allows us to discover rhythmic biological activities that the other methods tested are unable to reveal.</p>
+</abstract>
+<funding-group>
+<funding-statement>This work was supported by the Defense Advanced Research Projects Agency (DARPA) (D12AP00023) <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.darpa.mil/">http://www.darpa.mil/</ext-link>. ALH is a trainee of the National Institutes of Health Medical Scientist Training program at the University of Chicago (grant NIGMS T32GM07281) <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.nigms.nih.gov/">http://www.nigms.nih.gov/</ext-link>. MMC is supported in part by NIH grant ULITR000050 (University of Illinois CTSA). HG is supported by the National Institute of Biomedical Imaging And Bioengineering of the National Institutes of Health (Award Number T32EB009412) <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.nibib.nih.gov/">http://www.nibib.nih.gov/</ext-link>. The content is solely the responsibility of the authors and does not necessarily reflect the position or the policy of the Government, and no official endorsement should be inferred. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="10"/>
+<table-count count="0"/>
+<page-count count="29"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>The simulated datasets can be computationally generated given the specifications contained within the paper. The experimental data analyzed are already publicly available through DOI: <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.0030208">10.1371/journal.pcbi.0030208</ext-link>. Our analysis of the experimental data is within the paper and its Supporting Information files. The code used can be found in the first author’s Github repository at <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="https://github.com/alanlhutchison/empirical-JTK_CYCLE-with-asymmetry">https://github.com/alanlhutchison/empirical-JTK_CYCLE-with-asymmetry</ext-link></meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Rhythmic behavior is ubiquitous across the spectrum of life [<xref ref-type="bibr" rid="pcbi.1004094.ref001">1</xref>–<xref ref-type="bibr" rid="pcbi.1004094.ref004">4</xref>]. Diverse fundamental biological functions such as cell division, energy metabolism, and sleep are periodic, and a growing body of evidence implicates temporal dysregulation as a contributing factor to depression, neurodegeneration, cardiovascular disease, and metabolic disorders in higher organisms [<xref ref-type="bibr" rid="pcbi.1004094.ref005">5</xref>–<xref ref-type="bibr" rid="pcbi.1004094.ref009">9</xref>]. Arguably the most well-studied periodic patterns are circadian rhythms: oscillatory changes in gene expression, metabolism, physiology, and behavior with approximately 24-hour (24 h) periods that enable organisms to anticipate and respond to daily changes in their environment, such as nutrient accessibility, temperature, and light [<xref ref-type="bibr" rid="pcbi.1004094.ref010">10</xref>–<xref ref-type="bibr" rid="pcbi.1004094.ref013">13</xref>].</p>
+<p>Circadian rhythms arise from innate clocks. The components of the core clock are well characterized and are strongly conserved across a wide range of species [<xref ref-type="bibr" rid="pcbi.1004094.ref014">14</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref015">15</xref>]. However, it remains to be determined how this clock couples to other molecular processes. Moreover, these interactions are likely to depend on tissue type and environmental conditions [<xref ref-type="bibr" rid="pcbi.1004094.ref002">2</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref007">7</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref011">11</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref016">16</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref017">17</xref>]. There is thus a need to identify molecular profiles that cycle and to characterize them as a function of conditions. The advent of high throughput methods for measuring gene expression now makes transcriptome-wide studies of this nature possible. Previous work suggests that hundreds, possibly thousands, of genes are regulated by circadian clocks [<xref ref-type="bibr" rid="pcbi.1004094.ref010">10</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref015">15</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref018">18</xref>].</p>
+<p>Despite the decreasing cost of measuring transcript levels, profiling time series genome-wide continues to present formidable challenges: tissue-specific samples are difficult to collect, and, in contrast to imaging, measuring transcript levels is destructive in nature, requiring separate samples for each time point. As a result, gene expression time series are typically sparsely sampled (e.g., every 2–4 hours (h) in circadian studies), often without multiple measurements per time point, which we refer to here as “replicates”. These experimental limitations result in low signal-to-noise ratios that prevent straightforward identification of cycling gene expression.</p>
+<p>Quantitative methods are thus needed to identify rhythmic time series from minimal data with statistical confidence. These methods can aid researchers in assessing the tradeoffs between the amount of data acquired, statistical precision, and breadth of biological discovery. While a number of different methods have been proposed for identifying cycling time series [<xref ref-type="bibr" rid="pcbi.1004094.ref019">19</xref>–<xref ref-type="bibr" rid="pcbi.1004094.ref030">30</xref>], further analysis is needed to guide selection of the best method(s) for a given situation and to aid in design of improved computational methods and further experiments.</p>
+<p>In this paper, we improve on the JTK_CYCLE method [<xref ref-type="bibr" rid="pcbi.1004094.ref026">26</xref>]. The original method uses a conservative estimation for its <italic>p</italic>-values and a cosine as its only reference waveform. Here, we introduce a procedure, empirical JTK_CYCLE with asymmetry search, that provides accurate empirically-calculated <italic>p</italic>-values for arbitrary waveforms. We test its performance for detecting rhythms in simulated data and a circadian metadataset [<xref ref-type="bibr" rid="pcbi.1004094.ref027">27</xref>] against other algorithms: cyclohedron test [<xref ref-type="bibr" rid="pcbi.1004094.ref020">20</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref021">21</xref>], address reduction [<xref ref-type="bibr" rid="pcbi.1004094.ref022">22</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref023">23</xref>], stable persistence [<xref ref-type="bibr" rid="pcbi.1004094.ref024">24</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref025">25</xref>], F24 [<xref ref-type="bibr" rid="pcbi.1004094.ref031">31</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref032">32</xref>], and one-way analysis of variance (ANOVA) [<xref ref-type="bibr" rid="pcbi.1004094.ref027">27</xref>]. The simulated data allow us to examine how performance varies with sampling density, number of replicates and/or periods, noise level, and waveform. Most methods provide accurate rhythm detection when sampling density is high and noise is low. However, we find that the choice of method significantly affects rhythm detection when data are limited and/or noisy. In particular, JTK_CYCLE, F24, and ANOVA consistently outperform the other methods and offer distinct advantages for certain types of data. Our improved method, empirical JTK_CYCLE with asymmetry search, performs best of all for data that include asymmetric waveforms. Application of our improved method, empirical JTK_CYCLE with asymmetry, to a metadataset of whole head <italic>D. melanogaster</italic> circadian microarrays [<xref ref-type="bibr" rid="pcbi.1004094.ref027">27</xref>] reveals a strong lights-on peak in expression for genes involved in glutathione metabolism, high enrichment for genes involved in oxidation reduction, many more metabolic genes cycling than previously appreciated, and rhythmic genes with transcripts that have alternative splicings.</p>
+</sec>
+<sec id="sec002" sec-type="materials|methods">
+<title>Methods</title>
+<sec id="sec003">
+<title>Overview</title>
+<p>The methods that we consider are general and can be applied to detecting periodic behavior in any context, but we describe them here in terms of searching for circadian rhythms in gene expression for clarity. The methods that we test are cyclohedron test [<xref ref-type="bibr" rid="pcbi.1004094.ref020">20</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref021">21</xref>], address reduction [<xref ref-type="bibr" rid="pcbi.1004094.ref022">22</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref023">23</xref>], stable persistence [<xref ref-type="bibr" rid="pcbi.1004094.ref024">24</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref025">25</xref>], F24 [<xref ref-type="bibr" rid="pcbi.1004094.ref031">31</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref032">32</xref>], one-way analysis of variance (ANOVA) [<xref ref-type="bibr" rid="pcbi.1004094.ref027">27</xref>], and JTK_CYCLE [<xref ref-type="bibr" rid="pcbi.1004094.ref026">26</xref>]. We describe each briefly below and note specific features; additional details can be found in the references introducing the methods.</p>
+<p>The methods can be broadly categorized as tests with and without reference waveforms. Cyclohedron test, address reduction, stable persistence, and ANOVA seek to identify patterns without specifying the waveform <italic>a priori</italic>. Address reduction, cyclohedron test, and stable persistence test for monotonicity. ANOVA compares the means of different time points with their variances to determine if differences are significant.</p>
+<p>In contrast, F24 and JTK_CYCLE compare the time series in question to a reference waveform, which is typically sinusoidal. These methods also test for a specific period. As mentioned above, here we assume a period of 24 h, but the period of the reference can be varied, in the same manner that the phase can be varied, to search for rhythms on other time scales.</p>
+<sec id="sec004">
+<title>Cyclohedron test</title>
+<p>Cyclohedron test [<xref ref-type="bibr" rid="pcbi.1004094.ref020">20</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref021">21</xref>] maps data to a cyclohedron and joins data points into sets according to their adjacency in rank-ordering. Monotonicity is quantified by how the sizes of the sets scale as more data points are included. Cyclohedron test has an exact null distribution computable from a generating function. The domain of test statistics increases very quickly with the number of data points, however, so Monte Carlo (MC) sampling, in which representations of the null model are randomly generated and evaluated, is required to estimate <italic>p</italic>-values if there are more than approximately 20 time points due to the computational cost of the generating function.</p>
+</sec>
+<sec id="sec005">
+<title>Address reduction</title>
+<p>Address reduction [<xref ref-type="bibr" rid="pcbi.1004094.ref022">22</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref023">23</xref>] measures the entropy of the dataset by comparing the rank-ordering of adjacent time points. Low entropy data are monotonic and score higher in the method. The null distribution for address reduction is estimated by MC sampling.</p>
+</sec>
+<sec id="sec006">
+<title>Stable persistence</title>
+<p>In stable persistence [<xref ref-type="bibr" rid="pcbi.1004094.ref024">24</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref025">25</xref>], local minima are paired with surrounding local maxima, and the “persistences” of these features are characterized by the differences in ranks of the paired extrema. A hierarchy of such features is established, and the test compares the global persistence to local ones. In this way, stable persistence tries to robustly assess overall monotonicity of a time series. The null distribution for stable persistence is estimated by MC sampling.</p>
+</sec>
+<sec id="sec007">
+<title>Analysis of variance (ANOVA)</title>
+<p>One-way ANOVA is a standard statistical test of the equivalence of means in several groups. In this case, each time point is a different group, and ANOVA is equivalent to testing for any statistically significant variation across the time points. Because expression measurements are averages over many cells and different time points come from different samples (as the measurement is destructive), only synchronized, consistent variation across all samples can generate a statistically significant trend. By this reasoning, significant changes in expression across time points can be attributed to time-dependent expression within the population, such as circadian rhythms. ANOVA tests for these time-dependent changes in expression. ANOVA has an exact null distribution derived from an assumption of normally distributed data; unlike the other five methods, however, ANOVA requires replicates to estimate the variance of experimental measurements at each time point.</p>
+</sec>
+<sec id="sec008">
+<title>24-hour Fourier projection (F24)</title>
+<p>F24 [<xref ref-type="bibr" rid="pcbi.1004094.ref031">31</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref032">32</xref>] assesses periodicity by focusing on the 24 h period of the Fourier transform of the data. The test statistic for F24 is the projection of the data onto the 24 h Fourier basis function, and the null distribution is obtained by recomputing the test statistic over repeated random permutations of the data. The phase is determined by projecting the data onto the cosine part of the Fourier basis function and finding the optimal phase for the projection. We find that the null distribution can be modeled by the Gamma distribution (<xref ref-type="supplementary-material" rid="pcbi.1004094.s001">S1 Fig</xref>.), which we parameterize from the mean and variance of the null distribution. We estimate the null distribution from a small number of permutations (usually 100). This allows more rapid and precise computation of <italic>p</italic>-values than can be obtained by standard permutation. Testing periods other than 24 h is accomplished simply by changing the period of the Fourier basis function used to compute the test statistic.</p>
+</sec>
+<sec id="sec009">
+<title>Jonckheere-Terpstra-Kendall cycle (JTK_CYCLE)</title>
+<p>JTK_CYCLE [<xref ref-type="bibr" rid="pcbi.1004094.ref026">26</xref>] computes the Kendall <italic>τ</italic> rank correlation coefficient between the data and a reference function over a range of possible reference function phases. For two time series <inline-formula id="pcbi.1004094.e001"><mml:math id="M1" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>x</mml:mi><mml:mo>⃗</mml:mo></mml:mover><mml:mo>=</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>x</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>x</mml:mi><mml:mn>2</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:mo>…</mml:mo><mml:mo>,</mml:mo><mml:msub><mml:mi>x</mml:mi><mml:mi>n</mml:mi></mml:msub><mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> and <inline-formula id="pcbi.1004094.e002"><mml:math id="M2" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>⃗</mml:mo></mml:mover><mml:mo>=</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>y</mml:mi><mml:mn>1</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mi>y</mml:mi><mml:mn>2</mml:mn></mml:msub><mml:mo>,</mml:mo><mml:mo>…</mml:mo><mml:mo>,</mml:mo><mml:msub><mml:mi>y</mml:mi><mml:mi>n</mml:mi></mml:msub><mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula>,
+<disp-formula id="pcbi.1004094.e003"><alternatives><graphic id="pcbi.1004094.e003g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004094.e003"/><mml:math id="M3" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>τ</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mover accent="true"><mml:mi>x</mml:mi> <mml:mo>⃗</mml:mo></mml:mover><mml:mo>,</mml:mo> <mml:mover accent="true"><mml:mi>y</mml:mi> <mml:mo>⃗</mml:mo></mml:mover> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mfrac><mml:mrow><mml:msub><mml:mo>∑</mml:mo> <mml:mrow><mml:mn>1</mml:mn> <mml:mo>≤</mml:mo> <mml:mi>i</mml:mi> <mml:mo>&lt;</mml:mo> <mml:mi>j</mml:mi> <mml:mo>≤</mml:mo> <mml:mi>n</mml:mi></mml:mrow></mml:msub> <mml:mrow><mml:mtext>sgn</mml:mtext> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>x</mml:mi> <mml:mi>j</mml:mi></mml:msub> <mml:mo>-</mml:mo> <mml:msub><mml:mi>x</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>·</mml:mo> <mml:mtext>sgn</mml:mtext> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>y</mml:mi> <mml:mi>j</mml:mi></mml:msub> <mml:mo>-</mml:mo> <mml:msub><mml:mi>y</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mrow> <mml:mrow><mml:mfrac><mml:mn>1</mml:mn> <mml:mn>2</mml:mn></mml:mfrac> <mml:mi>n</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>n</mml:mi> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mfrac> <mml:mspace width="4pt"/></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(1)</label></disp-formula>
+where sgn(<italic>x</italic>) is −1 if <italic>x</italic> &lt; 0 and +1 if <italic>x</italic>&gt;0. The numerator is the number of pairs that vary concordantly between the two time series minus the number that vary discordantly (<xref ref-type="fig" rid="pcbi.1004094.g001">Fig. 1A</xref>). Every possible pair is included, not just ones between neighboring points in the time series. The denominator is the total number of pairs, which normalizes the value of <italic>τ</italic> to the range [−1, 1]. Perfectly correlated series score <italic>τ</italic> = 1, perfectly anti-correlated series score <italic>τ</italic> = −1, and uncorrelated series score <italic>τ</italic> = 0. Like the cyclohedron test, the null distribution for JTK_CYCLE can be computed exactly from a generating function [<xref ref-type="bibr" rid="pcbi.1004094.ref033">33</xref>], although again the test statistic domain grows quickly with time series size (becoming impractically large at 100–200 time points with present computing power). However, for large time series the JTK_CYCLE null distribution is approximately normal, allowing for a convenient, fast <italic>p</italic>-value estimate.</p>
+<fig id="pcbi.1004094.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004094.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>JTK_CYCLE compares all possible pair relations for a time series to those for a reference waveform.</title>
+<p>(A) JTK_CYCLE tests for pairwise agreement between a reference (blue) and a signal (cyan) time series. Three discordant pairwise relationships are indicated by red lines. (B) The previous implementation compared a time series to a set of phase-shifted cosines. (C) We add a set of asymmetric waveforms to the reference. An example is shown here with the same phases as in A.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.g001"/>
+</fig>
+</sec>
+</sec>
+<sec id="sec010">
+<title>Improvements to the JTK_CYCLE method</title>
+<p>It is important to note that <italic>τ</italic> (<xref ref-type="disp-formula" rid="pcbi.1004094.e003">Eq. 1</xref>) is calculated for a specific reference time series, and thus JTK_CYCLE typically tests against a family of curves (e.g., to consider the possible phases of a waveform, as illustrated in <xref ref-type="fig" rid="pcbi.1004094.g001">Fig. 1B</xref>). It is thus necessary to account for multiple hypothesis testing across reference waveforms in assessing the significance of the results. Hughes <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004094.ref026">26</xref>] employed the Bonferroni correction [<xref ref-type="bibr" rid="pcbi.1004094.ref034">34</xref>] in their original formulation and implementation of the method. This method is known to be conservative [<xref ref-type="bibr" rid="pcbi.1004094.ref034">34</xref>], and we illustrate this fact here explicitly for JTK_CYCLE (<xref ref-type="fig" rid="pcbi.1004094.g002">Fig. 2</xref>). These considerations motivate a new procedure for estimating the significance of the results, which we describe. We end this section by discussing the comparison of time series to reference waveforms (<xref ref-type="fig" rid="pcbi.1004094.g001">Fig. 1C</xref>) other than the cosine waveform that was used originally. Together, our improvements allow for the JTK_CYCLE method to include additional reference waveforms in its rhythm detection without compromising sensitivity and specificity.</p>
+<fig id="pcbi.1004094.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004094.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Empirical <bold>p</bold>-values are uniformly distributed for the null model of JTK_CYCLE.</title>
+<p><italic>P</italic>-values versus their ranks from lowest (most significant) to highest (least significant) for JTK_CYCLE testing phases at 2 h intervals (green line) or phases and asymmetries at 2 h intervals (blue line) with time series consisting of Gaussian noise. Unbiased estimates should follow the black line (see text). (A) “Initial” <italic>p</italic>-values from JTK_CYCLE with multiple hypothesis testing underestimate the true <italic>p</italic>-values. (B) The Bonferroni correction results in <italic>p</italic>-values that are too high (less significant). (C) The Benjamini-Hochberg correction performs better than the Bonferroni correction but still results in <italic>p</italic>-values that are generally too high. (D) Empirical <italic>p</italic>-values that we calculate by permutation are close to uniformly distributed, as desired; their correspondence to the null model improves as the number of hypotheses tested increases.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.g002"/>
+</fig>
+<sec id="sec011">
+<title>Empirical <italic>p</italic>-values</title>
+<p>By definition, a <italic>p</italic>-value is the likelihood of obtaining a test statistic equal to or more extreme than the value that is observed if the null hypothesis is true—it increases cumulatively as one progresses through a set of rank ordered test statistics. In the case of JTK_CYCLE, under the null hypothesis, time series values are independent (and generated by the same noise distribution) and so the rank ordering of time series values is random. For a dataset generated from this null model, the <italic>p</italic>-values should be uniformly distributed from 0 to 1, exclusive: the highest Kendall’s <italic>τ</italic> out of <italic>N</italic> tests should have a <italic>p</italic>-value of 1/(<italic>N</italic> + 1), the second highest test statistic has a <italic>p</italic>-value of 2/(<italic>N</italic> + 1), and the <italic>i</italic><sup><italic>th</italic></sup> highest test statistic has a <italic>p</italic>-value of <italic>i</italic>/(<italic>N</italic> + 1) [<xref ref-type="bibr" rid="pcbi.1004094.ref035">35</xref>]. Restated, the <italic>p</italic>-values should be a linear function of the ranks (black lines in <xref ref-type="fig" rid="pcbi.1004094.g002">Fig. 2</xref>).</p>
+<p>JTK_CYCLE computes the Kendall <italic>τ</italic> values for all the reference time series against the signal of interest and then performs a selection step for the lowest <italic>p</italic>-value (i.e., the highest <italic>τ</italic>), which we refer to here as the “initial” <italic>p</italic>-value. This procedure biases the <italic>p</italic>-values (the blue and green lines in <xref ref-type="fig" rid="pcbi.1004094.g002">Fig. 2A</xref>) such that they underestimate the true probability of obtaining test statistics by chance (the black line in <xref ref-type="fig" rid="pcbi.1004094.g002">Fig. 2A</xref>). The previous version of JTK_CYCLE corrects for underestimating the <italic>p</italic>-values with the Bonferroni correction, which controls the family-wide error rate (FWER) by multiplying the <italic>p</italic>-values by the number of hypothesis tests being performed. The FWER is the probability that there is at least one false positive for a given threshold. Therefore, a threshold of 0.01 means that there is a 1% chance that the list of time series with a Bonferroni adjusted <italic>p</italic>-value below 0.01 contains a false positive. This method, while rigorous, is overly conservative and overcompensates for the bias that comes from selecting the lowest <italic>p</italic>-value (blue and green lines in <xref ref-type="fig" rid="pcbi.1004094.g002">Fig. 2B</xref>). The likelihood of false positives is greatly reduced, but so is the likelihood of identifying true positives.</p>
+<p>A common alternative to the Bonferroni correction is the Benjamini-Hochberg procedure [<xref ref-type="bibr" rid="pcbi.1004094.ref036">36</xref>], which seeks to control the false discovery rate (FDR). The FDR is the fraction of the time series that are identified as cycling that are false positive. For example, a Benjamini-Hochberg adjusted <italic>p</italic>-value cutoff of 0.05 means that 5% of the positives are false. This is a less stringent constraint than the FWER. In this procedure, the <italic>p</italic>-values are also multiplied by the number of hypotheses tested, as in the Bonferroni procedure. However, the <italic>p</italic>-values are additionally ordered from lowest to highest and then divided by their rank order (the lowest <italic>p</italic>-value has rank order 1, the second highest <italic>p</italic>-value has rank order 2, and so on). The <italic>p</italic>-values are also adjusted such that there is no change in ordering: if the originally lowest <italic>p</italic>-value is adjusted so that it is higher than the originally second lowest <italic>p</italic>-value, the lowest <italic>p</italic>-value takes the value of the adjusted second <italic>p</italic>-value so that the ordering is not violated. The same holds for the relationship between the second and the third lowest <italic>p</italic>-values and so forth. While the Benjamini-Hochberg procedure is a reasonable approach to multiple hypothesis testing in general, it does not account for the selection step in JTK_CYCLE; it still is thus overly conservative (<xref ref-type="fig" rid="pcbi.1004094.g002">Fig. 2C</xref>).</p>
+<p>Consequently, we instead numerically compute the null distribution by applying the full JTK_CYCLE procedure to time series in which the values have random rank orders. Since we test a family of curves (e.g., spanning phases), we focus on positive correlations and compute one-sided <italic>p</italic>-values. In the present study, these “empirical” <italic>p</italic>-values are based on 2 × 10<sup>6</sup> random time series and are nearly uniformly distributed, as desired (<xref ref-type="fig" rid="pcbi.1004094.g002">Fig. 2D</xref>). Though this empirical calculation is more computationally expensive than the application of the Bonferroni correction or the Benjamini-Hochberg correction, we show that empirically calculating the <italic>p</italic>-values results in better rhythmic detection and biological insight. We term this improved method <italic>empirical</italic> JTK_CYCLE, as we empirically calculate the <italic>p</italic>-values after selecting the highest <italic>τ</italic> value for each time series.</p>
+<p>Below, we compare the Bonferroni adjusted <italic>p</italic>-values, Benjamini-Hochberg adjusted <italic>p</italic>-values, and empirical <italic>p</italic>-values directly. These have been adjusted on the basis of correcting for multiple hypothesis testing across different waveforms for a single time series. When we compare different time series to each other, we have to correct again for multiple hypothesis testing, this time across time series. To do this we use the Benjamini-Hochberg correction, as in the original implementation of the method [<xref ref-type="bibr" rid="pcbi.1004094.ref026">26</xref>]. When we refer to the Bonferroni, Benjamini-Hochberg, or empirical method, we refer to corrections across different waveforms for a given time series; all corrections across time series are with the Benjamini-Hochberg method. While the Bonferroni adjusted <italic>p</italic>-values, Benjamini-Hochberg adjusted <italic>p</italic>-values, and empirical <italic>p</italic>-values represent different quantities (the FWER, the FDR, and the <italic>p</italic>-values, respectively) they are all at least as conservative as the “true” <italic>p</italic>-values in the range that we are examining (compare blue and green lines with black lines in Figs. <xref ref-type="fig" rid="pcbi.1004094.g002">2B, C, and D</xref>). This means that the FDRs that result from the Benjamini-Hochberg correction between time series are more conservative than the true FDRs.</p>
+</sec>
+<sec id="sec012">
+<title>Asymmetric waveforms</title>
+<p>There is no <italic>a priori</italic> reason biological time series need be sinusoidal [<xref ref-type="bibr" rid="pcbi.1004094.ref037">37</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref038">38</xref>], so it is of interest to test additional waveforms. In this regard, it is important to keep in mind that for JTK_CYCLE the rank order of the points in the reference matters, so we can represent a wide range of simple waveforms (e.g., <xref ref-type="fig" rid="pcbi.1004094.g001">Fig. 1C</xref>) by a triangle function with a specified separation between the maximum and the minimum. This allows us to avoid functionally defining an asymmetric cosine waveform. For the time series that we examine in this paper the difference is insignificant (<xref ref-type="supplementary-material" rid="pcbi.1004094.s002">S2 Fig</xref>.). We term the size of the interval from the maximum to the minimum the “asymmetry”, and we express the asymmetry here in units corresponding to a 24 h period. In this notation, a cosine has an asymmetry of 12 h, while a time series with an asymmetry of 8 h has a more rapid fall than rise (the values decrease over 8 h and increase over 16 h). The triangle reference waveforms have the same monotonicity as a cosine, and we keep the convention that the peak value corresponds to the phase of the time series.</p>
+<p>To parse the effects of empirically calculating the <italic>p</italic>-values from those of including asymmetric waveforms, we test our form of JTK_CYCLE with and without asymmetric reference time series. In the former case, we denote searching over asymmetry values in steps of 2 h “by 2 h”, in steps of 4 h “by 4 h”, etc. We expect these additional waveforms to be more sensitive to asymmetric patterns of gene expression, resulting in discovery of additional rhythmic time series. It is important, however, to be cognizant of the fact that we are increasing the total number of hypotheses that we test, resulting in a greater need for the empirical correction procedure. <xref ref-type="fig" rid="pcbi.1004094.g002">Fig. 2</xref> shows the different correction methods for the minimum <italic>p</italic>-values for JTK_CYCLE with searching over 12 phases (every 2 h, green line) or searching over 12 phases and 11 asymmetries (every 2 h, blue line). The added hypotheses for searching across asymmetries result in larger selection bias when choosing the highest <italic>τ</italic> value (<xref ref-type="fig" rid="pcbi.1004094.g002">Fig. 2A</xref>) as well as larger correction biases (<xref ref-type="fig" rid="pcbi.1004094.g002">Fig. 2B and C</xref>) than when only searching across phases. The empirical calculation of the <italic>p</italic>-values improves as the number of tests increases as well (<xref ref-type="fig" rid="pcbi.1004094.g002">Fig. 2</xref>), further justifying its use.</p>
+</sec>
+</sec>
+</sec>
+<sec id="sec013" sec-type="results">
+<title>Results</title>
+<sec id="sec014">
+<title>Simulated data benchmarks</title>
+<p>To assess the performance of our empirical form of JTK_CYCLE against the original form as well as other methods, we utilize two simulated datasets. We employ the first simulated dataset to understand the sensitivity of each method to different shapes of time series. It comprises four types of waveforms: sine, ramp (a triangle with maximum asymmetry), impulse, and step, as well as an equal number of time series consisting of Gaussian noise. We compare all the precision-recall curves for all the methods on these data via the area under the receiver operating characteristic (AUROC), a measure of the sensitivity and specificity of the rhythm detection methods that does not depend on the proportions of positives and negatives in the dataset. The second simulated dataset contains 10% rhythmic time series of triangle waveform with uniformly distributed phases and asymmetries and 90% time series consisting solely of Gaussian noise. We use it to further assess the importance of considering asymmetric waveforms, and we explore how multiple hypothesis correction impacts the results when the true positives represent a relatively small fraction of the simulated time series, as we expect to be the case in genome-wide studies.</p>
+<sec id="sec015">
+<title>F24, ANOVA, and JTK_CYCLE outperform other methods</title>
+<p>To construct the first dataset described immediately above, for each of the four waveforms in <xref ref-type="fig" rid="pcbi.1004094.g003">Fig. 3A</xref> we generated 10,000 time series with uniformly distributed random phase shifts (always with a 24 h period) and added Gaussian noise to each point with a standard deviation of 25% or 50% of the total waveform amplitude, examples of which can be seen in <xref ref-type="fig" rid="pcbi.1004094.g003">Fig. 3B</xref>. We tested data with 4, 6, 8, or 12 evenly spaced points per 24 h period, and 1, 2, 3, or 4 replicates per time point (which is the equivalent of 1, 2, 3, or 4 periods per time series). At each spacing and replicate count we also generated 10,000 time series of Gaussian noise to serve as true negatives. The cyclohedron test, address reduction, stable persistence, and F24 are designed for single-replicate data, so we treated replicates as subsequent days of data, yielding multiple-period time series.</p>
+<fig id="pcbi.1004094.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004094.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Examples of simulated data.</title>
+<p>(A) Different waveforms simulated with a 24 h period. From left to right, cosine, ramp, step, and impulse (width at half-max is 2 h). Waveforms in figure may not be to scale. (B) Cosine in black, with Gaussian noise with standard deviation of 25% (blue) or 50% (green) of amplitude.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.g003"/>
+</fig>
+<p>We scored each method by computing the area under the receiver operating characteristic curve (AUROC). The receiver operating characteristic (ROC) curve plots the true positive rate (TPR) as a function of the false positive rate (FPR) as the threshold for calling a time series as a positive is varied. The TPR and FPR are the fractions of the 10,000 simulated or Gaussian noise time series determined to be rhythmic at a threshold, respectively, and the threshold is varied over the entire range of false positive scores, such that the FPR ranges from 0 to 1. The AUROC is the integral of this curve; perfect classifiers have an AUROC of 1.0, while random classifiers have an AUROC of 0.5. An advantage of the AUROC as a metric is that it does not depend on the proportions of positives and negatives in the dataset because the TPR and FPR are calculated separately, i.e., they are normalized by the total number of positives and negatives, respectively. For stable persistence, the cyclohedron test, and address reduction, we calculated the AUROC from the test statistics themselves as opposed to the <italic>p</italic>-values, which we use for the latter three methods. Although the AUROC for JTK_CYCLE can be in principle be computed directly from the Kendall’s <italic>τ</italic> statistic, we include the multiple hypothesis testing correction because it impacts the TPR and FPR in practice; in particular, aggressive correction can lead to a loss of rank information because <italic>p</italic>-values must be less than or equal to 1.</p>
+<p>The performance of the different methods at 50% noise can be seen in <xref ref-type="fig" rid="pcbi.1004094.g004">Fig. 4</xref> (performance at 25% noise can be seen in <xref ref-type="supplementary-material" rid="pcbi.1004094.s003">S3 Fig</xref>.). ANOVA requires multiple measurements at each time point to determine the variance, so we define ANOVA to have an AUROC of 0.5 (performs no better than random guessing) when there is only one replicate. At 25% noise and high sampling rate, the cyclohedron test, address reduction, and stable persistence all perform roughly equivalent to the JTK_CYCLE methods, F24, and ANOVA. However, the former do noticeably worse than the latter at 50% noise. Empirical JTK_CYCLE out-performs original JTK_CYCLE, F24, and ANOVA for the sine and ramp waveforms, while ANOVA generally outperforms the other methods for the step and impulse waveforms.</p>
+<fig id="pcbi.1004094.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004094.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>AUROCs for simulated data with 50% noise (standard deviation of Gaussian noise as a percent of amplitude).</title>
+<p>An AUROC value of 1 represents perfect discrimination between rhythmic and arrhythmic time series, and a value of 0.5 corresponds to random guessing. In each panel, the number of replicates increases from 1 to 4 replicates from left to right, and the number of sampled points per period is indicated by color. AUROC for single-replicate ANOVA (for which the method is undefined) is set at 0.5 exactly. Imp: impulse waveform, Cyclo: cyclohedron test, Address: address reduction, Stable: stable persistence, JTK: original JTK_CYCLE with Bonferroni correction, JTK_BH: JTK_CYCLE with Benjamini-Hochberg correction with symmetric triangle reference, eJTK: empirical JTK_CYCLE with symmetric triangle reference, JTK_BH_aby2: JTK_CYCLE with Benjamini-Hochberg correction and triangle references with asymmetries from 2 to 22 h by 2 h, eJTK_aby2: empirical JTK_CYCLE with triangle references with asymmetries from 2 to 22 h by 2 h.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.g004"/>
+</fig>
+<p>While the empirical calculation approximates the null model well, it does not fully prevent multiple hypothesis testing from weakening the ability to identify rhythmic time series. Therefore, we do not sample phases and asymmetries more densely than the resolution of the data (e.g., if the experimental time points are spaced every 4 h, then we do not test phase values spaced every 2 h). We break this rule in <xref ref-type="fig" rid="pcbi.1004094.g004">Fig. 4</xref> for the time series with 4–8 points for consistency of the figure. Sampling phases and asymmetries more densely than the resolution of the data needlessly reduces the power of our test, but does not affect the analysis in <xref ref-type="fig" rid="pcbi.1004094.g004">Fig. 4</xref>.</p>
+<p>The JTK_CYCLE with Benjamini-Hochberg correction (JTK_BH) has AUROC values that are in between the AUROC values for the original JTK_CYCLE with Bonferroni correction (JTK) and empirical JTK_CYCLE. This is to be expected since the Benjamini-Hochberg method is more conservative than the empirical method but less conservative than the Bonferroni method. An additional detail is that the original JTK_CYCLE here uses a cosine as a reference waveform, in comparison to the triangle used by the other JTK_CYCLE methods. The methods that use the triangle waveform do not do significantly worse than the methods that use the cosine waveform in any of the cases, justifying the use of the triangle waveform for rhythm detection.</p>
+<p>The cyclohedron test, address reduction, and stable persistence fail to improve as the number of replicates increases, and perform worse for low sampling rates. For example, a sine wave sampled at 4 time points per period for multiple periods has extrema at every other time point. Because cyclohedron test, address reduction, and stable persistence are essentially tests of monotonicity, they fail to detect the sparse periodic pattern in such data. In fact sparsely sampled data sometimes results in scores consistently lower than expected by chance, leading to the AUROC values less than 0.5 for these methods on some datasets in <xref ref-type="fig" rid="pcbi.1004094.g004">Fig. 4</xref>.</p>
+<p>In summary, we find that all the methods tested can identify rhythmic expression patterns when the sampling density, replicate number, and signal-to-noise ratios are high. If data are sparse or noisy, however, method choice can significantly impact rhythm detection. In such cases, we find that ANOVA, F24, and JTK_CYCLE consistently better distinguish true and false positives. Empirical JTK_CYCLE outperforms ANOVA, F24, and original JTK_CYCLE for sine and ramp waveforms, but ANOVA performs better for impulse waveforms.</p>
+</sec>
+<sec id="sec016">
+<title>Increasing replicate number for a fixed number of total measurements improves sensitivity</title>
+<p>The total number of samples required for an experiment is the product of the number of time points and the number of replicates. Consequently, it is important to consider how best to apportion resources. To this end, in <xref ref-type="fig" rid="pcbi.1004094.g005">Fig. 5</xref> we compare possible combinations of numbers of time points and replicates that give rise to 12 or 24 total samples (see <xref ref-type="supplementary-material" rid="pcbi.1004094.s004">S4 Fig</xref>. for additional waveforms and numbers of samples). For this comparison, we consider sampling at a density of 4 points per period to be the minimal requirement for the identification of rhythmicity. Furthermore, we focus on genome-wide experiments where the experimental design is such that there is no meaningful difference between data collected over multiple periods and data collected at the same sampling rate in replicate over a single period. This assumption does not hold for experiments that follow the response to a synchronization event or other perturbation because time points from successive periods are not equivalent.</p>
+<fig id="pcbi.1004094.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004094.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Higher numbers of replicates provide greater sensitivity compared to increased density of time points for the same number of samples.</title>
+<p>Results shown are AUROC values for sine and ramp simulated data with 50% noise (see <xref ref-type="supplementary-material" rid="pcbi.1004094.s004">S4 Fig</xref>. for additional waveforms and sample numbers). “Points” refers to the number of time points per period (“Points 12” refers to 12 points per period) and “Replicates” refers to the number of replicates per time series (“Replicates 2” refers to 2 samples per time point). Together, “Points 12 Replicates 2” refers to a time series that consists of 12 time points per period with 2 replicates per time point. Abbreviations are the same as in <xref ref-type="fig" rid="pcbi.1004094.g004">Fig. 4</xref>.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.g005"/>
+</fig>
+<p>To optimize the performance of ANOVA, it is best to maximize the number of replicates at the expense of the number of time points, which is not surprising given the importance of accurately estimating the variance in this test. For JTK_CYCLE and F24, the choice is less clear, but greater improvement is obtained with replicate increases in the case of the step and impulse waveforms (<xref ref-type="supplementary-material" rid="pcbi.1004094.s004">S4 Fig</xref>.). By contrast, original JTK_CYCLE performs slightly better for sinusoidal waveforms with higher numbers of time points, but empirical JTK_CYCLE does not. Overall, the results suggest that limited resources are better directed at increasing replicate numbers than the density of time points.</p>
+</sec>
+<sec id="sec017">
+<title>Interpolated pseudo-replicates improve ANOVA sensitivity</title>
+<p>Given the importance of replicates in improving sensitivity, we also explored interpolating neighboring time points to create pseudo-replicates, which would double the number of time points in the data (<xref ref-type="supplementary-material" rid="pcbi.1004094.s005">S5 Fig</xref>.). However, this requires recomputing null distributions via MC sampling because the construction procedure introduces correlations between data points, resulting in <italic>p</italic>-value underestimates if not corrected. We found that the pseudo-replicates improved the performance mainly of ANOVA when the replicate number was low (e.g., 1 or 2); in particular, they allowed ANOVA to be applied and give good results for the single replicate case (<xref ref-type="supplementary-material" rid="pcbi.1004094.s006">S6 Fig</xref>.). We stress that 2 or more biological replicates should be obtained if at all possible, and we do not recommend using the pseudo-replicate approach if sufficient data are available.</p>
+</sec>
+<sec id="sec018">
+<title>Empirical JTK_CYCLE outperforms other methods after correcting for multiple hypothesis testing</title>
+<p>Our second benchmark comprises 15,840 times series, which was chosen to allow equal numbers of time series with different phases and asymmetries. 10% of the time series were generated from a triangle waveform with noise added and 90% were generated entirely from Gaussian noise. This composition was chosen to be reflective of a genome-wide dataset. The rhythmic time series were 24 points long, with 2 periods, each with 12 time points. Here, we analyze two such datasets: one with only asymmetry of 12 h (analogous to a cosine) and one with a uniform sampling of possible asymmetries (by 2 h from 2 to 22 h). In both cases, phases (peak values) were uniformly distributed over the possible discrete values. We added Gaussian noise with a standard deviation of either 25% or 50% of the amplitude of the time series, as previously described. We tested these data against the empirical JTK_CYCLE method with various asymmetries as well as original JTK_CYCLE, ANOVA, F24, and Benjamini-Hochberg adjusted JTK_CYCLE with various asymmetries for comparison. In all cases the JTK_CYCLE methods used the triangle waveform as the reference waveform, as it was the waveform used to generate the data.</p>
+<p>We show cumulative histograms of the number of cycling time series identified for a given significance cutoff in <xref ref-type="fig" rid="pcbi.1004094.g006">Fig. 6</xref>. The methods shown yield comparable numbers for <italic>p</italic>-values less than 0.05, a reasonable threshold (<xref ref-type="fig" rid="pcbi.1004094.g006">Fig. 6A and B</xref>). However, in reporting total cycling numbers, it is important to correct for the fact that we are testing many time series (as opposed to testing many waveforms for a single time series, as previously). The <italic>p</italic>-values of empirical JTK_CYCLE are approximately uniformly distributed (<xref ref-type="fig" rid="pcbi.1004094.g002">Fig. 2D</xref>), as are those of ANOVA and F24, which satisfies the assumptions of the Benjamini-Hochberg correction [<xref ref-type="bibr" rid="pcbi.1004094.ref036">36</xref>], described above, so we use it for this purpose. We also apply the Benjamini-Hochberg correction to the original JTK_CYCLE with the intra-time series Bonferroni and Benjamini-Hochberg corrections discussed previously, which results in underestimates of the true FDR since their adjusted <italic>p</italic>-values are conservative (<xref ref-type="fig" rid="pcbi.1004094.g002">Fig. 2B and C</xref>).</p>
+<fig id="pcbi.1004094.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004094.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>Empirical JTK_CYCLE outperforms the other methods in the presence and absence of asymmetric time series.</title>
+<p>Simulated data with rhythmic time series without asymmetry (left, A and C) or with evenly distributed asymmetry (right, B and D) were tested with different methods. The cumulative histograms are plotted before (A and B) and after (C and D) Benjamini-Hochberg multiple hypothesis correction across time series. The vertical axis shows the number of time series with a <italic>p</italic>-value (P) (A and B) or false discovery rate (FDR, the Benjamini-Hochberg adjusted <italic>p</italic>-value) (C and D) below or equal to a significance threshold, shown on the horizontal axis. Results shown are for the second simulated dataset with 25% noise, but the effects of Benjamini-Hochberg correction are significantly greater at 50% noise (not shown). The method abbreviations are the same as those in <xref ref-type="fig" rid="pcbi.1004094.g004">Fig. 4</xref>. The legends of A and B correspond to C and D, respectively. The rightmost point on the horizontal axis is 0.2.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.g006"/>
+</fig>
+<p>In Figs. <xref ref-type="fig" rid="pcbi.1004094.g006">6C and D</xref>, we see that the performance of the methods differs considerably when controlling for the false discovery rate (FDR). For these curves, the proportion of false positives identified as cycling matches the FDR. Specifically, the Benjamini-Hochberg correction (for many time series) penalizes methods with many <italic>p</italic>-values clustered at relatively high values (corresponding to a rapid rise toward the right of Figs. <xref ref-type="fig" rid="pcbi.1004094.g006">6A and B</xref>, as for ANOVA and F24). Thus despite the fact that ANOVA and F24 perform comparably to JTK_CYCLE in the AUROC analysis (<xref ref-type="fig" rid="pcbi.1004094.g004">Fig. 4</xref>), their <italic>p</italic>-values provide less discrimination between time series, and thus they provide less sensitivity for a given FDR. In addition to looking at AUROC scores in <xref ref-type="fig" rid="pcbi.1004094.g004">Fig. 4</xref> and time series identification in Figs. <xref ref-type="fig" rid="pcbi.1004094.g006">6C and D</xref>, we also computed the Matthews Correlation Coefficient [<xref ref-type="bibr" rid="pcbi.1004094.ref039">39</xref>], which quantifies the quality of a binary classification. A score of 1 indicates that a method correctly identified all true positives and true negatives, while a score of −1 indicates that a method yielded all false positives and false negatives. <xref ref-type="supplementary-material" rid="pcbi.1004094.s007">S7 Fig</xref>. shows that the JTK_CYCLE methods have higher-quality classification ability than F24 and ANOVA for these simulated data. Furthermore, the figure shows that empirical JTK_CYCLE with asymmetry search performs equally well with and without asymmetric time series, whereas the JTK_CYCLE methods without asymmetry search perform worse when the dataset includes asymmetric time series.</p>
+<p>Therefore, in terms of genome-wide studies, empirical JTK_CYCLE with asymmetric waveforms is the method of choice for identifying rhythmic genes. <xref ref-type="supplementary-material" rid="pcbi.1004094.s008">S8 Fig</xref>. examines how the inclusion of different asymmetries affects rhythm detection.</p>
+</sec>
+</sec>
+<sec id="sec019">
+<title>Microarray metadataset</title>
+<p>Keegan <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004094.ref027">27</xref>] previously assembled a metadataset comprised of data from four DNA microarray studies of <italic>Drosophila melanogaster</italic> under light-dark (LD) conditions (from Ceriani [<xref ref-type="bibr" rid="pcbi.1004094.ref040">40</xref>], Claridge-Chang [<xref ref-type="bibr" rid="pcbi.1004094.ref018">18</xref>], Lin [<xref ref-type="bibr" rid="pcbi.1004094.ref041">41</xref>], and Ueda [<xref ref-type="bibr" rid="pcbi.1004094.ref042">42</xref>]). We do not include a fifth dataset from that study [<xref ref-type="bibr" rid="pcbi.1004094.ref015">15</xref>], because it was limited to dark-dark (DD) conditions. Here, we discuss issues that arise from merging data from different laboratories and use the resulting metadataset to test the methods. We find that empirical JTK_CYCLE with asymmetry search identifies a larger number of rhythmic genes and, in turn, enriched annotations among those genes, such as oxidation reduction, glutathione metabolism, and alternative splicing.</p>
+<sec id="sec020">
+<title>Z-score-based procedure for preparing the metadataset</title>
+<p>All of the measurements in the contributing studies are at intervals of 4 h. Time points for circadian LD time series are referenced as zeitgeber time points (ZT); the beginning of the light period is ZT0. Under 12 hours of light and 12 hours of dark, ZT24 is the equivalent of ZT0. Three studies sampled at ZT0, 4, 8, 12, 16, and 20, and the fourth (Ueda [<xref ref-type="bibr" rid="pcbi.1004094.ref042">42</xref>]) sampled at ZT1, 5, 9, 13, 17, and 21. We found that the differences in sampling protocols, together with variations from one laboratory to another, consistently gave rise to a jagged structure in the time series of known cycling genes (<xref ref-type="fig" rid="pcbi.1004094.g007">Fig. 7A</xref>). Microarray-wide normalization techniques such as quantile normalization were unable to produce curves consistent with independently measured profiles. Instead, we found that the best approach was to convert the values in each time series to Z-scores—i.e., for each gene in each dataset, we subtract its mean expression level and divide by its standard deviation. Then we pool the Z-scores to generate the metadataset. <xref ref-type="fig" rid="pcbi.1004094.g007">Fig. 7</xref> illustrates the effect of the processing step on <italic>Pdp1</italic>, a known cycling gene. This method is equivalent to treating measurements from the same zeitgeber time point as replicates. For probes that corresponded to the same gene, we chose the probe with the highest mean expression value to use in the analysis. This reduced 14,010 probes to 11,625 genes.</p>
+<fig id="pcbi.1004094.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004094.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Z-score normalization allows combining of time series from different datasets into smooth time series.</title>
+<p><italic>Pdp1</italic> gene expression from metadata before (A) and after (B) Z-score normalization. Light gray crosses indicate individual replicates, and the black curve is the mean.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.g007"/>
+</fig>
+<p>The metadata has many places where the values are not available (NA). To prevent the need to recalculate the null distribution for every pattern of NAs in the data for empirical JTK_CYCLE (there were 5005 unique NA permutations in the data), the NAs were replaced by random noise drawn from a Gaussian distribution with mean and standard deviation that match those of the data on the whole. While this adds noise to the time series, it should not have a large effect given that each time series has 57 points. To mitigate the impact of this procedure on our study, however, time series that had more then half their points as NA were discarded from the dataset, leaving 9,313 out of 11,625 genes. We consistently used the dataset resulting from these preprocessing steps for all our analysis to ensure that comparisons between methods were fair; where comparisons with and without NA substitution were possible, we found that NA substitution led to slight increases in cycling numbers in all cases except ANOVA (114 vs. 101). However, these differences did not change any of the ontological results (discussed below).</p>
+</sec>
+<sec id="sec021">
+<title>Analysis of microarray metadataset</title>
+<p>To evaluate the methods against genes for which we know the rhythmicity <italic>a priori</italic>, we compared the <italic>p</italic>-values for 6 positive examples (<italic>per</italic>, <italic>tim</italic>, <italic>vri</italic>, <italic>Pdp1</italic>, <italic>cry</italic>, and <italic>Clk</italic>) and 4 negative examples (<italic>cam</italic>, <italic>RpL32</italic>, <italic>cyc</italic>, and <italic>dco</italic>). <xref ref-type="supplementary-material" rid="pcbi.1004094.s009">S9 Fig</xref>. shows the performance of the different methods for the known positive and negative examples. Stable persistence, the cyclohedron test, and address reduction all have false negatives. The JTK_CYCLE methods, ANOVA, and F24, however, detect all of the known cycling genes and none of the non-cycling genes as rhythmic.</p>
+<p>Having again established F24, ANOVA, and JTK_CYCLE as the better methods, we now apply them to the full dataset (<xref ref-type="fig" rid="pcbi.1004094.g008">Fig. 8</xref>). As in <xref ref-type="fig" rid="pcbi.1004094.g006">Fig. 6</xref>, the Benjamini-Hochberg correction decreases the sensitivity of ANOVA and F24 relative to JTK_CYCLE for a given FDR (compare <xref ref-type="fig" rid="pcbi.1004094.g008">Fig. 8A</xref> with <xref ref-type="fig" rid="pcbi.1004094.g008">Fig. 8B</xref>). Choosing a Benjamini-Hochberg adjusted <italic>p</italic>-value cutoff of 0.05 (i.e., 5%), the number of genes and overlap between methods can be seen in Figs. <xref ref-type="fig" rid="pcbi.1004094.g008">8C and D</xref>. All the JTK_CYCLE methods outperform F24 and ANOVA. Empirical JTK_CYCLE with asymmetry search by 4 h (eJTK_aby4) identified the most genes, showing a clear improvement over the Bonferroni (JTK) and Benjamini-Hochberg (JTK_BH) methods with asymmetry search by 4 h (aby4); eJTK_aby4 also identified more cycling genes than methods without asymmetry search, and the genes were distinct.</p>
+<fig id="pcbi.1004094.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004094.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>Empirical JTK_CYCLE with asymmetry search of 4 h (eJTK_aby4) identifies more genes than ANOVA, F24, and the other JTK_CYCLE methods.</title>
+<p>(A) The vertical axis shows the number of genes with a <italic>p</italic>-value below or equal to the horizontal axis for the methods indicated. The rightmost point on the horizontal axis is 0.2. (B) The Benjamini-Hochberg correction for testing multiple genes impacts the relative performance of the different methods. The rightmost point on the horizontal axis is 0.2. The colors are the same as in A. (C) The number of genes with Benjamini-Hochberg adjusted <italic>p</italic>-values below 0.05 (blue) and below 0.20 (red) with the different methods is shown. (D) A comparison of the intersection (below the diagonal) and union (above the diagonal) of genes identified as rhythmic with Benjamini-Hochberg adjusted <italic>p</italic>-values less than 0.05 for the different methods. JTK: the original JTK_CYCLE method with Bonferroni correction. JTK_BH: the JTK_CYCLE method with Benjamini-Hochberg correction. eJTK: the JTK_CYCLE method with empirical calculation of the <italic>p</italic>-values. “_aby4” refers to an asymmetry search every 4 h (at 4, 8, 12, 16, and 20 h).</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.g008"/>
+</fig>
+<p>Interestingly, among the JTK_CYCLE methods without asymmetry search the Bonferroni and Benjamini-Hochberg methods identified more genes than the empirical method did. For JTK_CYCLE without asymmetry search, there were only 6 hypotheses tested per gene time series (for each of the 6 phases searched), for which the Bonferroni and Benjamini-Hochberg correction across waveforms is very slight. For JTK_CYCLE with asymmetry search every 4 h, the number of hypotheses tested becomes 30, for 6 different phases paired with 5 different asymmetries, which results in a more stringent correction by the Bonferroni and Benjamini-Hochberg methods. As experimental sampling rates and sampling densities enable more extensive searching of phases, periods, and asymmetries, we expect the advantage for empirical JTK_CYCLE relative to the original formulation to grow because the Bonferroni correction strongly penalizes adding hypothesis tests. Provided that sufficient permutations are performed, empirical JTK_CYCLE provides the more robust identification of rhythmic genes. Another way of viewing this difference between the inclusion and exclusion of asymmetry search is by examining the distributions of the Bonferroni-adjusted <italic>p</italic>-values against the empirical <italic>p</italic>-values, as in <xref ref-type="supplementary-material" rid="pcbi.1004094.s010">S10 Fig</xref>. With asymmetry search, the empirical <italic>p</italic>-values are significantly lower than the Bonferroni-adjusted <italic>p</italic>-values, a pattern that is less pronounced without asymmetry search.</p>
+<p>We examine the effect of searching multiple asymmetries with empirical JTK_CYCLE further in <xref ref-type="supplementary-material" rid="pcbi.1004094.s011">S11 Fig</xref>. Searching for rhythmic genes with asymmetries of 8 and 16 h alone yielded 4 more genes than searching for rhythmic genes with asymmetries of 4, 8, 12, 16, and 20 h, with an overlap of 293 genes and approximately 50 genes each that were separately called rhythmic by each method. Comparing the two sets of cycling genes in <xref ref-type="supplementary-material" rid="pcbi.1004094.s012">S12 Fig</xref>., we find that searching by 4 h excludes genes with asymmetries 8 to 16 h that are barely below the adjusted <italic>p</italic>-value of 0.05 (upper left quadrant), while searching at asymmetries of 8 and 16 h excludes genes that have extreme asymmetries.</p>
+<p>We also examined how our results depended on using a triangle vs. a cosine for the reference waveform. Figs. <xref ref-type="supplementary-material" rid="pcbi.1004094.s013">S13</xref> and <xref ref-type="supplementary-material" rid="pcbi.1004094.s014">S14</xref> show that there is no substantial difference in genes identified as cycling or in ontological results (discussed below). This can be attributed to the fact that across many time points (57 in the case of the metadataset), the differences between the cosine and triangle waveform are slight (<xref ref-type="supplementary-material" rid="pcbi.1004094.s002">S2 Fig</xref>.).</p>
+</sec>
+<sec id="sec022">
+<title>Comparison with Keegan <italic>et al</italic></title>
+<p>We compared our results to those of Keegan <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004094.ref027">27</xref>], an earlier analysis of this metadataset. There were two main differences in the way we constructed the dataset: we excluded time series that had more than half their values as NA, and we excluded the dark-dark (DD) McDonald dataset, as discussed above. Of the 200 genes identified as cycling by Keegan <italic>et al</italic>., 169 remained after pre-processing to remove time series with more than half of their values as NAs. Of those 169, 111 had Benjamini-Hochberg adjusted <italic>p</italic>-values less than 0.05 for the empirical JTK_CYCLE with asymmetry search by 4 h (eJTK_aby4). 58 genes that were identified as cycling by Keegan <italic>et al</italic>. were not identified by eJTK_aby4. <xref ref-type="supplementary-material" rid="pcbi.1004094.s015">S15 Fig</xref>. compares the cycling genes identified by Keegan <italic>et al</italic>. with the cycling genes identified by eJTK_aby4. Keegan <italic>et al</italic>. identified genes as cycling primarily on the basis of scoring well (<italic>p</italic> &lt; 0.05) on several tests following pre-screening by ANOVA. <xref ref-type="supplementary-material" rid="pcbi.1004094.s015">S15A Fig</xref>. shows a comparison of the number of tests passed after the ANOVA pre-screening with the Benjamini-Hochberg adjusted <italic>p</italic>-value from eJTK_aby4. While there appears to be a weak relation between the number of tests passed and the <italic>p</italic>-value, there is not a clear pattern that would enable one to predict the cycling genes common to both Keegan <italic>et al</italic>. and eJTK_by4. <xref ref-type="supplementary-material" rid="pcbi.1004094.s015">S15B Fig</xref>. shows the maximum amplitude measurements (after Z-scoring) for the genes identified as cycling by Keegan <italic>et al</italic>., which are organized by whether they are identified as cycling by eJTK_aby4 as well. The genes identified by Keegan <italic>et al</italic>. but not by eJTK_aby4 tend to have larger maximum amplitudes than the ones identified by both. The ANOVA pre-screening in Keegan <italic>et al</italic>. can account for this difference; our results with empirical JTK_CYCLE suggest that there are many cycling genes with lower amplitudes. <xref ref-type="supplementary-material" rid="pcbi.1004094.s015">S15C Fig</xref>. shows the asymmetries of the genes identified by Keegan <italic>et al</italic>. as cycling, as determined by eJTK_aby4. A large number of genes identified by Keegan <italic>et al</italic>., but not by eJTK_aby4, have asymmetry of 16 h. The bias in the earlier study may reflect the fact that one of the tests that Keegan <italic>et al</italic>. employs is based on correlation with the gene <italic>per</italic>, which has an asymmetry of 16 h. More generally, Keegan <italic>et al</italic>. fail to identify 231 genes as cycling that eJTK_aby4 identifies with Benjamini-Hochberg adjusted <italic>p</italic>-values below 0.05. Of these 231, 82 have Benjamini-Hochberg adjusted <italic>p</italic>-values below 0.01, 65 have values below 0.005, and 16 have values below 0.001.</p>
+</sec>
+<sec id="sec023">
+<title>Comparison with Wijnen <italic>et al</italic></title>
+<p>In addition to comparing our results to those of Keegan <italic>et al</italic>., we also compared our results to those of Wijnen <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004094.ref032">32</xref>], who identified 336 genes as rhythmic using an F24-based method. Again, we excluded time series that had more than half their values as NA, and we excluded the dark-dark (DD) McDonald dataset. <xref ref-type="supplementary-material" rid="pcbi.1004094.s016">S16 Fig</xref>. shows a comparison of the genes that are identified as rhythmic by eJTK_aby4, Keegan <italic>et al</italic>., and Wijnen <italic>et al</italic>. Whereas 31 genes that Keegan <italic>et al</italic>. identified as rhythmic were removed by the empirical JTK_CYCLE analysis pre-processing, 57 genes that were identified by Wijnen <italic>et al</italic>. were removed by the empirical JTK_CYCLE analysis pre-processing due to more than half their time points being NA. These genes are “unassigned” in <xref ref-type="supplementary-material" rid="pcbi.1004094.s016">S16A Fig</xref>. because an asymmetry estimate is not available. Wijnen <italic>et al</italic>. and eJTK_aby4 jointly identified 120 genes as rhythmic, of which Keegan <italic>et al</italic>. identified 59 as well. Wijnen <italic>et al</italic>. uniquely identified 177 genes as rhythmic, whereas eJTK_aby4 uniquely identified 167 genes. A comparison of the asymmetry distributions for all the genes (<xref ref-type="supplementary-material" rid="pcbi.1004094.s016">S16A Fig</xref>.) shows that they are similar for eJTK_aby4 and Wijnen <italic>et al</italic>.</p>
+</sec>
+<sec id="sec024">
+<title>Validation with dataset-independent literature citations</title>
+<p>As a first step toward validation the new genes that eJTK_aby4 exclusively identified as rhythmic (i.e., those genes not previously identified by Keegan <italic>et al</italic>. or Wijnen <italic>et al</italic>.), we examined the literature for references that independently suggest that these genes are cycling. Specifically, for each gene, we identified the references in FlyBase (<ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://flybase.org">http://flybase.org</ext-link>) that mention the gene. Of those references, those that have the term “circadian” in their title or abstract were identified. <xref ref-type="supplementary-material" rid="pcbi.1004094.s016">S16B Fig</xref>. shows the distribution of genes based on their citation in FlyBase by a “circadian” paper, by the original five dataset papers [<xref ref-type="bibr" rid="pcbi.1004094.ref015">15</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref018">18</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref040">40</xref>–<xref ref-type="bibr" rid="pcbi.1004094.ref042">42</xref>], or by neither. Genes identified by “circadian” papers but not by the original five dataset papers represent further validation that the genes that we select as rhythmic are related to circadian processes.</p>
+<p>Among these references, there were some that discussed several genes. Kadener <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004094.ref043">43</xref>] assayed for genes regulated by the gene <italic>Clk</italic> and referenced 6 of the genes not mentioned by the original five papers out of a total of 32 genes, which has less than 1.6% probability of occurring by chance (Fisher’s Exact Test unadjusted <italic>p</italic>&lt;0.016 [<xref ref-type="bibr" rid="pcbi.1004094.ref044">44</xref>]). One gene referenced by Kadener <italic>et al</italic>. as well as Abruzzi <italic>et al</italic>., who also assayed for genes regulated by <italic>Clk</italic>, is <italic>cabut</italic> (<italic>cbt, CG4427, FBgn0043364</italic>, referred to as EP2237 by Kadener <italic>et al</italic>.). The gene <italic>cbt</italic> was previously unidentified as having rhythmic expression. The average time series from the metadata can be seen in <xref ref-type="supplementary-material" rid="pcbi.1004094.s017">S17 Fig</xref>. The gene <italic>cbt</italic> is a metal-ion binding transcription factor downstream of the JNK cascade and is involved in morphogenesis [<xref ref-type="bibr" rid="pcbi.1004094.ref045">45</xref>–<xref ref-type="bibr" rid="pcbi.1004094.ref048">48</xref>]. It has an asymmetry of 4 h, potentially explaining why it was missed by previous methods but identified by eJTK_aby4. Abruzzi <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004094.ref049">49</xref>] also discuss another <italic>Clk</italic>-regulated gene that was uniquely identified by eJTK_aby4 as rhythmic, <italic>twins</italic> (<italic>tws, CG6235, FBgn0004889</italic>), seen in <xref ref-type="supplementary-material" rid="pcbi.1004094.s017">S17 Fig</xref>. It has an asymmetry of 20 h, which explains how, like <italic>cbt</italic>, it could have been missed by previous methods. These genes, though previously unidentified as rhythmic, are strong candidates for having roles in circadian regulation and processes based on our identification of them as rhythmic and the work of Kadener <italic>et al</italic>. and Abruzzi <italic>et al</italic>. This warrants further experimental studies of these genes in a circadian context as well as the other genes that we have identified.</p>
+<p>The gene <italic>cbt</italic> is also referenced by another study that discusses several genes identified as rhythmic by eJTK_aby4. Fujikawa <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004094.ref050">50</xref>] identified 114 genes that are up-regulated and down-regulated in the head of <italic>D. melanogaster</italic> following 24 h of starvation. 16 of these genes are not mentioned by the original five papers but are identified as rhythmic by eJTK_aby4, which has less than 0.3% probability of occurring by chance (Fisher’s Exact Test unadjusted <italic>p</italic>&lt;0.003). Fujikawa <italic>et al</italic>. refer to several genes from the circadian dataset papers that also appear in their lists of differentially expressed genes, but they do not associate rhythmic behavior with all the genes that they describe. In addition to the gene <italic>cbt</italic>, Fujikawa <italic>et al</italic>. reference other genes that were previously unidentified as rhythmic: <italic>Esterase-Q</italic> (<italic>Est-Q, CG7529, FBgn0037090</italic>) and <italic>1, 4-Alpha-Glucan Branching Enzyme</italic> (<italic>AGBE, CG33138, FBgn0053138</italic>). Both have asymmetries of 16 h, which is also outside the range of standard symmetric-waveform detection (<xref ref-type="supplementary-material" rid="pcbi.1004094.s017">S17 Fig</xref>.). The identification of these genes as rhythmic reinforces the connection between metabolism and circadian regulation and indicates other potential areas of experimental exploration.</p>
+<p>To further understand the relationship between circadian regulation that we see in the genes eJTK_aby4 has identified as rhythmic and biological processes, we examined the enrichment of functional annotations in the identified genes.</p>
+</sec>
+<sec id="sec025">
+<title>Functional classification of cycling genes</title>
+<p>We used DAVID [<xref ref-type="bibr" rid="pcbi.1004094.ref051">51</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref052">52</xref>] to analyze the ontological enrichment of the genes contributing to <xref ref-type="fig" rid="pcbi.1004094.g008">Fig. 8</xref> separately for each rhythm detection method. Because many of the annotation terms are obviously related (e.g., “oxidoreductase” and “oxidation reduction”), we manually grouped them. The grouped terms enriched with Benjamini-Hochberg adjusted <italic>p</italic>-values less than 0.05 for the different methods can be seen in <xref ref-type="fig" rid="pcbi.1004094.g009">Fig. 9</xref>. Genes that are identified as rhythmic by F24 and ANOVA are enriched in the fewest terms. They are mainly in rhythm/light/circadian categories, corroborating the selection of these genes as cycling. The JTK_CYCLE methods without asymmetry search identify sets of genes that are enriched for different terms in addition to the rhythm/light/circadian ones found by ANOVA and F24, such as glutathione and oxidation reduction annotation terms. The JTK_CYCLE methods with asymmetry search identify sets of genes enriched in the most terms of all the methods. The original JTK_CYCLE method with Bonferroni correction and empirical JTK_CYCLE method identify sets of enriched genes known to have alternative splice forms of their RNA; JTK_CYCLE with the Benjamini-Hochberg correction and empirical JTK_CYCLE identify sets of genes that are enriched for genes involved in biosynthetic pathways.</p>
+<fig id="pcbi.1004094.g009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004094.g009</object-id>
+<label>Fig 9</label>
+<caption>
+<title>Manual grouping of annotation terms identified as enriched by DAVID.</title>
+<p>The number of annotation terms enriched in the genes with Benjamini-Hochberg adjusted <italic>p</italic>-values less than 0.05 that are identified by each method are shown in grey shading and red numbers. Annotation terms were enriched with Benjamini-Hochberg adjusted <italic>p</italic>-values below 0.05 as identified by the DAVID web tool [<xref ref-type="bibr" rid="pcbi.1004094.ref051">51</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref052">52</xref>]. Abbreviations are the same as in <xref ref-type="fig" rid="pcbi.1004094.g008">Fig. 8</xref>.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.g009"/>
+</fig>
+<p>Because eJTK_aby4 captures all the annotation terms of interest, we focus on its results for the remainder of this section. The individual annotation terms that are enriched in the rhythmic genes found by eJTK_aby4 can be seen with their adjusted <italic>p</italic>-values and phase distributions in <xref ref-type="fig" rid="pcbi.1004094.g010">Fig. 10A</xref>. <xref ref-type="fig" rid="pcbi.1004094.g010">Fig. 10B</xref> shows the total phase distribution of the genes, and <xref ref-type="fig" rid="pcbi.1004094.g010">Fig. 10C</xref> shows the total asymmetry distribution. Functionally, these genes fall into several annotation categories, each of which we discuss in turn.</p>
+<fig id="pcbi.1004094.g010" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004094.g010</object-id>
+<label>Fig 10</label>
+<caption>
+<title>Annotation terms identified by DAVID as enriched for rhythmic genes.</title>
+<p>Rhythmic genes shown are those that are identified with eJTK_aby4 with a Benjamini-Hochberg adjusted <italic>p</italic>-value less than 0.05. The terms shown are those identified by the DAVID web tool [<xref ref-type="bibr" rid="pcbi.1004094.ref051">51</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref052">52</xref>] as enriched with a Benjamini-Hochberg adjusted <italic>p</italic>-value less than 0.05. (A) The individual annotation terms are shown with their adjusted <italic>p</italic>-values and phase distributions. The red numbers refer to the number of genes in that annotation term with that phase. The horizontal axis of A is the same as that of B. (B) Total phase distribution of the cycling genes. (C) Total asymmetry distribution of the cycling genes.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.g010"/>
+</fig>
+<p>Many of the rhythmic genes involved in glutathione metabolism are also involved in drug metabolism. The peak expressions of these genes are focused around ZT4, and these genes mainly have asymmetries close to 12 h (Figs. <xref ref-type="fig" rid="pcbi.1004094.g010">10A</xref> and <xref ref-type="supplementary-material" rid="pcbi.1004094.s018">S18</xref>). Glutathione and drug metabolism are known to be circadian [<xref ref-type="bibr" rid="pcbi.1004094.ref053">53</xref>–<xref ref-type="bibr" rid="pcbi.1004094.ref055">55</xref>]; possible links to aging are suggested by the role of glutathione metabolism in clearing reactive oxygen species [<xref ref-type="bibr" rid="pcbi.1004094.ref056">56</xref>]. Other oxidation-reduction related terms peak at either ZT4 or ZT16-20 (Figs. <xref ref-type="fig" rid="pcbi.1004094.g010">10A</xref> and <xref ref-type="supplementary-material" rid="pcbi.1004094.s019">S19</xref>). These genes have a broader distribution of asymmetries, with several with extreme values of 4 or 20 h.</p>
+<p>A subset of the genes involved with oxidation-reduction are also associated with iron and have a bimodal distribution of phases, with peaks at ZT4 and ZT16-20 (<xref ref-type="fig" rid="pcbi.1004094.g010">Fig. 10A</xref>). Various iron-related genes have been implicated as important in circadian rhythms. Recent studies, however, have only looked at the effect of iron-related genes on whole organism activity, or on particular circadian genes, such as <italic>per</italic> or <italic>tim</italic> [<xref ref-type="bibr" rid="pcbi.1004094.ref057">57</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref058">58</xref>]. These studies have shown that individual iron-related genes affect circadian rhythms. To our knowledge, no studies to date have found as many iron-related genes displaying rhythmic behavior as we have described here.</p>
+<p>Genes that have multiple protein forms due to alternative splicing peak at times that are evenly distributed throughout the day (Figs. <xref ref-type="fig" rid="pcbi.1004094.g010">10A</xref> and <xref ref-type="supplementary-material" rid="pcbi.1004094.s020">S20</xref>). They have a broad distribution of asymmetries as well, with several genes with extreme values of 4 h and 20 h, such as <italic>tws</italic>, the newly discovered cycling gene previously mentioned as having an asymmetry of 20 h and as a regulatory target of <italic>Clk</italic>. The existence of these alternatively spliced genes with extreme asymmetries explains why “alternative splicing” was only found to be enriched in the genes identified as rhythmic by methods searching for asymmetric waveforms. Alternative splicing has been found to be important in circadian rhythms in <italic>Drosophila</italic> as well as in other species. Most studies, however, have focused on specific experimental findings that discovered particular genes that modulate circadian rhythms [<xref ref-type="bibr" rid="pcbi.1004094.ref059">59</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref060">60</xref>]. No studies exist that have found that so many genes with alternative splicing are rhythmic.</p>
+</sec>
+</sec>
+</sec>
+<sec id="sec026" sec-type="conclusions">
+<title>Discussion</title>
+<p>In this paper, we compare several rhythm detection methods. These approaches are general and can be applied to detecting periodic behavior in a wide range of contexts, but we focus on time series representative of genome-wide expression data. Deckard <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004094.ref028">28</xref>] recently reviewed a number of earlier studies of rhythm detection methods and selected four algorithms for comparison (de Lichtenberg, Lomb-Scargle, JTK_CYCLE, and persistent homology) based on their mathematical properties and applicability to genome-wide expression data. They test the methods with simulated data and experimental data for the metabolic cycle in yeast, circadian rhythms in the mouse, and the root clock in the flowering plant <italic>Arabidopsis thaliana</italic> (see [<xref ref-type="bibr" rid="pcbi.1004094.ref028">28</xref>] for references). They find that there is no all-around best method and construct a decision tree for picking an algorithm based on the expected nature of the data. For increasing noise and decreasing sampling rate, they favor JTK_CYCLE and Lomb-Scargle, a Fourier-like method. These recommendations are consistent with our own findings that JTK_CYCLE and F24 were consistently more accurate than the monotonicity tests (represented by persistent homology in [<xref ref-type="bibr" rid="pcbi.1004094.ref028">28</xref>]) and justifies our focus on improving JTK_CYCLE.</p>
+<p>Also recently, Zielinski <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004094.ref029">29</xref>] reviewed six different Fourier-like methods for their ability to estimate periods in periodic time series. They focus on time series that are well-sampled (36 and 72 time points were the lowest-sampled time series they examined, 720 was among the highest), as might be obtained from tracking a luminescence reporter for a single gene. The fundamentally different nature of their data from ours highlights the fact that it is important to match the computational tool with the task of interest. Zielinski <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004094.ref029">29</xref>] seek precise period determination for genes already known to cycle. By contrast, here we focus on discovering rhythmic time series that represent only a fraction of a genome-wide dataset. JTK_CYCLE can provide estimates of a periodic time series’ phase, period, and asymmetry, but it resolves these parameters only to the level of the sampling (or search) depth. It is likely that there is a tradeoff between robust separation of rhythmic and arrhythmic time series and precise estimation of the cycling parameters; presently, no algorithm achieves both these goals simultaneously.</p>
+<p>Zielinski <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004094.ref029">29</xref>], as well as earlier studies [<xref ref-type="bibr" rid="pcbi.1004094.ref037">37</xref>, <xref ref-type="bibr" rid="pcbi.1004094.ref038">38</xref>], note that biological oscillations are expected to have asymmetric patterns of expression. Thaben and Westermark recently published one approach to this problem [<xref ref-type="bibr" rid="pcbi.1004094.ref030">30</xref>]. Their method, RAIN, employs the Mann-Whitney U test [<xref ref-type="bibr" rid="pcbi.1004094.ref061">61</xref>] between different time points to look for a rising pattern followed by a falling pattern. They show that RAIN outperforms the original JTK_CYCLE method as well as a cosine-fitting method [<xref ref-type="bibr" rid="pcbi.1004094.ref062">62</xref>] for simulated data consisting of sinusoidal and ramp waveforms. They also analyze genomic and proteomic data for the mouse liver. Their work reinforces our finding that searching for asymmetric waveforms can produce better rhythm detection sensitivity and validates our efforts. Thaben and Westermark suggest that modifying JTK_CYCLE to allow for asymmetric waveforms would provide a useful complement to their approach. In particular, in contrast to RAIN, JTK_CYCLE can search for specific waveforms, including arbitrary shapes with multiple peaks. We meet that need here.</p>
+<p>We were able to expand JTK_CYCLE to search for asymmetric waveforms without degrading sensitivity because we empirically calculate <italic>p</italic>-values, which yields much more accurate significance estimates than the Bonferroni correction employed in the original formulation of JTK_CYCLE [<xref ref-type="bibr" rid="pcbi.1004094.ref026">26</xref>]. Our analysis of two different simulated datasets and the fly head metadataset clearly shows the importance of accurate significance estimates. As sequencing costs continue to decrease, we expect sampling density to increase. This trend should favor use of empirical JTK_CYCLE over alternative means of correcting for multiple hypothesis testing because the increase in data will enable more phases, asymmetries, and periods to be examined. Our analysis shows that certain gene ontologies have many genes with highly asymmetric patterns of expression. It will be interesting to determine the prevalence of different waveforms in additional biological datasets and to understand how their features depend quantitatively on genotype, tissue, and environmental conditions.</p>
+<sec id="sec027">
+<title>Conclusions</title>
+<p>In this paper, we compare methods for detecting rhythmic time series in genome-wide expression data. With regard to experimental design, we find that increasing the number of replicates is more important than increasing the sampling density for achieving greater sensitivity. A key aspect of our study is that we improve the estimation of <italic>p</italic>-values in JTK_CYCLE. This enables control of the false discovery rate and testing waveforms beyond sinusoidal ones. For both simulated data and a circadian metadataset [<xref ref-type="bibr" rid="pcbi.1004094.ref027">27</xref>] the resulting empirical JTK_CYCLE with asymmetry search exhibits the greatest sensitivity among the methods that we evaluated. The annotation terms that are enriched among the genes that we identify as cycling include rhythm/light/circadian, glutathione/drug metabolism, oxidation-reduction, iron metabolism, and alternative splicing. These findings are consistent with known circadian biology but also suggest new investigations.</p>
+</sec>
+</sec>
+<sec id="sec028">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1004094.s001" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s001" mimetype="application/eps" xlink:type="simple">
+<label>S1 Fig</label>
+<caption>
+<title>Evaluation of Gamma distribution modeling for the F24 null distribution.</title>
+<p>The time series used for this example was a 24 h sine wave sampled every 2 h for 1 period (no replicates); noise was added at 25% of the amplitude. (A) Convergence of the mean and variance estimates, used to parameterize the Gamma distribution, as a function of the number of permutations performed, for testing the 24 h period (blue curve in A; convergence for 4 h and 48 h periods were similar, data not shown). (B) The cumulative distributions obtained by random permutation fit to the Gamma distribution, as shown by their proximity to the diagonal (black). Shown are fits for testing a 24 h period, plus a 4 h period and a 48 h period (i.e., F4 and F48). For these fits, 100 permutations were used.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s002" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s002" mimetype="application/eps" xlink:type="simple">
+<label>S2 Fig</label>
+<caption>
+<title>The triangle waveform is highly correlated with the cosine waveform.</title>
+<p>The correlation between triangle and cosine waveforms are compared for time series of different lengths for three different correlation metrics: Pearson, Spearman, and Kendall. Correlations can range from −1 (completely anti-correlated) to +1 (completely correlated).</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s003" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s003" mimetype="application/eps" xlink:type="simple">
+<label>S3 Fig</label>
+<caption>
+<title>AUROCs for simulated data with 25% noise (standard deviation of Gaussian noise as a percent of amplitude).</title>
+<p>Layout and abbreviations are the same as in <xref ref-type="fig" rid="pcbi.1004094.g004">Fig. 4</xref>.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s004" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s004" mimetype="application/eps" xlink:type="simple">
+<label>S4 Fig</label>
+<caption>
+<title>Full set of comparisons used to evaluate the trade-off between increased numbers of replicates and increased densities of time points per period.</title>
+<p>Layout and abbreviations are the same as in <xref ref-type="fig" rid="pcbi.1004094.g005">Fig. 5</xref>.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s005" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s005" mimetype="application/eps" xlink:type="simple">
+<label>S5 Fig</label>
+<caption>
+<title>Interpolation scheme for increasing replicate counts.</title>
+<p>(A) A pseudo-replicate (⊙) for time <italic>t</italic><sub><italic>i</italic></sub> (indicated by the arrow) is obtained by linearly interpolating between time points <italic>t</italic><sub><italic>i</italic>−1</sub> and <italic>t</italic><sub><italic>i</italic>+1</sub> (dashed line). (B) Repeating this procedure for each time point (modulo 24 h) generates a new time series (⊙ symbols).</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s006" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s006" mimetype="application/eps" xlink:type="simple">
+<label>S6 Fig</label>
+<caption>
+<title>Interpolating the data points to generate pseudo-replicates improves AUROCs when the number of actual replicates is low.</title>
+<p>We compare performance with (Interp) and without (Normal) pseudo-replicates for the first simulated dataset with 50% noise.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s007" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s007" mimetype="application/eps" xlink:type="simple">
+<label>S7 Fig</label>
+<caption>
+<title>Matthews Correlation Coefficient shows that JTK_CYCLE methods outperform ANOVA and F24 in the presence and absence of asymmetric time series.</title>
+<p>Simulated data with rhythmic time series without asymmetry (A) or with evenly distributed asymmetry (B) was tested with different methods. The vertical axis shows the Matthews Correlation Coefficients (MCC) [<xref ref-type="bibr" rid="pcbi.1004094.ref039">39</xref>] for different Benjamini-Hochberg adjusted <italic>p</italic>-value cutoffs (FDR) along the x-axis. These data are with 25% noise, but the effects of Benjamini-Hochberg correction are significantly greater at 50% noise (not shown). The method abbreviations are the same as those in <xref ref-type="fig" rid="pcbi.1004094.g004">Fig. 4</xref>.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s008" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s008" mimetype="application/eps" xlink:type="simple">
+<label>S8 Fig</label>
+<caption>
+<title>Searching for asymmetric waveforms is detrimental if none are present, but is otherwise advantageous.</title>
+<p>Simulated data with rhythmic time series without asymmetry (left, A and C) or with evenly distributed asymmetry (right, B and D) was tested with different asymmetries. The cumulative histograms are plotted before (A and B) and after (C and D) Benjamini-Hochberg multiple hypothesis correction across time series. The vertical axis shows the number of genes with a <italic>p</italic>-value (P) (A and B) or false discovery rate (FDR, the Benjamini-Hochberg adjusted <italic>p</italic>-value) (C and D) below or equal to a significance threshold, shown on the x-axis. These data are with 25% noise, but the effects of Benjamini-Hochberg correction are significantly greater at 50% noise (not shown). The legend in A applies to B, C, and D as well as A. The rightmost point on the horizontal axis is 0.2. eJTK_aby2: asymmetries sampled every 2 h, from 2 h to 22 h, eJTK_aby4: asymmetries sampled every 4 h, from 4 h to 20 h, eJTK_a04-12-20: asymmetries sampled at 4 h, 12 h and 20 h, eJTK_a08-16: asymmetries sampled at 8 h and 16 h, eJTK: no asymmetry (i.e. asymmetry of 12 h, equivalent to a cosine).</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s009" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s009" mimetype="application/eps" xlink:type="simple">
+<label>S9 Fig</label>
+<caption>
+<title>Metadata results for known positive and negative examples.</title>
+<p>The positive examples are known cycling genes <italic>per</italic>, <italic>tim</italic>, <italic>vri</italic>, <italic>Pdp1</italic>, <italic>cry</italic>, and <italic>Clk</italic>. The negative examples are known non-cycling genes <italic>cam</italic>, <italic>RpL32</italic>, <italic>cyc</italic>, and <italic>dco</italic>. As plotted, large values for the positive examples and small values for the negative examples are desirable. The magenta line marks a <italic>p</italic>-value of 0.05 (−log<sub>10</sub> 0.05 = 1.3). Since 2 × 10<sup>6</sup> permutations were used to generate the empirical JTK_CYCLE <italic>p</italic>-values, they cannot be lower than 5 × 10<sup>−7</sup>. Abbreviations are the same as in <xref ref-type="fig" rid="pcbi.1004094.g008">Fig. 8</xref>.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s010" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s010" mimetype="application/eps" xlink:type="simple">
+<label>S10 Fig</label>
+<caption>
+<title>Comparison of the p-value distributions of the original JTK_CYCLE method (with Bonferroni correction) with the empirical JTK_CYCLE method without (A) and with (B) asymmetry search.</title>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s011" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s011" mimetype="application/eps" xlink:type="simple">
+<label>S11 Fig</label>
+<caption>
+<title>Comparison of the intersection and union of genes identified as rhythmic with Benjamini-Hochberg adjusted p-values less than 0.05 (blue bars) and 0.20 (red bars) for empirical JTK_CYCLE with different asymmetry searches.</title>
+<p>(A) The number of genes with a Benjamini-Hochberg adjusted <italic>p</italic>-value (FDR) below 0.05 (blue) and 0.20 (red) are shown. (B) A comparison of the intersection (below the diagonal) and union (above the diagonal) of genes identified as rhythmic with Benjamini-Hochberg adjusted <italic>p</italic>-values less than 0.05 for the different methods. Abbreviations are the same as in <xref ref-type="supplementary-material" rid="pcbi.1004094.s008">S8 Fig</xref>.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s012" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s012" mimetype="application/eps" xlink:type="simple">
+<label>S12 Fig</label>
+<caption>
+<title>Comparison of JTK_CYCLE asymmetry search depths.</title>
+<p>Points represent genes, colored by the asymmetry search by 4 h-estimated asymmetries. The black vertical and horizontal lines mark a FDR of 0.05 (−log<sub>10</sub> 0.05 ≈ 1.30). Genes to the the right of the vertical line pass the threshold cutoff for eJTK_aby4, while genes above the horizontal line pass the threshold cutoff for eJTK with asymmetry search of 8 and 16 h. Genes that are above the horizontal line but left of the vertical line barely pass the threshold and have asymmetries in the range of 8 to 16 h. Genes that are right of the vertical line but below the horizontal line pass the threshold much more significantly than the previously mentioned genes and have asymmetries that are more extreme.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s013" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s013" mimetype="application/eps" xlink:type="simple">
+<label>S13 Fig</label>
+<caption>
+<title>Using a cosine as a reference waveform instead of a triangle does not produce substantially different results in genes identified as cycling.</title>
+<p>A comparison of the intersection and union of genes identified as rhythmic with Benjamini-Hochberg adjusted <italic>p</italic>-values less than 0.05 (blue bars) or 0.20 (red bars) for empirical JTK_CYCLE without asymmetry (eJTK), and empirical JTK_CYCLE with asymmetry search of 4, 8, 12, 16, and 20 h (eJTK_aby4) calculated with a reference waveform of a triangle (no prefix) or with a reference waveform of a cosine (prefix “cos”). (A) The number of genes with a Benjamini-Hochberg adjusted <italic>p</italic>-value below 0.05 (blue) and 0.20 (red) are shown. (B) A comparison of the intersection (below the diagonal) and union (above the diagonal) of genes identified as rhythmic with Benjamini-Hochberg adjusted <italic>p</italic>-values less than 0.05 for the different methods.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s014" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s014" mimetype="application/eps" xlink:type="simple">
+<label>S14 Fig</label>
+<caption>
+<title>Using a cosine as a reference waveform instead of a triangle does not produce substantially different results in annotation terms enriched for in genes identified as cycling.</title>
+<p>Annotation terms identified as enriched by DAVID share many similarities and were therefore grouped. The number of annotation terms enriched in the genes discovered by each method are shown in grey shading and red numbers. Empirical JTK_CYCLE methods with and without asymmetry search (“_aby4” and no suffix, respectively) and with a triangle as a reference waveform or cosine as a reference waveform (no prefix or “cos”, respectively). The annotation terms displayed are enriched with Benjamini-Hochberg adjusted <italic>p</italic>-values below 0.05.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s015" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s015" mimetype="application/eps" xlink:type="simple">
+<label>S15 Fig</label>
+<caption>
+<title>Comparison of genes identified as cycling by Keegan <italic>et al</italic>. and empirical JTK_CYCLE with asymmetry search of 4 h (eJTK_by4).</title>
+<p>(A) All the genes shown passed the ANOVA pre-screen, but only the green ones are identified as cycling by Keegan <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004094.ref027">27</xref>]. Higher negative logarithms of <italic>p</italic>-values are more significant than lower ones: the horizontal black line indicates a Benjamini-Hochberg adjusted <italic>p</italic>-value for eJTK_aby4 of 0.05. (B) All the genes shown were identified as cycling by Keegan <italic>et al</italic>. The mean and variance of the genes identified as cycling by Keegan <italic>et al</italic>. and eJTK_aby4 (blue), are 4.34 and 0.54, respectively. The mean and variance of the genes identified as cycling by Keegan <italic>et al</italic>. and but not eJTK_aby4 (red), are 4.75 and 0.56, respectively. (C) All the genes shown were identified as cycling by Keegan <italic>et al</italic>. The asymmetry of the genes was determined by eJTK_aby4.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s016" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s016" mimetype="application/eps" xlink:type="simple">
+<label>S16 Fig</label>
+<caption>
+<title>Comparison of genes identified as cycling by Keegan <italic>et al</italic>., Wijnen <italic>et al</italic>., and empirical JTK_CYCLE with asymmetry search by 4 h (eJTK_by4).</title>
+<p>(A) Comparison of genes identified as rhythmic by Keegan <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004094.ref027">27</xref>], Wijnen <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004094.ref032">32</xref>], and eJTK_by4. Stacked bars are colored to represent the asymmetry, as determined by eJTK_aby4. eJTK_aby4 identifies more genes with non-12 h asymmetries than the other methods. “Unassigned” refers to genes that were excluded from the empirical JTK_CYCLE analysis. (B) For each gene, the references on FlyBase (<ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://flybase.org">http://flybase.org</ext-link>) that mention the gene were identified. The genes identified by eJTK_by4, Keegan <italic>et al</italic>., and Wijnen <italic>et al</italic>. are shown in a histogram with stacked bars colored to represent the genes being cited by references with “circadian” in the title or abstract, genes cited in the original five dataset papers, or neither. While there are more genes uniquely identified by Wijnen <italic>et al</italic>., there are more total genes identified by eJTK_by4, as well as more genes that are cited in papers that have “circadian” in their title or abstract.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s017" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s017" mimetype="application/eps" xlink:type="simple">
+<label>S17 Fig</label>
+<caption>
+<title>Z-score expression time series of <italic>cbt</italic>, <italic>tws</italic>, <italic>Est-Q</italic>, and <italic>ABGE</italic> averaged across replicate time points.</title>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s018" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s018" mimetype="application/eps" xlink:type="simple">
+<label>S18 Fig</label>
+<caption>
+<title>KEGG pathway “dme00480: Glutathione metabolism” is enriched in genes identified as rhythmic by eJTK_aby4.</title>
+<p>Peak expression (phase) of these genes is mainly in the light period. (A) Z-scored gene expression of genes from the metadataset involved in glutathione metabolism averaged across 24 h and interpolated to every 2 h. (B) Phase and asymmetry distribution of the genes from the metadataset involved in glutathione metabolism.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s019" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s019" mimetype="application/eps" xlink:type="simple">
+<label>S19 Fig</label>
+<caption>
+<title>Gene ontology “GO:0055114 oxidation reduction” is enriched in genes identified as rhythmic by eJTK_aby4.</title>
+<p>Peak expression (phase) of these genes is distributed over 24 h. (A) Z-scored gene expression of genes from the metadataset involved in oxidation reduction averaged across 24 h and interpolated to every 2 h. Black indicates time points where data were not available (NA). (B) Phase and asymmetry distribution of the genes from the metadataset involved in oxidation reduction.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s020" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s020" mimetype="application/eps" xlink:type="simple">
+<label>S20 Fig</label>
+<caption>
+<title>PIR keyword “alternative splicing” is enriched in genes identified as rhythmic by eJTK_aby4.</title>
+<p>Peak expression (phase) of these genes is distributed over 24 h. (A) Z-scored gene expression of genes from the metadataset involved in alternative splicing averaged across 24 h and interpolated to every 2 h. (B) Phase and asymmetry distribution of the genes from the metadataset involved in alternative splicing.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s021" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s021" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" xlink:type="simple">
+<label>S1 Data</label>
+<caption>
+<title>This Excel spreadsheet file contains the time series for the metadataset, with official gene names, after Z-scoring has been performed.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s022" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s022" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" xlink:type="simple">
+<label>S2 Data</label>
+<caption>
+<title>This Excel spreadsheet file contains several pages referring to the output of the rhythm detection methods on the metadataset, as well as the DAVID results for those methods.</title>
+<p>The method results provided are all for the metadataset after pre-processing: eJTK_aby4, eJTK_a12, JTK_BF_aby4, JTK_BF_a12, cos_eJTK_aby4, cos_eJTK_a12, ANOVA, and F24.</p>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004094.s023" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004094.s023" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" xlink:type="simple">
+<label>S3 Data</label>
+<caption>
+<title>This Excel spreadsheet file contains several pages referring to the output of the rhythm detection methods on the metadataset.</title>
+<p>The method results provided are all for the metadataset after pre-processing: JTK_BH_aby4, JTK_BH_a12 (these two come with DAVID results), eJTK_a04-12-20, and eJTK_a08-16.</p>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>We would like to thank Matthew Stephens for advice about evaluating statistical significance and multiple hypothesis correction.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004094.ref001">
+<label>1</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Etter</surname> <given-names>PD</given-names></name>, <name name-style="western"><surname>Ramaswami</surname> <given-names>M</given-names></name> (<year>2002</year>) <article-title>The ups and downs of daily life: Profiling circadian gene expression in <italic>Drosophila</italic></article-title>. <source>BioEssays</source> <volume>24</volume>: <fpage>494</fpage>–<lpage>498</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/bies.10109" xlink:type="simple">10.1002/bies.10109</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref002">
+<label>2</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Abe</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Herzog</surname> <given-names>ED</given-names></name>, <name name-style="western"><surname>Yamazaki</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Straume</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Tei</surname> <given-names>H</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>Circadian rhythms in isolated brain regions</article-title>. <source>The Journal of Neuroscience</source> <volume>22</volume>: <fpage>350</fpage>–<lpage>356</lpage>. <object-id pub-id-type="pmid">11756518</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref003">
+<label>3</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Panda</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Antoch</surname> <given-names>MP</given-names></name>, <name name-style="western"><surname>Miller</surname> <given-names>BH</given-names></name>, <name name-style="western"><surname>Su</surname> <given-names>AI</given-names></name>, <name name-style="western"><surname>Schook</surname> <given-names>AB</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>Coordinated transcription of key pathways in the mouse by the circadian clock</article-title>. <source>Cell</source> <volume>109</volume>: <fpage>307</fpage>–<lpage>320</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0092-8674(02)00722-5" xlink:type="simple">10.1016/S0092-8674(02)00722-5</ext-link></comment> <object-id pub-id-type="pmid">12015981</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref004">
+<label>4</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Ueda</surname> <given-names>HR</given-names></name>, <name name-style="western"><surname>Chen</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Adachi</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Wakamatsu</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Hayashi</surname> <given-names>S</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>A transcription factor response element for gene expression during circadian night</article-title>. <source>Nature</source> <volume>418</volume>: <fpage>534</fpage>–<lpage>539</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature00906" xlink:type="simple">10.1038/nature00906</ext-link></comment> <object-id pub-id-type="pmid">12152080</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref005">
+<label>5</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Wulff</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Gatti</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Wettstein</surname> <given-names>JG</given-names></name>, <name name-style="western"><surname>Foster</surname> <given-names>RG</given-names></name> (<year>2010</year>) <article-title>Sleep and circadian rhythm disruption in psychiatric and neurodegenerative disease</article-title>. <source>Nat Rev Neurosci</source> <volume>11</volume>: <fpage>589</fpage>–<lpage>599</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrn2868" xlink:type="simple">10.1038/nrn2868</ext-link></comment> <object-id pub-id-type="pmid">20631712</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref006">
+<label>6</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Armitage</surname> <given-names>R</given-names></name> (<year>2007</year>) <article-title>Sleep and circadian rhythms in mood disorders</article-title>. <source>Acta Psychiatrica Scandinavica</source> <volume>115</volume>: <fpage>104</fpage>–<lpage>115</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1600-0447.2007.00968.x" xlink:type="simple">10.1111/j.1600-0447.2007.00968.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref007">
+<label>7</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Storch</surname> <given-names>KF</given-names></name>, <name name-style="western"><surname>Lipan</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Leykin</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Viswanathan</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Davis</surname> <given-names>FC</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>Extensive and divergent circadian gene expression in liver and heart</article-title>. <source>Nature</source> <volume>417</volume>: <fpage>78</fpage>–<lpage>83</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature744" xlink:type="simple">10.1038/nature744</ext-link></comment> <object-id pub-id-type="pmid">11967526</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref008">
+<label>8</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Germain</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Kupfer</surname> <given-names>DJ</given-names></name> (<year>2008</year>) <article-title>Circadian rhythm disturbances in depression</article-title>. <source>Human Psychopharmacology: Clinical and Experimental</source> <volume>23</volume>: <fpage>571</fpage>–<lpage>585</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/hup.964" xlink:type="simple">10.1002/hup.964</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref009">
+<label>9</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>McClung</surname> <given-names>CA</given-names></name> (<year>2007</year>) <article-title>Circadian genes, rhythms and the biology of mood disorders</article-title>. <source>Pharmacology &amp; Therapeutics</source> <volume>114</volume>: <fpage>222</fpage>–<lpage>232</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.pharmthera.2007.02.003" xlink:type="simple">10.1016/j.pharmthera.2007.02.003</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref010">
+<label>10</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Albrecht</surname> <given-names>U</given-names></name> (<year>2006</year>) <article-title>Orchestration of gene expression and physiology by the circadian clock</article-title>. <source>Journal of Physiology-Paris</source> <volume>100</volume>: <fpage>243</fpage>–<lpage>251</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jphysparis.2007.05.004" xlink:type="simple">10.1016/j.jphysparis.2007.05.004</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref011">
+<label>11</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Dibner</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Schibler</surname> <given-names>U</given-names></name>, <name name-style="western"><surname>Albrecht</surname> <given-names>U</given-names></name> (<year>2010</year>) <article-title>The mammalian circadian timing system: Organization and coordination of central and peripheral clocks</article-title>. <source>Annual Review of Physiology</source> <volume>72</volume>: <fpage>517</fpage>–<lpage>549</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1146/annurev-physiol-021909-135821" xlink:type="simple">10.1146/annurev-physiol-021909-135821</ext-link></comment> <object-id pub-id-type="pmid">20148687</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref012">
+<label>12</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Hayes</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Baggs</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Hogenesch</surname> <given-names>J</given-names></name> (<year>2005</year>) <article-title>Circadian clocks are seeing the systems biology light</article-title>. <source>Genome Biology</source> <volume>6</volume>: <fpage>219</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2005-6-5-219" xlink:type="simple">10.1186/gb-2005-6-5-219</ext-link></comment> <object-id pub-id-type="pmid">15892879</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref013">
+<label>13</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Wijnen</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Young</surname> <given-names>MW</given-names></name> (<year>2006</year>) <article-title>Interplay of circadian clocks and metabolic rhythms</article-title>. <source>Annual Review of Genetics</source> <volume>40</volume>: <fpage>409</fpage>–<lpage>448</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1146/annurev.genet.40.110405.090603" xlink:type="simple">10.1146/annurev.genet.40.110405.090603</ext-link></comment> <object-id pub-id-type="pmid">17094740</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref014">
+<label>14</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Moynihan Ramsey</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Marcheva</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Kohsaka</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Bass</surname> <given-names>J</given-names></name> (<year>2007</year>) <article-title>The clockwork of metabolism</article-title>. <source>Annual Review of Nutrition</source> <volume>27</volume>: <fpage>219</fpage>–<lpage>240</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1146/annurev.nutr.27.061406.093546" xlink:type="simple">10.1146/annurev.nutr.27.061406.093546</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref015">
+<label>15</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>McDonald</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Rosbash</surname> <given-names>M</given-names></name> (<year>2001</year>) <article-title>Microarray analysis and organization of circadian gene expression in <italic>Drosophila</italic></article-title>. <source>Cell</source> <volume>107</volume>: <fpage>567</fpage>–<lpage>578</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0092-8674(01)00545-1" xlink:type="simple">10.1016/S0092-8674(01)00545-1</ext-link></comment> <object-id pub-id-type="pmid">11733057</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref016">
+<label>16</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Zvonic</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Ptitsyn</surname> <given-names>AA</given-names></name>, <name name-style="western"><surname>Conrad</surname> <given-names>SA</given-names></name>, <name name-style="western"><surname>Scott</surname> <given-names>LK</given-names></name>, <name name-style="western"><surname>Floyd</surname> <given-names>ZE</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Characterization of peripheral circadian clocks in adipose tissues</article-title>. <source>Diabetes</source> <volume>55</volume>: <fpage>962</fpage>–<lpage>970</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2337/diabetes.55.04.06.db05-0873" xlink:type="simple">10.2337/diabetes.55.04.06.db05-0873</ext-link></comment> <object-id pub-id-type="pmid">16567517</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref017">
+<label>17</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bell-Pedersen</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Cassone</surname> <given-names>VM</given-names></name>, <name name-style="western"><surname>Earnest</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Golden</surname> <given-names>SS</given-names></name>, <name name-style="western"><surname>Hardin</surname> <given-names>PE</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Circadian rhythms from multiple oscillators: lessons from diverse organisms</article-title>. <source>Nat Rev Genet</source> <volume>6</volume>: <fpage>544</fpage>–<lpage>556</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrg1633" xlink:type="simple">10.1038/nrg1633</ext-link></comment> <object-id pub-id-type="pmid">15951747</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref018">
+<label>18</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Claridge-Chang</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Wijnen</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Naef</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Boothroyd</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Rajewsky</surname> <given-names>N</given-names></name>, <etal>et al</etal>. (<year>2001</year>) <article-title>Circadian regulation of gene expression systems in the <italic>Drosophila</italic> head</article-title>. <source>Neuron</source> <volume>32</volume>: <fpage>657</fpage>–<lpage>671</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0896-6273(01)00515-3" xlink:type="simple">10.1016/S0896-6273(01)00515-3</ext-link></comment> <object-id pub-id-type="pmid">11719206</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref019">
+<label>19</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Dequéant</surname> <given-names>ML</given-names></name>, <name name-style="western"><surname>Ahnert</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Edelsbrunner</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Fink</surname> <given-names>TMA</given-names></name>, <name name-style="western"><surname>Glynn</surname> <given-names>EF</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Comparison of pattern detection methods in microarray time series of the segmentation clock</article-title>. <source>PLoS ONE</source> <volume>3</volume>: <fpage>e2856</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0002856" xlink:type="simple">10.1371/journal.pone.0002856</ext-link></comment> <object-id pub-id-type="pmid">18682743</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref020">
+<label>20</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Morton</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Pachter</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Shiu</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Sturmfels</surname> <given-names>B</given-names></name> (<year>2007</year>) <article-title>The cyclohedron test for finding periodic genes in time course expression studies</article-title>. <source>Statistical Applications in Genetics and Molecular Biology</source> <volume>6</volume>: <fpage>1</fpage>–<lpage>25</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2202/1544-6115.1286" xlink:type="simple">10.2202/1544-6115.1286</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref021">
+<label>21</label>
+<mixed-citation xlink:type="simple" publication-type="other">Morton J, Pachter L, Shiu A, Sturmfels B, Wienand O (2006) Geometry of rank tests. ArXiv Mathematics e-prints arXiv:math/0605173.</mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref022">
+<label>22</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Fink</surname> <given-names>TMA</given-names></name>, <name name-style="western"><surname>Willbrand</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Brown</surname> <given-names>FCS</given-names></name> (<year>2007</year>) <article-title>1-D random landscapes and non-random data series</article-title>. <source>EPL (Europhysics Letters)</source> <volume>79</volume>: <fpage>38006</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1209/0295-5075/79/38006" xlink:type="simple">10.1209/0295-5075/79/38006</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref023">
+<label>23</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Ahnert</surname> <given-names>SE</given-names></name>, <name name-style="western"><surname>Willbrand</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Brown</surname> <given-names>FCS</given-names></name>, <name name-style="western"><surname>Fink</surname> <given-names>TMA</given-names></name> (<year>2006</year>) <article-title>Unbiased pattern detection in microarray data series</article-title>. <source>Bioinformatics</source> <volume>22</volume>: <fpage>1471</fpage>–<lpage>1476</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btl121" xlink:type="simple">10.1093/bioinformatics/btl121</ext-link></comment> <object-id pub-id-type="pmid">16766565</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref024">
+<label>24</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Edelsbrunner</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Letscher</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Zomorodian</surname> <given-names>A</given-names></name> (<year>2000</year>) <chapter-title>Topological persistence and simplification</chapter-title>. In: <source>Proceedings of the 41st Annual Symposium on Foundations of Computer Science</source>. <publisher-loc>Washington, DC, USA</publisher-loc>: <publisher-name>IEEE Computer Society, FOCS’00</publisher-name>, p. <fpage>454</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref025">
+<label>25</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Cohen-Steiner</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Edelsbrunner</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Harer</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Mileyko</surname> <given-names>Y</given-names></name> (<year>2010</year>) <article-title>Lipschitz functions have <italic>L<sub>p</sub></italic>-stable persistence</article-title>. <source>Foundations of Computational Mathematics</source> <volume>10</volume>: <fpage>127</fpage>–<lpage>139</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10208-010-9060-6" xlink:type="simple">10.1007/s10208-010-9060-6</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref026">
+<label>26</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Hughes</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Hogenesch</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Kornacker</surname> <given-names>K</given-names></name> (<year>2010</year>) <article-title>JTK CYCLE: an efficient non-parametric algorithm for detecting rhythmic components in genome-scale datasets</article-title>. <source>J Biol Rhythms</source> <volume>25</volume>: <fpage>372</fpage>–<lpage>380</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1177/0748730410379711" xlink:type="simple">10.1177/0748730410379711</ext-link></comment> <object-id pub-id-type="pmid">20876817</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref027">
+<label>27</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Keegan</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Pradhan</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Allada</surname> <given-names>R</given-names></name> (<year>2007</year>) <article-title>Meta-analysis of <italic>Drosophila</italic> circadian microarray studies identifies a novel set of rhythmically expressed genes</article-title>. <source>PLoS Comp Biol</source> <volume>3</volume>: <fpage>e208</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.0030208" xlink:type="simple">10.1371/journal.pcbi.0030208</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref028">
+<label>28</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Deckard</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Anafi</surname> <given-names>RC</given-names></name>, <name name-style="western"><surname>Hogenesch</surname> <given-names>JB</given-names></name>, <name name-style="western"><surname>Haase</surname> <given-names>SB</given-names></name>, <name name-style="western"><surname>Harer</surname> <given-names>J</given-names></name> (<year>2013</year>) <article-title>Design and analysis of large-scale biological rhythm studies: a comparison of algorithms for detecting periodic signals in biological data</article-title>. <source>Bioinformatics</source> <volume>29</volume>: <fpage>3174</fpage>–<lpage>3180</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btt541" xlink:type="simple">10.1093/bioinformatics/btt541</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref029">
+<label>29</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Zielinski</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Moore</surname> <given-names>AM</given-names></name>, <name name-style="western"><surname>Troup</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Halliday</surname> <given-names>KJ</given-names></name>, <name name-style="western"><surname>Millar</surname> <given-names>AJ</given-names></name> (<year>2014</year>) <article-title>Strengths and limitations of period estimation methods for circadian data</article-title>. <source>PLoS ONE</source> <volume>9</volume>: <fpage>e96462</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0096462" xlink:type="simple">10.1371/journal.pone.0096462</ext-link></comment> <object-id pub-id-type="pmid">24809473</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref030">
+<label>30</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Thaben</surname> <given-names>PF</given-names></name>, <name name-style="western"><surname>Westermark</surname> <given-names>PO</given-names></name> (<year>2014</year>) <article-title>Detecting rhythms in time series with RAIN</article-title>. <source>Journal of Biological Rhythms</source> <volume>29</volume>: <fpage>391</fpage>–<lpage>400</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1177/0748730414553029" xlink:type="simple">10.1177/0748730414553029</ext-link></comment> <object-id pub-id-type="pmid">25326247</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref031">
+<label>31</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Wijnen</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Naef</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Young</surname> <given-names>MW</given-names></name>, <name name-style="western"><surname>Young</surname> <given-names>MW</given-names></name> (<year>2005</year>) <article-title>Molecular and statistical tools for circadian transcript profiling</article-title>. <source>Methods in Enzymology</source> <volume>393</volume>: <fpage>341</fpage>–<lpage>365</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0076-6879(05)93015-2" xlink:type="simple">10.1016/S0076-6879(05)93015-2</ext-link></comment> <object-id pub-id-type="pmid">15817298</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref032">
+<label>32</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Wijnen</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Naef</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Boothroyd</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Claridge-Chang</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Young</surname> <given-names>MW</given-names></name> (<year>2006</year>) <article-title>Control of daily transcript oscillations in <italic>Drosophila</italic> by light and the circadian clock</article-title>. <source>PLoS Genet</source> <volume>2</volume>: <fpage>e39</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pgen.0020039" xlink:type="simple">10.1371/journal.pgen.0020039</ext-link></comment> <object-id pub-id-type="pmid">16565745</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref033">
+<label>33</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Harding</surname> <given-names>EF</given-names></name> (<year>1984</year>) <article-title>An efficient, minimal-storage procedure for calculating the Mann-Whitney U, generalized U and similar distributions</article-title>. <source>Journal of the Royal Statistical Society Series C (Applied Statistics)</source> <volume>33</volume>: <fpage>1</fpage>–<lpage>6</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref034">
+<label>34</label>
+<mixed-citation xlink:type="simple" publication-type="other">Weisstein EW (2014). Bonferroni correction, from MathWorld–A Wolfram Web Resource. URL <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://mathworld.wolfram.com/BonferroniCorrection.html">http://mathworld.wolfram.com/BonferroniCorrection.html</ext-link>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref035">
+<label>35</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>North</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Curtis</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Sham</surname> <given-names>P</given-names></name> (<year>2002</year>) <article-title>A note on the calculation of empirical <italic>p</italic>-values from Monte Carlo procedures</article-title>. <source>The American Journal of Human Genetics</source> <volume>71</volume>: <fpage>439</fpage>–<lpage>441</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1086/341527" xlink:type="simple">10.1086/341527</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref036">
+<label>36</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Benjamini</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Hochberg</surname> <given-names>Y</given-names></name> (<year>1995</year>) <article-title>Controlling the false discovery rate: a practical and powerful approach to multiple testing</article-title>. <source>J Roy Statist Soc Ser B</source> <volume>57</volume>: <fpage>289</fpage>–<lpage>300</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref037">
+<label>37</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Yosef</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Regev</surname> <given-names>A</given-names></name> (<year>2011</year>) <article-title>Impulse control: Temporal dynamics in gene transcription</article-title>. <source>Cell</source> <volume>144</volume>: <fpage>886</fpage>–<lpage>896</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2011.02.015" xlink:type="simple">10.1016/j.cell.2011.02.015</ext-link></comment> <object-id pub-id-type="pmid">21414481</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref038">
+<label>38</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Tyson</surname> <given-names>JJ</given-names></name>, <name name-style="western"><surname>Chen</surname> <given-names>KC</given-names></name>, <name name-style="western"><surname>Novak</surname> <given-names>B</given-names></name> (<year>2003</year>) <article-title>Sniffers, buzzers, toggles and blinkers: dynamics of regulatory and signaling pathways in the cell</article-title>. <source>Current Opinion in Cell Biology</source> <volume>15</volume>: <fpage>221</fpage>–<lpage>231</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0955-0674(03)00017-6" xlink:type="simple">10.1016/S0955-0674(03)00017-6</ext-link></comment> <object-id pub-id-type="pmid">12648679</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref039">
+<label>39</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Matthews</surname> <given-names>B</given-names></name> (<year>1975</year>) <article-title>Comparison of the predicted and observed secondary structure of <italic>T4</italic> phage lysozyme</article-title>. <source>Biochimica et Biophysica Acta (BBA)—Protein Structure</source> <volume>405</volume>: <fpage>442</fpage>–<lpage>451</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/0005-2795(75)90109-9" xlink:type="simple">10.1016/0005-2795(75)90109-9</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref040">
+<label>40</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Ceriani</surname> <given-names>MF</given-names></name>, <name name-style="western"><surname>Hogenesch</surname> <given-names>JB</given-names></name>, <name name-style="western"><surname>Yanovsky</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Panda</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Straume</surname> <given-names>M</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>Genome-wide expression analysis in <italic>Drosophila</italic> reveals genes controlling circadian behavior</article-title>. <source>The Journal of Neuroscience</source> <volume>22</volume>: <fpage>9305</fpage>–<lpage>9319</lpage>. <object-id pub-id-type="pmid">12417656</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref041">
+<label>41</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Lin</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Han</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Shimada</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Gibler</surname> <given-names>TM</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>Influence of the period-dependent circadian clock on diurnal, circadian, and aperiodic gene expression in <italic>Drosophila melanogaster</italic></article-title>. <source>Proceedings of the National Academy of Sciences</source> <volume>99</volume>: <fpage>9562</fpage>–<lpage>9567</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.132269699" xlink:type="simple">10.1073/pnas.132269699</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref042">
+<label>42</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Ueda</surname> <given-names>HR</given-names></name>, <name name-style="western"><surname>Matsumoto</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Kawamura</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Iino</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Tanimura</surname> <given-names>T</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>Genome-wide transcriptional orchestration of circadian rhythms in <italic>Drosophila</italic></article-title>. <source>J Biol Chem</source> <volume>16</volume>: <fpage>14048</fpage>–<lpage>14052</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1074/jbc.C100765200" xlink:type="simple">10.1074/jbc.C100765200</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref043">
+<label>43</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Kadener</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Stoleru</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>McDonald</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Nawathean</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Rosbash</surname> <given-names>M</given-names></name> (<year>2007</year>) <article-title>Clockwork orange is a transcriptional repressor and a new <italic>Drosophila</italic> circadian pacemaker component</article-title>. <source>Genes &amp; Development</source> <volume>21</volume>: <fpage>1675</fpage>–<lpage>1686</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref044">
+<label>44</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Fisher</surname> <given-names>RA</given-names></name> (<year>1922</year>) <article-title>On the interpretation of χ<sup>2</sup> from contingency tables, and the calculation of p</article-title>. <source>Journal of the Royal Statistical Society</source> <volume>85</volume>: <fpage>87</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/2340521" xlink:type="simple">10.2307/2340521</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref045">
+<label>45</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>St Pierre</surname> <given-names>SE</given-names></name>, <name name-style="western"><surname>Ponting</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Stefancsik</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>McQuilton</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Consortium</surname> <given-names>F</given-names></name> (<year>2014</year>) <article-title>FlyBase 102-advanced approaches to interrogating FlyBase</article-title>. <source>Nucleic Acids Research</source> <volume>42</volume>: <fpage>D780</fpage>–<lpage>D788</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkt1092" xlink:type="simple">10.1093/nar/gkt1092</ext-link></comment> <object-id pub-id-type="pmid">24234449</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref046">
+<label>46</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Brown</surname> <given-names>JL</given-names></name> (<year>2005</year>) <article-title>An Sp1/KLF binding site is important for the activity of a polycomb group response element from the <italic>Drosophila</italic> engrailed gene</article-title>. <source>Nucleic Acids Research</source> <volume>33</volume>: <fpage>5181</fpage>–<lpage>5189</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gki827" xlink:type="simple">10.1093/nar/gki827</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref047">
+<label>47</label>
+<mixed-citation xlink:type="simple" publication-type="other">Munoz-Descalzo S, Llobell MC, Paricio N (2004) cabut encodes a <italic>C</italic><sub>2</sub><italic>H</italic><sub>2</sub> zinc finger transcription factor required during <italic>Drosophila</italic> embryogenesis. Program and Abstracts 45th Annual Drosophila Research Conference, Washington, DC, 2004: 528C.</mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref048">
+<label>48</label>
+<mixed-citation xlink:type="simple" publication-type="other">Munoz-Descalzo S, Llobell MC, Paricio N (2003) cabut, a new gene involved in multiple processes during <italic>Drosophila melanogaster</italic> development. Abstracts Eighteenth European Drosophila Research Conference, Gottingen, 2003: P04.</mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref049">
+<label>49</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Abruzzi</surname> <given-names>KC</given-names></name>, <name name-style="western"><surname>Rodriguez</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Menet</surname> <given-names>JS</given-names></name>, <name name-style="western"><surname>Desrochers</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Zadina</surname> <given-names>A</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title><italic>Drosophila</italic> CLOCK target gene characterization: implications for circadian tissue-specific gene expression</article-title>. <source>Genes &amp; Development</source> <volume>25</volume>: <fpage>2374</fpage>–<lpage>2386</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref050">
+<label>50</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Fujikawa</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Takahashi</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Nishimura</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Itoh</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Takano-Shimizu</surname> <given-names>T</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Characteristics of genes up-regulated and down-regulated after 24h starvation in the head of <italic>Drosophila</italic></article-title>. <source>Gene</source> <volume>446</volume>: <fpage>11</fpage>–<lpage>17</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.gene.2009.06.017" xlink:type="simple">10.1016/j.gene.2009.06.017</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref051">
+<label>51</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Huang</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Sherman</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Lempicki</surname> <given-names>R</given-names></name> (<year>2009</year>) <article-title>Bioinformatics enrichment tools: paths toward the comprehensive functional analysis of large gene lists</article-title>. <source>Nucleic Acids Res</source> <volume>37</volume>: <fpage>1</fpage>–<lpage>13</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkn923" xlink:type="simple">10.1093/nar/gkn923</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref052">
+<label>52</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Huang</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Sherman</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Lempicki</surname> <given-names>R</given-names></name> (<year>2009</year>) <article-title>Systematic and integrative analysis of large gene lists using DAVID bioinformatics resources</article-title>. <source>Nat Protoc</source> <volume>4</volume>: <fpage>44</fpage>–<lpage>57</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nprot.2008.211" xlink:type="simple">10.1038/nprot.2008.211</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref053">
+<label>53</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Hooven</surname> <given-names>LA</given-names></name>, <name name-style="western"><surname>Sherman</surname> <given-names>KA</given-names></name>, <name name-style="western"><surname>Butcher</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Giebultowicz</surname> <given-names>JM</given-names></name> (<year>2009</year>) <article-title>Does the clock make the poison? Circadian variation in response to pesticides</article-title>. <source>PLoS ONE</source> <volume>4</volume>: <fpage>e6469</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0006469" xlink:type="simple">10.1371/journal.pone.0006469</ext-link></comment> <object-id pub-id-type="pmid">19649249</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref054">
+<label>54</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Beaver</surname> <given-names>LM</given-names></name>, <name name-style="western"><surname>Hooven</surname> <given-names>LA</given-names></name>, <name name-style="western"><surname>Butcher</surname> <given-names>SM</given-names></name>, <name name-style="western"><surname>Krishnan</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Sherman</surname> <given-names>KA</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Circadian clock regulates response to pesticides in <italic>Drosophila</italic> via conserved <italic>Pdp1</italic> pathway</article-title>. <source>Toxicological Sciences</source> <volume>115</volume>: <fpage>513</fpage>–<lpage>520</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/toxsci/kfq083" xlink:type="simple">10.1093/toxsci/kfq083</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref055">
+<label>55</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Hamby</surname> <given-names>KA</given-names></name>, <name name-style="western"><surname>Kwok</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Zalom</surname> <given-names>FG</given-names></name>, <name name-style="western"><surname>Chiu</surname> <given-names>JC</given-names></name> (<year>2013</year>) <article-title>Integrating circadian activity and gene expression profiles to predict chronotoxicity of <italic>Drosophila suzukii</italic> response to insecticides</article-title>. <source>PLoS ONE</source> <volume>8</volume>: <fpage>e68472</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0068472" xlink:type="simple">10.1371/journal.pone.0068472</ext-link></comment> <object-id pub-id-type="pmid">23861907</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref056">
+<label>56</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Pompella</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Visvikis</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Paolicchi</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Tata</surname> <given-names>VD</given-names></name>, <name name-style="western"><surname>Casini</surname> <given-names>A</given-names></name> (<year>2003</year>) <article-title>The changing faces of glutathione, a cellular protagonist</article-title>. <source>Biochem Pharmacol</source> <volume>66</volume>: <fpage>1499</fpage>–<lpage>1503</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0006-2952(03)00504-5" xlink:type="simple">10.1016/S0006-2952(03)00504-5</ext-link></comment> <object-id pub-id-type="pmid">14555227</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref057">
+<label>57</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Mandilaras</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Missirlis</surname> <given-names>F</given-names></name> (<year>2012</year>) <article-title>Genes for iron metabolism influence circadian rhythms in <italic>Drosophila melanogaster</italic></article-title>. <source>Metallomics</source> <volume>4</volume>: <fpage>928</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1039/c2mt20065a" xlink:type="simple">10.1039/c2mt20065a</ext-link></comment> <object-id pub-id-type="pmid">22885802</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref058">
+<label>58</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Freeman</surname> <given-names>AA</given-names></name>, <name name-style="western"><surname>Mandilaras</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Missirlis</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Sanyal</surname> <given-names>S</given-names></name> (<year>2013</year>) <article-title>An emerging role for <italic>Cullin-3</italic> mediated ubiquitination in sleep and circadian rhythm: Insights from <italic>Drosophila</italic></article-title>. <source>Fly</source> <volume>7</volume>: <fpage>39</fpage>–<lpage>43</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.4161/fly.23506" xlink:type="simple">10.4161/fly.23506</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref059">
+<label>59</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bartok</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Kyriacou</surname> <given-names>CP</given-names></name>, <name name-style="western"><surname>Levine</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Sehgal</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Kadener</surname> <given-names>S</given-names></name> (<year>2013</year>) <article-title>Adaptation of molecular circadian clockwork to environmental changes: a role for alternative splicing and miRNAs</article-title>. <source>Proceedings of the Royal Society B: Biological Sciences</source> <volume>280</volume>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rspb.2013.0011" xlink:type="simple">10.1098/rspb.2013.0011</ext-link></comment> <object-id pub-id-type="pmid">23825200</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref060">
+<label>60</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Preußner</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Wilhelmi</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Schultz</surname> <given-names>AS</given-names></name>, <name name-style="western"><surname>Finkernagel</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Michel</surname> <given-names>M</given-names></name>, <etal>et al</etal>. (<year>2014</year>) <article-title>Rhythmic U2af26 alternative splicing controls <italic>PERIOD1</italic> stability and the circadian clock in mice</article-title>. <source>Molecular Cell</source> <volume>54</volume>: <fpage>651</fpage>–<lpage>662</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref061">
+<label>61</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Mann</surname> <given-names>HB</given-names></name>, <name name-style="western"><surname>Whitney</surname> <given-names>DR</given-names></name> (<year>1947</year>) <article-title>On a test of whether one of two random variables is stochastically larger than the other</article-title>. <source>The Annals of Mathematical Statistics</source> <volume>18</volume>: <fpage>50</fpage>–<lpage>60</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1214/aoms/1177730491" xlink:type="simple">10.1214/aoms/1177730491</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004094.ref062">
+<label>62</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Cornelissen</surname> <given-names>G</given-names></name> (<year>2014</year>) <article-title>Cosinor-based rhythmometry</article-title>. <source>Theoretical Biology and Medical Modelling</source> <volume>11</volume>: <fpage>16</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1742-4682-11-16" xlink:type="simple">10.1186/1742-4682-11-16</ext-link></comment> <object-id pub-id-type="pmid">24725531</object-id></mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

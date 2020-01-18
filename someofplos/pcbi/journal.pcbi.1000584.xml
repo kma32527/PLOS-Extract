@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Computational Biology</journal-title></journal-title-group><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">09-PLCB-RA-0714R3</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1000584</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Computational Biology</subject><subject>Computational Biology/Macromolecular Structure Analysis</subject><subject>Computational Biology/Protein Homology Detection</subject><subject>Computational Biology/Protein Structure Prediction</subject></subj-group></article-categories><title-group><article-title>Defining an Essence of Structure Determining Residue Contacts in Proteins</article-title><alt-title alt-title-type="running-head">Essential Contacts for Structure Reconstruction</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Sathyapriya</surname><given-names>R.</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Duarte</surname><given-names>Jose M.</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Stehr</surname><given-names>Henning</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Filippis</surname><given-names>Ioannis</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Lappe</surname><given-names>Michael</given-names></name><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group><aff id="aff1">          <addr-line>Structural Genomics/Bioinformatics Group, Otto Warburg Laboratory, Max Planck Institute for Molecular Genetics, Berlin, Germany</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Nussinov</surname><given-names>Ruth</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">National Cancer Institute, United States of America and Tel Aviv University, Israel</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">lappe@molgen.mpg.de</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: RS JMD ML. Performed the experiments: RS ML. Analyzed the data: RS JMD HS ML. Contributed reagents/materials/analysis tools: RS JMD HS IF ML. Wrote the paper: RS ML.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><month>12</month><year>2009</year></pub-date><pub-date pub-type="epub"><day>4</day><month>12</month><year>2009</year></pub-date><volume>5</volume><issue>12</issue><elocation-id>e1000584</elocation-id><history>
+<date date-type="received"><day>19</day><month>6</month><year>2009</year></date>
+<date date-type="accepted"><day>30</day><month>10</month><year>2009</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2009</copyright-year><copyright-holder>Sathyapriya et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>The network of native non-covalent residue contacts determines the three-dimensional structure of a protein. However, not all contacts are of equal structural significance, and little knowledge exists about a minimal, yet sufficient, subset required to define the global features of a protein. Characterisation of this “structural essence” has remained elusive so far: no algorithmic strategy has been devised to-date that could outperform a random selection in terms of 3D reconstruction accuracy (measured as the Ca RMSD). It is not only of theoretical interest (i.e., for design of advanced statistical potentials) to identify the number and nature of essential native contacts—such a subset of spatial constraints is very useful in a number of novel experimental methods (like EPR) which rely heavily on constraint-based protein modelling. To derive accurate three-dimensional models from distance constraints, we implemented a reconstruction pipeline using distance geometry. We selected a test-set of 12 protein structures from the four major SCOP fold classes and performed our reconstruction analysis. As a reference set, series of random subsets (ranging from 10% to 90% of native contacts) are generated for each protein, and the reconstruction accuracy is computed for each subset. We have developed a rational strategy, termed “cone-peeling” that combines sequence features and network descriptors to select minimal subsets that outperform the reference sets. We present, for the first time, a rational strategy to derive a structural essence of residue contacts and provide an estimate of the size of this minimal subset. Our algorithm computes sparse subsets capable of determining the tertiary structure at approximately 4.8 Å Ca RMSD with as little as 8% of the native contacts (Ca-Ca and Cb-Cb). At the same time, a randomly chosen subset of native contacts needs about twice as many contacts to reach the same level of accuracy. This “structural essence” opens new avenues in the fields of structure prediction, empirical potentials and docking.</p>
+</abstract><abstract abstract-type="summary"><title>Author Summary</title>
+<p>A protein structure can be visualized as a network of non-covalent contacts existing between amino acids. But not all such contacts are important structural determinants of a protein. We have attempted to identify a subset of amino acid contacts that are essential for reconstructing protein structures. Initially, we followed random sampling of contacts and tested their efficacy to successfully represent the three-dimensional structure. Further, we also developed an algorithm that selects a subset of amino acid contacts from proteins based on the sequence and network properties. The subsets picked by our algorithm represent protein three-dimensional structure better than random subsets, thereby offering direct evidence for the existence of a structural essence in protein structures. The identification of such structure-defining subsets finds application in experimental and computational protein structure determination.</p>
+</abstract><funding-group><funding-statement>We received no funding for this work.</funding-statement></funding-group><counts><page-count count="10"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>The native structure of a protein is held intact by the complex and cooperative interplay of residue interactions. While a network of amino acid contacts is well defined given a native structure, it remains an open question if all the contacts are equivalent in terms of their contribution to the structural integrity. In part, this question has been addressed by studies where a partial contact network of a native structure is embedded into the three-dimensional space <xref ref-type="bibr" rid="pcbi.1000584-Vassura1">[1]</xref>,<xref ref-type="bibr" rid="pcbi.1000584-Vendruscolo1">[2]</xref>. The resultant root mean square deviation (RMSD) of the embedding from the native structure quantifies the information content of the selected subset (<xref ref-type="fig" rid="pcbi-1000584-g001">Figure 1</xref>).</p>
+<fig id="pcbi-1000584-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000584.g001</object-id><label>Figure 1</label><caption>
+<title>The concept of structural essence.</title>
+<p>The concept of a minimal set of contacts essential for the reconstruction of the three-dimensional structure is elucidated with an example of CheY (1e6k). A The native structure of 1e6k is shown in ribbon representation (pink). B The Ca contacts are visualized in a contact map. The inset highlights all the Ca contacts (red) on the cartoon representation. C A subset selected from the native contact map is highlighted (black). The inset shows the selected subset mapped onto the structure. D The structure reconstructed from the selected subset is shown in ribbon representation (blue). E The superposition of the native and the reconstructed structures. The reconstruction accuracy is measured as the Ca RMSD of the superposition of the native structure and the reconstructed model.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.g001" xlink:type="simple"/></fig>
+<p>Such a line of investigation also represents a logical extension to the current trends in structural biology. While most of the three-dimensional structures of proteins in the PDB are identified by X-ray crystallography and NMR, new experimental methods like EPR aim to broaden the horizon of structural proteomics and cover the protein universe <xref ref-type="bibr" rid="pcbi.1000584-Mouradov1">[3]</xref>–<xref ref-type="bibr" rid="pcbi.1000584-Alexander1">[5]</xref>. In spirit, these techniques are similar to established NMR spectroscopic methods as they yield information about inter-residue proximity constraints. From a sufficient number of such experimentally derived constraints, the tertiary structure of the protein can be identified <xref ref-type="bibr" rid="pcbi.1000584-Young1">[6]</xref>. Identifying a minimal set of structure determining distance constraints a-priori from the sequence would not only minimize the experimental efforts, but would in fact imply a solution to the protein folding problem. As an intermediate step in this direction, analysing minimal subsets of structure determining contacts in known structures promises to provide preliminary insights into the question what the features of such an essential subset of contacts might be.</p>
+<p>For several years, the distance constraints and other stereo chemical and biophysical restraints have been employed in computational restraint-based protein modelling <xref ref-type="bibr" rid="pcbi.1000584-Aszodi1">[7]</xref>–<xref ref-type="bibr" rid="pcbi.1000584-Wolff1">[13]</xref>. Specifically, a selected subset of native contacts is considered as distance constraints that efficiently define the fold and reconstruct the tertiary structure of the protein <xref ref-type="bibr" rid="pcbi.1000584-Vassura2">[14]</xref>. In order to obtain coordinates consistent with a given set of distance constraints, we implemented a contact map reconstruction method based on distance geometry <xref ref-type="bibr" rid="pcbi.1000584-Crippen1">[15]</xref>. Using the complete set of native contacts of a known protein structure as input, the reconstruction provides models that are within 2.0 Å Ca RMSD from the native structure (Jose M Duarte et al. unpublished data). The other existing implementations of 3D reconstruction from contact maps are based on methods such as Discrete Molecular Dynamics (DMD) <xref ref-type="bibr" rid="pcbi.1000584-Chen1">[16]</xref>, singular value decomposition <xref ref-type="bibr" rid="pcbi.1000584-Vendruscolo1">[2]</xref>,<xref ref-type="bibr" rid="pcbi.1000584-Porto1">[17]</xref>. The reconstruction accuracies of the alternate reconstruction methods vary and different contact definitions and datasets make a direct comparison difficult. Despite the quantitative differences in reconstruction accuracy, we reproduce qualitatively the same non-linear relationship of Ca RMSD with fraction of native contacts. In all such studies, below a certain fraction of the native contacts, the reconstruction accuracy deteriorates rapidly. With our reconstruction pipeline we could go as low as 20–30% of the native contacts (Ca-Ca, Cb-Cb) and still obtain an average reconstruction accuracy of ∼4 Å Ca RMSD. In summary, we confirmed that a contact map is highly redundant and a subset of native contacts is sufficient to determine the structure up to experimental accuracy.</p>
+<p>Together with an accurate 3D reconstruction method and the knowledge that a complete contact map is not required for recognizing the protein fold, the central question is to predetermine the nature and the number of ‘minimal distance constraints’ required to efficiently identify the tertiary structure of the protein (<xref ref-type="fig" rid="pcbi-1000584-g001">Figure 1</xref>). The current paper focuses on the methods used to derive a minimal set of contacts, the necessary and sufficient determinants to reconstruct any given protein fold, namely the ‘structural essence of a protein’. An independent study by Chen et al showed that randomly picked subset of contacts could be used to successfully reconstruct the three-dimensional structure of the protein <xref ref-type="bibr" rid="pcbi.1000584-Chen1">[16]</xref>. They further claimed that subsets selected with a rational strategy could only reconstruct as good as the random subsets and not better. Here, for the first time we demonstrate that a structural essence exists and provide a constructive algorithm for its calculation. We also characterize the structural essence from different folds. The results of this study facilitate the choice of contacts to obtain better models from experimental and computational restrain-based protein modelling.</p>
+</sec><sec id="s2">
+<title>Results</title>
+<sec id="s2a">
+<title>Less is more in 3D reconstruction of protein structures</title>
+<p>To verify that a subset of native contacts is sufficient to reconstruct the native structure, we chose increasing fractions (from 10%–90%) randomly from native contacts and measured their reconstruction accuracy (as Ca RMSD compared to the native structure). The reconstruction accuracies obtained are provided in <xref ref-type="fig" rid="pcbi-1000584-g002">Figure 2A</xref>. The dataset chosen for the study is given in <xref ref-type="table" rid="pcbi-1000584-t001">Table 1</xref>. We find that in all the proteins from the dataset, the reconstruction with a fraction of native contacts yields structures close to the native structure. Specifically, the 30%–50% random subsets show reconstruction accuracies comparable to those obtained from the complete contact map. The negligible increase in Ca RMSD between the 20% and 30% subsets provides a direct estimate of the size of the minimal subset (<xref ref-type="fig" rid="pcbi-1000584-g002">Figure 2A</xref>).</p>
+<fig id="pcbi-1000584-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000584.g002</object-id><label>Figure 2</label><caption>
+<title>Subsets from random selection.</title>
+<p>A Increasing fractions of contacts (from 10% to 100%) are selected at random and reconstructed. Two independent random selections are performed for every fraction and the average Ca RMSD is reported for every protein in a SCOP class. Each class consists of three structures. In each class ‘*’ denotes proteins that are thrice as large as the other two proteins. B The reconstruction accuracies of the random subsets are compared between our method and Chen and co-workers. Five proteins (1dd3, 1nxb, 1igd, 1bxy, 1d0d) are selected from the Chen dataset and the random subsets are generated with (i) our contact definitions Ca 9.0 Å, Cb 8.0 Å (red) (ii) contact definition from Chen et al (Cb 7.5 Å) (black). Subsets from (i) and (ii) are reconstructed with Tinker (iii) The reconstruction accuracy from Chen et al (blue).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.g002" xlink:type="simple"/></fig><table-wrap id="pcbi-1000584-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000584.t001</object-id><label>Table 1</label><caption>
+<title>Dataset.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000584-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">PDB</td>
+<td align="left" colspan="1" rowspan="1">SCOP id</td>
+<td align="left" colspan="1" rowspan="1">#Nodes</td>
+<td align="left" colspan="1" rowspan="1">#Edges (Ca-Ca, Cb-Cb)</td>
+<td align="left" colspan="1" rowspan="1">Size (% Ca-Ca, Cb-Cb contacts)</td>
+<td align="left" colspan="1" rowspan="1">PI<xref ref-type="table-fn" rid="nt101">*</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="6" rowspan="1"><bold>All α</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1bkr</td>
+<td align="left" colspan="1" rowspan="1">a.40.1.1</td>
+<td align="left" colspan="1" rowspan="1">109</td>
+<td align="left" colspan="1" rowspan="1">553, 339</td>
+<td align="left" colspan="1" rowspan="1">5.6, 9.3</td>
+<td align="left" colspan="1" rowspan="1">2.14</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1odd</td>
+<td align="left" colspan="1" rowspan="1">a.4.6.1</td>
+<td align="left" colspan="1" rowspan="1">118</td>
+<td align="left" colspan="1" rowspan="1">508, 341</td>
+<td align="left" colspan="1" rowspan="1">5.3, 8.8</td>
+<td align="left" colspan="1" rowspan="1">1.84</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1cem</td>
+<td align="left" colspan="1" rowspan="1">a.102.1.2</td>
+<td align="left" colspan="1" rowspan="1">363</td>
+<td align="left" colspan="1" rowspan="1">2273, 1627</td>
+<td align="left" colspan="1" rowspan="1">6.2, 11.6</td>
+<td align="left" colspan="1" rowspan="1">1.53</td>
+</tr>
+<tr>
+<td align="left" colspan="6" rowspan="1"><bold>All β</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1pzc</td>
+<td align="left" colspan="1" rowspan="1">b.6.1.1</td>
+<td align="left" colspan="1" rowspan="1">123</td>
+<td align="left" colspan="1" rowspan="1">679, 481</td>
+<td align="left" colspan="1" rowspan="1">5.4, 13.7</td>
+<td align="left" colspan="1" rowspan="1">1.61</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1onl</td>
+<td align="left" colspan="1" rowspan="1">b.84.1.1</td>
+<td align="left" colspan="1" rowspan="1">128</td>
+<td align="left" colspan="1" rowspan="1">690, 510</td>
+<td align="left" colspan="1" rowspan="1">5.7, 11.0</td>
+<td align="left" colspan="1" rowspan="1">1.85</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1eur</td>
+<td align="left" colspan="1" rowspan="1">b.68.1.1</td>
+<td align="left" colspan="1" rowspan="1">365</td>
+<td align="left" colspan="1" rowspan="1">2244, 1567</td>
+<td align="left" colspan="1" rowspan="1">6.7, 14.1</td>
+<td align="left" colspan="1" rowspan="1">1.74</td>
+</tr>
+<tr>
+<td align="left" colspan="6" rowspan="1"><bold>α/β</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1e6k</td>
+<td align="left" colspan="1" rowspan="1">c.23.1.1</td>
+<td align="left" colspan="1" rowspan="1">130</td>
+<td align="left" colspan="1" rowspan="1">669, 503</td>
+<td align="left" colspan="1" rowspan="1">4.3, 8.9</td>
+<td align="left" colspan="1" rowspan="1">1.74</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1o8w</td>
+<td align="left" colspan="1" rowspan="1">c.47.1.10</td>
+<td align="left" colspan="1" rowspan="1">146</td>
+<td align="left" colspan="1" rowspan="1">722, 524</td>
+<td align="left" colspan="1" rowspan="1">6.8, 12.8</td>
+<td align="left" colspan="1" rowspan="1">3.13</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1ede</td>
+<td align="left" colspan="1" rowspan="1">c.69.1.8</td>
+<td align="left" colspan="1" rowspan="1">310</td>
+<td align="left" colspan="1" rowspan="1">1764, 1315</td>
+<td align="left" colspan="1" rowspan="1">5.5, 11.8</td>
+<td align="left" colspan="1" rowspan="1">1.69</td>
+</tr>
+<tr>
+<td align="left" colspan="6" rowspan="1"><bold>α + β</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1r9h</td>
+<td align="left" colspan="1" rowspan="1">d.26.1.1</td>
+<td align="left" colspan="1" rowspan="1">135</td>
+<td align="left" colspan="1" rowspan="1">629, 446</td>
+<td align="left" colspan="1" rowspan="1">5.9, 9.9</td>
+<td align="left" colspan="1" rowspan="1">1.26</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1ugm</td>
+<td align="left" colspan="1" rowspan="1">d.15.1.3</td>
+<td align="left" colspan="1" rowspan="1">125</td>
+<td align="left" colspan="1" rowspan="1">519, 379</td>
+<td align="left" colspan="1" rowspan="1">5.6, 10.0</td>
+<td align="left" colspan="1" rowspan="1">2.06</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">1iu4</td>
+<td align="left" colspan="1" rowspan="1">d.3.1.8</td>
+<td align="left" colspan="1" rowspan="1">331</td>
+<td align="left" colspan="1" rowspan="1">1935, 1316</td>
+<td align="left" colspan="1" rowspan="1">6.2, 11.6</td>
+<td align="left" colspan="1" rowspan="1">1.51</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label>*</label><p>PI for the cone-peeled subsets are calculated using Eq. (1). For the sake of comparison, the GDT_TS is given in  for the cone-peeled and the random subsets.</p></fn></table-wrap-foot></table-wrap>
+<p>The existence of the structural essence is observed as a common feature across different folds. However, the size of the subset varied with different SCOP classes as shown in <xref ref-type="fig" rid="pcbi-1000584-g002">Figure 2A</xref>. For proteins from the all α, all β and the α/β SCOP classes, as low as 20% of the native contacts are sufficient to obtain a structure within Ca RMSD of ≤4 Å to the native structure. However in the α+β class more contacts (30%) are required for acquiring the same reconstruction accuracy (<xref ref-type="fig" rid="pcbi-1000584-g002">Figure 2A</xref>) highlighting its higher topological complexity. Furthermore, it is worthwhile to note that 20% of contacts are sufficient for reconstruction across a range of protein sizes between 100 and 300 amino acids. Thus, there is a negligible effect of protein size on the reconstruction accuracy with our reconstruction method.</p>
+<p>The performance comparison of our contact definition and our reconstruction pipeline with other existing methods of contact map reconstruction namely FT-COMAR <xref ref-type="bibr" rid="pcbi.1000584-Vassura1">[1]</xref>, DMD <xref ref-type="bibr" rid="pcbi.1000584-Chen1">[16]</xref> reveals differences in the reconstruction accuracies and the size of the minimal subsets. In order to systematically compare the differences, we have taken the dataset from Chen et al (henceforth called Chen-set) and repeated the reconstructions with our method and contact definition (for details see <xref ref-type="sec" rid="s4">methods</xref>). The results are shown in the <xref ref-type="fig" rid="pcbi-1000584-g002">Figure 2B</xref>. We find that the overall profile of the reconstruction accuracy of different random subsets from the Chen-set did not vary considerably between our method and DMD. However, there are differences observed in the size of the minimal subset. In contrast to the 70% contacts required by DMD to reconstruct to ∼3.5 Å of the native structure, our method required just 20%–30% contacts to achieve a similar accuracy. Further, the reconstructions with our contact definitions (Ca 9.0 Å, Cb 8.0 Å) for a 30% subset yielded RMSD of 3.25 Å; whereas using Cb 7.5 Å, we get a RMSD of 5.03 Å showing the improved performance of our contact definition.</p>
+<p>In case of FT-COMAR, 25% of native distance restraints were required for reconstructing up to ∼4 Å of the native structure <xref ref-type="bibr" rid="pcbi.1000584-Vassura1">[1]</xref>. However, a large Ca distance threshold (&gt;15 Å) was used to define the contacts. In comparison, we used a four-fold sparser contact map (20% contacts) and achieved better accuracy (∼3.4 Å). Thus, in the trade-off between the reconstruction accuracy and the size of the subset required for achieving a given accuracy, we observe that our reconstruction method along with our contact definition outperform FT-COMAR and DMD.</p>
+</sec><sec id="s2b">
+<title>A rational selection of the structural essence</title>
+<p>An algorithm capable of picking the structurally important contacts should be able to generate sets with significantly better reconstruction accuracy than by random selection. On the same token, such an algorithm should also require fewer distance restraints as input. To measure the improvement we define a relative performance index (PI) as<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.e001" xlink:type="simple"/><label>(1)</label></disp-formula>where the size of the random subset equals the rational subset. An algorithm capable of picking a minimal subset that reconstructs better than a random subset scores a PI&gt;1.</p>
+<p>The sequence based information in combination with graph-based properties can be used as parameters in devising a rational strategy that identifies the structural essence.</p>
+</sec><sec id="s2c">
+<title>Long sequence-range distils the structural essence better than short-range</title>
+<p>The sequence-range of a contact is defined as the separation in sequence between the amino acids i and j which are in contact (for details see <xref ref-type="sec" rid="s4">methods</xref>). While contacts from the lower sequence-range are determinants of the secondary structure, the long-range contacts determine the intricacies of the fold and the packing of the tertiary structure. Further, the number of long-range contacts and the long-range contact order influence the folding rate of proteins <xref ref-type="bibr" rid="pcbi.1000584-Bagler1">[18]</xref>–<xref ref-type="bibr" rid="pcbi.1000584-Bonneau1">[21]</xref>. To evaluate the significance of contacts from different sequence-ranges, we selected predefined short and long sequence-range contacts (see <xref ref-type="sec" rid="s4">methods</xref>). The reconstruction accuracies of the chosen subsets compared to similar sized random subset are shown in <xref ref-type="fig" rid="pcbi-1000584-g003">Figure 3</xref>. While the short-range subsets failed to produce a model anywhere near the native structure, the long sequence-range subsets reconstructed significantly better. However, in comparison to the random subsets, these results are not significant and the long-range contacts alone did not achieve a PI&gt;1. Although there is an effect of long-range contacts being more important, a set of long-range contacts alone is not sufficient to capture all the structural information.</p>
+<fig id="pcbi-1000584-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000584.g003</object-id><label>Figure 3</label><caption>
+<title>Sequence-range based subset selection.</title>
+<p>The reconstruction accuracy of the short-range (left) and the long-range subsets (right) are shown (blue). The entire short (SR) and long-range (LR) contacts subsets are used in reconstruction. The comparison is against a random subset of similar size (red). The class average is the average Ca RMSDs from the ensembles (1/4<sup>th</sup> best models) of every protein. The sizes of the SR and the LR subsets vary slightly in each SCOP class; however the trend was the preserved for both the Ca and the Cb graphs. (The average sizes of Ca graphs:- All α: SR = 62.2%, LR = 37.8%; All β: SR = 51.1%, LR = 49.9%; α/β: SR = 55.5%, LR = 44.5%; α+β: SR = 51.1%, LR = 48.9%).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.g003" xlink:type="simple"/></fig></sec><sec id="s2d">
+<title>Common neighbourhoods of contacts</title>
+<p>The concept of common neighbourhoods is used to analyze the significance of an edge and its local neighbourhood to the overall structure and stability of the network. For instance, common neighbourhoods are used in determining packing effects of atoms in crystals <xref ref-type="bibr" rid="pcbi.1000584-Luemmen1">[22]</xref>,<xref ref-type="bibr" rid="pcbi.1000584-Tsusuki1">[23]</xref>. The common neighbourhood (CNb) of a contact is defined in methods and the concept illustrated in <xref ref-type="fig" rid="pcbi-1000584-g004">Figure 4</xref>. For an edge E<sub>ij</sub> (red) between nodes i (pink) and j (green), the edges formed by i and j with nodes k<sub>1</sub>, k<sub>2</sub> and k<sub>3</sub> (yellow) constitute the neighbourhood of E<sub>ij.</sub> The triangle formed by E<sub>ij</sub> and its neighbours (E<sub>ik</sub> and E<sub>kj</sub> (black)) forms the CNb triangle. A contact (red) embedded in its CNb is viewed as a representative of its neighbourhoods (black).</p>
+<fig id="pcbi-1000584-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000584.g004</object-id><label>Figure 4</label><caption>
+<title>Common Neighbourhood of an edge (Cn(E<sub>ij</sub>)).</title>
+<p>A contact E<sub>ij</sub> (red) between nodes i (pink) and j (green) is shown. Let (N<sub>i</sub>) be the neighbours of the i and (N<sub>j</sub>) be neighbours of the j (grey). The CNb of edge (E<sub>ij</sub>) is defined as <disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.e002" xlink:type="simple"/></disp-formula>The nodes k<sub>1</sub>, k<sub>2</sub> and k<sub>3</sub> (yellow) share edges with nodes i and j. The triangles k<sub>1</sub>, k<sub>2</sub> and k<sub>3</sub> make with E<sub>ij</sub> constitute the CNb triangles of E<sub>ij</sub>.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.g004" xlink:type="simple"/></fig>
+<p>A contact map typically contains many contacts that have few common neighbours and few with many common neighbours. Thus, it is possible to rank contacts based on their CNb sizes. We hypothesize here that contacts that possess more common neighbours are structurally more significant compared to the small neighbourhood counterparts. By stripping the neighbourhoods from the contacts, the ability of contacts to represent their neighbourhood efficiently is tested.</p>
+</sec><sec id="s2e">
+<title>Can rank based selection outperform a random selection of contacts?</title>
+<p>A simple rank-ordered selection of contacts was the initial strategy we employed in selecting structurally important contacts. Native contacts were ranked in the ascending order according to the sequence-range, CNb sizes and increasing fractions (10% to 90%) were selected and reconstructed. The PIs of the rank-ordered subsets are given in <xref ref-type="table" rid="pcbi-1000584-t002">Table 2</xref> (the reconstruction accuracies are shown in <xref ref-type="supplementary-material" rid="pcbi.1000584.s001">Figure S1</xref>). Even with structurally important parameters like the sequence-range and the CNb sizes, a direct rank-ordered selection failed to distinguish the structurally essential from the non-essential contacts of the protein structure. This is evident when the rank-ordered subsets are visualized in a contact map. The rank-ordering samples only discrete regions of the contact map, while a random selection samples uniformly from different regions of the contact map ensuring better reconstruction. For instance, in the case of the sequence-range ordering, contacts are selected diagonally and clearly carry insufficient information about the protein's tertiary structure (<xref ref-type="supplementary-material" rid="pcbi.1000584.s002">Figure S2</xref>). This provides a possible explanation of why contact order ranked selection did not yield a better reconstructing subset for Chen and co-workers <xref ref-type="bibr" rid="pcbi.1000584-Chen1">[16]</xref>. Thus, it is clear that even with a choice of parameters like sequence-range and CNbs that carry significant structural information, the method employed in selecting the best reconstructing subset can be considered as the biggest bottle-neck. Such a method should show better performance when the two parameters are combined in a most efficient way.</p>
+<table-wrap id="pcbi-1000584-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000584.t002</object-id><label>Table 2</label><caption>
+<title>PIs<xref ref-type="table-fn" rid="nt102">*</xref> of common neighbourhood (CNb) and sequence-range rank ordered subsets.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000584-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">PDB Id</td>
+<td align="center" colspan="5" rowspan="1">CNb Ranked Subsets</td>
+<td align="center" colspan="5" rowspan="1">Sequence-range Ranked Subsets</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>10%</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>30%</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>50%</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>70%</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>90%</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>10%</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>30%</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>50%</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>70%</bold></td>
+<td align="left" colspan="1" rowspan="1"><bold>90%</bold></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>1bkr</bold></td>
+<td align="left" colspan="1" rowspan="1">0.52</td>
+<td align="left" colspan="1" rowspan="1">0.67</td>
+<td align="left" colspan="1" rowspan="1">0.69</td>
+<td align="left" colspan="1" rowspan="1">0.81</td>
+<td align="left" colspan="1" rowspan="1">0.94</td>
+<td align="left" colspan="1" rowspan="1">0.46</td>
+<td align="left" colspan="1" rowspan="1">0.79</td>
+<td align="left" colspan="1" rowspan="1">1.07</td>
+<td align="left" colspan="1" rowspan="1">1.01</td>
+<td align="left" colspan="1" rowspan="1">1.01</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>1odd</bold></td>
+<td align="left" colspan="1" rowspan="1">0.37</td>
+<td align="left" colspan="1" rowspan="1">0.39</td>
+<td align="left" colspan="1" rowspan="1">0.47</td>
+<td align="left" colspan="1" rowspan="1">0.75</td>
+<td align="left" colspan="1" rowspan="1">0.92</td>
+<td align="left" colspan="1" rowspan="1">0.41</td>
+<td align="left" colspan="1" rowspan="1">0.70</td>
+<td align="left" colspan="1" rowspan="1">0.92</td>
+<td align="left" colspan="1" rowspan="1">1.05</td>
+<td align="left" colspan="1" rowspan="1">1.08</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>1cem</bold></td>
+<td align="left" colspan="1" rowspan="1">0.31</td>
+<td align="left" colspan="1" rowspan="1">0.63</td>
+<td align="left" colspan="1" rowspan="1">0.71</td>
+<td align="left" colspan="1" rowspan="1">0.73</td>
+<td align="left" colspan="1" rowspan="1">0.88</td>
+<td align="left" colspan="1" rowspan="1">0.28</td>
+<td align="left" colspan="1" rowspan="1">0.66</td>
+<td align="left" colspan="1" rowspan="1">0.81</td>
+<td align="left" colspan="1" rowspan="1">1.05</td>
+<td align="left" colspan="1" rowspan="1">1.05</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>1pzc</bold></td>
+<td align="left" colspan="1" rowspan="1">0.41</td>
+<td align="left" colspan="1" rowspan="1">0.55</td>
+<td align="left" colspan="1" rowspan="1">0.64</td>
+<td align="left" colspan="1" rowspan="1">0.75</td>
+<td align="left" colspan="1" rowspan="1">0.90</td>
+<td align="left" colspan="1" rowspan="1">0.32</td>
+<td align="left" colspan="1" rowspan="1">0.50</td>
+<td align="left" colspan="1" rowspan="1">0.62</td>
+<td align="left" colspan="1" rowspan="1">0.75</td>
+<td align="left" colspan="1" rowspan="1">0.67</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>1onl</bold></td>
+<td align="left" colspan="1" rowspan="1">0.77</td>
+<td align="left" colspan="1" rowspan="1">0.56</td>
+<td align="left" colspan="1" rowspan="1">0.60</td>
+<td align="left" colspan="1" rowspan="1">0.68</td>
+<td align="left" colspan="1" rowspan="1">0.94</td>
+<td align="left" colspan="1" rowspan="1">0.38</td>
+<td align="left" colspan="1" rowspan="1">0.55</td>
+<td align="left" colspan="1" rowspan="1">0.92</td>
+<td align="left" colspan="1" rowspan="1">1.19</td>
+<td align="left" colspan="1" rowspan="1">1.07</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>1eur</bold></td>
+<td align="left" colspan="1" rowspan="1">0.64</td>
+<td align="left" colspan="1" rowspan="1">0.53</td>
+<td align="left" colspan="1" rowspan="1">0.72</td>
+<td align="left" colspan="1" rowspan="1">0.77</td>
+<td align="left" colspan="1" rowspan="1">0.89</td>
+<td align="left" colspan="1" rowspan="1">0.48</td>
+<td align="left" colspan="1" rowspan="1">0.86</td>
+<td align="left" colspan="1" rowspan="1">1.07</td>
+<td align="left" colspan="1" rowspan="1">1.31</td>
+<td align="left" colspan="1" rowspan="1">1.18</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>1e6k</bold></td>
+<td align="left" colspan="1" rowspan="1">0.54</td>
+<td align="left" colspan="1" rowspan="1">0.36</td>
+<td align="left" colspan="1" rowspan="1">0.54</td>
+<td align="left" colspan="1" rowspan="1">0.62</td>
+<td align="left" colspan="1" rowspan="1">0.87</td>
+<td align="left" colspan="1" rowspan="1">0.54</td>
+<td align="left" colspan="1" rowspan="1">0.72</td>
+<td align="left" colspan="1" rowspan="1">1.03</td>
+<td align="left" colspan="1" rowspan="1">1.15</td>
+<td align="left" colspan="1" rowspan="1">1.01</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>1o8w</bold></td>
+<td align="left" colspan="1" rowspan="1">0.31</td>
+<td align="left" colspan="1" rowspan="1">0.58</td>
+<td align="left" colspan="1" rowspan="1">0.71</td>
+<td align="left" colspan="1" rowspan="1">0.80</td>
+<td align="left" colspan="1" rowspan="1">0.92</td>
+<td align="left" colspan="1" rowspan="1">0.24</td>
+<td align="left" colspan="1" rowspan="1">0.47</td>
+<td align="left" colspan="1" rowspan="1">0.85</td>
+<td align="left" colspan="1" rowspan="1">1.05</td>
+<td align="left" colspan="1" rowspan="1">0.94</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>1ede</bold></td>
+<td align="left" colspan="1" rowspan="1">0.79</td>
+<td align="left" colspan="1" rowspan="1">1.04</td>
+<td align="left" colspan="1" rowspan="1">0.92</td>
+<td align="left" colspan="1" rowspan="1">0.95</td>
+<td align="left" colspan="1" rowspan="1">1.09</td>
+<td align="left" colspan="1" rowspan="1">0.65</td>
+<td align="left" colspan="1" rowspan="1">1.21</td>
+<td align="left" colspan="1" rowspan="1">1.19</td>
+<td align="left" colspan="1" rowspan="1">1.34</td>
+<td align="left" colspan="1" rowspan="1">1.16</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>1r9h</bold></td>
+<td align="left" colspan="1" rowspan="1">0.37</td>
+<td align="left" colspan="1" rowspan="1">0.38</td>
+<td align="left" colspan="1" rowspan="1">0.78</td>
+<td align="left" colspan="1" rowspan="1">0.88</td>
+<td align="left" colspan="1" rowspan="1">0.94</td>
+<td align="left" colspan="1" rowspan="1">0.31</td>
+<td align="left" colspan="1" rowspan="1">0.53</td>
+<td align="left" colspan="1" rowspan="1">0.91</td>
+<td align="left" colspan="1" rowspan="1">1.07</td>
+<td align="left" colspan="1" rowspan="1">0.98</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>1ugm</bold></td>
+<td align="left" colspan="1" rowspan="1">0.94</td>
+<td align="left" colspan="1" rowspan="1">0.77</td>
+<td align="left" colspan="1" rowspan="1">0.75</td>
+<td align="left" colspan="1" rowspan="1">0.82</td>
+<td align="left" colspan="1" rowspan="1">0.92</td>
+<td align="left" colspan="1" rowspan="1">0.55</td>
+<td align="left" colspan="1" rowspan="1">0.65</td>
+<td align="left" colspan="1" rowspan="1">0.87</td>
+<td align="left" colspan="1" rowspan="1">1.17</td>
+<td align="left" colspan="1" rowspan="1">0.92</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>1iu4</bold></td>
+<td align="left" colspan="1" rowspan="1">0.69</td>
+<td align="left" colspan="1" rowspan="1">0.57</td>
+<td align="left" colspan="1" rowspan="1">0.69</td>
+<td align="left" colspan="1" rowspan="1">0.53</td>
+<td align="left" colspan="1" rowspan="1">0.98</td>
+<td align="left" colspan="1" rowspan="1">0.28</td>
+<td align="left" colspan="1" rowspan="1">0.53</td>
+<td align="left" colspan="1" rowspan="1">0.79</td>
+<td align="left" colspan="1" rowspan="1">1.05</td>
+<td align="left" colspan="1" rowspan="1">1.07</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt102"><label>*</label><p>PIs are calculated for every fraction (10% to 90%) of rank-ordered contacts using Eq. (1).</p></fn></table-wrap-foot></table-wrap></sec><sec id="s2f">
+<title>Cone-peeling: a rational contact selection algorithm</title>
+<p>The CNb sizes of contacts and the sequence-range are effectively combined with other network descriptors like degree in formulating the cone-peeling algorithm. The cone-peeling algorithm is based on the concept of common neighbourhood of edges. The CNb of an edge is defined in Eq. 3 and the concept explained in <xref ref-type="fig" rid="pcbi-1000584-g004">Figure 4</xref>. For any given edge E<sub>ij</sub>, a CNb triangle can be defined with edges E<sub>ik1</sub> and E<sub>k1j</sub>. Here, we hypothesize that in every neighbourhood triangle if the edges E<sub>ik1</sub> and E<sub>k1j</sub> are redundant then every triangle can be reduced to just the edge E<sub>ij</sub> on some conditions. For instance, if E<sub>ik1</sub> or E<sub>k1j</sub> are low sequence-range edges, then E<sub>ij</sub> can successfully represent E<sub>ik1</sub> and E<sub>k1j</sub> and a single edge successfully represents the triangle. Thus, E<sub>ij</sub> is called the representative edge in its CNb triangle. This is meaningful when visualized in the context of the three-dimensional structure of proteins. Assuming E<sub>ij</sub> is present in a regular secondary structure such as an alpha-helix, the low sequence-range edges E<sub>ik1</sub> or E<sub>k1j</sub> would also be part of the same helix. Thus the presence of the representative edge E<sub>ij</sub> is sufficient and the edges E<sub>ik1</sub> and E<sub>k1j</sub> can be safely deleted.</p>
+<p>For the sake of illustration, the CNb triangles in contact maps can be visualized in 3D as occupying the base of a cone while the representative edges occupying the summit (<xref ref-type="fig" rid="pcbi-1000584-g005">Figure 5A</xref>). The height of the cone is defined by the CNb size of the representative edge. In such a scenario, the algorithm peels the cone by deleting local contacts retaining only the summits. This is performed iteratively and every CNbs is replaced with its representative edge in the decreasing order of their degree and the common neighbour sizes of contacts. Thus, the strategy of retaining only higher neighbourhood long-range edges and deleting the low sequence-range neighbours has been implemented in the cone-peeling algorithm. A step-by-step implementation of the cone-peeling algorithm can be obtained from the pseudo code in the <xref ref-type="sec" rid="s4">methods</xref> section.</p>
+<fig id="pcbi-1000584-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000584.g005</object-id><label>Figure 5</label><caption>
+<title>Deriving the structural essence from cone-peeling strategy.</title>
+<p>A The contact map visualization of the common neighbourhoods. The cone shaped landscape of the CNbs is resultant of low CNb edges occupying the base of the cone, while the high CNb edges occupying the summits. The colour-bar shows the range of the CNb sizes. B The cone-peeling strategy characterizes the structural essence better than random selection. The algorithm selects a subset of native contacts that have high CNb and are also in the long sequence-range and removes all the local contacts. It can be seen that in all the proteins, the subsets selected from cone-peeling (blue) reconstruct better than a similar sized random subset (red) achieving a PI&gt;1 consistently in all the cases. For every protein, the ensemble average Ca RMSD is reported. The sizes of the final subsets and the PIs of the individual proteins are given in <xref ref-type="table" rid="pcbi-1000584-t001">Table 1</xref>. C The essential contacts (blue) obtained from cone-peeling are highlighted in the native structure of 1e6k (red) using Pymol <xref ref-type="bibr" rid="pcbi.1000584-Delano1">[29]</xref>. With 4.3% of Ca-Ca and 9% of Cb-Cb contacts, the subsets achieve a PI of 1.74. D The overlay of the best reconstructed models onto native structure (1e6k). The models reconstructed from the essential subsets obtained from the cone-peeling algorithm are superposed to the native structure for comparison. The best models selected (in terms of Ca RMSD) are shown in ribbon representation (orange). The native structure is shown in cartoon (blue). The overlaid models show an average Ca RMSD of 4.5 Å to the native structure. In the reconstructed models, only with the essential subsets of contacts, the secondary structural regions are well distinguished from the inter-secondary structural regions.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.g005" xlink:type="simple"/></fig>
+<p>The long sequence-range and high CNb edges which emerge after cone-peeling is subjected to reconstruction and the accuracies compared with the random subsets in <xref ref-type="fig" rid="pcbi-1000584-g005">Figure 5B</xref>. Our ‘cone-peeled’ subsets from all the SCOP classes exhibit a PI of &gt;1.5 (<xref ref-type="table" rid="pcbi-1000584-t001">Table 1</xref>). Thus, our ‘cone-peeling’ of local contacts has filtered out the non-essential contacts, while retaining only the essential or structure-determining contacts. It is surprising to note that the minimal subsets of contacts selected from our approach are significantly sparse, on an average comprising about ∼5.8% of Ca and 11.1% of Cb contacts. The cone-peeled subset of contacts for CheY protein (1e6k) is highlighted in <xref ref-type="fig" rid="pcbi-1000584-g005">Figure 5C</xref>. It can be seen that the structural essence as characterized by our algorithm has picked mostly the inter-secondary structural contacts and the contacts from loop regions that are crucial for packing in the protein core, while the ignoring intra-secondary structural contacts and the contacts on the surface. The overlay of five best reconstructed models of CheY (1e6k) onto the native structure is shown in <xref ref-type="fig" rid="pcbi-1000584-g005">Figure 5D</xref>. It can be seen that the secondary structures and the inter-secondary structural regions are distinguished even with a sparse set of Ca and Cb contacts.</p>
+<p>With as little as 8% of native contacts (Ca-Ca and Cb-Cb), our algorithm along with our reconstruction pipeline determines the structure of a protein at 4.8 Å (Ca RMSD). At the same time, from a random selection of contacts, roughly twice the number of contacts is necessary to achieve such reconstruction accuracy. Thus, for the first time we report a method that successfully selects native contacts that determine the structure better than a random selection.</p>
+</sec></sec><sec id="s3">
+<title>Discussion</title>
+<p>We have shown that a structural essence exists among the network of non-covalent contacts of a protein structure. For every protein in our dataset, a subset of 20%–30% native contacts picked at random successfully specifies the global structural features. Further, even by random selection we achieved improvements in the reconstruction accuracy as well as in the size of the subsets over existing methods. This is attributed to the combination of the contact definitions and the reconstruction potential of our method. Thus, up to 70%–80% of the native contact map can be considered dispensable for reconstruction with our method. Hence, the essence affirms the presence of redundant information content in the native contact maps. Redundancy in native contact maps could be envisaged as buffers that would neutralize perturbation effects, which might otherwise destroy the protein fold. This redundancy can be generally compared to the structural effects of mutations in proteins where a comparable trend of greater tolerance to the mutational load exists <xref ref-type="bibr" rid="pcbi.1000584-Besenmatter1">[24]</xref>–<xref ref-type="bibr" rid="pcbi.1000584-Bloom1">[26]</xref>. In a broader perspective, this could also be visualized in analogy to genetic knockdown experiments which in many instances does not mediate drastic consequences.</p>
+<p>By demonstrating the existence of a rational strategy that outperforms a random contact selection, we disprove of the previous notions, that a random contact selection is sufficient for characterizing the structural essence of a protein. Specifically, we have formulated a rational strategy (cone-peeling) that combines sequence properties and network descriptors to identify essential contacts better than a random subset. Further, we did not discriminate between the contacts based on their secondary or the tertiary structural content. Instead, the structural importance of the selected subset emerged naturally from the choice of the contact properties and the network descriptors and the way in which we have combined the parameters into the algorithm. Even the same parameters used in slightly different ways by other groups did not yield the desired results, emphasizing the success of our algorithm.</p>
+<p>The fact that a structural essence of contacts can be described from the native contact network raises further questions about the uniqueness of the essence and its biophysical and the biochemical significance. Do all the essential contacts carry important biological significance? Would mutations to the structural essence have more severe effects? By addressing these issues in future, one can understand of the significance of the essence in the context of protein stability and function.</p>
+<p>The filtering of essential contacts from the non-essential ones can be considered as a first step in contact prediction and constraint selection studies. The knowledge gained from the present study that a fraction of native Ca and Cb contacts (8% to 10%) from long sequence-range and high common neighbourhood are sufficient for reconstruction could serve as preliminary guidelines in selecting distance constraints for experimental structure determination problems. However, in its present form, prediction of such contacts from sequence is not easy as the algorithm works by characterizing an essential subset of proteins from the structure. In future, when the essential contacts are analyzed from a large non-redundant set of proteins, the biophysical and structural information obtained from these contacts could be employed as features in machine learning methods to predict essential contacts directly from the sequence. The present paper thus focuses only on the first step in characterizing the essential subsets of contacts from contact maps and further studies are necessary to address the feature selection and the contact prediction issues.</p>
+<sec id="s3a">
+<title>Conclusions</title>
+<p>We have identified a structural essence from the non-covalent contacts of protein, which successfully determines structural features. The essence could be identified as a 20%–30% fraction of native contacts by random selection. We have proposed a rational strategy (cone-peeling) that outperforms a random contact selection and it successfully distilled the structural essence of a protein from the bulk of non-covalent contacts. The cone-peeling combines the sequence and network descriptors to select the essential contacts. The structural essence is only 8% of the native contacts that reconstructs to 4.8 Å (Ca RMSD) to the native structure. However, to attain a similar reconstruction accuracy with random selection about twice the number of contacts is required. Thus, our cone-peeling algorithm is the first rational strategy that characterizes the structural essence in protein structures. The concept of essential contacts in proteins can find further applications in the design of empirical contact potentials, in experimental and theoretical protein structure determination and also in constraint-based comparative sequence design.</p>
+</sec></sec><sec id="s4" sec-type="methods">
+<title>Methods</title>
+<sec id="s4a">
+<title>Dataset</title>
+<p>A non-redundant dataset of proteins is selected from SCOP release 1.73 <xref ref-type="bibr" rid="pcbi.1000584-Murzin1">[27]</xref>. Only monomeric, monodomain proteins from the four main SCOP classes and from high populated folds are chosen such that all possible interactions that stabilize the native fold are taken into account. All proteins have resolutions better than 3.0 Å, R-factor lower than 0.3 as well as no missing or ambiguous conformational data (Filippis, personal communication). A subset of 12 proteins, three per SCOP class, is selected from the dataset such that two fall in the size range of 100–120 amino acids and the third is thrice bigger. The PDB codes of the selected proteins are given in <xref ref-type="table" rid="pcbi-1000584-t001">Table 1</xref>.</p>
+</sec><sec id="s4b">
+<title>Contact Maps and selection of constraints</title>
+<p>The protein structures are represented as graphs with amino acids as nodes and the interactions between the amino acids as edges. Specifically, the contacts between the Ca or Cb atoms are considered as edges. The distance thresholds of 9.0 Å and 8.0 Å are used respectively to define contacts between Ca and Cb atoms (Ca for Gly). The contacts are visualized in a contact map with CMView [CMView: Interactive Contact Map Visualization and Analysis. <ext-link ext-link-type="uri" xlink:href="http://www.molgen.mpg.de/~lappe/cmview/" xlink:type="simple">http://www.molgen.mpg.de/~lappe/cmview/</ext-link>]. All covalent contacts are ignored.</p>
+</sec><sec id="s4c">
+<title>Model building from distance restraints</title>
+<p>The Ca and the Cb contacts are passed as restraints to the distance geometry program (distgeom) of the Tinker molecular dynamics package <xref ref-type="bibr" rid="pcbi.1000584-Ponder1">[28]</xref>. The distgeom uses a variation of the EMBED algorithm <xref ref-type="bibr" rid="pcbi.1000584-Crippen1">[15]</xref> to find three-dimensional coordinates in agreement with a sparse set of distance restraints. It proceeds by calculating bounds for all pairs of atoms (bounds smoothing), choosing particular distance values from within the bounds (metrization) and then embedding the resulting metric matrix. A final regularization step is performed by which the coordinates obtained are transformed so that their geometry, with respect to bond lengths and angles, is improved. For this purpose, we used the simulated annealing protocol offered by the distgeom program that minimizes an error function that measures the violations to the restraints.</p>
+<p>An ensemble of 50 models is generated for every protein in the dataset. Even after enforcing individual amino acids to the L-enantiomer in the refinement from simulated annealing, a solution to the given contact map can still be found such that the fold is ‘mirrored’. These solutions are termed as ‘topological mirrors’ where the global fold possesses the wrong chirality in spite of individual amino acids being in the L-form. The conformations obtained from the distance geometry protocol cannot distinguish such topological mirrors and we overcome this problem by comparing the models with their native structure through Ca RMSD. The Ca RMSD values for the conformation ensemble are found to be distributed bimodally, by simply choosing the lowest fourth of models as ranked by RMSD we are sure to be selecting the correct models (<xref ref-type="supplementary-material" rid="pcbi.1000584.s003">Figure S3</xref>). The ensemble average is obtained from the fourth of models with the lowest Ca RMSD.</p>
+</sec><sec id="s4d">
+<title>Comparison of 3D Reconstruction between Tinker and DMD</title>
+<p>We have considered the dataset of 5 proteins (1dd3, 1nxb, 1igd, 1bxy, 1d0d) from Chen and co-workers <xref ref-type="bibr" rid="pcbi.1000584-SmithBrown1">[12]</xref>. For every protein, contacts maps (Ca 9.0 Å, Cb 8.0 Å) were generated and reconstructed with Tinker. However, contact maps were also generated with Cb 7.5 Å, to compare the differences in reconstruction between Tinker and DMD. The covalent contacts are ignored and the ensemble average Ca RMSD is obtained as mentioned earlier.</p>
+</sec><sec id="s4e">
+<title>Features employed in the selection of contacts</title>
+<p>The properties of the contacts employed in selecting a minimal subset of a given contact map are discussed below.</p>
+<sec id="s4e1">
+<title>Sequence-range</title>
+<p>The sequence-range of an edge E<sub>ij</sub>, (S_(E<sub>ij</sub>)), is defined as the separation in sequence between the amino acids i and j which are in contact. <disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.e003" xlink:type="simple"/><label>(2)</label></disp-formula></p>
+<p>N<sub>i</sub>, N<sub>j</sub> are the residue numbers of amino acids i and j. The short and the long-ranges are defined as S_(E<sub>ij</sub>) ≤9 and S_(E<sub>ij</sub>) ≥10 respectively. Subsets were selected with the defined sequence-ranges and reconstructed.</p>
+</sec><sec id="s4e2">
+<title>Common neighbourhoods</title>
+<p>The CNb of an edge (E<sub>ij</sub>) is defined as the set of nearest neighbour edges (ik<sub>1</sub>, jk<sub>1</sub>, ik<sub>2</sub>, jk<sub>2</sub>, ik<sub>3</sub>, jk<sub>3</sub>) common to the amino acids i and j in contact,<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.e004" xlink:type="simple"/><label>(3)</label></disp-formula></p>
+<p>The CNb of an edge is illustrated in <xref ref-type="fig" rid="pcbi-1000584-g004">Figure 4</xref>. The number of the common neighbourhood triangles of an edge constitutes the CNb size of the edge.</p>
+</sec></sec><sec id="s4f">
+<title>Cone-peeling algorithm: pseudo code</title>
+<p>The algorithm employed in selecting subsets based on peeling of CNbs of contacts is shown in <xref ref-type="fig" rid="pcbi-1000584-g006">Figure 6</xref>.</p>
+<fig id="pcbi-1000584-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000584.g006</object-id><label>Figure 6</label><caption>
+<title>The cone-peeling algorithm.</title>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.g006" xlink:type="simple"/></fig></sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1000584.s001" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.s001" xlink:type="simple"><label>Figure S1</label><caption>
+<p>Rank-ordered selection of contacts Increasing fractions (10%–90%) of native contacts are selected by a rank-ordering contacts based on the sequence-range (circle), common neighbourhood (square) properties. In every instance, a similar sized random subset (*) is used to compare the reconstruction accuracies.</p>
+<p>(0.27 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000584.s002" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.s002" xlink:type="simple"><label>Figure S2</label><caption>
+<p>Sequence-range based contact selection The contacts selected in a given sequence range is selected across a diagonal in the contact map. Shown are the contacts selected for the sequence-ranges 5 (lower diagonal) and 25 (upper diagonal). The rank-ordered selection based on sequence-range samples contacts along the diagonals and is insufficient for determining the three-dimensional structure.</p>
+<p>(0.07 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000584.s003" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.s003" xlink:type="simple"><label>Figure S3</label><caption>
+<p>The distribution of the Ca RMSD for all the models is shown for the cone-peeled subsets. The correct folds were distinguished from the mirrors mainly by filtering using Ca RMSD as it mostly followed a bi modal distribution. For every protein, the lowest fourth of models as ranked by RMSD were selected and the ensemble average was obtained.</p>
+<p>(0.25 MB DOC)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000584.s004" mimetype="application/msword" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000584.s004" xlink:type="simple"><label>Figure S4</label><caption>
+<p>GDT-TS Scores of the Cone-Peeled Subsets - GDT-TS Scores of the cone-peeled subsets are shown (blue). The scores of the corresponding random subsets are shown in red</p>
+<p>(0.27 MB DOC)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We acknowledge Elisabeth Sahler for the technical assistance provided in the project.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1000584-Vassura1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Vassura</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Margara</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Di Lena</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Medri</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Fariselli</surname><given-names>P</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>FT-COMAR: fault tolerant three-dimensional structure reconstruction from protein contact maps.</article-title>             <source>Bioinformatics</source>             <volume>24</volume>             <fpage>1313</fpage>             <lpage>1315</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Vendruscolo1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Vendruscolo</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Kussell</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Domany</surname><given-names>E</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Recovery of protein structure from contact maps.</article-title>             <source>Fold Des</source>             <volume>2</volume>             <fpage>295</fpage>             <lpage>306</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Mouradov1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mouradov</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Craven</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Forwood</surname><given-names>JK</given-names></name>
+<name name-style="western"><surname>Flanagan</surname><given-names>JU</given-names></name>
+<name name-style="western"><surname>Garcia-Castellanos</surname><given-names>R</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Modelling the structure of latexin-carboxypeptidase A complex based on chemical cross-linking and molecular docking.</article-title>             <source>Protein Eng Des Sel</source>             <volume>19</volume>             <fpage>9</fpage>             <lpage>16</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Petrotchenko1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Petrotchenko</surname><given-names>EV</given-names></name>
+<name name-style="western"><surname>Xiao</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Cable</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Chen</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Dokholyan</surname><given-names>NV</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>BiPS, a photo-cleavable, isotopically-coded, fluorescent crosslinker for structural proteomics.</article-title>             <source>Mol Cell Proteomics</source>          </element-citation></ref>
+<ref id="pcbi.1000584-Alexander1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Alexander</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Bortolus</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Al-Mestarihi</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>McHaourab</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Meiler</surname><given-names>J</given-names></name>
+</person-group>             <year>2008</year>             <article-title>De novo high-resolution protein structure determination from sparse spin-labeling EPR data.</article-title>             <source>Structure</source>             <volume>16</volume>             <fpage>181</fpage>             <lpage>195</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Young1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Young</surname><given-names>MM</given-names></name>
+<name name-style="western"><surname>Tang</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Hempel</surname><given-names>JC</given-names></name>
+<name name-style="western"><surname>Oshiro</surname><given-names>CM</given-names></name>
+<name name-style="western"><surname>Taylor</surname><given-names>EW</given-names></name>
+<etal/></person-group>             <year>2000</year>             <article-title>High throughput protein fold identification by using experimental constraints derived from intramolecular cross-links and mass spectrometry.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>97</volume>             <fpage>5802</fpage>             <lpage>5806</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Aszodi1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Aszodi</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Gradwell</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Taylor</surname><given-names>WR</given-names></name>
+</person-group>             <year>1995</year>             <article-title>Global fold determination from a small number of distance restraints.</article-title>             <source>J Mol Biol</source>             <volume>251</volume>             <fpage>308</fpage>             <lpage>326</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-DePristo1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>DePristo</surname><given-names>MA</given-names></name>
+<name name-style="western"><surname>De Bakker</surname><given-names>PI</given-names></name>
+<name name-style="western"><surname>Shetty</surname><given-names>RP</given-names></name>
+<name name-style="western"><surname>Blundell</surname><given-names>TL</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Discrete restraint-based protein modeling and the Calpha-trace problem.</article-title>             <source>Protein Sci</source>             <volume>12</volume>             <fpage>2032</fpage>             <lpage>2046</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Furnham1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Furnham</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>de Bakker</surname><given-names>PI</given-names></name>
+<name name-style="western"><surname>Gore</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Burke</surname><given-names>DF</given-names></name>
+<name name-style="western"><surname>Blundell</surname><given-names>TL</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Comparative modelling by restraint-based conformational sampling.</article-title>             <source>BMC Struct Biol</source>             <volume>8</volume>             <fpage>7</fpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Lin1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lin</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Lu</surname><given-names>HM</given-names></name>
+<name name-style="western"><surname>Chen</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Liang</surname><given-names>J</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Generating properly weighted ensemble of conformations of proteins from sparse or indirect distance constraints.</article-title>             <source>J Chem Phys</source>             <volume>129</volume>             <fpage>094101</fpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Skolnick1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Skolnick</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Kolinski</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Ortiz</surname><given-names>AR</given-names></name>
+</person-group>             <year>1997</year>             <article-title>MONSSTER: a method for folding globular proteins with a small number of distance restraints.</article-title>             <source>J Mol Biol</source>             <volume>265</volume>             <fpage>217</fpage>             <lpage>241</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-SmithBrown1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Smith-Brown</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Kominos</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Levy</surname><given-names>RM</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Global folding of proteins using a limited number of distance constraints.</article-title>             <source>Protein Eng</source>             <volume>6</volume>             <fpage>605</fpage>             <lpage>614</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Wolff1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wolff</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Vendruscolo</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Porto</surname><given-names>M</given-names></name>
+</person-group>             <year>2008</year>             <article-title>A stochastic method for the reconstruction of protein structures from one-dimensional structural profiles.</article-title>             <source>Gene</source>             <volume>422</volume>             <fpage>47</fpage>             <lpage>51</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Vassura2"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Vassura</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Margara</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Di Lena</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Medri</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Fariselli</surname><given-names>P</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Reconstruction of 3D structures from protein contact maps.</article-title>             <source>IEEE/ACM Trans Comput Biol Bioinform</source>             <volume>5</volume>             <fpage>357</fpage>             <lpage>367</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Crippen1"><label>15</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Crippen</surname><given-names>GH</given-names></name>
+<name name-style="western"><surname>Havel</surname><given-names>TF</given-names></name>
+</person-group>             <year>1988</year>             <article-title>Distance Geometry and Molecular Conformation.</article-title>             <publisher-loc>New York</publisher-loc>             <publisher-name>John Wiley &amp; Sons</publisher-name>          </element-citation></ref>
+<ref id="pcbi.1000584-Chen1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chen</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Ding</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Dokholyan</surname><given-names>NV</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Fidelity of the protein structure reconstruction from inter-residue proximity constraints.</article-title>             <source>J Phys Chem B</source>             <volume>111</volume>             <fpage>7432</fpage>             <lpage>7438</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Porto1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Porto</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Bastolla</surname><given-names>U</given-names></name>
+<name name-style="western"><surname>Roman</surname><given-names>HE</given-names></name>
+<name name-style="western"><surname>Vendruscolo</surname><given-names>M</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Reconstruction of protein structures from a vectorial representation.</article-title>             <source>Phys Rev Lett</source>             <volume>92</volume>             <fpage>218101</fpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Bagler1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bagler</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Sinha</surname><given-names>S</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Assortative mixing in Protein Contact Networks and protein folding kinetics.</article-title>             <source>Bioinformatics</source>             <volume>23</volume>             <fpage>1760</fpage>             <lpage>1767</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Gromiha1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gromiha</surname><given-names>MM</given-names></name>
+<name name-style="western"><surname>Selvaraj</surname><given-names>S</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Inter-residue interactions in protein folding and stability.</article-title>             <source>Prog Biophys Mol Biol</source>             <volume>86</volume>             <fpage>235</fpage>             <lpage>277</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Baker1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Baker</surname><given-names>D</given-names></name>
+</person-group>             <year>2000</year>             <article-title>A surprising simplicity to protein folding.</article-title>             <source>Nature</source>             <volume>405</volume>             <fpage>39</fpage>             <lpage>42</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Bonneau1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bonneau</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Ruczinski</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Tsai</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Baker</surname><given-names>D</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Contact order and ab initio protein structure prediction.</article-title>             <source>Protein Sci</source>             <volume>11</volume>             <fpage>1937</fpage>             <lpage>1944</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Luemmen1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Luemmen</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Kraska</surname><given-names>T</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Common Neighbour Analysis for binary systems.</article-title>             <source>Modelling and Simulation in Material Science and Engineering</source>             <volume>15</volume>             <fpage>319</fpage>             <lpage>334</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Tsusuki1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tsusuki</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Branicio</surname><given-names>PS</given-names></name>
+<name name-style="western"><surname>Rino</surname><given-names>JP</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Structural characterization of deformed crystals by analysis of common atomic neighborhood</article-title>             <source>Computer Physics Communications.</source>             <fpage>518</fpage>             <lpage>523</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Besenmatter1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Besenmatter</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Kast</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Hilvert</surname><given-names>D</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Relative tolerance of mesostable and thermostable protein homologs to extensive mutation.</article-title>             <source>Proteins</source>             <volume>66</volume>             <fpage>500</fpage>             <lpage>506</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Woycechowsky1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Woycechowsky</surname><given-names>KJ</given-names></name>
+<name name-style="western"><surname>Choutko</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Vamvaca</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Hilvert</surname><given-names>D</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Relative tolerance of an enzymatic molten globule and its thermostable counterpart to point mutation.</article-title>             <source>Biochemistry</source>             <volume>47</volume>             <fpage>13489</fpage>             <lpage>13496</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Bloom1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bloom</surname><given-names>JD</given-names></name>
+<name name-style="western"><surname>Lu</surname><given-names>Z</given-names></name>
+<name name-style="western"><surname>Chen</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Raval</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Venturelli</surname><given-names>OS</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Evolution favors protein mutational robustness in sufficiently large populations.</article-title>             <source>BMC Biol</source>             <volume>5</volume>             <fpage>29</fpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Murzin1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Murzin</surname><given-names>AG</given-names></name>
+<name name-style="western"><surname>Brenner</surname><given-names>SE</given-names></name>
+<name name-style="western"><surname>Hubbard</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Chothia</surname><given-names>C</given-names></name>
+</person-group>             <year>1995</year>             <article-title>SCOP: a structural classification of proteins database for the investigation of sequences and structures.</article-title>             <source>J Mol Biol</source>             <volume>247</volume>             <fpage>536</fpage>             <lpage>540</lpage>          </element-citation></ref>
+<ref id="pcbi.1000584-Ponder1"><label>28</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ponder</surname><given-names>JW</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Software Tools for Molecular Design, User's Guide for Version 4.2.</article-title>          </element-citation></ref>
+<ref id="pcbi.1000584-Delano1"><label>29</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Delano</surname><given-names>WL</given-names></name>
+</person-group>             <year>2002</year>             <article-title>The PyMOL Molecular Graphics System.</article-title>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

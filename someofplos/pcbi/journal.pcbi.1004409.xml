@@ -1,0 +1,825 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE article PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article article-type="research-article" dtd-version="3.0" xml:lang="en" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-15-00355</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004409</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Consistency of VDJ Rearrangement and Substitution Parameters Enables Accurate B Cell Receptor Sequence Annotation</article-title>
+<alt-title alt-title-type="running-head">VDJ Annotation via Consistency of Rearrangement and Substitution</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Ralph</surname> <given-names>Duncan K.</given-names></name>
+<xref ref-type="aff" rid="aff001"/>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Matsen</surname> <given-names>Frederick A.</given-names> <suffix>IV</suffix></name>
+<xref ref-type="aff" rid="aff001"/>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<addr-line>Fred Hutchinson Cancer Research Center, Seattle, Washington, United States of America</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Peters</surname> <given-names>Bjoern</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>La Jolla Institute for Allergy and Immunology, UNITED STATES</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: DKR FAM. Performed the experiments: DKR. Analyzed the data: DKR FAM. Contributed reagents/materials/analysis tools: DKR. Wrote the paper: DKR FAM.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">matsen@fredhutch.org</email></corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<month>1</month>
+<year>2016</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>11</day>
+<month>1</month>
+<year>2016</year>
+</pub-date>
+<volume>12</volume>
+<issue>1</issue>
+<elocation-id>e1004409</elocation-id>
+<history>
+<date date-type="received">
+<day>4</day>
+<month>3</month>
+<year>2015</year>
+</date>
+<date date-type="accepted">
+<day>20</day>
+<month>6</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2016</copyright-year>
+<copyright-holder>Ralph, Matsen</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004409"/>
+<abstract>
+<p>VDJ rearrangement and somatic hypermutation work together to produce antibody-coding B cell receptor (BCR) sequences for a remarkable diversity of antigens. It is now possible to sequence these BCRs in high throughput; analysis of these sequences is bringing new insight into how antibodies develop, in particular for broadly-neutralizing antibodies against HIV and influenza. A fundamental step in such sequence analysis is to annotate each base as coming from a specific one of the V, D, or J genes, or from an N-addition (a.k.a. non-templated insertion). Previous work has used simple parametric distributions to model transitions from state to state in a hidden Markov model (HMM) of VDJ recombination, and assumed that mutations occur via the same process across sites. However, codon frame and other effects have been observed to violate these parametric assumptions for such coding sequences, suggesting that a non-parametric approach to modeling the recombination process could be useful. In our paper, we find that indeed large modern data sets suggest a model using parameter-rich per-allele categorical distributions for HMM transition probabilities and per-allele-per-position mutation probabilities, and that using such a model for inference leads to significantly improved results. We present an accurate and efficient BCR sequence annotation software package using a novel HMM “factorization” strategy. This package, called <monospace>partis</monospace> (<ext-link ext-link-type="uri" xlink:href="https://github.com/psathyrella/partis/" xlink:type="simple">https://github.com/psathyrella/partis/</ext-link>), is built on a new general-purpose HMM compiler that can perform efficient inference given a simple text description of an HMM.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>The binding properties of antibodies are determined by the sequences of their corresponding B cell receptors (BCRs). These BCR sequences are created in “draft” form by VDJ recombination, which randomly selects and deletes from the ends of V, D, and J genes, then joins them together with additional random nucleotides. If they pass initial screening and bind an antigen, these sequences then undergo an evolutionary process of mutation and selection, “revising” the BCR to improve binding to its cognate antigen. It has recently become possible to determine the BCR sequences resulting from this process in high throughput. Although these sequences implicitly contain a wealth of information about both antigen exposure and the process by which humans learn to resist pathogens, this information can only be extracted using computer algorithms. In this paper, we employ a computational and statistical approach to learn about the VDJ recombination process. Using a large data set, we find consistent and detailed patterns in the parameters, such as amount of V gene exonuclease removal, for this process. We can then use this parameter-rich model to perform more accurate per-sequence attribution of each nucleotide to either a V, D, or J gene, or an N-addition (a.k.a. non-templated insertion).</p>
+</abstract>
+<funding-group>
+<funding-statement>This research was funded by National Institutes of Health grants R01 GM113246-01 &amp; R01 AI103981, and in part by a 2013 emerging opportunity award from the University of Washington Center for AIDS Research (CFAR), an NIH funded program under award number P30AI027757 which is supported by the following NIH Institutes and Centers (NIAID, NCI, NIMH, NIDA, NICHD, NHLBI, NIA, NIGMS, NIDDK). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="12"/>
+<table-count count="2"/>
+<page-count count="25"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability">
+<meta-name>Data Availability</meta-name>
+<meta-value>The data are available at the following dryad link: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.5061/dryad.149m8" xlink:type="simple">http://dx.doi.org/10.5061/dryad.149m8</ext-link></meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<disp-quote>
+<p>This is a <italic>PLOS Computational Biology</italic> Methods paper.</p>
+</disp-quote>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>The molecular sequences of B and T cell receptors (BCRs and TCRs) determine what antigens will be recognized by these lymphocytes, with B cells recognizing antigens via immunoglobulins [<xref ref-type="bibr" rid="pcbi.1004409.ref001">1</xref>] and T cells recognizing antigenic peptides presented by the major histocompatibility complex [<xref ref-type="bibr" rid="pcbi.1004409.ref002">2</xref>]. Together, BCRs and TCRs are able to bind to a great diversity of antigens due to their sequence-level diversity. Diversity in the receptor loci is generated first by the process of VDJ recombination, in which germline-encoded V, D, and J genes are randomly selected, the gene ends are trimmed some random amount, and then joined together with random non-templated insertions forming the N-region (<xref ref-type="fig" rid="pcbi.1004409.g001">Fig 1</xref>) [<xref ref-type="bibr" rid="pcbi.1004409.ref003">3</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref004">4</xref>]. BCR sequences diversify further through the Darwinian process of somatic hypermutation and antigen selection [<xref ref-type="bibr" rid="pcbi.1004409.ref005">5</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref006">6</xref>].</p>
+<fig id="pcbi.1004409.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004409.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>The VDJ recombination process, in which individual V, D, and J genes are first randomly selected from a number of copies of each.</title>
+<p>These genes are then joined together via a process that deletes some randomly distributed number of nucleotides on their boundaries then joins them together with random “non-templated” nucleotides in the N-region (blue). The specificity of an antibody is to a large extent determined by the region defined by the heavy chain recombination site, referred to as the third complementarity determining region (CDR3).</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.g001" xlink:type="simple"/>
+</fig>
+<p>In the 30-odd years since the discovery of VDJ recombination by Susumu Tonegawa [<xref ref-type="bibr" rid="pcbi.1004409.ref003">3</xref>], molecular sequencing has been widely applied to BCRs and TCRs to further our understanding of this process. Recently, high throughput sequencing has given a remarkable perspective on the forces determining the immunoglobulin repertoire [<xref ref-type="bibr" rid="pcbi.1004409.ref007">7</xref>–<xref ref-type="bibr" rid="pcbi.1004409.ref012">12</xref>]. In addition to advancing basic science understanding, such sequencing is being applied to learn how antibodies develop against antigens of medical interest, such as through influenza vaccination [<xref ref-type="bibr" rid="pcbi.1004409.ref013">13</xref>]. There have also been spectacular advances using this technology to understand the ontogeny of HIV broadly neutralizing antibodies, with the still-elusive goal of eliciting them with an HIV vaccine [<xref ref-type="bibr" rid="pcbi.1004409.ref014">14</xref>–<xref ref-type="bibr" rid="pcbi.1004409.ref017">17</xref>].</p>
+<p>A fundamental step in the analysis of such a sequencing data set is to reconstruct the origin of each nucleotide in each sequence: whether it came from an N-addition or from a germline V, D, or J gene, and if so, which one and where. Even if a complete collection of alleles (gene variants between individuals) for the germline V, D, and J genes were available, this problem would be challenging because exonuclease deletion obscures the boundaries between N-regions and germline V, D, and J gene sequences. The BCR case is made more difficult by the processes of somatic hypermutation and clonal selection: if a BCR sequence does not match a germline gene in an area adjoining exonuclease removal, it may have come from a mutated germline position or an N-addition (non-templated insertion). We will call this general problem of describing the source of each nucleotide in a BCR (or TCR) sequence the BCR (or TCR) “annotation problem”. Here we will focus on the more challenging BCR variant of the problem.</p>
+<p>One approach is to leverage general-purpose tools for doing pairwise sequence search such as BLAST [<xref ref-type="bibr" rid="pcbi.1004409.ref018">18</xref>] and Smith-Waterman local alignment [<xref ref-type="bibr" rid="pcbi.1004409.ref019">19</xref>] for the annotation problem. Adding BCR-specific aspects to these basic algorithms has resulted in a collection of useful tools such as <monospace>IgBLAST</monospace> [<xref ref-type="bibr" rid="pcbi.1004409.ref020">20</xref>] and the online annotation tool on the <monospace>IMGT</monospace> [<xref ref-type="bibr" rid="pcbi.1004409.ref021">21</xref>] website. Another approach has been to search sequences for motifs characteristic of various parts of the locus and search databases for the resulting segments [<xref ref-type="bibr" rid="pcbi.1004409.ref022">22</xref>].</p>
+<p>However, BCR sequence formation is quite complex (reviewed in [<xref ref-type="bibr" rid="pcbi.1004409.ref011">11</xref>]) and this complexity invites a modeling-based approach, specifically in the framework of hidden Markov models (HMMs). HMMs for sequence analysis consist of a directed graph on “hidden state” nodes with defined start and end states, with each node potentially “emitting” a nucleotide base or amino acid residue [<xref ref-type="bibr" rid="pcbi.1004409.ref023">23</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref024">24</xref>]. In the BCR case, the hidden states represent either (gene, nucleotide position) pairs or N-region nucleotides, and the emission probabilities incorporate the probability of somatic hypermutation at that base. The HMM approach to BCR annotation has been elegantly implemented first in <monospace>SODA</monospace> [<xref ref-type="bibr" rid="pcbi.1004409.ref025">25</xref>], then <monospace>iHMMunealign</monospace> [<xref ref-type="bibr" rid="pcbi.1004409.ref026">26</xref>], and then <monospace>SODA2</monospace> [<xref ref-type="bibr" rid="pcbi.1004409.ref027">27</xref>]. The transition probabilities for these previous HMM methods were modeled parametrically: specifically, they used the negative binomial distribution as first used in [<xref ref-type="bibr" rid="pcbi.1004409.ref028">28</xref>], and the emission probabilities come from the same mutation process across positions (even if the process is context-dependent) [<xref ref-type="bibr" rid="pcbi.1004409.ref026">26</xref>].</p>
+<p>High throughput sequencing has become commonplace in the time since these HMMs were designed; this provides both a challenge and an opportunity for such model-based approaches. It is a challenge because millions of distinct sequences are now available from a single sample of B cells, so methods must be efficient. On the other hand, it is an opportunity because such large data sets offer the opportunity to develop and fit models with much more detail.</p>
+<p>We hypothesized that large data sets would reveal reproducible fine-scale details in the probabilistic rearrangement process that could be used for improved inference. The reproducibility of such details on a per-gene level is suggested by two papers from the same group: first, analogous results in T cells [<xref ref-type="bibr" rid="pcbi.1004409.ref029">29</xref>], and, more recently, similar results for B cells (independent to that presented here) [<xref ref-type="bibr" rid="pcbi.1004409.ref030">30</xref>]. For annotation via HMMs, researchers have previously used probability distributions such as the negative binomial [<xref ref-type="bibr" rid="pcbi.1004409.ref028">28</xref>] to model exonuclease deletion lengths, and modeled the propensity for somatic hypermutation based on sequence context [<xref ref-type="bibr" rid="pcbi.1004409.ref026">26</xref>]. However, BCR sequences are protein-coding, and thus there are constraints on N-region and exonuclease deletion lengths that come from sequence frame; these types of constraints cannot be expressed by unimodal probability distributions with few parameters. For example, the post-selection D gene is preferentially (though not exclusively) used in a specific frame [<xref ref-type="bibr" rid="pcbi.1004409.ref009">9</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref031">31</xref>], which in some cases is simply due to a stop codon being present in the alternate frames [<xref ref-type="bibr" rid="pcbi.1004409.ref011">11</xref>]. This suggests that a parameter-rich approach could be useful: instead of parametric distributions with a few parameters, using a large data set we could fit a per-allele categorical distribution for N-region and exonuclease deletion lengths, in which every outcome has its own probability. Rather than modeling the process of somatic hypermutation with germline nucleotide context, we could simply infer the per-position per-allele mutation frequency and use this as the mutation probability.</p>
+<p>In order to meet the challenge and opportunity of large-scale data, we have built <monospace>partis</monospace>: a fast, flexible, and open source HMM framework to analyze BCR sequences. We started by writing an efficient new HMM compiler, called <monospace>ham</monospace>, which enables inference on an arbitrary HMM specified via a simple text file rather than having to write special-purpose computer code. We then developed an HMM “factorization” strategy, which along with extensive caching and optimizations in the overall model topology, results in an order of magnitude faster execution than previous HMM implementations for BCR/TCR sequences. This work, along with parallelization, means that data sets of tens of millions of unique sequences [<xref ref-type="bibr" rid="pcbi.1004409.ref032">32</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref033">33</xref>], the largest available today, are comfortably within the capabilities of <monospace>partis</monospace> running on standard research hardware.</p>
+<p>We find that HMM inference using this approach to fitting HMM parameter distributions for heavy chain BCRs outperforms previous approaches for the annotation problem [<xref ref-type="bibr" rid="pcbi.1004409.ref025">25</xref>–<xref ref-type="bibr" rid="pcbi.1004409.ref027">27</xref>]. The parameters for the non-parametric transition and emission probabilities are fit “on the fly” for each individual data set, using a tiered aggregation strategy to scale the level of model detail to the amount of data. The accuracy of <monospace>partis</monospace> is further increased by using multiple sequences from the same rearrangement event (which differ due to somatic hypermutation) using pair-HMMs and their generalization to more than two emission sequences, which we will call “multi-HMMs”. We also leverage the full power of HMMs by not only calculating the best (known as Viterbi) annotations of a sequence according to that HMM, but also computing forward probabilities for single and multi-HMMs. These forward probabilities allow one to integrate out uncertainty in quantities that are not of interest, retaining more accurate estimates (with uncertainty) of those parameters that are of interest. The <monospace>partis</monospace> software implementation has been engineered to be extensible and maintainable: it is open source and includes continuous integration and reproducible validation using the Docker software container system [<xref ref-type="bibr" rid="pcbi.1004409.ref034">34</xref>].</p>
+</sec>
+<sec id="sec002" sec-type="results">
+<title>Results</title>
+<sec id="sec003">
+<title>Empirical distributions of VDJ recombination process parameters deviate reproducibly from simple distributions</title>
+<p>We find that the probability distributions of rearrangement parameters for heavy chain BCR sequences deviate reproducibly from any commonly used distribution. For example, our inferred exonuclease deletion length distributions take on a variety of shapes (<xref ref-type="fig" rid="pcbi.1004409.g002">Fig 2</xref>), which vary from gene to gene, and allele to allele, but appear consistent across humans (see also <xref ref-type="supplementary-material" rid="pcbi.1004409.s002">S2 Fig</xref>). Mutation rates vary by an order of magnitude from position to position, creating a pattern which is unique to each allele but similar across humans for that allele (<xref ref-type="fig" rid="pcbi.1004409.g003">Fig 3</xref> and <xref ref-type="supplementary-material" rid="pcbi.1004409.s003">S3 Fig</xref>). The overall level of mutation, however, varies between humans in our data sets (as noted previously [<xref ref-type="bibr" rid="pcbi.1004409.ref035">35</xref>]). N-region lengths, on the other hand, vary much less across alleles, and are typically unimodal (<xref ref-type="fig" rid="pcbi.1004409.g004">Fig 4</xref> and <xref ref-type="supplementary-material" rid="pcbi.1004409.s003">S3 Fig</xref>). The full collection of plots is available on Dryad at <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.5061/dryad.149m8" xlink:type="simple">http://dx.doi.org/10.5061/dryad.149m8</ext-link>. In these plots the error bars are constructed using a bootstrapping procedure: we divide unique sequences in the data into ten subsets and plot the uncertainty as the standard deviation over these subsets (see <xref ref-type="sec" rid="sec008">Methods</xref>).</p>
+<fig id="pcbi.1004409.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004409.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Observed exonuclease deletion length frequencies for two V, four D, and two J alleles on the three humans (A, B, and C) in the Adaptive data set.</title>
+<p>These alleles were chosen to be representative of the various shapes taken by the empirical distributions. In the complete set of plots (which are publicly available as described in the text), per-allele distributions are frequently multi-modal and appear similar between humans.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.g002" xlink:type="simple"/>
+</fig>
+<fig id="pcbi.1004409.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004409.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Mutation frequency versus position.</title>
+<p>Typical observed mutation frequencies for two V, two D, and two J alleles on the three humans (A, B, and C) in the Adaptive data set. The x axis is the zero-indexed position along the IMGT germline allele. Mutation frequencies are seen to be highly position-dependent. While the structure of these mutation distributions appears similar between humans, the overall level of mutation varies. The first base of the conserved cysteine and tryptophan codons (i.e. the CDR3 boundaries) are indicated with black vertical dashed lines. In the complete set of plots (which are publicly available as described in the text), mutation frequencies are highly variable across sites with a pattern that is similar between humans.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.g003" xlink:type="simple"/>
+</fig>
+<fig id="pcbi.1004409.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004409.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>N-region lengths.</title>
+<p>Typical observed N-region lengths at the VD and DJ boundaries for two D and two J alleles. In the complete set of plots (which are publicly available as described in the text), distributions have a similar shape and the per-allele plots appear similar between humans.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.g004" xlink:type="simple"/>
+</fig>
+<p>By considering all of the parameter estimates together, we find that estimates are consistent between sequence subsets. Indeed, we partitioned the set of unique sequences into 10 disjoint sets and estimated HMM parameters (transition and emission probabilities) independently for each subset to learn to what extent those parameters are dependent on details of the data set rather than underlying processes. By plotting histograms of the means and variances for all of the HMM parameters, we find that the between-subset variance is consistently much smaller than the mean (<xref ref-type="fig" rid="pcbi.1004409.g005">Fig 5</xref> and <xref ref-type="supplementary-material" rid="pcbi.1004409.s004">S4 Fig</xref>). That these parameter estimates are consistent between disjoint subsets of a collection of unique sequences, and to a lesser extent consistent between humans, indicates that they reflect biology rather than noise. Although the suggestion of consistency between humans is interesting, our strategy of per-sample parameter fitting does not require any such assumption, and so we refrain from formalizing this suggestion of between-human consistency into a statistical statement.</p>
+<fig id="pcbi.1004409.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004409.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Mean and variance of inferred parameters.</title>
+<p>The across-subset mean and variance of inferred parameter values for each human in the Adaptive data set across 10 disjoint subsets of the data.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.g005" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec004">
+<title>ham</title>
+<p>We implemented a new HMM compiler, called <monospace>ham</monospace>, because none of the existing compilers were suitable for our needs (see <xref ref-type="sec" rid="sec008">Methods</xref> for more details). This program is able to perform classical, pair, and multi-HMM inference on any HMM within computational constraints given a text-file description of its topology. This text file description is in YAML format (<ext-link ext-link-type="uri" xlink:href="http://yaml.org/" xlink:type="simple">http://yaml.org/</ext-link>), which is easy to write both by hand and with existing libraries for all popular programming languages.</p>
+<p>Although our initial motivations lay more in usability than optimization, <monospace>ham</monospace>’s general purpose C++ code is slightly faster and uses somewhat less memory than code generated by the well-known <monospace>HMMoC</monospace> [<xref ref-type="bibr" rid="pcbi.1004409.ref036">36</xref>], even ignoring the extra time for code generation and compilation in the latter (<xref ref-type="table" rid="pcbi.1004409.t001">Table 1</xref>). The <monospace>ham</monospace> C++ code is open source (GPL v3 license), and is available at <ext-link ext-link-type="uri" xlink:href="https://github.com/psathyrella/ham/" xlink:type="simple">https://github.com/psathyrella/ham/</ext-link>.</p>
+<table-wrap id="pcbi.1004409.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004409.t001</object-id>
+<label>Table 1</label>
+<caption>
+<title>HMM compiler performance comparison.</title>
+</caption>
+<alternatives>
+<graphic id="pcbi.1004409.t001g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.t001" xlink:type="simple"/>
+<table border="0" frame="box" rules="all">
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left">method</th>
+<th align="center">seq length (x10<sup>6</sup>)</th>
+<th align="center">user time (sec)</th>
+<th align="center">max memory (MB)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><monospace>HMMoC</monospace></td>
+<td align="center">1</td>
+<td align="center">0.57 ± 0.01</td>
+<td align="center">18.01 ± 0.01</td>
+</tr>
+<tr>
+<td align="left"><monospace>ham</monospace></td>
+<td align="center">1</td>
+<td align="center">0.54 ± 0.01</td>
+<td align="center">12.65 ± 0.0</td>
+</tr>
+<tr>
+<td align="left"><monospace>HMMoC</monospace></td>
+<td align="center">10</td>
+<td align="center">5.05 ± 0.07</td>
+<td align="center">168.7 ± 0.1</td>
+</tr>
+<tr>
+<td align="left"><monospace>ham</monospace></td>
+<td align="center">10</td>
+<td align="center">4.77 ± 0.05</td>
+<td align="center">110.6 ± 0.1</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t001fn001">
+<p>Efficiency of <monospace>ham</monospace> compared to code generated by <monospace>HMMoC</monospace> for the “occasionally dishonest casino” from [<xref ref-type="bibr" rid="pcbi.1004409.ref023">23</xref>]. Elapsed CPU time and memory usage (user time and maximum resident set size from the Unix <monospace>time</monospace> command) for the Forward probability calculation are shown for sequences of length 1 million (mean of 300 runs) and 10 million (mean of 30 runs). These estimates do not include the extra time for code generation and compilation which is necessary in <monospace>HMMoC</monospace>. Uncertainties are the standard error on the mean.</p>
+</fn>
+</table-wrap-foot>
+</table-wrap>
+</sec>
+<sec id="sec005">
+<title>partis</title>
+<p>We then used <monospace>ham</monospace> to build a platform called <monospace>partis</monospace> to perform annotation of B cell receptor sequences (BCRs) using HMMs. This platform is especially effective for modern large sequencing data sets because it can infer detailed parameters concerning the rearrangement process, and then perform annotation inference on each sequence in the set. It is written in Python, is open source (GPL v3 license), and is available at <ext-link ext-link-type="uri" xlink:href="https://github.com/psathyrella/partis/" xlink:type="simple">https://github.com/psathyrella/partis/</ext-link>. A Docker image with <monospace>partis</monospace> installed is available at <ext-link ext-link-type="uri" xlink:href="https://registry.hub.docker.com/u/psathyrella/partis/" xlink:type="simple">https://registry.hub.docker.com/u/psathyrella/partis/</ext-link>.</p>
+<p>In order to find a maximum-likelihood annotation, <monospace>partis</monospace> calculates the Viterbi path through the HMM, giving an annotation consisting of the germline genes used to make the BCR, the amount of junctional exonuclease deletion for each gene, and the size of junctional insertions (N-regions) between the trimmed germline genes. It can also compute forward probabilities, which give the joint probability of sequence and annotation. All of this information is output as text files in comma-separated format.</p>
+</sec>
+<sec id="sec006">
+<title>Benchmarking on simulated data</title>
+<p>We developed a simulation engine for B cell receptor sequences implemented in non-HMM-based code separate from that used for inference (see <xref ref-type="sec" rid="sec008">Methods</xref>). This engine implicitly takes into account detailed dependencies between variables beyond what is possible in our inferential framework. To create a “true naive” (i.e. unmutated ancestor) sequence it begins by sampling a single point from the joint empirical distribution over all rearrangement parameters observed in a data set: such a draw specifies which V, D, and J genes led to the BCR, the amount by which they are trimmed, and the length of the N-regions. Because the draw is from the joint empirical distribution, it reflects our best understanding of a “true” rearrangement event from the data set. The simulator then generates a random sequence with corresponding rearrangement parameters (e.g. N-region length between V and J), and then simulates somatic hypermutation out to each leaf of a given tree using per-position mutation rates. The test sample for which we show performance comparisons (<xref ref-type="table" rid="pcbi.1004409.t002">Table 2</xref> and Figs <xref ref-type="fig" rid="pcbi.1004409.g006">6</xref>, <xref ref-type="fig" rid="pcbi.1004409.g007">7</xref> and <xref ref-type="fig" rid="pcbi.1004409.g008">8</xref>) may be found in the <monospace>partis</monospace> GitHub repository at <ext-link ext-link-type="uri" xlink:href="http://git.io/vn9gf" xlink:type="simple">http://git.io/vn9gf</ext-link>. This sample was generated with parameters from human A in the Adaptive data set, except that the mean mutation frequency was doubled in order to provide a more challenging inference test (the original mutation frequencies for the three humans can be found in <xref ref-type="supplementary-material" rid="pcbi.1004409.s006">S6 Fig</xref>).</p>
+<table-wrap id="pcbi.1004409.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004409.t002</object-id>
+<label>Table 2</label>
+<caption>
+<title>Correct gene calls for all public BCR annotation methods.</title>
+</caption>
+<alternatives>
+<graphic id="pcbi.1004409.t002g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.t002" xlink:type="simple"/>
+<table border="0" frame="box" rules="all">
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left">method</th>
+<th align="center">V correct</th>
+<th align="center">D correct</th>
+<th align="center">J correct</th>
+<th align="center">failed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><monospace>partis</monospace> (<italic>k</italic> = 5)</td>
+<td align="center">0.9968 ±.0006</td>
+<td align="center">0.828 ±.004</td>
+<td align="center">0.9983 ±.0005</td>
+<td align="center">0 ±.00003</td>
+</tr>
+<tr>
+<td align="left"><monospace>partis</monospace> (<italic>k</italic> = 1)</td>
+<td align="center">0.9955 ±.0008</td>
+<td align="center">0.753 ±.005</td>
+<td align="center">0.9766 ±.0017</td>
+<td align="center">0 ±.00003</td>
+</tr>
+<tr>
+<td align="left"><monospace>ighutil</monospace></td>
+<td align="center">0.9938 ±.0009</td>
+<td align="center">0.714 ±.005</td>
+<td align="center">0.961 ±.002</td>
+<td align="center">0 ±.00003</td>
+</tr>
+<tr>
+<td align="left"><monospace>iHMMunealign</monospace></td>
+<td align="center">0.938 ±.003</td>
+<td align="center">0.530 ±.006</td>
+<td align="center">0.799 ±.005</td>
+<td align="center">0.18 ±.004</td>
+</tr>
+<tr>
+<td align="left"><monospace>IgBLAST</monospace></td>
+<td align="center">0.986 ±.001</td>
+<td align="center">0.521 ±.006</td>
+<td align="center">0.872 ±.004</td>
+<td align="center">0.10 ±.003</td>
+</tr>
+<tr>
+<td align="left"><monospace>IMGT</monospace></td>
+<td align="center">0.988 ±.001</td>
+<td align="center">0.574 ±.006</td>
+<td align="center">0.935 ±.003</td>
+<td align="center">0.06 ±.003</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t002fn001">
+<p>Fraction of genes correctly inferred up to allele, i.e. the number of sequences for which the specified method called the correct gene (regardless of allele) divided by the total number of sequences, for all publicly-available BCR annotation methods on a simulated sample of 30,000 sequences. For those methods which fail for some input sequences (usually due to poor D matches), we specify the fraction of sequences for which such failures occurred. <monospace>partis</monospace> is shown both for single sequences (<italic>k</italic> = 1), and for a multi-HMM (<italic>k</italic> = 5), which performs simultaneous inference on five clonally related sequences. Values are shown ± the half-width of the binomial proportion 95% confidence intervals using Jeffreys prior.</p>
+</fn>
+</table-wrap-foot>
+</table-wrap>
+<fig id="pcbi.1004409.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004409.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>Correct gene calls versus sequence mutation frequency, i.e. the number of sequences for which the specified method called the correct gene (regardless of allele) divided by the total number of sequences, versus sequence mutation frequency, for publicly-available BCR annotation methods on a simulated sample of 30,000 sequences.</title>
+<p>
+<monospace>partis</monospace> is shown both for single sequences (<italic>k</italic> = 1), and for a multi-HMM (<italic>k</italic> = 5), which performs simultaneous inference on five clonally related sequences.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.g006" xlink:type="simple"/>
+</fig>
+<fig id="pcbi.1004409.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004409.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Hamming distance between inferred and true naive sequences, for all available BCR annotation methods on a simulated sample of 30,000 sequences.</title>
+<p>
+<monospace>partis</monospace> is shown both for single sequences (<italic>k</italic> = 1), and for a multi-HMM (<italic>k</italic> = 5), which performs simultaneous inference on five clonally related sequences.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.g007" xlink:type="simple"/>
+</fig>
+<fig id="pcbi.1004409.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004409.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>True versus inferred parameters for all methods.</title>
+<p>The difference between inferred and true values for exonuclease deletion lengths, N-region lengths, and mutation frequency for all available BCR annotation methods on a simulated sample of 30,000 sequences; more tightly peaked around zero is better. <monospace>partis</monospace> is shown both for single sequences (<italic>k</italic> = 1) and for a multi-HMM (<italic>k</italic> = 5), which performs simultaneous inference on five clonally related sequences.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.g008" xlink:type="simple"/>
+</fig>
+<p>We find that our strategy using flexible categorical distributions (i.e. general discrete distributions) outperforms previous BCR annotation packages on this simulated data. Indeed, <monospace>partis</monospace> has higher accuracy than other methods in terms of the simple fraction of genes that are correctly inferred (<xref ref-type="table" rid="pcbi.1004409.t002">Table 2</xref>), a metric used in previous studies [<xref ref-type="bibr" rid="pcbi.1004409.ref027">27</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref037">37</xref>]. We note that this higher accuracy is true across a variety of mutation frequencies (<xref ref-type="fig" rid="pcbi.1004409.g006">Fig 6</xref>). While intuitive, however, the fraction of correct genes ignores the difference between slightly incorrect and very incorrect inferences in terms of underlying sequence (see <xref ref-type="sec" rid="sec008">Methods</xref> for details).</p>
+<p>A more detailed comparison via the Hamming distance between inferred and true naive sequences also shows that <monospace>partis</monospace> outperforms previous HMM-based implementations (<xref ref-type="fig" rid="pcbi.1004409.g007">Fig 7</xref>). Neither <monospace>SODA</monospace> [<xref ref-type="bibr" rid="pcbi.1004409.ref025">25</xref>] nor <monospace>SODA2</monospace> [<xref ref-type="bibr" rid="pcbi.1004409.ref027">27</xref>] were available from the web or directly from the author for comparison. The <monospace>ighutil</monospace> program [<xref ref-type="bibr" rid="pcbi.1004409.ref035">35</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref038">38</xref>] is a straightforward application of Smith-Waterman alignment [<xref ref-type="bibr" rid="pcbi.1004409.ref019">19</xref>] to the annotation problem.</p>
+<p>
+<monospace>partis</monospace> also gave the most accurate parameter inferences (the narrowest distributions around the correct value in <xref ref-type="fig" rid="pcbi.1004409.g008">Fig 8</xref>) for N-region lengths, exonuclease deletion lengths, and mutation frequencies.</p>
+<p>Additionally, we find that using multiple sequences from a single rearrangement event (differing only in somatic hypermutation) leads to more accurate inference than using one sequence at a time. <monospace>ham</monospace>’s ability to simultaneously emit an arbitrary number of symbols allows us to take advantage of this in a way that previous implementations could not, providing an additional boost in accuracy. This annotation with multi-HMMs is shown in the preceding Figures as “<monospace>partis</monospace> (<italic>k</italic> = 5)” because, as an example, we do inference on five sequences known to form a clonal family.</p>
+<p>Although the benefits of our more-detailed model decrease with decreasing sample size, we find that our “tiered aggregation” strategy (see <xref ref-type="sec" rid="sec008">Methods</xref>) performs well with smaller numbers of sequences (<xref ref-type="fig" rid="pcbi.1004409.g009">Fig 9</xref>). Indeed, performance does not begin to degrade appreciably until sample size drops to around a hundred sequences.</p>
+<fig id="pcbi.1004409.g009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004409.g009</object-id>
+<label>Fig 9</label>
+<caption>
+<title>Performance versus sample size.</title>
+<p><monospace>partis</monospace> performance as measured by Hamming distance between inferred and true naive sequences when given 50 to 10,000 total sequences. When fewer sequences than a threshold are provided for a gene, <monospace>partis</monospace> uses a tiered aggregation strategy (see <xref ref-type="sec" rid="sec008">Methods</xref>) to obtain enough sequences on which to do parameter estimation, which partly recovers performance as shown here.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.g009" xlink:type="simple"/>
+</fig>
+<p>We also find that <monospace>partis</monospace> is computationally efficient, making it suitable for inference on large data sets. For efficiency tests, we used samples of one and ten thousand simulated sequences. The Smith-Waterman methods in <monospace>ighutil</monospace> require about 0.03 seconds per sequence. The HMM-based inference, alone, of <monospace>partis</monospace> takes about 0.04 seconds per sequence; however <monospace>partis</monospace> performs a preliminary Smith-Waterman step (see <xref ref-type="sec" rid="sec008">Methods</xref>), and typically also writes the HMM input files from the Smith-Waterman and initial HMM steps. In total, then, <monospace>partis</monospace> takes between 0.1 and 0.2 seconds per sequence, depending on sample size. The other available HMM-based method, <monospace>iHMMunealign</monospace>, takes about 5 seconds per sequence on both data sets. We suspect that this gain in speed is from the HMM factorization scheme described in the Methods. As a practical example, a sample with 100,000 sequences takes <monospace>partis</monospace> about 20 minutes to annotate using ten processes on our code-development server (which has a hyperthreaded 8-core 2.9 GHz Xenon processor). As a typical example on a research compute cluster, one might run one million sequences with 100 processes divided across some number of machines, which would also take about 20 minutes (job dispatch via <monospace>slurm</monospace> is easily done via a <monospace>partis</monospace> command line flag). For centers without computing clusters, we estimate that analyzing a million unique sequences would cost $5.25 using on-demand compute through Amazon Web Services. We did not attempt speed comparison with web-based BCR analysis tools, although we note that as a group they cannot be scaled to the size of the task, and are subject to periods of high load and downtimes.</p>
+<p>Shorter sequences, which do not include the entire V and/or J segments, are perfectly appropriate input for <monospace>partis</monospace>. The method currently requires only that there is at least one base from the V, D, and J, although of course longer sequences will lead to more accurate results.</p>
+</sec>
+</sec>
+<sec id="sec007" sec-type="conclusions">
+<title>Discussion</title>
+<p>We find substantial complexity in the details of the heavy chain BCR rearrangement process; these details are consistent between data subsets and appear consistent between humans. This observation agrees with the corresponding observation for T cells [<xref ref-type="bibr" rid="pcbi.1004409.ref029">29</xref>], with work showing codon effects on D segment frame usage [<xref ref-type="bibr" rid="pcbi.1004409.ref009">9</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref031">31</xref>], and more recent work on B cells [<xref ref-type="bibr" rid="pcbi.1004409.ref030">30</xref>]. This complexity suggests the use of parameter-rich categorical distributions for transition and emission probabilities in a hidden Markov model (HMM) for BCR annotation. Indeed, we find that incorporating the peculiarities and richness of modern data sets enables more accurate annotation of BCR sequences. By letting the data inform parameters such as per-position mutation frequencies, we side-step the need to perform sophisticated modeling of processes such as context-sensitive hypermutation. The multi-HMM framework enables simultaneous annotation of a number of sequences in a clonal family, which results in increased accuracy because the effects of various mutations can be averaged out in a principled way. The four insert states in our HMM topology also allow inference of unmutated ancestral sequences in N-regions.</p>
+<p>We have extended the ideas of previous authors using HMMs for BCR sequence annotation [<xref ref-type="bibr" rid="pcbi.1004409.ref025">25</xref>–<xref ref-type="bibr" rid="pcbi.1004409.ref027">27</xref>] and previous work on HMM compilers [<xref ref-type="bibr" rid="pcbi.1004409.ref036">36</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref037">37</xref>] to build <monospace>partis</monospace>, a system to annotate BCR sequences. We find that this system substantially outperforms previous methods when given simulated data. We have not yet tested it against two very fast new methods [<xref ref-type="bibr" rid="pcbi.1004409.ref039">39</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref040">40</xref>] that were released after the initial submission of this paper; such sequence-identity based methods may be preferable to model-based <monospace>partis</monospace> for applications in which speed is critical. The <monospace>partis</monospace> package and its dependencies are open source, and validation can be run using a supplied Docker image.</p>
+<p>When <monospace>partis</monospace> is presented with a data set for the first time, it infers around one to ten thousand parameters for that data set; with this in mind, we would like to be very clear concerning the potential for over-fitting. For any given application of <monospace>partis</monospace>, these parameter estimates are intermediate steps for which we are not making a claim of generality, and are instead specific to that data set. This situation is analogous to fitting the rate parameters of a mutation rate matrix when performing a maximum likelihood phylogenetic analysis. In contrast, previous methods used a collection of sequences as a training set for parameter inference and applied HMMs with those general-purpose parameters to other sequences. Thus it makes perfect sense that previous authors [<xref ref-type="bibr" rid="pcbi.1004409.ref027">27</xref>] test on simulated sequences made with a different set of parameters than the ones used for training. However, because <monospace>partis</monospace> fits parameters on the fly for each data set, it never makes out-of-sample predictions and thus does not “train” in this sense. This is not to say that the approach would not benefit from some form of across-sample estimation of parameters. If, for example, the sample taken is small and does not appropriately represent the true parameter distribution, then one would obtain too high of confidence in bad inferences from these incorrect parameter estimates. Such situations could benefit from regularization via empirical Bayes, using such overall parameter estimates as across-human priors [<xref ref-type="bibr" rid="pcbi.1004409.ref041">41</xref>]. Such an approach will become increasingly viable as we become more familiar with the population-level distributions of the relevant parameters.</p>
+<p>We have also presented a robust validation framework for <monospace>partis</monospace>. For effective validation we need a set of sequences which is both representative of the data on which we will apply the method, and for which we know the true rearrangement history. Unfortunately real data, which is the most readily-available source of sequences which satisfy the first criterion, does not exist which also satisfies the second. In [<xref ref-type="bibr" rid="pcbi.1004409.ref026">26</xref>], for instance, validation was performed on two data sets which were each known to consist of a single clone with unknown true annotation, and the authors used the fraction of sequences annotated to have the same germline alleles as a proxy for accuracy. This approach cannot test whether the methods are inferring the correct allele, and more significantly, it tests on only two points in the entire, many-dimensional rearrangement space. In other words, validation was performed on a sample of two rearrangements, and gives no information as to how each method might perform on every other possible combination of germline allele choices and exonuclease deletion boundaries.</p>
+<p>We thus chose to use simulation, for which by construction one knows the correct answer, but which also requires proof that it accurately represents data (see <xref ref-type="sec" rid="sec008">Methods</xref> for details). Our simulations cover a broad range of parameter space, and use parameter distributions inferred from data sets. However, they do not explicitly model sequencing error, as the landscape of sequencing techniques is rapidly evolving, including techniques such as replicate immunosequencing [<xref ref-type="bibr" rid="pcbi.1004409.ref033">33</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref042">42</xref>] and barcoding [<xref ref-type="bibr" rid="pcbi.1004409.ref013">13</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref043">43</xref>]. For the same reason, we have not attempted to add platform-specific emission probabilities to the HMM, and thus users employing <monospace>partis</monospace> for the annotation of sequence data from a platform with a specific bias should be careful that this bias does not creep into the annotations.</p>
+<p>The results presented here have all used the IMGT set of germline sequences. We acknowledge the substantial discussion concerning this set’s accuracy [<xref ref-type="bibr" rid="pcbi.1004409.ref044">44</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref045">45</xref>], but IMGT is still by far the most popular resource for germline information and tools. We have thus designed <monospace>partis</monospace> so it can switch to any other germline database using a simple command line flag, for instance as new information becomes available [<xref ref-type="bibr" rid="pcbi.1004409.ref045">45</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref046">46</xref>].</p>
+<p>We emphasize that the improved accuracy obtained using the multi-HMM framework in simulation assumed that we knew the collection of sequences form a clonal family. On real data, of course, we do not know which sequences derive from the same rearrangement event, and in fact this is a challenging problem. Our next step will be to use the HMM framework presented here to cluster sequences together by rearrangement event.</p>
+<p>While we and others have found HMMs to be useful for the BCR annotation problem, they do have certain limitations. The Markov assumption (that the current state is ignorant of all states except for the previous one) makes it difficult to propagate information across the HMM. For example, levels of mutation are correlated between different segments of the BCR [<xref ref-type="bibr" rid="pcbi.1004409.ref035">35</xref>]; thus upon traversing the V segment of a query sequence we have information concerning the overall mutation rate in the rest of the sequence. The Markov chain’s conditional independence, however, makes it impossible to propagate this information to the D and J segments in a strict HMM framework. Additionally, HMMs cannot account for palindromic N-additions [<xref ref-type="bibr" rid="pcbi.1004409.ref047">47</xref>], complex strand interaction events [<xref ref-type="bibr" rid="pcbi.1004409.ref048">48</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref049">49</xref>], or the appearance of tandem D segments [<xref ref-type="bibr" rid="pcbi.1004409.ref009">9</xref>]. Conditional Random Fields (reviewed in [<xref ref-type="bibr" rid="pcbi.1004409.ref050">50</xref>]) could provide a way around some of these limitations; linear-chain conditional random fields enjoy many of the attractive computational properties of HMMs while allowing for more complex dependencies. As a final note, the HMM does not at this time model insertion/deletion mutations within gene segments [<xref ref-type="bibr" rid="pcbi.1004409.ref051">51</xref>]. We instead look for such events during the preliminary Smith-Waterman alignment step, and if one is found the user may run the HMM both with and without the insertion/deletion in question. Such events, though rare in the Adaptive data set [<xref ref-type="bibr" rid="pcbi.1004409.ref035">35</xref>], could in principle be incorporated into an HMM with additional transitions between the states representing insertions and deletions within the HMM, although significant innovation would be needed in order to keep annotation inference tractable.</p>
+</sec>
+<sec id="sec008" sec-type="materials|methods">
+<title>Methods</title>
+<sec id="sec009">
+<title>Data sets used</title>
+<p>As our primary data set, we used the Illumina-sequenced heavy chain BCR sequence data generated from a single time point sample from each of three humans, as recently described in [<xref ref-type="bibr" rid="pcbi.1004409.ref033">33</xref>]. This data set is distinguished by its size (30 million total unique sequences, split between three humans and naive versus memory compartments) and the experimental design, which used replicate wells to enable template count estimation and decrease error [<xref ref-type="bibr" rid="pcbi.1004409.ref042">42</xref>]. This data is available at <ext-link ext-link-type="uri" xlink:href="http://adaptivebiotech.com/link/mat2015" xlink:type="simple">http://adaptivebiotech.com/link/mat2015</ext-link>; we will call it the “Adaptive” data set.</p>
+<p>We also show results on the data from [<xref ref-type="bibr" rid="pcbi.1004409.ref013">13</xref>], which used Illumina paired-end sequencing of heavy chain BCRs to investigate memory B cell recall after vaccination in 15 humans. This data set used unique barcodes to decrease error, a technique which was validated using a reproducibility experiment. This data can be publicly accessed in GenBank (<ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs000656.v1.p1" xlink:type="simple">http://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs000656.v1.p1</ext-link>); we will call this the “Vollmers” data set.</p>
+</sec>
+<sec id="sec010">
+<title>ham</title>
+<p>We considered writing specialized code to do HMM inference on B cell receptor sequences, as has been done by previous authors [<xref ref-type="bibr" rid="pcbi.1004409.ref025">25</xref>–<xref ref-type="bibr" rid="pcbi.1004409.ref027">27</xref>]. However, for maximum flexibility and usability, we were inspired by other work [<xref ref-type="bibr" rid="pcbi.1004409.ref036">36</xref>, <xref ref-type="bibr" rid="pcbi.1004409.ref037">37</xref>] to build an HMM “compiler” that can do HMM inference given a description of the HMM in a format that is simpler to interpret and modify than specialized inferential machinery. We were greatly inspired by the <monospace>HMMoC</monospace> [<xref ref-type="bibr" rid="pcbi.1004409.ref036">36</xref>] and <monospace>StochHMM</monospace> [<xref ref-type="bibr" rid="pcbi.1004409.ref037">37</xref>] tools, but neither of them fully satisfied our needs. We found the XML input format in <monospace>HMMoC</monospace> too complicated to script, and the paradigm of auto-generated C++ code to be extremely difficult to test and debug. <monospace>StochHMM</monospace>, meanwhile, had a custom configuration file format, lacked a pair-HMM implementation, and possessed an extraordinarily extensive but not entirely functional feature set. However, <monospace>StochHMM</monospace>’s overall structure, and its basic idea of reading the HMM specification from a text file rather than generating code, were similar to what we desired, so we used it as a starting point for a complete rewrite. (As an aside, we note that the excellent HMMER tool [<xref ref-type="bibr" rid="pcbi.1004409.ref052">52</xref>] only implements profile HMMs, and thus is not appropriate for our needs.)</p>
+<p>We were thus led to build a new tool, which we call <monospace>ham</monospace>. <monospace>ham</monospace> uses the intuitive YAML text format, which is easy to read and write by hand for simple cases, while being equally simple to use for more complex models via existing programming libraries (such as for <ext-link ext-link-type="uri" xlink:href="http://pyyaml.org/" xlink:type="simple">python</ext-link> and <ext-link ext-link-type="uri" xlink:href="https://code.google.com/p/yaml-cpp/" xlink:type="simple">C++</ext-link>). This makes it trivial to test many different HMM topologies, since such modifications only require editing a few lines in the text file.</p>
+<p>In a simple comparison on the canonical “occasionally dishonest casino” example [<xref ref-type="bibr" rid="pcbi.1004409.ref023">23</xref>] we find it slightly faster and more memory-efficient than <monospace>HMMoC</monospace> (<xref ref-type="table" rid="pcbi.1004409.t001">Table 1</xref>). To generate these results we ran the Viterbi algorithm using both programs on sequences of length one (resp. ten) million, and averaged CPU time and memory use over 300 (resp. 30) runs. We note in passing that <monospace>HMMoC</monospace>’s XML for this example consists of 5961 characters, while <monospace>ham</monospace>’s YAML specifies the same information in only 440.</p>
+<p><monospace>ham</monospace> can simultaneously emit onto an arbitrary number (<italic>k</italic>) of outputs, such as for a pair-HMM (<italic>k</italic> = 2). As previously described, this ability is useful for BCR ancestral inference.</p>
+<p>We have also included an optimization we call “chunk-caching” which greatly speeds repetitive dynamic programing (DP) table calculations. Any time the left-hand side of a sequence is the same as that of another sequence, the corresponding left hand side of their DP tables will be identical. We have thus included the ability to cache and recall previous DP tables in order to avoid unnecessary recalculation in such cases.</p>
+<sec id="sec011">
+<title>HMM architecture</title>
+<p>We follow previous work [<xref ref-type="bibr" rid="pcbi.1004409.ref025">25</xref>–<xref ref-type="bibr" rid="pcbi.1004409.ref027">27</xref>] by representing each germline base in each V, D, and J allele as an HMM state (<xref ref-type="fig" rid="pcbi.1004409.g010">Fig 10</xref>). N-additions are represented as a separate class of states, and 5’ (3’) exonuclease deletions as transitions to or from germline states which are not at the start (end) of the gene. All of these states can be combined to create a single HMM for the entire VDJ rearrangement process. While it can be useful to think of individually calculating the probability of each such path, in practice one traverses the dynamic programming (DP) table using the recursion relations found in [<xref ref-type="bibr" rid="pcbi.1004409.ref023">23</xref>].</p>
+<fig id="pcbi.1004409.g010" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004409.g010</object-id>
+<label>Fig 10</label>
+<caption>
+<title>A few states in the internal region of a B cell receptor sequence HMM.</title>
+<p>On the left is a state representing a position in a gene with a germline G, which usually emits a G, but sometimes emits other bases (i.e. mutates). If this state is near enough to the start or end of the gene, there will likely be transitions from the initial state, or to the end state (upper arrows). On the other hand, if it is in the middle of a gene the path is more likely to simply traverse the states in order (straight horizontal arrows).</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.g010" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec012">
+<title>Factorization</title>
+<p>All inferential operations on the HMM described in the previous section can be made faster by a process of “factorization”, which performs inference on a collection of smaller HMMs but returns exactly the same results as a monolithic HMM. Each of these smaller HMMs has the topology obtained by extracting it from the monolithic HMM, resulting in the topologies shown in <xref ref-type="fig" rid="pcbi.1004409.g011">Fig 11</xref>. In order to motivate the procedure, we observe that 1) once a path hits a state corresponding to a given allele, it cannot transition to any state corresponding to a different allele for that segment (for example, a path in allele <italic>D</italic><sub>1</sub> cannot transition to <italic>D</italic><sub>2</sub>); and 2) the only external information needed to calculate the DP table on a single allele’s HMM for a given query sequence is where in the query sequence to start and where to end.</p>
+<fig id="pcbi.1004409.g011" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004409.g011</object-id>
+<label>Fig 11</label>
+<caption>
+<title>Overall topology of the HMMs in the V, D, and J segments.</title>
+<p>Inserts are shown as a single state for clarity, but are replaced by four states in the actual HMM (<xref ref-type="fig" rid="pcbi.1004409.g012">Fig 12</xref>). Note that we include 5’ V and 3’ D exonuclease deletions as a convenience (dashed lines) to account for varying read lengths.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.g011" xlink:type="simple"/>
+</fig>
+<p>In order to describe the factorization process in more detail, we will use the notation of [<xref ref-type="bibr" rid="pcbi.1004409.ref023">23</xref>] referring to a single HMM: <italic>e</italic><sub><italic>s</italic></sub>(<italic>b</italic>) represents the probability of emitting <italic>b</italic> in state <italic>s</italic>, and <italic>a</italic><sub><italic>ss</italic>′</sub> is the transition probability from state <italic>s</italic> to <italic>s</italic>′. We also use <italic>π</italic> for a path through the set of hidden states, and <italic>p</italic><sub><italic>i</italic></sub>(<italic>x</italic>, <italic>π</italic>) as an abbreviation for <italic>e</italic><sub><italic>π</italic><sub><italic>i</italic></sub></sub>(<italic>x</italic><sub><italic>i</italic></sub>)<italic>a</italic><sub><italic>π</italic><sub><italic>i</italic>−1</sub> <italic>π</italic><sub><italic>i</italic></sub></sub>: the contribution of position <italic>x</italic> to the forward probability.</p>
+<p>One can write the total probability of a sequence <italic>x</italic> under a given HMM, i.e. the forward probability, as a sum over paths <italic>π</italic> <disp-formula id="pcbi.1004409.e001"><alternatives><graphic id="pcbi.1004409.e001g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004409.e001" xlink:type="simple"/><mml:math display="block" id="M1"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:munder><mml:mo>∑</mml:mo> <mml:mi>π</mml:mi></mml:munder> <mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>π</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(1)</label></disp-formula>
+(For the Viterbi algorithm we would replace the summation with argmax.) As written, this corresponds to a single, monolithic HMM, and we are implicitly summing over all paths through all alleles in the V, D, and J segments. In order to factorize this monolithic probability, we first write the probability of each path in more detail as a product over each position <italic>i</italic> in the sequence of length <italic>L</italic>:
+<disp-formula id="pcbi.1004409.e002"><alternatives><graphic id="pcbi.1004409.e002g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004409.e002" xlink:type="simple"/><mml:math display="block" id="M2"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>π</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>:</mml:mo> <mml:mo>=</mml:mo> <mml:munderover><mml:mo>∏</mml:mo> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>L</mml:mi></mml:munderover> <mml:msub><mml:mi>e</mml:mi> <mml:msub><mml:mi>π</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>x</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:msub><mml:mi>a</mml:mi> <mml:mrow><mml:msub><mml:mi>π</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msub> <mml:msub><mml:mi>π</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:munderover><mml:mo>∏</mml:mo> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>L</mml:mi></mml:munderover> <mml:msub><mml:mi>p</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>π</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+Here <italic>π</italic><sub><italic>i</italic></sub> is the state at position <italic>i</italic> in path <italic>π</italic>, and <italic>x</italic><sub><italic>i</italic></sub> is the symbol at position <italic>i</italic> in the query sequence. Thus <italic>e</italic><sub><italic>π</italic><sub><italic>i</italic></sub></sub>(<italic>x</italic><sub><italic>i</italic></sub>) is the probability of emitting <italic>x</italic><sub><italic>i</italic></sub> from state <italic>π</italic><sub><italic>i</italic></sub>, and <italic>a</italic><sub><italic>π</italic><sub><italic>i</italic>−1</sub> <italic>π</italic><sub><italic>i</italic></sub></sub> is the transition probability from the state at <italic>i</italic> − 1 to the state at <italic>i</italic>.</p>
+<p>We now subdivide this product for the path <italic>π</italic> into three factors for the V, D, and J segments; this divides the sequence correspondingly into three sections of length <italic>l</italic><sub><italic>V</italic></sub>, <italic>l</italic><sub><italic>D</italic></sub>, and <italic>L</italic> − <italic>l</italic><sub><italic>V</italic></sub> − <italic>l</italic><sub><italic>D</italic></sub>. We will use <italic>P</italic><sub><italic>R</italic></sub>(<italic>x</italic>, <italic>π</italic>, <italic>l</italic><sub><italic>V</italic></sub>, <italic>l</italic><sub><italic>D</italic></sub>) to denote the forward probability of the path <italic>π</italic> through a single segment <italic>R</italic> ∈ [<italic>V</italic>, <italic>D</italic>, <italic>J</italic>].
+<disp-formula id="pcbi.1004409.e003"><alternatives><graphic id="pcbi.1004409.e003g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004409.e003" xlink:type="simple"/><mml:math display="block" id="M3"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>P</mml:mi> <mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>π</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mtd> <mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:munderover><mml:mo>∏</mml:mo> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:msub><mml:mi>l</mml:mi> <mml:mi>V</mml:mi></mml:msub></mml:munderover> <mml:msub><mml:mi>p</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>π</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:munderover><mml:mo>∏</mml:mo> <mml:mrow><mml:mi>j</mml:mi> <mml:mo>=</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>V</mml:mi></mml:msub> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mrow><mml:msub><mml:mi>l</mml:mi> <mml:mi>V</mml:mi></mml:msub> <mml:mo>+</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>D</mml:mi></mml:msub></mml:mrow></mml:munderover> <mml:msub><mml:mi>p</mml:mi> <mml:mi>j</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>π</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:munderover><mml:mo>∏</mml:mo> <mml:mrow><mml:mi>k</mml:mi> <mml:mo>=</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>V</mml:mi></mml:msub> <mml:mo>+</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>D</mml:mi></mml:msub> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>L</mml:mi></mml:munderover> <mml:msub><mml:mi>p</mml:mi> <mml:mi>k</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>π</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd/><mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:msub><mml:mi>P</mml:mi> <mml:mi>V</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>π</mml:mi> <mml:mo>,</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>V</mml:mi></mml:msub> <mml:mo>,</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>D</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:msub><mml:mi>P</mml:mi> <mml:mi>D</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>π</mml:mi> <mml:mo>,</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>V</mml:mi></mml:msub> <mml:mo>,</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>D</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:msub><mml:mi>P</mml:mi> <mml:mi>J</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>π</mml:mi> <mml:mo>,</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>V</mml:mi></mml:msub> <mml:mo>,</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>D</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd/><mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:munder><mml:mo>∏</mml:mo> <mml:mrow><mml:mi>R</mml:mi> <mml:mo>=</mml:mo> <mml:mi>V</mml:mi> <mml:mo>,</mml:mo> <mml:mi>D</mml:mi> <mml:mo>,</mml:mo> <mml:mi>J</mml:mi></mml:mrow></mml:munder> <mml:msub><mml:mi>P</mml:mi> <mml:mi>R</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>π</mml:mi> <mml:mo>,</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>V</mml:mi></mml:msub> <mml:mo>,</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>D</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+We then use this factorization to rearrange the order of operations in the sum over paths <xref ref-type="disp-formula" rid="pcbi.1004409.e001">Eq (1)</xref>:
+<disp-formula id="pcbi.1004409.e004"><alternatives><graphic id="pcbi.1004409.e004g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004409.e004" xlink:type="simple"/><mml:math display="block" id="M4"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:munder><mml:mo>∑</mml:mo> <mml:mi>π</mml:mi></mml:munder> <mml:mi>P</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>π</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mtd> <mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:munder><mml:mo>∑</mml:mo> <mml:mi>π</mml:mi></mml:munder> <mml:munder><mml:mo>∏</mml:mo> <mml:mrow><mml:mi>R</mml:mi> <mml:mo>=</mml:mo> <mml:mi>V</mml:mi> <mml:mo>,</mml:mo> <mml:mi>D</mml:mi> <mml:mo>,</mml:mo> <mml:mi>J</mml:mi></mml:mrow></mml:munder> <mml:msub><mml:mi>P</mml:mi> <mml:mi>R</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>π</mml:mi> <mml:mo>,</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>V</mml:mi></mml:msub> <mml:mo>,</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>D</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd/><mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:munder><mml:mo>∑</mml:mo> <mml:mrow><mml:msub><mml:mi>l</mml:mi> <mml:mi>V</mml:mi></mml:msub> <mml:mo>,</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>D</mml:mi></mml:msub></mml:mrow></mml:munder> <mml:munder><mml:mo>∏</mml:mo> <mml:mrow><mml:mi>R</mml:mi> <mml:mo>=</mml:mo> <mml:mi>V</mml:mi> <mml:mo>,</mml:mo> <mml:mi>D</mml:mi> <mml:mo>,</mml:mo> <mml:mi>J</mml:mi></mml:mrow></mml:munder> <mml:mspace width="4pt"/><mml:munder><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>g</mml:mi> <mml:mo>∈</mml:mo> <mml:mi>R</mml:mi></mml:mrow></mml:munder> <mml:mspace width="4pt"/><mml:msub><mml:mi>q</mml:mi> <mml:mi>g</mml:mi></mml:msub> <mml:munder><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>π</mml:mi> <mml:mo>∈</mml:mo> <mml:mi>g</mml:mi></mml:mrow></mml:munder> <mml:msub><mml:mi>P</mml:mi> <mml:mi>R</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>x</mml:mi> <mml:mo>,</mml:mo> <mml:mi>π</mml:mi> <mml:mo>,</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>V</mml:mi></mml:msub> <mml:mo>,</mml:mo> <mml:msub><mml:mi>l</mml:mi> <mml:mi>D</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+where <italic>q</italic><sub><italic>g</italic></sub> is the probability of choosing each allele <italic>g</italic>. Here we have isolated the computationally expensive sum over all states ∑<sub><italic>π</italic>∈<italic>g</italic></sub> as far to the right as possible, so that we sum only over the paths within each allele, and combine all alleles afterward. Factorization thus reduces a single HMM with a state for each germline position in each of a few hundred alleles, to a number of HMMs, each with states only for a single allele. Since at each step in the forward (and Viterbi) recursion relations we sum over all possible previous states for each current state, computing time scales roughly as the square of the number of states in each HMM. By reducing the maximum number of states per HMM by several orders of magnitude, factorization thus substantially decreases memory and computation time.</p>
+<p>N-additions change this picture very little: we simply add them to the left side of each D and J HMM (they could as easily go on the right side of V and D). The resulting HMM topologies are shown in <xref ref-type="fig" rid="pcbi.1004409.g011">Fig 11</xref>. In this version, we show a single insert state, with emission probabilities corresponding to the empirical N-region nucleotide distribution from data (compare <xref ref-type="fig" rid="pcbi.1004409.g012">Fig 12</xref>).</p>
+<fig id="pcbi.1004409.g012" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004409.g012</object-id>
+<label>Fig 12</label>
+<caption>
+<title>HMM N-region topology.</title>
+<p>By using four states instead of one, this gives improved discrimination for pairs or tuples of sequences because it does not ignore mutation information within N-regions. Self-transitions for insert states ommitted for clarity.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.g012" xlink:type="simple"/>
+</fig>
+<p>As described above, the HMM does not model insertion/deletion mutations within gene segments at this time. Their inclusion would impose a significant computational burden: rather than a linear number of transitions there would be a quadratic number, and adding deletion self-transitions would require exploring the complete collection of potential deletions at every site in order to get a valid forward probability. Noting that the Smith-Waterman step provides only slightly less accurate annotation than the HMM, we instead provide the option of filtering out potential insertion/deletion mutations during the initial Smith-Waterman step. This allows the user to make a subjective decision, which we believe is appropriate in the face of the currently incomplete germline sequence databases, combined with many germline genes being related to each other by insertion/deletion events. We thus we provide a command line parameter to adjust the Smith-Waterman gap-opening penalty to vary sensitivity to insertion/deletion mutations. Any candidate insertion/deletion mutations are then flagged, after which the HMM can be run with and without the insertion/deletion.</p>
+</sec>
+<sec id="sec013">
+<title>Multi-HMMs</title>
+<p>As described above, <monospace>ham</monospace> is able to do inference under a model which simultaneously emits an arbitrary number of symbols <italic>k</italic>. When <italic>k</italic> = 2 this is typically called a pair HMM [<xref ref-type="bibr" rid="pcbi.1004409.ref023">23</xref>], and we call the generalized form a multi-HMM (<italic>k</italic> ≥ 2). One can also think of this as doing inference while constraining all of the sequences to come from the same path through the hidden states of the HMM. In our setting, the <italic>k</italic> sequences resulting from such a multi-HMM model are the various sequences deriving from a single rearrangement event (which differ only according to point substitution from somatic hypermutation).</p>
+<p>We can use this ability to perform improved inference on a collection of sequences deriving from the same rearrangement event, allowing us to integrate out much of the uncertainty due to somatic hypermutation in each single sequence. In other words, not all mutations are shared between clonally related sequences, and this provides valuable information that is only available if the HMM can emit several sequences simultaneously.</p>
+<p>Although this approach allows us to share inferential power among various sequences within the germline regions, with a standard VDJ HMM topology (as in <xref ref-type="fig" rid="pcbi.1004409.g011">Fig 11</xref>) the N-region does not contribute to the likelihood in a meaningful way. In order to allow likelihood contributions from the N-region, we replace the single insert state with four states, corresponding to naive-sequence N-addition of A, C, G, and T (<xref ref-type="fig" rid="pcbi.1004409.g012">Fig 12</xref>). The emissions of these four states are then treated as for actual germline states (<xref ref-type="fig" rid="pcbi.1004409.g010">Fig 10</xref>): the A state, for example, has a large probability of emitting an A, and a complementary probability (equal to the observed mutation probability) of emitting one of the other three bases. For example, if we pass in five sequences that share identical N-regions except that one sequence has a single mutated base, the HMM uses the information from the four non-mutated bases to conclude that the difference in the fifth sequence is likely to be a mutation from the un-mutated ancestral sequence.</p>
+</sec>
+<sec id="sec014">
+<title>Parameter estimation</title>
+<p>The parameters of our HMM consist of allele usage probabilities, transition probabilities, and emission probabilities; as described above we estimate categorical distributions for each of these. The inferred distributions of these parameters come from either a previous generation of HMM estimates, or from Smith-Waterman (as described below).</p>
+<p>In order to convert from substitution probability <italic>p</italic> to emission probabilities, we set the probability of emission for each non-germline base to <italic>p</italic>/3, and correspondingly set the probability of germline emission to 1 − <italic>p</italic>. In the HMM implementation, it is trivial to account for different probabilities of mutating to different bases (instead of simply using <italic>f</italic>/3 for all three). However, we do not know of phylogenetic sequence simulation software (we use <monospace>bppseqgen</monospace> from Bio++ [<xref ref-type="bibr" rid="pcbi.1004409.ref053">53</xref>]) that implements both this and per-position mutation rates, and thus lacking reliable means of validation for this feature we leave it out.</p>
+<p>Transition probabilities are set according to empirical frequencies of inferred exonuclease deletion and N-region lengths. For example, again sub-setting by allele, the frequency with which we observe a 3’ exonuclease deletion of length one gives us the transition probability from the second-to-last state in this allele to the end state (thereby bypassing the last state in the allele). This logic is repeated for all positions in each allele, and also for the 5’ end (where instead of a transition to the end state, it is a transition from the initial state). Note that we include 5’ V and 3’ D exonuclease deletions as a convenience (dashed lines in <xref ref-type="fig" rid="pcbi.1004409.g011">Fig 11</xref>) to account for varying read lengths. The N-region state self-transition probability is set to the inverse of the observed mean N-region length in data, and thus N-region lengths are modeled according to a geometric distribution with the correct mean length. While the choice of a geometric distribution is simply a result of HMMs’ inherent lack of memory, in practice we observe that N-region lengths are not far from geometrically distributed (<xref ref-type="fig" rid="pcbi.1004409.g004">Fig 4</xref>).</p>
+<p>Finally, the allele choice probabilities denoted <italic>q</italic><sub><italic>g</italic></sub> above are simply set to the observed frequency of each allele.</p>
+<p>For all parameters, we perform an initial estimation step using the Smith-Waterman based methods of [<xref ref-type="bibr" rid="pcbi.1004409.ref038">38</xref>]. These provisional parameters are used to build a set of HMMs which we then run on the same data in order to obtain a more accurate set of parameters. We can feed these parameters back into the HMM and continue the process recursively (this is Viterbi training in the language of [<xref ref-type="bibr" rid="pcbi.1004409.ref023">23</xref>]), but in practice we find no significant improvement after the first iteration. In future versions we may implement full Baum-Welch parameter estimation [<xref ref-type="bibr" rid="pcbi.1004409.ref023">23</xref>]. However, given the level of agreement which we observe for Viterbi training, we do not expect large improvement from moving to full Baum-Welch.</p>
+<p>In order to correctly estimate parameter uncertainties we would like to know the sample size: the number of independent rearrangement events. This is not the same as the number of unique reads, because several reads can stem from a single rearrangement through somatic hypermutation and clonal expansion. In principle the sample size for each measurement should be the number of observed rearrangement events. However, we can only observe sequences rather than rearrangement events, and thus do not know precisely how many rearrangement events we have observed. Previous work has shown that a significant majority of B cell rearrangements are represented by only one sequence in healthy humans, even in a deep sample from the memory compartment [<xref ref-type="bibr" rid="pcbi.1004409.ref054">54</xref>]. In order to be conservative we posit that B-cells are members of clones with two members, and thus multiply all uncertainty measurements (e.g. in <xref ref-type="fig" rid="pcbi.1004409.g002">Fig 2</xref>) by a factor of <inline-formula id="pcbi.1004409.e005"><alternatives><graphic id="pcbi.1004409.e005g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004409.e005" xlink:type="simple"/><mml:math display="inline" id="M5"><mml:msqrt><mml:mn>2</mml:mn></mml:msqrt></mml:math></alternatives></inline-formula> corresponding to this assumed two-fold reduction in sample size.</p>
+</sec>
+<sec id="sec015">
+<title>Parameter merging in small samples via tiered aggregation</title>
+<p>As mentioned above, a more highly parameterized model is both allowed by and requires large data sets. In order to facilitate the use of <monospace>partis</monospace> on data sets of varying size, and also to allow accurate inference of rare clones, we have thus implemented a scheme that automatically reduces the detail of the model on smaller samples. The basic idea of this scheme, which we call “tiered aggregation”, is to merge together the information from increasing numbers of germline alleles, in several tiers of similarity, as the sample size decreases.</p>
+<p>As shown above, we observe significant parameter variation between alleles, and we thus initially subset all emission and transition probabilities by allele (i.e. use different probabilities for each allele of each gene in V, D, and J). For large data sets, and for BCR repertoires with relatively homogeneous allele frequency distributions, this approach is sufficient. If we observe a particular allele only a handful of times, however, we cannot confidently estimate parameters for that allele. In such cases we thus include information from similar alleles in the parameter estimation.</p>
+<p>Specifically, if we observe an allele fewer than <italic>N</italic> times, we take a simple average over all the observations of its allelic variants when calculating its parameters, rather than just considering that allele. If we also fail to observe <italic>N</italic> occurrences of all these allelic variants together, we go on to include all alleles in the same IMGT gene family (e.g. all IGHV1 alleles). Finally, if with this criterion we still do not reach <italic>N</italic> observations, we include all alleles from that segment (e.g. all V alleles). Here <italic>N</italic> is a tunable parameter, and in practice gives good results in simulation at about 20, which is the value used for the results in this paper.</p>
+<p>This procedure thus has the effect of automatically compensating for decreased parameter accuracy in smaller samples by switching to a less parameter-rich model. We find this strategy to be effective in simulation (<xref ref-type="fig" rid="pcbi.1004409.g009">Fig 9</xref>). As expected, performance decreases with decreasing sample size, although the degradation is minimal for samples larger than a few hundred sequences. While <monospace>partis</monospace> still performs well on fewer than a few hundred sequences, there is little benefit to using it, as one is not taking advantage of its detailed models. Instead, one could use <monospace>ighutil</monospace> [<xref ref-type="bibr" rid="pcbi.1004409.ref038">38</xref>] on small data sets, as in such cases the two will perform comparably in terms of accuracy.</p>
+</sec>
+<sec id="sec016">
+<title>Validation</title>
+<p>As described above, we find it necessary to validate BCR annotation methods on simulated sequences; we therefore wrote a simulator of rearrangement and somatic hypermutation. This simulator takes as input a joint categorical distribution over all “rearrangement values” which are necessary to specify the rearrangement event (e.g. 3’ V exonuclease deletion length, which V allele, etc.). It then draws a point in this space according to the distribution, and generates a naive sequence according to the coordinates of this point. N-regions are generated with corresponding length, with N-addition bases chosen randomly according to the empirical nucleotide distribution. This simulation process implicitly models all correlations between “rearrangement values,” even correlations that are ignored in the HMMs. As an input distribution of rearrangement values to the simulation, we used our inferences on the Adaptive data set.</p>
+<p>The resulting unmutated ancestor then diversifies via simulated mutation into a set of sequences in a clonal family. Specifically, we first use TreeSim [<xref ref-type="bibr" rid="pcbi.1004409.ref055">55</xref>] to generate a lineage tree descending from this ancestral sequence, with a speciation rate of 1.0 and extinction rate of 0.5, conditioned on the desired number of leaves and on a tree height drawn from the empirical distribution. The number of leaves is easily configurable in our simulation package either as a constant or as a random variable drawn from some distribution.</p>
+<p>The segments are then generated through simulation down this tree using empirical per-position mutation rates, with tree height rescaled by the mean observed ratio of that segment’s mutation rate to the rate in all three segments, using the <monospace>bppseqgen</monospace> mutation simulator in the Bio++ [<xref ref-type="bibr" rid="pcbi.1004409.ref053">53</xref>] package. The D segment, for instance, could use a tree height 1.8 times the overall height in a typical human, while the V and J would use 0.98 and 0.87. N-regions are also mutated, using parameters averaged over the three segments. This approach yields good agreement between mutation rates in data and simulation (<xref ref-type="supplementary-material" rid="pcbi.1004409.s006">S6 Fig</xref>).</p>
+<p>For simplicity, all plots in this paper use simulation with a constant five leaves per tree; results were consistent when simulating with widely varying constant, as well as non-constant, leaves per tree (results not shown). The sample for which we show performance comparisons (<xref ref-type="table" rid="pcbi.1004409.t002">Table 2</xref> and Figs <xref ref-type="fig" rid="pcbi.1004409.g006">6</xref>, <xref ref-type="fig" rid="pcbi.1004409.g007">7</xref> and <xref ref-type="fig" rid="pcbi.1004409.g008">8</xref>) was generated with parameters from human A in the Adaptive data set, except that the mean mutation frequency was doubled (see the original mutation frequencies for the three humans in <xref ref-type="supplementary-material" rid="pcbi.1004409.s006">S6 Fig</xref>) in order to provide a more challenging inference test.</p>
+<p>To check that this simulator generates sequences that are close to real data, we compared its output parameter distributions to the inferred parameters from data (which are the simulator’s input). These distributions are similar (<xref ref-type="supplementary-material" rid="pcbi.1004409.s005">S5</xref>, <xref ref-type="supplementary-material" rid="pcbi.1004409.s006">S6</xref> and <xref ref-type="supplementary-material" rid="pcbi.1004409.s007">S7</xref> Figs), showing that the simulator accurately recapitulates the processes generating the true data. Given this accuracy, the compatibility between true and inferred distributions in <xref ref-type="fig" rid="pcbi.1004409.g008">Fig 8</xref> shows that our original parameters inferred from data are indeed close to the true parameters in data.</p>
+<p>The validation is run within the <monospace>partis</monospace> directory in the main repository using the command <monospace>scons validate</monospace>.</p>
+<p>We emphasize that this simulator’s only inputs are the inferred empirical parameter distributions, and that it is thus entirely independent of <monospace>partis</monospace>’ HMM machinery. <monospace>partis</monospace>’s inference framework, meanwhile, is presented with only the simulated sequences; specifically, it has no information about the simulation or its parameters (information which would not be available in a real data set).</p>
+</sec>
+</sec>
+</sec>
+<sec id="sec017">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1004409.s001" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.s001" xlink:type="simple">
+<label>S1 Fig</label>
+<caption>
+<title>Deletion lengths.</title>
+<p>Typical observed exonuclease deletion length frequencies for two V, four D, and two J alleles on the Vollmers data set.</p>
+<p>(TIFF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004409.s002" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.s002" xlink:type="simple">
+<label>S2 Fig</label>
+<caption>
+<title>Mutation frequency versus position.</title>
+<p>Typical observed mutation frequencies for two V, two D, and two J alleles on the Vollmers data set. The first base of the conserved cysteine and tryptophan codons (i.e. the CDR3 boundaries) are indicated with black vertical dashed lines. The large uncertainties at the 5’ end of V and 3’ end of J reflect that our reads very rarely extend into these regions. Here and elsewhere we use the standard naming convention for alleles of germline genes: for example “IGHV3-33*06” means the 6th allele of the 33rd gene in the V3 gene family for the heavy chain.</p>
+<p>(TIFF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004409.s003" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.s003" xlink:type="simple">
+<label>S3 Fig</label>
+<caption>
+<title>N-region lengths.</title>
+<p>Typical observed N-region lengths at the VD and DJ boundaries for two D and two J alleles.</p>
+<p>(TIFF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004409.s004" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.s004" xlink:type="simple">
+<label>S4 Fig</label>
+<caption>
+<title>Mean and variance of inferred parameters.</title>
+<p>The across-subset mean and variance of inferred parameter values for each human in the Vollmers data set across 10 disjoint subsets of the data. See the caption to <xref ref-type="fig" rid="pcbi.1004409.g005">Fig 5</xref> and the corresponding text for more details.</p>
+<p>(TIFF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004409.s005" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.s005" xlink:type="simple">
+<label>S5 Fig</label>
+<caption>
+<title>Deletions and N-region lengths for data and simulation for three different humans.</title>
+<p>(TIFF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004409.s006" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.s006" xlink:type="simple">
+<label>S6 Fig</label>
+<caption>
+<title>Mutation frequencies for data and simulation for three different humans over the full reads, and for the V, D, and J segments individually.</title>
+<p>(TIFF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004409.s007" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004409.s007" xlink:type="simple">
+<label>S7 Fig</label>
+<caption>
+<title>Per-position mutation frequencies for data and simulation for typical alleles in the V, D, and J segments.</title>
+<p>(TIFF)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>The authors would like to thank Trevor Bedford, Lily Blair, Robert Bradley, Connor McCoy, Vladimir Minin, Steve Quake, Harlan Robins, and Christopher Vollmers for helpful discussions and for sharing data.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004409.ref001">
+<label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Cooper</surname> <given-names>MD</given-names></name>. <article-title>The early history of B cells</article-title>. <source>Nat Rev Immunol</source>. <year>2015</year> <month>Mar</month>;<volume>15</volume>(<issue>3</issue>):<fpage>191</fpage>–<lpage>197</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nri3801" xlink:type="simple">http://dx.doi.org/10.1038/nri3801</ext-link></comment> <object-id pub-id-type="pmid">25656707</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref002">
+<label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Huppa</surname> <given-names>JB</given-names></name>, <name name-style="western"><surname>Davis</surname> <given-names>MM</given-names></name>. <article-title>T-cell-antigen recognition and the immunological synapse</article-title>. <source>Nat Rev Immunol</source>. <year>2003</year> <month>Dec</month>;<volume>3</volume>(<issue>12</issue>):<fpage>973</fpage>–<lpage>983</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nri1245" xlink:type="simple">http://dx.doi.org/10.1038/nri1245</ext-link></comment> <object-id pub-id-type="pmid">14647479</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref003">
+<label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Hozumi</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Tonegawa</surname> <given-names>S</given-names></name>. <article-title>Evidence for somatic rearrangement of immunoglobulin genes coding for variable and constant regions</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>1976</year> <month>Oct</month>;<volume>73</volume>(<issue>10</issue>):<fpage>3628</fpage>–<lpage>3632</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/824647" xlink:type="simple">http://www.ncbi.nlm.nih.gov/pubmed/824647</ext-link></comment> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.73.10.3628" xlink:type="simple">10.1073/pnas.73.10.3628</ext-link></comment> <object-id pub-id-type="pmid">824647</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref004">
+<label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Tonegawa</surname> <given-names>S</given-names></name>. <article-title>Somatic generation of antibody diversity</article-title>. <source>Nature</source>. <year>1983</year> <day>14</day> <month>Apr</month>;<volume>302</volume>(<issue>5909</issue>):<fpage>575</fpage>–<lpage>581</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/6300689" xlink:type="simple">http://www.ncbi.nlm.nih.gov/pubmed/6300689</ext-link></comment> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/302575a0" xlink:type="simple">10.1038/302575a0</ext-link></comment> <object-id pub-id-type="pmid">6300689</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref005">
+<label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Weigert</surname> <given-names>MG</given-names></name>, <name name-style="western"><surname>Cesari</surname> <given-names>IM</given-names></name>, <name name-style="western"><surname>Yonkovich</surname> <given-names>SJ</given-names></name>, <name name-style="western"><surname>Cohn</surname> <given-names>M</given-names></name>. <article-title>Variability in the lambda light chain sequences of mouse antibody</article-title>. <source>Nature</source>. <year>1970</year> <day>12</day> <month>Dec</month>;<volume>228</volume>(<issue>5276</issue>):<fpage>1045</fpage>–<lpage>1047</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/5483159" xlink:type="simple">http://www.ncbi.nlm.nih.gov/pubmed/5483159</ext-link></comment> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/2281045a0" xlink:type="simple">10.1038/2281045a0</ext-link></comment> <object-id pub-id-type="pmid">5483159</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref006">
+<label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>McKean</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Huppi</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Bell</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Staudt</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Gerhard</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Weigert</surname> <given-names>M</given-names></name>. <article-title>Generation of antibody diversity in the immune response of BALB/c mice to influenza virus hemagglutinin</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>1984</year> <month>May</month>;<volume>81</volume>(<issue>10</issue>):<fpage>3180</fpage>–<lpage>3184</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/6203114" xlink:type="simple">http://www.ncbi.nlm.nih.gov/pubmed/6203114</ext-link></comment> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.81.10.3180" xlink:type="simple">10.1073/pnas.81.10.3180</ext-link></comment> <object-id pub-id-type="pmid">6203114</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref007">
+<label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Boyd</surname> <given-names>SD</given-names></name>, <name name-style="western"><surname>Marshall</surname> <given-names>EL</given-names></name>, <name name-style="western"><surname>Merker</surname> <given-names>JD</given-names></name>, <name name-style="western"><surname>Maniar</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>LN</given-names></name>, <name name-style="western"><surname>Sahaf</surname> <given-names>B</given-names></name>, <etal>et al</etal>. <article-title>Measurement and Clinical Monitoring of Human Lymphocyte Clonality by Massively Parallel V-D-J Pyrosequencing</article-title>. <source>Sci Transl Med</source>. <year>2009</year> <month>Dec</month>;<volume>1</volume>(<issue>12</issue>):<fpage>12ra23</fpage>–<lpage>12ra23</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/scitranslmed.3000540" xlink:type="simple">http://dx.doi.org/10.1126/scitranslmed.3000540</ext-link></comment> <object-id pub-id-type="pmid">20161664</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref008">
+<label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Weinstein</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Jiang</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>White</surname> <given-names>RA</given-names> <suffix>3rd</suffix></name>, <name name-style="western"><surname>Fisher</surname> <given-names>DS</given-names></name>, <name name-style="western"><surname>Quake</surname> <given-names>SR</given-names></name>. <article-title>High-throughput sequencing of the zebrafish antibody repertoire</article-title>. <source>Science</source>. <year>2009</year> <day>8</day> <month>May</month>;<volume>324</volume>(<issue>5928</issue>):<fpage>807</fpage>–<lpage>810</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1170020" xlink:type="simple">http://dx.doi.org/10.1126/science.1170020</ext-link></comment> <object-id pub-id-type="pmid">19423829</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref009">
+<label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Larimore</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>McCormick</surname> <given-names>MW</given-names></name>, <name name-style="western"><surname>Robins</surname> <given-names>HS</given-names></name>, <name name-style="western"><surname>Greenberg</surname> <given-names>PD</given-names></name>. <article-title>Shaping of human germline IgH repertoires revealed by deep sequencing</article-title>. <source>J Immunol</source>. <year>2012</year> <day>3</day> <month>Aug</month>;<volume>189</volume>(<issue>6</issue>):<fpage>3221</fpage>–<lpage>3230</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.4049/jimmunol.1201303" xlink:type="simple">http://dx.doi.org/10.4049/jimmunol.1201303</ext-link></comment> <object-id pub-id-type="pmid">22865917</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref010">
+<label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Reddy</surname> <given-names>ST</given-names></name>, <name name-style="western"><surname>Ge</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Miklos</surname> <given-names>AE</given-names></name>, <name name-style="western"><surname>Hughes</surname> <given-names>RA</given-names></name>, <name name-style="western"><surname>Kang</surname> <given-names>SH</given-names></name>, <name name-style="western"><surname>Hoi</surname> <given-names>KH</given-names></name>, <etal>et al</etal>. <article-title>Monoclonal antibodies isolated without screening by analyzing the variable-gene repertoire of plasma cells</article-title>. <source>Nat Biotechnol</source>. <year>2010</year> <month>Sep</month>;<volume>28</volume>(<issue>9</issue>):<fpage>965</fpage>–<lpage>969</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nbt.1673" xlink:type="simple">http://dx.doi.org/10.1038/nbt.1673</ext-link></comment> <object-id pub-id-type="pmid">20802495</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref011">
+<label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Jackson</surname> <given-names>KJL</given-names></name>, <name name-style="western"><surname>Kidd</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Collins</surname> <given-names>AM</given-names></name>. <article-title>The Shape of the Lymphocyte Receptor Repertoire: Lessons from the B Cell Receptor</article-title>. <source>Front Immunol</source>. <year>2013</year> <day>2</day> <month>Sep</month>;<volume>4</volume>:<fpage>263</fpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3389/fimmu.2013.00263" xlink:type="simple">http://dx.doi.org/10.3389/fimmu.2013.00263</ext-link></comment> <object-id pub-id-type="pmid">24032032</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref012">
+<label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Georgiou</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Ippolito</surname> <given-names>GC</given-names></name>, <name name-style="western"><surname>Beausang</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Busse</surname> <given-names>CE</given-names></name>, <name name-style="western"><surname>Wardemann</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Quake</surname> <given-names>SR</given-names></name>. <article-title>The promise and challenge of high-throughput sequencing of the antibody repertoire</article-title>. <source>Nat Biotechnol</source>. <year>2014</year> <day>19</day> <month>Jan</month>;<comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nbt.2782" xlink:type="simple">http://dx.doi.org/10.1038/nbt.2782</ext-link></comment> <object-id pub-id-type="pmid">24441474</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref013">
+<label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Vollmers</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Sit</surname> <given-names>RV</given-names></name>, <name name-style="western"><surname>Weinstein</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Dekker</surname> <given-names>CL</given-names></name>, <name name-style="western"><surname>Quake</surname> <given-names>SR</given-names></name>. <article-title>Genetic measurement of memory B-cell recall using antibody repertoire sequencing</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2013</year> <day>13</day> <month>Aug</month>;<volume>110</volume>(<issue>33</issue>):<fpage>13463</fpage>–<lpage>13468</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1312146110" xlink:type="simple">http://dx.doi.org/10.1073/pnas.1312146110</ext-link></comment> <object-id pub-id-type="pmid">23898164</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref014">
+<label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Sok</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Laserson</surname> <given-names>U</given-names></name>, <name name-style="western"><surname>Laserson</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Vigneault</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Julien</surname> <given-names>JP</given-names></name>, <etal>et al</etal>. <article-title>The effects of somatic hypermutation on neutralization and binding in the PGT121 family of broadly neutralizing HIV antibodies</article-title>. <source>PLoS Pathog</source>. <year>2013</year> <day>21</day> <month>Nov</month>;<volume>9</volume>(<issue>11</issue>):<fpage>e1003754</fpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.ppat.1003754" xlink:type="simple">http://dx.doi.org/10.1371/journal.ppat.1003754</ext-link></comment> <object-id pub-id-type="pmid">24278016</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref015">
+<label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Zhu</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Ofek</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Yang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Louder</surname> <given-names>MK</given-names></name>, <name name-style="western"><surname>Lu</surname> <given-names>G</given-names></name>, <etal>et al</etal>. <article-title>Mining the antibodyome for HIV-1-neutralizing antibodies with next-generation sequencing and phylogenetic pairing of heavy/light chains</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2013</year> <day>16</day> <month>Apr</month>;<volume>110</volume>(<issue>16</issue>):<fpage>6470</fpage>–<lpage>6475</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1219320110" xlink:type="simple">http://dx.doi.org/10.1073/pnas.1219320110</ext-link></comment> <object-id pub-id-type="pmid">23536288</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref016">
+<label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Gao</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Bonsignori</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Liao</surname> <given-names>HX</given-names></name>, <name name-style="western"><surname>Kumar</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Xia</surname> <given-names>SM</given-names></name>, <name name-style="western"><surname>Lu</surname> <given-names>X</given-names></name>, <etal>et al</etal>. <article-title>Cooperation of B Cell Lineages in Induction of HIV-1-Broadly Neutralizing Antibodies</article-title>. <source>Cell</source>. <year>2014</year> <day>23</day> <month>Jul</month>;<comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2014.06.022" xlink:type="simple">http://dx.doi.org/10.1016/j.cell.2014.06.022</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref017">
+<label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kepler</surname> <given-names>TB</given-names></name>, <name name-style="western"><surname>Liao</surname> <given-names>HX</given-names></name>, <name name-style="western"><surname>Alam</surname> <given-names>SM</given-names></name>, <name name-style="western"><surname>Bhaskarabhatla</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Yandava</surname> <given-names>C</given-names></name>, <etal>et al</etal>. <article-title>Immunoglobulin Gene Insertions and Deletions in the Affinity Maturation of HIV-1 Broadly Reactive Neutralizing Antibodies</article-title>. <source>Cell Host Microbe</source>. <year>2014</year> <day>10</day> <month>Sep</month>;<volume>16</volume>(<issue>3</issue>):<fpage>304</fpage>–<lpage>313</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.chom.2014.08.006" xlink:type="simple">http://dx.doi.org/10.1016/j.chom.2014.08.006</ext-link></comment> <object-id pub-id-type="pmid">25211073</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref018">
+<label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Altschul</surname> <given-names>SF</given-names></name>, <name name-style="western"><surname>Gish</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Miller</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Myers</surname> <given-names>EW</given-names></name>, <name name-style="western"><surname>Lipman</surname> <given-names>DJ</given-names></name>. <article-title>Basic local alignment search tool</article-title>. <source>J Mol Biol</source>. <year>1990</year> <day>5</day> <month>Oct</month>;<volume>215</volume>(<issue>3</issue>):<fpage>403</fpage>–<lpage>410</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0022-2836(05)80360-2" xlink:type="simple">http://dx.doi.org/10.1016/S0022-2836(05)80360-2</ext-link></comment> <object-id pub-id-type="pmid">2231712</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref019">
+<label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Smith</surname> <given-names>TF</given-names></name>, <name name-style="western"><surname>Waterman</surname> <given-names>MS</given-names></name>. <article-title>Identification of common molecular subsequences</article-title>. <source>J Mol Biol</source>. <year>1981</year> <day>25</day> <month>Mar</month>;<volume>147</volume>(<issue>1</issue>):<fpage>195</fpage>–<lpage>197</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/7265238" xlink:type="simple">http://www.ncbi.nlm.nih.gov/pubmed/7265238</ext-link></comment> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/0022-2836(81)90087-5" xlink:type="simple">10.1016/0022-2836(81)90087-5</ext-link></comment> <object-id pub-id-type="pmid">7265238</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref020">
+<label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Ye</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Ma</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Madden</surname> <given-names>TL</given-names></name>, <name name-style="western"><surname>Ostell</surname> <given-names>JM</given-names></name>. <article-title>IgBLAST: an immunoglobulin variable domain sequence analysis tool</article-title>. <source>Nucleic Acids Res</source>. <year>2013</year> <month>Jul</month>;<volume>41</volume>(<issue>Web Server issue</issue>):<fpage>W34</fpage>–<lpage>40</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkt382" xlink:type="simple">http://dx.doi.org/10.1093/nar/gkt382</ext-link></comment> <object-id pub-id-type="pmid">23671333</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref021">
+<label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Lefranc</surname> <given-names>MP</given-names></name>, <name name-style="western"><surname>Giudicelli</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Ginestoux</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Jabado-Michaloud</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Folch</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Bellahcene</surname> <given-names>F</given-names></name>, <etal>et al</etal>. <article-title>IMGT, the international ImMunoGeneTics information system</article-title>. <source>Nucleic Acids Res</source>. <year>2009</year> <day>1</day> <month>Jan</month>;<volume>37</volume>(<issue>suppl 1</issue>):<fpage>D1006</fpage>–<lpage>D1012</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://nar.oxfordjournals.org/content/37/suppl_1/D1006.abstract" xlink:type="simple">http://nar.oxfordjournals.org/content/37/suppl_1/D1006.abstract</ext-link></comment> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkn838" xlink:type="simple">10.1093/nar/gkn838</ext-link></comment> <object-id pub-id-type="pmid">18978023</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref022">
+<label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Souto-Carneiro</surname> <given-names>MM</given-names></name>, <name name-style="western"><surname>Longo</surname> <given-names>NS</given-names></name>, <name name-style="western"><surname>Russ</surname> <given-names>DE</given-names></name>, <name name-style="western"><surname>Sun</surname> <given-names>HW</given-names></name>, <name name-style="western"><surname>Lipsky</surname> <given-names>PE</given-names></name>. <article-title>Characterization of the human Ig heavy chain antigen binding complementarity determining region 3 using a newly developed software algorithm, JOINSOLVER</article-title>. <source>J Immunol</source>. <year>2004</year> <day>1</day> <month>Jun</month>;<volume>172</volume>(<issue>11</issue>):<fpage>6790</fpage>–<lpage>6802</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.4049/jimmunol.172.11.6790" xlink:type="simple">10.4049/jimmunol.172.11.6790</ext-link></comment> <object-id pub-id-type="pmid">15153497</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref023">
+<label>23</label>
+<mixed-citation publication-type="book" xlink:type="simple">
+<name name-style="western"><surname>Durbin</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Eddy</surname> <given-names>SR</given-names></name>, <name name-style="western"><surname>Krogh</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Mitchison</surname> <given-names>G</given-names></name>. <source>Biological Sequence Analysis: Probabilistic Models of Proteins and Nucleic Acids</source>. <publisher-name>Cambridge University Press</publisher-name>; <year>1998</year>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://books.google.com/books?id=R5P2GlJvigQC" xlink:type="simple">http://books.google.com/books?id=R5P2GlJvigQC</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref024">
+<label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Eddy</surname> <given-names>SR</given-names></name>. <article-title>What is a hidden Markov model?</article-title> <source>Nat Biotechnol</source>. <year>2004</year> <month>Oct</month>;<volume>22</volume>(<issue>10</issue>):<fpage>1315</fpage>–<lpage>1316</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nbt1004-1315" xlink:type="simple">http://dx.doi.org/10.1038/nbt1004-1315</ext-link></comment> <object-id pub-id-type="pmid">15470472</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref025">
+<label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Volpe</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Cowell</surname> <given-names>LG</given-names></name>, <name name-style="western"><surname>Kepler</surname> <given-names>TB</given-names></name>. <article-title>SoDA: implementation of a 3D alignment algorithm for inference of antigen receptor recombinations</article-title>. <source>Bioinformatics</source>. <year>2005</year> <day>15</day> <month>Dec</month>;<volume>22</volume>(<issue>4</issue>):<fpage>438</fpage>–<lpage>444</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btk004" xlink:type="simple">http://dx.doi.org/10.1093/bioinformatics/btk004</ext-link></comment> <object-id pub-id-type="pmid">16357034</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref026">
+<label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Gaëta</surname> <given-names>BA</given-names></name>, <name name-style="western"><surname>Malming</surname> <given-names>HR</given-names></name>, <name name-style="western"><surname>Jackson</surname> <given-names>KJL</given-names></name>, <name name-style="western"><surname>Bain</surname> <given-names>ME</given-names></name>, <name name-style="western"><surname>Wilson</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Collins</surname> <given-names>AM</given-names></name>. <article-title>iHMMune-align: hidden Markov model-based alignment and identification of germline genes in rearranged immunoglobulin gene sequences</article-title>. <source>Bioinformatics</source>. <year>2007</year> <day>26</day> <month>Apr</month>;<volume>23</volume>(<issue>13</issue>):<fpage>1580</fpage>–<lpage>1587</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btm147" xlink:type="simple">http://dx.doi.org/10.1093/bioinformatics/btm147</ext-link></comment> <object-id pub-id-type="pmid">17463026</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref027">
+<label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Munshaw</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Kepler</surname> <given-names>TB</given-names></name>. <article-title>SoDA2: a Hidden Markov Model approach for identification of immunoglobulin rearrangements</article-title>. <source>Bioinformatics</source>. <year>2010</year> <day>1</day> <month>Apr</month>;<volume>26</volume>(<issue>7</issue>):<fpage>867</fpage>–<lpage>872</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btq056" xlink:type="simple">http://dx.doi.org/10.1093/bioinformatics/btq056</ext-link></comment> <object-id pub-id-type="pmid">20147303</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref028">
+<label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Jackson</surname> <given-names>KJL</given-names></name>, <name name-style="western"><surname>Gaeta</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Sewell</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Collins</surname> <given-names>AM</given-names></name>. <article-title>Exonuclease activity and P nucleotide addition in the generation of the expressed immunoglobulin repertoire</article-title>. <source>BMC Immunol</source>. <year>2004</year> <day>2</day> <month>Sep</month>;<volume>5</volume>:<fpage>19</fpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2172-5-19" xlink:type="simple">http://dx.doi.org/10.1186/1471-2172-5-19</ext-link></comment> <object-id pub-id-type="pmid">15345030</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref029">
+<label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Murugan</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Mora</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Walczak</surname> <given-names>AM</given-names></name>, <name name-style="western"><surname>Callan</surname> <given-names>CG</given-names> <suffix>Jr</suffix></name>. <article-title>Statistical inference of the generation probability of T-cell receptors from sequence repertoires</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2012</year> <day>2</day> <month>Oct</month>;<volume>109</volume>(<issue>40</issue>):<fpage>16161</fpage>–<lpage>16166</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1212755109" xlink:type="simple">http://dx.doi.org/10.1073/pnas.1212755109</ext-link></comment> <object-id pub-id-type="pmid">22988065</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref030">
+<label>30</label>
+<mixed-citation publication-type="other" xlink:type="simple">Elhanati Y, Sethna Z, Marcou Q, Callan CG Jr, Mora T, Walczak AM. Inferring processes underlying B-cell repertoire diversity. arXiv. 2015 10 Feb;<comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://arxiv.org/abs/1502.03136" xlink:type="simple">http://arxiv.org/abs/1502.03136</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref031">
+<label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Benichou</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Glanville</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Prak</surname> <given-names>ETL</given-names></name>, <name name-style="western"><surname>Azran</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Kuo</surname> <given-names>TC</given-names></name>, <name name-style="western"><surname>Pons</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>The restricted DH gene reading frame usage in the expressed human antibody repertoire is selected based upon its amino acid content</article-title>. <source>J Immunol</source>. <year>2013</year> <day>1</day> <month>Jun</month>;<volume>190</volume>(<issue>11</issue>):<fpage>5567</fpage>–<lpage>5577</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.4049/jimmunol.1201929" xlink:type="simple">http://dx.doi.org/10.4049/jimmunol.1201929</ext-link></comment> <object-id pub-id-type="pmid">23630353</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref032">
+<label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>DeKosky</surname> <given-names>BJ</given-names></name>, <name name-style="western"><surname>Kojima</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Rodin</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Charab</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Ippolito</surname> <given-names>GC</given-names></name>, <name name-style="western"><surname>Ellington</surname> <given-names>AD</given-names></name>, <etal>et al</etal>. <article-title>In-depth determination and analysis of the human paired heavy- and light-chain antibody repertoire</article-title>. <source>Nat Med</source>. <year>2015</year> <month>Jan</month>;<volume>21</volume>(<issue>1</issue>):<fpage>86</fpage>–<lpage>91</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nm.3743" xlink:type="simple">http://dx.doi.org/10.1038/nm.3743</ext-link></comment> <object-id pub-id-type="pmid">25501908</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref033">
+<label>33</label>
+<mixed-citation publication-type="other" xlink:type="simple">DeWitt WS, Lindau P, Snyder TM, Emerson RO, Sherwood AM, Vignali M, et al.. A public immunosequencing database of memory and naïve B cell receptors; 2015.</mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref034">
+<label>34</label>
+<mixed-citation publication-type="other" xlink:type="simple">Boettiger C. An introduction to Docker for reproducible research, with examples from the R environment. arXiv. 2014 2 Oct;<comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://arxiv.org/abs/1410.0846" xlink:type="simple">http://arxiv.org/abs/1410.0846</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref035">
+<label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>McCoy</surname> <given-names>CO</given-names></name>, <name name-style="western"><surname>Bedford</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Minin</surname> <given-names>VN</given-names></name>, <name name-style="western"><surname>Bradley</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Robins</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Matsen</surname> <given-names>FA</given-names> <suffix>IV</suffix></name>. <article-title>Quantifying evolutionary constraints on B cell affinity maturation</article-title>. <source>Submitted to Proc Roy Soc B</source>. <year>2014</year> <day>12</day> <month>Mar</month>;<comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://arxiv.org/abs/1403.3066" xlink:type="simple">http://arxiv.org/abs/1403.3066</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref036">
+<label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Lunter</surname> <given-names>G</given-names></name>. <article-title>HMMoC - a compiler for hidden Markov models</article-title>. <source>Bioinformatics</source>. <year>2007</year>;<volume>23</volume>(<issue>18</issue>):<fpage>2485</fpage>–<lpage>2487</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://bioinformatics.oxfordjournals.org/content/23/18/2485.abstract" xlink:type="simple">http://bioinformatics.oxfordjournals.org/content/23/18/2485.abstract</ext-link></comment> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btm350" xlink:type="simple">10.1093/bioinformatics/btm350</ext-link></comment> <object-id pub-id-type="pmid">17623703</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref037">
+<label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Lott PC</surname> <given-names>KI</given-names></name>. <article-title>StochHMM: a flexible hidden Markov model tool and C++ library</article-title>. <source>Bioinformatics</source>. <year>2014</year> <month>Jun</month>;<volume>30</volume>(<issue>11</issue>):<fpage>1625</fpage>–<lpage>6</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/24489371" xlink:type="simple">http://www.ncbi.nlm.nih.gov/pubmed/24489371</ext-link></comment> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btu057" xlink:type="simple">10.1093/bioinformatics/btu057</ext-link></comment> <object-id pub-id-type="pmid">24489371</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref038">
+<label>38</label>
+<mixed-citation publication-type="other" xlink:type="simple">McCoy CO. ighutil. GitHub; 2015. <ext-link ext-link-type="uri" xlink:href="https://github.com/cmccoy/ighutil" xlink:type="simple">https://github.com/cmccoy/ighutil</ext-link>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref039">
+<label>39</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Bolotin</surname> <given-names>DA</given-names></name>, <name name-style="western"><surname>Poslavsky</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Mitrophanov</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Shugay</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Mamedov</surname> <given-names>IZ</given-names></name>, <name name-style="western"><surname>Putintseva</surname> <given-names>EV</given-names></name>, <etal>et al</etal>. <article-title>MiXCR: software for comprehensive adaptive immunity profiling</article-title>. <source>Nat Methods</source>. <year>2015</year> <day>29</day> <month>Apr</month>;<volume>12</volume>(<issue>5</issue>):<fpage>380</fpage>–<lpage>381</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nmeth.3364" xlink:type="simple">10.1038/nmeth.3364</ext-link></comment> <object-id pub-id-type="pmid">25924071</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref040">
+<label>40</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kuchenbecker</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Nienen</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Hecht</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Neumann</surname> <given-names>AU</given-names></name>, <name name-style="western"><surname>Babel</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Reinert</surname> <given-names>K</given-names></name>, <etal>et al</etal>. <article-title>IMSEQ - a fast and error aware approach to immunogenetic sequence analysis</article-title>. <source>Bioinformatics</source>. <year>2015</year> <day>18</day> <month>May</month>;. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btv309" xlink:type="simple">10.1093/bioinformatics/btv309</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref041">
+<label>41</label>
+<mixed-citation publication-type="other" xlink:type="simple">Robbins H. An Empirical Bayes Approach to Statistics. In: Proceedings of the Third Berkeley Symposium on Mathematical Statistics and Probability, Volume 1: Contributions to the Theory of Statistics. The Regents of the University of California; 1956. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://projecteuclid.org/euclid.bsmsp/1200501653" xlink:type="simple">http://projecteuclid.org/euclid.bsmsp/1200501653</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref042">
+<label>42</label>
+<mixed-citation publication-type="other" xlink:type="simple">DeWitt W, Lindau P, Snyder T, Vignali M, Emerson R, Robins H. Replicate immunosequencing as a robust probe of B cell repertoire diversity. arXiv. 2014 1 Oct; <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://arxiv.org/abs/1410.0350" xlink:type="simple">http://arxiv.org/abs/1410.0350</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref043">
+<label>43</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>He</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Sok</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Azadnia</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Hsueh</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Landais</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Simek</surname> <given-names>M</given-names></name>, <etal>et al</etal>. <article-title>Toward a more accurate view of human B-cell repertoire by next-generation sequencing, unbiased repertoire capture and single-molecule barcoding</article-title>. <source>Sci Rep</source>. <year>2014</year> <day>27</day> <month>Oct</month>;<volume>4</volume>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/srep06778" xlink:type="simple">http://dx.doi.org/10.1038/srep06778</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref044">
+<label>44</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Lee</surname> <given-names>CEH</given-names></name>, <name name-style="western"><surname>Gaëta</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Malming</surname> <given-names>HR</given-names></name>, <name name-style="western"><surname>Bain</surname> <given-names>ME</given-names></name>, <name name-style="western"><surname>Sewell</surname> <given-names>WA</given-names></name>, <name name-style="western"><surname>Collins</surname> <given-names>AM</given-names></name>. <article-title>Reconsidering the human immunoglobulin heavy-chain locus</article-title>. <source>Immunogenetics</source>. <year>2006</year>;<volume>57</volume>(<issue>12</issue>):<fpage>917</fpage>–<lpage>925</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00251-005-0062-5" xlink:type="simple">10.1007/s00251-005-0062-5</ext-link></comment> <object-id pub-id-type="pmid">16402215</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref045">
+<label>45</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Gadala-Maria</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Yaari</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Uduman</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Kleinstein</surname> <given-names>SH</given-names></name>. <article-title>Automated analysis of high-throughput B-cell sequencing data reveals a high frequency of novel immunoglobulin V gene segment alleles</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2015</year> <day>9</day> <month>Feb</month>;. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1417683112" xlink:type="simple">10.1073/pnas.1417683112</ext-link></comment> <object-id pub-id-type="pmid">25675496</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref046">
+<label>46</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Watson</surname> <given-names>CT</given-names></name>, <name name-style="western"><surname>Steinberg</surname> <given-names>KM</given-names></name>, <name name-style="western"><surname>Graves</surname> <given-names>TA</given-names></name>, <name name-style="western"><surname>Warren</surname> <given-names>RL</given-names></name>, <name name-style="western"><surname>Malig</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Schein</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>Sequencing of the human IG light chain loci from a hydatidiform mole BAC library reveals locus-specific signatures of genetic diversity</article-title>. <source>Genes Immun</source>. <year>2014</year> <day>23</day> <month>Oct</month>;<comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/gene.2014.56" xlink:type="simple">http://dx.doi.org/10.1038/gene.2014.56</ext-link></comment> <object-id pub-id-type="pmid">25338678</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref047">
+<label>47</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Saada</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Weinberger</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Shahaf</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Mehr</surname> <given-names>R</given-names></name>. <article-title>Models for antigen receptor gene rearrangement: CDR3 length</article-title>. <source>Immunol Cell Biol</source>. <year>2007</year> <day>3</day> <month>Apr</month>;<volume>85</volume>(<issue>4</issue>):<fpage>323</fpage>–<lpage>332</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/sj.icb.7100055" xlink:type="simple">http://dx.doi.org/10.1038/sj.icb.7100055</ext-link></comment> <object-id pub-id-type="pmid">17404591</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref048">
+<label>48</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kepler</surname> <given-names>TB</given-names></name>, <name name-style="western"><surname>Borrero</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Rugerio</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>McCray</surname> <given-names>SK</given-names></name>, <name name-style="western"><surname>Clarke</surname> <given-names>SH</given-names></name>. <article-title>Interdependence of N nucleotide addition and recombination site choice in V(D)J rearrangement</article-title>. <source>The Journal of Immunology</source>. <year>1996</year> <day>15</day> <month>Nov</month>;<volume>157</volume>(<issue>10</issue>):<fpage>4451</fpage>–<lpage>4457</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://www.jimmunol.org/content/157/10/4451.abstract" xlink:type="simple">http://www.jimmunol.org/content/157/10/4451.abstract</ext-link></comment> <object-id pub-id-type="pmid">8906821</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref049">
+<label>49</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Jackson</surname> <given-names>KJL</given-names></name>, <name name-style="western"><surname>Gaëta</surname> <given-names>BA</given-names></name>, <name name-style="western"><surname>Collins</surname> <given-names>AM</given-names></name>. <article-title>Identifying highly mutated IGHD genes in the junctions of rearranged human immunoglobulin heavy chain genes</article-title>. <source>J Immunol Methods</source>. <year>2007</year> <day>15</day> <month>May</month>;<volume>324</volume>(<issue>1-2</issue>):<fpage>26</fpage>–<lpage>37</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jim.2007.04.011" xlink:type="simple">http://dx.doi.org/10.1016/j.jim.2007.04.011</ext-link></comment> <object-id pub-id-type="pmid">17553518</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref050">
+<label>50</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Sutton</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>McCallum</surname> <given-names>A</given-names></name>. <article-title>An Introduction to Conditional Random Fields</article-title>. <source>Foundations and Trends<sup>®</sup> in Machine Learning</source>. <year>2011</year>;<volume>4</volume>(<issue>4</issue>):<fpage>267</fpage>–<lpage>373</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1561/2200000013" xlink:type="simple">http://dx.doi.org/10.1561/2200000013</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref051">
+<label>51</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kepler</surname> <given-names>TB</given-names></name>, <name name-style="western"><surname>Munshaw</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Wiehe</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Yu</surname> <given-names>JS</given-names></name>, <name name-style="western"><surname>Woods</surname> <given-names>CW</given-names></name>, <etal>et al</etal>. <article-title>Reconstructing a B-cell Clonal Lineage. II. Mutation, Selection, and Affinity Maturation</article-title>. <source>Front Immunol</source>. <year>2014</year> <day>22</day> <month>Apr</month>;<volume>5</volume>:<fpage>170</fpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3389/fimmu.2014.00170" xlink:type="simple">http://dx.doi.org/10.3389/fimmu.2014.00170</ext-link></comment> <object-id pub-id-type="pmid">24795717</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref052">
+<label>52</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Eddy</surname> <given-names>SR</given-names></name>. <article-title>Profile hidden Markov models</article-title>. <source>Bioinformatics</source>. <year>1998</year> <day>27</day> <month>Jan</month>;<volume>14</volume>(<issue>9</issue>):<fpage>755</fpage>–<lpage>763</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:href="http://www.ncbi.nlm.nih.gov/pubmed/9918945" xlink:type="simple">http://www.ncbi.nlm.nih.gov/pubmed/9918945</ext-link></comment> <object-id pub-id-type="pmid">9918945</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref053">
+<label>53</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Dutheil</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Boussau</surname> <given-names>B</given-names></name>. <article-title>Non-homogeneous models of sequence evolution in the Bio++ suite of libraries and programs</article-title>. <source>BMC Evol Biol</source>. <year>2008</year> <month>Sep</month>;<volume>8</volume>(<issue>1</issue>):<fpage>255</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2148-8-255" xlink:type="simple">10.1186/1471-2148-8-255</ext-link></comment> <object-id pub-id-type="pmid">18808672</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref054">
+<label>54</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Bashford-Rogers</surname> <given-names>RJM</given-names></name>, <name name-style="western"><surname>Palser</surname> <given-names>AL</given-names></name>, <name name-style="western"><surname>Huntly</surname> <given-names>BJ</given-names></name>, <name name-style="western"><surname>Rance</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Vassiliou</surname> <given-names>GS</given-names></name>, <name name-style="western"><surname>Follows</surname> <given-names>GA</given-names></name>, <etal>et al</etal>. <article-title>Network properties derived from deep sequencing of human B-cell receptor repertoires delineate B-cell populations</article-title>. <source>Genome Res</source>. <year>2013</year> <month>Nov</month>;<volume>23</volume>(<issue>11</issue>):<fpage>1874</fpage>–<lpage>1884</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.154815.113" xlink:type="simple">10.1101/gr.154815.113</ext-link></comment> <object-id pub-id-type="pmid">23742949</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004409.ref055">
+<label>55</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Stadler</surname> <given-names>T</given-names></name>. <article-title>Simulating trees with a fixed number of extant species</article-title>. <source>Syst Biol</source>. <year>2011</year> <month>Oct</month>;<volume>60</volume>(<issue>5</issue>):<fpage>676</fpage>–<lpage>84</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/sysbio/syr029" xlink:type="simple">10.1093/sysbio/syr029</ext-link></comment> <object-id pub-id-type="pmid">21482552</object-id></mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

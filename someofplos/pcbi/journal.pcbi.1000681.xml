@@ -1,0 +1,977 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Computational Biology</journal-title></journal-title-group><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">09-PLCB-RA-1208R3</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1000681</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Computational Biology/Systems Biology</subject><subject>Computer Science/Applications</subject><subject>Immunology/Leukocyte Activation</subject></subj-group></article-categories><title-group><article-title>Identifying the Rules of Engagement Enabling Leukocyte Rolling, Activation, and Adhesion</article-title><alt-title alt-title-type="running-head">Leukocyte Rolling, Activation, and Adhesion</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Tang</surname><given-names>Jonathan</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Hunt</surname><given-names>C. Anthony</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>UCSF/UC Berkeley Joint Graduate Group in Bioengineering, University of California, Berkeley, Berkeley, California, United States of America</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Department of Bioengineering and Therapeutic Sciences, University of California, San Francisco, San Francisco, California, United States of America</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Bourne</surname><given-names>Philip E.</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">University of California San Diego, United States of America</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">a.hunt@ucsf.edu</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: JT CAH. Performed the experiments: JT. Analyzed the data: JT. Contributed reagents/materials/analysis tools: JT. Wrote the paper: JT CAH.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><month>2</month><year>2010</year></pub-date><pub-date pub-type="epub"><day>19</day><month>2</month><year>2010</year></pub-date><volume>6</volume><issue>2</issue><elocation-id>e1000681</elocation-id><history>
+<date date-type="received"><day>8</day><month>10</month><year>2009</year></date>
+<date date-type="accepted"><day>20</day><month>1</month><year>2010</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2010</copyright-year><copyright-holder>Tang, Hunt</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>The LFA-1 integrin plays a pivotal role in sustained leukocyte adhesion to the endothelial surface, which is a precondition for leukocyte recruitment into inflammation sites. Strong correlative evidence implicates LFA-1 clustering as being essential for sustained adhesion, and it may also facilitate rebinding events with its ligand ICAM-1. We cannot challenge those hypotheses directly because it is infeasible to measure either process during leukocyte adhesion following rolling. The alternative approach undertaken was to challenge the hypothesized mechanisms by experimenting on validated, working counterparts: simulations in which diffusible, LFA1 objects on the surfaces of quasi-autonomous leukocytes interact with simulated, diffusible, ICAM1 objects on endothelial surfaces during simulated adhesion following rolling. We used object-oriented, agent-based methods to build and execute multi-level, multi-attribute analogues of leukocytes and endothelial surfaces. Validation was achieved across different experimental conditions, in vitro, ex vivo, and in vivo, at both the individual cell and population levels. Because those mechanisms exhibit all of the characteristics of biological mechanisms, they can stand as a concrete, working theory about detailed events occurring at the leukocyte–surface interface during leukocyte rolling and adhesion experiments. We challenged mechanistic hypotheses by conducting experiments in which the consequences of multiple mechanistic events were tracked. We quantified rebinding events between individual components under different conditions, and the role of LFA1 clustering in sustaining leukocyte–surface adhesion and in improving adhesion efficiency. Early during simulations ICAM1 rebinding (to LFA1) but not LFA1 rebinding (to ICAM1) was enhanced by clustering. Later, clustering caused both types of rebinding events to increase. We discovered that clustering was not necessary to achieve adhesion as long as LFA1 and ICAM1 object densities were above a critical level. Importantly, at low densities LFA1 clustering enabled improved efficiency: adhesion exhibited measurable, cell level positive cooperativity.</p>
+</abstract><abstract abstract-type="summary"><title>Author Summary</title>
+<p>To gain access to sites of inflammation, leukocytes must first adhere to the blood vessel wall using integrin molecules. It has been hypothesized that integrin clustering is essential for sustaining adhesion prior to transmigration into the inflamed tissue. We cannot challenge such hypotheses directly because it is infeasible to measure molecular level events during the leukocyte adhesion process. At best correlative relationships have been made. The alternative approach undertaken was to experimentally challenge the hypothesized mechanisms in silico. We used object-oriented, software engineering methods to build and execute multi-level, multi-attribute analogues of leukocytes and binding surfaces. The simulated leukocytes contained diffusible objects (representing integrins) on their surface that were allowed to interact with binding partners on simulated endothelial surfaces. Validation was achieved across different experimental conditions, in vitro, ex vivo, and in vivo, at both the individual cell and population levels. Consequently, the finalized virtual mechanisms stand as a concrete, working theory about detailed events occurring at the leukocyte-surface interface during adhesion. We challenged mechanistic hypotheses by conducting experiments in which the consequences of multiple mechanistic events were tracked. We discovered that integrin clustering was not necessary to achieve adhesion as long as integrin and binding partner object densities were above a critical level. Importantly, at low densities integrin clustering enabled adhesion that exhibited measurable, cell level positive cooperativity.</p>
+</abstract><funding-group><funding-statement>This research was funded by the CDH Research Foundation. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="15"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Integrin-mediated adhesion is a crucial regulator of cell-cell interactions as well as cell migration, yet its causal mechanisms are still not fully understood. Improved biological insight into how surface component interactions control the distinct steps for leukocyte trafficking, beginning with rolling and adhesion, will enable us to begin precisely manipulating integrin-mediated adhesive interactions between cells <xref ref-type="bibr" rid="pcbi.1000681-Kinashi1">[1]</xref>. Sustained leukocyte adhesion sufficient to resist blood flow shear forces is a precondition to subsequent trafficking events. There is strong correlative evidence that some degree of LFA-1 integrin clustering as observed in vitro through fluorescence microscopy is essential for efficient, sustained adhesion <xref ref-type="bibr" rid="pcbi.1000681-Kim1">[2]</xref>–<xref ref-type="bibr" rid="pcbi.1000681-Constantin1">[4]</xref>. Moreover, LFA-1 clustering may facilitate rebinding events, enhancing leukocyte adhesion even further <xref ref-type="bibr" rid="pcbi.1000681-Sarantos1">[5]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-RocaCusachs1">[6]</xref>.</p>
+<p>The use of advanced microscopy techniques have greatly enhanced our understanding of leukocyte trafficking in various tissues by allowing for the visualization of this process at the level of capillaries <xref ref-type="bibr" rid="pcbi.1000681-Norman1">[7]</xref>–<xref ref-type="bibr" rid="pcbi.1000681-Zarbock1">[10]</xref>. However, even with current, state-of-the-art wet-lab and intravital microscopy methods, we cannot directly challenge those hypotheses (mentioned above) experimentally because it is infeasible to directly measure molecular level events during the leukocyte adhesion process. By employing relatively new, object-oriented, discrete event simulation methods in which quasi-autonomous components interact within and between nested biomimetic structures, it is feasible to construct, validate, and challenge concrete, working simulations of conceptualized mechanisms. The approach, methods, and objectives are different from those of the familiar inductive approach to modeling and simulation <xref ref-type="bibr" rid="pcbi.1000681-Hunt1">[11]</xref>. Upon discovering a system that validated under a variety of experimental conditions, we designed experiments that traced the consequences of specific mechanistic events and thus were able to test mechanistic hypotheses directly. We quantified the role of LFA-1 clustering in leukocyte–surface adhesion, and measured improvements in adhesion efficiency when they occurred. In addition, we determined if and when rebinding events could contribute to sustained adhesion.</p>
+<p>To obtain those new mechanistic insights, we needed to create new, multi-level, multi-scale simulation capabilities that could be merged seamlessly with previously developed single cell methods <xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>. Object-oriented, software engineering methods were used to implement and iteratively revise biomimetic rolling and adhesion mechanisms <xref ref-type="bibr" rid="pcbi.1000681-Hunt1">[11]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>. The products of the process were many, extant (actually existing, working, observable) hypothetical mechanisms: these components assembled as specified, will produce observable multi-level mechanisms upon execution that are analogous to those hypothesized to be responsible for leukocyte rolling, adhesion, and sustained adhesion. The objects included leukocyte analogues having multi-level surface components including diffusible LFA-1 analogues capable of clustering. We followed a rigorous, iterative refinement protocol to shrink the set of plausible biomimetic (biologically emulated) mechanisms. Simulation of finalized mechanisms led to validation: multiple, diverse, phenomena similarities met prespecified similarity criteria for over a dozen different wet-lab experimental conditions, in vitro, ex vivo, and in vivo at both the cell and population levels. Consequently, the mechanisms presented herein stand as a cohesive, concrete, tested and challengeable, working theory about detailed events occurring at the leukocyte–surface interface during rolling and adhesion experiments.</p>
+<p>Our simulations enabled us to view how different molecular interaction events on simulated leukocyte surfaces cause behaviors that are unique and diverse at both the molecular and leukocyte levels, and yet—importantly—narrowly constrained at the population level. Within the validated system, clustering of LFA1 objects was not necessary to achieve adhesion as long as LFA1 and ICAM1 object densities were above a critical level. However, when LFA1 and ICAM1 object densities were both low and LFA1 clustering was enabled, adhesion between leukocyte and simulated endothelial surface exhibited measurable, positive cooperativity. No such cooperativity was evident when densities were high.</p>
+<p>Early during simulations, there were no differences in LFA1 rebinding events with or without having LFA1 clustering enabled. Thereafter, however, clustering caused LFA1 rebinding (to ICAM1) to increase. The situation was somewhat different for ICAM1 rebinding. As early as 25 seconds into an experiment, significantly more ICAM1 rebinding (to LFA1) was measured when LFA1 clustering was enabled.</p>
+<p>Class IB phosphoinositide-3 kinase (PI3Kγ) signal transduction molecules play important roles in regulating inflammation. Recruitment of leukocytes lacking PI3Kγ is impaired in several animal models of inflammation. However, details of how PI3Kγ regulates recruitment have not been determined <xref ref-type="bibr" rid="pcbi.1000681-Smith1">[13]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Rommel1">[14]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Hawkins1">[15]</xref>. PI3Kγ is upstream of many signaling pathways and is responsible for many additional leukocyte functions including chemotaxis, secretion, and the neutrophil respiratory burst <xref ref-type="bibr" rid="pcbi.1000681-Andrews1">[16]</xref>. To study the role of PI3Kγ in neutrophil adhesion, Smith et al. compared the behaviors of neutrophils from PI3K knockout (KO; PI3Kγ<sup>−/−</sup>) and wild-type (WT) mice in ex vivo flow chambers coated with P-selectin (substrate for rolling), ICAM-1 (substrate for adhesion), and CXCL1 (arrest chemokine for leukocyte activation and subsequent induction of PI3Kγ signaling). Neutrophils from KO mice, compared to WT counterparts, had a reduced ability to adhere to substrate-coated surfaces. Similar experiments were undertaken in vivo in exteriorized cremaster muscle venules of mice injected with CXCL1, and the results were similar. Neutrophils from KO mice, compared to WT counterparts, adhered less to the CXCL1-treated venular surfaces. Interestingly, most neutrophils from KO mice that were able to initiate adhesion were only able to do so for short intervals <xref ref-type="bibr" rid="pcbi.1000681-Smith1">[13]</xref>. They hypothesized that the defects in adhesion observed ex vivo and in vivo were a result of an inability of LFA-1 to redistribute and cluster on the membrane of leukocytes in the PI3Kγ KO mice <xref ref-type="bibr" rid="pcbi.1000681-Smith1">[13]</xref>. We used simulation experiments to directly test this hypothesis in silico. LFA1 objects were designed to cluster upon multivalent binding to multivalent ICAM1 objects, in an analogous fashion to what was observed in vitro by Kim et al <xref ref-type="bibr" rid="pcbi.1000681-Kim1">[2]</xref>. Inhibiting this LFA1 clustering mechanism in silico caused simulated neutrophil behaviors that closely mimicked the above adhesion defect results from both ex vivo and in vivo experiments in KO mice across eight different experimental conditions at both the cell- and population-level, including the transient adhesion of simulated KO neutrophils. Thus, the neutrophil–surface interaction model presented herein stands as a tested theory about the mechanistic events that may be occurring in normal and KO mice during neutrophil rolling and adhesion. Experimenting on descendants of these models may help speed discovery and development of critically needed immunotherapeutics <xref ref-type="bibr" rid="pcbi.1000681-Vodovotz1">[17]</xref>.</p>
+<sec id="s1a">
+<title>Biological Background</title>
+<p>Rolling, activation, and adhesion are critical events in the inflammatory response, as they are required for the proper recruitment of leukocytes to sites of tissue damage. The selectin family of receptors and their respective carbohydrate ligands largely mediate the initial interactions between leukocytes and endothelial cells. Their high frequency rates of association and dissociation allow for transient interactions that slow the speed of travel, enabling leukocytes to roll along the activated endothelial surface and integrate inflammatory signals, such as immobilized chemokines <xref ref-type="bibr" rid="pcbi.1000681-Ley1">[18]</xref>.</p>
+<p>The transition from rolling to adhesion is exclusively mediated by integrin receptors. They can exist in multiple conformational states each having different ligand binding properties. Low-, intermediate-, and high-affinity states have been identified. Natively, these integrins exist in non-adhesive, low-affinity states to prevent leukocytes from sticking non-specifically to blood vessel surfaces. Upon detection of immobilized chemokines, such as CXCL1, intracellular signaling events can trigger integrin conformational changes to high affinity states that enable a leukocyte to adhere firmly <xref ref-type="bibr" rid="pcbi.1000681-Simon1">[19]</xref>. Post-adhesion events involving integrins are thought to help strengthen the attachment to the endothelium <xref ref-type="bibr" rid="pcbi.1000681-Smith1">[13]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Gakidis1">[20]</xref>.</p>
+<p>Earlier studies, in addition to those cited in the <xref ref-type="sec" rid="s1">Introduction</xref>, have provided evidence that LFA-1 clustering is mediated by PI3K and that the process is important for leukocyte adhesion. Constantin et al. showed that chemokines triggered a rapid increase in LFA-1 affinity on lymphocytes. Using immunofluorescently labeled LFA-1 with confocal microscopy, they observed that chemokines also stimulated LFA-1 movement into clusters and large polar patches <xref ref-type="bibr" rid="pcbi.1000681-Constantin1">[4]</xref>. Inhibiting PI3K activity blocked LFA-1 mobility but had no effect on LFA-1 affinity change. In separate experiments, PI3K inhibitors prevented lymphocytes from adhering to low densities of immobilized ICAM-1 substrate. At high ICAM-1 densities, inhibiting PI3K had no effect on lymphocyte adhesion. Whether this same phenomena exists in neutrophils remains to be determined.</p>
+</sec></sec><sec id="s2" sec-type="methods">
+<title>Methods</title>
+<sec id="s2a">
+<title>Executable Biology Model</title>
+<p>The simulation system we have constructed is designed to be an experimentally useful analogue of the wet-lab experimental systems used to study leukocyte rolling and adhesion (<xref ref-type="fig" rid="pcbi-1000681-g001">Figure 1</xref>). Wet-lab experimental systems provide data that can be used to generate mechanistic hypotheses. We used the synthetic modeling method, an example of what has been referred to as executable biology <xref ref-type="bibr" rid="pcbi.1000681-Fisher1">[21]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Hunt2">[22]</xref>, as a means to instantiate those mechanistic hypotheses so that they can be evaluated and tested. Object-oriented, agent-based software components were designed, instantiated, verified, plugged together, and then operated in ways that can map concretely to mechanisms and processes believed responsible for leukocyte rolling and adhesion. An agent is a quasi-autonomous object capable of scheduling its own actions in much the same way as we imagine cells and some of their components (such as a mitochondrion or modular subsystem) doing. See <xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref> for details of this approach, the basic framework of the in silico white blood cell (ISWBC), and an iterative refinement protocol for successively developing and validating simulation results. To distinguish the previous version from the current one, we refer to the former as ISWBC1 (in silico white blood cell) and the latter as ISWBC2. Below we summarize details and the new ISWBC2 capabilities.</p>
+<fig id="pcbi-1000681-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000681.g001</object-id><label>Figure 1</label><caption>
+<title>Sketch of the ISWBC2 experimental system components.</title>
+<p>(A) A <sc>leukocyte</sc> agent is shown pulled away from the simulated surface to which it was attached. The left arrow indicates <sc>roll</sc> direction; the three right arrows indicate <sc>shear</sc> resulting from the simulated flow. The <sc>surface</sc> is discretized into independent units of function called <sc>surface units</sc>. The <sc>leukocyte's membrane</sc> is similarly discretized into matching units called <sc>membrane units</sc>: 600 total (20×30). The 8×10 shaded region on the <sc>surface</sc> and on the <sc>leukocyte</sc>'s underside identifies the <sc>contact zone</sc>. The <sc>units</sc> within the <sc>contact zones</sc> that are shaded differently indicate that different numbers of <sc>bonds</sc> had formed between <sc>ligand</sc>–<sc>ligand</sc> pairs in overlapping <sc>units</sc>; otherwise, no <sc>bonds</sc> formed. R<sc>olling</sc> is the result of a sequence of forward ratchet events. One ratchet event is the result of one row of <sc>membrane units</sc> being released at the rear of the <sc>contact zone</sc> along with engagement of a new row of at the front of the <sc>contact zone</sc>. One ratchet event maps to a leukocyte rolling approximately 1 µm (relative to the flow chamber surface). (B) A <sc>membrane unit</sc> is illustrated. Each is a software object functioning as a container. All leukocyte membrane functionality (relevant to these studies) within each unit of surface on <sc>icam</sc>1G<sc>rid</sc> is represented by the four objects: <sc>psgl</sc>1, <sc>vla</sc>4 (not used for most experiments), <sc>cxcr</sc>2, and <sc>lfa</sc>1. They map to leukocyte receptors; they are illustrated as spheres. The number on each sphere indicates the number of receptors to which that agent maps. Mobile <sc>lfa</sc>1 objects reside on a <sc>lfa</sc>1G<sc>rid</sc>. Each <sc>lfa</sc>1 maps to an individual LFA-1 molecule. (C) A <sc>surface unit</sc> is illustrated. Similar to <sc>membrane units</sc>, each <sc>surface unit</sc> is simulated using a software object functioning as a container. All flow chamber surface functionality (relevant to these studies) within each <sc>surface unit</sc> is represented by four objects: <sc>pselectin</sc>, <sc>vcam</sc>1 (not used for most experiments), <sc>cxcl</sc>1, and <sc>icam</sc>1. They map to surface receptors and chemokines. The number on each sphere indicates the number of receptors or chemokines to which that agent maps. Similar to <sc>lfa</sc>1, an <sc>icam</sc>1 resides on <sc>icam</sc>1G<sc>rid</sc>, a 2D hexagonal lattice, and maps to an individual ICAM-1 molecule.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000681.g001" xlink:type="simple"/></fig></sec><sec id="s2b">
+<title>Iterative Refinement Method</title>
+<p>The greater the similarity between the measured behaviors, or phenotype, of an ISWBC2 and corresponding wet-lab attributes of interest, the more useful it will become as a research tool and as an expression of the coalesced, relevant leukocyte knowledge. The expectation has been that increasing phenotype similarity will require, and can be achieved in part through, similarities in design plan and in generative mechanisms. We follow an iterative refinement protocol to systematically and sequentially extend the overlap of the model and referent system phenotypes. This iterative refinement protocol allows us to concatenate in a dynamic fashion new knowledge about the referent systems into the synthetic model, without having to reengineer the whole system, and without having to compromise already validated features and behaviors <xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>, <xref ref-type="bibr" rid="pcbi.1000681-Grant1">[23]</xref>–<xref ref-type="bibr" rid="pcbi.1000681-Kim3">[25]</xref>. This approach has its grounding in the use of modeling and simulation as a research topic <xref ref-type="bibr" rid="pcbi.1000681-Balci1">[26]</xref>. It is as follows:</p>
+<list list-type="bullet"><list-item>
+<p>For the wet-lab systems being studied, create a list of attributes to be targeted.</p>
+</list-item><list-item>
+<p>Design, construct, and enable the analogue to exhibit the targeted phenotypic attributes.</p>
+</list-item><list-item>
+<p>Iteratively falsify and revise the operating mechanisms until the analogue exhibits the targeted phenotypic attributes within a pre-specified level of similarity, thereby achieving a level of validation.</p>
+</list-item><list-item>
+<p>The process is then repeated with the addition of more phenotypic attributes to the targeted list.</p>
+</list-item></list>
+<p>It is important to note that validity is distinguishable from verity. For this technical context, we define validity as the degree to which an assertion (such as an ISWBC2) can be trusted as true enough or true to within some tolerance (e.g., the similarities discussed herein). In contrast, verity targets ontological truth, regardless of any arguments or belief. One cannot verify a representation such as an ISWBC2 against reality because of the ontological wall. Therefore, we define (<ext-link ext-link-type="uri" xlink:href="http://biosystems.ucsf.edu/research_dictionary.html" xlink:type="simple">http://biosystems.ucsf.edu/research_dictionary.html</ext-link>) verification as the process of determining where two statements agree and disagree, as in comparing a model to its corresponding simulation. One can only validate a representation against reality. Model validation can be achieved at several levels <xref ref-type="bibr" rid="pcbi.1000681-Xiang1">[27]</xref>. For example, one level of validation is through the qualitative reproduction of observed behaviors. Another level can be determined through parameter variability and sensitivity analysis. Changes to the values of input and internal parameters should affect model behaviors in a fashion similar to when analogous changes are made to the real system. Additionally, a level of validation can be achieved through the reliable prediction of new data. The most appropriate type and level of validation will depend on the intended model usage. ISWBCs were designed specifically to explain the diverse observations of leukocytes as they interact with endothelial surfaces, which is in contrast to inductive mathematical models that are typically intended for precise prediction <xref ref-type="bibr" rid="pcbi.1000681-Hunt1">[11]</xref>.</p>
+<p>We previously reported progress validating against our initial set of targeted attributes <xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>. The ISWBC1 successfully represented the dynamics of individual leukocytes rolling separately on P-selectin and VCAM-1, along with the transition from rolling to adhesion on P-selectin and VCAM-1 in the presence of GRO-α chemokine. Additionally, the individual in silico and in vitro behavioral similarities translated successfully to population-level measures (<xref ref-type="table" rid="pcbi-1000681-t001">Table 1A</xref>). Herein we extend the model by also targeting the phenotypic attributes of LFA-1 and ICAM-1 receptor mobility and clustering (<xref ref-type="table" rid="pcbi-1000681-t001">Table 1B</xref>). Doing so allowed us to observe their hypothesized role in initiating adhesion ex vivo and sustaining adhesion in vivo.</p>
+<table-wrap id="pcbi-1000681-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000681.t001</object-id><label>Table 1</label><caption>
+<title>Targetable phenotypic attributes of leukocytes in vitro/ex vivo/in vivo: an abridged list.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000681-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000681.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Phenotypic Attribute</td>
+<td align="left" colspan="1" rowspan="1">Reference</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Set A: previously targeted attributes</italic></td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Characteristic jerky stop and go movement during rolling</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Smith2">[50]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Highly fluctuating rolling velocities</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Park1">[51]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Larger rolling velocities observed at higher shear rates</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Lawrence1">[52]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Smaller rolling velocities at higher ligand substrate densities</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Lawrence1">[52]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">R<sc>olling</sc><xref ref-type="table-fn" rid="nt102">a</xref> velocities on <sc>pselectin</sc><xref ref-type="table-fn" rid="nt102">a</xref> match reported values</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Lawrence1">[52]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Small number of bonds within the contact zone, e.g., within 2–20</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Chen1">[53]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Distance-time and velocity-time data for <sc>rolling</sc><xref ref-type="table-fn" rid="nt102">a</xref> on <xref ref-type="table-fn" rid="nt102">a</xref><sc>pselectin</sc>/<sc>vcam</sc>1 are indistinguishable from reported data</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Smith2">[50]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Park1">[51]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Chemokines induce adhesion within seconds</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Smith3">[54]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Set B: currently targeted attributes</italic></td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">LFA-1 and ICAM-1 lateral mobility and diffusion</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Cairo1">[55]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">LFA-1 nanocluster formation upon binding multivalent ligand</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Kim1">[2]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">ICAM-1 spatial configurations in vivo</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Jun1">[33]</xref>–<xref ref-type="bibr" rid="pcbi.1000681-Barreiro1">[37]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Barreiro2">[56]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Effect of phosphoinositide 3-kinase inhibitors on adhesion ex vivo</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Smith1">[13]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Effect of phosphoinositide 3-kinase inhibitors on adhesion in vivo</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Smith1">[13]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Set C: future targetable attributes</italic></td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Induction of LFA-1-dependent neutrophil rolling on ICAM-1 by engagement of E-selectin</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Chesnutt1">[57]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Synergistic effect observed during neutrophil rolling on P- and E-selectin</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Smith4">[58]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Effect of knocking out VAV1/3 guanine nucleotide exchange factors on neutrophil rolling</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Gakidis1">[20]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Effect of inhibitors to other signaling molecules on cell arrest (pertussis toxin (PTx)-sensitive G proteins, p38 mitogen-activated protein kinase)</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Chesnutt1">[57]</xref></td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label/><p>We find that this model accounts for the nonlinear influence of experimentally induced visual motion on human postural behavior both in our data and in previously published results.</p></fn><fn id="nt102"><label>a</label><p>We use <sc>small</sc> <sc>caps</sc> when referring to the in silico components, features, measurements, and events.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s2c">
+<title>The <sc>Leukocyte</sc> Analogue</title>
+<p>We used RePast 3 as our modeling and simulation framework. It is a java-based software toolkit developed at the University of Chicago for creating and exercising agent-based models (<ext-link ext-link-type="uri" xlink:href="http://repast.sourceforge.net/repast_3/index.html" xlink:type="simple">http://repast.sourceforge.net/repast_3/index.html</ext-link>). The libraries provided were used to create, run, display, and collect data. The ISWBC2 can be downloaded at <xref ref-type="bibr" rid="pcbi.1000681-In1">[28]</xref>.</p>
+<p>To avoid confusion and clearly distinguish model components, features, measurements, and events from their <italic>ex vivo</italic> or <italic>in vivo</italic> counterparts, we use <sc>small caps</sc> when referring to those of analogues. The biological aspects of the referent experimental systems and their ISWBC2 counterparts are listed in <xref ref-type="table" rid="pcbi-1000681-t002">Table 2</xref>.</p>
+<table-wrap id="pcbi-1000681-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000681.t002</object-id><label>Table 2</label><caption>
+<title>Table of biological aspects from the experimental system and their ISWBC2 counterparts.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000681-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000681.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Biological Aspects</td>
+<td align="left" colspan="1" rowspan="1">Model Components</td>
+<td align="left" colspan="1" rowspan="1">Description or Type</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Substrate-Coated Surface</td>
+<td align="left" colspan="1" rowspan="1">S<sc>urface</sc></td>
+<td align="left" colspan="1" rowspan="1">2D Square Lattice (low resolution)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Functional Unit of the Surface</td>
+<td align="left" colspan="1" rowspan="1">S<sc>urface</sc> U<sc>nit</sc></td>
+<td align="left" colspan="1" rowspan="1">Grid Unit of the S<sc>urface</sc></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Surface area containing ICAM-1</td>
+<td align="left" colspan="1" rowspan="1"><sc>icam</sc>1<sc>grid</sc></td>
+<td align="left" colspan="1" rowspan="1">2D Hexagonal Lattice (high resolution)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Leukocyte</td>
+<td align="left" colspan="1" rowspan="1">L<sc>eukocyte</sc></td>
+<td align="left" colspan="1" rowspan="1">Object</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Leukocyte Membrane</td>
+<td align="left" colspan="1" rowspan="1">M<sc>embrane</sc></td>
+<td align="left" colspan="1" rowspan="1">2D Square Lattice (low resolution)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Functional Unit of Leukocyte Membrane</td>
+<td align="left" colspan="1" rowspan="1">M<sc>embrane</sc> U<sc>nit</sc></td>
+<td align="left" colspan="1" rowspan="1">Grid Unit of the M<sc>embrane</sc></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Membrane area containing LFA-1</td>
+<td align="left" colspan="1" rowspan="1"><sc>lfa</sc>1<sc>grid</sc></td>
+<td align="left" colspan="1" rowspan="1">2D Hexagonal Lattice (high resolution)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Chemokine</td>
+<td align="left" colspan="1" rowspan="1">C<sc>xcl</sc>1</td>
+<td align="left" colspan="1" rowspan="1">Object</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Chemokine Receptor</td>
+<td align="left" colspan="1" rowspan="1">C<sc>xcr</sc>2</td>
+<td align="left" colspan="1" rowspan="1">Receptor Object</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Adhesion Molecule</td>
+<td align="left" colspan="1" rowspan="1">A<sc>dhesion</sc> M<sc>olecule</sc></td>
+<td align="left" colspan="1" rowspan="1">Receptor Object</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Tensile Force on Rear Bonds</td>
+<td align="left" colspan="1" rowspan="1">Parameter: <italic>RearForce</italic></td>
+<td align="left" colspan="1" rowspan="1">Parameter representing force due to shear</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Hypothesized Biological Mechanisms</td>
+<td align="left" colspan="1" rowspan="1">Operating Mechanisms</td>
+<td align="left" colspan="1" rowspan="1">Algorithms</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt103"><label/><p>S<sc>urface</sc> maps to either the endothelial cell surface or flow chamber surface depending on the simulation experiment.</p></fn></table-wrap-foot></table-wrap>
+<p>The <sc>surface</sc> with which <sc>leukocytes</sc> interact is discretized into independent units of function called <sc>surface units</sc>. The <sc>leukocyte's membrane</sc> is similarly discretized into matching units of function called <sc>membrane units</sc>. For simplicity, the <sc>surface</sc> and <sc>membrane</sc> are both implemented as 2D toroidal lattices. With current parameter values, one <sc>surface unit</sc> maps to approximately 1 µm<sup>2</sup> and when rolling or adhered, one <sc>membrane unit</sc> maps to the same amount of surface area on the cell membrane. Contained within each <sc>unit</sc> are <sc>receptor</sc> objects, each one mapping to receptors found on the surface or leukocyte membrane. An eight × ten <sc>unit</sc> region shared between the <sc>surface</sc> and the <sc>membrane</sc> identifies the <sc>contact zone</sc>. It determines which <sc>surface</sc> and <sc>membrane units</sc> (and which of their <sc>receptors</sc>) can interact.</p>
+<p>In ISWBC1s <xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>, the receptors found at the tips of microvilli (PSGL-1, VLA-4, and CXCR-2) were represented by the <sc>receptor</sc> objects <sc>psgl</sc>1, <sc>vla</sc>4, and <sc>cxcr</sc>2. Each one mapped to several binding molecules of the same type that may be found within a discrete area within the referent system. For example, a <sc>psgl</sc>1 <sc>receptor</sc> mapped to several PSGL-1 adhesion molecules. The approximate number to which that object maps is determined by its parameter, <italic>TotalNumber</italic>. In ISWBC2, we have increased granularity (spatial resolution) by adding <sc>receptor</sc> objects <sc>lfa</sc>1 and <sc>icam</sc>1 and placing them within a higher granularity 2D hexagonal grid (<sc>lfa</sc>1<sc>grid</sc> and <sc>icam</sc>1<sc>grid</sc>) within some <sc>membrane units</sc> and <sc>surface units</sc>, respectively, as illustrated in <xref ref-type="fig" rid="pcbi-1000681-g001">Figures 1B,C</xref>. <sc>lfa</sc>1 maps to the integrin molecule LFA-1 that is found on leukocyte membranes between microvilli <xref ref-type="bibr" rid="pcbi.1000681-Hocde1">[29]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Laudanna1">[30]</xref>, while <sc>icam</sc>1 maps to its ligand-receptor ICAM-1. Distinct from the other <sc>receptor</sc> objects, each <sc>lfa</sc>1 and <sc>icam</sc>1 object maps to single molecules. Each high-resolution hexagonal grid space maps to approximately 100 nm<sup>2</sup> of leukocyte membrane or surface.</p>
+</sec><sec id="s2d">
+<title>Behaviors</title>
+<p>ISWBC2 experiments are analogous to those performed in vivo or using an ex vivo flow chamber system. While on the <sc>surface</sc>, <sc>leukocytes</sc> use their <sc>receptors</sc> and the decisional processes sketched in <xref ref-type="supplementary-material" rid="pcbi.1000681.s001">Text S1</xref> to interact and form <sc>bonds</sc> with <sc>receptors</sc> on the <sc>surface</sc>. Those interactions are recorded and measured. The ISWBC2 consists of components having three levels of spatial resolution illustrated in <xref ref-type="fig" rid="pcbi-1000681-g001">Figure 1</xref>: L<sc>eukocyte</sc>-level, M<sc>embrane</sc>/S<sc>urface</sc> U<sc>nit</sc>-level, and <sc>lfa</sc>1 grid/I<sc>cam</sc>1 grid-level. High-level behaviors are dependent upon the collective operation of objects and agents contained within each of the lower levels. For example, the behavior of <sc>membrane</sc> and <sc>surface units</sc> arise from the <sc>receptor</sc> objects contained within each. Similarly, the behavior at the <sc>leukocyte</sc>-level is dependent upon the collective events that occur within the underlying <sc>membrane</sc>/<sc>surface units</sc>. Conversely, events at the highest level impose constraints upon allowed lower level behaviors. For example, the positioning and movement of the <sc>leukocyte</sc> on the <sc>surface</sc> dictate which <sc>membrane</sc> and <sc>surface units</sc> are overlapping and can interact.</p>
+</sec><sec id="s2e">
+<title><sc>Receptor</sc> Behaviors</title>
+<p>Local <sc>activation</sc> of an <sc>integrin</sc> within a <sc>membrane unit</sc> occurs when a <sc>chemokine receptor</sc> detects a <sc>chemokine</sc> in an overlapping <sc>surface unit</sc>. When an <sc>activation signal</sc> is detected, local <sc>lfa</sc>1 <sc>receptors</sc> change from low to high affinity state. They achieve that by changing the parameter values <italic>Pon</italic> (<sc>bond formation</sc> rates), <sc>bond</sc> b<sub>0</sub>, b<sub>1</sub>, and b<sub>Limit</sub> (<sc>bond dissociation</sc> properties), as described in <xref ref-type="supplementary-material" rid="pcbi.1000681.s001">Text S1</xref>. Relationships between the parameter <italic>bondforce</italic> and probability of <sc>bond dissociation</sc> for each of the four <sc>ligand</sc> pairs included in the ISWBC2 are given in <xref ref-type="supplementary-material" rid="pcbi.1000681.s001">Text S1</xref> along with corresponding in vitro measurements. The <sc>diffusive</sc> properties of <sc>lfa</sc>1, specified by the parameter <italic>LFA1MoveNum</italic>, are also dependent on state. L<sc>fa</sc>1 lateral mobility parameters were specified as described <xref ref-type="supplementary-material" rid="pcbi.1000681.s001">Text S1</xref> such that they have diffusive properties similar to those observed in vitro. Values are provided in <xref ref-type="supplementary-material" rid="pcbi.1000681.s001">Text S1</xref>. <italic>LFA1MoveNum</italic> determines the number of attempts that an <sc>lfa</sc>1 object will take to move to a neighboring space within the <sc>lfa</sc>1<sc>grid</sc> during a single simulation cycle. During lateral movement, L<sc>fa</sc>1 has an equal probability of moving into any of its six neighboring spaces, but it cannot move into an already occupied space. When simulating the endothelial cell surface, <sc>icam</sc>1 can similarly diffuse on the <sc>icam</sc>1<sc>grid</sc> with a rate determined by the parameter <italic>ICAM1MoveNum</italic>. As a simple representation of some LFA-1 trafficking events (removal from endocytosis, deactivation, extraction from the membrane) <xref ref-type="bibr" rid="pcbi.1000681-Tohyama1">[31]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Shao1">[32]</xref>, <sc>unbound lfa</sc>1 is removed from the <sc>membrane</sc> during each simulation cycle with a probability of <italic>LFA1RemovalRate</italic>.</p>
+</sec><sec id="s2f">
+<title><sc>Leukocyte</sc> Movement</title>
+<p>The number and location of <sc>bonds</sc> at the <sc>surface</sc> and <sc>membrane unit</sc> level combined with the decisional processes sketched in <xref ref-type="supplementary-material" rid="pcbi.1000681.s001">Text S1</xref> determine L<sc>eukocyte</sc> behavior. If there are <sc>bonds</sc> between <sc>adhesion molecules</sc> within the rear column of the <sc>contact zone</sc>, the <sc>leukocyte</sc> pauses, or remains stationary, until the next simulation cycle. If there are no <sc>bonds</sc> within the rear column of the <sc>contact zone</sc>, the <sc>leukocyte</sc>, influenced by the simulated shear force, performs a forward <sc>rolling</sc> movement. R<sc>olling</sc> is the result of a sequence of forward ratchet events. The process involves removing a column from the rear of the <sc>membrane</sc>'<sc>s</sc> rectangular <sc>contact zone</sc> while a new one is placed at the front of the <sc>zone</sc> above the <sc>surface</sc>.</p>
+</sec><sec id="s2g">
+<title>Experimental Behaviors and Similarity Modeling Approach and Strategy</title>
+<p>At the beginning of each simulation experiment, Boolean parameters (<xref ref-type="table" rid="pcbi-1000681-t003">Table 3</xref>) determine whether L<sc>fa</sc>1 <sc>clustering</sc> (<italic>LFA1Clustering</italic>), preformed <sc>icam</sc>1 <sc>clustering</sc> in <sc>endothelial surface units</sc> (<italic>ICAM1Pre-Clustered</italic>), or <sc>icam</sc>1 <sc>tetramer formation</sc> (<italic>ICAM1Tetramer</italic>) is allowed to occur.</p>
+<table-wrap id="pcbi-1000681-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000681.t003</object-id><label>Table 3</label><caption>
+<title>Boolean variables determining which rules and behaviors are allowed during a simulation.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000681-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000681.t003" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Boolean Parameter Name</td>
+<td align="left" colspan="1" rowspan="1">Description</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>LFA1Clustering</italic></td>
+<td align="left" colspan="1" rowspan="1">Allow LFA1 agents to <sc>cluster</sc>?</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>ICAM1Pre-Clustered</italic></td>
+<td align="left" colspan="1" rowspan="1">Allow ICAM1 agents to be prearranged into <sc>cluster</sc>?</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>ICAM1Tetramers</italic></td>
+<td align="left" colspan="1" rowspan="1">Allow ICAM1 agents to form <sc>tetramers</sc> upon <sc>ligand</sc>-<sc>binding</sc>?</td>
+</tr>
+</tbody>
+</table></alternatives></table-wrap>
+<p>When mean ISWBC2 results were within the range of mean ± SD of wet-lab results, the two sets of data were declared experimentally indistinguishable.</p>
+</sec><sec id="s2h">
+<title><sc>Lfa1</sc> and <sc>icam1 clustering</sc>, and <sc>tetramers</sc></title>
+<p>A <sc>lfa</sc>1 <sc>cluster</sc> on the <sc>lfa</sc>1G<sc>rid</sc> is specified by the parameter <italic>LFA1ClusterDiameter</italic>. It determines the length and width of the region that LFA1 objects must stay within while <sc>diffusing</sc> on the <sc>lfa</sc>1<sc>grid</sc>. L<sc>fa</sc>1 <sc>clusters</sc> are formed by randomly choosing non-overlapping regions on the <sc>lfa</sc>1<sc>grid</sc> and then filling each with all L<sc>fa</sc>1 within that <sc>membrane unit</sc> (<xref ref-type="fig" rid="pcbi-1000681-g002">Figure 2B</xref>). The number of <sc>clusters</sc> per <sc>lfa</sc>1<sc>grid</sc> is specified by the parameter <italic>NumLFA1Clusters</italic>. During a simulation, <sc>clusters</sc> with unbound <sc>lfa</sc>1 randomly move to new and unoccupied locations within the <sc>lfa</sc>1<sc>grid</sc>, a process that maps to molecular diffusion within a membrane region.</p>
+<fig id="pcbi-1000681-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000681.g002</object-id><label>Figure 2</label><caption>
+<title>Diagrams illustrate the different spatial configurations of <sc>lfa</sc>1 and <sc>icam</sc>1 <sc>adhesion molecules</sc> implemented and tested during simulations.</title>
+<p><sc>lfa</sc>1G<sc>rids</sc> are shown with <sc>lfa</sc>1 objects labeled dark blue in either (A) a <sc>nonclustered</sc> state or (B) a <sc>clustered</sc> state. C<sc>lustered lfa</sc>1 are spatially restricted within the light blue region. I<sc>cam</sc>1G<sc>rids</sc> are shown with <sc>icam</sc>1 objects labeled yellow in either a (C) <sc>native monomeric</sc> state, (D) a <sc>native dimeric</sc> state, (E) as preformed <sc>clusters</sc>, or (F) as <sc>w</sc>-<sc>tetramers</sc> formed after <sc>ligand</sc>-<sc>binding</sc>.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000681.g002" xlink:type="simple"/></fig>
+<p>Different configurations of ICAM-1 have been reported in the literature. One study suggested that the native state of ICAM-1 is monomeric, because a monomer contains the complete binding site for LFA-1 <xref ref-type="bibr" rid="pcbi.1000681-Jun1">[33]</xref>. Other studies provided evidence that dimeric ICAM-1 is the predominant form expressed by cytokine-activated endothelium <xref ref-type="bibr" rid="pcbi.1000681-Miller1">[34]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Reilly1">[35]</xref>. One such study showed that a dramatic conformational change of dimeric ICAM-1 occurs upon binding to LFA-1 such that they form one-dimensional chains of W-tetramers and higher order oligomers <xref ref-type="bibr" rid="pcbi.1000681-Jun2">[36]</xref>.</p>
+<p>However, more recent studies by Barreiro et al. observed that ICAM-1 is clustered with other adhesion molecules into preformed tetraspanin-enriched microdomains on the surface of activated endothelial cells. They provided convincing evidence that these preformed microdomains might act as specialized endothelial adhesive platforms for leukocytes during adhesion and extravasation <xref ref-type="bibr" rid="pcbi.1000681-Barreiro1">[37]</xref>. Evidence from immuno-electron microscopy of fixed endothelial cells suggested that these organized microdomains might be smaller than 100 nm in diameter <xref ref-type="bibr" rid="pcbi.1000681-Ley2">[38]</xref>. Scanning electron microscope images of activated endothelial cells stained with anti–ICAM-1 antibodies followed by 40-nm gold immunolabeling showed a cluster size of 2.4±0.1 (mean ± SE) particles per nanoclusters.</p>
+<p>In our simulations of in vivo experiments, we implemented the latter case where ICAM-1 exists preclustered (<italic>ICAM1Pre-Clustered</italic> = true). However, we also implemented the three other hypothesized ICAM-1 spatial configurations in order to observe their relative effects on <sc>leukocyte adhesion</sc>: (1) native monomeric ICAM1 (<xref ref-type="fig" rid="pcbi-1000681-g002">Figure 2C</xref>), (2) native dimeric ICAM1 (<xref ref-type="fig" rid="pcbi-1000681-g002">Figure 2D</xref>), and (3) in <xref ref-type="fig" rid="pcbi-1000681-g002">Figure 2F</xref>, dimeric ICAM-1 forming linear W-tetramers upon ligand binding (<italic>ICAM1Tetramer</italic> = true).</p>
+<p>In the simulations, when <italic>ICAM1Tetramer</italic> = true, a <sc>bound icam</sc>1 forms a linear <sc>tetramer</sc> structure with a nearby unbound dimeric <sc>icam</sc>1 object (<xref ref-type="fig" rid="pcbi-1000681-g002">Figure 2F</xref>). To keep things simple in simulations where <italic>ICAM1Pre-Clustered</italic> = true, preformed ICAM-1 nanoclusters were represented using three <sc>icam</sc>1 <sc>molecules</sc> held together (<xref ref-type="fig" rid="pcbi-1000681-g002">Figure 2E</xref>).</p>
+</sec><sec id="s2i">
+<title>Sensitivity Analysis and <sc>rebinding</sc></title>
+<p>Upon achieving <sc>leukocyte</sc> behaviors that matched those from ex vivo and in vivo experiments, robustness to changes in a variety of key parameters were measured. Small (5–10%) and large (50%) parameter value changes were made to <italic>Pon</italic> (<sc>high affinity lfa</sc>1-<sc>icam</sc>1) (<sc>bond formation</sc> probabilities for <sc>lfa</sc>1-<sc>icam</sc>1), <italic>RearForce</italic>, and <italic>LFA1RemovalRate</italic>, while other factors were held constant. For each, ISWBC2 behaviors were recorded.</p>
+<p>During a simulation, each <sc>lfa</sc>1 and <sc>icam</sc>1 object kept track of its <sc>bond</sc> event and position history. When needed, that information was transferred to a separate file. Each <sc>membrane unit</sc> and <sc>surface unit</sc> also kept track of the number of <sc>bond</sc> events that involved <sc>receptor</sc> objects contained within, including <sc>lfa</sc>1 and <sc>icam</sc>1 <sc>rebinding</sc> events.</p>
+</sec></sec><sec id="s3">
+<title>Results</title>
+<sec id="s3a">
+<title>Re-validation studies of <sc>rolling</sc> on <sc>pselectin</sc></title>
+<p>Many iterative refinement cycles were performed in order to get from ISWBC1 to ISWBC2. While no code changes were made to the <sc>leukocyte receptors psgl</sc>1 and <sc>vla</sc>4 or to the <sc>substrates pselectin</sc> and <sc>vcam</sc>1, software changes were made to manage the simulation output. Therefore, we deemed it necessary to test the ISWBC2's ability to reproduce some of the essential targeted phenotypic attributes from <xref ref-type="table" rid="pcbi-1000681-t001">Table 1</xref> that were previously used to validate the ISWBC1.</p>
+<p>We repeated simulations of in vitro parallel plate flow chamber experiments that observed neutrophils rolling on various densities of P-selectin (9 and 25 sites/µm<sup>2</sup>) and under varying wall shear rates (0.5, 1.0, and 2.0 dyn/cm<sup>2</sup>), exactly as executed previously <xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>. Using analogous in silico experimental conditions, the ISWBC2 <sc>leukocytes</sc> produced behaviors (not shown) that were indistinguishable from wet-lab results and from simulation results previously reported. L<sc>eukocytes</sc> exhibited the characteristic jerky stop-and-go movement with highly fluctuating <sc>rolling</sc> velocities. Average <sc>rolling</sc> velocities were calculated and were still within the ranges reported in the literature. Higher average <sc>leukocyte rolling</sc> velocities were observed at higher simulated shear rates. At higher <sc>pselectin substrate</sc> densities, <sc>leukocytes rolled</sc> with smaller average <sc>rolling</sc> velocities. Lastly, comparison of <sc>pause time</sc> distributions revealed no apparent difference between the ISWBC1 and ISWBC2. From these studies, we concluded that the new code introduced to transform ISWBC1 into ISWBC2 did not affect the model's ability to reproduce previously targeted phenotypic attributes.</p>
+</sec><sec id="s3b">
+<title><sc>Lfa1 clustering</sc> and <sc>leukocyte adhesion</sc></title>
+<p>To gain insight into the role of PI3Kγ on leukocyte rolling and adhesion under flow conditions, Smith et al. compared the behaviors of leukocytes from PI3Kγ KO and WT mice ex vivo using blood-perfused micro-flow chambers coated with the endothelial cell substrate molecules P-selectin, ICAM-1, and CXCL1 <xref ref-type="bibr" rid="pcbi.1000681-Smith1">[13]</xref>. Nine one-minute recordings of a field of view were taken of the center of each chamber under each experimental condition. Population-level measures of rolling and adhesion were obtained by averaging the number of rolling and adherent cells for each condition. Arrested cells were defined as those that were adherent for at least 30 s. They observed a reduced ability of leukocytes from PI3Kγ KO mice to adhere to the coated surfaces in comparison to leukocytes from WT mice.</p>
+<p>We simulated analogous experimental conditions to determine if the addition of a simple <sc>lfa</sc>1 <sc>clustering</sc> mechanism and its <sc>inhibition</sc> would enable the in silico system to mimic that adhesion defect. We used the same combination of substrate analogues. We explored the consequences of changing <italic>LFA1Clustering</italic> in isolation of other variables during each experiment. We chose parameter values based on reported literature values or searched empirically for parameter sets that would provide acceptable matches for all eight experimental conditions. Listed parameters found in the literature were from experiments specifically using murine neutrophils. The <sc>leukocyte</sc> parameters from <xref ref-type="table" rid="pcbi-1000681-t004">Table 4</xref> and the <sc>environment</sc> parameters from <xref ref-type="table" rid="pcbi-1000681-t005">Table 5</xref> (part II) are such a set; they produced the results in <xref ref-type="fig" rid="pcbi-1000681-g003">Figure 3</xref>. The data are averages from 20 sets of experiments containing 30 <sc>leukocytes</sc> each, with the duration of each run being 600 simulation cycles (maps to 1 minute). The number of <sc>rolling</sc> and <sc>adhering leukocytes</sc> for each batch were counted and averaged. L<sc>eukocytes</sc> that remained stationary on the <sc>surface</sc> for at least 300 simulation cycles (about 30 seconds) were classified <sc>adherent</sc>. <xref ref-type="fig" rid="pcbi-1000681-g003">Figure 3</xref> shows that for all ligand combinations and genotypic variations simulated, both the <sc>leukocyte rolling</sc> and <sc>adhesion</sc> data matched that from ex vivo experiments: the in silico and wet-lab results were indistinguishable experimentally.</p>
+<fig id="pcbi-1000681-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000681.g003</object-id><label>Figure 3</label><caption>
+<title>Ex vivo and in silico results for eight different experimental conditions are compared.</title>
+<p>Ex vivo conditions (from <xref ref-type="bibr" rid="pcbi.1000681-Smith1">[13]</xref>): the flow chamber surface was coated with P-selectin and/or ICAM-1 with or without immobilized CXCL1 chemokine. Mice were either WT or PI3Kγ knockouts (KO). Leukocytes that rolled and adhered within each of five fields of view were recorded during a 60-second observation interval. White bars are ex vivo means ± 1 SE. The paired black bars are ISWBC2 means ± 1 SD (20 populations containing 30 leukocytes each) for the same condition using the parameter values in <xref ref-type="table" rid="pcbi-1000681-t004">Tables 4</xref> and <xref ref-type="table" rid="pcbi-1000681-t005">5</xref>. ISWBC2 experiments that map to WT mouse counterparts used <italic>LFA1Clustering</italic> = true. Simulations of KO mice used the parameter setting <italic>LFA1Clustering</italic> = false.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000681.g003" xlink:type="simple"/></fig><table-wrap id="pcbi-1000681-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000681.t004</object-id><label>Table 4</label><caption>
+<title>Parameter values for the <sc>leukocyte membrane</sc> and <sc>ligands</sc> along with corresponding wet-lab values.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000681-t004-4" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000681.t004" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Parameter Name</td>
+<td align="left" colspan="1" rowspan="1">Description</td>
+<td align="left" colspan="1" rowspan="1">Model Parameter Value</td>
+<td align="left" colspan="1" rowspan="1">Experimental Value</td>
+<td align="left" colspan="1" rowspan="1">Reference</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>LeukTotalWidth</italic></td>
+<td align="left" colspan="1" rowspan="1">L<sc>eukocyte membrane</sc> width (in the <italic>y</italic> [east-west] dimension)</td>
+<td align="left" colspan="1" rowspan="1">20 <sc>membrane units</sc></td>
+<td align="left" colspan="1" rowspan="1">Average murine Neutrophil Diameter: ∼7 µm</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Frommhold1">[59]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>LeukTotalLength</italic></td>
+<td align="left" colspan="1" rowspan="1">L<sc>eukocyte membrane</sc> length (in the <italic>x</italic> [north-south] dimension)</td>
+<td align="left" colspan="1" rowspan="1">30 <sc>membrane units</sc></td>
+<td align="left" colspan="1" rowspan="1">Average murine Neutrophil Diameter: ∼7 µm</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Frommhold1">[59]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>LeukExposedWidth</italic></td>
+<td align="left" colspan="1" rowspan="1">C<sc>ontact zone</sc> width (in the <italic>y</italic> dimension)</td>
+<td align="left" colspan="1" rowspan="1">8 <sc>membrane units</sc></td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>LeukExposedLength</italic></td>
+<td align="left" colspan="1" rowspan="1">C<sc>ontact zone</sc> length (in the <italic>x</italic> dimension)</td>
+<td align="left" colspan="1" rowspan="1">10 <sc>membrane units</sc></td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>LFA1GridSize ICAM1GridSize</italic></td>
+<td align="left" colspan="1" rowspan="1">Length/width of <sc>lfa</sc>1G<sc>rid</sc> and <sc>icam</sc>1G<sc>rid</sc></td>
+<td align="left" colspan="1" rowspan="1">100×100</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>LFA1GridDensity</italic></td>
+<td align="left" colspan="1" rowspan="1">Density of <sc>lfa</sc>1G<sc>rid</sc> on <sc>membrane</sc> exposed to the <sc>surface</sc>.</td>
+<td align="left" colspan="1" rowspan="1">0.20</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>NumLFA1Clusters</italic></td>
+<td align="left" colspan="1" rowspan="1">Number of <sc>lfa</sc>1 <sc>clusters</sc>/<sc>lfa</sc>1G<sc>rid</sc> formed if <sc>clustering</sc> is initiated</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">N/A</td>
+<td align="left" colspan="1" rowspan="1">N/A</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>LFA1ClusterDiameter</italic></td>
+<td align="left" colspan="1" rowspan="1">The length and width of the <sc>lfa</sc>1 <sc>cluster</sc> on the <sc>lfa</sc>1G<sc>rid</sc></td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">N/A</td>
+<td align="left" colspan="1" rowspan="1">N/A</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>PSGL1Density</italic></td>
+<td align="left" colspan="1" rowspan="1">Mean number of PSGL-1 molecules (± standard deviation) represented by each <sc>psgl</sc>1 agent</td>
+<td align="left" colspan="1" rowspan="1">120±5</td>
+<td align="left" colspan="1" rowspan="1">∼75,000/murine neutrophil<xref ref-type="table-fn" rid="nt104">a</xref></td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Norman2">[60]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>LFA1Density</italic></td>
+<td align="left" colspan="1" rowspan="1">Mean number of LFA-1 molecules (± standard deviation) in each <sc>membrane unit</sc></td>
+<td align="left" colspan="1" rowspan="1">25±5</td>
+<td align="left" colspan="1" rowspan="1">∼50,000/murine neutrophil<xref ref-type="table-fn" rid="nt104">a</xref></td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Ding1">[61]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>LFA1RemovalRate</italic></td>
+<td align="left" colspan="1" rowspan="1">Probability that an unbound <sc>lfa</sc>1 will be removed from the <sc>membrane</sc></td>
+<td align="left" colspan="1" rowspan="1">0.0025</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Tohyama1">[31]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Shao1">[32]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>CXCR2Density</italic></td>
+<td align="left" colspan="1" rowspan="1">Number of CXCR-2 molecules (± standard deviation) represented by each <sc>cxcr</sc>2 agent</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Pon</italic> (<sc>psgl</sc>1-<sc>pselectin</sc>)</td>
+<td align="left" colspan="1" rowspan="1">Probability of forming a <sc>psgl</sc>1-<sc>pselectin bond</sc></td>
+<td align="left" colspan="1" rowspan="1">0.001</td>
+<td align="left" colspan="1" rowspan="1">NA<xref ref-type="table-fn" rid="nt105">b</xref></td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Mehta1">[62]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Pon</italic> (<sc>low affinity lfa</sc>1-<sc>icam</sc>)</td>
+<td align="left" colspan="1" rowspan="1">Probability of forming a <sc>low affinity lfa</sc>1-<sc>icam</sc>1 <sc>bond</sc></td>
+<td align="left" colspan="1" rowspan="1">0.01</td>
+<td align="left" colspan="1" rowspan="1">NA<xref ref-type="table-fn" rid="nt105">b</xref></td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Shimaoka1">[63]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Pon</italic> (<sc>high affinity lfa</sc>1-<sc>icam</sc>1)</td>
+<td align="left" colspan="1" rowspan="1">Probability of forming a <sc>high affinity lfa</sc>1-<sc>icam</sc>1 <sc>bond</sc></td>
+<td align="left" colspan="1" rowspan="1">1.0</td>
+<td align="left" colspan="1" rowspan="1">NA<xref ref-type="table-fn" rid="nt105">b</xref></td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Lupher1">[64]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Tominaga1">[65]</xref></td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Pon</italic> (<sc>cxcr</sc>2-<sc>cxcl</sc>1)</td>
+<td align="left" colspan="1" rowspan="1">Probability of <sc>cxcr</sc>2 interacting with <sc>cxcl</sc>1</td>
+<td align="left" colspan="1" rowspan="1">1.0</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><italic>Poff</italic> (<sc>cxcr</sc>2-<sc>cxcl</sc>1)</td>
+<td align="left" colspan="1" rowspan="1">Probability of <sc>cxcr</sc>2 releasing <sc>cxcl</sc>1</td>
+<td align="left" colspan="1" rowspan="1">1.0</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+<td align="left" colspan="1" rowspan="1">NA</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt104"><label>a</label><p>Neutrophils were incubated with fluorescence-conjugated mAbs to LFA-1 or PSGL-1 and analyzed by FACScan flow cytometry. LFA-1 receptor number was quantified by comparing the binding of neutrophils to LFA-1-FITC with the binding of receptor-coated microbeads with known binding site densities <xref ref-type="bibr" rid="pcbi.1000681-Ding1">[61]</xref>. PSGL-1 receptor number was determined in a similar fashion <xref ref-type="bibr" rid="pcbi.1000681-Norman2">[60]</xref>.</p></fn><fn id="nt105"><label>b</label><p><italic>Pon</italic> and <italic>Kon</italic> are intended to map to aspects of the same in vitro phenomena. However, there is no direct mapping between these parameters because the parent models belong to fundamentally different classes.</p></fn></table-wrap-foot></table-wrap><table-wrap id="pcbi-1000681-t005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000681.t005</object-id><label>Table 5</label><caption>
+<title>Experimental values for the blood-perfused micro-flow chamber and the cremaster muscle venule experiments and the corresponding ISWBC2 parameter values used for the two simulated experimental conditions.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000681-t005-5" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000681.t005" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Experiment</td>
+<td align="left" colspan="1" rowspan="1">Experimental Parameter</td>
+<td align="left" colspan="1" rowspan="1">Experimental Value</td>
+<td align="left" colspan="1" rowspan="1">Ref</td>
+<td align="left" colspan="1" rowspan="1">ISWBC P<sc>arameter</sc></td>
+<td align="left" colspan="1" rowspan="1">ISWBC V<sc>alue</sc></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>I. Ex Vivo Blood Perfused Micro-flow chamber</bold></td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="2" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">P-Selectin</td>
+<td align="left" colspan="1" rowspan="1">18 µg/mL</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Smith1">[13]</xref></td>
+<td align="left" colspan="1" rowspan="1"><sc>pselectin</sc></td>
+<td align="left" colspan="1" rowspan="1">15±5</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">ICAM-1</td>
+<td align="left" colspan="1" rowspan="1">15 µg/mL</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Smith1">[13]</xref></td>
+<td align="left" colspan="1" rowspan="1"><sc>icam</sc>1</td>
+<td align="left" colspan="1" rowspan="1">25±5</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">CXCL1</td>
+<td align="left" colspan="1" rowspan="1">15 µg/mL</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Smith1">[13]</xref></td>
+<td align="left" colspan="1" rowspan="1"><sc>cxcl</sc>1</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Shear</td>
+<td align="left" colspan="1" rowspan="1">2.5 dyn/cm<sup>2</sup></td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Smith1">[13]</xref></td>
+<td align="left" colspan="1" rowspan="1"><italic>RearForce</italic></td>
+<td align="left" colspan="1" rowspan="1">0.6</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>II. In Vivo Cremaster Muscle Venule</bold></td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="2" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">P-Selectin<xref ref-type="table-fn" rid="nt106">a</xref></td>
+<td align="left" colspan="1" rowspan="1">1.02×10<sup>7</sup> molecules/cm<sup>2</sup></td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Granger1">[66]</xref></td>
+<td align="left" colspan="1" rowspan="1"><sc>pselectin</sc></td>
+<td align="left" colspan="1" rowspan="1">12±5</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">ICAM-1<xref ref-type="table-fn" rid="nt106">a</xref></td>
+<td align="left" colspan="1" rowspan="1">8.90×10<sup>7</sup> molecules/cm<sup>2</sup></td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Granger1">[66]</xref></td>
+<td align="left" colspan="1" rowspan="1"><sc>icam</sc>1</td>
+<td align="left" colspan="1" rowspan="1">6±3</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">CXCL1</td>
+<td align="left" colspan="1" rowspan="1">5 µg/mL</td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Smith1">[13]</xref></td>
+<td align="left" colspan="1" rowspan="1"><sc>cxcl</sc>1</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">Shear</td>
+<td align="left" colspan="1" rowspan="1">1–4 dyn/cm<sup>2</sup></td>
+<td align="left" colspan="1" rowspan="1"><xref ref-type="bibr" rid="pcbi.1000681-Lawrence1">[52]</xref></td>
+<td align="left" colspan="1" rowspan="1"><italic>RearForce</italic></td>
+<td align="left" colspan="1" rowspan="1">0.6</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt106"><label>a</label><p>Neutrophils were incubated with radiolabelled mAbs to P-Selectin or ICAM-1 and analyzed by laser confocal microscopy. The receptor number is determined by the binding ratio between the fluorescence and immunoglobulin <xref ref-type="bibr" rid="pcbi.1000681-Granger1">[66]</xref>.</p></fn></table-wrap-foot></table-wrap>
+<p>We varied the values of <italic>ICAM1Density</italic> (density of <sc>icam</sc>1) to determine their impact on simulation outcomes. The results in <xref ref-type="fig" rid="pcbi-1000681-g004">Figure 4</xref> show that at <italic>ICAM1Density</italic> values≥60, disabling <sc>clustering</sc> (by changing <italic>LFA1ClusteringAllowed</italic> from true to false) did not change <sc>adhesion</sc>. However, at <italic>ICAM1Density</italic> values≤50, disabling <sc>clustering</sc> reduced <sc>adhesion</sc>. The greatest differences were observed at the lower <italic>ICAM1Density</italic> values, indicating that with <sc>clustering</sc> there was cooperative binding between surfaces. We repeated this set of experiments twice (varying <italic>ICAM1Density</italic> values), but <italic>LFA1GridDensity</italic> (the fraction of all <sc>membrane units</sc> that contain <sc>lfa</sc>1<sc>grids</sc>) values were changed first to 0.1 and then to 0.4. Similar cooperative binding effects were observed at both <italic>LFA1GridDensity</italic> values, but at different ICAM1Density values and with differing magnitudes (<xref ref-type="supplementary-material" rid="pcbi.1000681.s001">Text S1</xref>).</p>
+<fig id="pcbi-1000681-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000681.g004</object-id><label>Figure 4</label><caption>
+<title>Effect of varying <italic>ICAM1Density</italic> parameter values on <sc>leukocyte adhesion</sc>.</title>
+<p>The effect of Leukocyte <italic>ICAM1Density</italic> was varied from 10 to 100 at intervals of 10. Bar heights are ISWBC2 means ± 1 SD (20 populations containing 30 leukocytes each) for the same condition using the parameter values in <xref ref-type="table" rid="pcbi-1000681-t004">Tables 4</xref> and <xref ref-type="table" rid="pcbi-1000681-t005">5</xref>. Black bars indicate simulation experiments when <italic>LFA1Clustering</italic> = true. White bars indicate simulation experiments when <italic>LFA1Clustering</italic> = false.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000681.g004" xlink:type="simple"/></fig>
+<p>The experimental observations above map well to results of wet-lab experimental studies done by Constantin and co-workers. They demonstrated that PI3K inhibition blocked lymphocyte adhesion at low densities of ICAM-1. At high ICAM-1 densities, lymphocytes were able to overcome the requirement for PI3K for efficient adhesion <xref ref-type="bibr" rid="pcbi.1000681-Constantin1">[4]</xref>.</p>
+<p>Results of sensitivity analysis experiments for changes in <italic>LFA1RemovalRate</italic>, <italic>Pon</italic> (high affinity <sc>lfa</sc>1-<sc>icam</sc>1), and <italic>RearForce</italic> are graphed in <xref ref-type="fig" rid="pcbi-1000681-g005">Figure 5</xref>. The simulations were repeated using small (5–10%) and large variations (&gt;50%) in each of these parameters separately, while holding all other parameter values constant. <xref ref-type="fig" rid="pcbi-1000681-g005">Figure 5</xref> shows the ratio of ISWBC2-to-wet-lab results for rolling and adhesion data from both WT and KO mice for four parameter variations selected to show the trends observed. Small variations in all three parameter values resulted in minimal changes in <sc>rolling</sc> and <sc>adhesion</sc> both with and without <sc>clustering</sc>. The results still matched referent data reasonably well. As was expected, large increases in the <italic>RearForce</italic> (<xref ref-type="fig" rid="pcbi-1000681-g005">Figure 5A</xref>) and <italic>LFA1RemovalRate</italic> (<xref ref-type="fig" rid="pcbi-1000681-g005">Figure 5B</xref>), or a large decrease in <italic>Pon</italic> values (<xref ref-type="fig" rid="pcbi-1000681-g005">Figure 5C</xref>) resulted in a significant decrease in <sc>adhesion</sc> both with and without <sc>clustering</sc>. Those results failed to match referent data. Results of these and other robustness explorations (not shown) demonstrated that there are many parameter vectors close to the ones in <xref ref-type="table" rid="pcbi-1000681-t004">Table 4</xref> and <xref ref-type="table" rid="pcbi-1000681-t005">Table 5</xref> that produce ISWBC2s that validate.</p>
+<fig id="pcbi-1000681-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000681.g005</object-id><label>Figure 5</label><caption>
+<title>Robustness of ISWBC2s to changes in the <italic>LFA1RemovalRate</italic>, <italic>Pon</italic>, and <italic>RearForce</italic>.</title>
+<p>Separate sets of in silico experiments, using the <sc>leukocyte</sc> parameter values in <xref ref-type="table" rid="pcbi-1000681-t004">Table 4</xref> and <sc>environment</sc> parameter values in <xref ref-type="table" rid="pcbi-1000681-t005">Table 5</xref>, were completed while varying either (A) <italic>RearForce</italic>, (B) <italic>LFA1RemovalRate</italic>, or (C) <italic>Pon</italic>(<sc>high affinity lfa</sc>1-<sc>icam</sc>1) as indicated. Bars heights are ratios of ISWBC2-to-wet-lab results of rolling and adhesion data for both WT and KO mice of the type used for the experiments in <xref ref-type="fig" rid="pcbi-1000681-g003">Figure 3</xref>. Comparable adjustments of other parameters caused similar gradual changes in <sc>leukocyte rolling</sc> and <sc>adhesion</sc> data. The listed parameter values for rolling under Knockout also apply to the similarly shaded bar for the other three conditions.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000681.g005" xlink:type="simple"/></fig></sec><sec id="s3c">
+<title>At Low Densities, <sc>lfa1 clustering</sc> is Necessary for Sustained <sc>leukocyte adhesion</sc></title>
+<p>Smith et al. observed individual leukocytes in vivo after injection of CXCL1 into the carotid artery of WT and KO mice to determine its role in adhesion. Events in post-capillary venules were recorded using intravital microscopy. Individual cells were tracked in each vessel starting one minute before and ending one minute after CXCL1 injection. After CXCL1 injection, leukocytes rapidly adhered to the vessel wall and remained attached over time in WT mice. However, in KO mice, leukocytes did not attach or attached transiently.</p>
+<p>We simulated similar conditions and observed whether disabling <sc>lfa</sc>1 <sc>clustering</sc> would allow the ISWBC2 system to reproduce the observed defect in sustained adhesion. We chose parameter values based on corresponding literature values. When none were available, we searched empirically. L<sc>fa</sc>1 <sc>clustering</sc> was enabled when simulating conditions in WT mice. It was disabled when simulating conditions in KO mice. <xref ref-type="fig" rid="pcbi-1000681-g006">Figure 6A</xref> shows that when <sc>lfa</sc>1 <sc>clustering</sc> was enabled, individual <sc>leukocytes</sc> initiated <sc>adhesion</sc> within <sc>seconds</sc> of exposure to <sc>cxcl</sc>1 and were able to sustain <sc>adhesion</sc> for the duration of the simulation. L<sc>eukocyte</sc> population level measurements were also similar to those observed in vivo (<xref ref-type="fig" rid="pcbi-1000681-g006">Figure 6B</xref>).</p>
+<fig id="pcbi-1000681-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000681.g006</object-id><label>Figure 6</label><caption>
+<title>In vivo and in silico results are compared.</title>
+<p>In vivo conditions (from <xref ref-type="bibr" rid="pcbi.1000681-Smith1">[13]</xref>): mice were either (A, B) WT or (C, D) KO. Red: wet-lab values; black: ISWBC2 values. Wet-lab experiments: post-capillary venules were observed from one minute before to one minute after CXCL1 injection at <italic>t</italic> = 0. Each simulation ran for 600 simulation cycles (equivalent to about 60 seconds). Individual leukocyte trajectories are plotted for (A) WT and (C) KO mice. (B, D) Individual leukocytes were tracked every 5 s, and those that were adherent during that time were counted. Open squares are adherent leukocyte counts for individual venules. Open circles are corresponding <sc>adherent leukocyte</sc> counts for <sc>venules</sc>. Thirty <sc>leukocytes</sc> comprised the population within a <sc>venule</sc>. Individual <sc>leukocytes</sc> were tracked every 50 simulation cycles (approximately 5 s), and those that were <sc>adherent</sc> were counted. ISWBC2: parameter values are those listed in <xref ref-type="table" rid="pcbi-1000681-t004">Tables 4</xref> and <xref ref-type="table" rid="pcbi-1000681-t005">5</xref>, and <sc>leukocytes</sc> are in the presence of <sc>cxcl</sc>1 beginning at t = 0. L<sc>fa</sc>1 <sc>clustering</sc> was either (A, B) enabled or (C, D) disabled.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000681.g006" xlink:type="simple"/></fig>
+<p>When <sc>lfa</sc>1 <sc>clustering</sc> was disabled to simulate conditions in KO mice, <sc>leukocytes</sc> exhibited the same transient <sc>adhesion</sc> observed in vivo (<xref ref-type="fig" rid="pcbi-1000681-g006">Figure 6C</xref>). In the presence of <sc>cxcl</sc>1 <sc>chemokine</sc>, <sc>leukocytes rolled</sc> for a brief period and then initiated <sc>adhesion</sc> to the <sc>surface</sc> for a brief interval before again initiating <sc>rolling</sc>. <xref ref-type="fig" rid="pcbi-1000681-g006">Figure 6D</xref> shows that the similarity in individual <sc>leukocyte</sc> behaviors translated successfully to <sc>population</sc> level measurements.</p>
+<p>In PI3Kγ KO mice during the above-described experiments, a small portion of leukocytes was still able to sustain adhesion. That observation may implicate an additional mechanism. Using ISWBC2, some <sc>leukocytes</sc> initiated and maintained <sc>adhesion</sc> for long intervals. However, none sustained <sc>adhesion</sc> for the entire duration of the simulation. Additionally, in WT mice, some leukocytes were adherent prior to chemokine injection. The intercept values for the wet-lab data in <xref ref-type="fig" rid="pcbi-1000681-g006">Figure 6B</xref> show that, at the time of injection, adherent leukocytes were already present. That observation may indicate some leukocyte pre-activation. The ISWBC2 system does not include any pre-activation effects. Consequently, we do not observe any <sc>adhering leukocytes</sc> at the start of a simulation. Nonetheless, the increases in the number of <sc>adherent leukocytes</sc> after <sc>chemokine</sc> addition were similar to referent observations.</p>
+</sec><sec id="s3d">
+<title>Influence of <sc>lfa1 clustering</sc> on <sc>lfa1</sc> and <sc>icam1 rebinding</sc> Events</title>
+<p>It has been suggested that integrin clustering may facilitate rebinding events thus enhancing leukocyte adhesion <xref ref-type="bibr" rid="pcbi.1000681-Sarantos1">[5]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-RocaCusachs1">[6]</xref>. Rebinding effects are those in which an ICAM-1 that is displaced from one LFA-1 will rapidly bind to a neighboring LFA-1 integrin if it is in sufficiently close proximity. We counted the cumulative number of <sc>lfa</sc>1 <sc>rebinding</sc> events (<xref ref-type="fig" rid="pcbi-1000681-g007">Figure 7A</xref>) and <sc>icam</sc>1 <sc>rebinding</sc> events (<xref ref-type="fig" rid="pcbi-1000681-g007">Figure 7B</xref>) at 50 simulation cycle intervals (every 5 <sc>seconds</sc>) for each <sc>leukocyte</sc>. We defined an <sc>lfa</sc>1 (or <sc>icam</sc>1) <sc>rebinding</sc> event as a <sc>bond formation</sc> event by an <sc>lfa</sc>1 (or <sc>icam</sc>1) that had already participated in a <sc>bond formation</sc> event during a previous simulation cycle. Averages were taken of 30 <sc>leukocytes</sc> from the simulations of the in vivo experiments for each experimental condition (<italic>LFA1Clustering</italic> enabled or disabled). All simulation data for the enabled <italic>LFA1Clustering</italic> experimental condition was generated by <sc>leukocytes</sc> that <sc>sustained adhesion</sc> (<sc>rolling</sc> followed by at least 30 simulation cycles of <sc>arrest</sc> until the end of the simulation), while all simulation data for the disabled <italic>LFA1Clustering</italic> condition was generated by <sc>leukocytes</sc> that exhibited <sc>initial</sc> and <sc>transient adhesion</sc> (at least 300 simulation cycles of arrest; average amount of time <sc>leukocytes</sc> remained stationary was 39.8±7.2 <sc>seconds</sc>). The average time that <sc>leukocytes</sc> detached following transient adhesion was 43.9±7.1 <sc>seconds</sc> for the disabled <italic>LFA1Clustering</italic> condition.</p>
+<fig id="pcbi-1000681-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000681.g007</object-id><label>Figure 7</label><caption>
+<title>Effect of <sc>lfa clustering</sc> on <sc>lfa</sc>1 and <sc>icam</sc>1 <sc>re</sc>-<sc>binding</sc> events.</title>
+<p>The cumulative number of (A) <sc>lfa</sc>1 <sc>re</sc>-<sc>binding</sc> events and (B) <sc>icam</sc>1 <sc>re</sc>-<sc>binding</sc> events were counted at 50 simulation cycle intervals (5 <sc>seconds</sc>) for each <sc>leukocyte</sc>. A <sc>lfa</sc>1 (or <sc>icam</sc>1) <sc>rebinding</sc> event was defined as a <sc>bond formation</sc> event by a <sc>lfa</sc>1 (or <sc>icam</sc>1) object that had already participated in a <sc>bond formation</sc> event in a previous time step. Averages are plotted for 30 <sc>leukocytes</sc> per experimental condition (with or without <italic>LFA1Clustering</italic>). Simulation data with <italic>LFA1Clustering</italic> were from <sc>leukocytes</sc> that <sc>sustained adhesion</sc> (<sc>rolling</sc> followed by at least 30 simulation cycles of <sc>arrest</sc> until the end of the simulation). Simulation data without <italic>LFA1Clustering</italic> were from <sc>leukocytes</sc> that exhibited <sc>initial</sc> and <sc>transient adhesion</sc> (at least 300 simulation cycles of arrest). Without <italic>LFA1Clustering</italic>, the average <sc>adhesion</sc> time was 39.8±7.2 <sc>seconds</sc> before the <sc>leukocyte</sc> initiated <sc>rolling</sc> again (average time = 43.9±7.1 <sc>seconds</sc>). Error bars: ± SD.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000681.g007" xlink:type="simple"/></fig>
+<p>At simulation times prior to 43.9 <sc>seconds</sc>, there were no significant differences in <sc>lfa</sc>1 <sc>rebinding</sc> events for enabled and disabled <italic>LFA1Clustering</italic> condition (<xref ref-type="fig" rid="pcbi-1000681-g007">Figure 7A</xref>). A significant difference was observed after 43.9 <sc>seconds</sc>, as expected. <sc>leukocytes</sc> with <italic>LFA1Clustering</italic> disabled began to <sc>roll</sc> again after 43.9 <sc>seconds</sc> allowing different <sc>lfa</sc>1 objects on the <sc>membrane</sc> to form new interactions with <sc>icam</sc>1. Those events caused the number of <sc>lfa</sc>1 <sc>rebinding</sc> events to plateau. In contrast, <sc>leukocytes</sc> with <italic>LFA1Clustering</italic> enabled continued to <sc>sustain adhesion</sc> enabling the same <sc>lfa</sc>1 and <sc>icam</sc>1 objects to interact, as evidenced by the rapidly increasing numbers of <sc>lfa</sc>1 <sc>rebinding</sc> events until the end of the simulation.</p>
+<p>A different situation was observed with <sc>icam</sc>1 <sc>rebinding</sc>. <xref ref-type="fig" rid="pcbi-1000681-g007">Figure 7B</xref> shows a significant difference in <sc>icam</sc>1 <sc>rebinding</sc> events when <sc>lfa</sc>1 <sc>clustering</sc> is enabled and disabled. As early as 25 <sc>seconds</sc>, the number of <sc>icam</sc>1 <sc>rebinding</sc> events was significantly larger for the <sc>lfa</sc>1 <sc>clustering</sc> enabled condition than for the disabled condition. The difference increased throughout the duration of the simulation. These results indicated that when <sc>lfa</sc>1 was <sc>clustered</sc>, more <sc>lfa</sc>1 objects were <sc>rebinding</sc> to the same <sc>icam</sc>1 objects than when <sc>lfa</sc>1 was randomly distributed and non-<sc>clustered</sc>.</p>
+</sec><sec id="s3e">
+<title>Comparison of the Effect of <sc>icam1</sc> Spatial Arrangements on Sustained <sc>adhesion</sc></title>
+<p>ICAM-1 has been reported to arrange itself on endothelial cell membrane surfaces in at least four forms: (1) monomeric, (2) dimeric, (3) dimeric that forms linear tetramers upon ligand binding, and (4) preclustered into tetraspanin enriched microdomains. We implemented each of these spatial configurations in order to compare their effect, in combination with <sc>lfa</sc>1 <sc>clustering</sc>, on <sc>leukocyte</sc>'s ability to sustain <sc>adhesion</sc>. We observed the consequences over a range of <italic>LFA1G<sc>rid</sc>Density</italic> and <italic>ICAM1Density</italic> values. For each <sc>icam</sc>1 configuration, <italic>LFA1Clustering</italic> parameter setting, <italic>LFA1G<sc>rid</sc>Density</italic> value, and <italic>ICAM1Density</italic> value, we performed 450 <sc>leukocyte</sc> simulations within <sc>lfa</sc>1 and <sc>icam</sc>1 density ranges that showed the greatest influence of <sc>lfa</sc>1 <sc>clustering</sc>. We then calculated the percentage of <sc>leukocytes</sc> that were able to initiate and sustain <sc>adhesion</sc> for the duration of the simulation.</p>
+<p>There was no difference in sustained <sc>adhesion</sc> between simulations when <sc>lfa</sc>1 <sc>clustering</sc> was either enabled or disabled when <sc>icam</sc>1 existed in a monomeric configuration (not shown). That result was expected because the mechanism is initiated only after a multimeric <sc>bond</sc> is formed between multiple <sc>lfa</sc>1 objects and multiple <sc>icam</sc>1 objects. If <sc>icam</sc>1 is monomeric, the chance of the <sc>lfa</sc>1 <sc>clustering</sc> mechanism being initiated is very small. In contrast, the results in <xref ref-type="fig" rid="pcbi-1000681-g008">Figure 8</xref> show that, for all multimeric configurations tested, significant differences in sustained <sc>adhesion</sc> were observed when <sc>lfa</sc>1 <sc>clustering</sc> was either enabled or disabled. Whether <sc>icam</sc>1 existed as a <sc>dimer</sc>, a <sc>dimer</sc> that formed into linear <sc>tetramers</sc> upon <sc>ligand</sc>-<sc>binding</sc>, or preclustered produced only slight differences in the percentage of <sc>leukocytes</sc> that were able to <sc>sustain adhesion</sc>.</p>
+<fig id="pcbi-1000681-g008" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000681.g008</object-id><label>Figure 8</label><caption>
+<title>The effect on sustained <sc>adhesion</sc> of different hypothesized <sc>icam</sc>1 configurations.</title>
+<p>The percentage of <sc>leukocytes</sc> that sustained <sc>adhesion</sc> (color scale at right) were calculated for varying <italic>LFA1GridDensity</italic> and <italic>ICAM1Density</italic> values using the different hypothesized <sc>icam</sc>1 configurations discussed in the text. L<sc>fa</sc>1 <sc>clustering</sc> was either disabled (left: A, C, E) or enabled (right: B, D, F). I<sc>cam</sc>1 was (A, B) dimeric, (C, D) dimeric and allowed to form linear <sc>tetramers</sc> upon <sc>ligand</sc>-<sc>binding</sc>, or (E, F) was preformed into <sc>nanoclusters</sc>. No sustained <sc>adhesion</sc> occurred when <sc>icam</sc>1 was monomeric (not shown).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000681.g008" xlink:type="simple"/></fig></sec></sec><sec id="s4">
+<title>Discussion</title>
+<sec id="s4a">
+<title>Achievements</title>
+<p>We constructed and validated models of leukocyte rolling, activation, and adhesion. We then experimented on them to test the plausibility of mechanistic hypotheses of how molecular components may interact to cause leukocyte behaviors at the cell and population level. We began with significant leukocyte rolling and adhesion data from ex vivo flow chamber and in vivo mouse cremaster muscle experiments, in which mice lacking functional PI3Kγ exhibited defects in adhesion and sustained adhesion in comparison to leukocytes from WT mice. Smith et al. hypothesized that the adhesion defects were a result of an inability of LFA-1 to redistribute and cluster on the leukocyte membrane in the PI3Kγ KO mice <xref ref-type="bibr" rid="pcbi.1000681-Smith1">[13]</xref>.</p>
+<p>To challenge that hypothesis, software objects were constructed and assembled according to the mechanistic design in <xref ref-type="fig" rid="pcbi-1000681-g001">Figure 1</xref> using the operating logic in <xref ref-type="supplementary-material" rid="pcbi.1000681.s001">Text S1</xref>. The resulting ISWBC2 system was iteratively refined until validation was achieved across multiple experimental conditions and attributes. LFA1 objects were designed to <sc>cluster</sc> upon <sc>leukocyte</sc> activation and post-<sc>ligand binding</sc> to multimeric <sc>icam</sc>1. During execution, <sc>leukocytes</sc> exhibited behaviors indistinguishable from leukocytes observed in both the ex vivo (<xref ref-type="fig" rid="pcbi-1000681-g003">Figures 3</xref> and <xref ref-type="fig" rid="pcbi-1000681-g005">5</xref>) and in vivo (<xref ref-type="fig" rid="pcbi-1000681-g006">Figure 6</xref>) experiments using WT mice. More importantly, inhibiting this mechanism allowed <sc>leukocyte</sc> behaviors to mimic the adhesion defects observed both ex vivo and in vivo in KO mice. Thus, ISWBC2 simulations provide a tested theory about the mechanistic events that may be occurring in both WT and KO mice. At higher <sc>lfa</sc>1 and <sc>icam</sc>1 densities, enabling <sc>lfa</sc>1 <sc>clustering</sc> did not improve <sc>adhesion</sc>. However, at low densities, enabling <sc>clustering</sc> led to cooperativity at the level of the <sc>leukocyte</sc>-<sc>surface</sc> zone of contact, and that increased <sc>adhesion</sc>. Analysis of <sc>rebinding</sc> events (<xref ref-type="fig" rid="pcbi-1000681-g007">Figure 7</xref>) showed that at later but not earlier times, enabling <sc>lfa</sc>1 <sc>clustering</sc> allowed for an increase in <sc>lfa</sc>1 <sc>rebinding</sc> events in comparison to when <sc>lfa</sc>1 did not <sc>cluster</sc>. C<sc>lustering</sc> enabled increased <sc>icam</sc>1 <sc>rebinding</sc> events at early times. Given the multi-attribute validation evidence, it is reasonable to claim that ISWBC2 mechanisms have mouse counterparts.</p>
+<p>Though still relatively simple, we have demonstrated that ISWBC2s can achieve a substantial list of targeted attributes under a variety of experimental conditions (<xref ref-type="table" rid="pcbi-1000681-t001">Table 1A, B</xref>). Traditional inductive, equation-based models typically focus on just one or a few different experimental conditions. This observation motivates commentary about the differences between traditional, inductive, equation based models and synthetic, relationally grounded analogues like ISWBC2s. The issues are discussed in detail in <xref ref-type="bibr" rid="pcbi.1000681-Hunt1">[11]</xref>. Grounding is defined as the units, dimensions, and/or objects to which a variable or model constituent refers <xref ref-type="bibr" rid="pcbi.1000681-Hunt1">[11]</xref>. In models grounded to metric spaces, parameters serve mostly to shift model behavior within a smooth region of the output metric space. In relationally grounded models, like ISWBC2s, in addition to that function, parameters also serve to shift model behavior discontinuously (even abruptly) into an entirely different region of behavior space: they change the analogue's dynamic phenotype. In metrically grounded models, the character of the model is bounded, whereas with relational grounding, model character can change completely with a change in parameters. In the former case, parameters describe one, particular (though abstract) model type. In the latter case, parameters describe families of different yet related models. The ISWBC2s functioning in various experimental conditions are examples of the latter. Relational grounding enables flexible, adaptable analogues, but requires a separate analogue-to-referent mapping model.</p>
+<p>The process of discovering a normal ISWBC2 that eventually achieved sustained adhesion typical of WT mouse counterparts, and the process of subsequently discovering modifications that eventually showed defective adhesion indistinguishable from that observed in PI3Kγ KO mice, was the same. It followed the iterative refinement protocol. Each ISWBC2 structure and parameterization was a hypothesis: upon execution, as a consequence of combined micro-mechanisms, measures of leukocyte rolling and adhesion will mimic referent data. Execution and measurement provides data that either support or falsify the hypothesis. Early during iterative refinement, all mechanistic hypotheses were falsified: they failed to achieve the prespecified target attributes. Why one was falsified was often somewhat surprising, reflecting uncertainties about the actual referents' underlying mechanisms. At times it reflected incorrect ideas about how micromechanisms influence ISWBC2 behaviors. The many cycles of iterative refinement that followed required and exercised abductive reasoning, which is essential to achieving new scientific insight <xref ref-type="bibr" rid="pcbi.1000681-Magnani1">[39]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Gabbay1">[40]</xref>. A failure of an early ISWBC2 to achieve one or more prespecified attributes taught us something about those ISWBC2s and improved insight into the referent systems. Failure forced us to think more deeply about plausible mechanistic details, and that in turn forced us to think differently about leukocytes and the process of rolling, activation, and adhesion.</p>
+<p>Previous studies by Constantin et al. provided evidence of PI3K mediated LFA-1 clustering in immobilized lymphocytes treated with chemokines <xref ref-type="bibr" rid="pcbi.1000681-Constantin1">[4]</xref>. Chemokines triggered a rapid increase in LFA-1 affinity and stimulated LFA-1 movement into clusters and large polar patches. Inhibition of PI3K activity blocked LFA-1 mobility but not LFA-1 affinity changes, and that prevented lymphocytes from adhering to low densities of immobilized ICAM-1. At high densities of immobilized ICAM-1, inhibiting PI3K activity had no effect on lymphocyte adhesion. Because the cell type was different, those observations were not among those originally targeted (<xref ref-type="table" rid="pcbi-1000681-t001">Table 1</xref>). Nevertheless, the validated ISWBC2 that gave the results in <xref ref-type="fig" rid="pcbi-1000681-g004">Figure 4</xref> correctly predicted those results. Whether this same mechanism is operative and influential in murine neutrophils remains to be determined. However, it is noteworthy that our simulation results are consistent. In ISWBC2 experiments, <sc>lfa clustering</sc> was important at low <sc>icam</sc>1 densities, but no differences in <sc>adhesion</sc> were observed at high <sc>icam</sc>1 densities (<xref ref-type="fig" rid="pcbi-1000681-g004">Figure 4</xref>).</p>
+<p>Lum et al. used sophisticated in vitro methods to study murine neutrophils after stimulation with IL-8 chemokine <xref ref-type="bibr" rid="pcbi.1000681-Lum1">[3]</xref>. They correlated the dynamics of adhesion with the increased expression of high affinity LFA-1 and membrane redistribution. Using fluorescence microscopy, they observed redistribution of high affinity LFA-1 into small punctate submicron clusters and large polar caps several µm<sup>2</sup> in area within 30 s of IL-8 stimulation. Within 2 min of chemokine stimulation, the polar caps dissipated into numerous smaller clusters. By 10 min, practically all clusters had dispersed and the number of active LFA-1 was observed to have dropped by ∼50%. Inhibition of PI3K activity by treatment with wortmannin did not affect the expression of high affinity LFA-1, but significantly inhibited the amount of LFA-1 clustering and formation of polar caps. Treatment with wortmannin after IL-8 stimulation also significantly decreased the amount of adhesion to fluorescent microbeads coated with ICAM-1 in a flow cytometric based assay. They also used a parallel plate flow chamber coated with an ICAM-1 monolayer to observe the strength and stability of neutrophil adhesion over time. Interestingly, the transience of LFA-1 cluster formation and number of active LFA-1 on the membrane correlated with a reversibility of firm adhesion observed in the flow chamber.</p>
+<p>We did not target any of the preceding results. One can question whether the observed behaviors from such in vitro murine neutrophils studies are relevant to those of native cells in the circulation under physiologic conditions <xref ref-type="bibr" rid="pcbi.1000681-HafeziMoghadam1">[41]</xref>, such as those used in the ex vivo and in vivo experiments that we targeted. It is recognized that procedures for isolating neutrophils to be studied in vitro can be inefficient and time-consuming. Previous reports have shown that neutrophils become unintentionally modified or activated because of the large number of steps required during isolation <xref ref-type="bibr" rid="pcbi.1000681-Kuijpers1">[42]</xref>–<xref ref-type="bibr" rid="pcbi.1000681-Glasser1">[44]</xref>. For example, in vitro isolated and stained neutrophils do not show normal rolling behavior when injected back in mice <xref ref-type="bibr" rid="pcbi.1000681-Ley2">[38]</xref>. Use of the auto-perfused ex vivo flow chamber system allows one to bypass these cell isolation procedures.</p>
+</sec><sec id="s4b">
+<title>Other Models of Leukocyte Rolling and Adhesion</title>
+<p>Bailey et al. constructed a multi-cell, tissue-level, agent-oriented analogue of human adipose-derived stromal cell trafficking through a microvasculature structure within skeletal muscle following acute ischemia <xref ref-type="bibr" rid="pcbi.1000681-Bailey1">[45]</xref>. A goal was to identify potential bottlenecks that may limit the efficiency of administered therapeutic cells being recruited into the site of ischemic injury after intravenous injection. They used confocal microscopy images to manually construct an image of the morphology of a characteristic microvascular network. E<sc>ndothelial cells</sc> lining the <sc>vessel surface</sc>, <sc>tissue resident macrophages</sc>, <sc>circulating monocytes</sc>, and therapeutic <sc>stem cells</sc> were individual agents. The agent-oriented model was coupled with a network blood flow analysis program that calculated <sc>blood pressure</sc>, <sc>flow velocities</sc>, and <sc>shear stresses</sc> throughout the <sc>microvascular network</sc>.</p>
+<p>Each <sc>endothelial cell</sc>, <sc>monocyte</sc>, and counterpart to a human, adipose-derived, stromal cell (<sc>hasc</sc>) could be either positive or negative in expression of each of several <sc>adhesion molecules</sc>. Similarly, <sc>each endothelial cell</sc>, <sc>monocyte</sc>, and <sc>tissue resident macrophage</sc> could be either positive or negative for <sc>secretion</sc> of each of the <sc>chemokines</sc> and <sc>cytokines</sc>. Whether a circulating <sc>monocyte</sc> or <sc>hasc</sc> rolled or adhered depended on whether they experienced a specified combination of <sc>adhesion molecule</sc> states and <sc>chemokine secretion</sc> states from a nearby <sc>endothelial cell</sc>, and whether they experienced a <sc>wall shear stress</sc> below a certain threshold level. If the <sc>cell</sc> adhered for more than a specified number of simulation cycles, it transmigrated into the <sc>tissue</sc> space.</p>
+<p>They observed that introduction of an additional <sc>adhesion molecule</sc>, with properties similar to PSGL-1, enabled the model to more closely mimic in vivo experimental results. They showed that small fractions of hASC's are able to roll on P-selectin even though they do not express PSGL-1. They proposed that the additional <sc>adhesion molecule</sc> might map to the cellular adhesion molecule CD24. This new knowledge gained reinforces the merit of investigating the complex mechanisms mediating leukocyte adhesion using a synthetic modeling and simulation approach.</p>
+<p>While ISWBC2s were constructed using similar methods and components, there are notable differences. The Bailey et al. model focused on leukocyte trafficking events at the tissue level. They explicitly represent in silico counterparts of differing blood pressures, flow velocities, and shear stresses throughout a microvascular network. L<sc>eukocytes rolling</sc> and <sc>adhering</sc> on a substrate coated surface within an ISWBC2 system is a small aspect of leukocyte trafficking through microvascular tissue. ISWBC2s focus more on the molecular and cellular level interactions, and have concrete counterparts to the molecular interactions between leukocyte and endothelial cell adhesion molecules.</p>
+<p>The discrete-time Adhesive Dynamics (AD) simulations by Hammer and co-workers are the most developed models of leukocyte rolling and adhesion to date <xref ref-type="bibr" rid="pcbi.1000681-Krasik1">[46]</xref>–<xref ref-type="bibr" rid="pcbi.1000681-Caputo1">[49]</xref>. In their models, leukocytes are idealized as solid spheres with extensible cylindrical protrusions, to represent microvilli, with receptors located at the tips. Using a Monte Carlo algorithm for the determination of receptor-ligand interactions, they have successfully produced a jerky stop-and-go pattern similar to that observed for rolling leukocytes. Their simulations have also allowed them to explore the molecular properties of adhesion molecules, such as reaction rates and bond elasticity, and how these properties may relate to macroscopic behavior such as rolling and adhesion <xref ref-type="bibr" rid="pcbi.1000681-Bhatia1">[47]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Chang1">[48]</xref>.</p>
+<p>At each time step in the Adhesive Dynamics simulation, positions of bonds on the spherical particle are tracked enabling the authors to calculate the forces that each bond experiences. The net force and torque acting on the cell from bonds, fluid shear, steric repulsion, and gravity are calculated assuming the cell is a solid sphere. The position of the cell is then determined for each time step from the net force and torque on the cell using a hydrodynamic mobility function for a sphere near a plane wall in a viscous fluid.</p>
+<p>In a recent version of their model, they have simulated the transition from rolling to adhesion upon detection of the IL-8 chemokine <xref ref-type="bibr" rid="pcbi.1000681-Caputo1">[49]</xref>. To represent the local G-protein intracellular signaling events, they use a 1D lattice of 1000 units on which a small set of intracellular signaling molecules can diffuse and interact. The bottom end of the lattice represents the microvilli tip. In their model, detection of IL-8 by CXCR1 on a microvilli tip initiates the dissociation of G-protein into two subunits, α and βγ, which can then diffuse along the 1D lattice. Effector molecules become activated when bound to the βγ subunit. In turn, the activated effector molecule can then diffuse and bind to the intracellular portion of LFA-1 at the bottom end of the lattice, converting it into a high affinity integrin.</p>
+<p>They observed a progressive activation of the integrins as cells rolled and interacted with chemokines, leading to a deceleration of the leukocyte before firm adhesion. The slowing of the leukocyte in their model was on a timescale similar to leukocytes from in vitro experiments. In addition, they were able to observe a chemokine density-dependent effect on adhesion time similar to that observed in vitro.</p>
+<p>The ISWBC2 differs in many aspects from this recent version of the AD model, which are briefly discussed below. A more detailed comparison of the ISWBCs with the AD models and with other models of leukocyte motility and adhesion can be found in the Appraisal of Model Specifications section within <xref ref-type="supplementary-material" rid="pcbi.1000681.s001">Text S1</xref> and in <xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>.</p>
+<p>In the above AD model, LFA-1 is found at the tips of microvilli. Studies have shown that LFA-1 exists on the cell body surface hidden between the leukocyte microvilli <xref ref-type="bibr" rid="pcbi.1000681-Hocde1">[29]</xref>,<xref ref-type="bibr" rid="pcbi.1000681-Laudanna1">[30]</xref>. Therefore, in our ISWBC2 we have specified simply that <sc>lfa</sc>1 objects are located on sparse regions on the <sc>membrane surface</sc>. The fraction of <sc>membrane units</sc> containing <sc>lfa</sc>1<sc>grids</sc> and <sc>lfa</sc>1 objects was determined by the parameter <italic>LFA1GridDensity</italic>.</p>
+<p>The most recent version of the AD simulations also included a more explicit representation of the signaling events initiated upon chemokine detection. With the ISWBC2, it was not our objective to model the signaling network in detail, and therefore it was not listed as a currently targeted phenotypic attribute in <xref ref-type="table" rid="pcbi-1000681-t001">Table 1</xref>. Our current goal was to test the hypothesized molecular mechanisms at the cell interface of the leukocyte and endothelial substrate surface. However, we have shown previously that synthetic models like ISWBCs can be easily refined to become increasingly realistic in terms of both components and behaviors <xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>. As needed, any of the abstract, low-resolution components can be replaced with more realistic, higher resolution composite objects composed of components that map to more detailed biological counterparts. The current ISWBC2 represents the hypothesized mechanisms and processes at a level of detail and resolution that is just sufficient to simulate the currently targeted attributes listed in <xref ref-type="table" rid="pcbi-1000681-t001">Table 1</xref>.</p>
+</sec><sec id="s4c">
+<title>Future Directions</title>
+<p>The ISWBC2 system represents significant progress towards a larger goal of discovering and validating concrete plausible mechanistic details of cell-cell interactions, in the face of considerable uncertainty, by building computational devices comprised of instantiated mechanisms. ISWBC2s are capable of mimicking only a portion (<xref ref-type="table" rid="pcbi-1000681-t001">Table 1</xref>) of a long list of targeted phenotypic attributes. However, we have shown here and previously that our iterative refinement method provides a means to concatenate in a dynamic fashion new knowledge of leukocyte rolling and adhesion into our ISWBC systems as it becomes available, without having to reengineer the whole system, and without having to compromise already validated features and behaviors <xref ref-type="bibr" rid="pcbi.1000681-Tang1">[12]</xref>. The expectation is that ISWBCs can be iteratively refined to become increasingly realistic in terms of components, mechanisms, and behaviors. The greater the similarity, the more useful the analogue will become as an observable expression of coalesced, relevant leukocyte knowledge. Future targeted attributes should include those associated with abnormal disease-associated leukocyte adhesion, and predicting the consequences of interventions.</p>
+</sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1000681.s001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000681.s001" xlink:type="simple"><label>Text S1</label><caption>
+<p>Supplementary Text: Decisional Processes for <sc>LFA1</sc>, <sc>PSELECTIN</sc>, <sc>MEMBRANE UNIT</sc>, <sc>LEUKOCYTE MEMBRANE</sc>, and <sc>ICAM1</sc>; <sc>BOND</sc> Formation and Dissociation; Diffusion; Effect of varying ICAM1Density and LFA1Density on <sc>LEUKOCYTE ADHESION</sc>; and Appraisal of Model Specifications</p>
+<p>(1.44 MB PDF)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We thank Klaus F. Ley, Glen Ropella, and members of the BioSystems group for helpful discussions and suggestions. The work was abstracted in part from a dissertation to be presented by JT to the Graduate Division, University of California, Berkeley, CA, in partial fulfillment of the Ph.D. degree.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1000681-Kinashi1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kinashi</surname><given-names>T</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Intracellular Signalling Controlling Integrin Activation in Lymphocytes.</article-title>             <source>Nat Rev Immunol</source>             <volume>5</volume>             <fpage>546</fpage>             <lpage>59</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Kim1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kim</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Carman</surname><given-names>CV</given-names></name>
+<name name-style="western"><surname>Yang</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Salas</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Springer</surname><given-names>TA</given-names></name>
+</person-group>             <year>2004</year>             <article-title>The primacy of affinity over clustering in regulation of adhesiveness of the integrin {alpha}L{beta}2.</article-title>             <source>J Cell Biol</source>             <volume>167</volume>             <fpage>1241</fpage>             <lpage>1253</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Lum1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lum</surname><given-names>AF</given-names></name>
+<name name-style="western"><surname>Green</surname><given-names>CE</given-names></name>
+<name name-style="western"><surname>Lee</surname><given-names>GR</given-names></name>
+<name name-style="western"><surname>Staunton</surname><given-names>DE</given-names></name>
+<name name-style="western"><surname>Simon</surname><given-names>SI</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Dynamic regulation of LFA-1 activation and neutrophil arrest on intercellular adhesion molecule 1 (ICAM-1) in shear flow.</article-title>             <source>J Biol Chem</source>             <volume>277</volume>             <fpage>20660</fpage>             <lpage>70</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Constantin1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Constantin</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Majeed</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Giagulli</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Piccio</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Kim</surname><given-names>JY</given-names></name>
+<etal/></person-group>             <year>2000</year>             <article-title>Chemokines trigger immediate beta2 integrin affinity and mobility changes: differential regulation and roles in lymphocyte arrest under flow.</article-title>             <source>Immunity</source>             <volume>13</volume>             <fpage>759</fpage>             <lpage>769</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Sarantos1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Sarantos</surname><given-names>MR</given-names></name>
+<name name-style="western"><surname>Raychaudhuri</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Lum</surname><given-names>AFH</given-names></name>
+<name name-style="western"><surname>Staunton</surname><given-names>DE</given-names></name>
+<name name-style="western"><surname>Simon</surname><given-names>SI</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Leukocyte function-associated antigen 1-mediated adhesion stability is dynamically regulated through affinity and valency during bond formation with intercellular adhesion molecule-1.</article-title>             <source>J Biol Chem</source>             <volume>280</volume>             <fpage>28290</fpage>             <lpage>28298</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-RocaCusachs1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Roca-Cusachs</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Gauthier</surname><given-names>NC</given-names></name>
+<name name-style="western"><surname>del Rio</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Sheetz</surname><given-names>MP</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Clustering of a5B1 integrins determines adhesion strength wheras avB3 and talin enable mechanotransduction.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>106</volume>             <fpage>16245</fpage>             <lpage>16250</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Norman1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Norman</surname><given-names>MU</given-names></name>
+<name name-style="western"><surname>Hulliger</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Colarusso</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Kubes</surname><given-names>P</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Multichannel fluorescence spinning disk microscopy reveals early endogenous CD4 T cell recruitment in contact sensitivity via complement.</article-title>             <source>J Immunol</source>             <volume>180</volume>             <fpage>510</fpage>             <lpage>521</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-McDonald1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>McDonald</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>McAvoy</surname><given-names>EF</given-names></name>
+<name name-style="western"><surname>Lam</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Gill</surname><given-names>V</given-names></name>
+<name name-style="western"><surname>de la Motte</surname><given-names>C</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Interaction of CD44 and hyaluronan is the dominant mechanism for neutrophil sequestration in inflamed liver sinusoids.</article-title>             <source>J Exp Med</source>             <volume>205</volume>             <fpage>915</fpage>             <lpage>927</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Mempel1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mempel</surname><given-names>TR</given-names></name>
+<name name-style="western"><surname>Henrickson</surname><given-names>SE</given-names></name>
+<name name-style="western"><surname>von Andrian</surname><given-names>UH</given-names></name>
+</person-group>             <year>2004</year>             <article-title>T-cell priming by dendritic cells in lymph nodes occurs in three distinct phases.</article-title>             <source>Nature</source>             <volume>427</volume>             <fpage>154</fpage>             <lpage>159</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Zarbock1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zarbock</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Ley</surname><given-names>K</given-names></name>
+</person-group>             <year>2009</year>             <article-title>New insights into leukocyte recruitment by intravital microscopy.</article-title>             <source>Curr Top Microbiol Immunol</source>             <volume>334</volume>             <fpage>129</fpage>             <lpage>152</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Hunt1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hunt</surname><given-names>CA</given-names></name>
+<name name-style="western"><surname>Ropella</surname><given-names>GE</given-names></name>
+<name name-style="western"><surname>Lam</surname><given-names>TE</given-names></name>
+<name name-style="western"><surname>Tang</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Kim</surname><given-names>SH</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>At the biological modeling and simulation frontier.</article-title>             <source>Pharm Res</source>             <comment>DOI 10.1007/s11095-009-9958-3</comment>          </element-citation></ref>
+<ref id="pcbi.1000681-Tang1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tang</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Ley</surname><given-names>KF</given-names></name>
+<name name-style="western"><surname>Hunt</surname><given-names>CA</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Dynamics of in silico leukocyte rolling, activation, and adhesion.</article-title>             <source>BMC Syst Biol</source>             <volume>1</volume>             <fpage>14</fpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Smith1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Smith</surname><given-names>DF</given-names></name>
+<name name-style="western"><surname>Deem</surname><given-names>TL</given-names></name>
+<name name-style="western"><surname>Bruce</surname><given-names>AC</given-names></name>
+<name name-style="western"><surname>Reutershan</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Wu</surname><given-names>D</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Leukocyte phosphoinositide-3 kinase {gamma} is required for chemokine-induced, sustained adhesion under flow in vivo.</article-title>             <source>J Leukoc Biol</source>             <volume>80</volume>             <fpage>1491</fpage>             <lpage>1499</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Rommel1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rommel</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Camps</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Ji</surname><given-names>H</given-names></name>
+</person-group>             <year>2007</year>             <article-title>PI3K delta and PI3K gamma: partners in crime in inflammation in rheumatoid arthritis and beyond?</article-title>             <source>Nat Rev Immunol</source>             <volume>7</volume>             <fpage>191</fpage>             <lpage>201</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Hawkins1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hawkins</surname><given-names>PT</given-names></name>
+<name name-style="western"><surname>Stephens</surname><given-names>LR</given-names></name>
+</person-group>             <year>2007</year>             <article-title>PI3Kgamma is a key regulator of inflammatory responses and cardiovascular homeostasis.</article-title>             <source>Science</source>             <volume>18</volume>             <fpage>64</fpage>             <lpage>66</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Andrews1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Andrews</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Stephens</surname><given-names>LR</given-names></name>
+<name name-style="western"><surname>Hawkins</surname><given-names>PT</given-names></name>
+</person-group>             <year>2007</year>             <article-title>PI3K Class IB Pathway in Neutrophils.</article-title>             <source>Sci STKE</source>             <volume>2007</volume>             <fpage>cm3</fpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Vodovotz1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Vodovotz</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Csete</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Bartels</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Chang</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>An</surname><given-names>G</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Translational systems biology of inflammation.</article-title>             <source>PLoS Comput Biol</source>             <volume>4</volume>             <fpage>e1000014</fpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Ley1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ley</surname><given-names>K</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Integration of inflammatory signals by rolling neutrophils.</article-title>             <source>Immunological Rev</source>             <volume>186</volume>             <fpage>8</fpage>             <lpage>18</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Simon1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Simon</surname><given-names>SI</given-names></name>
+<name name-style="western"><surname>Green</surname><given-names>CE</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Molecular mechanics and dynamics of leukocyte recruitment during inflammation.</article-title>             <source>Annu Rev Biomed Eng</source>             <volume>7</volume>             <fpage>151</fpage>             <lpage>185</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Gakidis1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gakidis</surname><given-names>MA</given-names></name>
+<name name-style="western"><surname>Cullere</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Olson</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Wilsbacher</surname><given-names>JL</given-names></name>
+<name name-style="western"><surname>Zhang</surname><given-names>B</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Vav GEFs are required for beta2 integrin-dependent functions of neutrophils.</article-title>             <source>J Cell Biol</source>             <volume>166</volume>             <fpage>273</fpage>             <lpage>282</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Fisher1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Fisher</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Henzinger</surname><given-names>TA</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Executable cell biology.</article-title>             <source>Nat Biotechnol</source>             <volume>25</volume>             <fpage>1239</fpage>             <lpage>1249</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Hunt2"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hunt</surname><given-names>CA</given-names></name>
+<name name-style="western"><surname>Ropella</surname><given-names>GE</given-names></name>
+<name name-style="western"><surname>Park</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Engelberg</surname><given-names>J</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Dichotomies between computational and mathematical models.</article-title>             <source>Nat Biotechnol</source>             <volume>26</volume>             <fpage>737</fpage>             <lpage>738</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Grant1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Grant</surname><given-names>MR</given-names></name>
+<name name-style="western"><surname>Mostov</surname><given-names>KE</given-names></name>
+<name name-style="western"><surname>Tlsty</surname><given-names>TD</given-names></name>
+<name name-style="western"><surname>Hunt</surname><given-names>CA</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Simulating properties of in vitro epithelial cell morphogenesis.</article-title>             <source>PLoS Comput Biol</source>             <volume>2</volume>             <fpage>e129</fpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Kim2"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kim</surname><given-names>SH</given-names></name>
+<name name-style="western"><surname>Debnath</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Mostov</surname><given-names>KE</given-names></name>
+<name name-style="western"><surname>Sunwoo</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Hunt</surname><given-names>CA</given-names></name>
+</person-group>             <year>2009</year>             <article-title>A computational approach to resolve cell level contributions to early glandular epithelial cancer progression.</article-title>             <source>BMC Syst Biol</source>             <volume>3</volume>             <fpage>122</fpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Kim3"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kim</surname><given-names>SH</given-names></name>
+<name name-style="western"><surname>Yu</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>Mostov</surname><given-names>KE</given-names></name>
+<name name-style="western"><surname>Matthay</surname><given-names>MA</given-names></name>
+<name name-style="western"><surname>Hunt</surname><given-names>CA</given-names></name>
+</person-group>             <year>2009</year>             <article-title>A computational approach to understand in vitro alveolar morphogenesis.</article-title>             <source>PLoS One</source>             <volume>4</volume>             <fpage>e4819</fpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Balci1"><label>26</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Balci</surname><given-names>O</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Verification, Validation and Testing.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Banks</surname><given-names>J</given-names></name>
+</person-group>             <source>Handbook of Simulation: Principles, Methodology, Advances, Applications, and Practice</source>             <publisher-loc>New York</publisher-loc>             <publisher-name>John Wiley &amp; Sons</publisher-name>             <fpage>335</fpage>             <lpage>396</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Xiang1"><label>27</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Xiang</surname><given-names>X</given-names></name>
+<name name-style="western"><surname>Kennedy</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Madey</surname><given-names>G</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Verification and validation of agent-based scientific simulation models.</article-title>             <fpage>47</fpage>             <lpage>55</lpage>             <comment>Agent-Directed Simulation Conference. San Diego, CA</comment>          </element-citation></ref>
+<ref id="pcbi.1000681-In1"><label>28</label><element-citation publication-type="other" xlink:type="simple">             <comment>In Silico White Blood Cell 2 (ISWBC2) Model [<ext-link ext-link-type="uri" xlink:href="http://biosystems.ucsf.edu/iswbc/" xlink:type="simple">http://biosystems.ucsf.edu/iswbc/</ext-link>]</comment>          </element-citation></ref>
+<ref id="pcbi.1000681-Hocde1"><label>29</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hocde</surname><given-names>SA</given-names></name>
+<name name-style="western"><surname>Hyrien</surname><given-names>O</given-names></name>
+<name name-style="western"><surname>Waugh</surname><given-names>RE</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Cell adhesion molecule distribution relative to neutrophil surface topography assessed by TIRFM.</article-title>             <source>Biophys J</source>             <volume>97</volume>             <fpage>379</fpage>             <lpage>387</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Laudanna1"><label>30</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Laudanna</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Kim</surname><given-names>JY</given-names></name>
+<name name-style="western"><surname>Constantin</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Butcher</surname><given-names>EC</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Rapid leukocyte integrin activation by chemokines.</article-title>             <source>Immunol Rev</source>             <volume>186</volume>             <fpage>37</fpage>             <lpage>46</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Tohyama1"><label>31</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tohyama</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Katagiri</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Pardi</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Lu</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Springer</surname><given-names>TA</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>The critical cytoplasmic regions of the alphaL/beta2 integrin in Rap1-induced adhesion and migration.</article-title>             <source>Mol Biol Cell</source>             <volume>14</volume>             <fpage>2570</fpage>             <lpage>2582</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Shao1"><label>32</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Shao</surname><given-names>JY</given-names></name>
+<name name-style="western"><surname>Hochmuth</surname><given-names>RM</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Mechanical anchoring strength of L-selectin, beta2 integrins, and CD45 to neutrophil cytoskeleton and membrane.</article-title>             <source>Biophys J</source>             <volume>77</volume>             <fpage>587</fpage>             <lpage>596</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Jun1"><label>33</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jun</surname><given-names>CD</given-names></name>
+<name name-style="western"><surname>Shimaoka</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Carman</surname><given-names>CV</given-names></name>
+<name name-style="western"><surname>Takagi</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Springer</surname><given-names>TA</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Dimerization and the effectiveness of ICAM-1 in mediating LFA-1 dependent adhesion.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>98</volume>             <fpage>6830</fpage>             <lpage>6835</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Miller1"><label>34</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Miller</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Knorr</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Ferrone</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Houdei</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Carron</surname><given-names>CP</given-names></name>
+<etal/></person-group>             <year>1995</year>             <article-title>Intercellular adhesion molecule-1 dimerization and its consequences for adhesion mediated by lymphocyte function associated-1.</article-title>             <source>J Exp Med</source>             <volume>172</volume>             <fpage>1231</fpage>             <lpage>1241</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Reilly1"><label>35</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Reilly</surname><given-names>PL</given-names></name>
+<name name-style="western"><surname>Waska</surname><given-names>JR</given-names></name>
+<name name-style="western"><surname>Jeanfavre</surname><given-names>DD</given-names></name>
+<name name-style="western"><surname>McNally</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Rothelein</surname><given-names>R</given-names></name>
+<etal/></person-group>             <year>1995</year>             <article-title>The native structure of the intercellular adhesion molecule-1 (ICAM-1) is a dimer.</article-title>             <source>J Immunol</source>             <volume>155</volume>             <fpage>529</fpage>             <lpage>532</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Jun2"><label>36</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jun</surname><given-names>CD</given-names></name>
+<name name-style="western"><surname>Carman</surname><given-names>CV</given-names></name>
+<name name-style="western"><surname>Redick</surname><given-names>SD</given-names></name>
+<name name-style="western"><surname>Shimaoka</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Erickson</surname><given-names>HP</given-names></name>
+<etal/></person-group>             <year>2001</year>             <article-title>Ultrastructure and function of dimeric, soluble intercellular adhesion molecule (ICAM-1).</article-title>             <source>J Biol Chem</source>             <volume>276</volume>             <fpage>29027</fpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Barreiro1"><label>37</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Barreiro</surname><given-names>O</given-names></name>
+<name name-style="western"><surname>Yanez-Mo</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Sala-Valdes</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Gutierrez-Lopez</surname><given-names>MD</given-names></name>
+<name name-style="western"><surname>Ovalle</surname><given-names>S</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Endothelial tetraspanin microdomains regulate leukocyte firm adhesion during extravasation.</article-title>             <source>Blood</source>             <volume>105</volume>             <fpage>2852</fpage>             <lpage>2861</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Ley2"><label>38</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ley</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Zhang</surname><given-names>H</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Dances with leukocytes: how tetraspanin-enriched microdomains assemble to form endothelial adhesive platforms.</article-title>             <source>J Cell Biol</source>             <volume>183</volume>             <fpage>375</fpage>             <lpage>376</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Magnani1"><label>39</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Magnani</surname><given-names>L</given-names></name>
+</person-group>             <year>2000</year>             <source>Abduction, reason and science - processes of discovery and explanation</source>             <publisher-loc>New York, NY</publisher-loc>             <publisher-name>Kluwer Academic/Plenum Publishers</publisher-name>          </element-citation></ref>
+<ref id="pcbi.1000681-Gabbay1"><label>40</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gabbay</surname><given-names>DM</given-names></name>
+<name name-style="western"><surname>Woods</surname><given-names>J</given-names></name>
+</person-group>             <year>2005</year>             <source>A Practical Logic of Cognitive Systems, Volume 2: The reach of abduction: insight and trial</source>             <publisher-name>Elsevier Science</publisher-name> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">496</size>           </element-citation></ref>
+<ref id="pcbi.1000681-HafeziMoghadam1"><label>41</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hafezi-Moghadam</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Thomas</surname><given-names>KL</given-names></name>
+<name name-style="western"><surname>Cornelssen</surname><given-names>C</given-names></name>
+</person-group>             <year>2004</year>             <article-title>A novel mouse-driven ex vivo flow chamber for the study of leukocyte and platelet function.</article-title>             <source>Am J Physiol Cell Physiol</source>             <volume>286</volume>             <fpage>C876</fpage>             <lpage>C892</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Kuijpers1"><label>42</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Kuijpers</surname><given-names>TW</given-names></name>
+<name name-style="western"><surname>Tool</surname><given-names>AT</given-names></name>
+<name name-style="western"><surname>van der Schoot</surname><given-names>CE</given-names></name>
+<name name-style="western"><surname>Ginsel</surname><given-names>LA</given-names></name>
+<name name-style="western"><surname>Onderwater</surname><given-names>JJ</given-names></name>
+<etal/></person-group>             <year>1991</year>             <article-title>Membrane surface antigen expression on neutrophils: a reappraisal of the use of surface markers for neutrophil activation.</article-title>             <source>Blood</source>             <volume>78</volume>             <fpage>1105</fpage>             <lpage>1111</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Forsyth1"><label>43</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Forsyth</surname><given-names>KD</given-names></name>
+<name name-style="western"><surname>Levinsky</surname><given-names>RJ</given-names></name>
+</person-group>             <year>1990</year>             <article-title>Preparative procedures of cooling and re-warming increase leukocyte integrin expression and function on neutrophils.</article-title>             <source>J Immunol Methods</source>             <volume>128</volume>             <fpage>159</fpage>             <lpage>163</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Glasser1"><label>44</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Glasser</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Fiederlein</surname><given-names>RL</given-names></name>
+</person-group>             <year>1990</year>             <article-title>The effect of various cell separation procedures on assays of neutrophil function. A critical appraisal.</article-title>             <source>Am J Clin Pathol</source>             <volume>93</volume>             <fpage>662</fpage>             <lpage>669</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Bailey1"><label>45</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bailey</surname><given-names>AM</given-names></name>
+<name name-style="western"><surname>Lawrence</surname><given-names>MB</given-names></name>
+<name name-style="western"><surname>Shang</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Katz</surname><given-names>AJ</given-names></name>
+<name name-style="western"><surname>Peirce</surname><given-names>SM</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Agent-based model of therapeutic adipose-derived stromal cell trafficking during ischemia predicts ability to roll on P-selectin.</article-title>             <source>PLoS Comput Biol</source>             <volume>5(2)</volume>             <fpage>e1000294</fpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Krasik1"><label>46</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Krasik</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Yee</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Hammer</surname><given-names>DA</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Adhesive Dynamics simulation of neutrophil arrest with deterministic activation.</article-title>             <source>Biophys J</source>             <volume>91</volume>             <fpage>1145</fpage>             <lpage>1155</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Bhatia1"><label>47</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bhatia</surname><given-names>SK</given-names></name>
+<name name-style="western"><surname>King</surname><given-names>MR</given-names></name>
+<name name-style="western"><surname>Hammer</surname><given-names>DA</given-names></name>
+</person-group>             <year>2003</year>             <article-title>The state diagram for cell adhesion mediated by two receptors.</article-title>             <source>Biophys J</source>             <volume>84</volume>             <fpage>2671</fpage>             <lpage>2690</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Chang1"><label>48</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chang</surname><given-names>KC</given-names></name>
+<name name-style="western"><surname>Tees</surname><given-names>DF</given-names></name>
+<name name-style="western"><surname>Hammer</surname><given-names>DA</given-names></name>
+</person-group>             <year>2000</year>             <article-title>The state diagram for cell adhesion under flow: leukocyte rolling and firm adhesion.</article-title>             <source>Proc Natl Acad Sci USA</source>             <volume>97</volume>             <fpage>11262</fpage>             <lpage>11267</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Caputo1"><label>49</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Caputo</surname><given-names>KE</given-names></name>
+<name name-style="western"><surname>Hammer</surname><given-names>DA</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Adhesive dynamics simulation of G-protein-mediated chemokine-activated neutrophil adhesion.</article-title>             <source>Biophys J</source>             <volume>96</volume>             <fpage>2989</fpage>             <lpage>3004</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Smith2"><label>50</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Smith</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Berg</surname><given-names>EL</given-names></name>
+<name name-style="western"><surname>Lawrence</surname><given-names>MB</given-names></name>
+</person-group>             <year>1999</year>             <article-title>A direct comparison of selectin-mediated transient, adhesive events using high temporal resolution.</article-title>             <source>Biophys J</source>             <volume>77</volume>             <fpage>3371</fpage>             <lpage>3383</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Park1"><label>51</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Park</surname><given-names>EY</given-names></name>
+<name name-style="western"><surname>Smith</surname><given-names>MJ</given-names></name>
+<name name-style="western"><surname>Stropp</surname><given-names>ES</given-names></name>
+<name name-style="western"><surname>Snapp</surname><given-names>KR</given-names></name>
+<name name-style="western"><surname>DiVietro</surname><given-names>JA</given-names></name>
+<etal/></person-group>             <year>2002</year>             <article-title>Comparison of PSGL-1 microbead and neutrophil rolling: microvillus elongation stabilizes P-selectin bond clusters.</article-title>             <source>Biophys J</source>             <volume>82</volume>             <fpage>1835</fpage>             <lpage>1847</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Lawrence1"><label>52</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lawrence</surname><given-names>MB</given-names></name>
+<name name-style="western"><surname>Kansas</surname><given-names>GS</given-names></name>
+<name name-style="western"><surname>Kunkel</surname><given-names>EJ</given-names></name>
+<name name-style="western"><surname>Ley</surname><given-names>K</given-names></name>
+</person-group>             <year>1997</year>             <article-title>Threshold levels of fluid shear promote leukocyte adhesion through selectins (CD62L P, E).</article-title>             <source>J Cell Biol</source>             <volume>136</volume>             <fpage>717</fpage>             <lpage>727</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Chen1"><label>53</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chen</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Springer</surname><given-names>TA</given-names></name>
+</person-group>             <year>1999</year>             <article-title>An automatic braking system that stabilizes leukocyte rolling by an increase in selectin bond number with shear.</article-title>             <source>J Cell Biol</source>             <volume>144</volume>             <fpage>185</fpage>             <lpage>200</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Smith3"><label>54</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Smith</surname><given-names>DF</given-names></name>
+<name name-style="western"><surname>Galkina</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Ley</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Huo</surname><given-names>Y</given-names></name>
+</person-group>             <year>2005</year>             <article-title>GRO family chemokines are specialized for monocyte arrest from flow.</article-title>             <source>Am J Physiol Heart Circ Physiol</source>             <volume>289</volume>             <fpage>H1976</fpage>             <lpage>1984</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Cairo1"><label>55</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cairo</surname><given-names>CW</given-names></name>
+<name name-style="western"><surname>Mirchev</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Golan</surname><given-names>DE</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Cytoskeletal regulation couples LFA-1 conformational changes to receptor lateral mobility and clustering.</article-title>             <source>Immunity</source>             <volume>25</volume>             <fpage>297</fpage>             <lpage>208</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Barreiro2"><label>56</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Barreiro</surname><given-names>O</given-names></name>
+<name name-style="western"><surname>Zamai</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Yanez-Mo</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Tejera</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Lopez-Romero</surname><given-names>P</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Endothelial adhesion receptors are recruited to adherent leukocytes by inclusion in preformed tetraspanin nanoplatforms.</article-title>             <source>J Cell Biol</source>             <volume>183</volume>             <fpage>527</fpage>             <lpage>542</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Chesnutt1"><label>57</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Chesnutt</surname><given-names>BC</given-names></name>
+<name name-style="western"><surname>Smith</surname><given-names>DF</given-names></name>
+<name name-style="western"><surname>Raffler</surname><given-names>NA</given-names></name>
+<name name-style="western"><surname>Smith</surname><given-names>ML</given-names></name>
+<name name-style="western"><surname>White</surname><given-names>EJ</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Induction of LFA-1-dependent neutrophil rolling on ICAM-1 by engagement of E-selectin.</article-title>             <source>Microcirculation</source>             <volume>13</volume>             <fpage>99</fpage>             <lpage>109</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Smith4"><label>58</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Smith</surname><given-names>ML</given-names></name>
+<name name-style="western"><surname>Sperandio</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Galkina</surname><given-names>EV</given-names></name>
+<name name-style="western"><surname>Ley</surname><given-names>K</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Autoperfused mouse flow chamber reveals synergistic neutrophil accumulation through P-selectin and E-selectin.</article-title>             <source>J Leukoc Biol</source>             <volume>76</volume>             <fpage>985</fpage>             <lpage>993</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Frommhold1"><label>59</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Frommhold</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Mannigel</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Schymeinsky</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Mocsai</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Poeschl</surname><given-names>J</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Spleen tyrosine kinase Syk is critical for sustained leukocyte adhesion during inflammation in vivo.</article-title>             <source>BMC Immunol</source>             <volume>8</volume>             <fpage>31</fpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Norman2"><label>60</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Norman</surname><given-names>KE</given-names></name>
+<name name-style="western"><surname>Katopodis</surname><given-names>AG</given-names></name>
+<name name-style="western"><surname>Thoma</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Kolbinger</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Hicks</surname><given-names>AE</given-names></name>
+<etal/></person-group>             <year>2000</year>             <article-title>P-selectin glycoprotein ligand-1 supports rolling on E- and P-selectin in vivo.</article-title>             <source>Blood</source>             <volume>96</volume>             <fpage>3585</fpage>             <lpage>3591</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Ding1"><label>61</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ding</surname><given-names>ZM</given-names></name>
+<name name-style="western"><surname>Babensee</surname><given-names>JE</given-names></name>
+<name name-style="western"><surname>Simon</surname><given-names>SI</given-names></name>
+<name name-style="western"><surname>Lu</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Perrard</surname><given-names>JL</given-names></name>
+<etal/></person-group>             <year>1999</year>             <article-title>Relative contribution of LFA-1 and Mac-1 to neutrophil adhesion and migration.</article-title>             <source>J Immunol</source>             <volume>163</volume>             <fpage>5029</fpage>             <lpage>5038</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Mehta1"><label>62</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mehta</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Cummings</surname><given-names>RD</given-names></name>
+<name name-style="western"><surname>McEver</surname><given-names>RP</given-names></name>
+</person-group>             <year>1998</year>             <article-title>Affinity and kinetic analysis of P-selectin binding to P-selectin glycoprotein ligand-1.</article-title>             <source>J Biol Chem</source>             <volume>273</volume>             <fpage>32506</fpage>             <lpage>32513</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Shimaoka1"><label>63</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Shimaoka</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Lu</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Palframan</surname><given-names>RT</given-names></name>
+<name name-style="western"><surname>von Andrian</surname><given-names>UH</given-names></name>
+<name name-style="western"><surname>McCormack</surname><given-names>A</given-names></name>
+<etal/></person-group>             <year>2001</year>             <article-title>Reversibly locking a protein fold in an active conformation with a disulfide bond: Integrin alphaL I domains with high affinity and antagonist activity in vivo.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>98</volume>             <fpage>6009</fpage>             <lpage>6014</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Lupher1"><label>64</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lupher</surname><given-names>ML</given-names><suffix>Jr</suffix></name>
+<name name-style="western"><surname>Harris</surname><given-names>EA</given-names></name>
+<name name-style="western"><surname>Beals</surname><given-names>CR</given-names></name>
+<name name-style="western"><surname>Sui</surname><given-names>LM</given-names></name>
+<name name-style="western"><surname>Liddington</surname><given-names>RC</given-names></name>
+<etal/></person-group>             <year>2001</year>             <article-title>Cellular activation of leukocyte function-associated antigen-1 and its affinity are regulated at the I domain allosteric site.</article-title>             <source>J Immunol</source>             <volume>167</volume>             <fpage>1431</fpage>             <lpage>1439</lpage>          </element-citation></ref>
+<ref id="pcbi.1000681-Tominaga1"><label>65</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tominaga</surname><given-names>YK</given-names></name>
+<name name-style="western"><surname>Satoh</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Asai</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Kato</surname><given-names>K</given-names></name>
+<name name-style="western"><surname>Ishikawa</surname><given-names>K</given-names></name>
+<etal/></person-group>             <year>1998</year>             <article-title>Affinity and kinetic analysis of the molecular interaction of ICAM-1 and leukocyte function-associated antigen-1.</article-title>             <source>J Immunol</source>             <volume>4016</volume>          </element-citation></ref>
+<ref id="pcbi.1000681-Granger1"><label>66</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Granger</surname><given-names>DN</given-names></name>
+<name name-style="western"><surname>Stokes</surname><given-names>KY</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Differential regulation of leukocyte-endothelial cell interactions.</article-title>             <person-group person-group-type="editor">
+<name name-style="western"><surname>Aird</surname><given-names>WC</given-names></name>
+</person-group>             <publisher-loc>Boca Raton, FL</publisher-loc>             <publisher-name>Taylor and Francis Group</publisher-name>             <fpage>229</fpage>             <lpage>243</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

@@ -1,0 +1,943 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id><journal-title-group>
+<journal-title>PLoS Computational Biology</journal-title></journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-13-01852</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1003741</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Biology and life sciences</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Proteins</subject><subj-group><subject>Protein structure</subject></subj-group></subj-group><subj-group><subject>Biomacromolecule-ligand interactions</subject></subj-group></subj-group><subj-group><subject>Biophysics</subject><subj-group><subject>Biophysical simulations</subject></subj-group></subj-group><subj-group><subject>Computational biology</subject></subj-group><subj-group><subject>Molecular biology</subject><subj-group><subject>Macromolecular structure analysis</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Physical sciences</subject><subj-group><subject>Chemistry</subject><subj-group><subject>Medicinal chemistry</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Structure-Based Druggability Assessment of the Mammalian Structural Proteome with Inclusion of Light Protein Flexibility</article-title>
+<alt-title alt-title-type="running-head">Structure-Based Druggability with Protein Flexibility</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Loving</surname><given-names>Kathryn A.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Lin</surname><given-names>Andy</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Cheng</surname><given-names>Alan C.</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Schrödinger LLC, New York, New York, United States of America</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>Amgen Inc., South San Francisco, California, United States of America</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Schlessinger</surname><given-names>Avner</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Icahn School of Medicine at Mount Sinai, United States of America</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">kathryn_armstrong@alum.mit.edu</email> (KAL); <email xlink:type="simple">alan.cheng@amgen.com</email> (ACC)</corresp>
+<fn fn-type="conflict"><p>ACC and AL were paid employees of Amgen, Inc., and KAL was a paid employee of Schrodinger, LLC. This does not alter our adherence to the PLOS policies on sharing data and materials.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: ACC KAL. Performed the experiments: ACC KAL AL. Analyzed the data: ACC KAL AL. Contributed reagents/materials/analysis tools: ACC KAL AL. Wrote the paper: ACC KAL. Reviewed the manuscript: ACC KAL AL.</p></fn>
+<fn id="fn1" fn-type="current-aff"><label>¤</label><p>Current address: Stem CentRx, South San Francisco, California, United States of America</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><month>7</month><year>2014</year></pub-date>
+<pub-date pub-type="epub"><day>31</day><month>7</month><year>2014</year></pub-date>
+<volume>10</volume>
+<issue>7</issue>
+<elocation-id>e1003741</elocation-id>
+<history>
+<date date-type="received"><day>24</day><month>10</month><year>2013</year></date>
+<date date-type="accepted"><day>8</day><month>6</month><year>2014</year></date>
+</history>
+<permissions>
+<copyright-year>2014</copyright-year>
+<copyright-holder>Loving et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>Advances reported over the last few years and the increasing availability of protein crystal structure data have greatly improved structure-based druggability approaches. However, in practice, nearly all druggability estimation methods are applied to protein crystal structures as rigid proteins, with protein flexibility often not directly addressed. The inclusion of protein flexibility is important in correctly identifying the druggability of pockets that would be missed by methods based solely on the rigid crystal structure. These include cryptic pockets and flexible pockets often found at protein-protein interaction interfaces. Here, we apply an approach that uses protein modeling in concert with druggability estimation to account for light protein backbone movement and protein side-chain flexibility in protein binding sites. We assess the advantages and limitations of this approach on widely-used protein druggability sets. Applying the approach to all mammalian protein crystal structures in the PDB results in identification of 69 proteins with potential druggable cryptic pockets.</p>
+</abstract>
+<abstract abstract-type="summary"><title>Author Summary</title>
+<p>Advances reported over the last few years and the increasing availability of protein crystal structure data have greatly improved structure-based druggability approaches. These algorithms predict our ability to discover small molecule drugs for protein targets and can help in identifying promising new biological targets for small molecule drug discovery. However, in practice, nearly all druggability estimation methods are applied to protein crystal structures as rigid proteins, with protein flexibility often not directly addressed. The increasing interest in finding small molecule drugs to protein-protein interfaces makes this issue particularly acute since these interfaces tend to have substantial flexibility compared to traditional enzyme targets. Here, we apply an approach that accounts for light protein backbone movement and protein side-chain flexibility in protein binding sites. We present the results of applying this method to all publicly available mammalian protein crystal structures.</p>
+</abstract>
+<funding-group><funding-statement>This work was funded by Amgen, with Schrodinger providing additional computational resources. Because ACC is an employee of Amgen, publication required consent from Amgen. The funders otherwise had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="13"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>The majority of small molecule drug discovery efforts towards new, unprecedented biological targets do not progress past high-throughput screening or hit-to-lead optimization due to lack of pursuable chemical matter <xref ref-type="bibr" rid="pcbi.1003741-Macarron1">[1]</xref>, <xref ref-type="bibr" rid="pcbi.1003741-Hopkins1">[2]</xref>. To counter this, drug discovery groups increasingly use druggability analysis methods to estimate the amenability of new targets to small molecule drug discovery efforts. In prioritizing new targets, druggability analysis results are then considered along with the strength of evidence that affecting the target will lead to human therapeutic benefit <xref ref-type="bibr" rid="pcbi.1003741-Cheng1">[3]</xref>. The results also inform the use of structure-based drug design resources and alternative approaches, such as those involving pro-drugs and covalent interactions, for targets that are expected to be very difficult.</p>
+<p>In a drug discovery setting, small molecule druggability is commonly defined as whether a small molecule can bind a desired biological site with good, nanomolar range potency, and, at the same time, also have good, drug-like properties conducive to oral bioavailability and clinical progression <xref ref-type="bibr" rid="pcbi.1003741-Cheng1">[3]</xref>–<xref ref-type="bibr" rid="pcbi.1003741-Fauman1">[6]</xref>. Thus, the concept refers to chemical tractability of the target. The term, bindability, is also used <xref ref-type="bibr" rid="pcbi.1003741-Sheridan1">[7]</xref>, although the term may not capture the desire for the optimized compound to have drug-like properties. We emphasize that a binding site is not necessarily druggable simply because a ligand binds; the ligand additionally needs to have reasonable drug-like properties and potency. The concepts of ‘druglikeness’ and ‘druggability’ as we use it here cover the most common strategies for small molecule drug discovery, and alternative strategies (e.g., involving covalent adducts, metal chelation, prodrugs, and non-oral delivery) can also be useful in prosecuting targets that are found to be likely ‘undruggable’ when only weak, non-covalent interactions are considered <xref ref-type="bibr" rid="pcbi.1003741-Cheng2">[4]</xref>.</p>
+<p>Druggability estimation has historically been based on precedence, that is, whether there are known drugs targeting the protein or one of its homologs <xref ref-type="bibr" rid="pcbi.1003741-Hopkins1">[2]</xref>, <xref ref-type="bibr" rid="pcbi.1003741-Cheng1">[3]</xref>. However, this type of data is scarce or non-existent for many newer protein targets. Advances reported over the last few years allow us to leverage the increasing availability of protein crystal structure data using structure-based druggability approaches. There are at least ten published methods for estimating druggability this way <xref ref-type="bibr" rid="pcbi.1003741-Cheng1">[3]</xref>, <xref ref-type="bibr" rid="pcbi.1003741-Fauman1">[6]</xref>, and the body of work is extremely consistent in finding that druggable sites are those that have particular ranges of size, curvature, and hydrophobic character <xref ref-type="bibr" rid="pcbi.1003741-Cheng1">[3]</xref>–<xref ref-type="bibr" rid="pcbi.1003741-Fauman1">[6]</xref>. These descriptors largely characterize aspects of receptor desolvation <xref ref-type="bibr" rid="pcbi.1003741-Cheng2">[4]</xref>, and atomistic simulations using molecular dynamics have now shown desolvation to be relevant and sufficient for predicting druggability <xref ref-type="bibr" rid="pcbi.1003741-Seco1">[8]</xref>, <xref ref-type="bibr" rid="pcbi.1003741-Beuming1">[9]</xref>.</p>
+<p>Many current structure-based methods for druggability estimation are remarkably accurate if the potential small molecule binding site is largely rigid <xref ref-type="bibr" rid="pcbi.1003741-Cheng1">[3]</xref>, <xref ref-type="bibr" rid="pcbi.1003741-Fauman1">[6]</xref>. Binding sites are not always rigid though, and druggability methods are less accurate if the protein readily changes conformation upon small molecule binding. This is particularly true of protein-protein interface and allosteric sites, where druggable pockets often become exposed only with protein movement <xref ref-type="bibr" rid="pcbi.1003741-Wells1">[10]</xref>–<xref ref-type="bibr" rid="pcbi.1003741-Basse1">[12]</xref>. These ‘cryptic pockets’ are large and shallow when bound to their biological peptide or protein partners, but tend to have high hydrophobic character, and, crucially, have flexibility such that larger, deeper pockets more typical of druggable binding sites are energetically accessible <xref ref-type="bibr" rid="pcbi.1003741-Wells1">[10]</xref>, <xref ref-type="bibr" rid="pcbi.1003741-Eyrisch1">[11]</xref>.</p>
+<p>To begin to address these sites, we apply an approach to modeling conservative movements in pockets using comparative protein modeling approaches coupled closely with structure-based druggability analysis. The approach models relatively light protein motions, involving side-chain flexibility and local protein backbone movements, and maintains reasonable prediction accuracy in retrospective validation studies. It allows us to take pockets that a rigid-protein druggability analysis would deem to have some drug-like properties, but not have sufficient drug-like size, and assess whether local protein motion can result in the pocket having all the drug-like properties, including drug-like size. The approach is computationally efficient enough to enable mining of the structural proteome while taking into account light protein flexibility. Applying the method to roughly 18,000 mammalian protein crystal structures in the PDB results in prediction of one percent of proteins as containing likely druggable cryptic pockets.</p>
+</sec><sec id="s2">
+<title>Results and Discussion</title>
+<p>We combine a druggability scoring model with protein modeling and docking methods to first identify candidate pockets that have drug-like physicochemical properties but may lack sufficient drug-like size, and then seek out energetically accessible side-chain and backbone motions near these potential pockets using protein modeling approaches.</p>
+<p>For determining whether a target pocket has drug-like physiochemical properties, we use an adaptation of a validated druggability score <xref ref-type="bibr" rid="pcbi.1003741-Halgren1">[13]</xref>-<xref ref-type="bibr" rid="pcbi.1003741-Gustin1">[15]</xref>, which we call Dscore+. Dscore+ is a modification of Dscore <xref ref-type="bibr" rid="pcbi.1003741-Halgren1">[13]</xref>, and we've found that this modification results in good correlation with <sup>19</sup>F NMR hit-rates for five newer targets prosecuted at Amgen <xref ref-type="bibr" rid="pcbi.1003741-Jordan1">[14]</xref>. Dscore+ is computed from physiochemical descriptors generated from a program, SiteMap, and is a weighted sum with contributions from the degree of pocket enclosure (a surrogate for pocket curvature), pocket size, and the balance between hydrophobic and hydrophilic character in the binding site <xref ref-type="bibr" rid="pcbi.1003741-Halgren1">[13]</xref>. In this work, we further validate Dscore+ as a druggability score, and tune the pocket identification parameters in the program, SiteMap, to better identify pockets that may become more druggable with protein motion. In addition to assessing the physiochemical properties of the pocket, we assess reasonable drug-like size by considering the volume of the pocket.</p>
+<p>The method consists of the three steps depicted in <xref ref-type="fig" rid="pcbi-1003741-g001">Figure 1</xref>. If a protein site is found to meet a minimal Dscore+ threshold, then residues surrounding the site are put through an iterative flexible protein docking and protein modeling workflow known as induced-fit docking <xref ref-type="bibr" rid="pcbi.1003741-Sherman1">[16]</xref> in order to model protein flexibility, including light, local backbone movement and side-chain rotamer conformations. Induced-fit docking is done twice, first using a small naphthalene molecule to reorder side-chains and expose small hydrophobic clefts, and then again using a larger, tetra-substituted naphthalene molecule to further open the cleft if the protein structure allows. We note that others have used fragment docking to assess druggability of pockets in static structures <xref ref-type="bibr" rid="pcbi.1003741-Huang1">[17]</xref>, but we are using docking for the different purpose of inducing flexibility in pockets.</p>
+<fig id="pcbi-1003741-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003741.g001</object-id><label>Figure 1</label><caption>
+<title>Method for druggability estimation with light protein flexibility.</title>
+<p>Multiple pockets per protein are considered, but one is shown here for simplicity.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003741.g001" position="float" xlink:type="simple"/></fig>
+<p>We chose naphthalene and a larger tetra-substituted naphthalene because they are hydrophobic and aromatic—known features of drug-like molecules. Additionally, naphthalene is rigid so docking is fast. The tetra-substituted naphthalene molecule we use is a natural progression from naphthalene, and includes four substituents (ethyl, propyl, and cyclohexyl at two positions) that we thought could help in opening pockets. These simple-minded choices performed reasonably well in validation studies, and limited experimentation with a few other molecules gave similar or worse results. In particular, use of benzene in place of naphthalene resulted in a large false positive rate because benzene is small and much more promiscuous, fitting into many small sites. For the larger molecule, we tried five molecules similar to tetra-substituted naphthalene and the results were not substantially different. It is certainly plausible that more systematic experimentation with a larger number of ligands could result in improved performance.</p>
+<p>Other approaches that address the issue of protein flexibility for druggability assessment use computational solvent mapping or molecular dynamics simulations, or both. <italic>Kozakov et al.</italic> used computational solvent mapping with 16 small organic fragment probes to identify small pocket ‘hot spots’ where multiple probes bind in the simulations <xref ref-type="bibr" rid="pcbi.1003741-Kozakov1">[18]</xref>–<xref ref-type="bibr" rid="pcbi.1003741-Grove1">[19]</xref>. Alternate side-chain conformers are then modeled for selected residues adjacent to the hot spots, and the resulting modeled sites are subjected to a round of computational solvent mapping. ‘Hot spots’ having all 16 probes bound are identified as druggable <xref ref-type="bibr" rid="pcbi.1003741-Grove1">[19]</xref>. <italic>Bakan et al.</italic> used molecular dynamics simulations for solvent mapping with a different set of small fragment probes and found that the probes bind known allosteric sites during the simulation <xref ref-type="bibr" rid="pcbi.1003741-Bakan1">[20]</xref>. <italic>Brown and Hajduk</italic> earlier showed that molecular dynamics simulations can capture pocket dynamics that result in a more druggable binding pocket in Bcl-xl, while preserving much of the known binding site rigidity of Akt-PH and FKBP <xref ref-type="bibr" rid="pcbi.1003741-Brown1">[21]</xref>. Tools have very recently become available to facilitate druggability assessment in molecular dynamics trajectories <xref ref-type="bibr" rid="pcbi.1003741-Kokh1">[22]</xref>–<xref ref-type="bibr" rid="pcbi.1003741-Ivetac1">[24]</xref>. However, the typically-used short molecular dynamics simulations on the order of 10–30 ns likely do not fully capture protein flexibility relevant to drug binding <xref ref-type="bibr" rid="pcbi.1003741-Lexa1">[25]</xref>, which typically occurs on much longer timescales <xref ref-type="bibr" rid="pcbi.1003741-Shan1">[26]</xref>.</p>
+<p>Our approach to flexibly treating potentially druggable binding sites is substantially less compute-intensive, which is important for our goal of analyzing the structural proteome. For a single binding site where flexibility is modeled, our approach requires between one and two hours for most individual protein structures on a current scientific workstation with a four core CPU. In contrast, a 30 ns molecular dynamics simulation on a single protein would require about a week, and the computational solvent mapping approach using FTMAP requires about half a day for each protein binding site since FTMap must be run for each discrete side-chain configuration and each configuration requires about two hours on a single CPU core <xref ref-type="bibr" rid="pcbi.1003741-Ngan1">[27]</xref>. Our approach runs relatively quickly due to the use of comparative protein modeling techniques instead of more resource-intensive methods that attempt to directly simulate biophysical phenomena. Our approach finds very few sites that open up significantly—less than two percent of protein structures across the mammalian structural proteome. The false positive rate is reasonably low; we see a 12% false positive rate in our protein-protein interaction validation set and a 0% false negative rate. In contrast, it is likely possible to find all known druggable sites using molecular dynamics, including some that are undetectable by our method. However, separating the signal from the noise is challenging <xref ref-type="bibr" rid="pcbi.1003741-Bakan1">[20]</xref>, <xref ref-type="bibr" rid="pcbi.1003741-Brown1">[21]</xref> since there is a tendency for many pocket openings to be observed. To be clear, our approach does not reveal any new pockets that do not already exist within the rigid structure. It does, however, locate small sites that do not meet the druggability criteria initially but can meet the druggability criteria when conservative protein flexibility is modeled.</p>
+<p>While accurate modeling of protein motion continues to be difficult and the subject of substantial research, we found the approach we present here to be sufficiently accurate and efficient for the purposes of mining the structural proteome. We note that previous efforts we are aware of to identify the “druggable genome” rely on sequence-similarity to known druggable proteins <xref ref-type="bibr" rid="pcbi.1003741-Hopkins1">[2]</xref>. Structure-based druggability analyses are based on “first principles” and are thus complementary to precedence-based sequence-similarity approaches.</p>
+<sec id="s2a">
+<title>Validation with targets of known druggability</title>
+<p>We applied the method to two widely-used druggability validation sets to check its performance and measure any increase in false positive rate due to allowance of protein flexibility.</p>
+<p>The first validation set is a published set that covers a variety of targets, and consists of 27 targets: 17 druggable targets and 10 difficult targets <xref ref-type="bibr" rid="pcbi.1003741-Cheng2">[4]</xref>. A histogram of the druggability scores, Dscore+, based on the original crystal structures, with no flexibility modeling, is shown in <xref ref-type="fig" rid="pcbi-1003741-g002">Figure 2a</xref>. The plot supports a Dscore+ &gt;1.3 threshold for druggable versus difficult targets, with higher scores roughly indicating more druggable sites. Modeling protein flexibility for target sites that meet a threshold of Dscore+&gt;1.3 results in an increase in Dscore+, but the increase is relatively systematic (mean = 0.4, σ = 0.3) and appears to be consistent enough that a useful differentiation between difficult and druggable targets is retained.</p>
+<fig id="pcbi-1003741-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003741.g002</object-id><label>Figure 2</label><caption>
+<title>Druggability score histograms for validation set binding site structures.</title>
+<p>The top panel depicts results with the original crystal structures used rigidly, with a red line indicating the Dscore+&gt;1.3 cutoff used in this work. The top Dscore+ value is shown for each of the 27 protein targets (17 druggable and 10 difficult, where the prodrug targets are considered difficult). The bottom panel depicts results after modeling of protein flexibility, with difficult targets in ghost outline because flexibility modeling is not usually applied to sites that score below the Dscore+&gt;1.3 cutoff. Difficult targets are indicated by the lighter bars, while druggable targets are indicated by the darker bars. See text for further discussion.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003741.g002" position="float" xlink:type="simple"/></fig>
+<p>We also investigated the effect of flexibility modeling on targets with scores of Dscore+≤1.3. For these additional targets, we again find an increase in scores by an average of 0.4 (σ = 0.3). Thus, difficult and druggable targets in the validation set can still be distinguished after flexibility modeling, although the distinction is less crisp than it was when scoring rigid structures. Comparing the score distributions for druggable and difficult targets using the two-sample Kolmogorov-Smirnov (K-S) statistic finds that the scores are significantly different from each other, both with and without flexibility modeling (<italic>p</italic>-values of 8×10<sup>−4</sup> and 1×10<sup>−6</sup>, respectively). When we subtract 0.4 from each score that includes protein flexibility, the score distributions remain similar within each set. For druggable targets, the means of the with- and without-flexibility scores are 1.6 and 1.6 respectively, with variances of 0.05 and 0.07. For difficult targets, the means of the with- and without-flexibility scores are 1.2 and 1.1 respectively, with variances of 0.04 and 0.03.</p>
+<p>Taken together, the results suggest that a Dscore+ threshold of 1.7 (i.e., 1.3+0.4) should be applied to sites resulting from flexibility modeling, and this threshold is depicted in <xref ref-type="fig" rid="pcbi-1003741-g002">Figure 2b</xref> by a red line. We will show that this threshold value is strongly supported by analysis of a larger number of proteins (109 proteins) from the mammalian proteome druggability results. While the threshold is determined empirically and the increase is not ideal, we can rationalize the increase as due to modeling of protein flexibility with an impetus towards making the pocket more hydrophobic.</p>
+<p>Turning to pocket volumes, the method should not lead to all pockets increasing significantly in volume, consistent with the belief that some sites are inherently flexible while others are less so. In this first validation set, which is composed largely of enzyme active sites, the average volume before and after flexibility modeling are both about the same (420 Å<sup>3</sup> and 360 Å<sup>3</sup>, respectively, with standard deviations of 190 Å<sup>3</sup> and 130 Å<sup>3</sup>), and are both within the drug-like range, as discussed later. In the second, validation set of protein-protein interfaces, we will see that the binding site volumes change more significantly. Resulting volumes tend towards a volume of around 300–400 Å<sup>3</sup>, if the flexibility of the protein allows, and this appears to be related to the size of the second ligand (tetra-substituted naphthalene) used in the induced-fit docking step of the flexibility modeling. In the mammalian proteome analysis, we find that only one percent of proteins analyzed have cryptic pockets that change substantially from a volume substantially below the drug-like range (≤100 Å<sup>3</sup>) to a drug-like volume (160–800 Å<sup>3</sup>). In developing our approach, the drug-like volume range was initially set roughly to 150–600 Å<sup>3</sup> based on our judgment, and later refined to 160–800 Å<sup>3</sup> based on quantitative analysis of the mammalian proteome results.</p>
+</sec><sec id="s2b">
+<title>Validation with protein-protein interaction targets</title>
+<p>The second validation set addresses protein-protein interaction (PPI) targets, and includes six targets from the 2P2I database and Wells et al. (2007): Bcl-xL, HDM2, IL-2R, HPV E2, ZipA, TNFα <xref ref-type="bibr" rid="pcbi.1003741-Wells1">[10]</xref>, <xref ref-type="bibr" rid="pcbi.1003741-Basse1">[12]</xref>. Bcl-xL and HDM2 are classified as druggable since oral small molecule inhibitors have advanced to clinical trials. We argue that the remaining potentially high-value targets are difficult. While pioneering small-molecule inhibitors have been reported, we note that substantial efforts made over the last 15 years to identify inhibitors of TNFα, IL-2R, HPV E2, and ZipA have not resulted in reported small molecule clinical compounds <xref ref-type="bibr" rid="pcbi.1003741-Wells1">[10]</xref>. Given just the protein crystal structures, with no information on location of binding sites, the method successfully opens the relevant binding pockets for Bcl-xL, HDM2, and TNFα and scores them as druggable based on Dscore+ and volume considerations, as shown in <xref ref-type="table" rid="pcbi-1003741-t001">Table 1</xref>. Calculated values of Dscore+ and volume that fall within the defined drug-like range are highlighted in bold. In the cases of Bcl-xL and TNFα, light flexibility results in small molecule binding pockets with roughly 50% and 100% larger volumes, respectively. Bcl-xL would have been classified as difficult based on the 2bzw PDB structure without additional flexibility modeling because the pocket size (112 Å<sup>3</sup>) is too small by any reasonable criteria for drug-like volume size. Flexibility modeling results in small changes in the binding site that, together, increases the volume of the pocket to a reasonable volume (172 Å<sup>3</sup>). Bcl-xL is perhaps the one clear example where a protein pocket opens substantially and the druggability is known (i.e., orally administered small molecule inhibitors have progressed to clinic).</p>
+<table-wrap id="pcbi-1003741-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003741.t001</object-id><label>Table 1</label><caption>
+<title>Results for protein-protein interaction targets from 2P2PI with known druggability <xref ref-type="bibr" rid="pcbi.1003741-Wells1">[10]</xref>, <xref ref-type="bibr" rid="pcbi.1003741-Basse1">[12]</xref>.</title>
+</caption><alternatives><graphic id="pcbi-1003741-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003741.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Target name</td>
+<td align="left" rowspan="1" colspan="1">PDB ID</td>
+<td align="left" rowspan="1" colspan="1">Ligand type</td>
+<td align="left" rowspan="1" colspan="1">Assigned druggability</td>
+<td colspan="2" align="left" rowspan="1">Crystal pocket</td>
+<td colspan="2" align="left" rowspan="1">Flexible model</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Dscore+</td>
+<td align="left" rowspan="1" colspan="1">Volume</td>
+<td align="left" rowspan="1" colspan="1">Dscore+</td>
+<td align="left" rowspan="1" colspan="1">Volume</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Bcl-xL</td>
+<td align="left" rowspan="1" colspan="1">2bzw</td>
+<td align="left" rowspan="1" colspan="1">protein</td>
+<td align="left" rowspan="1" colspan="1">druggable</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.5</bold></td>
+<td align="left" rowspan="1" colspan="1">112</td>
+<td align="left" rowspan="1" colspan="1"><bold>2.4</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>172</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Bcl-2</td>
+<td align="left" rowspan="1" colspan="1">2xa0</td>
+<td align="left" rowspan="1" colspan="1">protein</td>
+<td align="left" rowspan="1" colspan="1">druggable</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.5</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>167</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>2.0</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>174</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">HDM2</td>
+<td align="left" rowspan="1" colspan="1">1ycr</td>
+<td align="left" rowspan="1" colspan="1">protein</td>
+<td align="left" rowspan="1" colspan="1">druggable</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.7</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>165</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>2.5</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>175</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TNFα</td>
+<td align="left" rowspan="1" colspan="1">1tnf</td>
+<td align="left" rowspan="1" colspan="1">protein</td>
+<td align="left" rowspan="1" colspan="1">difficult</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.8</bold></td>
+<td align="left" rowspan="1" colspan="1">126</td>
+<td align="left" rowspan="1" colspan="1"><bold>2.4</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>257</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">IL-2Rα</td>
+<td align="left" rowspan="1" colspan="1">1z92</td>
+<td align="left" rowspan="1" colspan="1">protein</td>
+<td align="left" rowspan="1" colspan="1">difficult</td>
+<td align="left" rowspan="1" colspan="1">0.9</td>
+<td align="left" rowspan="1" colspan="1">49</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">HPV E2</td>
+<td align="left" rowspan="1" colspan="1">1tue</td>
+<td align="left" rowspan="1" colspan="1">protein</td>
+<td align="left" rowspan="1" colspan="1">difficult</td>
+<td align="left" rowspan="1" colspan="1">0.8</td>
+<td align="left" rowspan="1" colspan="1">57</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">ZipA</td>
+<td align="left" rowspan="1" colspan="1">1f46</td>
+<td align="left" rowspan="1" colspan="1">protein</td>
+<td align="left" rowspan="1" colspan="1">difficult</td>
+<td align="left" rowspan="1" colspan="1">0.7</td>
+<td align="left" rowspan="1" colspan="1">105</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">ZipA</td>
+<td align="left" rowspan="1" colspan="1">1f47</td>
+<td align="left" rowspan="1" colspan="1">protein</td>
+<td align="left" rowspan="1" colspan="1">difficult</td>
+<td align="left" rowspan="1" colspan="1">0.9</td>
+<td align="left" rowspan="1" colspan="1">141</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Bcl-xL</td>
+<td align="left" rowspan="1" colspan="1">2yxj</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">druggable</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.8</bold></td>
+<td align="left" rowspan="1" colspan="1">141</td>
+<td align="left" rowspan="1" colspan="1"><bold>2.5</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>239</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Bcl-xL</td>
+<td align="left" rowspan="1" colspan="1">3qkd</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">druggable</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.9</bold></td>
+<td align="left" rowspan="1" colspan="1">132</td>
+<td align="left" rowspan="1" colspan="1"><bold>2.1</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>195</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Bcl-xL</td>
+<td align="left" rowspan="1" colspan="1">4ehr</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">druggable</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.4</bold></td>
+<td align="left" rowspan="1" colspan="1">100</td>
+<td align="left" rowspan="1" colspan="1"><bold>2.4</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>175</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Bcl-2</td>
+<td align="left" rowspan="1" colspan="1">4aq3</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">druggable</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.7</bold></td>
+<td align="left" rowspan="1" colspan="1">113</td>
+<td align="left" rowspan="1" colspan="1"><bold>2.3</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>220</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">HDM2</td>
+<td align="left" rowspan="1" colspan="1">1rv1</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">druggable</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.7</bold></td>
+<td align="left" rowspan="1" colspan="1">147</td>
+<td align="left" rowspan="1" colspan="1"><bold>2.2</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>178</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">HDM2</td>
+<td align="left" rowspan="1" colspan="1">1t4e</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">druggable</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.6</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>203</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>2.1</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>234</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">HDM2</td>
+<td align="left" rowspan="1" colspan="1">3jzk</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">druggable</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.6</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>204</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>1.9</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>184</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">HDM2</td>
+<td align="left" rowspan="1" colspan="1">3lbk</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">druggable</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.5</bold></td>
+<td align="left" rowspan="1" colspan="1">150</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.9</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>160</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">HDM2</td>
+<td align="left" rowspan="1" colspan="1">3lbl</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">druggable</td>
+<td align="left" rowspan="1" colspan="1"><bold>2.0</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>224</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>2.2</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>218</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">HDM2</td>
+<td align="left" rowspan="1" colspan="1">3tu1</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">druggable</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.5</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>221</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>1.9</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>172</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">HDM2</td>
+<td align="left" rowspan="1" colspan="1">4dij</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">druggable</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.6</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>192</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>1.8</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>207</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">HDM2</td>
+<td align="left" rowspan="1" colspan="1">4ere</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">druggable</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.8</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>165</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>2.5</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>172</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TNFα</td>
+<td align="left" rowspan="1" colspan="1">2az5</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">difficult</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.7</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>325</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>2.0</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>233</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TNFR1</td>
+<td align="left" rowspan="1" colspan="1">1ft4</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">difficult</td>
+<td align="left" rowspan="1" colspan="1">1.2</td>
+<td align="left" rowspan="1" colspan="1"><bold>330</bold></td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">IL-2Rα</td>
+<td align="left" rowspan="1" colspan="1">1py2</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">difficult</td>
+<td align="left" rowspan="1" colspan="1">1.2</td>
+<td align="left" rowspan="1" colspan="1">66</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">IL-2Rα</td>
+<td align="left" rowspan="1" colspan="1">1pw6</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">difficult</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.4</bold></td>
+<td align="left" rowspan="1" colspan="1">73</td>
+<td align="left" rowspan="1" colspan="1"><bold>1.4</bold></td>
+<td align="left" rowspan="1" colspan="1">72</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">HPV E2</td>
+<td align="left" rowspan="1" colspan="1">1r6n</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">difficult</td>
+<td align="left" rowspan="1" colspan="1">1.2</td>
+<td align="left" rowspan="1" colspan="1">95</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">ZipA</td>
+<td align="left" rowspan="1" colspan="1">1y2f</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">difficult</td>
+<td align="left" rowspan="1" colspan="1">0.9</td>
+<td align="left" rowspan="1" colspan="1">91</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">ZipA</td>
+<td align="left" rowspan="1" colspan="1">1y2g</td>
+<td align="left" rowspan="1" colspan="1">cmpd</td>
+<td align="left" rowspan="1" colspan="1">difficult</td>
+<td align="left" rowspan="1" colspan="1">0.9</td>
+<td align="left" rowspan="1" colspan="1">96</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>These targets have <underline>protein-protein</underline> co-crystal structures shown in the top half of the table, and corresponding <underline>protein-ligand</underline> co-crystal structures are shown in the bottom half. Values of Dscore+ and volumes falling within drug-like criteria are highlighted in bold. ‘cmpd’ indicates a small molecule compound, and volumes are in units of Å<sup>3</sup>. “*” indicates ‘not applicable’ because the site's initial Dscore+ values did not meet the cut-off for flexibility modeling; however, some values were subsequently calculated for validation purposes, and are discussed in the text. We define known druggability based on the success in finding drug-like, clinical small molecules where there are efforts from multiple independent groups.</p></fn></table-wrap-foot></table-wrap>
+<p>We also analyzed all targets listed in 2P2I where crystal structures are provided, but some targets have either unclear experimental druggability because efforts on the targets are more recent, or known inhibitors involve metal chelation. The results for these additional targets are included in <xref ref-type="supplementary-material" rid="pcbi.1003741.s001">Table S1</xref>.</p>
+<p>Comparing Dscore+ and pocket volume calculation results with and without protein flexibility modeling finds that Bcl-xL (PDB IDs: 2bzw, 2yxj, 3qkd, 4ehr) and a minority of HDM2 structures (PDB IDs: 1rv1, 3lbk) would have been missed without the additional flexibility modeling to open up pockets to a drug-like volume. Interestingly, one IL-2Rα structure (PDB ID: 1pw6) has a Dscore+ that places the target in the low end of the druggable score range, but the pocket volume does not satisfy the drug-like criteria, and this remains the case after protein flexibility modeling. Protein flexibility modeling does not always open pockets significantly.</p>
+<p>With TNFα, the known pocket at the trimer interface was identified as the top pocket in the apo-structure, and flexibility modeling resulted in a binding site with good druggability score and good drug-like volume. This result is consistent with the scores obtained using the co-complex structure with SPD-304 <xref ref-type="bibr" rid="pcbi.1003741-He1">[28]</xref>. However, the best reported inhibitor has only single digit micromolar range potency against TNFα <xref ref-type="bibr" rid="pcbi.1003741-He1">[28]</xref>, and although there is not really sufficient data currently to determine this, it is possible that the calculations overestimate the druggability of the pocket.</p>
+<p>With Bcl-xL, comparison of a BAD peptide-bound structure (PDB ID: 2bzw) with a small molecule-bound structure (PDB ID: 2yxj) shows that two residues, Phe105 and Leu130, adopt alternate conformations, and the helix around Leu108 becomes disordered to create the ligand binding pocket <xref ref-type="bibr" rid="pcbi.1003741-Lee1">[29]</xref>, as shown in <xref ref-type="fig" rid="pcbi-1003741-g003">Figure 3</xref>. The target serves as a good illustrative example of our complete approach. First, a potentially druggable site is identified regardless of whether it is too small to hold a drug-like molecule. This is followed by induced-fit docking of naphthalene to the identified site, which moves residues, including Phe105, as shown in <xref ref-type="fig" rid="pcbi-1003741-g003">Figure 3b</xref>. A second induced-fit docking of the larger (molecular weight of 363 Da) tetra-substituted naphthalene (TSN) results in a total of four models, where we see additional movements in addition to Phe105. A representative model is shown in green in <xref ref-type="fig" rid="pcbi-1003741-g003">Figure 3c</xref>, and shows a Leu130 rotamer change and backbone movements around Leu108 resulting in loss of the alpha-helical secondary structure. However, the modeled structures still differ from the ligand-bound crystal structure, as shown in <xref ref-type="fig" rid="pcbi-1003741-g003">Figure 3d</xref>, and the model, in this case, is effectively a hybrid of the peptide-bound structure and the known ligand-bound structure. Thus, the modeling approach, in the case of Bcl-xL, successfully allows backbone motion and reproduces some of the known side-chain and backbone movements in the resultant models. We note that the TSN molecule makes similar interactions compared to the ligand, ABT-737, in the ligand-bound crystal structure. Despite not reproducing all of the atomic details of the ABT-737 crystal structure, the flexibility modeling captures many key features and the inherent flexibility of the pocket that results in an increased binding site volume and increased druggability score.</p>
+<fig id="pcbi-1003741-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003741.g003</object-id><label>Figure 3</label><caption>
+<title>Flexible protein druggability modeling applied to Bcl-xL.</title>
+<p>Phe105, Leu108, and Leu130 are shown in stick in all structures. (a) Crystal structure of Bcl-xl protein bound to a BAD peptide (red and gray, respectively, PDB ID: 2bzw), (b) two naphthalene induced-fit docked models (orange), (c) one TSN induced-fit docked model (green), and (d) ABT-737-bound crystal structure (blue, PDB ID: 2yxj) with TSN induced-fit model (green).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003741.g003" position="float" xlink:type="simple"/></fig></sec><sec id="s2c">
+<title>Known protein flexibility cases</title>
+<p>To investigate the behavior of the flexibility modeling approach on targets where protein flexibility is known based on crystal structures, we applied the method to a set of protein crystal structures with binding site flexibility from <italic>Huang and Jacobson</italic> <xref ref-type="bibr" rid="pcbi.1003741-Huang1">[17]</xref>, where we've selected targets that show RMSD<sub>ave</sub> &gt;1.5 Å for binding site residues in different crystal structures of the same protein. We compare these results with their published druggability results, which do not account for flexibility, in <xref ref-type="table" rid="pcbi-1003741-t002">Table 2</xref>. While the two methods perform similarly on non-PPI targets (first six targets in <xref ref-type="table" rid="pcbi-1003741-t002">Table 2</xref>), the flexible druggability method performs better on PPI targets (last five targets in <xref ref-type="table" rid="pcbi-1003741-t002">Table 2</xref>). In particular, their docking-based druggability model predicts IL-2 and HPV E2 to be druggable (docking hit rate&gt;0.36) based on some structures, but predicts the same targets to be very difficult based on other structures. The flexibility modeling approach results in classification of both targets as very difficult, consistent with what is known, as previously discussed.</p>
+<table-wrap id="pcbi-1003741-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003741.t002</object-id><label>Table 2</label><caption>
+<title>Comparison of druggability estimations on known flexible protein pockets.</title>
+</caption><alternatives><graphic id="pcbi-1003741-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003741.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">Target</td>
+<td colspan="2" align="left" rowspan="1">Structural data</td>
+<td align="left" rowspan="1" colspan="1">Docking-based druggability</td>
+<td align="left" rowspan="1" colspan="1">Protein flexibility</td>
+<td colspan="2" align="left" rowspan="1">Variation</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">PDB ID</td>
+<td align="left" rowspan="1" colspan="1">RMSD<sub>ave</sub> (Å)</td>
+<td align="left" rowspan="1" colspan="1">[A] dock hit rate</td>
+<td align="left" rowspan="1" colspan="1">[B] DScore+</td>
+<td align="left" rowspan="1" colspan="1">[A]</td>
+<td align="left" rowspan="1" colspan="1">[B]</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">CDK2</td>
+<td align="left" rowspan="1" colspan="1">1aq1</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1.32</td>
+<td align="left" rowspan="1" colspan="1">1.7</td>
+<td align="left" rowspan="1" colspan="1">21%</td>
+<td align="left" rowspan="1" colspan="1">11%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1buh</td>
+<td align="left" rowspan="1" colspan="1">1.8</td>
+<td align="left" rowspan="1" colspan="1">1.44</td>
+<td align="left" rowspan="1" colspan="1">1.7</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1dm2</td>
+<td align="left" rowspan="1" colspan="1">1.8</td>
+<td align="left" rowspan="1" colspan="1">1.62</td>
+<td align="left" rowspan="1" colspan="1">1.9</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">ER</td>
+<td align="left" rowspan="1" colspan="1">1l2i</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1.69</td>
+<td align="left" rowspan="1" colspan="1">2.9</td>
+<td align="left" rowspan="1" colspan="1">9%</td>
+<td align="left" rowspan="1" colspan="1">7%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">3ert</td>
+<td align="left" rowspan="1" colspan="1">2.6</td>
+<td align="left" rowspan="1" colspan="1">1.55</td>
+<td align="left" rowspan="1" colspan="1">2.7</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1err</td>
+<td align="left" rowspan="1" colspan="1">2.0</td>
+<td align="left" rowspan="1" colspan="1">1.61</td>
+<td align="left" rowspan="1" colspan="1">2.8</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">HIV RT</td>
+<td align="left" rowspan="1" colspan="1">1vrt</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1.66</td>
+<td align="left" rowspan="1" colspan="1">2.5</td>
+<td align="left" rowspan="1" colspan="1">8%</td>
+<td align="left" rowspan="1" colspan="1">13%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1rt1</td>
+<td align="left" rowspan="1" colspan="1">1.5</td>
+<td align="left" rowspan="1" colspan="1">1.75</td>
+<td align="left" rowspan="1" colspan="1">2.3</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1c1c</td>
+<td align="left" rowspan="1" colspan="1">1.9</td>
+<td align="left" rowspan="1" colspan="1">1.61</td>
+<td align="left" rowspan="1" colspan="1">2.2</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1rth</td>
+<td align="left" rowspan="1" colspan="1">1.6</td>
+<td align="left" rowspan="1" colspan="1">1.61</td>
+<td align="left" rowspan="1" colspan="1">2.3</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">p38α</td>
+<td align="left" rowspan="1" colspan="1">1a9u</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1.00</td>
+<td align="left" rowspan="1" colspan="1">1.8</td>
+<td align="left" rowspan="1" colspan="1">49%</td>
+<td align="left" rowspan="1" colspan="1">15%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">kinase</td>
+<td align="left" rowspan="1" colspan="1">1kv1</td>
+<td align="left" rowspan="1" colspan="1">3.8</td>
+<td align="left" rowspan="1" colspan="1">1.16</td>
+<td align="left" rowspan="1" colspan="1">2.1</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1kv2</td>
+<td align="left" rowspan="1" colspan="1">3.5</td>
+<td align="left" rowspan="1" colspan="1">1.61</td>
+<td align="left" rowspan="1" colspan="1">2.1</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">PPARγ</td>
+<td align="left" rowspan="1" colspan="1">1fm6</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1.46</td>
+<td align="left" rowspan="1" colspan="1">2.9</td>
+<td align="left" rowspan="1" colspan="1">13%</td>
+<td align="left" rowspan="1" colspan="1">34%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1fm9</td>
+<td align="left" rowspan="1" colspan="1">1.5</td>
+<td align="left" rowspan="1" colspan="1">1.62</td>
+<td align="left" rowspan="1" colspan="1">3.0</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">2prg</td>
+<td align="left" rowspan="1" colspan="1">0.7</td>
+<td align="left" rowspan="1" colspan="1">1.43</td>
+<td align="left" rowspan="1" colspan="1">2.1</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TK</td>
+<td align="left" rowspan="1" colspan="1">1kim</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1.58</td>
+<td align="left" rowspan="1" colspan="1">2.7</td>
+<td align="left" rowspan="1" colspan="1">12%</td>
+<td align="left" rowspan="1" colspan="1">4%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1ki4</td>
+<td align="left" rowspan="1" colspan="1">1.8</td>
+<td align="left" rowspan="1" colspan="1">1.40</td>
+<td align="left" rowspan="1" colspan="1">2.6</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">IL-2</td>
+<td align="left" rowspan="1" colspan="1">1z92</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">0.13</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">107%</td>
+<td align="left" rowspan="1" colspan="1"><italic>13%</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1py2</td>
+<td align="left" rowspan="1" colspan="1">2.6</td>
+<td align="left" rowspan="1" colspan="1">0.62</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1m48</td>
+<td align="left" rowspan="1" colspan="1">2.5</td>
+<td align="left" rowspan="1" colspan="1">0.62</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Bcl-XL</td>
+<td align="left" rowspan="1" colspan="1">2bzw</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1.04</td>
+<td align="left" rowspan="1" colspan="1">2.4</td>
+<td align="left" rowspan="1" colspan="1">21%</td>
+<td align="left" rowspan="1" colspan="1">4%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">2yxj</td>
+<td align="left" rowspan="1" colspan="1">2.5</td>
+<td align="left" rowspan="1" colspan="1">0.84</td>
+<td align="left" rowspan="1" colspan="1">2.5</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">TNF</td>
+<td align="left" rowspan="1" colspan="1">1tnf</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">0.95</td>
+<td align="left" rowspan="1" colspan="1">2.4</td>
+<td align="left" rowspan="1" colspan="1">1%</td>
+<td align="left" rowspan="1" colspan="1">18%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">2az5</td>
+<td align="left" rowspan="1" colspan="1">2.9</td>
+<td align="left" rowspan="1" colspan="1">0.96</td>
+<td align="left" rowspan="1" colspan="1">2.0</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">MDM2</td>
+<td align="left" rowspan="1" colspan="1">1ycr</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">0.45</td>
+<td align="left" rowspan="1" colspan="1">2.5</td>
+<td align="left" rowspan="1" colspan="1">69%</td>
+<td align="left" rowspan="1" colspan="1">18%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1rv1</td>
+<td align="left" rowspan="1" colspan="1">1.8</td>
+<td align="left" rowspan="1" colspan="1">0.92</td>
+<td align="left" rowspan="1" colspan="1">2.2</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1t4e</td>
+<td align="left" rowspan="1" colspan="1">1.6</td>
+<td align="left" rowspan="1" colspan="1">0.66</td>
+<td align="left" rowspan="1" colspan="1">2.1</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">HPV E2</td>
+<td align="left" rowspan="1" colspan="1">1tue</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">-0.24</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1">323%</td>
+<td align="left" rowspan="1" colspan="1"><italic>31%</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">1r6n</td>
+<td align="left" rowspan="1" colspan="1">2.8</td>
+<td align="left" rowspan="1" colspan="1">1.02</td>
+<td align="left" rowspan="1" colspan="1">*</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt102"><label/><p>Targets are from <italic>Huang and Jacobson</italic> <xref ref-type="bibr" rid="pcbi.1003741-Huang1">[17]</xref>, and include all targets where at least two structures have an RMSD<sub>ave</sub> greater than 1.5 Å. The data under the <italic>Structural data</italic> and <italic>Docking-based druggability</italic> are from reference 17. RMSD<sub>ave</sub> is the RMSD of side-chains in the binding site within 4.5 Å of crystallographic ligands.<xref ref-type="bibr" rid="pcbi.1003741-Huang1">[17]</xref> <italic>Variation</italic> is calculated as the difference between the largest and smallest druggability score values divided by the average of all druggability score values for the particular target. The flexible druggability method is only performed for binding sites that meet an initial score (with the rigid crystal structure). However, for the purposes of this comparison study, we removed this cut-off in order to generate values for IL-2 and HPV E2. For IL-2, performing the flexibility modeling procedure results in DScore+ values of 1.5 (1z92), 1.5 (1py2), and 1.7 (1m48), with small, non-drug-like volumes of 98, 82, and 53 Å<sup>3</sup>, respectively. For HPV E2, the DScore+ values are 1.1 (1tue) and 1.5 (1r6n), with reasonable drug-like volumes. Calculations on all targets from reference 17 are included as S4.</p></fn></table-wrap-foot></table-wrap>
+<p>Examining the variation in scores between different crystal structures of the same target finds that while both the static protein and flexible protein methods yield similar score variation for non-PPI targets, they have substantially different variation with PPI targets. In particular, the docking hit-rate method shows large variation in score among structures of IL-2 (107%), MDM2 (69%), and HPV E2 (323%) compared with a median variation of 21% in all 11 targets. The flexibility modeling method, on the other hand, results in score variation on PPI targets that is consistent with that found with non-PPI targets.</p>
+<p>Overall, the docking method has a median score variation of 21% with a standard deviation of 94% in the dataset, while the flexibility modeling approach has a median score variation of 13% with a standard deviation of 10%. Yet, when the PPI targets are removed, the two methods have comparable score variation. Taken together, the flexibility modeling method appear to provide more reliable, consistent predictions at PPI interfaces, and this makes sense because PPI interfaces are much more likely to involve substantial protein flexibility <xref ref-type="bibr" rid="pcbi.1003741-Eyrisch1">[11]</xref>. Accounting for protein flexibility in a conservative manner, as we have done, leads to more consistent druggability predictions.</p>
+</sec><sec id="s2d">
+<title>The mammalian structural proteome</title>
+<p>We next applied the flexibility modeling approach to all publicly-available crystal structures containing mammalian proteins to estimate the number of druggable targets and identify potential druggable cryptic pockets. Analyzing the over 18,000 structures in the Protein Data Bank (PDB) <xref ref-type="bibr" rid="pcbi.1003741-Berman1">[30]</xref> as of June 30, 2012, required approximately 35,000 CPU-days of calculation (in aggregate) on our internal Linux clusters. The analysis covered not only the crystal structures as deposited in the PDB, but also all individual monomers in the case of multimer assemblies. Five percent of PDB files generated an error, due mostly to structures containing only Cα atoms (i.e., no protein side-chains) or involving large biomolecular assemblies, since we stopped calculations on a particular PDB entry if it ran for more than fourteen days.</p>
+<p>The results are summarized in <xref ref-type="table" rid="pcbi-1003741-t003">Table 3</xref>, where we also mapped PDB chains to SWISS-PROT ID's to determine the number of proteins represented. Of the 17,834 PDB entries analyzed, 42% had at least one site that met the Dscore+ &gt;1.3 threshold for further protein flexibility modeling. Twenty percent of mammalian proteins in the PDB have a potentially druggable pocket. Of the 5,739 PDB entries (1,134 proteins) that have a predicted druggable pocket, about two–thirds would be predicted druggable based on the original, static crystal structure.</p>
+<table-wrap id="pcbi-1003741-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003741.t003</object-id><label>Table 3</label><caption>
+<title>Results of druggability analysis of mammalian crystal structures in the PDB (as of June 30, 2012) with inclusion of light protein flexibility.</title>
+</caption><alternatives><graphic id="pcbi-1003741-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003741.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Structures</td>
+<td colspan="2" align="left" rowspan="1">Proteins</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">mammalian crystal structures</td>
+<td align="left" rowspan="1" colspan="1">18,879</td>
+<td align="left" rowspan="1" colspan="1">5,807</td>
+<td align="left" rowspan="1" colspan="1">105%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">structures analyzed</td>
+<td align="left" rowspan="1" colspan="1">17,834</td>
+<td align="left" rowspan="1" colspan="1">5,551</td>
+<td align="left" rowspan="1" colspan="1">100%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">flexibility modeling applied <xref ref-type="table-fn" rid="nt104">1</xref></td>
+<td align="left" rowspan="1" colspan="1">7,427</td>
+<td align="left" rowspan="1" colspan="1">2,875</td>
+<td align="left" rowspan="1" colspan="1">52%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">potentially druggable <xref ref-type="table-fn" rid="nt105">2</xref></td>
+<td align="left" rowspan="1" colspan="1">5,739</td>
+<td align="left" rowspan="1" colspan="1">1,134</td>
+<td align="left" rowspan="1" colspan="1">20%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">involves intermolecular interface<xref ref-type="table-fn" rid="nt106">3</xref></td>
+<td align="left" rowspan="1" colspan="1">2,095</td>
+<td align="left" rowspan="1" colspan="1">730</td>
+<td align="left" rowspan="1" colspan="1">17%</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">cryptic pocket<xref ref-type="table-fn" rid="nt107">4</xref></td>
+<td align="left" rowspan="1" colspan="1">105</td>
+<td align="left" rowspan="1" colspan="1">69</td>
+<td align="left" rowspan="1" colspan="1">1%</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt103"><label/><p>The “Structures” column provides the number of unique PDB entries represented, and “Proteins” represents the number of unique Swiss-Prot entries.</p></fn><fn id="nt104"><label>1</label><p>Dscore+&gt;1.3 for original rigid structure.</p></fn><fn id="nt105"><label>2</label><p>Dscore+≥1.7, drug-like volume (160–800 Å<sup>3</sup>) after flexibility modeling, protein at least 100 amino acids in size (equivalent to about 10 kDa molecular weight).</p></fn><fn id="nt106"><label>3</label><p>Intermolecular interfaces are further defined to include only protein-protein interaction dimer interfaces and protein-ligand pockets.</p></fn><fn id="nt107"><label>4</label><p>Cryptic pockets are further defined as pockets that are less than 100 Å<sup>3</sup> in volume in the crystal structure, but fall into the drug-like volume range after modeling of protein flexibility. An additional criteria of enclosure &lt;96% was applied to eliminate small buried sites.</p></fn></table-wrap-foot></table-wrap>
+<p>To identify druggable pockets with the greatest likelihood of biological relevance, we winnowed the list to protein sites in 2095 PDB structures where a small molecule could potentially disrupt a known intermolecular interaction. The interacting partner should be transiently-bound (as opposed to obligately-bound) and can be a protein, natural co-factor, natural ligand, or synthetic ligand. These sites are either at protein-protein interfaces or contain a small molecule of molecular weight less than 1000 Da. Including these criteria gives us higher-confidence druggability predictions and may remove many false-positives, but could result in removing sites that are functionally relevant but perhaps not well-characterized. For sites at protein-protein binding interfaces, we assessed whether the relevant protein-protein interaction is an obligate or transient interaction based on a published database, Interevol <xref ref-type="bibr" rid="pcbi.1003741-Faure1">[31]</xref>. Sites involving obligate dimer interfaces were removed, but sites without any prediction or assessment were retained; there was no annotation for over half of the protein interfaces we considered.</p>
+<p>Overall, we identified predicted druggable pockets in 2,095 PDB structures representing 730 unique proteins. In <xref ref-type="fig" rid="pcbi-1003741-g004">Figure 4</xref>, we depict the breakdown of predicted druggable pockets at these intermolecular interfaces with pockets where a bound ligand would disrupt a protein-protein interaction (including protein-peptide interactions) shown in blue, and pockets where a bound ligand would disrupt a protein-ligand interaction shown in red. The purple overlap region indicates protein pockets that are at both a protein-ligand and protein-protein interface. Some of these pockets are adjacent to small peptides, which can be classified as both a ligand and protein by our definition; ligands are defined as any molecule with molecular weight of 1000 kDa or less, while proteins are defined as non-HETATM molecules. The number of unique proteins in the purple region is much higher because a given protein may not only have a co-crystal structure solved bound to a protein partner, but also bound to a small molecule ligand (or vice-versa).</p>
+<fig id="pcbi-1003741-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003741.g004</object-id><label>Figure 4</label><caption>
+<title>Reasonable druggable criteria from analysis of 109 co-crystal structures of MDDR oral tablet drugs.</title>
+<p>A) Volumes of MDDR protein structure pockets. B) For pockets with volumes between 160 and 800 Å<sup>3</sup>, Dscore+ distribution of MDDR protein structures (top) and all protein structures (bottom). C) Range of Dscore+ after flexibility modeling of MDDR protein structure pockets supports a modified 1.7 Dscore+ cut-off after flexibility is applied.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003741.g004" position="float" xlink:type="simple"/></fig>
+<p>To identify cryptic pockets, we looked at potential druggable pockets that were small (volume ≤100 Å<sup>3</sup>) in the static structure, as long as the initial cavity was not fully buried (enclosure ≤96%). Less than 20% of these, representing 105 structures, met the flexible druggability criteria, opening up to at least 160 Å<sup>3</sup> with flexibility modeling. These targets representing 69 unique proteins are provided in <xref ref-type="supplementary-material" rid="pcbi.1003741.s002">Table S2</xref>.</p>
+<p>To compare the mammalian PDB results to a positive control set, we mapped known oral drugs from MDDR (2008 release) to ligands in known crystal structures. Of the 421 oral drugs administered in tablet form, 109 could be mapped to PDB co-crystal structures that had crystallographic resolution ≤2.5A. The 102 pockets with ligand overlap to known co-crystalized ligands (ligand overlap &gt;0) are plotted by volume in <xref ref-type="fig" rid="pcbi-1003741-g005">Figure 5A</xref>, where volume is computed using SiteMap. Targets at the low end of the volume range, with volumes of 160 Å<sup>3</sup> or less, include four complexes with large FK-506 natural product analogs that are not captured by the drug-like binding site definition in use. Targets with volumes of 800 Å<sup>3</sup> or greater are largely natural product complexes as well (macrocyclic antibiotics, reservatrol, and others). The results therefore suggest a drug-like volume range of between 160 and 800 Å<sup>3</sup> is appropriate for the approach we use. We note that volume calculations are highly sensitive to the algorithm used, and so these volume ranges should be established independently for different implementations of our approach.</p>
+<fig id="pcbi-1003741-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003741.g005</object-id><label>Figure 5</label><caption>
+<title>Flexibility modeling substantially increases the volume of a minority of protein pockets.</title>
+<p>A 2D histogram showing all pockets found in the mammalian structural proteome with initial volumes less than 800 Å<sup>3</sup> and with greater than 100 amino acids (about 10 kD in weight). The vertical and horizontal white lines indicate the 160 Å<sup>3</sup> volume cut-off. While the modeling method likely overpredicts volume increases in pockets, the majority of pockets that increase in volume increase by less than 50 Å<sup>3</sup>. The color bar on the right side indicates the number of pockets at each 2D histogram bin.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003741.g005" position="float" xlink:type="simple"/></fig>
+<p>The range of druggability scores for the known oral tablet drug set versus all pockets is shown in <xref ref-type="fig" rid="pcbi-1003741-g005">Figure 5B</xref>, where the top histogram represents the oral tablet drug set. The distributions are overlapping, and while the means of 1.7 and 1.4 are significantly different (p = 6×10<sup>−15</sup> based on the two-sample K-S test), the 95% confidence intervals overlap. While the large-scale data shows there is room for improvement in the separation of druggable and difficult targets, the 1.3 Dscore+ cut-off we use is nevertheless useful for identifying druggable pockets in rigid proteins, and removing 60% of pockets from further analysis with more resource-intensive flexibility modeling. Applying flexibility modeling to the MDDR targets also results in a shift in Dscore+ range, shown in <xref ref-type="fig" rid="pcbi-1003741-g005">Figure 5C</xref>, similar to what is seen with the smaller general validation set. The shift seen here further supports use of a Dscore+&gt;1.7 cut-off in conjunction with protein flexibility modeling.</p>
+<p>To assess the effect of our flexibility modeling approach on pocket volumes, we looked at all pockets at intermolecular interfaces before and after flexibility modeling and show the results in <xref ref-type="fig" rid="pcbi-1003741-g006">Figure 6</xref>. A diagonal white line indicates no change in volume. While the modeling method likely overpredicts volume increases in pockets, the majority of pockets that increase in volume increase by less than 50 Å<sup>3</sup>. The vertical and horizontal white lines in <xref ref-type="fig" rid="pcbi-1003741-g006">Figure 6</xref> indicate the 160 Å<sup>3</sup> volume cut-off, and it is clear that most pockets under the cut-off remain under the cut-off. As expected, pockets with volumes closer to the cut-off, with volumes of 100–160 Å<sup>3</sup>, are the most likely to increase to over 160 Å<sup>3</sup> with protein flexibility modeling.</p>
+<fig id="pcbi-1003741-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003741.g006</object-id><label>Figure 6</label><caption>
+<title>Breakdown of predicted druggable pockets at known intermolecular interfaces.</title>
+<p>Pockets found where a bound ligand would disrupt a protein-protein interaction are shown in the blue circle, and pockets found where a bound ligand would disrupt a protein-ligand interaction are shown in red. The overlap region shown in purple indicates where a protein or structure contains a pocket at both a protein-ligand and protein-protein interface. The blue region indicates proteins or structures containing only protein-protein interfacial pockets, and the red region indicates proteins or structures containing only protein-ligand pockets. Ligands are defined as any molecule with molecular weight ≤1000 kDa.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003741.g006" position="float" xlink:type="simple"/></fig>
+<p>In <xref ref-type="fig" rid="pcbi-1003741-g006">Figure 6</xref>, pockets with original volumes less than about 200 Å<sup>3</sup> tend to get larger, while pockets with original volumes greater than about 400 Å<sup>3</sup> tend to get smaller. The likely rationale is that the tetra-substituted naphthalene ligand used in the flexibility modeling approach induces smaller pockets to grow to accommodate the ligand, while it induces larger pockets to shrink to better enshroud the ligand. These tendencies are, however, dependent on the inherent flexibility of the protein structure.</p>
+<p>While the analysis provides a good set of putative druggable proteins in the mammalian structural proteome, we are not blind to deficiencies in this analysis. The prediction error rate in the large mammalian structural proteome analysis is hard to know, and we discuss the limitations in the next section.</p>
+</sec><sec id="s2e">
+<title>Limitations and future work</title>
+<p>The automated approach to protein flexibility we report here is useful for identifying druggable targets in the structural proteome. We are aware of three areas for further improvement.</p>
+<p>The first is related to pocket selection. Pocket selection is based on geometric considerations, and the pockets are subsequently scored for druggability using Dscore+ as well as, potentially, protein flexibility modeling. Ideally, the pocket selection and scoring would be done simultaneously to yield pockets that maximized the druggability score <xref ref-type="bibr" rid="pcbi.1003741-Coleman1">[32]</xref>. This issue, for instance, has an effect on scoring of phosphodiesterase active sites such as those in PDE-4D and PDE-5, where protein residues at one end of the catalytic site are very polar, and known oral inhibitors do not interact in this region <xref ref-type="bibr" rid="pcbi.1003741-Coleman1">[32]</xref>. <xref ref-type="fig" rid="pcbi-1003741-g007">Figure 7a</xref> shows the binding site including the polar region that results in a low druggability score, Dscore+ = 1.4, which is not representative of the druggability of the binding site. Removing the polar region shown in <xref ref-type="fig" rid="pcbi-1003741-g007">Figure 7b</xref> results in a more representative druggability score, Dscore+ = 1.6. We were not successful in adjusting our protocol to account for this, and thus we may miss druggable sites that are similarly amphipathic in nature. In addition, despite our efforts at tuning the pocket identification algorithm, SiteMap does, in about 2% of cases, return candidate pockets with volumes over 800 Å<sup>3</sup>, the drug-like size limit that we use. Currently we simply remove these pockets, which may cause us to miss druggable sites. Future work to resolve these issues include modifying SiteMap to identify only pockets of the desired volume (160–800 Å<sup>3</sup>), allow for pockets that overlap with each other, and account for properties such as hydrophobicity in the pocket definition process.</p>
+<fig id="pcbi-1003741-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003741.g007</object-id><label>Figure 7</label><caption>
+<title>Example of druggability predictions PDE-4D binding site (PDB ID: 1ptw) druggability calculations:</title>
+<p>(a) gray spheres defining the full automatically identified site, (b) purple spheres depicting the edited subsite. The crystal structure is of AMP-bound PDE-4D.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003741.g007" position="float" xlink:type="simple"/></fig>
+<p>A second area relates to the false positive rate, that is, the fraction of pockets identified as druggable that are not truly druggable. Even though we restrict protein flexibility to side-chain motion and localized backbone movement, the protein flexibility modeled and our selection of proble molecules are biased towards increasing the hydrophobicity of the pocket under analysis, and relaxation of the resultant structures may improve results. In addition, the degree of protein flexibility modeled is probably more than that present in reality. In this work, we empirically compensated for these issues by measuring the impact of flexibility modeling in <xref ref-type="fig" rid="pcbi-1003741-g002">Figures 2</xref> and <xref ref-type="fig" rid="pcbi-1003741-g004">4</xref>, which led to the use of a Dscore+≥1.7 criteria. While our flexibility modeling approach demonstrates statistically significant discrimination of difficult and druggable targets, we also plan to explore approaches such as protein relaxation <xref ref-type="bibr" rid="pcbi.1003741-Johnson1">[33]</xref>, to remove the need for an empirical correction. The flexibility modeling approach is more likely to exaggerate the flexibility of smaller proteins due to fewer stabilizing interactions within the protein. For the cryptic pocket analysis, we restricted our results to those proteins that are greater than 100 amino acids in length (which translates to about 10 kD).</p>
+<p>Lastly, we need to consider that the protein structures observed in crystal structures, in a minority of cases, may not be the biologically relevant constructs or complexes. Crystal structures may be synthetic constructs or portions of proteins, which, in the context of the full-length protein, have predicted binding sites occluded. Similarly, biological obligate dimers not seen in the crystal structures can occlude the binding site. Co-factors can also affect the druggability of binding sites; here, we only account for selected, particularly tight-binding co-factors such as metals and hemes. We analyze both biological assemblies defined in the PDB as well as the individual monomer components to account for binding to intact complexes as well as unbound partners. Other partially dissociated complexes may exist however. In addition, we are looking at binding, and not functional effects of binding; weak binding at an allosteric site is sometimes sufficient to generate the desired inhibition or activation of biological activity <xref ref-type="bibr" rid="pcbi.1003741-Coleman1">[32]</xref>.</p>
+</sec><sec id="s2f">
+<title>Conclusions</title>
+<p>We leverage advances in druggability assessment and modeling of protein flexibility to create an approach that allows light flexibility in the protein backbone and side-chains. The method improves the accuracy of druggability assessments when tested on two validation sets representing general pharmaceutical targets and protein-protein interactions of pharmaceutical interest. Combining this with the wealth of crystal structures available in the PDB allows us to find new protein binding sites that are potentially druggable by small molecules. Searching for such sites is thought to be like finding needles in a large haystack, and a systematic, automated approach is thus useful. Accurate modeling of protein flexibility continues to be difficult and the subject of substantial research. Even so, our approach is useful in exploring induced druggable pockets and provides a substantial number of hypotheses. For applications focused on analysis of protein pockets, the approach we take is computationally efficient and may be complementary to comprehensive analyses of static crystal structures <xref ref-type="bibr" rid="pcbi.1003741-Kufareva1">[34]</xref>. Finally, we have long been intrigued by the possibility of combining the druggability data with biological target disease-relevance data. This has recently been done on a small-scale with cancer targets <xref ref-type="bibr" rid="pcbi.1003741-Patel1">[35]</xref>, although protein flexibility was not accounted for in the druggability assessment. Inclusion of protein flexibility in such assessments can help to provide more accurate target assessment.</p>
+</sec></sec><sec id="s3" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<p>Protein structures were downloaded from the biounits repository at the RCSB based on criteria that the structure (1) contains protein, (2) is categorized as deriving from the class <italic>Mammalia</italic>, and (3) has an x-ray crystal structure resolution ≤2.5A.</p>
+<p>Ligands, defined as having molecular weight ≤1000 Da, are removed with the exception of heme groups, zinc, and magnesium (PDB het groups HEM, MHM, HEV, VER, SRM, HEO, HEB, HEC, HDM, HDD, DDH, ZN, MG). Protein structures were prepared using Schrödinger Protein Preparation Wizard (version 2012, Schrödinger LLC, New York, NY), on the command line with the following options: –watdist 0, –fillsidechains, –rehtreat, –mse, –noepik, –noimpref. These options assign bond orders, add hydrogens, remove all waters, create zero-order bonds to metals, create disulfide bonds for close cysteines, mutate selenomethionines to methionine, fill in any missing side-chains with Prime (v3.1, Schrödinger LLC, New York, NY), and optimize hydrogen placement and polar residue flips using PropKa. Validation test runs using restrained minimization to a heavy atom RMSD of 0.3 Å, a procedure known as “Impref”, did not change which sites were found and did not significantly change druggability scores on the validation dataset proteins, so we chose to increase workflow speed by avoiding this step in the protein preparation.</p>
+<p>Next, initial potential druggable surface patches were identified using Schrödinger SiteMap (v2.6, Schrödinger LLC, New York, NY), the results of which are used to compute Dscore+. We run Sitemap with a fine grid (0.35 Å spacing) and “loose” definition of hydrophobicity. In this study, all calculations were performed from the command line with options that return the 5 largest SiteMap sites, in order of the number of site points they contain. Our modified settings allow more shallow binding sites to be found and include binding site regions with slightly weaker vdW interaction energy. We used the following non-default Sitemap parameters: maxdist = 10, enclosure = 0.4, maxvdw = 1.0, dthresh = 5.0, mingroup = 7, nthresh = 7, grid = 0.35, modphobic = 0. The smaller value of maxvdw (default is 1.1 kcal/mol) and the less restrictive definition for modphobic of zero together allow gridpoints with slightly weaker vdW interaction energy to be included as sitepoints. The smaller enclosure score (default is 0.5) and larger maxdist value (default 8.0 Å) allow more shallow binding sites to be found. The enclosure score is computed by drawing radial rays from each sitepoint, and the score is the fraction of rays that strike the receptor surface within a distance of 10 Å (maxdist), averaged over the sitepoints. Decreasing dthresh from the default (6.5 Å) and increasing nthresh from the default (3) causes SiteMap to return smaller, more compact sites than it otherwise would when using a fine grid. When considering a gridpoint for inclusion in a site, there must be at least nthresh other points within 1.76 Å (square root of d2thresh) for it to be considered. When considering whether two sites should be joined, the closest points in the two sites must be closer than dthresh. The parameter, “mingroup”, is the only parameter here that limits the number of sites found; this is the minimum number of points in a site-point group required to constitute a site (default = 7). We found that including sites with less than seven points in combination with a fine grid of 0.35A resulted in merging of many very small pockets to form long, stringy sites that were not realistic as small molecule binding sites. Overall, these modified SiteMap settings allow us to find shallow pockets with less hydrophobic character than is possible to find with default settings.</p>
+<p>From the SiteMap results, sites identified with a druggability score, Dscore+, of greater than 1.3 are taken as candidate sites regardless of volume, where Dscore+ is defined as Dscore + 0.3*hydrophobic, as previously described <xref ref-type="bibr" rid="pcbi.1003741-Jordan1">[14]</xref>, <xref ref-type="bibr" rid="pcbi.1003741-Gustin1">[15]</xref>, and druggability scores are rounded to the first decimal place. The choice for the 1.3 value is discussed in the <italic>Results and Discussion</italic> section. Dscore is computed from physiochemical descriptors generated by SiteMap, and is a weighted sum with contributions from three components, (1) degree of site enclosure, (2) pocket size defined by the number of site points included in the site; site points are x, y, z coordinates that are outside the protein, are reasonably enclosed, and have a vdW interaction potential over a defined threshold are clustered into sites, and (3) a negative contribution from the hydrophilic score, which limits the impact of hydrophilicity in charged and highly polar sites <xref ref-type="bibr" rid="pcbi.1003741-Halgren1">[13]</xref>.</p>
+<p>To identify binding sites with potential flexibility, we used an iterative protein-modeling and docking approach <xref ref-type="bibr" rid="pcbi.1003741-Sherman1">[16]</xref>, available in the Schrödinger Suite (2012 release, Schrödinger LLC, New York, NY) as the induced fit docking (IFD) workflow, and applied this using the ligands in <xref ref-type="fig" rid="pcbi-1003741-g008">Figure 8</xref> to each candidate site. In this study, all calculations were performed from the command line with the default IFD parameters, except the variable, OUTER_BOX, which is always set to 25 Å, since we were docking the same small ligands. We defined the variable, BINDING_SITE, by a single sitepoint which is placed at the centroid of all SiteMap sitepoints from the candidate site. First, we used IFD to dock a naphthalene molecule, <bold>1</bold>, to the top 5 sites found by SiteMap and kept the best two naphthalene poses for each site. If poses were returned for naphthalene, we then used IFD again to dock a tetra-substituted naphthalene molecule, <bold>2</bold>, to the same pocket, now opened up by naphthalene. SiteMap was then applied to score the sites in the four top-scoring structural model results (typically, at least ten models were generated per site). Increasing the number of models can result in better predictions of binding site conformations, but we chose to produce a smaller but reasonable set of four models to reduce the compute time required to process all mammalian crystal structures.</p>
+<fig id="pcbi-1003741-g008" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003741.g008</object-id><label>Figure 8</label><caption>
+<title>Ligands used in protein modeling and docking procedure.</title>
+<p>The tetra-substituted naphthalene compound, 2, was designed to facilitate opening of pockets.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003741.g008" position="float" xlink:type="simple"/></fig>
+<p>To analyze the druggability and protein-protein interaction validation data, we automatically compared each SiteMap site to the corresponding ligand-bound structure using the Phase (version 3.4, Schrödinger LLC, New York, NY) command-line utility phase_volcalc to compute the overlap (measured in Å<sup>3</sup>) between the SiteMap sitepoints and the bound crystal ligand. After the IFD steps, we used the same utility to compute the overlap between the tetra-substituted naphthalene and the bound crystal ligand. This value is positive when there is direct overlap between the two sets of atoms. For the validation studies only, we identified the relevant protein biological assembly based on the known literature, and only retained those assemblies or protein monomers that are biologically meaningful. The calculations were otherwise performed automatically.</p>
+<p>For calculations run on all mammalian PDB structures, we used a purely automated procedure applying the method to the first “biological unit” as defined in the PDB. Calculations were performed on commodity cluster hardware running RedHat Enterprise Linux. Failed calculations were re-run up to five times, including at both Amgen and Schrödinger facilities, to ensure that failures were not the result of compute infrastructure issues. To identify protein-protein interaction interfaces, we checked whether any of the TSN molecules modeled into a predicted druggable site also overlapped with another protein chain in the crystal structure. Overlap was defined as at least one atom of the TSN molecule being within 2 Å of the additional protein chain, where hydrogens were included. To identify protein-ligand interfaces, we used the previously-described volume overlap calculation. Finally, to analyze the results of the mammalian proteins in the PDB for obligate dimers, we used the Interevol database, publicly available at <ext-link ext-link-type="uri" xlink:href="http://biodev.cea.fr/interevol/interevol.aspx" xlink:type="simple">http://biodev.cea.fr/interevol/interevol.aspx</ext-link> <xref ref-type="bibr" rid="pcbi.1003741-Faure1">[31]</xref>. We downloaded the database (July 2012 release) and joined the data with our PDB results by matching both the four-letter PDB code and any chain identifier. PDB IDs were translated to gene ID's using the SWPROT database <xref ref-type="bibr" rid="pcbi.1003741-Martin1">[36]</xref>, and all gene annotations were performed using bioDBnet <xref ref-type="bibr" rid="pcbi.1003741-Mudunuri1">[37]</xref> Structure figures were produced using PyMOL version 1.4.1 <xref ref-type="bibr" rid="pcbi.1003741-The1">[38]</xref>.</p>
+<p>To map MDDR drugs to PDB co-crystal structures, we first identified all oral drugs in MDDR that were annotated as ‘marketed’ and delivered orally as tablets or pills. PipelinePilot (ver. 8.5., Accelrys Software, San Diego, CA) was used to identify identical compounds based on structural identity when compared with the SMILES strings included in the HET code file downloaded from RCSB LigandDepot <xref ref-type="bibr" rid="pcbi.1003741-Berman1">[30]</xref>. PDB codes were then identified that corresponded to matched HET codes.</p>
+<p>Matlab version 7.9 (R2009b, The Mathworks Inc., Natick, MA) was used to generate <xref ref-type="fig" rid="pcbi-1003741-g002">Figures 2</xref>, <xref ref-type="fig" rid="pcbi-1003741-g005">5</xref>, and <xref ref-type="fig" rid="pcbi-1003741-g006">6</xref>, and also to calculate statistical means, variances, and two-sample Kolmogorov-Smirnov test results for the general validation set.</p>
+<p>Calculations were performed on Intel Xeon CPU (2.7GHz) multi-core processors running RedHat Enterprise version 6. CPU timings quoted in the paper are per single core.</p>
+</sec><sec id="s4">
+<title>Acknowledgments</title>
+<p>We thank Nigel Walker, Philip Tagari, Yax Sun, Paul Kassner, Mike Ollman, and Astrid Ruefli-Brasse at Amgen, and Woody Sherman and Alessandro Monge at Schrödinger for their support and helpful discussions.</p>
+</sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1003741.s001" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pcbi.1003741.s001" position="float" xlink:type="simple"><label>Table S1</label><caption>
+<p><bold>Protein-protein interaction targets from 2P2I that have less well-defined druggability as determined by conclusive results from multiple research groups, or where known drugs are metal chelators (HIV Integrase).</bold> These targets have protein-protein co-crystal structures shown in the top half of the table, and corresponding protein-ligand co-crystal structures shown in the bottom half. Score is Dscore+, ‘cmpd’ indicates a small molecule compound, and volumes are in units of Å<sup>3</sup>. “*” indicates ‘not applicable’ because the site's initial Dscore+ values did not meet the cut-off for flexibility modeling. <bold><sup>1</sup></bold> Menin-MLL inhibitors has been reported in academic discovery efforts, but there does not appear to be enough evidence yet to definitively assign druggability. One group reports nM inhibitors with small molecule compounds (see Murai et al., <italic>J. Biol Chem.</italic> 2011 286: 31742–8), while another group reports nM inhibitors with large macrocyclic peptidomimetics that do not fall into drug-like property ranges (see Zhou et al., <italic>J. Med Chem.</italic> 2013 56: 1113–23). Several of the Menin-MLL inhibitor co-crystal structures contained several extra dummy atoms in the inhibitor binding site, and we removed them for the purposes of running our analysis. <bold><sup>2</sup></bold> HIV Integrase complex involves a DNA-protein interaction, and thus inhibitors are not protein-protein inhibitors. In addition, the approved drugs, raltegravir and elvitegravir, bind to two Mg2+ ions bound to HIV integrase, and thus are metal chelators (see Hare et al., <italic>Nature</italic>. 2010 464: 232–6). Metal chelators are not captured by structure-based druggability approaches, as discussed in the <italic>Introduction</italic>, although allosteric LEDGF/p75-Integrase inhibitors are showing promise.</p>
+<p>(DOCX)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003741.s002" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pcbi.1003741.s002" position="float" xlink:type="simple"><label>Table S2</label><caption>
+<p><bold>Potential cryptic druggable sites based on flexible modeling of the mammalian structural proteome.</bold></p>
+<p>(DOCX)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003741.s003" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pcbi.1003741.s003" position="float" xlink:type="simple"><label>Table S3</label><caption>
+<p><bold>Binding site residues for predictions in <xref ref-type="supplementary-material" rid="pcbi.1003741.s002">Table S2</xref>.</bold> Notes: chains are appended to residue names with a leading period. In a few cases, more than one binding site may be defined.</p>
+<p>(DOCX)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003741.s004" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" xlink:href="info:doi/10.1371/journal.pcbi.1003741.s004" position="float" xlink:type="simple"><label>Table S4</label><caption>
+<p><bold>Extension of </bold><xref ref-type="table" rid="pcbi-1003741-t002"><bold>Table 2</bold></xref><bold> to comparison of druggability estimations on all targets from </bold><bold><italic>Huang and Jacobson</italic></bold><bold> </bold><xref ref-type="bibr" rid="pcbi.1003741-Huang1">[17]</xref><bold>.</bold> The data under the <italic>Structural data</italic> and <italic>Docking-based druggability</italic> are from reference 17. Aldose reductase sites required manual intervention to include NAP co-factor. Without co-factor, Dscore+ is lower, around 1.1. The DHFR structure with PDB ID 6dfr is missing a large portion of the binding site (both protein and co-factor), and so calculations would not be relevant; we indicated this with “[Not calculated]”. The flexible druggability method is only performed for binding sites that meet an initial score (with the rigid crystal structure). However, for the purposes of this study, we removed this cut-off in order to generate values for IL-2 and HPV E2. For IL-2, performing the flexibility modeling procedure results in DScore+ values of 1.5 (1z92), 1.5 (1py2), and 1.7 (1m48), with small, non-drug-like volumes of 98, 82, 53, respectively. For HPV E2, the DScore+ values are 1.1 (1tue) and 1.5 (1r6n), with reasonable drug-like volumes. For neuraminidase (NA), the Dscore+ values are 1.8 (1a4g), 1.7 (1a4q), and 1.7 (1nsc), with drug-like volumes.</p>
+<p>(DOCX)</p>
+</caption></supplementary-material></sec></body>
+<back><ref-list>
+<title>References</title>
+<ref id="pcbi.1003741-Macarron1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Macarron</surname><given-names>R</given-names></name> (<year>2006</year>) <article-title>Critical review of the role of HTS in drug discovery</article-title>. <source>Drug Discov Today</source> <volume>11</volume>: <fpage>277</fpage>–<lpage>279</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Hopkins1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hopkins</surname><given-names>AL</given-names></name>, <name name-style="western"><surname>Groom</surname><given-names>CR</given-names></name> (<year>2002</year>) <article-title>The druggable genome</article-title>. <source>Nature Rev Drug Discov</source> <volume>1</volume>: <fpage>727</fpage>–<lpage>730</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Cheng1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cheng</surname><given-names>AC</given-names></name> (<year>2008</year>) <article-title>Predicting selectivity and druggability in drug discovery</article-title>. <source>Annual Reports Comp Chem</source> <volume>4</volume>: <fpage>23</fpage>–<lpage>37</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Cheng2"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cheng</surname><given-names>AC</given-names></name>, <name name-style="western"><surname>Coleman</surname><given-names>RG</given-names></name>, <name name-style="western"><surname>Smyth</surname><given-names>KT</given-names></name>, <name name-style="western"><surname>Cao</surname><given-names>Q</given-names></name>, <name name-style="western"><surname>Soulard</surname><given-names>P</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Structure-based maximal affinity model predicts small molecule druggability</article-title>. <source>Nature Biotech</source> <volume>25</volume>: <fpage>71</fpage>–<lpage>75</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Lipinski1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lipinski</surname><given-names>CA</given-names></name> (<year>2005</year>) <article-title>Filtering in drug discovery</article-title>. <source>Annual Reports Comp Chem</source> <volume>1</volume>: <fpage>155</fpage>–<lpage>168</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Fauman1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fauman</surname><given-names>EB</given-names></name>, <name name-style="western"><surname>Rai</surname><given-names>BK</given-names></name>, <name name-style="western"><surname>Huang</surname><given-names>ES</given-names></name> (<year>2011</year>) <article-title>Structure-based druggability assessment—identifying suitable targets for small molecule therapeutics</article-title>. <source>Curr Opin Chem Biol</source> <volume>15</volume>: <fpage>463</fpage>–<lpage>468</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Sheridan1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sheridan</surname><given-names>RP</given-names></name>, <name name-style="western"><surname>Maiorov</surname><given-names>VN</given-names></name>, <name name-style="western"><surname>Holloway</surname><given-names>MK</given-names></name>, <name name-style="western"><surname>Cornell</surname><given-names>WD</given-names></name>, <name name-style="western"><surname>Gao</surname><given-names>YD</given-names></name> (<year>2010</year>) <article-title>Drug-like density: a method of quantifying the “bindability” of a protein target based on a very large set of pockets and drug-like ligands from the Protein Data Bank</article-title>. <source>J Chem Inf Model</source> <volume>50</volume>: <fpage>2029</fpage>–<lpage>2040</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Seco1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Seco</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Luque</surname><given-names>FJ</given-names></name>, <name name-style="western"><surname>Barril</surname><given-names>X</given-names></name> (<year>2009</year>) <article-title>Binding site detection and druggability index from first principles</article-title>. <source>J Med Chem</source> <volume>52</volume>: <fpage>2363</fpage>–<lpage>2371</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Beuming1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Beuming</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Che</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Abel</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Kim</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Shanmugasundaram</surname><given-names>V</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Thermodynamic analysis of water molecules at the surface of proteins and applications to binding site prediction and characterization</article-title>. <source>Proteins</source> <volume>80</volume>: <fpage>871</fpage>–<lpage>883</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Wells1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wells</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>McClendon</surname><given-names>CL</given-names></name> (<year>2007</year>) <article-title>Reaching for high-hanging fruit in drug discovery at protein-protein interfaces</article-title>. <source>Nature</source> <volume>450</volume>: <fpage>1001</fpage>–<lpage>1009</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Eyrisch1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Eyrisch</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Helms</surname><given-names>V</given-names></name> (<year>2007</year>) <article-title>Transient pockets on protein surfaces involved in protein-protein interaction</article-title>. <source>J Med Chem</source> <volume>50</volume>: <fpage>3457</fpage>–<lpage>3464</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Basse1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Basse</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Betzi</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Bourgeas</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Bouzidi</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Chetrit</surname><given-names>B</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>2P2Idb: A Structural Database Dedicated to Orthosteric Modulation of Protein-Protein Interactions</article-title>. <source>Nucleic Acid Research</source> <volume>41</volume>: <fpage>D824</fpage>–<lpage>827</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Halgren1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Halgren</surname><given-names>TA</given-names></name> (<year>2009</year>) <article-title>Identifying and characterizing binding sites and assessing druggability</article-title>. <source>J Chem Inf Model</source> <volume>49</volume>: <fpage>377</fpage>–<lpage>389</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Jordan1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jordan</surname><given-names>JB</given-names></name>, <name name-style="western"><surname>Poppe</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Xia</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Cheng</surname><given-names>AC</given-names></name>, <name name-style="western"><surname>Sun</surname><given-names>Y</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Fragment based drug discovery: practical implementation based on <sup>19</sup>F NMR spectroscopy</article-title>. <source>J Med Chem</source> <volume>55</volume>: <fpage>678</fpage>–<lpage>687</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Gustin1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gustin</surname><given-names>DJ</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Brown</surname><given-names>ML</given-names></name>, <name name-style="western"><surname>Min</surname><given-names>X</given-names></name>, <name name-style="western"><surname>Schmitt</surname><given-names>MJ</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Structure guided design of a series of sphingosine kinase (SphK) inhibitors</article-title>. <source>Bioorg Med Chem Lett</source> <volume>23</volume>: <fpage>4608</fpage>–<lpage>4616</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Sherman1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sherman</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Day</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Jacobson</surname><given-names>MP</given-names></name>, <name name-style="western"><surname>Friesner</surname><given-names>RA</given-names></name>, <name name-style="western"><surname>Farid</surname><given-names>R</given-names></name> (<year>2006</year>) <article-title>Novel procedure for modeling ligand/receptor induced fit effects</article-title>. <source>J Med Chem</source> <volume>49</volume>: <fpage>534</fpage>–<lpage>553</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Huang1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huang</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Jacobson</surname><given-names>MP</given-names></name> (<year>2010</year>) <article-title>Binding-site assessment by virtual fragment screening</article-title>. <source>PLoS One</source> <volume>5</volume>: <fpage>e10109</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Kozakov1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kozakov</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Hall</surname><given-names>DR</given-names></name>, <name name-style="western"><surname>Chuang</surname><given-names>GY</given-names></name>, <name name-style="western"><surname>Cencic</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Brenke</surname><given-names>R</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Structural conservation of druggable hot spots in protein-protein interfaces</article-title>. <source>Proc Natl Acad Sci USA</source> <volume>108</volume>: <fpage>13528</fpage>–<lpage>13533</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Grove1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Grove</surname><given-names>LE</given-names></name>, <name name-style="western"><surname>Hall</surname><given-names>DR</given-names></name>, <name name-style="western"><surname>Beglov</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Vajda</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Kozakov</surname><given-names>D</given-names></name> (<year>2013</year>) <article-title>FTFlex: accounting for binding site flexibility to improve fragment-based identification of druggable hot spots</article-title>. <source>Bioinformatics</source> <volume>29</volume>: <fpage>1218</fpage>–<lpage>1219</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Bakan1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bakan</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Nevins</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Lakdawala</surname><given-names>AS</given-names></name>, <name name-style="western"><surname>Bahar</surname><given-names>I</given-names></name> (<year>2012</year>) <article-title>Druggability assessment of allosteric proteins by dynamics simulations in the presence of probe molecules</article-title>. <source>J Chem Theory Comput</source> <volume>8</volume>: <fpage>2435</fpage>–<lpage>2447</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Brown1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brown</surname><given-names>SP</given-names></name>, <name name-style="western"><surname>Hajduk</surname><given-names>PJ</given-names></name> (<year>2006</year>) <article-title>Effects of conformational dynamics on predicted protein druggability</article-title>. <source>ChemMedChem</source> <volume>1</volume>: <fpage>70</fpage>–<lpage>72</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Kokh1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kokh</surname><given-names>DB</given-names></name>, <name name-style="western"><surname>Richter</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Henrich</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Czodrowski</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Rippmann</surname><given-names>F</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>TRAPP: a tool for analysis of transient binding pockets in proteins</article-title>. <source>J Chem Inf Model</source> <volume>53</volume>: <fpage>1235</fpage>–<lpage>1252</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Schmidtke1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schmidtke</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Bidon-Chanal</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Luque</surname><given-names>FJ</given-names></name>, <name name-style="western"><surname>Barril</surname><given-names>X</given-names></name> (<year>2011</year>) <article-title>MDpocket: open-source cavity detection and characterization on molecular dynamics trajectories</article-title>. <source>Bioinformatics</source> <volume>27</volume>: <fpage>3276</fpage>–<lpage>3285</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Ivetac1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ivetac</surname><given-names>A</given-names></name>, <name name-style="western"><surname>McCammon</surname><given-names>JA</given-names></name> (<year>2012</year>) <article-title>A molecular dynamics ensemble-based approach for the mapping of druggable binding sites</article-title>. <source>Methods Mol Biol</source>. <volume>819</volume>: <fpage>3</fpage>–<lpage>12</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Lexa1"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lexa</surname><given-names>KW</given-names></name>, <name name-style="western"><surname>Carlson</surname><given-names>HA</given-names></name> (<year>2011</year>) <article-title>Full protein flexibility is essential for proper hot-spot mapping</article-title>. <source>J Am Chem Soc</source> <volume>133</volume>: <fpage>200</fpage>–<lpage>202</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Shan1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shan</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Kim</surname><given-names>ET</given-names></name>, <name name-style="western"><surname>Eastwood</surname><given-names>MP</given-names></name>, <name name-style="western"><surname>Dror</surname><given-names>RO</given-names></name>, <name name-style="western"><surname>Seeliger</surname><given-names>MA</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>How does a drug molecule find its target binding site?</article-title> <source>J Am Chem Soc</source> <volume>133</volume>: <fpage>9181</fpage>–<lpage>9183</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Ngan1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ngan</surname><given-names>CH</given-names></name>, <name name-style="western"><surname>Bohnuud</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Mottarella</surname><given-names>SE</given-names></name>, <name name-style="western"><surname>Beglov</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Villar</surname><given-names>EA</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>FTMAP: extended protein mapping with user-selected probe molecules</article-title>. <source>Nucleic Acids Res</source> <volume>40</volume>: <fpage>W271</fpage>–<lpage>275</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-He1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>He</surname><given-names>MM</given-names></name>, <name name-style="western"><surname>Smith</surname><given-names>AS</given-names></name>, <name name-style="western"><surname>Oslob</surname><given-names>JD</given-names></name>, <name name-style="western"><surname>Flanagan</surname><given-names>WM</given-names></name>, <name name-style="western"><surname>Braisted</surname><given-names>AC</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Small molecule inhibition of TNF-alpha</article-title>. <source>Science</source> <volume>310</volume>: <fpage>1022</fpage>–<lpage>1025</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Lee1"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lee</surname><given-names>EF</given-names></name>, <name name-style="western"><surname>Czabotar</surname><given-names>PE</given-names></name>, <name name-style="western"><surname>Smith</surname><given-names>BJ</given-names></name>, <name name-style="western"><surname>Deshayes</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Zobel</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Crystal structure of ABT-737 complexed with Bcl-xL: implications for selectivity of antagonists of the Bcl-2 family</article-title>. <source>Cell Death Differ</source> <volume>14</volume>: <fpage>1711</fpage>–<lpage>1713</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Berman1"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Berman</surname><given-names>HM</given-names></name>, <name name-style="western"><surname>Westbrook</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Feng</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Gilliland</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Bhat</surname><given-names>TN</given-names></name>, <etal>et al</etal>. (<year>2000</year>) <article-title>The Protein Data Bank</article-title>. <source>Nucleic Acids Res</source> <volume>28</volume>: <fpage>235</fpage>–<lpage>242</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Faure1"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Faure</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Andreani</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Guerois</surname><given-names>R</given-names></name> (<year>2012</year>) <article-title>InterEvol database: Exploring the structure and evolution of protein complex interfaces</article-title>. <source>Nucleic Acids Res</source> <volume>40</volume>: <fpage>D847</fpage>–<lpage>56</lpage> (Used July 2012 release from <ext-link ext-link-type="uri" xlink:href="http://biodev.cea.fr/interevol/" xlink:type="simple">http://biodev.cea.fr/interevol/</ext-link>, downloaded May 26, 2013.).</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Coleman1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Coleman</surname><given-names>RG</given-names></name>, <name name-style="western"><surname>Salzberg</surname><given-names>AC</given-names></name>, <name name-style="western"><surname>Cheng</surname><given-names>AC</given-names></name> (<year>2006</year>) <article-title>Structure-based identification of small molecule binding sites using a free energy model</article-title>. <source>J Chem Inf Model</source> <volume>46</volume>: <fpage>2631</fpage>–<lpage>2637</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Johnson1"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Johnson</surname><given-names>DK</given-names></name>, <name name-style="western"><surname>Karanicolas</surname><given-names>J</given-names></name> (<year>2013</year>) <article-title>Druggable protein interaction sites are more predisposed to surface pocket formation than the rest of the protein surface</article-title>. <source>PLoS Comput Biol</source> <volume>9</volume>: <fpage>e1002951</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Kufareva1"><label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kufareva</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Ilatovskiy</surname><given-names>AV</given-names></name>, <name name-style="western"><surname>Abagyan</surname><given-names>R</given-names></name> (<year>2012</year>) <article-title>Pocketome: an encyclopedia of small-molecule binding sites in 4D</article-title>. <source>Nucleic Acids Res</source> <volume>40</volume>: <fpage>D535</fpage>–<lpage>40</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Patel1"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Patel</surname><given-names>MN</given-names></name>, <name name-style="western"><surname>Halling-Brown</surname><given-names>MD</given-names></name>, <name name-style="western"><surname>Tym</surname><given-names>JE</given-names></name>, <name name-style="western"><surname>Workman</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Al-Lazikani</surname><given-names>B</given-names></name> (<year>2013</year>) <article-title>Objective assessment of cancer genes for drug discovery</article-title>. <source>Nat Rev Drug Discov</source> <volume>12</volume>: <fpage>35</fpage>–<lpage>50</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Martin1"><label>36</label>
+<mixed-citation publication-type="other" xlink:type="simple">Martin AC (2005) Mapping PDB chains to UniProtKB entries. Bioinformatics 21: 4297–4301. Downloaded March 6, 2013 update.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-Mudunuri1"><label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mudunuri</surname><given-names>U</given-names></name>, <name name-style="western"><surname>Che</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Yi</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Stephens</surname><given-names>RM</given-names></name> (<year>2009</year>) <article-title>bioDBnet: the biological database network</article-title>. <source>Bioinformatics</source> <volume>25</volume>: <fpage>555</fpage>–<lpage>556</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003741-The1"><label>38</label>
+<mixed-citation publication-type="other" xlink:type="simple">The PyMOL Molecular Graphics System, Version 1.5.0.4 Schrödinger, LLC.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

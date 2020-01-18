@@ -1,0 +1,971 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Computational Biology</journal-title></journal-title-group><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">10-PLCB-RA-1949R2</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1000859</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Computational Biology/Metabolic Networks</subject></subj-group></article-categories><title-group><article-title>Sampling the Solution Space in Genome-Scale Metabolic Networks Reveals Transcriptional Regulation in Key Enzymes</article-title><alt-title alt-title-type="running-head">Sampling the Solution Space in Metabolic Networks</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Bordel</surname><given-names>Sergio</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Agren</surname><given-names>Rasmus</given-names></name><xref ref-type="aff" rid="aff1"/></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Nielsen</surname><given-names>Jens</given-names></name><xref ref-type="aff" rid="aff1"/><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group><aff id="aff1">          <addr-line>Systems Biology, Department of Chemical and Biological Engineering, Chalmers University of Technology, Gothenburg, Sweden</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Reed</surname><given-names>Jennifer L.</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">University of Wisconsin-Madison, United States of America</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">nielsenj@chalmers.se</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: SB JN. Analyzed the data: SB RA. Wrote the paper: SB.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><month>7</month><year>2010</year></pub-date><pub-date pub-type="epub"><day>15</day><month>7</month><year>2010</year></pub-date><volume>6</volume><issue>7</issue><elocation-id>e1000859</elocation-id><history>
+<date date-type="received"><day>18</day><month>3</month><year>2010</year></date>
+<date date-type="accepted"><day>14</day><month>6</month><year>2010</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2010</copyright-year><copyright-holder>Bordel et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>Genome-scale metabolic models are available for an increasing number of organisms and can be used to define the region of feasible metabolic flux distributions. In this work we use as constraints a small set of experimental metabolic fluxes, which reduces the region of feasible metabolic states. Once the region of feasible flux distributions has been defined, a set of possible flux distributions is obtained by random sampling and the averages and standard deviations for each of the metabolic fluxes in the genome-scale model are calculated. These values allow estimation of the significance of change for each reaction rate between different conditions and comparison of it with the significance of change in gene transcription for the corresponding enzymes. The comparison of flux change and gene expression allows identification of enzymes showing a significant correlation between flux change and expression change (transcriptional regulation) as well as reactions whose flux change is likely to be driven only by changes in the metabolite concentrations (metabolic regulation). The changes due to growth on four different carbon sources and as a consequence of five gene deletions were analyzed for <italic>Saccharomyces cerevisiae</italic>. The enzymes with transcriptional regulation showed enrichment in certain transcription factors. This has not been previously reported. The information provided by the presented method could guide the discovery of new metabolic engineering strategies or the identification of drug targets for treatment of metabolic diseases.</p>
+</abstract><abstract abstract-type="summary"><title>Author Summary</title>
+<p>The sequencing of full genomes and the development of high-throughput analysis technologies have made available both genome-scale metabolic networks and simultaneous transcription data for all the genes of an organism. Genome-scale metabolic models, with the assumption of steady state for the internal metabolites, allow the definition of a region of feasible metabolic flux distributions. This space of solutions can be further constrained using experimental flux measurements (normally production or uptake rates of external compounds). Here a random sampling method was used to obtain average values and standard deviations for all the reaction rates in a genome-scale model. These values were used to quantify the significance of changes in metabolic fluxes between different conditions. The significance in flux changes can be compared to the changes in gene transcription of the corresponding enzymes. Our method allowed for identification of specific reactions that are transcriptionally regulated, and we further identified that these reactions can be ascribed to a few key transcription factors. This suggests that the regulation of metabolism has evolved to contain a few flux-regulating transcription factors that could be the target for genetic manipulations in order to redirect fluxes.</p>
+</abstract><funding-group><funding-statement>This work was funded by the European Research Council. The funder had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="13"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Systems Biology aims to use mathematical models to integrate different kinds of data in order to achieve a global understanding of cellular functions. The data to be integrated differ both in their nature and measurability. The availability of DNA microarrays allows for the comparative analysis or mRNA levels between different strains and conditions. These data provide genome-wide information, and changes in expression at different conditions are expressed in statistical terms such as p-values or Z-scores that quantify the level of significance in transcriptional changes. The availability of annotated genome-scale metabolic networks allowed mapping of the transcriptional changes in metabolic genes on to their corresponding metabolic pathways and defining significantly up or down regulated sub-networks <xref ref-type="bibr" rid="pcbi.1000859-Patil1">[1]</xref>. Even though this allows for identification of transcriptional hot-spots in metabolism, this does still not provide information about whether there are any changes in metabolic fluxes in these pathways, as it has been shown that in general there is no clear correlation between gene expression and protein concentration <xref ref-type="bibr" rid="pcbi.1000859-Gygi1">[2]</xref> or metabolic flux <xref ref-type="bibr" rid="pcbi.1000859-Yang1">[3]</xref>, <xref ref-type="bibr" rid="pcbi.1000859-Moxley1">[4]</xref>.</p>
+<p>Metabolic fluxes are the result of a complex interplay between enzyme kinetics, metabolite concentrations, gene expression and translational regulation. Metabolic fluxes can be directly measured using <sup>13</sup>C labeling experiments <xref ref-type="bibr" rid="pcbi.1000859-Fong1">[5]</xref>. However, flux data obtained using this approach differ from gene expression data in two main features: 1) their determination is only possible for a relatively small subset of all the reactions in a genome-scale metabolic network and 2) they are indirect data in the sense that the fluxes are quantified obtained by fitting measured labeling patterns using a simple metabolic model. The complexity of the mRNA-flux dependence and the disparity in the nature of both kinds of data make their integration an important challenge.</p>
+<p>In this paper we propose a method to integrate gene expression data with flux data by transforming a limited amount of quantitative flux data into a genome-scale set of statistical scores similar to the one obtained from DNA microarrays. In order to do that, a set of experimental exchange fluxes are fixed for each of the studied conditions or for each of the strains investigated, and a sampling algorithm is then used to obtain a set of flux distributions satisfying the experimental values. This approach allows for obtaining means and standard deviations for each flux in the genome-scale network. From the mean and standard deviation it is possible to derive statistical scores for the significance of flux change between conditions <xref ref-type="bibr" rid="pcbi.1000859-Mo1">[6]</xref>, <xref ref-type="bibr" rid="pcbi.1000859-Schellenberger1">[7]</xref>. Random sampling in the region of feasible flux distributions has been previously used to study the statistical distribution of flux values and determine a flux backbone of reactions carrying high fluxes <xref ref-type="bibr" rid="pcbi.1000859-Almaas1">[8]</xref> as well as to define modules of reactions whose fluxes are positively correlated <xref ref-type="bibr" rid="pcbi.1000859-Papin1">[9]</xref>, <xref ref-type="bibr" rid="pcbi.1000859-Jamshidi1">[10]</xref>. Also mitochondria related diseases have been analyzed using random sampling <xref ref-type="bibr" rid="pcbi.1000859-Thiele1">[11]</xref>. All the works published so far used the Hit and Run algorithm to perform the sampling <xref ref-type="bibr" rid="pcbi.1000859-Schellenberger1">[7]</xref>.</p>
+<p>By dividing the average difference among two conditions (e.g. carbon sources or mutant strains) by its standard deviation, it is possible to obtain Z scores for each metabolic flux. These scores can be transformed into p-values that measure the significance of change of each flux (see <xref ref-type="sec" rid="s3">methods</xref>). By comparing these p-values with the p-values derived from gene-expression arrays, the enzymes in the network can be classified as: 1) enzymes that have a significantly correlated change both in flux and expression level (reactions showing transcriptional regulation), 2) enzymes that show a significant change in expression but not in flux (we will refer to them as showing post-transcriptional regulation) and 3) enzymes that show significant changes in flux but not a change in expression (metabolic regulation). Hereby we provide a framework that allows for global classification of reaction fluxes into those that are transcriptionally regulated, post-transcriptionally regulated and metabolically regulated (see <xref ref-type="fig" rid="pcbi-1000859-g001">Fig. 1</xref>). This will have substantial impact on the field of metabolic engineering where changes in gene-expression are often used as the key means to alter metabolic fluxes. In the paper we show the use of the presented framework for the analysis of the yeast <italic>Saccharomyces cerevisiae</italic> grown at different growth conditions and for the analysis of different deletion mutants.</p>
+<fig id="pcbi-1000859-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000859.g001</object-id><label>Figure 1</label><caption>
+<title>Illustration of the regulatory mechanisms of cellular metabolism.</title>
+<p>The fluxes can be regulated at the level of mRNA transcription, by the concentrations of the metabolites or by intermediate steps such as translation or activation of the enzymes.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.g001" xlink:type="simple"/></fig>
+<p>The combined use of random sampling of genome-scale metabolic networks and expression data allows for global mapping of reactions that are either transcriptionally or metabolically regulated. This information can be used to guide the engineering of microbial strains or as a diagnosis tool for studying metabolic diseases in humans. In particular we should highlight that reactions in which there is no relation between gene transcription level and metabolic flux are not suitable targets for flux increase via gene over-expression. Through analysis of different data sets the method revealed that many changes in gene expression are not correlated with a corresponding change in metabolic fluxes. The use of gene-expression data alone can therefore be misleading. However, our method allowed for identification of many specific reactions that are indeed transcriptionally regulated, and we further identified that the expression of these enzymes is regulated a few key transcription factors. This fact suggests that the regulation of metabolism has evolved to contain a few flux-regulating transcription factors that could be the target for genetic manipulations in order to redirect fluxes.</p>
+</sec><sec id="s2">
+<title>Results/Discussion</title>
+<sec id="s2a">
+<title>Comparisons between different sampling methods</title>
+<p>Here we propose a sampling method that finds extreme solutions among the feasible flux distributions of the metabolic network. These solutions correspond to the corners in the region of allowed flux distributions, and in mathematical terms they are elements of the convex basis of the region of feasible solutions (which is a convex set). The COBRA Toolbox <xref ref-type="bibr" rid="pcbi.1000859-Becker1">[12]</xref> includes a random sampling option that uses the Hit and Run algorithm <xref ref-type="bibr" rid="pcbi.1000859-Lovasz1">[13]</xref> to obtain points uniformly distributed in the region of allowed solutions. The difference between the two sampling methods is illustrated in <xref ref-type="fig" rid="pcbi-1000859-g002">Fig. 2</xref>.</p>
+<fig id="pcbi-1000859-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000859.g002</object-id><label>Figure 2</label><caption>
+<title>The red points illustrate the sampling in the corners of the region of allowed solutions.</title>
+<p>The blue points illustrate the uniform random sampling inside the space of allowed solutions.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.g002" xlink:type="simple"/></fig>
+<p>In order to assess the accuracy of our sampling method to estimate the average fluxes and their standard deviations, we compared a set of internal fluxes measured with <sup>13</sup>C labeling <xref ref-type="bibr" rid="pcbi.1000859-Jouhten1">[14]</xref> with predictions using 500 sampling points obtained using the sampling method in the convex basis and 500 sampling points obtained using the sampling algorithm implemented in the COBRA Toolbox. The results are summarized in <xref ref-type="table" rid="pcbi-1000859-t001">Table 1</xref> where our method is labeled Convex Basis (CB), because it samples elements of the convex basis of the region of allowed solutions (see above), and the method from the COBRA Toolbox is labeled Hit and Run (HR). The Z values in the table are the number of standard deviations that the real value is deviating from the calculated mean.</p>
+<table-wrap id="pcbi-1000859-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000859.t001</object-id><label>Table 1</label><caption>
+<title>Real and estimated fluxes in <italic>S. cerevisiae</italic> at aerobic and anaerobic growth conditions. </title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000859-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Aerobic conditions</td>
+<td align="left" colspan="1" rowspan="1">Flux</td>
+<td align="left" colspan="1" rowspan="1">Mean (HR)</td>
+<td align="left" colspan="1" rowspan="1">Variance (HR)</td>
+<td align="left" colspan="1" rowspan="1">Mean (CB)</td>
+<td align="left" colspan="1" rowspan="1">Variance (CB)</td>
+<td align="left" colspan="1" rowspan="1">Z (HR)</td>
+<td align="left" colspan="1" rowspan="1">Z (CB)</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Fructose-bisphosphate aldolase</bold></td>
+<td align="left" colspan="1" rowspan="1">0.70</td>
+<td align="left" colspan="1" rowspan="1">0.76</td>
+<td align="left" colspan="1" rowspan="1">0.0001</td>
+<td align="left" colspan="1" rowspan="1">0.73</td>
+<td align="left" colspan="1" rowspan="1">0.0098</td>
+<td align="left" colspan="1" rowspan="1">3.38</td>
+<td align="left" colspan="1" rowspan="1">0.19</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Pyruvate kinase</bold></td>
+<td align="left" colspan="1" rowspan="1">1.50</td>
+<td align="left" colspan="1" rowspan="1">1.49</td>
+<td align="left" colspan="1" rowspan="1">0.0351</td>
+<td align="left" colspan="1" rowspan="1">1.43</td>
+<td align="left" colspan="1" rowspan="1">0.344</td>
+<td align="left" colspan="1" rowspan="1">0.024</td>
+<td align="left" colspan="1" rowspan="1">0.12</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Pyruvate dehydrogenase</bold></td>
+<td align="left" colspan="1" rowspan="1">0.47</td>
+<td align="left" colspan="1" rowspan="1">1.03</td>
+<td align="left" colspan="1" rowspan="1">0.0004</td>
+<td align="left" colspan="1" rowspan="1">0.98</td>
+<td align="left" colspan="1" rowspan="1">0.015</td>
+<td align="left" colspan="1" rowspan="1">28</td>
+<td align="left" colspan="1" rowspan="1">4.14</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Citrate synthase</bold></td>
+<td align="left" colspan="1" rowspan="1">0.71</td>
+<td align="left" colspan="1" rowspan="1">0.99</td>
+<td align="left" colspan="1" rowspan="1">0.0178</td>
+<td align="left" colspan="1" rowspan="1">0.94</td>
+<td align="left" colspan="1" rowspan="1">0.1868</td>
+<td align="left" colspan="1" rowspan="1">2.08</td>
+<td align="left" colspan="1" rowspan="1">0.53</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Pyruvate carboxylase</bold></td>
+<td align="left" colspan="1" rowspan="1">0.32</td>
+<td align="left" colspan="1" rowspan="1">0.23</td>
+<td align="left" colspan="1" rowspan="1">0.0014</td>
+<td align="left" colspan="1" rowspan="1">0.22</td>
+<td align="left" colspan="1" rowspan="1">0.0124</td>
+<td align="left" colspan="1" rowspan="1">2.44</td>
+<td align="left" colspan="1" rowspan="1">0.96</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Glucose-6-phosphate 1-dehydrogenase</bold></td>
+<td align="left" colspan="1" rowspan="1">0.52</td>
+<td align="left" colspan="1" rowspan="1">0.37</td>
+<td align="left" colspan="1" rowspan="1">0.0012</td>
+<td align="left" colspan="1" rowspan="1">0.41</td>
+<td align="left" colspan="1" rowspan="1">0.0881</td>
+<td align="left" colspan="1" rowspan="1">4.25</td>
+<td align="left" colspan="1" rowspan="1">0.37</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Pyruvate decarboxylase</bold></td>
+<td align="left" colspan="1" rowspan="1">0.53</td>
+<td align="left" colspan="1" rowspan="1">0.07</td>
+<td align="left" colspan="1" rowspan="1">0.0004</td>
+<td align="left" colspan="1" rowspan="1">0.08</td>
+<td align="left" colspan="1" rowspan="1">0.0092</td>
+<td align="left" colspan="1" rowspan="1">23</td>
+<td align="left" colspan="1" rowspan="1">4.7</td>
+</tr>
+</tbody>
+</table><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Anaerobic conditions</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Fructose-bisphosphate aldolase</bold></td>
+<td align="left" colspan="1" rowspan="1">5.82</td>
+<td align="left" colspan="1" rowspan="1">5.62</td>
+<td align="left" colspan="1" rowspan="1">0.0053</td>
+<td align="left" colspan="1" rowspan="1">5.67</td>
+<td align="left" colspan="1" rowspan="1">0.30</td>
+<td align="left" colspan="1" rowspan="1">2.78</td>
+<td align="left" colspan="1" rowspan="1">0.28</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Pyruvate kinase</bold></td>
+<td align="left" colspan="1" rowspan="1">10.37</td>
+<td align="left" colspan="1" rowspan="1">10.39</td>
+<td align="left" colspan="1" rowspan="1">1.93</td>
+<td align="left" colspan="1" rowspan="1">10.49</td>
+<td align="left" colspan="1" rowspan="1">25.62</td>
+<td align="left" colspan="1" rowspan="1">0.019</td>
+<td align="left" colspan="1" rowspan="1">0.025</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Pyruvate dehydrogenase</bold></td>
+<td align="left" colspan="1" rowspan="1">0.26</td>
+<td align="left" colspan="1" rowspan="1">0.59</td>
+<td align="left" colspan="1" rowspan="1">0.0114</td>
+<td align="left" colspan="1" rowspan="1">0.87</td>
+<td align="left" colspan="1" rowspan="1">0.45</td>
+<td align="left" colspan="1" rowspan="1">3.16</td>
+<td align="left" colspan="1" rowspan="1">0.91</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Citrate synthase</bold></td>
+<td align="left" colspan="1" rowspan="1">0.19</td>
+<td align="left" colspan="1" rowspan="1">0.96</td>
+<td align="left" colspan="1" rowspan="1">0.0271</td>
+<td align="left" colspan="1" rowspan="1">1.03</td>
+<td align="left" colspan="1" rowspan="1">1.03</td>
+<td align="left" colspan="1" rowspan="1">4.7</td>
+<td align="left" colspan="1" rowspan="1">0.83</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Pyruvate carboxylase</bold></td>
+<td align="left" colspan="1" rowspan="1">0.32</td>
+<td align="left" colspan="1" rowspan="1">0.32</td>
+<td align="left" colspan="1" rowspan="1">0.0261</td>
+<td align="left" colspan="1" rowspan="1">0.88</td>
+<td align="left" colspan="1" rowspan="1">2.82</td>
+<td align="left" colspan="1" rowspan="1">0.028</td>
+<td align="left" colspan="1" rowspan="1">0.33</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Glucose-6-phosphate 1-dehydrogenase</bold></td>
+<td align="left" colspan="1" rowspan="1">0.32</td>
+<td align="left" colspan="1" rowspan="1">1.35</td>
+<td align="left" colspan="1" rowspan="1">0.0441</td>
+<td align="left" colspan="1" rowspan="1">1.20</td>
+<td align="left" colspan="1" rowspan="1">2.40</td>
+<td align="left" colspan="1" rowspan="1">4.9</td>
+<td align="left" colspan="1" rowspan="1">0.56</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Pyruvate decarboxylase</bold></td>
+<td align="left" colspan="1" rowspan="1">9.54</td>
+<td align="left" colspan="1" rowspan="1">9.82</td>
+<td align="left" colspan="1" rowspan="1">1.71</td>
+<td align="left" colspan="1" rowspan="1">9.21</td>
+<td align="left" colspan="1" rowspan="1">2.20</td>
+<td align="left" colspan="1" rowspan="1">0.22</td>
+<td align="left" colspan="1" rowspan="1">0.22</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label/><p>HR refers to the Hit and Run algorithm and CB to the Convex Basis algorithm. </p></fn></table-wrap-foot></table-wrap>
+<p>The means obtained by the two sampling methods are very similar for most of the reactions; however the standard deviations found using the HR algorithm are significantly smaller. With the HR method the real values for the fluxes in many cases deviate several standard deviations from the mean, A high value of Z indicates that the real value has a very low chance of being obtained using the considered sampling method (or in other words: the real value does not belong to the family of solutions that is generated by the sampling method). The number of samples with the HR algorithm was increased up to 5000 to check possible effects of the sample size on the standard deviation. Only small increases were observed for the standard deviations of the studied fluxes.</p>
+<p>Using the CB algorithm we obtain higher standard deviations and the real flux is for most reactions less than one standard deviation away from the mean flux. We can therefore conclude that the CB sampling method gives more realistic standard deviations for the fluxes. This is important if we want to compare the significance of flux changes between conditions. An underestimated standard deviation would make some flux changes appear as being significant even though they may not be in reality, and our method therefore gives a more conservative list of significantly changed reaction fluxes than the HR algorithm.</p>
+</sec><sec id="s2b">
+<title>Comparisons between different carbon sources and mutant strains</title>
+<p>To evaluate our method we used data for the yeast <italic>S. cerevisiae</italic>. Data from growth on four different carbon sources (glucose, maltose, ethanol and acetate) in chemostat cultures and five deletion mutants (grr1Δ, hxk2Δ, mig1Δ, mig1Δmig2Δ and gdh1Δ) grown in batch cultures were used. The exchange fluxes and gene expression data for the mentioned conditions have been published earlier <xref ref-type="bibr" rid="pcbi.1000859-DaranLapujade1">[15]</xref>–<xref ref-type="bibr" rid="pcbi.1000859-Bro1">[17]</xref>.</p>
+<p>Our method obtains probability scores for each enzyme in the metabolic network (see <xref ref-type="sec" rid="s3">methods</xref>) and this allowed us to classify the enzymes as transcriptionally regulated (correlation between flux and gene expression), post-transcriptionally regulated (changes in gene expression don't cause changes in flux) and metabolically regulated (changes in flux are not caused by changes in gene-expression). The cut-off chosen for this classification was a probability score above 0.95. <xref ref-type="table" rid="pcbi-1000859-t002">Tables 2</xref> and <xref ref-type="table" rid="pcbi-1000859-t003">3</xref> show the 10 top scoring enzymes in each group (or fewer when less than 10 enzymes had a score exceeding 0.95). The method is illustrated in <xref ref-type="fig" rid="pcbi-1000859-g003">Fig. 3</xref>.</p>
+<fig id="pcbi-1000859-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000859.g003</object-id><label>Figure 3</label><caption>
+<title>This figure illustrates the different steps of our method.</title>
+<p>Two kinds of data are extracted from fermentations, gene expression data and production and consumption rates of different metabolites. The gene expression data are transformed into significance scores and p-values for the expression change of the metabolic genes. The measured fluxes are used to constrain the solution spaces corresponding to different conditions. A sampling among the allowed solutions gives averages and standard deviations for each reaction rate in the metabolic network. These values can be obtained to obtain significance scores and p-values for the changes in reaction rates. The p-values for changes in expression and in reaction rates can be combined to obtain the probabilities for a correlated change between both values (transcriptional regulation), changes in rate not correlated to transcriptional changes (metabolic regulation) and changes in transcription that are not correlated to changes in rate (which we refer to as posttranscriptional regulation).</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.g003" xlink:type="simple"/></fig><table-wrap id="pcbi-1000859-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000859.t002</object-id><label>Table 2</label><caption>
+<title>Top scoring enzymes for transcriptional, post-transcriptional and metabolic regulation for changes in carbon source.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000859-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Carbon source shift</td>
+<td align="left" colspan="1" rowspan="1">Enzymes showing transcriptional regulation</td>
+<td align="left" colspan="1" rowspan="1">Enzymes showing post-transcriptional regulation</td>
+<td align="left" colspan="1" rowspan="1">Enzymes showing metabolic regulation</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Glucose-Maltose</bold></td>
+<td align="left" colspan="1" rowspan="1">• α-glucosidase MAL32</td>
+<td align="left" colspan="1" rowspan="1">• Mevalonate kinase</td>
+<td align="left" colspan="1" rowspan="1">• Acetate transport via proton symport</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Low-affinity glucose transporter HXT4</td>
+<td align="left" colspan="1" rowspan="1">• Inosine-5′-monophosphate dehydrogenase IMD2</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Asparagine synthetase 1</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• (DL)-glycerol-3-phosphatase 1</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Uncharacterized deaminase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Nicotinate-nucleotide pyrophosphorylase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Mevalonate kinase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Mevalonate kinase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Glycerol-3-phosphate dehydrogenase [NAD+] 1</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Glucose-Ethanol</bold></td>
+<td align="left" colspan="1" rowspan="1">• Phosphoenolpyruvate carboxykinase</td>
+<td align="left" colspan="1" rowspan="1">• Formate dehydrogenase 2</td>
+<td align="left" colspan="1" rowspan="1">• Fructose-bisphosphate aldolase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Fructose-1,6-bisphosphatase</td>
+<td align="left" colspan="1" rowspan="1">• ATP-NADH kinase</td>
+<td align="left" colspan="1" rowspan="1">• Triosephosphate isomerase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Isocitrate lyase</td>
+<td align="left" colspan="1" rowspan="1">• Sulfate permease 1</td>
+<td align="left" colspan="1" rowspan="1">• Pyruvate dehydrogenase E1 component subunit alpha [m]</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Malate dehydrogenase [c]</td>
+<td align="left" colspan="1" rowspan="1">• Formate dehydrogenase 1</td>
+<td align="left" colspan="1" rowspan="1">• Alpha-ketoglutarate dehydrogenase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Citrate synthase [p]</td>
+<td align="left" colspan="1" rowspan="1">• Dicarboxylate transporter [m]</td>
+<td align="left" colspan="1" rowspan="1">• Succinyl-CoA ligase [ADP-forming] subunit beta [m]</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Ribose-5-phosphate isomerise</td>
+<td align="left" colspan="1" rowspan="1">• NADP-specific glutamate dehydrogenase 2</td>
+<td align="left" colspan="1" rowspan="1">• Malate synthase 2, glyoxysomal</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Low-affinity glucose transporter HXT4</td>
+<td align="left" colspan="1" rowspan="1">• Uncharacterized deaminase</td>
+<td align="left" colspan="1" rowspan="1">• Glucose-6-phosphate 1-dehydrogenase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• External NADH-ubiquinone oxidoreductase 2 [m]</td>
+<td align="left" colspan="1" rowspan="1">• Probable 6-phosphogluconolactonase 3</td>
+<td align="left" colspan="1" rowspan="1">• Cytochrome b-c1 complex subunit Rieske [m]</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Glucose-6-phosphate isomerase</td>
+<td align="left" colspan="1" rowspan="1">• 6-phosphofructo-2-kinase 2</td>
+<td align="left" colspan="1" rowspan="1">• Adenylate kinase [c]</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Nucleoside diphosphate kinase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Glucose-Acetate</bold></td>
+<td align="left" colspan="1" rowspan="1">• Fumarate hydratase [m]</td>
+<td align="left" colspan="1" rowspan="1">• Ribonucleoside-diphosphate reductase large chain 1</td>
+<td align="left" colspan="1" rowspan="1">• Fructose-bisphosphate aldolase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Phosphoenolpyruvate carboxykinase [ATP]</td>
+<td align="left" colspan="1" rowspan="1">• Phospho-2-keto-3-deoxyheptonate aldolase</td>
+<td align="left" colspan="1" rowspan="1">• Triosephosphate isomerase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Fructose-1,6-bisphosphatase</td>
+<td align="left" colspan="1" rowspan="1">• 6-phosphofructo-2-kinase 1</td>
+<td align="left" colspan="1" rowspan="1">• Ribose-5-phosphate isomerase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Isocitrate dehydrogenase [NADP] [c]</td>
+<td align="left" colspan="1" rowspan="1">• Glutamine-dependent NAD(+) synthetase</td>
+<td align="left" colspan="1" rowspan="1">• Inorganic pyrophosphatase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Succinate-semialdehyde dehydrogenase [NADP+]</td>
+<td align="left" colspan="1" rowspan="1">• Ribose-phosphate pyrophosphokinase 4</td>
+<td align="left" colspan="1" rowspan="1">• Adenylate kinase [c]</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Citrate synthase [p]</td>
+<td align="left" colspan="1" rowspan="1">• ATP-dependent permease AUS1</td>
+<td align="left" colspan="1" rowspan="1">• Glutamate decarboxylase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Isocitrate dehydrogenase [NAD] subunit 1 [m]</td>
+<td align="left" colspan="1" rowspan="1">• Fructose-2,6-bisphosphatase</td>
+<td align="left" colspan="1" rowspan="1">• 4-aminobutyrate aminotransferase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Pyruvate kinase 2</td>
+<td align="left" colspan="1" rowspan="1">• Nicotinate-nucleotide pyrophosphorylase [carboxylating]</td>
+<td align="left" colspan="1" rowspan="1">• Tricarboxylate transport protein</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Low-affinity glucose transporter HXT4′</td>
+<td align="left" colspan="1" rowspan="1">• Squalene monooxygenase</td>
+<td align="left" colspan="1" rowspan="1">• Prephenate dehydrogenase [NADP+]</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Tricarboxylate transport protein</td>
+</tr>
+</tbody>
+</table></alternatives></table-wrap><table-wrap id="pcbi-1000859-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000859.t003</object-id><label>Table 3</label><caption>
+<title>Top scoring enzymes for transcriptional, post-transcriptional and metabolic regulation upon deletion of specific genes.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000859-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.t003" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Mutants</td>
+<td align="left" colspan="1" rowspan="1">Enzymes showing transcriptional regulation</td>
+<td align="left" colspan="1" rowspan="1">Enzymes showing post-transcriptional regulation</td>
+<td align="left" colspan="1" rowspan="1">Enzymes showing metabolic regulation</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Wild type-grr1Δ</bold></td>
+<td align="left" colspan="1" rowspan="1">• GMP synthase [glutamine-hydrolyzing]</td>
+<td align="left" colspan="1" rowspan="1">• ADP, ATP carrier protein 2</td>
+<td align="left" colspan="1" rowspan="1">• Acetyl-CoA carboxylase malonyltransferase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Phosphoribosylformylglycinamidine synthase</td>
+<td align="left" colspan="1" rowspan="1">• Glycogen [starch] synthase isoform 1</td>
+<td align="left" colspan="1" rowspan="1">• [Acyl-carrier-protein]</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Dihydroorotase</td>
+<td align="left" colspan="1" rowspan="1">• AMP deaminase'</td>
+<td align="left" colspan="1" rowspan="1">• [Acyl-carrier-protein] acetyltransferase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Imidazole glycerol phosphate synthase hisHF</td>
+<td align="left" colspan="1" rowspan="1">• Sugar transporter STL1</td>
+<td align="left" colspan="1" rowspan="1">• Grouped fatty acid synthesis [c]</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Adenylosuccinate lyase</td>
+<td align="left" colspan="1" rowspan="1">• Phosphofructokinase 2</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Pantoate–beta-alanine ligase</td>
+<td align="left" colspan="1" rowspan="1">• D-3-phosphoglycerate dehydrogenase 2</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Inorganic phosphate transporter</td>
+<td align="left" colspan="1" rowspan="1">• Probable 6-phosphogluconolactonase 4</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Threonine dehydratase [m]</td>
+<td align="left" colspan="1" rowspan="1">• Glycerol-3-phosphate dehydrogenase [NAD+] 1</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• ATP phosphoribosyltransferase</td>
+<td align="left" colspan="1" rowspan="1">• Alcohol dehydrogenase 4</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Histidinol-phosphate aminotransferase</td>
+<td align="left" colspan="1" rowspan="1">• Xanthine phosphoribosyltransferase 1</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Wild type-hxk2Δ</bold></td>
+<td align="left" colspan="1" rowspan="1">• Phosphoribosylformylglycinamidine synthase</td>
+<td align="left" colspan="1" rowspan="1">• Nucleoside diphosphate kinase</td>
+<td align="left" colspan="1" rowspan="1">• Mannose-6-phosphate isomerase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Pyruvate decarboxylase isozyme 3</td>
+<td align="left" colspan="1" rowspan="1">• Cytochrome b-c1 complex subunit Rieske [m]</td>
+<td align="left" colspan="1" rowspan="1">• Acetyl-CoA carboxylase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Phosphoglycerate mutase 2</td>
+<td align="left" colspan="1" rowspan="1">• Homocysteine S-methyltransferase 1</td>
+<td align="left" colspan="1" rowspan="1">• [Acyl-carrier-protein] malonyltransferase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Alcohol dehydrogenase 5</td>
+<td align="left" colspan="1" rowspan="1">• ATP-NADH kinase</td>
+<td align="left" colspan="1" rowspan="1">• [Acyl-carrier-protein] acetyltransferase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Imidazole glycerol phosphate synthase hisHF</td>
+<td align="left" colspan="1" rowspan="1">• 1,4-alpha-glucan-branching enzyme</td>
+<td align="left" colspan="1" rowspan="1">• Grouped fatty acid synthesis [c]</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Dihydroorotase'</td>
+<td align="left" colspan="1" rowspan="1">• NAD-dependent malic enzyme [m]</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Hexokinase-2</td>
+<td align="left" colspan="1" rowspan="1">• Pyrroline-5-carboxylate reductase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Phosphoglycerate mutase 3</td>
+<td align="left" colspan="1" rowspan="1">• Galactose-1-phosphate uridylyltransferase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Phosphofructokinase 1</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Adenylosuccinate lyase</td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Wild Type-mig1Δ</bold></td>
+<td align="left" colspan="1" rowspan="1">• Probable 6-phosphogluconolactonase 1</td>
+<td align="left" colspan="1" rowspan="1">• ADP-sulfurylase</td>
+<td align="left" colspan="1" rowspan="1">• Mannose-6-phosphate isomerase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Orotidine 5′-phosphate decarboxylase</td>
+<td align="left" colspan="1" rowspan="1">• Purine nucleoside phosphorylase</td>
+<td align="left" colspan="1" rowspan="1">• Mannose-1-phosphate guanyltransferase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Transketolase 2</td>
+<td align="left" colspan="1" rowspan="1">• 3′,5′-cyclic-nucleotide phosphodiesterase 2</td>
+<td align="left" colspan="1" rowspan="1">• Acetyl-CoA carboxylase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Chorismate mutase</td>
+<td align="left" colspan="1" rowspan="1">• Phosphoserine phosphatase</td>
+<td align="left" colspan="1" rowspan="1">• Grouped fatty acid synthesis [c]</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Prephenate dehydratase'</td>
+<td align="left" colspan="1" rowspan="1">• Cytidine deaminase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Amidophosphoribosyltransferase</td>
+<td align="left" colspan="1" rowspan="1">• 1,3-beta-D-glucan-UDP glucosyltransferase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Phosphatidate cytidylyltransferase</td>
+<td align="left" colspan="1" rowspan="1">• Vacuolar acid trehalase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Diacylglycerol pyrophosphate phosphatase 1</td>
+<td align="left" colspan="1" rowspan="1">• Low-affinity glucose transporter HXT1</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Inositol-3-phosphate synthase</td>
+<td align="left" colspan="1" rowspan="1">• Trehalose-phosphatase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Wild Type-mig1Δmig2Δ</bold></td>
+<td align="left" colspan="1" rowspan="1">• Branched-chain-amino-acid aminotransferase [c]</td>
+<td align="left" colspan="1" rowspan="1">• Cystathionine beta-synthase</td>
+<td align="left" colspan="1" rowspan="1">• Phosphomannomutase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Phosphoribosylformylglycinamidine synthase</td>
+<td align="left" colspan="1" rowspan="1">• Isocitrate lyase</td>
+<td align="left" colspan="1" rowspan="1">• Mannose-1-phosphate guanyltransferase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Pantothenate kinase</td>
+<td align="left" colspan="1" rowspan="1">• Mitochondrial dicarboxylate transporter</td>
+<td align="left" colspan="1" rowspan="1">• Acetyl-CoA carboxylase</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• GMP synthase [glutamine-hydrolyzing]</td>
+<td align="left" colspan="1" rowspan="1">• High-affinity glucose transporter HXT2</td>
+<td align="left" colspan="1" rowspan="1">• Grouped fatty acid synthesis [c]</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Imidazole glycerol phosphate synthase hisHF</td>
+<td align="left" colspan="1" rowspan="1">• Uridylate kinase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• 2-isopropylmalate synthase</td>
+<td align="left" colspan="1" rowspan="1">• Nucleoside diphosphate kinase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Cytidine deaminase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Potassium-activated aldehyde dehydrogenase [m]</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Acetyl-coenzyme A synthetase 2</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Pyrroline-5-carboxylate reductase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>Wild Type-gdh1Δ</bold></td>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Malate synthase 2 [g]</td>
+<td align="left" colspan="1" rowspan="1">• Glycerol uptake/efflux facilitator protein</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Sugar transporter STL1</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• 1,3-beta-glucan synthase component FKS3</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• High-affinity glucose transporter HXT2</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• S-(hydroxymethyl)glutathione dehydrogenase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Methylenetetrahydrofolate dehydrogenase [NAD+]</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Acetate transport via proton symport</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Homoaconitase [m]</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Homoisocitrate dehydrogenase [m]</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">• Glutamate 5-kinase</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+</tbody>
+</table></alternatives></table-wrap>
+<p>The method to identify the significance of flux changes relies on a set of measured external fluxes, and in some cases strains that don't show significant changes in external fluxes have changes in internal fluxes <xref ref-type="bibr" rid="pcbi.1000859-Price1">[18]</xref>. These changes cannot be identified with our method, and our estimations of the significance of flux changes can therefore be seen as conservative estimates. The lists of transcriptionally and metabolically regulated reactions are therefore more reliable than the list of post-transcriptionally regulated reactions (in which some fluxes may be changed in reality but their change pass undetected).</p>
+<p>The reactions showing transcriptional regulation form a set of putative targets where enzyme over-expression or down regulation will influence the flux through these reactions. The reactions showing metabolic regulation points to parts of the metabolism where the pools of metabolites are possibly increasing or decreasing in connection with transcriptional changes and hereby counteracting possible changes in enzyme concentration as a result of transcriptional changes. This knowledge can be used to identify whether one should target changes in enzyme concentration (v<sub>max</sub> changes), e.g. through over-expression, or changes in enzyme affinity (K<sub>m</sub> changes), e.g. through expression of heterologous enzymes, in order to alter the fluxes.</p>
+<sec id="s2b1">
+<title>Effects of different carbon sources</title>
+<p>In the glucose to maltose transition, only two enzymes showed transcriptional change correlated with their flux. The α-glucosidase MAL32, responsible for the breakdown of maltose into glucose was up-regulated and the glucose transporter HXT4 was down-regulated. The metabolic adjustment in terms of fluxes was minimal and only enzymes directly related with substrate uptake and utilization were detected. The changes in gene expression were also low and only 11 metabolic enzymes were significantly perturbed (without significant flux changes).</p>
+<p>The glucose to ethanol and the glucose to acetate transitions showed widespread flux and expression changes, and they are therefore more interesting study cases. In the glucose-ethanol transition 19 enzymes showed transcriptional regulation and 22 other enzymes changed in expression but not in flux. For the glucose-acetate transition the same numbers were 33 and 23 respectively. We can see that about one half of the genes that changed in transcription level also showed significant flux changes, this proportion is higher than in the case of deletion mutants (as it will be discussed later). Among the enzymes showing transcriptional regulation, 14 were shared between the glucose-ethanol and glucose-acetate transitions. Interestingly, no overlap was found between the sets of enzymes that don't change in flux. Metabolic regulation was observed in 21 reactions for each case, among which 8 overlap.</p>
+<p>The enzymes showing transcriptional regulation clearly show a down regulation of enzymes involved in glucose uptake and utilization (e.g. Glucose transporter HXT4 or Hexokinase 2) and the up-regulation of enzymes involved in the gluconeogenesis (e.g. Fructose-1,6-biphosphatase) and the TCA cycle (e.g. Succinate dehydrogenase or Citrate synthase). The AcCoA synthetase 2, responsible for supplying AcCoA to the TCA cycle is also transcriptionally up-regulated as well as the ATP synthetase (involved in the respiratory chain) and the external NADH-ubiquinone oxidoreductase 2, which supplies the necessary NAD<sup>+</sup> to oxidize ethanol or acetate in the cytoplasm and maintain the redox balance in the cell. Isocitrate lyase, a key component of the glyoxylate cycle, is also transcriptionally up regulated and this allows for net formation of malic acid that can further be converted to phopshoenolpyruvate (via oxaloacetate) that fuels the gluconeogenesis. All these changes in fluxes are consistent with general knowledge about the changes in metabolism from glucose to C2 carbon sources like ethanol and acetate, but what is interesting to see is that not all the reactions associated with these flux changes are transcriptionally regulated, but the cell have selected a few key reactions to regulate at the transcriptional level and these are identified using our method.</p>
+<p>In order to make a deeper analysis, we performed an enrichment test to compare the transcription factors involved in the expression of the enzymes showing transcriptional regulation and the enzymes showing changes in expression but not in flux. We found three transcription factors that were strongly overrepresented in the metabolic genes showing transcriptional regulation. In the glucose-ethanol transition, the transcription factors Gcr1 and Gcr2 both appeared in 11 transcriptionally regulated genes and in none of the other genes, whereas the transcription factor Hap4 appeared in 11 transcriptionally regulated genes and 5 of the other regulated genes. For the glucose-acetate transition these numbers were 15-0, 11-0 and 15-0 for the same transcription factors. This means that certain transcription factors are especially involved in the transcriptional regulation of metabolic fluxes (the same kind of enrichment was observed in the deletion mutants, as will be discussed later), and to our knowledge this has not been previously reported. It basically implies that there is global regulation of major flux alterations, which is similar to what has experimentally been shown to be the case for galactose metabolism <xref ref-type="bibr" rid="pcbi.1000859-Ostergaard1">[19]</xref>.</p>
+<p>The top scoring metabolically regulated reactions, both for glucose-ethanol and glucose-acetate, are the Fructose biphosphate aldolase and the Triosephosphate isomerase. These reactions are known to operate close to the equilibrium and are therefore very sensitive to changes in the metabolic pools, which is consistent with metabolic regulation of the fluxes. In the considered cases the direction of these reactions is inverted. This can only be explained by a decrease in the fructose-1,6-diphosphate pool and an increase in the glyceraldehyde-3-phosphate and dihydroxyacetone pools. This hypothesis is supported by the fact that in chemostat cultures, there was not found any correlation between the glycolytic flux and the expression of the genes encoding these two enzymes <xref ref-type="bibr" rid="pcbi.1000859-DaranLapujade2">[20]</xref>.</p>
+<p>The results for the glucose-ethanol change are summarized in <xref ref-type="fig" rid="pcbi-1000859-g004">Fig. 4</xref>.</p>
+<fig id="pcbi-1000859-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000859.g004</object-id><label>Figure 4</label><caption>
+<title>Main reactions showing transcriptional up (red) or down (green) regulation associated with the glucose-ethanol shift.</title>
+<p>The underlined metabolite pools are those that are expected to increase (red) or decrease (green) according to the observed metabolic regulation.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.g004" xlink:type="simple"/></fig></sec><sec id="s2b2">
+<title>Effects of gene deletions</title>
+<p>As mentioned above several different deletion strains were evaluated and the number of enzymatic reactions showing transcriptional regulation was 26 for the grr1Δ strain, 25 for the hxk2Δ strain, 11 for the mig1Δ strain, 8 for the mig1Δmig2Δ strain and 0 for the gdh1Δ strain. The reactions showing post-transcriptional regulation were 73, 70, 46, 36 and 89 for the same strains, respectively. These numbers clearly show, that in contrast to growth on different carbon sources, most of the transcriptional changes do not result in correlated changes in metabolic fluxes. This indicates that many transcriptional changes are indeed happening in order to minimize the metabolic adjustment resulting from a gene deletion, and the most extreme case is the gdh1Δ strain, where no transcriptional changes seem to be correlated to flux changes. This behaviour is consistent with the MOMA (Minimization of Metabolic Adjustment) hypothesis <xref ref-type="bibr" rid="pcbi.1000859-Segre1">[21]</xref>.</p>
+<p>There is a substantial overlap between the strains grr1Δ and hxk2Δ, 15 transcriptionally regulated reactions were shared between both strains and 28 post-transcriptionally regulated reactions were also shared. An enrichment test was performed in order to find transcription factors regulating the enzymes showing transcriptional regulation. For the grr1Δ, the most significantly enriched transcription factors were Pho2 (which regulates the expression of 10 of the 26 enzymes with transcriptional regulation and only 6 of the 73 enzymes showing post-transcriptional regulation) and Bas1 (which regulates 10 out of 26 and 7 out of 73 enzymes in the mentioned groups). For the hxk2Δ strain the most significant transcription factor enrichment was found for the factors Pho2 (with 7 and 5 enzymes in each of the groups) and Bas1 (with 7 and 6 enzymes in each of the groups).</p>
+<p>Pho2 and Bas1 are partner proteins that regulate the transcription of genes involved in purine and histidine biosynthesis <xref ref-type="bibr" rid="pcbi.1000859-Bhoite1">[22]</xref>. It is possible that the slower growth rate observed in grr1Δ and hxk2Δ with respect to the wild type is due to a down-regulation of purine and histidine biosynthesis resulting from lower activities of Pho2 or Bas1.</p>
+<p>Strains grr1Δ and hxk2Δ show specific growth rates of 0.23 and 0.22 h<sup>−1</sup> respectively <xref ref-type="bibr" rid="pcbi.1000859-Westergaard1">[16]</xref>, however the biomass yields were 0.09 g-DW g<sup>−1</sup> and 0.2 g-DW g<sup>−1</sup>. The specific glucose uptake rate for the hxk2Δ strain is significantly lower than for the grr1Δ strain as well as for the reference strain. This is associated with the observation that the glycolytic flux in the hxk2Δ strain shows transcriptional down-regulation of five enzymes. In the upper glycolysis, the Hexokinase 2 has been deleted and the Phosphofructokinase 1 is down-regulated. The Phosphofructokinase 1 was also strongly down-regulated in the grr1Δ strain but the decrease in flux was not as large as in the hxk2Δ strain. In the lower glycolysis of the hxk2Δ, all the three iso-enzymes of Phosphoglycerate mutase were down-regulated as well as the phosphoglycerate kinase. No down-regulation for these enzymes was seen in the grr1Δ strain. The glycerol-3-phosphate dehydrogenase has two iso-enzymes. The first of those isoenzymes was up-regulated in the grr1Δ and the hxk2Δ strains; however its expected flux decreased in both cases (more significantly in hxk2Δ). The second iso-enzyme did not show important changes in grr1Δ but was down-regulated in hxk2Δ. This is not the only case in which different iso-enzymes show different regulatory patterns, and in these cases our method for having flux estimations independent from transcriptome analysis is particularly useful.</p>
+<p>The strain hxk2Δ showed a strong decrease in ethanol production compared to grr1Δ. All the alcohol dehydrogenase iso-enzymes were down-regulated in a similar way in both strains. The explanation of the differences in flux towards ethanol should be found in the pyruvate decarboxylase. Pyruvate decarboxylase 3 was strongly down-regulated in both strains, however, pyruvate decarboxylase 2 was up-regulated. This up-regulation was much more significant in grr1Δ, which could explain a higher flux from pyruvate to AcCoA in this strain. The results for the hxk2Δ mutant are summarized in <xref ref-type="fig" rid="pcbi-1000859-g005">Fig. 5</xref>.</p>
+<fig id="pcbi-1000859-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000859.g005</object-id><label>Figure 5</label><caption>
+<title>Main reactions showing transcriptional up (red) or down (green) regulation associated with the deletion of HXK2.</title>
+<p>The underlined metabolite pools are expected to increase (red) or decrease (green) according to the observed metabolic regulation. The transcription factors controlling the down-regulated pathways are also underlined in green.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.g005" xlink:type="simple"/></fig>
+<p>The mig1Δ mutant shows a higher specific growth rate than the wild type. In general it is transcriptionally very similar to the wild type <xref ref-type="bibr" rid="pcbi.1000859-Westergaard1">[16]</xref>. An enrichment test in transcription factors between transcriptional regulated and post-transcriptional regulated reactions was performed and the factor Sfp1 was found. This factor is known to regulate ribosome production and is nutrient sensitive <xref ref-type="bibr" rid="pcbi.1000859-Marion1">[23]</xref>. This could mean that the deletion of <italic>MIG1</italic> activates a response against starvation that results in an increased specific growth rate. Among the transcriptionally regulated reactions, a slight down-regulation of the PP pathway is observed together with an up-regulation of several amino-acid production pathways.</p>
+<p>In the mig1Δmig2Δ mutant there is a slight decrease in the specific growth rate. All the 8 transcriptionally regulated reactions were down-regulated and belonged to amino-acid biosynthesis pathways. The enrichment test found the factors Cbf1 and Gcn4 (represented in 4 and 1 out of 8 reactions and 5 and 6 out of 36 reactions). Gcn4 is known to regulate amino-acid biosynthetic genes <xref ref-type="bibr" rid="pcbi.1000859-Hope1">[24]</xref> and it seems that the up-regulation of amino-acid biosynthesis due to the deletion of <italic>MIG1</italic> is cancelled by an opposite effect due to <italic>MIG2</italic>.</p>
+<p>In all the mutants discussed above, the AcCoA carboxylase and the fatty acid synthesis showed metabolic regulation. This could indicate that in the studied cases the AcCoA pool was the main parameter responsible for adjusting the rate of lipid biosynthesis to match the changes in specific growth rates.</p>
+<p>The experiments for the gdh1Δ mutant were performed in chemostat cultures <xref ref-type="bibr" rid="pcbi.1000859-Bro1">[17]</xref> with the same dilution rate. The only observed change in exchange fluxes was a small decrease in glycerol production and only a few significant changes were identified in the metabolic fluxes. However, there were significant transcriptional changes in many metabolic pathways. This again points to the hypothesis that changes in transcription mainly results in altered metabolite levels such that metabolic homeostasis can be maintained. This is supported by metabolome analysis of this mutant, which showed that there were many changes in the metabolite levels <xref ref-type="bibr" rid="pcbi.1000859-VillasBas1">[25]</xref> and in fact many of these changes were associated with changes also in the transcription of associated enzymes <xref ref-type="bibr" rid="pcbi.1000859-Cakir1">[26]</xref>. It is possible that the chemostat conditions, by imposing the same specific growth rate, forced the mutant strain to important transcriptional changes in order to keep the fluxes unchanged.</p>
+<p>In <xref ref-type="fig" rid="pcbi-1000859-g006">Fig. 6</xref> we aim to provide a global visualization of the changes for all the studied metabolic conditions.</p>
+<fig id="pcbi-1000859-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000859.g006</object-id><label>Figure 6</label><caption>
+<title>This figure illustrates the extent of transcriptional, post-transcriptional and metabolic regulation observed in different metabolic processes for each of the studied cases.</title>
+<p>The metabolic processes are defined in the same way as in the iFF708 model. The brightness of the color is proportional to the probability of a reaction in the corresponding process to show transcriptional, post-transcriptional and metabolic regulation respectively. The black correspond to 0 and the white to 1.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.g006" xlink:type="simple"/></fig></sec></sec></sec><sec id="s3" sec-type="methods">
+<title>Methods</title>
+<sec id="s3a">
+<title>Sampling in the region of feasible solutions</title>
+<p>The steady state condition and the irreversibility of some reactions impose limitations on the flux distributions attainable by the cell <xref ref-type="bibr" rid="pcbi.1000859-Price1">[18]</xref>. The set of feasible solutions can be further constrained by fixing some fluxes to their experimental values. In general, the fluxes most accessible to experimental determination are those corresponding to uptake or secretion rates. After fixing a subset of fluxes, genome scale models still have a large number of degrees of freedom. In this study we used the genome scale model iFF708 for <italic>S. cerevisiae</italic> <xref ref-type="bibr" rid="pcbi.1000859-Frster1">[27]</xref>. Random sampling has previously been performed <xref ref-type="bibr" rid="pcbi.1000859-Schellenberger1">[7]</xref> by enclosing the region of allowed solutions in a parallelepiped with the same dimensions as solution space (the null space of the stoichiometric matrix) and generating random points inside this parallelepiped. The points that lie inside the region of possible solutions are then selected. The COBRA Toolbox <xref ref-type="bibr" rid="pcbi.1000859-Becker1">[12]</xref> uses a Hit and Run algorithm to generate random points in this way. In this work instead of sampling inside the region of allowed solutions we sampled at its corners.</p>
+<p>In order to obtain corners in the space of allowed solutions we used the simplex method with a random set of objective functions to be maximized. The maximization of each of these objective functions will give a corner in the space of solutions. The constraints imposed upon each optimization are:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.e001" xlink:type="simple"/><label>(1)</label></disp-formula><disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.e002" xlink:type="simple"/><label>(2)</label></disp-formula><disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.e003" xlink:type="simple"/><label>(3)</label></disp-formula>The values of the measured fluxes (<bold><italic>v<sup>exp</sup></italic></bold>) are different between conditions. This fact changes the shape of the region of feasible solutions between different conditions. <italic>S</italic> is the stoichiometric matrix of the network.</p>
+<p>In order to reduce the effects of internal loops we first identified all the reactions that can get involved in loops using the FVA (Flux Variability Analysis) option in the COBRA Toolbox. The reactions that can be involved in loops are unbounded and show the default maximal or minimal value set in the COBRA Toolbox (1000 or −1000). If these bounds were kept, the means and standard deviations for these reactions would be unrealistic <xref ref-type="bibr" rid="pcbi.1000859-Mo1">[6]</xref> and cannot be used for further analysis. In order to reduce the effect of loops, the default maximal and minimal fluxes for the reactions involved in loops, were set to a smaller value in order to reduce the loop effect. In order to select an appropriate value the bounds were increased from 0 in steps of 0.1 until the minimal value that allows obtaining flux distributions consistent with the experimental fluxes is found. These values went from 1 to 15 mmol h<sup>−1</sup>g-DW<sup>−1</sup> depending on each condition. Also no weights (eq. 4) were assigned to the reactions involved in loops in order to avoid objective functions that maximize the activity of loops.</p>
+<p>Random objective functions were generated by selecting random pairs of reactions and assigning them random weights (the reactions involved in loops were excluded from these choices). The weights (<italic>w<sub>i</sub></italic>) assigned to each reaction were generated by dividing a random number between 0 and 1 by the maximal flux for this reaction obtained using FVA. This normalization was made to account for the different size orders of the different reactions. The objective functions take the form:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.e004" xlink:type="simple"/><label>(4)</label></disp-formula>One solution is obtained for each of the objective functions generated.</p>
+<p>Our objective is to obtain means and standard deviations for each flux in each of the compared conditions and use them to get a Z-score quantifying the significance of change in each flux between the considered conditions. This score is equal to the difference between the means in each of the conditions divided by the standard deviation of this difference (note that the variance of the difference is the sum of the two variances and the standard deviation its square root).<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.e005" xlink:type="simple"/><label>(5)</label></disp-formula>The difference between averages in the numerator follows a normal distribution (according to the central limit theorem) with a standard deviation equal to the standard deviation of the flux (the denominator in eq. (5)) divided by the square root of the number of samples. Therefore, Z itself follows a normal distribution with a standard deviation equal to the inverse of the square root of the number of samples.</p>
+<p>The Z score measures the significance of change in terms of standard deviations. If the error in the Z score is lower than 0.15, no information would be lost in terms of classifying a reaction as significantly changed or not. The order of size of a genome-scale model is about 1000 reactions. A reasonable accuracy for the Z-scores would be to expect errors higher than 0.15 on the Z score only for 1 reaction in the whole model. This means a p-value of 0.001. If we want to keep the error on the Z score under 0.15 with a probability of 0.999 we need 500 samples, and this was therefore selected as the sampling number.</p>
+</sec><sec id="s3b">
+<title>Classification of enzymes according to their changes in flux and expression level</title>
+<p>The Z-scores can be transformed into probabilities of change by using the cumulative Gaussian distribution. Once we have Z-scores for the significance of flux changes and Z-scores for the significance of gene-expression changes we can obtain probabilities of having correlated expression and flux changes for each enzyme.</p>
+<p>An increase in enzyme expression can result in an increase of flux (transcriptional regulation). In order to evaluate the probability for a reaction of being transcriptionally regulated we multiply the probability of its enzyme level changing by the probability of its flux changing in the same direction (obtained using the cumulative normal distribution).<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.e006" xlink:type="simple"/><label>(6)</label></disp-formula><disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.e007" xlink:type="simple"/><label>(7)</label></disp-formula>If there is a decrease in expression and a decrease in flux, both Z-scores are negative and we will use the absolute values of the Zs in eq. (6). If there is an increase in expression and a negative flux becomes more negative, we will use the absolute value of the Z-score for the flux change. If the direction of the flux changes between conditions, this change must be driven by the metabolic concentrations and no by transcriptional regulation, therefore a P<sub>tri</sub> of zero is assigned by default.</p>
+<p>In the same way as in eq. (6) we can define probabilities for the expression level changing and for the flux not changing (post transcriptional regulation).<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.e008" xlink:type="simple"/><label>(8)</label></disp-formula><disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.e009" xlink:type="simple"/><label>(9)</label></disp-formula>Now we use the error function because we want to evaluate the probability of change in any direction. The absolute value of Z is used in all the cases.</p>
+<p>The probability of a change in flux but not in transcription (metabolic regulation) can be obtained for each reaction as follows:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.e010" xlink:type="simple"/><label>(10)</label></disp-formula>Each of these three probabilities can be associated to each enzyme in the metabolic network.</p>
+<p><xref ref-type="table" rid="pcbi-1000859-t004">Table 4</xref> summarizes the criteria to assign each type of regulation.</p>
+<table-wrap id="pcbi-1000859-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000859.t004</object-id><label>Table 4</label><caption>
+<title>Decision table to assign transcriptional regulation (TR), post transcriptional regulation (PR) or metabolic regulation (MR) to the different enzymes depending on the observed up-regulation (+), down-regulation (−) or lack of change ( = ) of flux and gene expression.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000859-t004-4" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000859.t004" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Exp\Flux</td>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1"> = </td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">+</td>
+<td align="left" colspan="1" rowspan="1">TR</td>
+<td align="left" colspan="1" rowspan="1">MR</td>
+<td align="left" colspan="1" rowspan="1">PR</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">−</td>
+<td align="left" colspan="1" rowspan="1">MR</td>
+<td align="left" colspan="1" rowspan="1">TR</td>
+<td align="left" colspan="1" rowspan="1">PR</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"> = </td>
+<td align="left" colspan="1" rowspan="1">MR</td>
+<td align="left" colspan="1" rowspan="1">MR</td>
+<td align="left" colspan="1" rowspan="1"/>
+</tr>
+</tbody>
+</table></alternatives></table-wrap></sec></sec></body>
+<back><ref-list>
+<title>References</title>
+<ref id="pcbi.1000859-Patil1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Patil</surname><given-names>KR</given-names></name>
+<name name-style="western"><surname>Nielsen</surname><given-names>J</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Uncovering transcriptional regulation of metabolism by using metabolic network topology.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>102</volume>             <fpage>2685</fpage>             <lpage>2689</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Gygi1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Gygi</surname><given-names>SP</given-names></name>
+<name name-style="western"><surname>Rochon</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Franza</surname><given-names>BR</given-names></name>
+<name name-style="western"><surname>Aebersold</surname><given-names>R</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Correlation between protein and mRNA abundance in yeast.</article-title>             <source>Mol Cell Biol</source>             <volume>19</volume>             <fpage>1720</fpage>             <lpage>1730</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Yang1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Yang</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Hua</surname><given-names>Q</given-names></name>
+<name name-style="western"><surname>Shimizu</surname><given-names>K</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Integration of the information from gene expression and metabolic fluxes for the analysis of the regulatory mechanisms in Synechocystis.</article-title>             <source>Appl Microbiol Biotechnol</source>             <volume>58</volume>             <fpage>813</fpage>             <lpage>822</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Moxley1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Moxley</surname><given-names>JF</given-names></name>
+<name name-style="western"><surname>Jewett</surname><given-names>MC</given-names></name>
+<name name-style="western"><surname>Antoniewicz</surname><given-names>MR</given-names></name>
+<name name-style="western"><surname>Villas-Boas</surname><given-names>SG</given-names></name>
+<name name-style="western"><surname>Alper</surname><given-names>H</given-names></name>
+<etal/></person-group>             <year>2009</year>             <article-title>Linking high-resolution metabolic flux phenotypes and transcriptional regulation in yeast modulated by the global regulator Gcn4p.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>106</volume>             <fpage>6477</fpage>             <lpage>6482</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Fong1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Fong</surname><given-names>SS</given-names></name>
+<name name-style="western"><surname>Nanchen</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Palsson</surname><given-names>BO</given-names></name>
+<name name-style="western"><surname>Sauer</surname><given-names>U</given-names></name>
+</person-group>             <year>2006</year>             <article-title>Latent pathway activation and increased pathway capacity enable Escherichia coli adaptation to loss of key metabolic enzymes.</article-title>             <source>J Biol Chem</source>             <volume>281</volume>             <fpage>8024</fpage>             <lpage>8033</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Mo1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mo</surname><given-names>ML</given-names></name>
+<name name-style="western"><surname>Palsson</surname><given-names>BO</given-names></name>
+<name name-style="western"><surname>Herrgård</surname><given-names>MJ</given-names></name>
+</person-group>             <year>2009</year>             <article-title>Connecting extracellular metabolomic measurements to intracellular flux states in yeast.</article-title>             <source>BMC systems biology</source>             <volume>3</volume>             <fpage>37</fpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Schellenberger1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schellenberger</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Palsson</surname><given-names>BØ</given-names></name>
+</person-group>             <year>2008</year>             <article-title>Use of randomized sampling for analysis of metabolic networks.</article-title>             <source>J Biol Chem</source>             <volume>284</volume>             <fpage>5457</fpage>             <lpage>5461</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Almaas1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Almaas</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Kovács</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Vicsek</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Oltvai</surname><given-names>ZN</given-names></name>
+<name name-style="western"><surname>Barabási</surname><given-names>AL</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Global organization of the metabolic fluxes in the bacterium <italic>Escherichia coli</italic>.</article-title>             <source>Nature</source>             <volume>427</volume>             <fpage>839</fpage>             <lpage>843</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Papin1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Papin</surname><given-names>JA</given-names></name>
+<name name-style="western"><surname>Reed</surname><given-names>JL</given-names></name>
+<name name-style="western"><surname>Palsson</surname><given-names>BØ</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Hierarchical thinking in network biology: the unbiased modularization of biochemical networks.</article-title>             <source>Trends Biochem Sci</source>             <volume>29</volume>             <fpage>641</fpage>             <lpage>647</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Jamshidi1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jamshidi</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Palsson</surname><given-names>BO</given-names></name>
+</person-group>             <year>2007</year>             <article-title>Investigating the metabolic capabilities of Mycobacterium tuberculosis H37Rv using the in silico strain iNJ661 and proposing alternative drug targets.</article-title>             <source>BMC Syst Biol</source>             <volume>1</volume>             <fpage>26</fpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Thiele1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Thiele</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Price</surname><given-names>ND</given-names></name>
+<name name-style="western"><surname>Vo</surname><given-names>TD</given-names></name>
+<name name-style="western"><surname>Palsson</surname><given-names>BØ</given-names></name>
+</person-group>             <year>2005</year>             <article-title>Candidate metabolic network states in human mitochondria: Impact of diabetes, ischemia, and diet.</article-title>             <source>Journal of Biological Chemistry</source>             <volume>280</volume>             <fpage>11683</fpage>             <lpage>11695</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Becker1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Becker</surname><given-names>SA</given-names></name>
+<name name-style="western"><surname>Feist</surname><given-names>AM</given-names></name>
+<name name-style="western"><surname>Mo</surname><given-names>ML</given-names></name>
+<name name-style="western"><surname>Hannum</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Palsson</surname><given-names>BØ</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Quantitative prediction of cellular metabolism with constraint-based models: the COBRA toolbox.</article-title>             <source>Nat Prot</source>             <volume>2</volume>             <fpage>727</fpage>             <lpage>738</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Lovasz1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lovasz</surname><given-names>L</given-names></name>
+</person-group>             <year>1999</year>             <article-title>Hit and Run mixes fast.</article-title>             <source>Math Program</source>             <volume>86</volume>             <fpage>443</fpage>             <lpage>461</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Jouhten1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jouhten</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Rintala</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Huuskonen</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Tamminen</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Toivari</surname><given-names>M</given-names></name>
+<etal/></person-group>             <year>2008</year>             <article-title>Oxygen dependence of metabolic fluxes and energy generation of Saccharomyces cerevisiae CEN.PKI I3-IA.</article-title>             <source>BMC Sys Biol</source>             <volume>2</volume>             <fpage>60</fpage>             <lpage>79</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-DaranLapujade1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Daran-Lapujade</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Jansen</surname><given-names>MLA</given-names></name>
+<name name-style="western"><surname>Daran</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>van Gulik</surname><given-names>W</given-names></name>
+<name name-style="western"><surname>de Winde</surname><given-names>JH</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Role of transcriptional regulation in controlling fluxes in central carbon metabolism of Saccharomyces cerevisiae.</article-title>             <source>J Biol Chem</source>             <volume>279</volume>             <fpage>9125</fpage>             <lpage>9138</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Westergaard1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Westergaard</surname><given-names>SL</given-names></name>
+<name name-style="western"><surname>Oliveira</surname><given-names>AP</given-names></name>
+<name name-style="western"><surname>Bro</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Olsson</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Nielsen</surname><given-names>J</given-names></name>
+</person-group>             <year>2007</year>             <article-title>A systems biology approach to study glucose repression in the yeast Saccharomyces cerevisiae.</article-title>             <source>Biotechnol Bioeng</source>             <volume>96</volume>             <fpage>134</fpage>             <lpage>145</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Bro1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bro</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Regenberg</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Nielsen</surname><given-names>J</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Genome-wide transcriptional response of a Saccharomyces cerevisiae strain with an altered redox metabolism.</article-title>             <source>Biotechnol Bioeng</source>             <volume>85</volume>             <fpage>269</fpage>             <lpage>276</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Price1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Price</surname><given-names>ND</given-names></name>
+<name name-style="western"><surname>Reed</surname><given-names>JL</given-names></name>
+<name name-style="western"><surname>Palsson</surname><given-names>BØ</given-names></name>
+</person-group>             <year>2004</year>             <article-title>Genome scale models of microbian cells: Evaluating the consequences of constraints.</article-title>             <source>Nat Rev Microbiol</source>             <volume>2</volume>             <fpage>886</fpage>             <lpage>897</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Ostergaard1"><label>19</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ostergaard</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>Walløe</surname><given-names>KO</given-names></name>
+<name name-style="western"><surname>Gomes</surname><given-names>CSG</given-names></name>
+<name name-style="western"><surname>Olsson</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Nielsen</surname><given-names>J</given-names></name>
+</person-group>             <year>2001</year>             <article-title>The impact of GAL6, GAL80 and MIG1 on glucose control of the GAL system in Saccharomyces cerevisiae.</article-title>             <source>FEMS Yeast Res</source>             <volume>1</volume>             <fpage>47</fpage>             <lpage>55</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-DaranLapujade2"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Daran-Lapujade</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Rossell</surname><given-names>S</given-names></name>
+<name name-style="western"><surname>van Gulik</surname><given-names>WM</given-names></name>
+<name name-style="western"><surname>Luttik</surname><given-names>MAH</given-names></name>
+<name name-style="western"><surname>de Groot</surname><given-names>MJL</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>The fluxes through glycolytic enzymes in Saccharomyces cerevisiae are predominantly regulated at posttranscriptional levels.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>104</volume>             <fpage>15753</fpage>             <lpage>15758</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Segre1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Segre</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Vitkup</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Church</surname><given-names>GM</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Analysis of optimality in natural and perturbed metabolic networks.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>99</volume>             <fpage>1801</fpage>             <lpage>1806</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Bhoite1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Bhoite</surname><given-names>LT</given-names></name>
+<name name-style="western"><surname>Allen</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Garcia</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Thomas</surname><given-names>LR</given-names></name>
+<name name-style="western"><surname>Gregory</surname><given-names>ID</given-names></name>
+<etal/></person-group>             <year>2002</year>             <article-title>Mutations in the Pho2 (Bas2) transcription factor that differentially affect activation with its partner proteins Bas1, Pho4, and Swi5.</article-title>             <source>J Biol Chem</source>             <volume>227</volume>             <fpage>37612</fpage>             <lpage>37618</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Marion1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Marion</surname><given-names>RM</given-names></name>
+<name name-style="western"><surname>Regev</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Segal</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Barash</surname><given-names>Y</given-names></name>
+<name name-style="western"><surname>Koller</surname><given-names>D</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Sfp1 is a stress- and nutrient-sensitive regulator of ribosomal protein gene expression.</article-title>             <source>Proc Natl Acad Sci U S</source>             <volume>A101</volume>             <fpage>14315</fpage>             <lpage>14322</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Hope1"><label>24</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hope</surname><given-names>IA</given-names></name>
+<name name-style="western"><surname>Struhl</surname><given-names>K</given-names></name>
+</person-group>             <year>1987</year>             <article-title>Gcn4, a eukaryotic transcriptional activator protein, binds as a dimer to target DNA.</article-title>             <source>EMBO J</source>             <volume>6</volume>             <fpage>2781</fpage>             <lpage>2784</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-VillasBas1"><label>25</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Villas-Bôas</surname><given-names>SG</given-names></name>
+<name name-style="western"><surname>Moxley</surname><given-names>JF</given-names></name>
+<name name-style="western"><surname>Åkesson</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Stephanopoulos</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Nielsen</surname><given-names>J</given-names></name>
+</person-group>             <year>2005</year>             <article-title>High throughput metabolic state analysis: the missing link in integrated functional genomics of yeasts.</article-title>             <source>Biochem J</source>             <volume>388</volume>             <fpage>669</fpage>             <lpage>677</lpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Cakir1"><label>26</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cakir</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Patil</surname><given-names>KR</given-names></name>
+<name name-style="western"><surname>Önsan</surname><given-names>ZI</given-names></name>
+<name name-style="western"><surname>Ülgen</surname><given-names>KÖ</given-names></name>
+<name name-style="western"><surname>Kirdar</surname><given-names>B</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>Integration of metabolome data with metabolic networks reveals reporter reactions.</article-title>             <source>Mol Syst Biol</source>             <volume>2</volume>             <fpage>50</fpage>          </element-citation></ref>
+<ref id="pcbi.1000859-Frster1"><label>27</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Förster</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Famili</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Fu</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Palsson</surname><given-names>BØ</given-names></name>
+<name name-style="western"><surname>Nielsen</surname><given-names>J</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Genome-scale reconstruction of the Saccharomyces cerevisiae metabolic network.</article-title>             <source>Genome Res</source>             <volume>13</volume>             <fpage>244</fpage>             <lpage>253</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

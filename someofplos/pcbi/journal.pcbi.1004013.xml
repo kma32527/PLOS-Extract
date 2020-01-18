@@ -1,0 +1,695 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id><journal-title-group>
+<journal-title>PLoS Computational Biology</journal-title></journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-14-01013</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004013</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Biology and life sciences</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Proteins</subject><subj-group><subject>Protein structure</subject><subj-group><subject>Protein folding</subject><subject>Protein misfolding</subject></subj-group></subj-group><subj-group><subject>Prions</subject></subj-group></subj-group></subj-group><subj-group><subject>Molecular biology</subject><subj-group><subject>Macromolecular structure analysis</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>What Makes a Protein Sequence a Prion?</article-title>
+<alt-title alt-title-type="running-head">Prediction of Prion Proteins</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Sabate</surname><given-names>Raimon</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Rousseau</surname><given-names>Frederic</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref><xref ref-type="aff" rid="aff4"><sup>4</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Schymkowitz</surname><given-names>Joost</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref><xref ref-type="aff" rid="aff4"><sup>4</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Ventura</surname><given-names>Salvador</given-names></name><xref ref-type="aff" rid="aff5"><sup>5</sup></xref><xref ref-type="aff" rid="aff6"><sup>6</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Departament de Fisicoquímica, Facultat de Farmàcia, Universitat de Barcelona, Barcelona, Spain</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>Institut de Nanociència i Nanotecnologia (IN2UB), Universitat de Barcelona, Barcelona, Spain</addr-line></aff>
+<aff id="aff3"><label>3</label><addr-line>VIB Switch Laboratory, VIB, Leuven, Belgium</addr-line></aff>
+<aff id="aff4"><label>4</label><addr-line>Departement for Cellular and Molecular Medicine, KU Leuven, Leuven, Belgium</addr-line></aff>
+<aff id="aff5"><label>5</label><addr-line>Institut de Biotecnologia i de Biomedicina, Universitat Autònoma de Barcelona, Bellaterra, Spain</addr-line></aff>
+<aff id="aff6"><label>6</label><addr-line>Departament de Bioquímica i Biologia Molecular, Universitat Autònoma de Barcelona, Bellaterra, Spain</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Fetrow</surname><given-names>Jacquelyn S.</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Wake Forest University, United States of America</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">rsabate@ub.edu</email> (RS); <email xlink:type="simple">salvador.ventura@uab.es</email> (SV)</corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: RS SV. Performed the experiments: RV SV. Analyzed the data: RV FR JS SV. Wrote the paper: RV FR JS SV.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><month>1</month><year>2015</year></pub-date>
+<pub-date pub-type="epub"><day>8</day><month>1</month><year>2015</year></pub-date>
+<volume>11</volume>
+<issue>1</issue>
+<elocation-id>e1004013</elocation-id>
+<history>
+<date date-type="received"><day>9</day><month>6</month><year>2014</year></date>
+<date date-type="accepted"><day>29</day><month>10</month><year>2014</year></date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Sabate et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>Typical amyloid diseases such as Alzheimer's and Parkinson's were thought to exclusively result from <italic>de novo</italic> aggregation, but recently it was shown that amyloids formed in one cell can cross-seed aggregation in other cells, following a prion-like mechanism. Despite the large experimental effort devoted to understanding the phenomenon of prion transmissibility, it is still poorly understood how this property is encoded in the primary sequence. In many cases, prion structural conversion is driven by the presence of relatively large glutamine/asparagine (Q/N) enriched segments. Several studies suggest that it is the amino acid composition of these regions rather than their specific sequence that accounts for their priogenicity. However, our analysis indicates that it is instead the presence and potency of specific short amyloid-prone sequences that occur within intrinsically disordered Q/N-rich regions that determine their prion behaviour, modulated by the structural and compositional context. This provides a basis for the accurate identification and evaluation of prion candidate sequences in proteomes in the context of a unified framework for amyloid formation and prion propagation.</p>
+</abstract>
+<abstract abstract-type="summary"><title>Author Summary</title>
+<p>Protein conformational disorders include several neurodegenerative diseases. These pathologies are initiated by conformational changes in specific polypeptides that, in many cases, result in their spontaneous self-assembly to form toxic amyloids. Prions are a subclass of amyloids with the ability to propagate <italic>in vivo</italic>, thus becoming infectious. Previous work with yeast prions has provided tremendous insight into prion propagation mechanism. These proteins contain glutamine/asparagine (Q/N) enriched prion forming domains (PFDs), which are both necessary and sufficient for propagation. We found that these domains include specific short amyloid-prone sequences, which are likely able to trigger the amyloid conversion of the complete prion protein. The amyloid potency of these short segments suffices to discriminate with high accuracy between Q/N rich domains with and without prion activity. Our data suggest a model for prions where a classical amyloid core is embedded in a sequence context that reduces the amyloid nucleation potential, resulting in sequences that are strongly dependent on seeding. This model should allow the identification of prion-like proteins in the human proteome and prediction of the deleterious effects of genetic mutations occurring in these particular proteins.</p>
+</abstract>
+<funding-group><funding-statement>This work was supported in part by grants BFU2010-14901 from Ministerio de Ciencia e Innovacion (Spain), by grant 2014-SGR 938 from AGAUR (Agencia de Gestio d'Ajuts Universitaris i de Recerca-Generalitat de Catalunya). The Switch Laboratory was supported by grants from VIB, University of Leuven, the Funds for Scientific Research Flanders (FWO), the Flanders Institute for Science and Technology (IWT) and the Federal Office for Scientific Affairs of Belgium (Belspo), IUAP P7/16. RS is the beneficiary of a contract from the Ramón y Cajal Programme (RYC-2011-07987) from Ministerio de Ciencia e Innovación. SV has been granted an ICREA-ACADEMIA award (Institució Catalana de Recerca I Estudis Avançats).</funding-statement></funding-group><counts><page-count count="9"/></counts><custom-meta-group><custom-meta id="data-availability" xlink:type="simple"><meta-name>Data Availability</meta-name><meta-value>The authors confirm that all data underlying the findings are fully available without restriction. All relevant data are within the paper and its Supporting Information files.</meta-value></custom-meta></custom-meta-group></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Amyloid structures are associated with an increasing number of human disorders <xref ref-type="bibr" rid="pcbi.1004013-Chiti1">[1]</xref>. Prions have been considered a particular subclass of amyloids in which the aggregation process self-perpetuates <italic>in vivo</italic>, thus becoming infectious. However, increasing evidence suggests that <italic>in vivo</italic> protein cross-seeding may in fact reach beyond the scope of relatively rare disorders such as Kuru or Creutzfeld-Jacob Disease, to frequently occurring neurodegenerative pathologies, including Alzheimer's and Parkinson's diseases <xref ref-type="bibr" rid="pcbi.1004013-Stohr1">[2]</xref>–<xref ref-type="bibr" rid="pcbi.1004013-Desplats1">[4]</xref>. So far it seems that the similarity only covers certain aspects of prion behaviour, causing Aguzzi to coin the term 'prionoids' <xref ref-type="bibr" rid="pcbi.1004013-Aguzzi1">[5]</xref>. A unifying aspect is certainly the amyloid structure adopted by prions and prionoids alike and which is thought to be behind <italic>in vivo</italic> seeded aggregation. However, the critical features that allow a specific amyloidogenic sequence to become prionogenic and thus infectious are still not clear.</p>
+<p>Fungal prions provide excellent model systems for the understanding of amyloid formation and propagation <xref ref-type="bibr" rid="pcbi.1004013-Uptain1">[6]</xref>. An increasing number of prion proteins are being identified in yeast, the best-characterized being NEW1, RNQ1, SWI1, SUP35 and URE2 proteins. Protein domains involved in prion formation in all these polypeptides are highly enriched in asparagine (N) and/or glutamine (Q) residues and often correspond to intrinsically unstructured protein regions. Protein domains displaying this sequence signature are over represented in eukaryotic genomes relative to prokaryotes. Given their potential involvement in pathogenic processes, the fact that these sequences have not been suppressed by purifying selection suggests that prion-like conformational conversion may have evolved as a mechanism for regulating functionality in eukaryotic proteins <xref ref-type="bibr" rid="pcbi.1004013-Michelitsch1">[7]</xref>. Recently, Lindquist's group conducted a genome-wide <italic>in silico</italic> survey to identify prionogenic proteins in the <italic>S. cerevisiae</italic> proteome on the basis of their compositional similarity to known prion forming domains (PFDs) using a hidden Markov model. The prionogenic nature of the top 100 identified candidate PFDs was evaluated through experimental investigations of four <italic>in vitro</italic> and <italic>in vivo</italic> prion characteristics <xref ref-type="bibr" rid="pcbi.1004013-Alberti1">[8]</xref>. 29 of them, including the PFDs of previously known yeast prions, showed one of the key features, namely switching behaviour between a soluble and prion form <italic>in cells</italic> or strong amyloid formation capability. Nevertheless, still 68% of the fully characterized domains turned to be false-positives, even with several of them displaying the highest composition similarity to known PFDs. This dataset provides an outstanding benchmark to decipher how prion transmissibility is encoded in polypeptide sequence.</p>
+<p>The sequence of a protein determines to a large extent its amyloid propensity <xref ref-type="bibr" rid="pcbi.1004013-delaPaz1">[9]</xref>. It has been argued, however, that two distinct classes of amyloid polypeptides exist <xref ref-type="bibr" rid="pcbi.1004013-Ross1">[10]</xref>. The first class follows the by now classical short-stretch model <xref ref-type="bibr" rid="pcbi.1004013-Ventura1">[11]</xref>–<xref ref-type="bibr" rid="pcbi.1004013-Teng1">[13]</xref>, in which self-assembly is thought to be nucleated specifically by short sequences of high amyloid propensity, whereas in the second class a large number of weak interactions between side-chains in large, structurally disordered domains would constitute the driving force for amyloid formation. According to this classification, prionoid proteins like Aß, tau and α-synuclein would belong to the first class, whereas the Q/N rich yeast prions will fall in the second one. It has been suggested that this mechanistic difference would explain why algorithms designed to detect short and specific amyloid motifs in proteins <xref ref-type="bibr" rid="pcbi.1004013-Castillo1">[14]</xref> usually fail to classify correctly Q/N rich prionic and non-prionic sequences <xref ref-type="bibr" rid="pcbi.1004013-Toombs1">[15]</xref>.</p>
+<p>The WALTZ algorithm <xref ref-type="bibr" rid="pcbi.1004013-MaurerStroh1">[16]</xref> (<ext-link ext-link-type="uri" xlink:href="http://waltz.switchlab.org/" xlink:type="simple">http://waltz.switchlab.org/</ext-link>) uses a position-specific scoring matrix deduced from the biophysical and structural analysis of the amyloid properties of a large set of hexapeptides (<xref ref-type="supplementary-material" rid="pcbi.1004013.s001">S1 Fig.</xref>). A distinctive feature of WALTZ is that most amino acids are predicted to display differential amyloid propensities depending on their specific position in the sequence. This is the case of Q and N residues, which contribute positively or negatively to the amyloid potential depending on their position (<xref ref-type="supplementary-material" rid="pcbi.1004013.s001">S1 Fig.</xref>). The edge positions 1, 2 and 6 in the matrix display low selectivity, whereas the core positions 3, 4 and 5 are highly restrictive. Aromatic and hydrophobic residues remain most favored in the core positions. However, certain polar residues, including Q and N, can be accommodated or even be favorable in these locations. The ability to consider position-specificities allows WALTZ to specifically identify short sequences leading to ordered amyloid aggregates, including those formed by Q/N enriched SUP35 decapeptides <xref ref-type="bibr" rid="pcbi.1004013-MaurerStroh1">[16]</xref>. Here we show that this ability can be exploited to classify prionic and non-prionic sequences providing an alternative description of the sequence features that underlie prion formation. In our model, prionogenic behaviour requires the embedding of a relatively short amyloid forming sequence in a flexible region enriched in the typical polar amino acids Q and N. This alternative model of prion behavior provides a unified framework for amyloid formation and prion propagation.</p>
+</sec><sec id="s2">
+<title>Results</title>
+<sec id="s2a">
+<title>The relationship between amyloidogenicity and prion propensity</title>
+<p>Ross and Toombs have shown that the sequence of a short eight-residue stretch of a variant of Sup35 PFD suffices to determine the priogenicity of the complete protein, revealing that the presence of hydrophobic residues, which are otherwise under-represented in PFDs, highly increase the overall prion propensity <xref ref-type="bibr" rid="pcbi.1004013-Toombs2">[17]</xref>. The presence of hydrophobic residues is recurrently observed in amyloid sequences and, in fact, when we analysed the 62 sequence variants they tested in this short Sup35 region using WALTZ (with default settings) we observed that 44.4% of prion-promoting sequences were predicted as amyloidogenic, whereas only 14.2% of non-prionic sequences were identified as such (<xref ref-type="supplementary-material" rid="pcbi.1004013.s003">S1 Table</xref>). This suggests that the enrichment in hydrophobic residues in prion-promoting stretches acts by increasing their sequential amyloid propensity and therefore that the presence of short and specific amyloid sequences might be an important contributor to the prionogenicity of a Q/N rich sequence, as previously proposed <xref ref-type="bibr" rid="pcbi.1004013-Sawaya1">[18]</xref>, <xref ref-type="bibr" rid="pcbi.1004013-Balbirnie1">[19]</xref>. Based on this hypothesis, we wondered if prediction of amyloidogenicity might aid to discriminate prion from non-prions in the protein dataset experimentally characterized by Alberti et al. The authors of that study scored the domains from 0 to 10 according to their combined performance in four different assays that include tests for both amyloid and prion forming ability. We considered as non-prions those sequences scoring ≤2 and being positive in one assay at maximum, meaning that they do not exhibit amyloid and prion forming ability at the same time, yielding a total of 39 sequences (<xref ref-type="table" rid="pcbi-1004013-t001">Table 1</xref>). We considered as prions those domains being positive in all four assays and scoring ≥9, with a total of 12 sequences, including the known prions NEW1, RNQ1, SWI1, SUP35 and URE2 proteins (<xref ref-type="table" rid="pcbi-1004013-t001">Table 1</xref>).</p>
+<table-wrap id="pcbi-1004013-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1004013.t001</object-id><label>Table 1</label><caption>
+<title>Prediction of the prionic behaviour of putative Q/N rich yeast prions.</title>
+</caption><alternatives><graphic id="pcbi-1004013-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004013.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>Gene Name</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>pWALTZ Score</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>P/NP</monospace><xref ref-type="table-fn" rid="nt102">(b)</xref></td>
+<td align="left" rowspan="1" colspan="1"><monospace>Gene Name</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>pWALTZ Score</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>P/NP</monospace><xref ref-type="table-fn" rid="nt102">(b)</xref></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>MCM1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>59.63</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace><underline>PUF2</underline></monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>73.07</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>P</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>NAB2</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>56.43</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>SWI1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>75.43</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>P</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>TAF12</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>55.60</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>KSP1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>75.97</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>P</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>YCK1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>64.05</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>ASM4</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>75.73</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>P</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>MED2</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>65.49</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>URE2</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>73.66</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>P</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>AKL1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>69.90</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>GLN3</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>74.36</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>P</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace><underline>PUF4</underline></monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>73.85</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>RNQ1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>74.82</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>P</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>PCF11</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>64.29</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NEW1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>85.60</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>P</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>EPL1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>68.82</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NRP1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>76.11</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>P</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>SNF2</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>67.91</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>LSM4</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>76.89</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>P</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>SCD6</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>67.03</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>YBL081W</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>76.78</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>P</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>YAK1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>61.84</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>SUP35</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>73.99</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>P</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>CAF40</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>56.70</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>NRD1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>56.92</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>PDC2</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>68.66</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>RAT1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>71.46</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>SLA1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>68.05</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>SIN3</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>69.95</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>UPC2</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>73.44</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>TIF4632</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>71.64</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>CLA4</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>53.86</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>SKG3</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>68.47</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>TIF4631</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>66.13</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>SLT2</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>51.68</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>AZF1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>72.27</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>CCR4</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>65.89</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>NUP57</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>73.01</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>SSD1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>69.09</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>VTS1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>69.76</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>PSP1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>73.05</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>YAP1802</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>64.13</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>YMR124W</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>53.75</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace><italic>ENT2</italic></monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>-</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace><italic>SKG6</italic></monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>-</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace><italic>YLR177W</italic></monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>-</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace><italic>PIN3</italic></monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>-</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace><italic>WWM1</italic></monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>-</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace><italic>NAB3</italic></monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>-</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace><italic>HRR25</italic></monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>-</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NP</monospace></td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>Prion recovery using the prion/non-prion (NP/P) classification of selected putative prions according to Alberti's scale of prion activity. Sequences with pWALTZ score &gt;73.55 are considered prion-like. False positives and false negatives are underlined. Proteins devoid of any predicted amyloid core are shown in italics (SUP35, in plain text, was not included in the test set to avoid overlap with the WALTZ training set).</p></fn><fn id="nt102"><label>(b)</label><p><monospace>Prion/Non-Prion (P/NP) classification according to Alberti et. al. scale of prion propensity (<italic>Cell</italic> 137, 146–158). Sequences scoring ≤2 (1 positive assay as a maximum) are considered non-prions (NP) while sequences scoring ≥9 (all four asays positives) are considered prions (P).</monospace></p></fn></table-wrap-foot></table-wrap>
+<p>The unique atomic-resolution structure of an infectious fibrillar state to date corresponds to HET-s PFD of the fungus <italic>Podospora anserina</italic>. In its fibrillar conformation, HET-s PFD forms a left-handed β-solenoid, with each molecule forming two helical windings <xref ref-type="bibr" rid="pcbi.1004013-Wasmer1">[20]</xref>. The two repeating strand–turn–strand motifs (β1–β2 and β3–β4) forming two turns of the solenoid contain 21 residues each. A distant homolog of the fungal HET-s prion in <italic>Fusarium graminum</italic> adopts an analogous structure with strand–turn–strand motifs of ∼21 residues <xref ref-type="bibr" rid="pcbi.1004013-Wasmer2">[21]</xref>. Although the HET-s PFDs are not related to those found in yeast, this implies that a length of 21 might suffice to form a transmissible β-fold. Therefore, we used a 21 residues sliding window to analyse the amyloid propensity of the complete PFD sequences in our dataset, with sizes comprised between 60 and 385 residues, with WALTZ. In addition, because Pro has been shown to act as a β-breaker residue <xref ref-type="bibr" rid="pcbi.1004013-Adessi1">[22]</xref> that efficiently opposes β-aggregation <xref ref-type="bibr" rid="pcbi.1004013-Beerten1">[23]</xref>, <xref ref-type="bibr" rid="pcbi.1004013-Rousseau1">[24]</xref> and mutation of any residue in HET-s PFD β-strands to Pro abrogates prion propagation <xref ref-type="bibr" rid="pcbi.1004013-Ritter1">[25]</xref>, we defined that the 21 residues windows cannot include Pro residues.</p>
+<p>The WALTZ algorithm can be run using different levels of stringency or custom defined thresholds. In a typical use, WALTZ high stringency levels (&gt;90%) are employed in order to identify very short and potent segments able to nucleate amyloid formation with high specificity. For example, the analysis of the 758 residue long Tau protein renders a single prediction overlapping with the experimentally validated hexapeptide 591-KVQIIN-596 <xref ref-type="bibr" rid="pcbi.1004013-Mukrasch1">[26]</xref>–<xref ref-type="bibr" rid="pcbi.1004013-Raz1">[31]</xref>. However, the identification and scoring of these strong and short protein stretches, usually flanked by highly soluble residues, does not allow an accurate discrimination between prionic and non-prionic Q/N rich sequences <xref ref-type="bibr" rid="pcbi.1004013-Toombs1">[15]</xref>. In the present approach, a sequence is considered for further analysis as a putative PFD candidate only if at least in one of the sliding windows all the 21 residues display values higher than the a given threshold. SUP35 was excluded from the test set, since one tetra- and three hexa-peptides belonging to its PFD sequence were part of the WALTZ training set. We used receiver operating characteristic (ROC) curves and evaluated the area under the curve (AUC) for each particular WALTZ stringency level (between 0 and 100%) and used the derived Youden's index for each plot to identify the threshold and the associated WALTZ score rendering the best predictability. The best values were obtained using a threshold of 35%. Despite this amyloidogenicity value is very low, according to the WALTZ scale, already seven of the non-prion proteins did not exhibit any continuous 21 residues sequence stretch able to pass the threshold. We used the rest of 32 non-prion domains and the 11 prion domains to elaborate the correspondent ROC plot which displays a striking AUC of 0.99 (<xref ref-type="fig" rid="pcbi-1004013-g001">Fig. 1</xref>), employing a WALTZ score cut off of 73.55% to discriminate between prion and non-prion domains (<xref ref-type="table" rid="pcbi-1004013-t001">Table 1</xref>) according to the associated Youden's index. With these parameters, the approach, which we call now as pWALTZ, has a significance P value &lt;0.0001, a sensitivity of 90.9% and a specificity of 97.4%, with only one false positive (PUF4) and one false negative (PUF2) among the 43 analysed proteins (<xref ref-type="table" rid="pcbi-1004013-t001">Table 1</xref>) and an overall accuracy of 95.3% (<xref ref-type="fig" rid="pcbi-1004013-g001">Fig. 1</xref>). All the known bona fide yeast prions included in the test set (NEW1, RNQ1, SWI1 and URE2) are correctly classified as positive hits. The approach outperforms composition based algorithms like PAPA (<xref ref-type="fig" rid="pcbi-1004013-g001">Fig. 1</xref>) <xref ref-type="bibr" rid="pcbi.1004013-Toombs1">[15]</xref>, which displays a 86.0% overall accuracy in the same dataset. As expected, SUP35 is also correctly classified as a prion (<xref ref-type="table" rid="pcbi-1004013-t001">Table 1</xref>). As shown in <xref ref-type="fig" rid="pcbi-1004013-g002">Fig. 2</xref>, prionic sequences display clearly overall higher pWALTZ values than non-prionic ones. The observed difference is significant, especially if we take into account that we do not include in the comparison those sequences that failed to past the soft 35% initial threshold. An example of the scoring of prion and non-prion sequences is provided in the Supplementary Material (<xref ref-type="supplementary-material" rid="pcbi.1004013.s002">S2 Fig.</xref>).</p>
+<fig id="pcbi-1004013-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1004013.g001</object-id><label>Figure 1</label><caption>
+<title>Prediction of prion propensity of Q/N-rich putative prions.</title>
+<p>Prion recovery using the prion/non-prion (NP/P) classification of selected putative prions according to Alberti's scale of prion activity. ROC plots shows pWALTZ (A) and PAPA (B) performance and box plots showing predicted prion propensity as scored by pWALTZ (C) and PAPA (D) are shown.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004013.g001" position="float" xlink:type="simple"/></fig><fig id="pcbi-1004013-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1004013.g002</object-id><label>Figure 2</label><caption>
+<title>Relationship between amyloid and prion propensities.</title>
+<p>Average pWALTZ scores of prion (white) and non-prion (red) domains.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004013.g002" position="float" xlink:type="simple"/></fig>
+<p>In a pioneering exercise, Ross and co-workers used PAPA to design two synthetic PFD (s-PFDs) that function as prions <italic>in vivo</italic> and three negative controls that fail to exhibit this phenotype, all them sharing Q/N content with the Sup35 PFD <xref ref-type="bibr" rid="pcbi.1004013-Toombs1">[15]</xref>. pWALTZ correctly classifies the prion activity of these s-PFDs and controls. The score of synthetic PFD fit well with those of the PFD of natural yeast prions (<xref ref-type="table" rid="pcbi-1004013-t002">Table 2</xref>). Thus, the differential prionogenicity of these artificial sequences correlates with the potency of their identified amyloid cores, suggesting that their prion propensities depend on their relative ability to form ordered assemblies nucleated by relatively short stretches displaying specific sequential properties and not in more diffuse and essentially sequence independent protein features spread out over large domains, as previously suggested <xref ref-type="bibr" rid="pcbi.1004013-Toombs1">[15]</xref>.</p>
+<table-wrap id="pcbi-1004013-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1004013.t002</object-id><label>Table 2</label><caption>
+<title>Prediction of the prionic behaviour of synthetic yeast prions.</title>
+</caption><alternatives><graphic id="pcbi-1004013-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004013.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>Gene Name</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>pWALTZ window</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>pWALTZ Score</monospace></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>s-PFD1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>NGEQSFWYQQNNNLQQQGNYQ</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace><bold>74.73</bold></monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>s-PFD2</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>QNQNGYYNNQNQIQQAQQNTQ</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace><bold>74.36</bold></monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>c-PFD1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>LAMNQHTKLNNENNSQDFLQQ</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>65.44</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>c-PFD2</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>QMNKRYNKKYSSNHTQQTSNH</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>66.73</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>c-PFD3</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>AGQALQHQNHKRYENNQAWEQ</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>66.30</monospace></td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt103"><label/><p>Synthetic PFDs (s-PFD) exhibiting prion behaviour in yeast and negative control sequences (c-PFD), as designed by Toombs et al. <xref ref-type="bibr" rid="pcbi.1004013-Toombs1">[15]</xref>, where analysed with pWALTZ. Sequences with pWALTZ score &gt;73.55 are considered prion-like. Predicted prion and non-prion sequences are shown in bold and plain text, respectively.</p></fn></table-wrap-foot></table-wrap>
+<p>The number of human proteins containing sequence stretches resembling in composition to yeast PFDs account for ∼1% of the human proteome <xref ref-type="bibr" rid="pcbi.1004013-King1">[32]</xref>, <xref ref-type="bibr" rid="pcbi.1004013-EspinosaAngarica1">[33]</xref>. The function of these domains remains unclear, however RNA- and DNA-binding proteins are enriched among human polypeptides containing putative PFD <xref ref-type="bibr" rid="pcbi.1004013-King1">[32]</xref>. The Fus, TPD-43, hnRNPA1 and hnRNPA2/B1 ribonucleoproteins, all linked to neurodegenerative disorders, are included in this group. Despite the scoring of hnRNPA1 and hnRNPA2 fall below the cut-off for prion identification in yeast sequences using pWALTZ and also in composition based algorithms like PAPA, it has been recently reported that discrete missense mutations in the PFD of hnRNPA1 (D262V and D262N) and hnRNPA2 (D290V) cause multisystem proteinopathy and amyotrophic lateral sclerosis <xref ref-type="bibr" rid="pcbi.1004013-Kim1">[34]</xref>. Importantly, these residues are located at the highest-scoring 21 residues window as identified by pWALTZ for both hnRNPA1 (G247-N267) and hnRNPA2 (Y275-N295) PFDs and all the pathogenic mutations increase the pWALTZ value (<xref ref-type="table" rid="pcbi-1004013-t003">Table 3</xref>), suggesting that increased amyloidogenicity might account for the accumulation as cytoplasmic inclusions of the mutated species in animal models <xref ref-type="bibr" rid="pcbi.1004013-Kim1">[34]</xref>. This suggestion is in line with the highest <italic>in vitro</italic> aggregation propensity of the disease-linked variants and the highest amyloid propensity of hexapeptides including the mutated residues, relative to those of the wild type sequences <xref ref-type="bibr" rid="pcbi.1004013-Kim1">[34]</xref>. Moreover, hnRNPA2 and hnRNPA1 variants lacking the 287–292 and 259–264 sequence stretches, respectively, both inside the pWALTZ best scoring windows for the wild type proteins (<xref ref-type="table" rid="pcbi-1004013-t002">Table 2</xref>), are aggregation resistant, even in the presence of preformed homologous wild type or mutant amyloid fibrils <xref ref-type="bibr" rid="pcbi.1004013-Kim1">[34]</xref>. Accordingly, the new high scoring sequences in this deleted PFDs display significantly lower pWALTZ values than those in their respective wild type sequences (<xref ref-type="table" rid="pcbi-1004013-t003">Table 3</xref>). Despite their aggregation properties, it cannot be affirmed that hnRNPA1 and hnRNPA2 or their mutants constitute <italic>bona fide</italic> prions in humans, since their propagation has yet not been demonstrated. Nevertheless, this property can be approximated exploiting the modular nature of yeast prion proteins. Kim and co-workers replaced the Sup35 nucleation domain with the core PFD from either hnRNPA2 or the D290V mutant and expressed these fusions as the unique copies of Sup35 in yeast cells. In agreement with its classification as a prion domain according to pWALTZ (<xref ref-type="table" rid="pcbi-1004013-t003">Table 3</xref>), only the mutant variant can substitute for the Sup35 nucleation domain in supporting prion formation and specifically promoting the nucleation activity <xref ref-type="bibr" rid="pcbi.1004013-Kim1">[34]</xref>.</p>
+<table-wrap id="pcbi-1004013-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1004013.t003</object-id><label>Table 3</label><caption>
+<title>Amyloidogenic regions in the PFDs of hnRNPA1 and hnRNPA2.</title>
+</caption><alternatives><graphic id="pcbi-1004013-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004013.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>Gene Name</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>pWALTZ window</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>pWALTZ Score</monospace></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>hnRNPA1</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>247-GFGNDGSNFGGG<underline>SYNDFG</underline>NYN-267</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>68.48</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>D262V</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>247-GFGNDGSNFGGGSYNVFGNYN-267</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>71.82</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>D262N</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>247-GFGNDGSNFGGGSYNNFGNYN-267</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>71.32</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>Δ259-264</monospace><xref ref-type="table-fn" rid="nt105">(a)</xref></td>
+<td align="left" rowspan="1" colspan="1"><monospace>241-SGDGYNGFGNDGSNFGGGNYN-267</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>65.56</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>hnRNPA2</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>275-YDNYGGGNYGSG<underline>NYNDFG</underline>NYN-295</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>71.82</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>D290V</monospace><xref ref-type="table-fn" rid="nt106">(b)</xref></td>
+<td align="left" rowspan="1" colspan="1"><monospace>275-YDNYGGGNYGSGNYNVFGNYN-295</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>75.03</monospace></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><monospace>Δ287-292 </monospace><xref ref-type="table-fn" rid="nt105">(a)</xref></td>
+<td align="left" rowspan="1" colspan="1"><monospace>271-YGGGYDNYGGGNYGSGNYNQQ-297</monospace></td>
+<td align="left" rowspan="1" colspan="1"><monospace>64.66</monospace></td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt104"><label/><p>The highest pWALTZ scoring windows and the pWALTZ values for these sequences are shown for the wild type, pathogenic and deleted variants of the proteins. Positions in which natural mutations occur are shown in bold, deleted regions in Δ mutants are underlined.</p></fn><fn id="nt105"><label>(a)</label><p><monospace>Variants with reduced amyloid propensity relative to the wild type sequence.</monospace></p></fn><fn id="nt106"><label>(b)</label><p><monospace>Variants that can substitute for the Sup35 nucleation domain in supporting prion formation and promote the nucleation activity in yeast.</monospace></p></fn></table-wrap-foot></table-wrap>
+<p>A reason for the accuracy of the pWALTZ can be found inspecting the values for Q and N in the position specific scoring matrix (PSSM) behind Waltz: N is favourable for amyloid formation in all hexapeptide positions except position 5, and Q is favourable in all positions except 4 and 5 <xref ref-type="bibr" rid="pcbi.1004013-MaurerStroh1">[16]</xref>. Therefore a sequence stretch with high Q/N content, in which position 4 is an N and position 5 is an amyloid-promoting residue, will have a strong amyloid forming potential. As position 5 is the most restrictive position in the Waltz PSSM, that leaves Ile, Phe and Tyr as the main options, of which the latter is a residue that occurs with high frequency in prion sequences. These considerations suggest that low complexity sequences biased towards Q and N might display an intrinsic propensity to accommodate one or more amyloid cores. However, because the amyloid propensity of Q and N is generally lower than the one of hydrophobic residues it is conceivable that, in order to nucleate the self-assembly reaction the amyloid cores in Q/N rich sequences should involve more residues than in typical amyloids were they tend to be very short and typically highly enriched in hydrophobic residues <xref ref-type="bibr" rid="pcbi.1004013-EsterasChopo1">[12]</xref>. This would explain why predictions aimed to identify these very short and highly potent protein segments fail to classify correctly Q/N based prionic sequences <xref ref-type="bibr" rid="pcbi.1004013-Toombs1">[15]</xref> and why pure polyQ sequences require very large stretches to attain amyloidogenic potential <xref ref-type="bibr" rid="pcbi.1004013-Scarafone1">[35]</xref>.</p>
+</sec><sec id="s2b">
+<title>The relationship between aggregation and structural order in prion proteins</title>
+<p>A surprising finding in Alberti's study is that, despite differing only in a methylene group, the ratio of N to Q residues is an important determinant of the prion propensity of a sequence. Prionic domains are, as a trend, enriched in N whereas Q are more abundant in non-prionic sequences in their dataset <xref ref-type="bibr" rid="pcbi.1004013-Toombs1">[15]</xref>. Since according to our analysis amyloidogenicity seems to contribute significantly to prion-forming capability, it could be simply that N residues are more amyloidogenic than Q in the context of prion sequences, in agreement with the observation that according to the WALTZ PSSM, N is tolerated in more positions than Q in amyloid sequences (<xref ref-type="supplementary-material" rid="pcbi.1004013.s001">S1 Fig</xref>). Interestingly, the 21 residues long amyloid cores detected by pWALTZ in prionic sequences in our dataset contain an average of 9.9 N and 1.3 Q residues, whereas the equivalent sequence stretches in non-prionic sequences contain 4.1 N and 6.0 Q residues, respectively. Therefore, despite in both cases Q+N account for ∼1/2 of the residues in the core, amyloid cores in prionic domains are highly enriched in N residues, with a N/Q ratio of 7.9, whereas non-prionic cores display a N/Q ratio of only 0.7 at their cores. This suggests that despite their similar physicochemical properties these two residues endorse sequences with different amyloidogenic potential. Consistently, when we compared the predicted amyloidogenicity of known yeast PFD and of virtual mutants in which all N were replaced by Q and <italic>vice versa</italic> using pWALTZ, we found that, as a trend, the N to Q replacement decreases the amyloid propensity of the domains, whereas changing Q into N results in propensities similar that of the wild type sequence, when the core is already enriched in N residues, or increases the amyloid propensity of the domain (<xref ref-type="fig" rid="pcbi-1004013-g003">Fig. 3</xref>). These observations are in excellent agreement with the recent experimental demonstration by the Lindquist's group that N richness promotes assembly of self-templating amyloids whereas Q richness favours the formation of non-amyloid conformers <xref ref-type="bibr" rid="pcbi.1004013-Halfmann1">[36]</xref>.</p>
+<fig id="pcbi-1004013-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1004013.g003</object-id><label>Figure 3</label><caption>
+<title>Amyloid propensities of Q and N residues in the context natural yeast prions.</title>
+<p>pWALTZ scores of wild-type (WT) (pink) and virtual mutants in which all Q residues are changed to N (red) or all N residues into Q (white) in the PrD of natural yeast prions.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004013.g003" position="float" xlink:type="simple"/></fig>
+<p>The intriguing question thus remains of why PFDs are enriched in Q and especially in N and not in other residues with a higher hydrophobicity and/or β-sheet propensity, which would render them more amyloidogenic, as in typical amyloids. Together with their high Q/N content and their ability to form amyloid assemblies, an essential property of yeast PFD is that they lack regular secondary structure in their soluble state. It could be simply that Q and especially N constitute the most amyloidogenic residues that are still able to promote significant intrinsic disorder in a protein sequence. Not surprisingly, according to the FoldIndex algorithm <xref ref-type="bibr" rid="pcbi.1004013-Prilusky1">[37]</xref> all the detected amyloid cores in prion domains are located in disordered protein regions. To test this possibility we constructed 21-mer homo-polymeric sequences for the 20 natural amino acids and analyzed their disorder and amyloidogenic propensity using Foldindex and pWALTZ simultaneously (<xref ref-type="fig" rid="pcbi-1004013-g004">Fig. 4</xref>). Interestingly enough, polyQ and specially polyN display both a high disorder and amyloidogenic propensity. Thus, Q and N enriched sequences would have a dual character that would allow them to maintain a certain amyloid potential and still remain disordered. However, polyQ and polyN render pWALTZ scores of 49.83 and 70.90, respectively, thus indicating that 21 residues core formed exclusively by these residues would not endorse prioneginicty to a sequence and therefore that the presence of hydrophobic residues in the core is a requirement for prion formation. The rest of predicted disordered sequences do not exhibit any amyloidogenic propensity according to pWALTZ, with the exception of polyY. Tyrosine is the most abundant hydrophobic residue in yeast PFDs <xref ref-type="bibr" rid="pcbi.1004013-Alberti1">[8]</xref>. We compared the composition of hydrophobic residues in the amyloid cores detected by pWALTZ in prionic and non-prionic sequences (<xref ref-type="fig" rid="pcbi-1004013-g005">Fig. 5</xref>) and found that non-aromatic hydrophobic residues are strongly underrepresented in both cores, relative to their average frequency in Swissprot <xref ref-type="bibr" rid="pcbi.1004013-httpwwwexpasyorgtoolspscaleAASwissProthtml1">[38]</xref>, whereas aromatic residues are overrepresented in prionic cores and underrepresented in non-prionic ones, respectively. However, Tyr is the only residue that contributes to the overrepresentation of aromatic residues in prionic amyloid cores, being 2.7 times more abundant that the average in Swissprot (<xref ref-type="fig" rid="pcbi-1004013-g005">Fig. 5</xref>). It has been recently proposed that aromatic residues are favoured in PFD relative to non-aromatic hydrophobic residues, because they serve a dual function, promoting both prion formation and chaperone dependent prion propagation <xref ref-type="bibr" rid="pcbi.1004013-GonzalezNelson1">[39]</xref>. However, this does not explain why, despite differing in a single hydroxyl group, Tyr is much more prevalent than Phe at both the PFDs and their amyloid cores. A plausible reason for this bias is that Tyr displays a clearly higher amyloidogenicity/disorder ratio than Phe and the rest of hydrophobic residues, followed by Trp, which due to its size might cause steric hindrance in prion fibrillar structures, explaining its low abundance in PFDs <xref ref-type="bibr" rid="pcbi.1004013-Alberti1">[8]</xref>. Additionally, from the best scoring residues in the restrictive position 5 in the Waltz PSSM, Tyr is clearly superior in terms of disorder propensity, appearing thus as the best residue to endorse prionogenic Q/N rich amyloid cores with increased amyloid potential without disturbing significantly the PFDs disorder properties.</p>
+<fig id="pcbi-1004013-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1004013.g004</object-id><label>Figure 4</label><caption>
+<title>Relationship between amyloid and disorder propensities of natural amino acids.</title>
+<p>Ordered and disordered-promoting homo-polymeric amino acid stretches according to FoldIndex are represented as triangles and squares, respectively, and sequences with low, medium and high amyloid propensity as predicted by WALTZ are represented in green, orange and red, respectively.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004013.g004" position="float" xlink:type="simple"/></fig><fig id="pcbi-1004013-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1004013.g005</object-id><label>Figure 5</label><caption>
+<title>Hydrophobic residues in pWALTZ amyloid cores.</title>
+<p>The frequency of the indicated hydrophobic residues in pWALTZ amyloid cores relative to that in all the proteins in SwissProt is plotted for non-prion (red) and prion (white) domains. Positive and negative values correspond to overrepresented and underrepresented amino acids or amino acid groups, respectively.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004013.g005" position="float" xlink:type="simple"/></fig>
+<p>Long disordered regions in functional intrinsically disordered proteins (IDPs) are significantly depleted in N, whereas they are, for instance, enriched in Q or S residues <xref ref-type="bibr" rid="pcbi.1004013-Tompa1">[40]</xref>. No satisfactory explanation for this low representation of N residues in intrinsically disordered regions has been provided yet. Our analysis suggests that because, in contrast to prions, IDPs need to remain soluble during all their existence in the cell, the reduction in the proportion of N residues might respond to an evolutionary strategy to avoid the spontaneous self-assembly. The same reason might explain why the occurrence of homo-polymeric amino acid stretches of 20 or more Q in proteomes is four times higher than that of N repeats despite the abundance of these residues in the corresponding proteins is fairly similar (4.4 and 3.9% for N and Q, respectively) <xref ref-type="bibr" rid="pcbi.1004013-Dorsman1">[41]</xref>. This may be especially true because mutation of one of several of the N residues in an N repeat into an hydrophobic residue might lead to the formation of a strong enough amyloid core to induce the protein aggregation.</p>
+<p>The intermediate amyloid potential of N might be important for prion propagation. It has been shown that the yeast chaperone Hsp104 promotes prion propagation at intermediate concentration and that propagation can be blocked by both increasing as well as decreasing the level of this essential chaperone <xref ref-type="bibr" rid="pcbi.1004013-Chernoff1">[42]</xref>. This is rationalised mechanistically by considering the balance between nucleation and growth of prion amyloids: when the chaperone breaks up amyloids without fully clearing them, the effective concentration of seeds is increasing. Fragmentation of fibrils has also been shown to determine the phenotype strength of different prion strains, as increased brittleness of fibrils results in a higher number of independently elongating fibril particles, increasing thus the efficiency of prion infection <xref ref-type="bibr" rid="pcbi.1004013-Tanaka1">[43]</xref>. The presence of a strong and rigid amyloid core formed by a high proportion of highly amyloidogenic residues would reduce the fragmentation rate and accordingly, would decrease the prion propagation efficiency. In this context, N is likely the residue that provides the best balance between amyloid and propagation potentials.</p>
+</sec></sec><sec id="s3">
+<title>Discussion</title>
+<p>The results in the present study together with several lines of evidence from the literature indicate that for a protein sequence to become a prion domain it requires: i) a specific region with significant amyloid propensity able to selectively nucleate the self-assembly into ordered, but brittle, amyloid structures ii) a disordered structural context that, in contrast to what happens in structured globular proteins, readily permits the domain self-assembly without a requirement for conformational unfolding, and iii) an amino acid composition that while allowing the domain to be soluble at the physiological concentrations required for the normal protein function still display a basal amyloid propensity, to which N residues would contribute significantly, promoting their self assembly in the presence of preformed amyloid seeds or when its concentration is increased. All these prion properties are readily predictable, opening an avenue for the accurate identification of prionic sequences in proteomes. Moreover, because aggregation of human PFD containing proteins might contribute to the etiology of a number of degenerative diseases, the present approach might find application in the detection of pathogenic genetic mutations associated with these disorders. Composition based methods provide good prion prediction accuracies by assuming that in these particular proteins amyloid formation relies on the establishment a large number of weak interactions between side-chains in long disordered domains (<xref ref-type="fig" rid="pcbi-1004013-g006">Fig. 6</xref>), but in fact they mask the presence of specific short sequence stretches that, as in other amyloids, would trigger the conversion of prions from the soluble to the aggregated and transmissible state (<xref ref-type="fig" rid="pcbi-1004013-g006">Fig. 6</xref>). Instead of two contrasting views, our analysis suggests a model for Q/N rich prions, where a classical amyloid core is embedded in a compositional context that reduces the amyloid nucleation potential, giving rise to sequences that are strongly dependent on seeding.</p>
+<fig id="pcbi-1004013-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1004013.g006</object-id><label>Figure 6</label><caption>
+<title>Alternative models for amyloid formation in prion-like domains.</title>
+<p>The compositional model relies on the establishment a large number of weak interactions whereas the pWALTZ model suggests a preferential nucleation by a short amyloidogenic stretch, whose amyloid propensity is modulated by the structural context.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004013.g006" position="float" xlink:type="simple"/></fig></sec><sec id="s4" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="s4a">
+<title>Selection of putative prion sequences</title>
+<p>From the 100 candidates putative PFD sequences in Alberti's data set <xref ref-type="bibr" rid="pcbi.1004013-Alberti1">[8]</xref> only those candidates for whom all four experimental assays could be carried out were selected for further analysis, accounting a total of 83 sequences.</p>
+</sec><sec id="s4b">
+<title>Classification of prion and non-prion sequences</title>
+<p>We used the combined accumulative score reported by Alberti et al <xref ref-type="bibr" rid="pcbi.1004013-Alberti1">[8]</xref>. For the formation of intracellular aggregates and Sup35 switching behavior, the putative prion sequences positive or negative proteins received 2 and 0 points, respectively. For SDD-AGE (48 hours of induction) and <italic>in vitro</italic> assembly assays, the candidates received points according the resulting scale: -  = 0 points, +  = 1 point, ++  = 2 points, +++  = 3 points. Therefore, the maximum combined score is: 2+2+3+3 = 10 <xref ref-type="bibr" rid="pcbi.1004013-Alberti1">[8]</xref>. Sequences scoring ≤2 and being positive in one assay at maximum were considered as non-prions and sequences being positive in all four assays and scoring ≥9 as prions (<xref ref-type="table" rid="pcbi-1004013-t001">Table 1</xref>). SUP35 was not included in the test set to avoid overlap with the WALTZ training set.</p>
+</sec><sec id="s4c">
+<title>Sequence analysis with WALTZ</title>
+<p>The Waltz prediction method described in Maurer-Stroh et al <xref ref-type="bibr" rid="pcbi.1004013-MaurerStroh1">[16]</xref> is available at <ext-link ext-link-type="uri" xlink:href="http://waltz.switchlab.org/" xlink:type="simple">http://waltz.switchlab.org/</ext-link>. The algorithm allows selecting a custom threshold for sequence analysis. Low thresholds are useful to determine the aggregation propensity of sequences without position-specificity restrictions whereas high thresholds select sequences fulfilling the position-specific requirements for amyloid formation. In order to identify the more predictive threshold, receiver-operating characteristic (ROC) analysis of the WALTZ scores for the complete PFD sequences were obtained using thresholds ranging from 0 to 100%. The ROC curve is a graphical plot displaying the performance of a binary classifier system as its discrimination threshold is varied. It plots the fraction of true positives out of the total actual positives (sensitivity) vs. the fraction of false positives out of the total actual negatives (specificity), at various thresholds. The area under the curve (AUC) reflected the accuracy of the discrimination <xref ref-type="bibr" rid="pcbi.1004013-Centor1">[44]</xref> and therefore the best balance between position-specific and non-specific aggregation prediction. The AUC estimates the statistical significance of the classification test and represents the probability that when a pair of positive and negative sequences is randomly selected from the pool, the WALTZ score will be higher for the positive one. The Youden's J statistic (J), also called Youden's index, a single statistic was used to capture the performance of the diagnostic test since it both measures the effectiveness of a diagnostic marker and enables the selection of an optimal cut off point for the marker, which corresponds to the best combination of sensitivity and specificity in the prediction (J =  Sensitivity + Specificity −1) <xref ref-type="bibr" rid="pcbi.1004013-Fluss1">[45]</xref>. The average accuracy was calculated as: Accuracy  =  (number of True Positives + number of True Negatives)/number of elements in the Total Population, for any given prediction. A pWALTZ executable file, sequence examples and use instructions can be freely downloaded for academic use at <ext-link ext-link-type="uri" xlink:href="http://bioinf.uab.es/pWALTZ/" xlink:type="simple">http://bioinf.uab.es/pWALTZ/</ext-link>. The order/disorder context of the detected amyloid cores was analyzed with FoldIndex <xref ref-type="bibr" rid="pcbi.1004013-httpwwwexpasyorgtoolspscaleAASwissProthtml1">[38]</xref> using the default 51-aa window size along the complete PFDs.</p>
+</sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1004013.s001" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1004013.s001" position="float" xlink:type="simple"><label>S1 Fig</label><caption>
+<p><bold>Amino acid preferences in the WALTZ scoring matrix.</bold> Residues log-odd scores for amyloid core formation in a given hexapeptide position.</p>
+<p>(TIFF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1004013.s002" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1004013.s002" position="float" xlink:type="simple"><label>S2 Fig</label><caption>
+<p><bold>Example of pWALTZ procedure for scoring prion and non-prion sequences.</bold> The putative PFDs of ENT2, MCM1 and SWI1, scoring 0, 0 and 9, respectively, according to <italic>Alberti et. al.</italic> scale of prion propensity (Cell 2009 137, 146–158) are analysed. In agreement with experiments, ENT2 (below the threshold) and MCM1 (pWALTZ score  = 59.63) are predicted as non-prions and SWI1 (pWALTZ score  = 75.43) as containing a prion domain.</p>
+<p>(TIFF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1004013.s003" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004013.s003" position="float" xlink:type="simple"><label>S1 Table</label><caption>
+<p><bold>Amyloid prediction of sequential variants in the 39 to 46 positions of the Sup35–27 PFD.</bold> PSI<sup>+</sup> and PSI<sup>-</sup> correspond to 8 residues stretches able to support or not prion conversion when substituting the original sequence in the Sup35–27 variant, respectively. As described by as Toombs and co-workers (Mol Cell Biol. 2010 30(1): 319–32). Sequences predicted to be amyloidogenic by WALTZ using the default parameters are shown in bold.</p>
+<p>(PDF)</p>
+</caption></supplementary-material></sec></body>
+<back><ref-list>
+<title>References</title>
+<ref id="pcbi.1004013-Chiti1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chiti</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Dobson</surname><given-names>CM</given-names></name> (<year>2006</year>) <article-title>Protein misfolding, functional amyloid, and human disease</article-title>. <source>Annu Rev Biochem</source> <volume>75</volume>: <fpage>333</fpage>–<lpage>366</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Stohr1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stohr</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Watts</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>Mensinger</surname><given-names>ZL</given-names></name>, <name name-style="western"><surname>Oehler</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Grillo</surname><given-names>SK</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Purified and synthetic Alzheimer's amyloid beta (Abeta) prions</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>109</volume>: <fpage>11025</fpage>–<lpage>11030</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Clavaguera1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Clavaguera</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Bolmont</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Crowther</surname><given-names>RA</given-names></name>, <name name-style="western"><surname>Abramowski</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Frank</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Transmission and spreading of tauopathy in transgenic mouse brain</article-title>. <source>Nat Cell Biol</source> <volume>11</volume>: <fpage>909</fpage>–<lpage>913</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Desplats1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Desplats</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Lee</surname><given-names>HJ</given-names></name>, <name name-style="western"><surname>Bae</surname><given-names>EJ</given-names></name>, <name name-style="western"><surname>Patrick</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Rockenstein</surname><given-names>E</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Inclusion formation and neuronal cell death through neuron-to-neuron transmission of alpha-synuclein</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>106</volume>: <fpage>13010</fpage>–<lpage>13015</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Aguzzi1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Aguzzi</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Rajendran</surname><given-names>L</given-names></name> (<year>2009</year>) <article-title>The transcellular spread of cytosolic amyloids, prions, and prionoids</article-title>. <source>Neuron</source> <volume>64</volume>: <fpage>783</fpage>–<lpage>790</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Uptain1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Uptain</surname><given-names>SM</given-names></name>, <name name-style="western"><surname>Lindquist</surname><given-names>S</given-names></name> (<year>2002</year>) <article-title>Prions as protein-based genetic elements</article-title>. <source>Annu Rev Microbiol</source> <volume>56</volume>: <fpage>703</fpage>–<lpage>741</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Michelitsch1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Michelitsch</surname><given-names>MD</given-names></name>, <name name-style="western"><surname>Weissman</surname><given-names>JS</given-names></name> (<year>2000</year>) <article-title>A census of glutamine/asparagine-rich regions: implications for their conserved function and the prediction of novel prions</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>97</volume>: <fpage>11910</fpage>–<lpage>11915</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Alberti1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alberti</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Halfmann</surname><given-names>R</given-names></name>, <name name-style="western"><surname>King</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Kapila</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Lindquist</surname><given-names>S</given-names></name> (<year>2009</year>) <article-title>A systematic survey identifies prions and illuminates sequence features of prionogenic proteins</article-title>. <source>Cell</source> <volume>137</volume>: <fpage>146</fpage>–<lpage>158</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-delaPaz1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>de la Paz</surname><given-names>ML</given-names></name>, <name name-style="western"><surname>Serrano</surname><given-names>L</given-names></name> (<year>2004</year>) <article-title>Sequence determinants of amyloid fibril formation</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>101</volume>: <fpage>87</fpage>–<lpage>92</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Ross1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ross</surname><given-names>ED</given-names></name>, <name name-style="western"><surname>Toombs</surname><given-names>JA</given-names></name> (<year>2010</year>) <article-title>The effects of amino acid composition on yeast prion formation and prion domain interactions</article-title>. <source>Prion</source> <volume>4</volume>: <fpage>60</fpage>–<lpage>65</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Ventura1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ventura</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Zurdo</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Narayanan</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Parreno</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Mangues</surname><given-names>R</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>Short amino acid stretches can mediate amyloid formation in globular proteins: the Src homology 3 (SH3) case</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>101</volume>: <fpage>7258</fpage>–<lpage>7263</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-EsterasChopo1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Esteras-Chopo</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Serrano</surname><given-names>L</given-names></name>, <name name-style="western"><surname>de la Paz</surname><given-names>ML</given-names></name> (<year>2005</year>) <article-title>The amyloid stretch hypothesis: Recruiting proteins toward the dark side</article-title>. <source>PNAS %R 101073/pnas0505905102</source> <volume>102</volume>: <fpage>16672</fpage>–<lpage>16677</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Teng1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Teng</surname><given-names>PK</given-names></name>, <name name-style="western"><surname>Eisenberg</surname><given-names>D</given-names></name> (<year>2009</year>) <article-title>Short protein segments can drive a non-fibrillizing protein into the amyloid state</article-title>. <source>Protein Eng Des Sel</source> <volume>22</volume>: <fpage>531</fpage>–<lpage>536</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Castillo1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Castillo</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Grana-Montes</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Sabate</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Ventura</surname><given-names>S</given-names></name> (<year>2011</year>) <article-title>Prediction of the aggregation propensity of proteins from the primary sequence: aggregation properties of proteomes</article-title>. <source>Biotechnology Journal</source> <volume>6</volume>: <fpage>674</fpage>–<lpage>685</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Toombs1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Toombs</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>Petri</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Paul</surname><given-names>KR</given-names></name>, <name name-style="western"><surname>Kan</surname><given-names>GY</given-names></name>, <name name-style="western"><surname>Ben-Hur</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>De novo design of synthetic prion domains</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>109</volume>: <fpage>6519</fpage>–<lpage>6524</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-MaurerStroh1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Maurer-Stroh</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Debulpaep</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Kuemmerer</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Lopez de la Paz</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Martins</surname><given-names>IC</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Exploring the sequence determinants of amyloid structure using position-specific scoring matrices</article-title>. <source>Nature Methods</source> <volume>7</volume>: <fpage>237</fpage>–<lpage>242</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Toombs2"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Toombs</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>McCarty</surname><given-names>BR</given-names></name>, <name name-style="western"><surname>Ross</surname><given-names>ED</given-names></name> (<year>2010</year>) <article-title>Compositional determinants of prion formation in yeast</article-title>. <source>Mol Cell Biol</source> <volume>30</volume>: <fpage>319</fpage>–<lpage>332</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Sawaya1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sawaya</surname><given-names>MR</given-names></name>, <name name-style="western"><surname>Sambashivan</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Nelson</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Ivanova</surname><given-names>MI</given-names></name>, <name name-style="western"><surname>Sievers</surname><given-names>SA</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Atomic structures of amyloid cross-beta spines reveal varied steric zippers</article-title>. <source>Nature</source> <volume>447</volume>: <fpage>453</fpage>–<lpage>457</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Balbirnie1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Balbirnie</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Grothe</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Eisenberg</surname><given-names>DS</given-names></name> (<year>2001</year>) <article-title>An amyloid-forming peptide from the yeast prion Sup35 reveals a dehydrated beta-sheet structure for amyloid</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>98</volume>: <fpage>2375</fpage>–<lpage>2380</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Wasmer1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wasmer</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Lange</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Van Melckebeke</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Siemer</surname><given-names>AB</given-names></name>, <name name-style="western"><surname>Riek</surname><given-names>R</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Amyloid fibrils of the HET-s(218–289) prion form a beta solenoid with a triangular hydrophobic core</article-title>. <source>Science</source> <volume>319</volume>: <fpage>1523</fpage>–<lpage>1526</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Wasmer2"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wasmer</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Zimmer</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Sabate</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Soragni</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Saupe</surname><given-names>SJ</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Structural similarity between the prion domain of HET-s and a homologue can explain amyloid cross-seeding in spite of limited sequence identity</article-title>. <source>Journal of Molecular Biology</source> <volume>402</volume>: <fpage>311</fpage>–<lpage>325</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Adessi1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Adessi</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Frossard</surname><given-names>MJ</given-names></name>, <name name-style="western"><surname>Boissard</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Fraga</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Bieler</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2003</year>) <article-title>Pharmacological profiles of peptide drug candidates for the treatment of Alzheimer's disease</article-title>. <source>J Biol Chem</source> <volume>278</volume>: <fpage>13905</fpage>–<lpage>13911</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Beerten1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Beerten</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Schymkowitz</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Rousseau</surname><given-names>F</given-names></name> (<year>2012</year>) <article-title>Aggregation prone regions and gatekeeping residues in protein sequences</article-title>. <source>Current Topics in Medicinal Chemistry</source> <volume>12</volume>: <fpage>2470</fpage>–<lpage>2478</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Rousseau1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rousseau</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Serrano</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Schymkowitz</surname><given-names>JW</given-names></name> (<year>2006</year>) <article-title>How evolutionary pressure against protein aggregation shaped chaperone specificity</article-title>. <source>J Mol Biol</source> <volume>355</volume>: <fpage>1037</fpage>–<lpage>1047</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Ritter1"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ritter</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Maddelein</surname><given-names>ML</given-names></name>, <name name-style="western"><surname>Siemer</surname><given-names>AB</given-names></name>, <name name-style="western"><surname>Luhrs</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Ernst</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Correlation of structural elements and infectivity of the HET-s prion</article-title>. <source>Nature</source> <volume>435</volume>: <fpage>844</fpage>–<lpage>848</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Mukrasch1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mukrasch</surname><given-names>MD</given-names></name>, <name name-style="western"><surname>Biernat</surname><given-names>J</given-names></name>, <name name-style="western"><surname>von Bergen</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Griesinger</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Mandelkow</surname><given-names>E</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Sites of tau important for aggregation populate {beta}-structure and bind to microtubules and polyanions</article-title>. <source>J Biol Chem</source> <volume>280</volume>: <fpage>24978</fpage>–<lpage>24986</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Miller1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Miller</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Ma</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Nussinov</surname><given-names>R</given-names></name> (<year>2011</year>) <article-title>Synergistic interactions between repeats in tau protein and Abeta amyloids may be responsible for accelerated aggregation via polymorphic states</article-title>. <source>Biochemistry</source> <volume>50</volume>: <fpage>5172</fpage>–<lpage>5181</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Margittai1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Margittai</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Langen</surname><given-names>R</given-names></name> (<year>2004</year>) <article-title>Template-assisted filament growth by parallel stacking of tau</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>101</volume>: <fpage>10278</fpage>–<lpage>10283</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Mukrasch2"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mukrasch</surname><given-names>MD</given-names></name>, <name name-style="western"><surname>von Bergen</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Biernat</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Fischer</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Griesinger</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>The "jaws" of the tau-microtubule interaction</article-title>. <source>J Biol Chem</source> <volume>282</volume>: <fpage>12230</fpage>–<lpage>12239</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Eliezer1"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Eliezer</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Barre</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Kobaslija</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Chan</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Li</surname><given-names>X</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Residual structure in the repeat domain of tau: echoes of microtubule binding and paired helical filament formation</article-title>. <source>Biochemistry</source> <volume>44</volume>: <fpage>1026</fpage>–<lpage>1036</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Raz1"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Raz</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Miller</surname><given-names>Y</given-names></name> (<year>2013</year>) <article-title>Interactions between Abeta and mutated Tau lead to polymorphism and induce aggregation of Abeta-mutated tau oligomeric complexes</article-title>. <source>PLoS One</source> <volume>8</volume>: <fpage>e73303</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-King1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>King</surname><given-names>OD</given-names></name>, <name name-style="western"><surname>Gitler</surname><given-names>AD</given-names></name>, <name name-style="western"><surname>Shorter</surname><given-names>J</given-names></name> (<year>2012</year>) <article-title>The tip of the iceberg: RNA-binding proteins with prion-like domains in neurodegenerative disease</article-title>. <source>Brain Research</source> <volume>1462</volume>: <fpage>61</fpage>–<lpage>80</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-EspinosaAngarica1"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Espinosa Angarica</surname><given-names>V</given-names></name>, <name name-style="western"><surname>Ventura</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Sancho</surname><given-names>J</given-names></name> (<year>2013</year>) <article-title>Discovering putative prion sequences in complete proteomes using probabilistic representations of Q/N-rich domains</article-title>. <source>BMC Genomics</source> <volume>14</volume>: <fpage>316</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Kim1"><label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kim</surname><given-names>HJ</given-names></name>, <name name-style="western"><surname>Kim</surname><given-names>NC</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>YD</given-names></name>, <name name-style="western"><surname>Scarborough</surname><given-names>EA</given-names></name>, <name name-style="western"><surname>Moore</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Mutations in prion-like domains in hnRNPA2B1 and hnRNPA1 cause multisystem proteinopathy and ALS</article-title>. <source>Nature</source> <volume>495</volume>: <fpage>467</fpage>–<lpage>473</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Scarafone1"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Scarafone</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Pain</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Fratamico</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Gaspard</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Yilmaz</surname><given-names>N</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Amyloid-like fibril formation by polyQ proteins: a critical balance between the polyQ length and the constraints imposed by the host protein</article-title>. <source>PLoS One</source> <volume>7</volume>: <fpage>e31253</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Halfmann1"><label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Halfmann</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Alberti</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Krishnan</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Lyle</surname><given-names>N</given-names></name>, <name name-style="western"><surname>O'Donnell</surname><given-names>CW</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Opposing effects of glutamine and asparagine govern prion formation by intrinsically disordered proteins</article-title>. <source>Mol Cell</source> <volume>43</volume>: <fpage>72</fpage>–<lpage>84</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Prilusky1"><label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Prilusky</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Felder</surname><given-names>CE</given-names></name>, <name name-style="western"><surname>Zeev-Ben-Mordehai</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Rydberg</surname><given-names>EH</given-names></name>, <name name-style="western"><surname>Man</surname><given-names>O</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>FoldIndex: a simple tool to predict whether a given protein sequence is intrinsically unfolded</article-title>. <source>Bioinformatics</source> <volume>21</volume>: <fpage>3435</fpage>–<lpage>3438</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-httpwwwexpasyorgtoolspscaleAASwissProthtml1"><label>38</label>
+<mixed-citation publication-type="other" xlink:type="simple"><ext-link ext-link-type="uri" xlink:href="http://www.expasy.org/tools/pscale/A.A.Swiss-Prot.html" xlink:type="simple">http://www.expasy.org/tools/pscale/A.A.Swiss-Prot.html</ext-link>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-GonzalezNelson1"><label>39</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gonzalez Nelson</surname><given-names>AC</given-names></name>, <name name-style="western"><surname>Paul</surname><given-names>KR</given-names></name>, <name name-style="western"><surname>Petri</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Flores</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Rogge</surname><given-names>RA</given-names></name>, <etal>et al</etal>. (<year>2014</year>) <article-title>Increasing prion propensity by hydrophobic insertion</article-title>. <source>PLoS One</source> <volume>9</volume>: <fpage>e89286</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Tompa1"><label>40</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tompa</surname><given-names>P</given-names></name> (<year>2002</year>) <article-title>Intrinsically unstructured proteins</article-title>. <source>Trends Biochem Sci</source> <volume>27</volume>: <fpage>527</fpage>–<lpage>533</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Dorsman1"><label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dorsman</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>Pepers</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Langenberg</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Kerkdijk</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Ijszenga</surname><given-names>M</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>Strong aggregation and increased toxicity of polyleucine over polyglutamine stretches in mammalian cells</article-title>. <source>Hum Mol Genet</source> <volume>11</volume>: <fpage>1487</fpage>–<lpage>1496</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Chernoff1"><label>42</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chernoff</surname><given-names>YO</given-names></name>, <name name-style="western"><surname>Lindquist</surname><given-names>SL</given-names></name>, <name name-style="western"><surname>Ono</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Inge-Vechtomov</surname><given-names>SG</given-names></name>, <name name-style="western"><surname>Liebman</surname><given-names>SW</given-names></name> (<year>1995</year>) <article-title>Role of the chaperone protein Hsp104 in propagation of the yeast prion-like factor [psi+]</article-title>. <source>Science</source> <volume>268</volume>: <fpage>880</fpage>–<lpage>884</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Tanaka1"><label>43</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tanaka</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Collins</surname><given-names>SR</given-names></name>, <name name-style="western"><surname>Toyama</surname><given-names>BH</given-names></name>, <name name-style="western"><surname>Weissman</surname><given-names>JS</given-names></name> (<year>2006</year>) <article-title>The physical basis of how prion conformations determine strain phenotypes</article-title>. <source>Nature</source> <volume>442</volume>: <fpage>585</fpage>–<lpage>589</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Centor1"><label>44</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Centor</surname><given-names>RM</given-names></name>, <name name-style="western"><surname>Schwartz</surname><given-names>JS</given-names></name> (<year>1985</year>) <article-title>An evaluation of methods for estimating the area under the receiver operating characteristic (ROC) curve</article-title>. <source>Medical Decision Making</source> <volume>5</volume>: <fpage>149</fpage>–<lpage>156</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004013-Fluss1"><label>45</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fluss</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Faraggi</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Reiser</surname><given-names>B</given-names></name> (<year>2005</year>) <article-title>Estimation of the Youden Index and its associated cutoff point</article-title>. <source>Biom J</source> <volume>47</volume>: <fpage>458</fpage>–<lpage>472</lpage>.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

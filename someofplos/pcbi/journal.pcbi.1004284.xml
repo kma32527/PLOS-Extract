@@ -1,0 +1,877 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004284</article-id>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-14-01895</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Fast Simulation of Mechanical Heterogeneity in the Electrically Asynchronous Heart Using the MultiPatch Module</article-title>
+<alt-title alt-title-type="running-head">The MultiPatch Module</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Walmsley</surname>
+<given-names>John</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+<xref rid="cor001" ref-type="corresp">*</xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Arts</surname>
+<given-names>Theo</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Derval</surname>
+<given-names>Nicolas</given-names>
+</name>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Bordachar</surname>
+<given-names>Pierre</given-names>
+</name>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Cochet</surname>
+<given-names>Hubert</given-names>
+</name>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Ploux</surname>
+<given-names>Sylvain</given-names>
+</name>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Prinzen</surname>
+<given-names>Frits W.</given-names>
+</name>
+<xref rid="aff003" ref-type="aff"><sup>3</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Delhaas</surname>
+<given-names>Tammo</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Lumens</surname>
+<given-names>Joost</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+</contrib>
+</contrib-group>
+<aff id="aff001"><label>1</label> <addr-line>Department of Biomedical Engineering, Cardiovascular Research Institute Maastricht (CARIM), Maastricht University, Maastricht, The Netherlands</addr-line></aff>
+<aff id="aff002"><label>2</label> <addr-line>Hôpital Cardiologique du Haut-Lévêque, IHU-LIRYC, CHU de Bordeaux, Bordeaux, France</addr-line></aff>
+<aff id="aff003"><label>3</label> <addr-line>Department of Physiology, Cardiovascular Research Institute Maastricht (CARIM), Maastricht University, Maastricht, The Netherlands</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>McCulloch</surname>
+<given-names>Andrew D.</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>University of California, San Diego, UNITED STATES</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that, beyond the funding listed above, no relevant competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: JW ND PB TA FWP TD JL. Performed the experiments: JW ND HC PB SP. Analyzed the data: JW TA JL ND HC. Contributed reagents/materials/analysis tools: TA JL ND PB HC SP. Wrote the paper: JW TA ND PB HC SP FWP TD JL.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">j.walmsley@maastrichtuniversity.nl</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>23</day>
+<month>7</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="collection">
+<month>7</month>
+<year>2015</year>
+</pub-date>
+<volume>11</volume>
+<issue>7</issue>
+<elocation-id>e1004284</elocation-id>
+<history>
+<date date-type="received">
+<day>17</day>
+<month>10</month>
+<year>2014</year>
+</date>
+<date date-type="accepted">
+<day>10</day>
+<month>4</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Walmsley et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004284" xlink:type="simple"/>
+<abstract>
+<p>Cardiac electrical asynchrony occurs as a result of cardiac pacing or conduction disorders such as left bundle-branch block (LBBB). Electrically asynchronous activation causes myocardial contraction heterogeneity that can be detrimental for cardiac function. Computational models provide a tool for understanding pathological consequences of dyssynchronous contraction. Simulations of mechanical dyssynchrony within the heart are typically performed using the finite element method, whose computational intensity may present an obstacle to clinical deployment of patient-specific models. We present an alternative based on the CircAdapt lumped-parameter model of the heart and circulatory system, called the MultiPatch module. Cardiac walls are subdivided into an arbitrary number of patches of homogeneous tissue. Tissue properties and activation time can differ between patches. All patches within a wall share a common wall tension and curvature. Consequently, spatial location within the wall is not required to calculate deformation in a patch. We test the hypothesis that activation time is more important than tissue location for determining mechanical deformation in asynchronous hearts. We perform simulations representing an experimental study of myocardial deformation induced by ventricular pacing, and a patient with LBBB and heart failure using endocardial recordings of electrical activation, wall volumes, and end-diastolic volumes. Direct comparison between simulated and experimental strain patterns shows both qualitative and quantitative agreement between model fibre strain and experimental circumferential strain in terms of shortening and rebound stretch during ejection. Local myofibre strain in the patient simulation shows qualitative agreement with circumferential strain patterns observed in the patient using tagged MRI. We conclude that the MultiPatch module produces realistic regional deformation patterns in the asynchronous heart and that activation time is more important than tissue location within a wall for determining myocardial deformation. The CircAdapt model is therefore capable of fast and realistic simulations of dyssynchronous myocardial deformation embedded within the closed-loop cardiovascular system.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>Under normal conditions, the electrical activation of the heart is almost synchronous, leading to uniform contraction. Due to either pathology or electrical pacing, the heart can be activated asynchronously. The result is discoordinated contraction and a reduction in the ability to pump blood. There is considerable interest in using computer simulations to understand how asynchronous electrical activation affects cardiac deformation, and how pathologies of the cardiac conduction system can be treated by pacing the heart. We present the MultiPatch module for simulating the effects of asynchronous electrical activation on cardiac contraction in the relatively simple CircAdapt model of the heart and circulation. We quantitatively compare model simulations to deformation patterns recorded during an experimental study of pacing-induced electrical asynchrony. We then demonstrate a ‘patient-specific’ simulation of deformation in a patient with a conduction disorder called left bundle-branch block. We use timings from endocardial mapping of electrical activation in a patient as an input for the model, and compare the resulting simulated deformation patterns to tagged magnetic resonance imaging recordings from the same patient. The model qualitatively reproduces deformation as observed in the patient. We conclude that the MultiPatch module makes CircAdapt appropriate for simulation of dyssynchronous heart failure in patients.</p>
+</abstract>
+<funding-group>
+<funding-statement>JW and JL were funded through a personal grant within the framework of the Dr E. Dekker program of the Dutch Heart Foundation to JL(<ext-link ext-link-type="uri" xlink:href="https://www.hartstichting.nl" xlink:type="simple">https://www.hartstichting.nl</ext-link>, 2012T010). TA, FWP, and TD received no specific funding for this work. ND, PB, HC, and SP were supported by the French Government, Agence National de la Recherche au titre du programme Investissements d'Avenir (<ext-link ext-link-type="uri" xlink:href="http://www.agence-nationale-recherche.fr" xlink:type="simple">http://www.agence-nationale-recherche.fr</ext-link>, ANR-10-IAHU-04). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="7"/>
+<table-count count="2"/>
+<page-count count="23"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the paper and its Supporting Information files.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>The ventricles of the heart undergo rapid electrical activation under normal conditions through the cardiac conduction system, leading to a near-synchronous mechanical contraction of the ventricles [<xref rid="pcbi.1004284.ref001" ref-type="bibr">1</xref>]. Ventricular electrical asynchrony may be induced either by ventricular pacing or through disorders of the cardiac conduction system such as left bundle-branch block (LBBB) [<xref rid="pcbi.1004284.ref002" ref-type="bibr">2</xref>]. Electrically asynchronous ventricular activation results in reduced pump function, due to dis-coordinated contraction and relaxation of the inter-ventricular septum and left ventricular (LV) free wall [<xref rid="pcbi.1004284.ref003" ref-type="bibr">3</xref>,<xref rid="pcbi.1004284.ref004" ref-type="bibr">4</xref>]. Ventricular deformation recorded during tagged MRI [<xref rid="pcbi.1004284.ref005" ref-type="bibr">5</xref>] or echocardiography [<xref rid="pcbi.1004284.ref006" ref-type="bibr">6</xref>] may contain information on both the electrical activation pattern causing mechanical dyssynchrony, and the health of ventricular tissue [<xref rid="pcbi.1004284.ref007" ref-type="bibr">7</xref>]. However, confusion remains due to conflicting data over the usefulness of mechanical dyssynchrony as a marker for potential response to treatment of dyssynchronous heart failure with cardiac resynchronization therapy (CRT) [<xref rid="pcbi.1004284.ref007" ref-type="bibr">7</xref>–<xref rid="pcbi.1004284.ref009" ref-type="bibr">9</xref>].</p>
+<p>Theoretical studies using computational models offer the ability to mechanistically link ventricular electrical activation and tissue condition to both mechanical deformation and haemodynamic changes. Computational models are beginning to provide insights into dyssynchronous heart failure and its treatment with CRT [<xref rid="pcbi.1004284.ref007" ref-type="bibr">7</xref>,<xref rid="pcbi.1004284.ref010" ref-type="bibr">10</xref>–<xref rid="pcbi.1004284.ref017" ref-type="bibr">17</xref>]. There is considerable interest in producing ‘patient-specific’ models with the ultimate goal of predicting response to treatment of dyssynchronous heart failure with CRT [<xref rid="pcbi.1004284.ref018" ref-type="bibr">18</xref>–<xref rid="pcbi.1004284.ref021" ref-type="bibr">21</xref>].</p>
+<p>The Finite Element (FE) method is the standard method to simulate time-dependent cardiac mechanics with inhomogeneous mechanical behavior of the myocardium. Common outputs are spatial distributions of stress and strain, and changes in cardiac geometry during ventricular systole. Patient-specific modeling using the FE method requires a considerable amount of input data such as a cardiac geometry from the patient and spatial distribution of mechanical properties within the myocardium, including fibre orientation, stiffness, and contractility [<xref rid="pcbi.1004284.ref022" ref-type="bibr">22</xref>]. Many of these ventricular properties are difficult to obtain in a clinical setting, requiring the use of generalised data instead based on anatomical atlases [<xref rid="pcbi.1004284.ref023" ref-type="bibr">23</xref>]. Furthermore, simulations using the FE method require considerable computational resources preventing availability of calculated results during clinical measurement protocols.</p>
+<p>In an attempt to reduce the input information required, and to focus on clinically measurable output data, the CircAdapt model of the heart and circulation has been developed (<xref rid="pcbi.1004284.g001" ref-type="fig">Fig 1A</xref>) [<xref rid="pcbi.1004284.ref024" ref-type="bibr">24</xref>]. CircAdapt allows rapid simulation of cardiac pump function and cardiovascular system dynamics for both research and educational purposes (<ext-link ext-link-type="uri" xlink:href="http://www.circadapt.org/" xlink:type="simple">www.circadapt.org</ext-link>). The model uses a highly simplified ventricular geometry where the cardiac walls are represented by thick-walled spherical shells consisting of myofibres. In the original CircAdapt model, mechanical properties and load were assumed to be evenly distributed within each wall. In the present study we introduce the MultiPatch module, allowing simulation of the effects of an uneven distribution of mechanical properties in the cardiac walls within the CircAdapt framework. Advantages of this approach over FE implementations include an extremely low computational effort, and a smooth haemodynamic incorporation of the heart within the entire circulation. Thus, real-time simulation of cardiac mechanics and haemodynamics is feasible using CircAdapt, widening the possibilities for patient-specific modeling in a clinical setting.</p>
+<fig id="pcbi.1004284.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004284.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Simulation protocol.</title>
+<p>Panel A shows a schematic representation of the CircAdapt model, adapted from Lumens <italic>et al</italic> (2009) [<xref rid="pcbi.1004284.ref025" ref-type="bibr">25</xref>]. The TriSeg module representing mechanical interaction between the left and right ventricles, the chamber module representing the left and right atria, the cardiac valves, major vessels, and systemic and pulmonary resistances are shown. Panel B shows activation patterns used for the simulation of RA pacing, RV apex pacing, and LV base pacing, together with the atrio-ventricular (AV) delay. The activation map for the patient specific simulation of LBBB is shown, together with the endocardial mapping data recorded from the endocardium plotted on a standard AHA segmentation without the apical segment in panel C. The colour bar denotes time of activation in ms, and is common to all activation maps. The asterisk (<bold>*</bold>) indicates the approximate location of pacing in the model for reference.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.g001" position="float" xlink:type="simple"/>
+</fig>
+<p>The MultiPatch module subdivides a cardiac wall into a finite number of patches. Each patch has its own stress-strain relation for the constituent myofibers. Although cardiac geometry is known to be complicated, we postulated that a cardiac wall may be considered simply spherical to estimate mechanical load in the tissue. The hypothesis used is that each patch can be considered part of a spherical wall. Furthermore, in this wall, the two-dimensional tensor, representing wall tension, is considered isotropic. An important consequence of this hypothesis is that wall tension is homogeneous in each wall, according to Laplace’s law. The location of a patch within a wall is therefore not relevant for the calculation of stress and strain in the patch, since all patches in a wall behave as if in series and experience the same wall tension. Myofibre stress is not necessarily distributed homogeneously as the thickness of the patches may differ. For example, when simulating mechanical effects of asynchronous activation, the location in the wall determines timing of activation, which then determines fibre stress and strain in the patch. After performing the calculations fibre mechanics are known locally, given the activation time of the tissue. Consequently, computational effort is reduced tremendously relative to the FE method.</p>
+<p>In the present study, we quantitatively assessed the effectiveness of the MultiPatch module for simulating mechanical deformation during asynchronous ventricular activation. For that purpose, we simulated experiments in a well-known animal study into the effects of pacing-induced electrical dyssynchrony [<xref rid="pcbi.1004284.ref004" ref-type="bibr">4</xref>]. We directly compare strain, stress-strain loops, and haemodynamic response calculated by the model to experimental recordings to investigate the hypothesis underpinning the MultiPatch module, that activation time of ventricular tissue is more important than tissue location for determining myocardial deformation in the asynchronous heart. Furthermore, we show a proof-of-concept simulation of ventricular mechanical deformation in a patient with LBBB and heart failure. We use recordings of endocardial electrical activation, and the patient’s stroke volume and ejection fraction as inputs to our model, and compare the simulated deformation patterns of the left ventricular and septal walls to those recorded in the patient using tagged MRI.</p>
+</sec>
+<sec id="sec002" sec-type="results">
+<title>Results</title>
+<sec id="sec003">
+<title>The CircAdapt Model</title>
+<p>The CircAdapt model, as shown schematically in <xref rid="pcbi.1004284.g001" ref-type="fig">Fig 1A</xref>, simulates the heart when incorporated in the whole circulation to provide realistic loading. The heart consists of five walls, <italic>i</italic>.<italic>e</italic>., the left and right atrial walls, the left and right ventricular wall, and the interventricular septum. Cavity pressures are calculated from cavity volumes as follows. Cavity volumes determine wall area. Wall areas determine strain of the myofibres in the wall. A model of myofibre mechanics is used to calculate myofibre stress from myofibre strain. Myofibre stress determines wall tension in each cardiac wall. Using the TriSeg module [<xref rid="pcbi.1004284.ref025" ref-type="bibr">25</xref>], the mechanical equilibrium between the three ventricular walls is used to calculate their shape when encapsulating the two ventricular cavities. Transmural pressure is calculated from wall tension and curvature for each wall using Laplace’s law. Cavity pressures are found by adding the transmural pressures to the intra-pericardial pressure surrounding the myocardial walls.</p>
+</sec>
+<sec id="sec004">
+<title>The MultiPatch Module</title>
+<p>In the basic CircAdapt model, wall area determines wall tension. In a cardiac wall, consisting of <italic>n</italic> different patches, the total area of the patches adds up to the given total wall area. The wall area is the area of the surface that divides the wall volume in half (see <xref rid="sec026" ref-type="sec">Materials and Methods</xref>). The MultiPatch module is designed 1) to calculate wall tension; and 2) to determine the area assigned to the different patches. To solve for the unknown areas of <italic>n</italic> patches we use one equation, saying that the sum of all patch areas equals the given total wall area. Furthermore we use a set of <italic>n</italic>-1 equations, saying that wall tension in all patches is the same. Thus, in total, <italic>n</italic> equations are used to solve the area of <italic>n</italic> patches. From the area and the known constitutive equations of each patch, myofibre strains and stresses are calculated. For each patch, the resulting wall tension is calculated. Because of the applied set of equations wall tension is general to all patches. Thus, as in the regular wall, the MultiPatch module determines wall tension from wall area. The mechanical load of the myofibres in each patch is an important side result of these calculations. Details of the mathematical derivation are presented in the methods section.</p>
+</sec>
+<sec id="sec005">
+<title>Simulation Protocols</title>
+<sec id="sec006">
+<title>Simulation of a paced canine model of dyssynchrony</title>
+<p>We simulated electrical asynchrony as induced in a paced canine model by Prinzen <italic>et al</italic> [<xref rid="pcbi.1004284.ref004" ref-type="bibr">4</xref>]. The LV free wall and septum were divided into 12 patches. We considered three pacing modes: right atrial (RA) pacing, RV apex pacing, and LV base pacing. In RA pacing, we assume a relatively synchronous ventricular activation due to activation of the His-Purkinje system. We assume that during ventricular pacing activation time of tissue increases with distance from the pacing site. In the MultiPatch model, this is represented by gradually increasing the proportion of patches in the wall that are activated. When simulating LV basal pacing, the earliest activated ventricular patch is in the left ventricular free wall, representing the pacing site. Following the first activation of a patch within a wall, two more patches become activated every 15 ms until every patch in the wall is activated, representing propagation of excitation through the myocardium away from the stimulus site. Septal and RV patches are then sequentially activated following the activation of all left ventricular patches, resulting in a delayed activation of the septum consistent with experimental recordings in LV-paced dogs [<xref rid="pcbi.1004284.ref026" ref-type="bibr">26</xref>]. The activation pattern is reversed to represent RV apex pacing, with an RV segment activated first, followed by a septal segment. Activation patterns are represented diagrammatically in <xref rid="pcbi.1004284.g001" ref-type="fig">Fig 1B</xref>. As in the study of Prinzen <italic>et al</italic> [<xref rid="pcbi.1004284.ref004" ref-type="bibr">4</xref>], we set the AV delay to 0 ms during both ventricular pacing simulations, whereas in RA pacing we used an AV delay of 157 ms.</p>
+</sec>
+<sec id="sec007">
+<title>Patient-specific simulation of mechanical deformation with left bundle-branch block</title>
+<p>To simulate cardiac mechanics in the patient with LBBB and heart failure, patches are assigned a time of onset of activation in <xref rid="pcbi.1004284.g001" ref-type="fig">Fig 1B</xref> corresponding to one segment in the standard AHA segmentation of the LV [<xref rid="pcbi.1004284.ref027" ref-type="bibr">27</xref>]. The endocardial mapping data is shown in <xref rid="pcbi.1004284.g001" ref-type="fig">Fig 1C</xref>. The LV and septum in the model were split into 16 segments and each was assigned an activation time corresponding to one of the AHA segments. Because we consider patches to be mechanically coupled in series, the order in which patches are placed within a wall is not significant. The resulting activation pattern used in the simulations is shown in <xref rid="pcbi.1004284.g001" ref-type="fig">Fig 1B</xref>. The patient’s heart rate of 76 beats per minute, and stroke volume of 63 mL were used as inputs to the model. Heart rate and stroke volume determined systemic flow. The systemic circulation was adapted to this flow using the CircAdapt adaptation protocols [<xref rid="pcbi.1004284.ref028" ref-type="bibr">28</xref>]. Septal and LV free wall volumes as derived from the MRI recordings were then used to determine the LV wall volume in the model. LV failure was induced by reducing the ability of the septum and LV free wall to generate active stress through reduction of the parameter σ<sub>fAct</sub> (see online supplement, ‘The CircAdapt sarcomere contraction model’) to 60% of its original value. Dilation was reproduced by increasing the reference mid-wall area A<sub>pRef</sub> (see <xref rid="sec026" ref-type="sec">Materials and Methods</xref>) by 35% in all LV free wall and septal patches, to give an LV ejection fraction and end-diastolic volume close to the patient’s values of 24% and 266 mL, respectively. Because no mitral regurgitation was observed in the patient we prevented mitral regurgitation from occurring in these simulations. All simulations shown are at a haemodynamic steady state.</p>
+</sec>
+</sec>
+<sec id="sec008">
+<title>Paced Canine Experiments</title>
+<sec id="sec009">
+<title>Simulated pump function decreases with pacing</title>
+<p>In the baseline RA pacing simulations, we recorded a peak systolic pressure of 117 mmHg, and an end-diastolic pressure of 11 mmHg. The stroke volume was 71 mL and the end-diastolic volume was 128 mL. During both RV apex pacing and LV basal pacing, peak systolic pressure decreased compared to RA pacing to values of 93 mmHg and to 95 mmHg, respectively. End diastolic pressure decreased slightly in the simulations to 7 mmHg during RV apex pacing and to 8 mmHg during LV base pacing, but stayed constant in the experiments (<xref rid="pcbi.1004284.t001" ref-type="table">Table 1</xref>). The stroke volume in ventricular pacing simulations decreased to 55 mL for RV apex pacing, and to 57 mL for LV basal pacing. The end diastolic volume also decreased slightly, to 106 mL with RV apex pacing and to 110 mL with LV base pacing. Further haemodynamic information is provided in <xref rid="pcbi.1004284.t001" ref-type="table">Table 1</xref>.</p>
+<table-wrap id="pcbi.1004284.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004284.t001</object-id>
+<label>Table 1</label> <caption><title>Haemodynamic parameters from pacing simulations.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004284.t001g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.t001" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Parameter</th>
+<th colspan="2" align="left" rowspan="1">RA Pacing</th>
+<th colspan="2" align="left" rowspan="1">RV Apex Pacing</th>
+<th colspan="2" align="left" rowspan="1">LV Base pacing</th>
+</tr>
+<tr>
+<th align="left" rowspan="1" colspan="1"/>
+<th align="left" rowspan="1" colspan="1">Experiment</th>
+<th align="left" rowspan="1" colspan="1">Simulation</th>
+<th align="left" rowspan="1" colspan="1">Experiment</th>
+<th align="left" rowspan="1" colspan="1">Simulation</th>
+<th align="left" rowspan="1" colspan="1">Experiment</th>
+<th align="left" rowspan="1" colspan="1">Simulation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">LV Stroke volume</td>
+<td align="left" rowspan="1" colspan="1">19.9 ± 13.9 mL</td>
+<td align="left" rowspan="1" colspan="1">71 mL</td>
+<td align="left" rowspan="1" colspan="1">14.8 ± 6 mL <underline><bold><xref rid="t001fn001" ref-type="table-fn">*</xref></bold></underline></td>
+<td align="left" rowspan="1" colspan="1">55 mL</td>
+<td align="left" rowspan="1" colspan="1">17.4 ± 9.5 mL</td>
+<td align="left" rowspan="1" colspan="1">57 mL</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">RV stroke volume</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">71 mL</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">55 mL</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">57 mL</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">LV peak systolic pressure</td>
+<td align="left" rowspan="1" colspan="1">105 ± 12 mmHg</td>
+<td align="left" rowspan="1" colspan="1">117mmHg</td>
+<td align="left" rowspan="1" colspan="1">96 ± 20 mmHg <underline><bold><xref rid="t001fn001" ref-type="table-fn">*</xref></bold></underline></td>
+<td align="left" rowspan="1" colspan="1">93 mmHg</td>
+<td align="left" rowspan="1" colspan="1">103 ± 20 mmHg</td>
+<td align="left" rowspan="1" colspan="1">95 mmHg</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">RV peak systolic pressure</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">34 mmHg</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">32 mmHg</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">33 mmHg</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">LV End diastolic volume</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">128 mL</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">106 mL</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">110 mL</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">RV end diastolic volume</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">108 mL</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">98 mL</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">91 mL</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">LV end diastolic pressure</td>
+<td align="left" rowspan="1" colspan="1">10 ± 2 mmHg</td>
+<td align="left" rowspan="1" colspan="1">11 mmHg</td>
+<td align="left" rowspan="1" colspan="1">9 ± 2 mmHg</td>
+<td align="left" rowspan="1" colspan="1">7 mmHg</td>
+<td align="left" rowspan="1" colspan="1">10 ± 2 mmHg</td>
+<td align="left" rowspan="1" colspan="1">8 mmHg</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">RV end diastolic pressure</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">4 mmHg</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">3 mmHg</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">3 mmHg</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t001fn001"><p><bold>*</bold> denotes statistical significance relative to RA pacing</p></fn>
+</table-wrap-foot>
+</table-wrap>
+</sec>
+<sec id="sec010">
+<title>Simulated and experimental strain patterns are consistent</title>
+<p>Strain is calculated from the CircAdapt model using the sarcomere length in each patch relative to the sarcomere length at the time of onset of ventricular activation. Simulated strain patterns during RA pacing, RV pacing and LV pacing are shown in <xref rid="pcbi.1004284.g002" ref-type="fig">Fig 2</xref>, together with tagged MRI strain patterns recorded from paced canine hearts by Prinzen <italic>et al</italic>. [<xref rid="pcbi.1004284.ref004" ref-type="bibr">4</xref>]. In both simulation and experiment, the time of activation of a segment determines its mechanical deformation pattern. The near-synchronous onset of activation in the RA pacing simulations leads to relatively uniform myocardial contraction in the LV walls. Asynchronous activation in the LV and RV pacing experiments and simulations causes early-activated regions to show pre-ejection shortening followed by stretch during systole. In the ventricular pacing simulations and the canine experiments, late-activated regions exhibit substantial degrees of pre-stretch followed by a large amount of shortening during the ejection phase. In general, early-activated regions show considerably less systolic shortening than late-activated regions.</p>
+<fig id="pcbi.1004284.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004284.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Quantitative comparison of strain patterns in canine hearts to simulations.</title>
+<p>The top panel shows experimental strain patterns during right atrial (RA), right ventricular (RV) apex, and left ventricular (LV) base pacing. The experimental strain data were originally published by Prinzen et al. (1999) [<xref rid="pcbi.1004284.ref004" ref-type="bibr">4</xref>]. The middle panel shows the corresponding CircAdapt simulations. Arrows indicate the order of activation throughout the ventricles in the RV apex and LV base simulations. Note the correspondence of the simulated patterns with the experiments, shown in black. The remainder of the simulated strain is plotted in grey. In both plots, asterisks (*) denote the approximate location of the pacing electrode, and the aortic ejection period is indicated by vertical dashed lines and a shaded area. In each panel, shortening during ejection (ESh) is shown in blue, and the rebound stretch after initial contraction (RSt) is shown in red. Experimental RSt and ESh were calculated during this study. The bottom panel plots simulated ESh (blue) and RSt (red) against values derived from the experimental data for each patch. The experimental data is on the left, and the simulated data is the right hand bar.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.g002" position="float" xlink:type="simple"/>
+</fig>
+<p>Quantitative comparison of strain patterns between simulation and experiment is done by calculating rebound stretch (RSt) as the total amount of lengthening following initial shortening in a segment, and shortening during ejection (ESh) only, since the onset or end of shortening is not present in all experimental data. A numerical comparison between simulated and experimental strain patterns for each segment is shown in the bottom panel of <xref rid="pcbi.1004284.g002" ref-type="fig">Fig 2</xref>.</p>
+<p>In RA pacing, the model predicted ESh of -0.14±0.02 (mean±standard deviation) as compared to experimental values of -0.14±0.03. We calculated the difference between the simulated and experimental ESh or RSt for each panel, and then defined ‘mean difference’ as the mean of these differences. For RA pacing the mean difference for ESh was 0.01. No RSt was present. During RV apex pacing, ESh at the earliest activated site was -0.02 and -0.05 for simulation and experiment, respectively. RSt was 0.09 in the simulation and 0.08 in the experiment. At the latest activated site, the ESh was -0.32 in the simulation and -0.22 in the experiment, with no RSt present. Across all segments the ESh was -0.13±0.1 and -0.12±0.06 for simulation and experiment, respectively, with a mean difference of 0.05. The RSt was 0.02±0.03 and 0.03±0.04 for simulation and experiment respectively, with a mean difference of 0.02. Values during LV base pacing were similar to RV apex pacing. ESh at the earliest activated site was -0.03 and -0.05 for simulation and experiment, respectively. RSt was 0.09 in the simulation and 0.08 in the experiment. At the latest activated site, the ESh was -0.3 in the simulation and -0.17 in the experiment, with no RSt present. Across all segments the ESh was -0.12±0.09 and -0.13±0.07 with a mean difference in ESh of 0.05; and RSt was 0.02±0.03 and 0.03±0.05 for simulation and experiment, respectively, with a mean difference in RSt of 0.02.</p>
+</sec>
+<sec id="sec011">
+<title>Asynchronous activation redistributes work from early- to late-activated regions</title>
+<p>Simulated and experimental stress-strain plots are shown in <xref rid="pcbi.1004284.g003" ref-type="fig">Fig 3</xref>. During RA pacing these diagrams show a relatively uniform pattern whereas in both the ventricular pacing experiments and simulations, there is a considerable heterogeneity in the stress-strain loops throughout the ventricle. Loops with stretch during active force generation are apparent in the early-activated regions, giving a ‘figure of 8’ pattern indicative of reduced or even negative myofibre work over the whole cardiac cycle in these regions.</p>
+<fig id="pcbi.1004284.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004284.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Comparison of stress-strain loops in canine hearts with simulations.</title>
+<p>The top panel shows experimental myofibre stress—length loops during RA, RV apex, and LV base pacing. The experimental data were originally published by Prinzen <italic>et al</italic>. (1999) [<xref rid="pcbi.1004284.ref004" ref-type="bibr">4</xref>].The bottom panel shows the corresponding CircAdapt simulations. Arrows indicate the order of activation throughout the ventricles in the RV apex and LV base simulations. Note the correspondence of the simulated patterns with the experiments, shown in black. The remainder of the simulated stress-strain loop is plotted in grey.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.g003" position="float" xlink:type="simple"/>
+</fig>
+<p>The total work done per patch in the model is calculated as the area of the myofibre stress–natural strain loop multiplied by the volume of tissue within the patch. Regional work distributions from both simulations and experiments are shown in <xref rid="pcbi.1004284.g004" ref-type="fig">Fig 4</xref>, demonstrating a relatively uniform distribution of work during RA pacing. Experimental work distributions are as originally published by Prinzen <italic>et al</italic>. [<xref rid="pcbi.1004284.ref004" ref-type="bibr">4</xref>], using the calculation of local fibre stress described by Delhaas <italic>et al</italic>. [<xref rid="pcbi.1004284.ref029" ref-type="bibr">29</xref>]. The stress-strain loops from the CircAdapt model are closed since the entire cardiac cycle is simulated. During ventricular pacing, work is redistributed away from the early-activated regions towards the latest activated regions in both simulations and experiments. In the simulations, the RV performs more work during LV base pacing than RV apex pacing due to its later activation. This difference in RV work suggests a possible mechanism for the higher stroke volumes in both simulation and experiment during LV base pacing, compared to RV apex pacing.</p>
+<fig id="pcbi.1004284.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004284.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Redistribution of work in the canine heart during pacing.</title>
+<p>The left-hand panels show work density distributions within the LV during RA, RV apex, and LV base pacing (data originally published by Prinzen <italic>et al</italic>. 1999 [<xref rid="pcbi.1004284.ref004" ref-type="bibr">4</xref>]). Work density is plotted in mJ/g. Darker regions indicate lower work density, and lighter regions indicate higher work density. The right hand panel shows the corresponding distribution of work density from the CircAdapt simulations. The scales on the left and right hand columns are different between the two figures. The asterisks (*) denote the location of the pacing electrode.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.g004" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+</sec>
+<sec id="sec012">
+<title>Patient-Specific Simulations</title>
+<sec id="sec013">
+<title>Patient-specific simulation of mechanical deformation based on endocardial activation maps</title>
+<p>Circumferential strain patterns recorded from the patient with heart failure and LBBB using tagged MRI are shown together with the corresponding CircAdapt simulation in <xref rid="pcbi.1004284.g005" ref-type="fig">Fig 5</xref>. Several key features of the experimental strain patterns are visible in the simulations. Early stretch, followed by deep and synchronous shortening, is apparent in the late-activated lateral wall, whereas in the early-activated septal segments we see an initial shortening followed by stretch of the septum as the lateral wall shortens. There was, however, both more pre-stretch and dispersion in strain in the lateral wall during early systole in the simulations than in the patient recordings.</p>
+<fig id="pcbi.1004284.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004284.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Comparison of patient tagged MRI strain with simulated deformation.</title>
+<p>Tagged-MRI strain patterns from the patient with LBBB are shown in the left hand panel, with the corresponding CircAdapt simulated strain patterns shown in the right panel. Strain patterns from the five septal segments are shown as dashed lines, and strain patterns from the LV free wall segments are shown as solid lines. Strain patterns are coloured according to their mean time of activation. The endocardial mapping activation map and the activation pattern used in the simulation are shown in the inset. The black lines denote the mean strain values from the septal and LV free wall segments. Dashed vertical lines denote pulmonary valve opening (PO) and closing (PC). Solid vertical lines denote aortic valve opening (AO) and closing (AC).</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.g005" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec014">
+<title>Comparison of patient haemodynamic measurements to simulated values</title>
+<p>In our simulation protocol, we set the stroke volume of the patient (63 mL) as an input parameter. The simulations produced an LV end diastolic volume of 256 mL, close to the patient value of 266 mL. The LV ejection fraction in the simulations was 25%, as compared to a patient value of 24%. The simulations also produced realistic durations of opening of the aortic and pulmonary valves compared to those observed in the patient.</p>
+</sec>
+</sec>
+</sec>
+<sec id="sec015" sec-type="conclusions">
+<title>Discussion</title>
+<sec id="sec016">
+<title>Activation Time, Not Location, Determines Regional Fibre Strain</title>
+<sec id="sec017">
+<title>Summary</title>
+<p>We present a lumped parameter model that enables the simulation of heterogeneity in mechanical behaviour in myocardial tissue. Our approach is based on the hypothesis that location of a region of tissue (‘patch’) within a cardiac wall determines its activation time, and that the resulting activation time then determines the myocardial deformation. Once activation time is known, the location of tissue within a wall does not have any further influence on its myocardial deformation, as the patches are connected in series through a common wall tension. We tested this hypothesis by quantitatively comparing fibre strain in simulations of paced asynchrony to circumferential strain in a paced canine model of asynchrony (<xref rid="pcbi.1004284.g002" ref-type="fig">Fig 2</xref>), and in a heart failure patient with LBBB (<xref rid="pcbi.1004284.g005" ref-type="fig">Fig 5</xref>). No fitting of parameters was performed in the pacing simulations beyond imposition of activation times.</p>
+<p>Our simulations produced realistic deformation patterns as compared with strain measurements from tagged MRI resulting from both a paced canine model of electrical asynchrony, and from a patient with chronic heart failure and LBBB. The model successfully reproduces two important features observed in pacing and LBBB: i) early-activated regions exhibit an early shortening, followed by stretch during systole; and ii) late-activated regions exhibit pre-stretch during contraction of the early-activated regions, followed by forceful late contraction. Pre-ejection stretching of late-activated regions is caused by the shortening of early-activated regions prior to ejection. Through the Frank-Starling mechanism, pre-stretch leads to increased force of contraction, causing the systolic stretch in early regions and increased shortening in late-activated regions.</p>
+<p>Based on the quantitative agreement between the simulation and experiment (<xref rid="pcbi.1004284.g002" ref-type="fig">Fig 2</xref>), we conclude that activation times, and intrinsic mechanical properties, of regions of tissue are the factors that determine myocardial deformation. The spatial location of tissue within the wall itself does not determine deformation once the tissue has been activated. Deformation of a region of tissue within a wall is affected by the mechanical load induced by other regions of tissue. This result is corroborated by the original experimental results of Prinzen <italic>et al</italic>. (<xref rid="pcbi.1004284.g002" ref-type="fig">Fig 2</xref>, top panel) showing a clear reversal of observed strain patterns in RV apex and LV base pacing.</p>
+</sec>
+<sec id="sec018">
+<title>Simulation of activation times</title>
+<p>The simulated activation patterns “LV base” and “RV apex” describe the data they should be compared against, since there is no true apex or base in the model. The location of patches determines the time at which they are activated within the wall but is not used in calculations, due to our hypothesis of uniform wall tension. Thus, the simulation protocols as portrayed in <xref rid="pcbi.1004284.g001" ref-type="fig">Fig 1B</xref> should be interpreted carefully. This figure shows a series of patches around the ventricular cavities (see also Lumens <italic>et al</italic>. [<xref rid="pcbi.1004284.ref016" ref-type="bibr">16</xref>] and Huntjens <italic>et al</italic>. [<xref rid="pcbi.1004284.ref030" ref-type="bibr">30</xref>]). The patches are regions that make up the wall. Within each wall, the patches could be presented in any order. The visual presentation shows the motivation for the choice of timing of patch activation. For the comparison between simulated and experimental deformation, the order the simulated patches are displayed in comes from the order of activation.</p>
+<p>The time of activation in a CircAdapt patch is the average time of activation in the myocardial tissue assigned to the patch. The total LV mid-wall activation time in the simulations of paced asynchrony was based on a total onset time of electrical activation in the pacing experiments of around 120ms [<xref rid="pcbi.1004284.ref031" ref-type="bibr">31</xref>], together with a transmural conduction time in the canine heart of 30ms [<xref rid="pcbi.1004284.ref026" ref-type="bibr">26</xref>]. Consequently, the average time of transmural activation in the earliest-activated LV patch occurs 15ms after stimulation. Similarly, the average time of activation in the latest activated patch was set 15ms before the time of latest activation recorded. The total time of LV activation used in the simulations was therefore 120 ms – 2 × 15 ms = 90 ms (<xref rid="pcbi.1004284.g001" ref-type="fig">Fig 1B</xref>).</p>
+</sec>
+<sec id="sec019">
+<title>Rationale for strain comparison</title>
+<p>The rationale behind the method used for our comparison is that the fibre orientation in the ventricular myocardium is approximately tangent to the epicardial surface. In the middle of the myocardial wall, the fibres lie approximately circumferential to the cavity [<xref rid="pcbi.1004284.ref032" ref-type="bibr">32</xref>]. Circumferential strain from tagged MRI is calculated primarily from deformation in the middle of the wall, in the same plane as the myocytes. The strain calculated for the simulations therefore represents the circumferential strain measured in both the canine model and patients. Our comparison in the canine experiments is also based on the assumption that activation in the paced canine heart spreads uniformly away from the activation site. In the patient simulations, time of activation is known through measurements of endocardial activation time.</p>
+</sec>
+<sec id="sec020">
+<title>Differences between simulated and measured strain patterns</title>
+<p>The magnitude of deformation was generally similar between the simulations and MRI recordings in both canine pacing and the patient with LBBB. However, the simulations produced a larger pre-stretch and shortening in the late-activated regions than was observed in the tagged MRI recordings in both canines and the patients. This difference may be due to the electromechanical model in CircAdapt, or it may be due to the circumferential strain in the tagged MRI recordings and fibre strain measured in the model being defined differently. Because the experimental data shown from the canine experiments comes from a mid-ventricular slice, it may not include the very earliest and latest regions, unlike the plots from the simulations. Furthermore, due to delay in the triggering of the MRI tagging, and uncertainty over when the triggering occurred relative to the ventricular activation sequence, it is also likely that our signals missed the early activation of the septum in <xref rid="pcbi.1004284.g005" ref-type="fig">Fig 5</xref>. This is further suggested by the apparent septal shortening at the end of the patient’s traces, although these signals will be unreliable due to deterioration of the tagging lines used for strain calculation. Hence, some early-systolic septal shortening and contralateral pre-stretch may be missing in the MRI patterns.</p>
+</sec>
+<sec id="sec021">
+<title>Assumption of transmurally homogeneous fibre strain</title>
+<p>The original CircAdapt model was based on the assumption that fibre stress and fibre strain within the myocardial walls of the heart are approximately homogeneous [<xref rid="pcbi.1004284.ref024" ref-type="bibr">24</xref>,<xref rid="pcbi.1004284.ref033" ref-type="bibr">33</xref>]. This is based on experiments showing no significant transmural differences in strain along the myofibre direction [<xref rid="pcbi.1004284.ref034" ref-type="bibr">34</xref>], suggesting that in the healthy heart mechanical loading is homogenised throughout the ventricular myocardium <italic>via</italic> remodelling of myofibre alignment [<xref rid="pcbi.1004284.ref035" ref-type="bibr">35</xref>]. In the MultiPatch module, this assumption is applied to the patches, so that (Cauchy) fibre stress and fibre strain are homogeneous within a patch, but can vary between patches in a wall. Patches within a wall are mechanically coupled through wall tension and conservation of energy. The assumption of homogeneity of transmural fibre strain has been challenged by experimental results from Ashikaga <italic>et al</italic>. in canine hearts under both sinus rhythm and epicardial pacing [<xref rid="pcbi.1004284.ref036" ref-type="bibr">36</xref>,<xref rid="pcbi.1004284.ref037" ref-type="bibr">37</xref>], and by finite element simulations showing transmural dispersion in time to onset of shortening [<xref rid="pcbi.1004284.ref038" ref-type="bibr">38</xref>,<xref rid="pcbi.1004284.ref039" ref-type="bibr">39</xref>]. In general, clinical and experimental measurements investigating transmural variation in strain patterns is difficult to obtain, and most studies in the literature represent averaged myofibre behaviour, as represented in the MultiPatch model.</p>
+</sec>
+<sec id="sec022">
+<title>Redistribution of work</title>
+<p>We also compared stress-strain loop morphology and work distribution in the paced canine simulations and experiments (Figs <xref rid="pcbi.1004284.g003" ref-type="fig">3</xref> and <xref rid="pcbi.1004284.g004" ref-type="fig">4</xref>). By calculating segmental work in the CircAdapt model, we observe a redistribution of work in pacing-induced mechanical dyssynchrony. Work is redistributed away from early-activated regions towards late-activated regions as previously reported [<xref rid="pcbi.1004284.ref004" ref-type="bibr">4</xref>,<xref rid="pcbi.1004284.ref040" ref-type="bibr">40</xref>]. The smaller decrease in stroke volume arising from LV base pacing than RV apex pacing can be explained by an increased contribution of work performed by the RV, as previously described by Lumens <italic>et al</italic>. [<xref rid="pcbi.1004284.ref016" ref-type="bibr">16</xref>], and consistent with the experimental findings of Quinn <italic>et al</italic>. in a porcine model [<xref rid="pcbi.1004284.ref041" ref-type="bibr">41</xref>]. The absolute values of haemodynamic parameters in the simulations are different to the canine experiments since the standard CircAdapt model represents human physiology, but the relative changes between RA pacing and ventricular pacing are similar.</p>
+</sec>
+</sec>
+<sec id="sec023">
+<title>MultiPatch Allows Fast Simulation of Asynchronous Activation</title>
+<p>Simulation of cardiovascular mechanics using the MultiPatch module requires a considerably reduced computational effort compared to FE implementations. Speed of the Matlab implementation can be assessed using CircAdapt files provided as an online supplement that perform all simulations in the present study (.txt files). FE-based models of cardiac mechanics presently run significantly slower than real-time and generally require access to supercomputing facilities. The speed of simulation in CircAdapt allows assessment of the role of factors that require simulation of multiple full cardiac cycles, such as homeostatic control and tissue adaptation [<xref rid="pcbi.1004284.ref024" ref-type="bibr">24</xref>,<xref rid="pcbi.1004284.ref028" ref-type="bibr">28</xref>]. Real time simulation on regular desktop computers when implemented in C++ enables use of CircAdapt in a teaching environment [<xref rid="pcbi.1004284.ref042" ref-type="bibr">42</xref>]. A future application of the MultiPatch module is integration within the CircAdapt Simulator (freely available through <ext-link ext-link-type="uri" xlink:href="http://www.circadapt.org/" xlink:type="simple">www.circadapt.org</ext-link>) to allow education of clinical trainees in the haemodynamic consequences of myocardial scar and conduction disorders, and in the interpretation of regional deformation patterns in the failing heart.</p>
+<p>Our study focusses on the heart. However, the theory and methods could also be applied to computer models of other contractile organs such as the gastro-intestinal tract or uterus to allow faster simulation [<xref rid="pcbi.1004284.ref043" ref-type="bibr">43</xref>,<xref rid="pcbi.1004284.ref044" ref-type="bibr">44</xref>].</p>
+</sec>
+<sec id="sec024">
+<title>Patient-Specific Simulation of Ventricular Asynchrony</title>
+<p>In the current study, we have established that the MultiPatch module in CircAdapt enables simulation of realistic deformation patterns in a patient-specific manner, based on a series of relatively simple parameter changes in the model (<xref rid="pcbi.1004284.g005" ref-type="fig">Fig 5</xref>) and invasively recorded activation maps. Combined with the speed at which simulations can be performed in CircAdapt, this provides the opportunity for patient-specific simulations of mechanical dyssynchrony and haemodynamics that can be performed on a personal computer in a bedside context. We have focussed on the effects of asynchronous mechanical activation on deformation in this study, but the model is also capable of simulating regional wall hypocontractility and/or stiffening, consistent with acute or chronic regional myocardial infarction or fibrosis [<xref rid="pcbi.1004284.ref030" ref-type="bibr">30</xref>]. By simulating CRT combined with patient-specific myocardial properties obtained by fitting to observed myofibre strain, it may be possible to predict patient response to CRT.</p>
+</sec>
+<sec id="sec025">
+<title>Limitations</title>
+<p>The ventricular geometry within the CircAdapt model is highly simplified. In particular, we assume that the curvature is the same at each point in a wall, which is not the case in the real heart. Mechanical effects of the atrioventricular rings on ventricular tissue are not included. Geometric simplifications in the CircAdapt model mean that circumferential, longitudinal, and fibre strain are considered to be equivalent, and so no apex-base axis is present. Our simplified approach prevents inclusion of transmural differences in electromechanical properties [<xref rid="pcbi.1004284.ref045" ref-type="bibr">45</xref>], and simulation of mechanical shear.</p>
+</sec>
+<sec id="sec026">
+<title>Conclusions</title>
+<p>The MultiPatch module integrated within the CircAdapt model of the heart and circulation produces realistic simulations of local mechanical deformation, work distribution, and global haemodynamic pump function of the dyssynchronous heart. The success of the model in predicting fibre strain patterns suggests that once timing of activation of a region of tissue is known, the location of the tissue is not important for determining of myocardial deformation. We have demonstrated the potential of this model for use in patient-specific simulation of dyssynchronous heart failure, based on clinical recordings of the LV endocardial activation sequence. As a future perspective, comparing patient-specific simulations from the MultiPatch module against recorded myocardial deformation could be used to determine whether the tissue substrate underlying electro-mechanical dyssynchrony in a patient is amenable to CRT.</p>
+</sec>
+</sec>
+<sec id="sec027" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="sec028">
+<title>Ethics Statement</title>
+<p>The patient included in the simulation part of the study was part of the CARTO-CRT trial and provided a written informed consent for the study. The CARTO-CRT trial protocol was approved by the CHU-Bordeaux ethics committee (registered at clinicaltrial.gov: NCT01270646).</p>
+</sec>
+<sec id="sec029">
+<title>Endocardial Electro-Anatomical Mapping</title>
+<p>A deflectable-tip catheter was inserted into the left ventricle through a trans-septal route (Navistar catheter, Biosense Webster, Diamond Bar, CA). Left ventricular endocardial electro-anatomical mapping was performed during sinus rhythm using Carto V3 (Biosense Webster, Diamond Bar, CA). After the reconstruction of the left ventricular geometry, detailed activation mapping was conducted with a minimum of 100 equally distributed points. All points were reviewed manually to ensure the quality of the activation map. The location of the LV septum, the anterior, lateral and posterior wall, the mitral annulus and the apex were defined on the CARTO anatomical mesh. The AHA segmentation was then used to accurately localise each of the endocardial activation points. Mean activation times were then applied to the AHA segmentation as described in the online supplement, section ‘Aligning CARTO data with an AHA segmentation of the left ventricle’.</p>
+</sec>
+<sec id="sec030">
+<title>Tagged MRI Strain Measurements</title>
+<p>The MRI study was conducted on a 1.5 Tesla clinical device (Magnetom Avanto, Siemens Medical Systems, Erlangen, Germany) equipped with a 32-channel cardiac coil. Myocardial tissue tagging was performed using complementary spatial modulation of magnetization (CSPAMM) combined with steady state free precession cine imaging [<xref rid="pcbi.1004284.ref046" ref-type="bibr">46</xref>]. Images were acquired in three parallel short-axis planes at the basal, mid, and apical levels of the left ventricle. A multiple expiratory breath hold scheme was used to enable strain imaging at high temporal resolution (11 ms). Sequence parameters were: prospective triggering, repetition time 4.7 ms, echo time 2.3 ms, bandwidth = 369 Hz/pixel, flip angle = 20°, FoV 300 × 300 mm, matrix size 256 × 78, slice thickness 6 mm, tag spacing 7 mm. CSPAMM images were processed using the software Osirix v3.9.4 (Osirix Fondation, Geneva, Switzerland). Strain computation was performed with the Sine Wave Modeling method [<xref rid="pcbi.1004284.ref047" ref-type="bibr">47</xref>] using the inTag Osirix plugin (CREATIS-INSA, Lyon, France). Circumferential strain curves were computed for each of the 16 left ventricular segments, according to the standard AHA segmentation, excluding the apical segment [<xref rid="pcbi.1004284.ref027" ref-type="bibr">27</xref>].</p>
+</sec>
+<sec id="sec031">
+<title>Calculating Wall Tension and Transmural Pressure in the TriSeg Module</title>
+<p>A summary of the notation used in this section is provided in <xref rid="pcbi.1004284.t002" ref-type="table">Table 2</xref>. Before describing the MultiPatch model, we recapitulate how wall tension is calculated in a uniform wall, as originally described for the TriSeg model [<xref rid="pcbi.1004284.ref025" ref-type="bibr">25</xref>], simulating three ventricular walls, encapsulating two cavities. The volume of blood in the cavity <italic>V</italic><sub><italic>c</italic></sub> is used to derive the area <italic>A</italic><sub><italic>w</italic></sub> of the mid-wall surface on which wall tension is calculated as described by Lumens <italic>et al</italic>. [<xref rid="pcbi.1004284.ref025" ref-type="bibr">25</xref>]. The mid-wall surface is the surface dividing the wall volume in half in the radial direction, as shown in <xref rid="pcbi.1004284.g006" ref-type="fig">Fig 6</xref>. Natural fibre strain <italic>ε</italic><sub><italic>f</italic></sub> is calculated from <italic>A</italic><sub><italic>w</italic></sub> assuming zero-strain reference for that area to be <italic>A</italic><sub><italic>w</italic>,<italic>ref</italic></sub>, the wall area when sarcomere length is 2μm:
+<disp-formula id="pcbi.1004284.e001">
+<alternatives>
+<graphic id="pcbi.1004284.e001g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.e001" xlink:type="simple"/>
+<mml:math display="block" id="M1" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>ε</mml:mi><mml:mi>f</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mfrac><mml:mn>1</mml:mn><mml:mn>2</mml:mn></mml:mfrac><mml:mtext>ln</mml:mtext><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:msub><mml:mi>A</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>w</mml:mi><mml:mo>,</mml:mo><mml:mtext>Ref</mml:mtext></mml:mrow></mml:msub></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(1)</label>
+</disp-formula></p>
+<fig id="pcbi.1004284.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004284.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>Concepts behind the MultiPatch model.</title>
+<p>Panel A represents one of the patches making up a wall, with its area A<sub>p,j</sub> being defined on the mid-wall surface. The mid-wall tension T<sub>w</sub> acts on this surface. The patch is also assigned a volume V<sub>p,j</sub>. Panel B demonstrates the difference between the patch areas A<sub>p,j</sub>, A<sub>p0,j</sub>, and A<sub>pRef,j</sub> in terms of sarcomere behaviour.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.g006" position="float" xlink:type="simple"/>
+</fig>
+<table-wrap id="pcbi.1004284.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004284.t002</object-id>
+<label>Table 2</label> <caption><title>Summary of notation used.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004284.t002g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.t002" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Variable name</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Units</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Meaning</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">T</td>
+<td align="left" rowspan="1" colspan="1">Nm<sup>-1</sup></td>
+<td align="left" rowspan="1" colspan="1">wall tension</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">p<sub>trans</sub></td>
+<td align="left" rowspan="1" colspan="1">Pa</td>
+<td align="left" rowspan="1" colspan="1">transmural pressure</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">V</td>
+<td align="left" rowspan="1" colspan="1">cm<sup>3</sup></td>
+<td align="left" rowspan="1" colspan="1">volume</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">C<sub>m</sub></td>
+<td align="left" rowspan="1" colspan="1">cm<sup>-1</sup></td>
+<td align="left" rowspan="1" colspan="1">mid-wall curvature</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">A</td>
+<td align="left" rowspan="1" colspan="1">cm<sup>2</sup></td>
+<td align="left" rowspan="1" colspan="1">surface area</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>ε</italic><sub><italic>f</italic></sub></td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">natural fibre strain</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>E</italic></td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">engineering fibre strain</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>σ</italic><sub><italic>f</italic></sub></td>
+<td align="left" rowspan="1" colspan="1">Pa</td>
+<td align="left" rowspan="1" colspan="1">fibre stress</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Subscript name</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Meaning</bold></td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>m</italic></td>
+<td align="left" rowspan="1" colspan="1">mid-wall surface</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>w</italic></td>
+<td align="left" rowspan="1" colspan="1">wall</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>p</italic></td>
+<td align="left" rowspan="1" colspan="1">patch</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>i</italic></td>
+<td align="left" rowspan="1" colspan="1">intrinsic sarcomere length</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>j</italic></td>
+<td align="left" rowspan="1" colspan="1">index of patch</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><italic>Ref</italic></td>
+<td align="left" rowspan="1" colspan="1">reference at sarcomere length 2μm</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>Fibre stress <italic>σ</italic><sub><italic>f</italic></sub> was calculated as a function of strain <italic>ε</italic><sub><italic>f</italic></sub>, using a phenomenological model based on physiological experiments, as explained in the sarcomere module originally published by Lumens <italic>et al</italic>. [<xref rid="pcbi.1004284.ref025" ref-type="bibr">25</xref>] (online supplement, section ‘The CircAdapt sarcomere contraction model’). To calculate the wall tension <italic>T</italic><sub><italic>w</italic></sub>, considered to be concentrated on the mid-wall surface, Lumens <italic>et al</italic>. used the following relation derived from the principle of conservation of energy (online supplement, section ‘Conservation of energy’):
+<disp-formula id="pcbi.1004284.e002">
+<alternatives>
+<graphic id="pcbi.1004284.e002g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.e002" xlink:type="simple"/>
+<mml:math display="block" id="M2" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>T</mml:mi><mml:mi>w</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mi>σ</mml:mi><mml:mi>f</mml:mi></mml:msub><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>ε</mml:mi><mml:mi>f</mml:mi></mml:msub><mml:mo stretchy="false">)</mml:mo><mml:msub><mml:mi>V</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow><mml:mrow><mml:mn>2</mml:mn><mml:msub><mml:mi>A</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:mfrac><mml:mspace width="0.25em"/><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(2)</label>
+</disp-formula></p>
+<p>The symbol <italic>V</italic><sub><italic>w</italic></sub> refers to the wall volume. In the TriSeg model, the geometries of the three ventricular walls are iteratively calculated to satisfy mechanical equilibrium between the walls on their common intersection curve. As a result, wall areas <italic>A</italic><sub><italic>w</italic></sub> and wall curvatures <italic>C</italic><sub><italic>m</italic></sub> can change within the TriSeg iteration. Once the wall tension and curvature are known, the transmural pressure can be calculated using Laplace’s law,
+<disp-formula id="pcbi.1004284.e003">
+<alternatives>
+<graphic id="pcbi.1004284.e003g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.e003" xlink:type="simple"/>
+<mml:math display="block" id="M3" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>P</mml:mi><mml:mrow><mml:mi>t</mml:mi><mml:mi>r</mml:mi><mml:mi>a</mml:mi><mml:mi>n</mml:mi><mml:mi>s</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mn>2</mml:mn><mml:msub><mml:mi>T</mml:mi><mml:mi>w</mml:mi></mml:msub><mml:msub><mml:mi>C</mml:mi><mml:mi>m</mml:mi></mml:msub><mml:mo>,</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(3)</label>
+</disp-formula>
+where <italic>C</italic><sub><italic>m</italic></sub> is the mid-wall curvature, calculated from the geometry of either the chamber or the TriSeg module as described by Lumens <italic>et al</italic>. [<xref rid="pcbi.1004284.ref025" ref-type="bibr">25</xref>]. The wall tension in <xref rid="pcbi.1004284.e002" ref-type="disp-formula">Eq 2</xref> is the same as that in Laplace’s law (<xref rid="pcbi.1004284.e003" ref-type="disp-formula">Eq 3</xref>), with units N/m, and is distinct from tensile force (units N).</p>
+</sec>
+<sec id="sec032">
+<title>Calculating Wall Tension Using the MultiPatch Module</title>
+<p>In the MultiPatch module, a wall is subdivided into <italic>n</italic> patches, indexed <italic>j</italic>. Each patch is assigned properties including a reference area <italic>A</italic><sub><italic>pRef</italic>,<italic>j</italic></sub> (<xref rid="pcbi.1004284.g006" ref-type="fig">Fig 6</xref>) and tissue volume <italic>V</italic><sub><italic>p</italic>,<italic>j</italic></sub>. Tissue properties, and hence fibre Cauchy stress and strain, are allowed to vary between patches, and so <xref rid="pcbi.1004284.e002" ref-type="disp-formula">Eq 2</xref> no longer holds throughout the wall. To solve the related equilibrium equations, wall tension <italic>T</italic><sub><italic>w</italic></sub> is linearized about a working point corresponding to the wall area at zero wall tension (<italic>A</italic><sub><italic>0</italic>,<italic>w</italic></sub>), <italic>i</italic>.<italic>e</italic>. wall area if the tissue would experience no external load;
+<disp-formula id="pcbi.1004284.e004">
+<alternatives>
+<graphic id="pcbi.1004284.e004g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.e004" xlink:type="simple"/>
+<mml:math display="block" id="M4" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>T</mml:mi><mml:mi>w</mml:mi></mml:msub><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>A</mml:mi><mml:mi>w</mml:mi></mml:msub><mml:mo stretchy="false">)</mml:mo><mml:mo>≈</mml:mo><mml:mfrac><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>T</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>A</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:mfrac><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>A</mml:mi><mml:mi>w</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mn>0</mml:mn><mml:mo>,</mml:mo><mml:mi>w</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mspace width="0.25em"/><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(4)</label>
+</disp-formula></p>
+<p><italic>A</italic><italic><sub>0,w</sub></italic> and wall area stiffness d<italic>T</italic><sub><italic>w</italic></sub>/d<italic>A</italic><sub><italic>w</italic></sub> are calculated using the MultiPatch module so that <xref rid="pcbi.1004284.e004" ref-type="disp-formula">Eq 4</xref> can be used to calculate <italic>T</italic><sub><italic>w</italic></sub>.</p>
+<p>For each patch we use a linearized relation for the wall tension in one patch <italic>T</italic><sub><italic>p</italic>,<italic>j</italic></sub> as a function of patch mid-wall area <italic>A</italic><sub><italic>p</italic>,<italic>j</italic></sub> (<xref rid="pcbi.1004284.g006" ref-type="fig">Fig 6</xref>), equivalent to that for the wall in <xref rid="pcbi.1004284.e004" ref-type="disp-formula">Eq 4</xref>:
+<disp-formula id="pcbi.1004284.e005">
+<alternatives>
+<graphic id="pcbi.1004284.e005g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.e005" xlink:type="simple"/>
+<mml:math display="block" id="M5" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>T</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo stretchy="false">(</mml:mo><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo stretchy="false">)</mml:mo><mml:mo>≈</mml:mo><mml:mfrac><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>T</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mn>0</mml:mn><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(5)</label>
+</disp-formula></p>
+<p>The mid-wall surface of the patch is assumed to lie on a spherical surface, as in the TriSeg model. Since transmural pressure and curvature are common to all patches in a wall, by application of Laplace’s law it follows that the wall tension <italic>T</italic><sub><italic>p</italic>,<italic>j</italic></sub> must be the same for all patches in the wall, and equals <italic>T</italic><sub><italic>w</italic></sub>. If wall tension equals zero, the mid-wall area of the whole wall equals the sum of zero wall tension mid-wall areas of all patches, resulting in a value for <italic>A</italic><sub><italic>0</italic>,<italic>w</italic></sub>, to be substituted into Eq (<xref rid="pcbi.1004284.e004" ref-type="disp-formula">4</xref>) for the whole wall:
+<disp-formula id="pcbi.1004284.e006">
+<alternatives>
+<graphic id="pcbi.1004284.e006g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.e006" xlink:type="simple"/>
+<mml:math display="block" id="M6" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mn>0</mml:mn><mml:mo>,</mml:mo><mml:mi>w</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mstyle displaystyle="true"><mml:msubsup><mml:mo>∑</mml:mo><mml:mrow><mml:mi>j</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mi>n</mml:mi></mml:msubsup><mml:mrow><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mn>0</mml:mn><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mstyle></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(6)</label>
+</disp-formula></p>
+<p>We can differentiate <xref rid="pcbi.1004284.e006" ref-type="disp-formula">Eq 6</xref> with respect to wall tension. Taking the inverse of the resulting expression, we find that the total wall stiffness d<italic>T</italic><sub><italic>w</italic></sub>/d<italic>A</italic><sub><italic>w</italic></sub> in Eq (<xref rid="pcbi.1004284.e003" ref-type="disp-formula">3</xref>) equals the inverse of the sum of inverse stiffness of all patches:
+<disp-formula id="pcbi.1004284.e007">
+<alternatives>
+<graphic id="pcbi.1004284.e007g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.e007" xlink:type="simple"/>
+<mml:math display="block" id="M7" overflow="scroll">
+<mml:mrow><mml:mfrac><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>T</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>A</mml:mi><mml:mi>w</mml:mi></mml:msub></mml:mrow></mml:mfrac><mml:mo>=</mml:mo><mml:mrow><mml:mn>1</mml:mn><mml:mo stretchy="true">/</mml:mo><mml:mrow><mml:msup><mml:mrow><mml:mstyle displaystyle="true"><mml:msubsup><mml:mo>∑</mml:mo><mml:mrow><mml:mi>j</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mi>n</mml:mi></mml:msubsup><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>T</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mstyle></mml:mrow><mml:mrow><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msup></mml:mrow></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(7)</label>
+</disp-formula></p>
+<p><italic>A</italic><sub><italic>0</italic>,<italic>w</italic></sub> and d<italic>T</italic><sub><italic>w</italic></sub>/d<italic>A</italic><sub><italic>w</italic></sub> as calculated in Eqs <xref rid="pcbi.1004284.e006" ref-type="disp-formula">6</xref> and <xref rid="pcbi.1004284.e007" ref-type="disp-formula">7</xref> are then used in <xref rid="pcbi.1004284.e004" ref-type="disp-formula">Eq 4</xref> to determine <italic>T</italic><sub><italic>w</italic></sub> for the current value of <italic>A</italic><sub><italic>w</italic></sub> in the TriSeg iterative scheme. <italic>A</italic><sub><italic>0</italic>,<italic>w</italic></sub> and d<italic>T</italic><sub><italic>w</italic></sub>/d<italic>A</italic><sub><italic>w</italic></sub> do not change between TriSeg iterations and so need only be calculated once per time step. Once the TriSeg solution is found, transmural pressure <italic>p</italic><sub><italic>trans</italic></sub> can be calculated by Laplace’s law (<xref rid="pcbi.1004284.e004" ref-type="disp-formula">Eq 4</xref>) using <italic>T</italic><sub><italic>w</italic></sub> and <italic>C</italic><sub><italic>m</italic></sub>. In this way, mechanical behaviour of the total wall is described in relation to the properties of its composing patches.</p>
+<p>After wall tension has been determined, the true areas <italic>A</italic><sub><italic>p</italic>,<italic>j</italic></sub> of the separate patches are calculated using <italic>T</italic><sub><italic>w</italic></sub>, d<italic>T</italic><sub><italic>p</italic>,<italic>j</italic></sub>/d<italic>A</italic><sub><italic>p</italic>,<italic>j</italic></sub>, and <italic>A</italic><sub><italic>p0</italic>,<italic>j</italic></sub> in Eq (<xref rid="pcbi.1004284.e005" ref-type="disp-formula">5</xref>). The fibre stress <italic>σ</italic><sub><italic>f</italic>,<italic>j</italic></sub> and fibre natural strain <italic>ε</italic><sub><italic>f</italic>,<italic>j</italic></sub> are then calculated for each patch, using the patch equivalent of Eq (<xref rid="pcbi.1004284.e001" ref-type="disp-formula">1</xref>) and the sarcomere module (online supplement, section ‘The CircAdapt sarcomere contraction model’). Different mechanical properties and activation times may be assigned to each patch and so can result in differences in fibre stress and strain between patches, despite having the same wall tension and curvature. The thickness of a patch can be calculated by dividing its constant volume <italic>V</italic><sub><italic>p</italic>,<italic>j</italic></sub> by its time-dependent area <italic>A</italic><sub><italic>p</italic>,<italic>j</italic></sub>.</p>
+</sec>
+<sec id="sec033">
+<title>Calculating Patch Stiffness and Unloaded Area</title>
+<p>We now explain how <italic>A</italic><sub><italic>p0</italic>,<italic>j</italic></sub> and <italic>dT</italic><sub><italic>p</italic>,<italic>j</italic></sub><italic>/ dAp</italic>,<italic>j</italic> are calculated for use in Eqs <xref rid="pcbi.1004284.e006" ref-type="disp-formula">6</xref> and <xref rid="pcbi.1004284.e007" ref-type="disp-formula">7</xref>. In the CircAdapt sarcomere module, sarcomere length <italic>L</italic><sub><italic>s</italic></sub> is described as follows,
+<disp-formula id="pcbi.1004284.e008">
+<alternatives>
+<graphic id="pcbi.1004284.e008g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.e008" xlink:type="simple"/>
+<mml:math display="block" id="M8" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>L</mml:mi><mml:mrow><mml:mi>s</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:msub><mml:mi>L</mml:mi><mml:mrow><mml:mi>s</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mi>L</mml:mi><mml:mrow><mml:mi>s</mml:mi><mml:mi>e</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>,</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(8)</label>
+</disp-formula>
+where <italic>L</italic><sub><italic>se</italic>,<italic>j</italic></sub> is the length of the series elastic element and <italic>L</italic><sub><italic>si</italic>,<italic>j</italic></sub> is the intrinsic sarcomere length (online supplement, section ‘The CircAdapt sarcomere contraction model’). <italic>L</italic><sub><italic>se</italic>,<italic>j</italic></sub> is proportional to the active stress generated by the tissue. Assuming that area is proportional to the square of sarcomere length, <italic>L</italic><sub><italic>s</italic>,<italic>j</italic></sub> is related to patch area <italic>A</italic><sub><italic>p</italic>,<italic>j</italic></sub> by
+<disp-formula id="pcbi.1004284.e009">
+<alternatives>
+<graphic id="pcbi.1004284.e009g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.e009" xlink:type="simple"/>
+<mml:math display="block" id="M9" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:msup><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:msub><mml:mi>L</mml:mi><mml:mrow><mml:mi>s</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mi>L</mml:mi><mml:mrow><mml:mtext>sRef,j</mml:mtext></mml:mrow></mml:msub></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mn>2</mml:mn></mml:msup><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mtext>pRef,j</mml:mtext></mml:mrow></mml:msub><mml:mspace width="0.25em"/><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(9)</label>
+</disp-formula></p>
+<p><italic>A</italic><sub><italic>pRef</italic>,<italic>j</italic></sub> is the reference area of patch <italic>j</italic> when the sarcomere length is <italic>L</italic><sub><italic>sRef</italic>,<italic>j</italic></sub> (<italic>i</italic>.<italic>e</italic>. 2μm, see <xref rid="pcbi.1004284.g006" ref-type="fig">Fig 6</xref>).</p>
+<p>In order to calculate <italic>A</italic><sub><italic>p0</italic>,<italic>j</italic></sub>, we use <xref rid="pcbi.1004284.e005" ref-type="disp-formula">Eq 5</xref>. Since <italic>A</italic><sub><italic>w</italic></sub>, and hence <italic>A</italic><sub><italic>p</italic>,<italic>j</italic></sub>, can change during the TriSeg iteration, <italic>L</italic><sub><italic>s</italic></sub> is unknown. We therefore use the intrinsic sarcomere length <italic>L</italic><sub><italic>si</italic></sub> with <xref rid="pcbi.1004284.e009" ref-type="disp-formula">Eq 9</xref> to compute a first estimate of the patch area, <italic>A</italic><sub><italic>pi</italic>,<italic>j</italic></sub>. <italic>A</italic><sub><italic>pi</italic>,<italic>j</italic></sub> corresponds to the area of the patch without the influence of active stress. The first estimate of natural fibre strain in the patch is
+<disp-formula id="pcbi.1004284.e010">
+<alternatives>
+<graphic id="pcbi.1004284.e010g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.e010" xlink:type="simple"/>
+<mml:math display="block" id="M10" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>ε</mml:mi><mml:mrow><mml:mi>f</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mtext>ln</mml:mtext><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:msub><mml:mi>L</mml:mi><mml:mrow><mml:mi>s</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mi>L</mml:mi><mml:mrow><mml:mtext>sRef,j</mml:mtext></mml:mrow></mml:msub></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mspace width="0.25em"/><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(10)</label>
+</disp-formula></p>
+<p>The strain <italic>ε</italic><sub><italic>fi</italic>,<italic>j</italic></sub> is used by the CircAdapt sarcomere module to calculate the fibre stress <italic>σ</italic><sub><italic>fi</italic>,<italic>j</italic></sub> and fibre stiffness <italic>dσ</italic><sub><italic>fi</italic>,<italic>j</italic></sub> <italic>/ dε</italic><sub><italic>fi</italic></sub> arising from <italic>L</italic><sub><italic>si</italic>,<italic>j</italic></sub>. <italic>σ</italic><sub><italic>fi</italic>,<italic>j</italic></sub> is a component of the fibre passive stress. The stiffness <italic>dσ</italic><sub><italic>fi</italic>,<italic>j</italic></sub> <italic>/ dε</italic><sub><italic>fi</italic></sub> additionally depends on the contractile state of the tissue in the patch since the contractile and passive elements of the sarcomere module are arranged in parallel (online supplement, Eq. 21). Hence <italic>dσ</italic><sub><italic>fi</italic>,<italic>j</italic></sub> <italic>/ dε</italic><sub><italic>fi</italic></sub> is dependent on the timing of patch activation.</p>
+<p>To calculate the unloaded area <italic>A</italic><sub><italic>p0</italic></sub>, we must subtract the effects of passive stress due to <italic>L</italic><sub><italic>si</italic></sub> from <italic>A</italic><sub><italic>pi</italic>,<italic>j</italic></sub>. By the principle of conservation of energy (<xref rid="pcbi.1004284.e002" ref-type="disp-formula">Eq 2</xref>), <italic>σ</italic><sub><italic>fi</italic>,<italic>j</italic></sub> and area <italic>A</italic><sub><italic>pi</italic>,<italic>j</italic></sub> must induce a part <italic>T</italic><sub><italic>pi</italic>,<italic>j</italic></sub> of the wall tension <italic>T</italic><sub><italic>w</italic></sub> felt by the patch,
+<disp-formula id="pcbi.1004284.e011">
+<alternatives>
+<graphic id="pcbi.1004284.e011g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.e011" xlink:type="simple"/>
+<mml:math display="block" id="M11" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>T</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mi>σ</mml:mi><mml:mrow><mml:mi>f</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:msub><mml:mi>V</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:mn>2</mml:mn><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac><mml:mspace width="0.25em"/><mml:mo>,</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(11)</label>
+</disp-formula>
+where <italic>V</italic><sub><italic>p</italic>,<italic>j</italic></sub> is the wall volume assigned to patch <italic>j</italic>.</p>
+<p>The patch area stiffness d<italic>T</italic><sub><italic>pi</italic>,<italic>j</italic></sub> /d<italic>A</italic><sub><italic>pi</italic>,<italic>j</italic></sub> is found by the chain rule:
+<disp-formula id="pcbi.1004284.e012">
+<alternatives>
+<graphic id="pcbi.1004284.e012g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.e012" xlink:type="simple"/>
+<mml:math display="block" id="M12" overflow="scroll">
+<mml:mrow><mml:mfrac><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>T</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac><mml:mo>=</mml:mo><mml:mrow><mml:mrow><mml:mfrac><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>T</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>ε</mml:mi><mml:mrow><mml:mi>f</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac></mml:mrow><mml:mo stretchy="true">/</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>ε</mml:mi><mml:mrow><mml:mi>f</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac></mml:mrow></mml:mrow><mml:mspace width="0.25em"/><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(12)</label>
+</disp-formula></p>
+<p>Substitution of Eqs (<xref rid="pcbi.1004284.e009" ref-type="disp-formula">9</xref>,<xref rid="pcbi.1004284.e010" ref-type="disp-formula">10</xref> and <xref rid="pcbi.1004284.e011" ref-type="disp-formula">11</xref>) into Eq (<xref rid="pcbi.1004284.e012" ref-type="disp-formula">12</xref>), and taking the derivative gives:
+<disp-formula id="pcbi.1004284.e013">
+<alternatives>
+<graphic id="pcbi.1004284.e013g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.e013" xlink:type="simple"/>
+<mml:math display="block" id="M13" overflow="scroll">
+<mml:mrow><mml:mfrac><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>T</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac><mml:mo>=</mml:mo><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>σ</mml:mi><mml:mrow><mml:mi>f</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>ε</mml:mi><mml:mrow><mml:mi>f</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac><mml:mo>−</mml:mo><mml:mn>2</mml:mn><mml:msub><mml:mi>σ</mml:mi><mml:mrow><mml:mi>f</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mfrac><mml:mrow><mml:msub><mml:mi>V</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:mn>4</mml:mn><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:msup><mml:mrow/><mml:mn>2</mml:mn></mml:msup></mml:mrow></mml:mfrac><mml:mspace width="0.25em"/><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(13)</label>
+</disp-formula></p>
+<p>We can now calculate the mechanically unloaded patch area <italic>A</italic><sub><italic>p0</italic>,<italic>j</italic></sub> using <xref rid="pcbi.1004284.e005" ref-type="disp-formula">Eq 5</xref> by
+<disp-formula id="pcbi.1004284.e014">
+<alternatives>
+<graphic id="pcbi.1004284.e014g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.e014" xlink:type="simple"/>
+<mml:math display="block" id="M14" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mn>0</mml:mn><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>−</mml:mo><mml:mrow><mml:mrow><mml:msub><mml:mi>T</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mo stretchy="true">/</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>T</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:mi>d</mml:mi><mml:msub><mml:mi>A</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac></mml:mrow></mml:mrow><mml:mspace width="0.25em"/><mml:mo>.</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(14)</label>
+</disp-formula></p>
+<p>A schematic showing calculations performed in the cavities, patches, and walls is given in <xref rid="pcbi.1004284.g007" ref-type="fig">Fig 7</xref>.</p>
+<fig id="pcbi.1004284.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004284.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>The sequence of calculations using the MultiPatch model.</title>
+<p>Calculations are divided into three levels–cavity, wall, and patch. Calculated quantities are given in black text. The names of the variables used in the text are shown in red. Black arrows show the sequence in which calculations are performed. White numbers indicate the equation number in the text used for calculation.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.g007" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec034">
+<title>Baseline Simulation of the Human Heart and Circulation</title>
+<p>The CircAdapt model was used to obtain a simulation that represents the healthy human cardiovascular system. A resting cardiac output of 5.1 l/min and heart rate of 70bpm, and an exercise condition of three times cardiac output and doubled heart rate, were used to adapt tissue volumes and areas in the cardiac walls and large blood vessels as described previously [<xref rid="pcbi.1004284.ref024" ref-type="bibr">24</xref>,<xref rid="pcbi.1004284.ref028" ref-type="bibr">28</xref>]. Mean arterial pressure of 92 mmHg was maintained at both rest and exercise. The resulting baseline human simulation was used as the basis for all subsequent simulations. All parameters used in the reference simulation may be found in the PRef Matlab structure that is part of the code provided in the online supplement (.txt files).</p>
+</sec>
+<sec id="sec035">
+<title>Comparing Simulated and Experimental / Clinical Data</title>
+<p>Strain for comparison to MRI data is calculated by taking the model sarcomere length at a reference time point, <italic>L</italic><sub><italic>s</italic></sub><italic>(t</italic><sub><italic>0</italic></sub><italic>)</italic>, for each patch, then computing the strain in each patch <italic>E</italic><sub><italic>j</italic></sub> as
+<disp-formula id="pcbi.1004284.e015">
+<alternatives>
+<graphic id="pcbi.1004284.e015g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004284.e015" xlink:type="simple"/>
+<mml:math display="block" id="M15" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>E</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mi>L</mml:mi><mml:mrow><mml:mi>s</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mi>L</mml:mi><mml:mrow><mml:mi>s</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>t</mml:mi><mml:mn>0</mml:mn></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mfrac><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(15)</label>
+</disp-formula></p>
+<p><italic>E<sub>j</sub></italic> is non-dimensional. For the canine simulations, the reference time is the time of first ventricular activation. For the patient simulation, the reference time is 100ms before aortic valve opening.</p>
+</sec>
+</sec>
+<sec id="sec036">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1004284.s001" xlink:href="info:doi/10.1371/journal.pcbi.1004284.s001" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S1 Text</label>
+<caption>
+<title>MultiPatch Paper Supplement.</title>
+<p>This document contains a description of placing mean activation times on the standard AHA segmentation, a description of the sarcomere model in CircAdapt, and an illustration of the calculation loop in CircAdapt.</p>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004284.s002" xlink:href="info:doi/10.1371/journal.pcbi.1004284.s002" mimetype="text/plain" position="float" xlink:type="simple">
+<label>S2 Text</label>
+<caption>
+<title>README.</title>
+<p>Contains instructions for unpacking the CircAdapt code and running the simulations in the paper.</p>
+<p>(TXT)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004284.s003" xlink:href="info:doi/10.1371/journal.pcbi.1004284.s003" mimetype="text/plain" position="float" xlink:type="simple">
+<label>S3 Text</label>
+<caption>
+<title>Unpack CircAdapt.</title>
+<p>Unpacks the CircAdapt model and simulation software (see <xref rid="pcbi.1004284.s002" ref-type="supplementary-material">S2 Text</xref>).</p>
+<p>(TXT)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004284.s004" xlink:href="info:doi/10.1371/journal.pcbi.1004284.s004" mimetype="text/plain" position="float" xlink:type="simple">
+<label>S4 Text</label>
+<caption>
+<title>Patient Data Builder.</title>
+<p>Builds the patient strain data structure used when generating the figures (see <xref rid="pcbi.1004284.s002" ref-type="supplementary-material">S2 Text</xref>).</p>
+<p>(TXT)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004284.s005" xlink:href="info:doi/10.1371/journal.pcbi.1004284.s005" mimetype="text/plain" position="float" xlink:type="simple">
+<label>S5 Text</label>
+<caption>
+<title>PRef Builder.</title>
+<p>Builds the PRef structure used in the simulations (see <xref rid="pcbi.1004284.s002" ref-type="supplementary-material">S2 Text</xref>).</p>
+<p>(TXT)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004284.s006" xlink:href="info:doi/10.1371/journal.pcbi.1004284.s006" mimetype="text/plain" position="float" xlink:type="simple">
+<label>S6 Text</label>
+<caption>
+<title>CircAdapt for Release.</title>
+<p>The version of the CircAdapt model used for these simulations (see <xref rid="pcbi.1004284.s002" ref-type="supplementary-material">S2 Text</xref>).</p>
+<p>(TXT)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004284.s007" xlink:href="info:doi/10.1371/journal.pcbi.1004284.s007" mimetype="text/plain" position="float" xlink:type="simple">
+<label>S7 Text</label>
+<caption>
+<title>CircAdapt Tools.</title>
+<p>Tools for use with CircAdapt (see <xref rid="pcbi.1004284.s002" ref-type="supplementary-material">S2 Text</xref>).</p>
+<p>(TXT)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004284.s008" xlink:href="info:doi/10.1371/journal.pcbi.1004284.s008" mimetype="text/plain" position="float" xlink:type="simple">
+<label>S8 Text</label>
+<caption>
+<title>MultiPatch Paper Simulations.</title>
+<p>Code for simulations in the paper and figure generation (see <xref rid="pcbi.1004284.s002" ref-type="supplementary-material">S2 Text</xref>).</p>
+<p>(TXT)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004284.s009" xlink:href="info:doi/10.1371/journal.pcbi.1004284.s009" mimetype="application/msword" position="float" xlink:type="simple">
+<label>S9 Text</label>
+<caption>
+<title>CircAdaptP Manual.</title>
+<p>Manual for using the enclosed CircAdapt model.</p>
+<p>(DOC)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004284.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Durrer</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>van Dam</surname> <given-names>RT</given-names></name>, <name name-style="western"><surname>Freud</surname> <given-names>GE</given-names></name>, <name name-style="western"><surname>Janse</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Meijler</surname> <given-names>FL</given-names></name>, <etal>et al</etal>. (<year>1970</year>) <article-title>Total excitation of the isolated human heart</article-title>. <source>Circulation</source> <volume>41</volume>: <fpage>899</fpage>–<lpage>912</lpage>. <object-id pub-id-type="pmid">5482907</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Strauss</surname> <given-names>DG</given-names></name>, <name name-style="western"><surname>Selvester</surname> <given-names>RH</given-names></name>, <name name-style="western"><surname>Wagner</surname> <given-names>GS</given-names></name> (<year>2011</year>) <article-title>Defining left bundle branch block in the era of cardiac resynchronization therapy</article-title>. <source>Am J Cardiol</source> <volume>107</volume>: <fpage>927</fpage>–<lpage>934</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.amjcard.2010.11.010" xlink:type="simple">10.1016/j.amjcard.2010.11.010</ext-link></comment> <object-id pub-id-type="pmid">21376930</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dillon</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Chang</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Feigenbaum</surname> <given-names>H</given-names></name> (<year>1974</year>) <article-title>Echocardiographic manifestations of left-bundle branch-block</article-title>. <source>Circulation</source> <volume>49</volume>: <fpage>876</fpage>–<lpage>880</lpage>. <object-id pub-id-type="pmid">4828608</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Prinzen</surname> <given-names>FW</given-names></name>, <name name-style="western"><surname>Hunter</surname> <given-names>WC</given-names></name>, <name name-style="western"><surname>Wyman</surname> <given-names>BT</given-names></name>, <name name-style="western"><surname>McVeigh</surname> <given-names>ER</given-names></name> (<year>1999</year>) <article-title>Mapping of regional myocardial strain and work during ventricular pacing: experimental study using magnetic resonance imaging tagging</article-title>. <source>J Am Coll Cardiol</source> <volume>33</volume>: <fpage>1735</fpage>–<lpage>1742</lpage>. <object-id pub-id-type="pmid">10334450</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Han</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Chan</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Haber</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Peters</surname> <given-names>DC</given-names></name>, <name name-style="western"><surname>Zimetbaum</surname> <given-names>PJ</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Circumferential myocardial strain in cardiomyopathy with and without left bundle branch block</article-title>. <source>J Cardiov Magn Reson</source> <volume>12</volume>: <fpage>2</fpage>.</mixed-citation></ref>
+<ref id="pcbi.1004284.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dandel</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Lehmkhul</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Knosalla</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Hetzer</surname> <given-names>R</given-names></name> (<year>2009</year>) <article-title>Strain and strain rate imaging by echocardiography–basic concepts and clinical applicability</article-title>. <source>Curr Rev Cardiol</source> <volume>5</volume>: <fpage>133</fpage>–<lpage>148</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004284.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Leenders</surname> <given-names>GE</given-names></name>, <name name-style="western"><surname>Lumens</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Cramer</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>De Boeck</surname> <given-names>BW</given-names></name>, <name name-style="western"><surname>Doevendans</surname> <given-names>PA</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Septal deformation patterns delineate mechanical dyssynchrony and regional differences in contractility: analysis of patient data using a computer model</article-title>. <source>Circ Heart Fail</source> <volume>5</volume>: <fpage>87</fpage>–<lpage>96</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1161/CIRCHEARTFAILURE.111.962704" xlink:type="simple">10.1161/CIRCHEARTFAILURE.111.962704</ext-link></comment> <object-id pub-id-type="pmid">21980078</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gorcsan</surname> <given-names>J</given-names> <suffix>III</suffix></name>, <name name-style="western"><surname>Oyenuga</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Habib</surname> <given-names>PJ</given-names></name>, <name name-style="western"><surname>Tanaka</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Adelstein</surname> <given-names>EC</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Relationship of echocardiographic dyssynchrony to long-term survival after cardiac resynchronization therapy</article-title>. <source>Circulation</source> <volume>122</volume>: <fpage>1910</fpage>–<lpage>1918</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1161/CIRCULATIONAHA.110.954768" xlink:type="simple">10.1161/CIRCULATIONAHA.110.954768</ext-link></comment> <object-id pub-id-type="pmid">20975000</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ruschitzka</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Abraham</surname> <given-names>WT</given-names></name>, <name name-style="western"><surname>Singh</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Bax</surname> <given-names>JJ</given-names></name>, <name name-style="western"><surname>Borer</surname> <given-names>JS</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Cardiac-resynchronization therapy in heart failure with a narrow QRS complex</article-title>. <source>N Engl J Med</source> <volume>369</volume>: <fpage>1395</fpage>–<lpage>1405</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1056/NEJMoa1306687" xlink:type="simple">10.1056/NEJMoa1306687</ext-link></comment> <object-id pub-id-type="pmid">23998714</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Russell</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Smiseth</surname> <given-names>OA</given-names></name>, <name name-style="western"><surname>Gjesdal</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Qvigstad</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Norseng</surname> <given-names>PA</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Mechanism of prolonged electromechanical delay in late activated myocardium during left bundle branch block</article-title>. <source>Am J Physiol Heart Circ Physiol</source> <volume>301</volume>: <fpage>H2334</fpage>–<lpage>2343</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1152/ajpheart.00644.2011" xlink:type="simple">10.1152/ajpheart.00644.2011</ext-link></comment> <object-id pub-id-type="pmid">21984549</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kerchoffs</surname> <given-names>RCP</given-names></name>, <name name-style="western"><surname>Omens</surname> <given-names>JH</given-names></name>, <name name-style="western"><surname>McCulloch</surname> <given-names>AD</given-names></name> (<year>2012</year>) <article-title>Mechanical discoordination increases continuously after the onset of left bundle branch block despite constant electrical dyssynchrony in a computational model of cardiac electromechanics and growth</article-title>. <source>Europace</source> <volume>14</volume>: <fpage>v65</fpage>–<lpage>v72</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/europace/eus274" xlink:type="simple">10.1093/europace/eus274</ext-link></comment> <object-id pub-id-type="pmid">23104917</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Constantino</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Hu</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Lardo</surname> <given-names>AC</given-names></name>, <name name-style="western"><surname>Trayanova</surname> <given-names>NA</given-names></name> (<year>2013</year>) <article-title>Mechanistic insight into prolonged electromechanical delay in dyssynchronous heart failure: a computational study</article-title>. <source>Am J Physiol Heart Circ Physiol</source> <volume>305</volume>: <fpage>H1265</fpage>–<lpage>1273</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1152/ajpheart.00426.2013" xlink:type="simple">10.1152/ajpheart.00426.2013</ext-link></comment> <object-id pub-id-type="pmid">23934857</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kerchoffs</surname> <given-names>RC</given-names></name>, <name name-style="western"><surname>McCulloch</surname> <given-names>AD</given-names></name>, <name name-style="western"><surname>Omens</surname> <given-names>JH</given-names></name>, <name name-style="western"><surname>Mulligan</surname> <given-names>LG</given-names></name> (<year>2009</year>) <article-title>Effects of biventricular pacing and scar size in a computational model of the failing heart with left bundle branch block</article-title>. <source>Med Image Anal</source> <volume>13</volume>: <fpage>362</fpage>–<lpage>369</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.media.2008.06.013" xlink:type="simple">10.1016/j.media.2008.06.013</ext-link></comment> <object-id pub-id-type="pmid">18675578</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Niederer</surname> <given-names>SA</given-names></name>, <name name-style="western"><surname>Plank</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Chinchapatnam</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Ginks</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Lamata</surname> <given-names>P</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Length-dependent tension in the failing heart and the efficacy of cardiac resynchronization therapy</article-title>. <source>Cardiovasc Res</source> <volume>89</volume>: <fpage>336</fpage>–<lpage>343</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/cvr/cvq318" xlink:type="simple">10.1093/cvr/cvq318</ext-link></comment> <object-id pub-id-type="pmid">20952413</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hu</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Gurev</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Constantino</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Trayanova</surname> <given-names>N</given-names></name> (<year>2014</year>) <article-title>Optimizing cardiac resynchronization therapy to minimize ATP consumption heterogeneity throughout the left ventricle: a simulation analysis using a canine heart failure model</article-title>. <source>Heart Rhythm</source> <volume>11</volume>: <fpage>1063</fpage>–<lpage>1069</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.hrthm.2014.03.021" xlink:type="simple">10.1016/j.hrthm.2014.03.021</ext-link></comment> <object-id pub-id-type="pmid">24657430</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lumens</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Ploux</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Strik</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Gorcsan</surname> <given-names>J</given-names> <suffix>III</suffix></name>, <name name-style="western"><surname>Cochet</surname> <given-names>H</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Comparative electromechanical and hemodynamic effects of left ventricular and biventricular pacing in dyssynchronous heart failure</article-title>. <source>J Am Coll Cardiol</source> <volume>62</volume>: <fpage>2395</fpage>–<lpage>2403</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jacc.2013.08.715" xlink:type="simple">10.1016/j.jacc.2013.08.715</ext-link></comment> <object-id pub-id-type="pmid">24013057</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lumens</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Leenders</surname> <given-names>GE</given-names></name>, <name name-style="western"><surname>Cramer</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>De Boeck</surname> <given-names>BW</given-names></name>, <name name-style="western"><surname>Doevendans</surname> <given-names>PA</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Mechanistic evaluation of echocardiographic dyssynchrony indices: patient data combined with multiscale computer simulations</article-title>. <source>Circ Cardiovasc Imaging</source> <volume>5</volume>: <fpage>491</fpage>–<lpage>499</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1161/CIRCIMAGING.112.973446" xlink:type="simple">10.1161/CIRCIMAGING.112.973446</ext-link></comment> <object-id pub-id-type="pmid">22661491</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Trayanova</surname> <given-names>NA</given-names></name> (<year>2011</year>) <article-title>Whole-heart modeling: applications to cardiac electrophysiology and electromechanics</article-title>. <source>Circ Res</source> <volume>108</volume>: <fpage>113</fpage>–<lpage>128</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1161/CIRCRESAHA.110.223610" xlink:type="simple">10.1161/CIRCRESAHA.110.223610</ext-link></comment> <object-id pub-id-type="pmid">21212393</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Aguado-Sierra</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Krishnamurthy</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Villongco</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Chuang</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Howard</surname> <given-names>E</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Patient-specific modeling of dyssynchronous heart failure: a case study</article-title>. <source>Prog Biophys Mol Biol</source> <volume>107</volume>: <fpage>147</fpage>–<lpage>155</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.pbiomolbio.2011.06.014" xlink:type="simple">10.1016/j.pbiomolbio.2011.06.014</ext-link></comment> <object-id pub-id-type="pmid">21763714</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Niederer</surname> <given-names>SA</given-names></name>, <name name-style="western"><surname>Lamata</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Plank</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Chinchapatnam</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Ginks</surname> <given-names>M</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Analyses of the redistribution of work following cardiac resynchronisation therapy in a patient specific model</article-title>. <source>PLoS One</source> <volume>7</volume>: <fpage>e43504</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0043504" xlink:type="simple">10.1371/journal.pone.0043504</ext-link></comment> <object-id pub-id-type="pmid">22952697</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tobon-Gomez</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Duchateau</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Sebastian</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Marchesseau</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Camara</surname> <given-names>O</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Understanding the mechanisms amenable to CRT response: from pre-operative multimodal image data to patient-specific computational models</article-title>. <source>Med Biol Eng Comput</source> <volume>51</volume>: <fpage>1235</fpage>–<lpage>1250</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s11517-013-1044-7" xlink:type="simple">10.1007/s11517-013-1044-7</ext-link></comment> <object-id pub-id-type="pmid">23430328</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Krishnamurthy</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Villongco</surname> <given-names>CT</given-names></name>, <name name-style="western"><surname>Chuang</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Frank</surname> <given-names>LR</given-names></name>, <name name-style="western"><surname>Nigam</surname> <given-names>V</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Patient-specific models of cardiac biomechanics</article-title>. <source>J Comput Phys</source> <volume>244</volume>: <fpage>4</fpage>–<lpage>21</lpage>. <object-id pub-id-type="pmid">23729839</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vadakkumpadan</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Arevalo</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Ceritoglu</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Miller</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Trayanova</surname> <given-names>N</given-names></name> (<year>2012</year>) <article-title>Image-Based Estimation of Ventricular Fiber Orientations for Personalized Modeling of Cardiac Electrophysiology</article-title>. <source>IEEE Trans Med Imaging</source> <volume>31</volume>: <fpage>1051</fpage>–<lpage>1060</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1109/TMI.2012.2184799" xlink:type="simple">10.1109/TMI.2012.2184799</ext-link></comment> <object-id pub-id-type="pmid">22271833</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Arts</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Delhaas</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Bovendeerd</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Verbeek</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Prinzen</surname> <given-names>FW</given-names></name> (<year>2005</year>) <article-title>Adaptation to mechanical load determines shape and properties of the heart and circulation: the CircAdapt model</article-title>. <source>Am J Physiol Heart Circ Physiol</source> <volume>288</volume>: <fpage>H1943</fpage>–<lpage>H1954</lpage>. <object-id pub-id-type="pmid">15550528</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lumens</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Delhaas</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Kirn</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Arts</surname> <given-names>T</given-names></name> (<year>2009</year>) <article-title>Three-wall segment (TriSeg) model describing mechanics and hemodynamics of ventricular interaction</article-title>. <source>Ann Biomed Eng</source> <volume>37</volume>: <fpage>2234</fpage>–<lpage>2255</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10439-009-9774-2" xlink:type="simple">10.1007/s10439-009-9774-2</ext-link></comment> <object-id pub-id-type="pmid">19718527</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Strik</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>van Deursen</surname> <given-names>CJ</given-names></name>, <name name-style="western"><surname>van Middendorp</surname> <given-names>LB</given-names></name>, <name name-style="western"><surname>van Hunnik</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Kuiper</surname> <given-names>M</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Transseptal conduction as an important determinant for cardiac resynchronization therapy, as revealed by extensive electrical mapping in the dyssynchronous canine heart</article-title>. <source>Circ Arrhythm Electrophysiol</source> <volume>6</volume>: <fpage>682</fpage>–<lpage>689</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1161/CIRCEP.111.000028" xlink:type="simple">10.1161/CIRCEP.111.000028</ext-link></comment> <object-id pub-id-type="pmid">23873141</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cerqueira</surname> <given-names>MD</given-names></name>, <name name-style="western"><surname>Weissman</surname> <given-names>NJ</given-names></name>, <name name-style="western"><surname>Dilsizian</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Jacobs</surname> <given-names>AK</given-names></name>, <name name-style="western"><surname>Kaul</surname> <given-names>S</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>Standardized myocardial segmentation and nomenclature for tomographic imaging of the heart. A statement for healthcare professionals from the Cardiac Imaging Committee of the Council on Clinical Cardiology of the American Heart Association</article-title>. <source>Circulation</source> <volume>105</volume>: <fpage>539</fpage>–<lpage>542</lpage>. <object-id pub-id-type="pmid">11815441</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Arts</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Lumens</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Kroon</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Delhaas</surname> <given-names>T</given-names></name> (<year>2012</year>) <article-title>Control of whole heart geometry by intramyocardial mechano-feedback: a model study</article-title>. <source>PLoS Comput Biol</source> <volume>8</volume>: <fpage>e1002369</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1002369" xlink:type="simple">10.1371/journal.pcbi.1002369</ext-link></comment> <object-id pub-id-type="pmid">22346742</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Delhaas</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Arts</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Prinzen</surname> <given-names>FW</given-names></name>, <name name-style="western"><surname>Reneman</surname> <given-names>RS</given-names></name> (<year>1994</year>) <article-title>Regional fibre stress-fibre strain area as an estimate of regional blood flow and oxygen demand in the canine heart</article-title>. <source>J Physiol</source> <volume>477</volume> (Pt <issue>3</issue>): <fpage>481</fpage>–<lpage>496</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004284.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huntjens</surname> <given-names>PR</given-names></name>, <name name-style="western"><surname>Walmsley</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Ploux</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Bordachar</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Prinzen</surname> <given-names>FW</given-names></name>, <etal>et al</etal>. (<year>2014</year>) <article-title>Influence of left ventricular lead position relative to scar location on response to cardiac resynchronization therapy: a model study</article-title>. <source>Europace</source> <volume>16</volume> <issue>Suppl 4</issue>: <fpage>iv62</fpage>–<lpage>iv68</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/europace/euu231" xlink:type="simple">10.1093/europace/euu231</ext-link></comment> <object-id pub-id-type="pmid">25362172</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wyman</surname> <given-names>BT</given-names></name>, <name name-style="western"><surname>Hunter</surname> <given-names>WC</given-names></name>, <name name-style="western"><surname>Prinzen</surname> <given-names>FW</given-names></name>, <name name-style="western"><surname>McVeigh</surname> <given-names>ER</given-names></name> (<year>1999</year>) <article-title>Mapping propagation of mechanical activation in the paced heart with MRI tagging</article-title>. <source>Am J Physiol</source> <volume>276</volume>: <fpage>H881</fpage>–<lpage>891</lpage>. <object-id pub-id-type="pmid">10070071</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Streeter</surname> <given-names>DD</given-names> <suffix>Jr.</suffix></name>, <name name-style="western"><surname>Spotnitz</surname> <given-names>HM</given-names></name>, <name name-style="western"><surname>Patel</surname> <given-names>DP</given-names></name>, <name name-style="western"><surname>Ross</surname> <given-names>J</given-names> <suffix>Jr.</suffix></name>, <name name-style="western"><surname>Sonnenblick</surname> <given-names>EH</given-names></name> (<year>1969</year>) <article-title>Fiber orientation in the canine left ventricle during diastole and systole</article-title>. <source>Circ Res</source> <volume>24</volume>: <fpage>339</fpage>–<lpage>347</lpage>. <object-id pub-id-type="pmid">5766515</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref033"><label>33</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Arts</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Bovendeerd</surname> <given-names>PH</given-names></name>, <name name-style="western"><surname>Prinzen</surname> <given-names>FW</given-names></name>, <name name-style="western"><surname>Reneman</surname> <given-names>RS</given-names></name> (<year>1991</year>) <article-title>Relation between left ventricular cavity pressure and volume and systolic fiber stress and strain in the wall</article-title>. <source>Biophys J</source> <volume>59</volume>: <fpage>93</fpage>–<lpage>102</lpage>. <object-id pub-id-type="pmid">2015392</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref034"><label>34</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Waldman</surname> <given-names>LK</given-names></name>, <name name-style="western"><surname>Nosan</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Villarreal</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Covell</surname> <given-names>JW</given-names></name> (<year>1988</year>) <article-title>Relation between transmural deformation and local myofiber direction in canine left ventricle</article-title>. <source>Circ Res</source> <volume>63</volume>: <fpage>550</fpage>–<lpage>562</lpage>. <object-id pub-id-type="pmid">3409487</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref035"><label>35</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Arts</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Veenstra</surname> <given-names>PC</given-names></name>, <name name-style="western"><surname>Reneman</surname> <given-names>RS</given-names></name> (<year>1982</year>) <article-title>Epicardial deformation and left ventricular wall mechanisms during ejection in the dog</article-title>. <source>Am J Physiol</source> <volume>243</volume>: <fpage>H379</fpage>–<lpage>390</lpage>. <object-id pub-id-type="pmid">7114270</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref036"><label>36</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ashikaga</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Omens</surname> <given-names>JH</given-names></name>, <name name-style="western"><surname>Ingels</surname> <given-names>NB</given-names> <suffix>Jr.</suffix></name>, <name name-style="western"><surname>Covell</surname> <given-names>JW</given-names></name> (<year>2004</year>) <article-title>Transmural mechanics at left ventricular epicardial pacing site</article-title>. <source>Am J Physiol Heart Circ Physiol</source> <volume>286</volume>: <fpage>H2401</fpage>–<lpage>2407</lpage>. <object-id pub-id-type="pmid">14751858</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref037"><label>37</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ashikaga</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Coppola</surname> <given-names>BA</given-names></name>, <name name-style="western"><surname>Hopenfeld</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Leifer</surname> <given-names>ES</given-names></name>, <name name-style="western"><surname>McVeigh</surname> <given-names>ER</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Transmural dispersion of myofiber mechanics: implications for electrical heterogeneity in vivo</article-title>. <source>J Am Coll Cardiol</source> <volume>49</volume>: <fpage>909</fpage>–<lpage>916</lpage>. <object-id pub-id-type="pmid">17320750</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref038"><label>38</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gurev</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Constantino</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Rice</surname> <given-names>JJ</given-names></name>, <name name-style="western"><surname>Trayanova</surname> <given-names>NA</given-names></name> (<year>2010</year>) <article-title>Distribution of electromechanical delay in the heart: insights from a three-dimensional electromechanical model</article-title>. <source>Biophys J</source> <volume>99</volume>: <fpage>745</fpage>–<lpage>754</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.bpj.2010.05.028" xlink:type="simple">10.1016/j.bpj.2010.05.028</ext-link></comment> <object-id pub-id-type="pmid">20682251</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref039"><label>39</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pluijmert</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Bovendeerd</surname> <given-names>PH</given-names></name>, <name name-style="western"><surname>Kroon</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Prinzen</surname> <given-names>FW</given-names></name>, <name name-style="western"><surname>Delhaas</surname> <given-names>T</given-names></name> (<year>2014</year>) <article-title>Effects of activation pattern and active stress development on myocardial shear in a model with adaptive myofiber reorientation</article-title>. <source>Am J Physiol Heart Circ Physiol</source> <volume>306</volume>: <fpage>H538</fpage>–<lpage>546</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1152/ajpheart.00571.2013" xlink:type="simple">10.1152/ajpheart.00571.2013</ext-link></comment> <object-id pub-id-type="pmid">24322610</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref040"><label>40</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Russell</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Eriksen</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Aaberge</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Wilhelmsen</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Skulstad</surname> <given-names>H</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Assessment of wasted myocardial work: a novel method to quantify energy loss due to uncoordinated left ventricular contractions</article-title>. <source>Am J Physiol Heart Circ Physiol</source> <volume>305</volume>: <fpage>H996</fpage>–<lpage>1003</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1152/ajpheart.00191.2013" xlink:type="simple">10.1152/ajpheart.00191.2013</ext-link></comment> <object-id pub-id-type="pmid">23893165</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref041"><label>41</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Quinn</surname> <given-names>TA</given-names></name>, <name name-style="western"><surname>Cabreriza</surname> <given-names>SE</given-names></name>, <name name-style="western"><surname>Richmond</surname> <given-names>ME</given-names></name>, <name name-style="western"><surname>Weinberg</surname> <given-names>AD</given-names></name>, <name name-style="western"><surname>Holmes</surname> <given-names>JW</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Simultaneous variation of ventricular pacing site and timing with biventricular pacing in acute ventricular failure improves function by interventricular assist</article-title>. <source>Am J Physiol Heart Circ Physiol</source> <volume>297</volume>: <fpage>H2220</fpage>–<lpage>2226</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1152/ajpheart.00802.2009" xlink:type="simple">10.1152/ajpheart.00802.2009</ext-link></comment> <object-id pub-id-type="pmid">19855057</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref042"><label>42</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lumens</surname> <given-names>J</given-names></name> (<year>2014</year>) <article-title>Creating your own virtual patient with CircAdapt Simulator</article-title>. <source>Eur Heart J</source> <volume>35</volume>: <fpage>335</fpage>–<lpage>337</lpage>. <object-id pub-id-type="pmid">24665476</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref043"><label>43</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sharp</surname> <given-names>GC</given-names></name>, <name name-style="western"><surname>Saunders</surname> <given-names>PT</given-names></name>, <name name-style="western"><surname>Norman</surname> <given-names>JE</given-names></name> (<year>2013</year>) <article-title>Computer models to study uterine activation at labour</article-title>. <source>Mol Hum Reprod</source> <volume>19</volume>: <fpage>711</fpage>–<lpage>717</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/molehr/gat043" xlink:type="simple">10.1093/molehr/gat043</ext-link></comment> <object-id pub-id-type="pmid">23778245</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref044"><label>44</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yassi</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Cheng</surname> <given-names>LK</given-names></name>, <name name-style="western"><surname>Rajagopal</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Nash</surname> <given-names>MP</given-names></name>, <name name-style="western"><surname>Windsor</surname> <given-names>JA</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Modeling of the mechanical function of the human gastroesophageal junction using an anatomically realistic three-dimensional model</article-title>. <source>J Biomech</source> <volume>42</volume>: <fpage>1604</fpage>–<lpage>1609</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jbiomech.2009.04.041" xlink:type="simple">10.1016/j.jbiomech.2009.04.041</ext-link></comment> <object-id pub-id-type="pmid">19481212</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref045"><label>45</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lou</surname> <given-names>Q</given-names></name>, <name name-style="western"><surname>Fedorov</surname> <given-names>VV</given-names></name>, <name name-style="western"><surname>Glukhov</surname> <given-names>AV</given-names></name>, <name name-style="western"><surname>Moazami</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Fast</surname> <given-names>VG</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Transmural heterogeneity and remodeling of ventricular excitation-contraction coupling in human heart failure</article-title>. <source>Circulation</source> <volume>123</volume>: <fpage>1881</fpage>–<lpage>1890</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1161/CIRCULATIONAHA.110.989707" xlink:type="simple">10.1161/CIRCULATIONAHA.110.989707</ext-link></comment> <object-id pub-id-type="pmid">21502574</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref046"><label>46</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zwanenburg</surname> <given-names>JJM</given-names></name>, <name name-style="western"><surname>Kuijer</surname> <given-names>JPA</given-names></name>, <name name-style="western"><surname>Marcus</surname> <given-names>JT</given-names></name>, <name name-style="western"><surname>Heethar</surname> <given-names>RM</given-names></name> (<year>2003</year>) <article-title>Steady state free precession with myocardial tagging: CSPAMM in a single breathhold</article-title>. <source>Magn Reson Med</source> <volume>49</volume>: <fpage>722</fpage>–<lpage>730</lpage>. <object-id pub-id-type="pmid">12652544</object-id></mixed-citation></ref>
+<ref id="pcbi.1004284.ref047"><label>47</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Arts</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Prinzen</surname> <given-names>FW</given-names></name>, <name name-style="western"><surname>Delhaas</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Milles</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Rossi</surname> <given-names>AC</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Mapping displacement and deformation of the heart with local sine-wave modeling</article-title>. <source>IEEE Trans Med Imaging</source> <volume>29</volume>: <fpage>1114</fpage>–<lpage>1123</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1109/TMI.2009.2037955" xlink:type="simple">10.1109/TMI.2009.2037955</ext-link></comment> <object-id pub-id-type="pmid">20335094</object-id></mixed-citation></ref>
+</ref-list>
+</back>
+</article>

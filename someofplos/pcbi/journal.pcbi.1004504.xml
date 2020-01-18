@@ -1,0 +1,1107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004504</article-id>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-15-00595</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Automated Identification of Core Regulatory Genes in Human Gene Regulatory Networks</article-title>
+<alt-title alt-title-type="running-head">Automated Identification of Core Regulatory Genes in Human</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Narang</surname>
+<given-names>Vipin</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Ramli</surname>
+<given-names>Muhamad Azfar</given-names>
+</name>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Singhal</surname>
+<given-names>Amit</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Kumar</surname>
+<given-names>Pavanish</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>de Libero</surname>
+<given-names>Gennaro</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Poidinger</surname>
+<given-names>Michael</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Monterola</surname>
+<given-names>Christopher</given-names>
+</name>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+<xref rid="cor001" ref-type="corresp">*</xref>
+</contrib>
+</contrib-group>
+<aff id="aff001"><label>1</label> <addr-line>Singapore Immunology Network, Singapore</addr-line></aff>
+<aff id="aff002"><label>2</label> <addr-line>Institute of High Performance Computing, Singapore</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Beer</surname>
+<given-names>Michael A</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Johns Hopkins University School of Medicine, UNITED STATES</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: VN MAR AS PK GdL MP CM. Performed the experiments: VN MAR. Analyzed the data: VN MAR MP CM. Contributed reagents/materials/analysis tools: VN MAR AS PK GdL MP CM. Wrote the paper: VN MAR AS PK GdL MP CM.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">monterolac@ihpc.a-star.edu.sg</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>22</day>
+<month>9</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="collection">
+<month>9</month>
+<year>2015</year>
+</pub-date>
+<volume>11</volume>
+<issue>9</issue>
+<elocation-id>e1004504</elocation-id>
+<history>
+<date date-type="received">
+<day>10</day>
+<month>4</month>
+<year>2015</year>
+</date>
+<date date-type="accepted">
+<day>11</day>
+<month>8</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Narang et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004504" xlink:type="simple"/>
+<abstract>
+<p>Human gene regulatory networks (GRN) can be difficult to interpret due to a tangle of edges interconnecting thousands of genes. We constructed a general human GRN from extensive transcription factor and microRNA target data obtained from public databases. In a subnetwork of this GRN that is active during estrogen stimulation of MCF-7 breast cancer cells, we benchmarked automated algorithms for identifying core regulatory genes (transcription factors and microRNAs). Among these algorithms, we identified K-core decomposition, pagerank and betweenness centrality algorithms as the most effective for discovering core regulatory genes in the network evaluated based on previously known roles of these genes in MCF-7 biology as well as in their ability to explain the up or down expression status of up to 70% of the remaining genes. Finally, we validated the use of K-core algorithm for organizing the GRN in an easier to interpret layered hierarchy where more influential regulatory genes percolate towards the inner layers. The integrated human gene and miRNA network and software used in this study are provided as supplementary materials (<xref rid="pcbi.1004504.s002" ref-type="supplementary-material">S1 Data</xref>) accompanying this manuscript.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>A gene regulatory network (GRN) represents how some genes encoding regulatory molecules such as transcription factors or microRNAs regulate the expression of other genes. Researchers commonly study GRNs involved in a specific biological process with the aim of identifying a few important regulatory genes. In higher organisms such as humans, a regulatory gene regulates multiple target genes and correspondingly any gene is regulated by multiple regulatory genes. Due to such multiplicity of interactions, a GRN usually resembles a tangled hairball wherein it is difficult to identify few most influential regulatory genes. In this study, we show that network analysis algorithms such as K-core, pagerank and betweenness centrality are useful for identifying a few important or core regulatory genes in a GRN, and the K-core algorithm is also useful for organizing regulatory genes in a hierarchical layered structure where the most influential genes in a GRN are found within the innermost layer or core. These few core regulatory genes determine to a large extent the expression status of the remaining genes in the network. We illustrate a pragmatic application of this technique to GRNs reconstructed from genome-wide gene expression measurements in the MCF-7 human breast cancer cell line.</p>
+</abstract>
+<funding-group>
+<funding-statement>MAR and CM are funded by SERC Complex Systems Programme Grant number 12245 04056. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript. VN, AS, PK, GdL and MP are funded by ASTAR/SIgN core funding.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="10"/>
+<table-count count="8"/>
+<page-count count="28"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the paper and its Supporting Information files.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Gene regulatory networks (GRN) are model representations of how genes regulate the expression levels of each other. In transcriptional regulation, proteins called transcription factors (TFs) regulate the transcription of their target genes to produce messenger RNA (mRNA), whereas in post-transcriptional regulation microRNAs (miRNAs) cause degradation and repression of target mRNAs. These interactions are represented in a GRN by adding edges linking TF or miRNA genes to their target mRNAs. Since these physical interactions are fixed, we can represent a GRN as a static network even though regulatory interactions occur dynamically in space and time.</p>
+<p>A GRN provides a systemic view of gene regulation by coordinated activity of multiple TFs and miRNAs and thus serves as a medium for understanding the mechanism of gene regulation. In a biological process specific genes are switched on (activated) or off (repressed). Analysis of GRN can help in identifying important or core regulatory genes (TFs and miRNAs) that play significant role in controlling the specificity of gene expression during a biological process [<xref rid="pcbi.1004504.ref001" ref-type="bibr">1</xref>,<xref rid="pcbi.1004504.ref002" ref-type="bibr">2</xref>]. These core regulatory genes are candidates for further experimental investigation and potential targets for therapeutic intervention [<xref rid="pcbi.1004504.ref003" ref-type="bibr">3</xref>–<xref rid="pcbi.1004504.ref005" ref-type="bibr">5</xref>]. Analysis of GRNs also enables quantitative modeling of gene expression which can be used for rational design of molecular approaches to target specific biological processes [<xref rid="pcbi.1004504.ref006" ref-type="bibr">6</xref>] and infer new biology [<xref rid="pcbi.1004504.ref007" ref-type="bibr">7</xref>,<xref rid="pcbi.1004504.ref008" ref-type="bibr">8</xref>].</p>
+<p>While the analysis of GRNs is well described in bacteria and yeast [<xref rid="pcbi.1004504.ref009" ref-type="bibr">9</xref>,<xref rid="pcbi.1004504.ref010" ref-type="bibr">10</xref>], similar analysis in higher organisms such as humans is challenging for a variety of reasons. Firstly, our knowledge of regulatory interactions between genes is incomplete, which is further complicated by the fact that the interactions may vary across different tissues [<xref rid="pcbi.1004504.ref011" ref-type="bibr">11</xref>]. Secondly, GRNs in higher organisms are highly complex as each regulatory molecule has dozens to thousands of targets and correspondingly a gene is usually targeted by multiple regulators. There is also cross-regulation and auto-regulation among genes. Such multiplicity of interconnections and loops makes the human GRN resemble a tangled hairball which is more challenging to analyze than a yeast gene network [<xref rid="pcbi.1004504.ref012" ref-type="bibr">12</xref>,<xref rid="pcbi.1004504.ref013" ref-type="bibr">13</xref>]. Lastly, gene expression is regulated at multiple levels in higher organisms and thereby transcriptional and post-transcriptional regulations represent only a fraction of total regulatory apparatus [<xref rid="pcbi.1004504.ref014" ref-type="bibr">14</xref>]. Hence gene expression cannot in principle be entirely explained using static GRNs.</p>
+<p>As a result, although many studies construct GRNs in higher organisms, especially in human, methodologies for downstream analysis of GRNs are not well established [<xref rid="pcbi.1004504.ref015" ref-type="bibr">15</xref>]. For instance, a recent review reported that network analysis based methods for prioritizing candidate genes for disease gene discovery are still in infancy in contrast to gene set analysis based methods such as Gene Ontology and GSEA [<xref rid="pcbi.1004504.ref016" ref-type="bibr">16</xref>]. Research involving human GRNs has used a variety of approaches for qualitative analysis such as identifying important hubs, network motifs, hierarchical organization, pathways, etc. [<xref rid="pcbi.1004504.ref017" ref-type="bibr">17</xref>–<xref rid="pcbi.1004504.ref020" ref-type="bibr">20</xref>]. While this is useful for gaining intuitive insights into the functioning of a GRN, it is important to have robust and well characterized automated and quantitative analysis methods for gleaning useful information from human GRNs [<xref rid="pcbi.1004504.ref021" ref-type="bibr">21</xref>,<xref rid="pcbi.1004504.ref022" ref-type="bibr">22</xref>].</p>
+<p>In view of the above challenges, this study aims to describe automated algorithms for analyzing human GRNs and organizing them into a meaningful structured hierarchy which is easier to analyze and interpret. We describe (1) the construction and analysis of an integrated network of human genes and miRNAs, (2) benchmarking algorithms for identifying core regulatory genes, and (3) algorithms for hierarchical organization of GRNs. We also discuss some practical considerations in the analysis of high throughput gene expression datasets in the context of GRNs.</p>
+</sec>
+<sec id="sec002" sec-type="results">
+<title>Results</title>
+<sec id="sec003">
+<title>Construction of an integrated general human gene and miRNA network</title>
+<p>We constructed an integrated general regulatory network of all human genes and miRNAs using extensive experimental TF target data and <italic>in silico</italic> miRNA target data derived from public databases (<xref rid="pcbi.1004504.g001" ref-type="fig">Fig 1</xref>). The general human TF-miRNA-mRNA network presents a useful base for understanding the structural characteristics of human GRNs and deriving subnetworks involved in specific biological processes. For instance, in this study we derived the network of genes responsible for estrogen response of MCF-7 breast cancer cells as a subnetwork of the general network.</p>
+<fig id="pcbi.1004504.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Integrated human transcriptional and post-transcriptional GRN.</title>
+<p>The network contains a total of 1867 miRNAs and 21,940 genes, including 1374 TFs and 20,556 non-TF genes (or mRNAs for simplicity). The numbers on the edges denote the total number of interactions between different types of nodes.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.g001" position="float" xlink:type="simple"/>
+</fig>
+<p>The nodes in our general human TF-miRNA-mRNA network represent 21,940 genes and 1,867 mature miRNAs based on gencode version 17 [<xref rid="pcbi.1004504.ref023" ref-type="bibr">23</xref>] and miRBase version 19 [<xref rid="pcbi.1004504.ref024" ref-type="bibr">24</xref>] annotations respectively. Out of 21,940 genes, 1,374 were marked as TFs and the remaining 20,566 were designated as non-regulatory genes which we call messenger RNAs (mRNAs) for simplicity. Genes were identified as TFs based on gene ontology annotation with term GO:0003700 “sequence-specific DNA binding transcription factor activity” and information obtained from TRANSFAC database [<xref rid="pcbi.1004504.ref025" ref-type="bibr">25</xref>].</p>
+<p>The edges in the network comprised a total of 2,245,197 interactions between TFs, miRNAs and mRNAs. Out of the 1,374 TFs in the network, experimentally validated targets for 329 TFs were obtained from ENCODE and HTRIdb databases [<xref rid="pcbi.1004504.ref026" ref-type="bibr">26</xref>,<xref rid="pcbi.1004504.ref027" ref-type="bibr">27</xref>]. For the remaining 1,045 TFs no target information was included. Although regulatory interactions between genes are cell type specific, we ignored this specificity to include all known interactions in all cell types. There were in total 466,534 TF-target interactions including 36,801 TF-TF (including self-regulation), 429,733 TF-mRNA, and 9,883 TF-miRNA interactions. In addition, there were 1,768,780 miRNA-target interactions including 174,936 miRNA-TF and 1,593,844 miRNA-mRNA interactions. These miRNA targets were identified by combining information from four different <italic>in silico</italic> databases as described in the Methods section.</p>
+<sec id="sec004">
+<title>Node degree distributions</title>
+<p>To get a systematic understanding of the general human TF-miRNA-mRNA network, we examined the <italic>degree distribution</italic> of the network, <italic>i</italic>.<italic>e</italic>., the statistical distribution of the number of incoming and outgoing edges in a node. The overall network had a multimodal degree distribution (<xref rid="pcbi.1004504.g002" ref-type="fig">Fig 2a</xref>) which prompted us to separately analyse the degree distributions of different types of nodes and edges in the network (<xref rid="pcbi.1004504.g002" ref-type="fig">Fig 2b–2f</xref>). Most regulatory interactions were best fitted by an exponential distribution (r<sup>2</sup> &gt; 0.7; <xref rid="pcbi.1004504.g002" ref-type="fig">Fig 2b, 2c, 2e and 2f</xref>) implying that a molecule is more likely to regulate or be regulated by a few other molecules rather than many molecules simultaneously. A notable exception was the out-degree of TFs (<xref rid="pcbi.1004504.g002" ref-type="fig">Fig 2d</xref>), implying that TFs usually target a large number of genes (<xref rid="pcbi.1004504.t001" ref-type="table">Table 1</xref>). Most mRNAs were regulated by several TFs and miRNAs (median 17 TFs, 76 miRNAs). TFs have a slightly larger number of regulating molecules (median 25 TFs, 111 miRNAs). Notably, miRNAs were usually regulated by a small number of TFs (median 3 TFs), whereas they in turn regulate a large number of TFs (median 74) and mRNAs (median 595.5). Furthermore, some TFs target a large number of molecules as indicated by high mean values of TF-&gt;mRNA (1377.35), TF-&gt;miRNA (83.75) and TF-&gt;TF (195.75) interactions although the corresponding median values are lower. Despite data incompleteness, these observations are in agreement with similar patterns reported in <italic>C</italic>. <italic>elegans</italic> gene network analysis [<xref rid="pcbi.1004504.ref012" ref-type="bibr">12</xref>].</p>
+<fig id="pcbi.1004504.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Degree distribution of the general human TF-miRNA-mRNA network over (a) all nodes, (b) mRNAs, (c,d) TFs (in, out degrees) and (e,f) miRNAs (in, out degrees), (g,h,i) regulation of TFs, mRNAs and miRNAs by TFs, (j,k) regulation of TFs and mRNAs by miRNAs.</title>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.g002" position="float" xlink:type="simple"/>
+</fig>
+<table-wrap id="pcbi.1004504.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.t001</object-id>
+<label>Table 1</label> <caption><title>Statistics of degree distribution for various interactions in the integrated human GRN.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004504.t001g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.t001" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Interaction Type</th>
+<th align="left" rowspan="1" colspan="1">Min</th>
+<th align="left" rowspan="1" colspan="1">Max</th>
+<th align="left" rowspan="1" colspan="1">Mean</th>
+<th align="left" rowspan="1" colspan="1">Median</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="justify" rowspan="1" colspan="1">TF → TF</td>
+<td align="justify" rowspan="1" colspan="1">1</td>
+<td align="justify" rowspan="1" colspan="1">918</td>
+<td align="char" char="." rowspan="1" colspan="1">195.75</td>
+<td align="justify" rowspan="1" colspan="1">74</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">TF ← TF</td>
+<td align="justify" rowspan="1" colspan="1">1</td>
+<td align="justify" rowspan="1" colspan="1">80</td>
+<td align="char" char="." rowspan="1" colspan="1">27.06</td>
+<td align="justify" rowspan="1" colspan="1">25</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">TF → mRNA</td>
+<td align="justify" rowspan="1" colspan="1">1</td>
+<td align="justify" rowspan="1" colspan="1">11357</td>
+<td align="char" char="." rowspan="1" colspan="1">1377.35</td>
+<td align="justify" rowspan="1" colspan="1">3</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">mRNA ← TF</td>
+<td align="justify" rowspan="1" colspan="1">1</td>
+<td align="justify" rowspan="1" colspan="1">94</td>
+<td align="char" char="." rowspan="1" colspan="1">21.55</td>
+<td align="justify" rowspan="1" colspan="1">17</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">TF → miRNA</td>
+<td align="justify" rowspan="1" colspan="1">1</td>
+<td align="justify" rowspan="1" colspan="1">343</td>
+<td align="char" char="." rowspan="1" colspan="1">83.75</td>
+<td align="justify" rowspan="1" colspan="1">60.5</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">miRNA ← TF</td>
+<td align="justify" rowspan="1" colspan="1">1</td>
+<td align="justify" rowspan="1" colspan="1">74</td>
+<td align="char" char="." rowspan="1" colspan="1">9.39</td>
+<td align="justify" rowspan="1" colspan="1">3</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">miRNA → TF</td>
+<td align="justify" rowspan="1" colspan="1">1</td>
+<td align="justify" rowspan="1" colspan="1">595</td>
+<td align="char" char="." rowspan="1" colspan="1">99.45</td>
+<td align="justify" rowspan="1" colspan="1">74</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">TF ← miRNA</td>
+<td align="justify" rowspan="1" colspan="1">1</td>
+<td align="justify" rowspan="1" colspan="1">595</td>
+<td align="char" char="." rowspan="1" colspan="1">131.73</td>
+<td align="justify" rowspan="1" colspan="1">111</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">miRNA → mRNA</td>
+<td align="justify" rowspan="1" colspan="1">1</td>
+<td align="justify" rowspan="1" colspan="1">5741</td>
+<td align="char" char="." rowspan="1" colspan="1">893.41</td>
+<td align="justify" rowspan="1" colspan="1">595.5</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">mRNA ← miRNA</td>
+<td align="justify" rowspan="1" colspan="1">1</td>
+<td align="justify" rowspan="1" colspan="1">773</td>
+<td align="char" char="." rowspan="1" colspan="1">99.06</td>
+<td align="justify" rowspan="1" colspan="1">76</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+<sec id="sec005">
+<title>Node degree distributions correlate with gene functions and expression</title>
+<p>We selected 500 nodes with highest in-degrees and 500 nodes with lowest in-degrees from the general human TF-miRNA-mRNA network for functional analysis. 500 genes is a reasonably large number to obtain statistical significance in gene set analysis [<xref rid="pcbi.1004504.ref028" ref-type="bibr">28</xref>] and represents 2.5 percent of the total number of nodes. Gene ontology analysis using DAVID [<xref rid="pcbi.1004504.ref029" ref-type="bibr">29</xref>] reported “transcriptional regulation” as the most enriched function for the 500 highest in-degree genes (139/500 genes, FDR 5.5e-11) and “nucleus” as their most prominent cellular compartment (205/500 genes, FDR 1.4e-19). In contrast, the 500 lowest in-degree genes were significantly enriched with “G-protein coupled receptors” (176/500 genes, FDR 6.9e-123) lying in the “cell membrane” (247/500 genes, FDR 2.0e-22) and participating in “cell surface receptor linked signal transduction” (203/500 genes, FDR 5.8e-73). The results were similar when the analysis was repeated on 1000 highest and lowest in-degree nodes.</p>
+<p>We used BioGPS [<xref rid="pcbi.1004504.ref030" ref-type="bibr">30</xref>,<xref rid="pcbi.1004504.ref031" ref-type="bibr">31</xref>] to study the expression profiles of these genes in 84 different human tissues. The low in-degree genes had a significantly lower absolute expression level across all tissues as compared to the high in-degree genes (<xref rid="pcbi.1004504.g003" ref-type="fig">Fig 3a</xref>). We also looked at tissue specificity of gene expression using a specificity measure (SPM) described by Xiao et al. [<xref rid="pcbi.1004504.ref032" ref-type="bibr">32</xref>]. The SPM of a gene in tissue <italic>t</italic> is a number in the range 0 to 1.0 calculated as <inline-formula id="pcbi.1004504.e001"><alternatives><graphic id="pcbi.1004504.e001g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e001" xlink:type="simple"/><mml:math display="inline" id="M1" overflow="scroll"><mml:mrow><mml:mi>S</mml:mi><mml:mi>P</mml:mi><mml:msub><mml:mi>M</mml:mi><mml:mi>t</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mrow><mml:mrow><mml:msub><mml:mi>x</mml:mi><mml:mi>t</mml:mi></mml:msub></mml:mrow><mml:mo>/</mml:mo><mml:mrow><mml:msqrt><mml:mrow><mml:mstyle displaystyle="true"><mml:munderover><mml:mo>∑</mml:mo><mml:mrow><mml:mi>t</mml:mi><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow><mml:mi>T</mml:mi></mml:munderover><mml:mrow><mml:msubsup><mml:mi>x</mml:mi><mml:mi>t</mml:mi><mml:mn>2</mml:mn></mml:msubsup></mml:mrow></mml:mstyle></mml:mrow></mml:msqrt></mml:mrow></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula> where <italic>x</italic><sub><italic>t</italic></sub> is the gene’s expression level in tissue <italic>t</italic> and <italic>T</italic> is the total number of tissues. We chose <italic>SPM</italic><sub><italic>t</italic></sub>&gt;0.5 as indicative of tissue specificity which implies that the expression in tissue <italic>t</italic> outweighs the combined expression in all other tissues. Moreover, following Xiao et al. [<xref rid="pcbi.1004504.ref032" ref-type="bibr">32</xref>] we merged similar tissues into an integrative tissue (such as merging monocytes, B cells, T cells and peripheral blood in a single tissue called “Blood”) to account for the fact that spiking of gene expression occurs simultaneously in similar tissues. Thus the 84 tissues were squashed into 12 integrative tissues. 422 (84%) out of 500 high in-degree genes had tissue specific expression while in comparison only 150 (30%) out of 500 low-in-degree genes were tissue specific (<xref rid="pcbi.1004504.g003" ref-type="fig">Fig 3b</xref>), indicating that high node in-degree is associated with tissue specificity of gene expression.</p>
+<fig id="pcbi.1004504.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Relationship between a node’s in or out-degree in the integrated human TF-miRNA-mRNA network and its expression characteristics in BioGPS (a) absolute expression level, (b) tissue specific gene expression.</title>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.g003" position="float" xlink:type="simple"/>
+</fig>
+<p>We also analysed the BioGPS expression profiles of top 52 transcription factors which have an out-degree of more than 4000 and observed that 45 TFs (86%) were expressed in a tissue specific manner with 35 of them (67%) being highly expressed in the blood and the immune cells (<xref rid="pcbi.1004504.g003" ref-type="fig">Fig 3b</xref>).</p>
+</sec>
+<sec id="sec006">
+<title>Inferring the properties of complete human GRN by extrapolation</title>
+<p>Our general human TF-miRNA-mRNA network contains only 10–15% of TF-target interactions expected in the complete network since out of more than 1300 TFs, only 120 TFs have been ChIPed in ENCODE and there is only limited target information for another 209 TFs in HTRIdB.</p>
+<p>We extrapolated the properties of the complete human GRN from the general trends observed in our partial network. We studied the evolution of network properties as ChIP experiments were progressively added. A ChIP experiment being added could be for a new TF, i.e., for which there is no existing target information in the GRN, or for an existing TF but in a new cell type so that there will be some additional outgoing edges for the TF. As ChIP experiments were added for new TFs the shape of the out-degree distribution of TFs did not change (<xref rid="pcbi.1004504.g004" ref-type="fig">Fig 4a</xref>) but the total number of edges in the network increased linearly (<xref rid="pcbi.1004504.g004" ref-type="fig">Fig 4b</xref>). As a consequence, the distribution of the in-degree of mRNA nodes and the location of the abrupt “drop” in number of nodes linearly increases with the number of TFs <xref rid="pcbi.1004504.g004" ref-type="fig">Fig 4c and 4d</xref>. The results suggest that as the number of TFs is increased, a fixed proportion of mRNAs in the GRN receive additional incoming edges resembling a network percolation like dynamics. <xref rid="pcbi.1004504.g004" ref-type="fig">Fig 4e</xref> shows a comparative plot of the theoretical cluster sizes obtained from random networks with successively higher probability of edges (denoted by <italic>p</italic>) between the nodes. Note that when a certain threshold number of TFs is reached, a giant cluster is expected to emerge within the network. In contrast, adding ChIP experiments for existing TFs contributed little to increase the number of edges in the network (<xref rid="pcbi.1004504.g004" ref-type="fig">Fig 4f</xref>) as the number of targets of a TF reached saturation after a handful of ChIP experiments (<xref rid="pcbi.1004504.g004" ref-type="fig">Fig 4g</xref>). From these trends we extrapolate that a complete integrated human GRN might contain ~5 million TF-target interactions. While a few hub nodes may have more than 750 incoming edges, a majority of genes might have approximately 250 incoming edges (<xref rid="pcbi.1004504.g004" ref-type="fig">Fig 4h</xref>).</p>
+<fig id="pcbi.1004504.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Evolution of the integrated human TF-miRNA-mRNA network with increasing number of ChIP’ed transcription factors and cell types in which transcription factors have been ChIP’ed.</title>
+<p>As more TFs are ChIP’ed, while the shape of TF out-degree distribution remains the same (a), a proportionate number of edges are added to the network (b). Addition of these new edges leads to a linear increase in the in-degrees of mRNA nodes both for average in-degree and high in-degree mRNAs (c,d). This is similar to percolation dynamics where the frequency of both average and large size clusters increases as an increasing number of lattice spaces are filled up (e). ChIP of the same TFs in more cell types adds fewer new edges to the network (f) and the TF nodes (g) with a plateau reached beyond 10 cell types. Shown in (h) is an extrapolation of mRNA in-degree if all known TFs in the human genome (~1400) were to be ChIP’ed.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.g004" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+</sec>
+<sec id="sec007">
+<title>Benchmarking algorithms for identifying core regulatory genes</title>
+<p>The general human TF-miRNA-mRNA network includes all known genes and interactions. However, the entire network of genes is not simultaneously active in a single cell. During a biological process certain genes are switched on (activated) and others are switched off (repressed) in order to produce the right repertoire of cellular products required in the process. Each biological process is governed by some core regulatory genes (TFs and miRNAs) that control the expression of a large number of downstream genes (mRNAs) to produce a specific repertoire of gene products. In this section we study gene networks active in specific biological processes and use network analysis algorithms for identifying their core regulatory genes.</p>
+<sec id="sec008">
+<title>Construction of MCF-7 gene network</title>
+<p>We studied the network of genes that respond to estrogen treatment in the MCF-7 breast cancer cell line. After searching through public databases for appropriate human datasets where high quality gene expression, transcription factor binding and interventional data are available, we narrowed our interest to the MCF-7 cell line which is a model for hormone-responsive breast cancer [<xref rid="pcbi.1004504.ref033" ref-type="bibr">33</xref>]. Treatment of MCF-7 cells with 17-β estradiol (E2 or estrogen) drives the expression of thousands of genes mediated by the estrogen receptor (ER) and leads to extensive cell proliferation. We studied the network of genes that are differentially expressed in MCF-7 upon E2 treatment using four different public datasets present in NCBI’s Gene Expression Omnibus (GEO) reporting high throughput gene expression in hormone starved (Control) <italic>vs</italic>. estradiol treated (E2) MCF-7 cells (<xref rid="pcbi.1004504.t002" ref-type="table">Table 2</xref>).</p>
+<table-wrap id="pcbi.1004504.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.t002</object-id>
+<label>Table 2</label> <caption><title>Public MCF-7 gene expression datasets downloaded from NCBI’s Gene Expression Omnibus (GEO) database.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004504.t002g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.t002" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="1" colspan="1">Category</th>
+<th align="center" rowspan="1" colspan="1">GEO Series ID</th>
+<th align="center" rowspan="1" colspan="1">Platform</th>
+<th align="center" rowspan="1" colspan="1">Description</th>
+<th align="center" rowspan="1" colspan="1">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td rowspan="4" align="left" colspan="1">Datasets for building MCF-7 gene network</td>
+<td align="left" rowspan="1" colspan="1">GSE11324</td>
+<td align="left" rowspan="1" colspan="1">Affymetrix HG U133 plus 2.0</td>
+<td align="left" rowspan="1" colspan="1">Control <italic>vs</italic>. 100nM E2 treatment for 12 hrs.</td>
+<td align="center" rowspan="1" colspan="1">[<xref rid="pcbi.1004504.ref034" ref-type="bibr">34</xref>]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">GSE11352</td>
+<td align="left" rowspan="1" colspan="1">Affymetrix HG U133 plus 2.0</td>
+<td align="left" rowspan="1" colspan="1">Control <italic>vs</italic>. 10nM E2 treatment for 12 hrs.</td>
+<td align="center" rowspan="1" colspan="1">[<xref rid="pcbi.1004504.ref035" ref-type="bibr">35</xref>]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">GSE42619</td>
+<td align="left" rowspan="1" colspan="1">Agilent HG G4112F 4x44K</td>
+<td align="left" rowspan="1" colspan="1">Control <italic>vs</italic>. 10nM E2 treatment for 24 hrs.</td>
+<td align="center" rowspan="1" colspan="1">[<xref rid="pcbi.1004504.ref036" ref-type="bibr">36</xref>]</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">GSE51403</td>
+<td align="left" rowspan="1" colspan="1">Illumina HiSeq 2000 RNA-seq</td>
+<td align="left" rowspan="1" colspan="1">Control <italic>vs</italic>. 10nM E2 treatment for 24 hrs.</td>
+<td align="center" rowspan="1" colspan="1">[<xref rid="pcbi.1004504.ref037" ref-type="bibr">37</xref>]</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>The treatment protocols were similar in all four datasets except for higher concentration of E2 used in GSE11324 and two different sample collection times of 12hrs (GSE11324, GSE11352) and 24hrs (GSE42619, GSE51403). In GSE11352 where both 12 and 24hr time points are reported, we observed that the list of differentially expressed genes (DEGs) at 12hrs was largely a subset of the list of DEGs at 24hrs and the directions of fold change were exactly the same between these two time points (see <xref rid="pcbi.1004504.s001" ref-type="supplementary-material">S1 Text</xref>). The technology platforms varied between two different microarrays (Affymetrix, Agilent) and RNA-seq (Illumina). Two experimental datasets, GSE11324 and GSE51403, showed higher sensitivity than the others, reporting 8,180 and 7,792 DEGs respectively at 0.05 FDR, and 3,362 and 4,094 DEGs respectively at 0.001 FDR (<xref rid="pcbi.1004504.g005" ref-type="fig">Fig 5a</xref>). These two experiments together included most of the DEGs found in the other two experiments (see <xref rid="pcbi.1004504.s001" ref-type="supplementary-material">S1 Text</xref> and <xref rid="pcbi.1004504.g005" ref-type="fig">Fig 5a</xref>). Hence we chose to use the union of DEGs in GSE11324 and GSE51403 at 0.001 FDR as starting DEG list. Although the overlap of gene lists between the two datasets was low (30%) at 0.001 FDR, relaxing the FDR to 0.05 in the comparison dataset increased the overlap to more than 60% (<xref rid="pcbi.1004504.g005" ref-type="fig">Fig 5a</xref>). Thus using a stringent FDR of 0.001 limited us to a higher quality DEG list. This list consisted of a total of 5,736 molecules including 462 TFs, 58 miRNAs and 5,216 mRNAs (<xref rid="pcbi.1004504.g005" ref-type="fig">Fig 5b</xref>).</p>
+<fig id="pcbi.1004504.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>MCF-7 estrogen response gene network.</title>
+<p>(a) Differentially expressed genes with FDR &lt; 0.001 were selected from two high quality datasets GSE11324 (microarray) and GSE51403 (RNA-seq). A significant number of genes were common between the two datasets, near about 70% if a FDR cutoff of 0.05 were to be used as shown by dotted ellipses. The union list between GSE11324 and GSE51403 was selected for network construction. The union list also had a good overlap with another dataset GSE11352. (b) The final MCF-7 network consisted of 5736 nodes including 462 TFs, 58 miRNAs and 5216 mRNA genes. The numbers on the edges denote the total number of interconnections between various types of nodes.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.g005" position="float" xlink:type="simple"/>
+</fig>
+<p>Next, we derived the network of these 5,736 DEGs by taking this subset from our general human TF-miRNA-mRNA network. All 5,736 nodes and all the edges interconnecting them were considered. Out of the 462 TFs, only 106 TFs had one or more known targets in the network. The remaining 356 TFs either did not have any target information in ENCODE and HTRIdB or none of their known target genes were within the MCF-7 estrogen response network.</p>
+</sec>
+<sec id="sec009">
+<title>Identification of core regulatory molecules in MCF-7 response to estrogen</title>
+<p>In order to identify the core regulators (TFs and miRNAs) in MCF-7 estrogen response GRN, we applied various strategies for ranking regulatory molecules (106 TFs and 58 miRNAs). Researchers usually look at most differentially expressed regulators or differentially expressed regulators with the most number of targets in the list of differentially expressed genes (i.e., regulators with maximum out-degree in the GRN) or regulators with maximum fold enrichment of differentially expressed (DE) targets in the data computed as [(#target genes that are DE)/(#DE genes)] / [(#target genes)/(#all genes)]. In addition, we used various network analysis based methods to rank the regulators, including maximum in-degree, centrality measures (closeness, betweenness), pagerank, and K-core. The top 20 ranked regulatory molecules identified by each strategy are shown in <xref rid="pcbi.1004504.t003" ref-type="table">Table 3</xref>.</p>
+<table-wrap id="pcbi.1004504.t003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.t003</object-id>
+<label>Table 3</label> <caption><title>Top 20 regulatory molecules identified by various ranking strategies in the MCF-7 estrogen response gene regulatory network.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004504.t003g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.t003" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Ranking Strategy</th>
+<th align="left" rowspan="1" colspan="1">Top regulatory molecules (ranked 1 to 20 from left to right)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Most differentially expressed regulators</bold></td>
+<td align="justify" rowspan="1" colspan="1">hsa-miR-941, GATA4, PGR, SIM1, CXCL12, hsa-miR-653, hsa-miR-489, EGR3, SOX3, HEY2, MYBL1, hsa-miR-548M, TMEM229A, FOXE3, FOXC2, CREB3L1, GRHL3, MYB, hsa-miR-623, hsa-miR-1231</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Maximum out-degree</bold></td>
+<td align="justify" rowspan="1" colspan="1">MYC, ELF1, TAF1, E2F6, E2F1, HDAC2, EGR1, CHD2, GATA2, USF1, RAD21, IRF1, GABPA, FOXA1, AR, SMC3, SRF, RFX5, GATA3, ZNF143</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Maximum target fold enrichment</bold></td>
+<td align="justify" rowspan="1" colspan="1">ESR1, STAT2, TP63, hsa-miR-4800-5P, GATA3, HIF1A, NFYA, TFAP2C, IRF1, SREBF1, GTF2F1, ATF3, BHLHE40, hsa-miR-4640-3P, RFX5, PBX3, SMARCC1, E2F1, USF2, FOXA1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Maximum in-degree</bold></td>
+<td align="justify" rowspan="1" colspan="1">PURB, HNRNPD, NFAT5, ZBTB4, CHD2, STAT3, HMGB1, NAA15, ILF3, CREB1, FOXN2, NCOA3, GABPB1, HBP1, HIF1A, AFF4, ZNF143, ELK4, KLF10, ZNF367</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Maximum closeness centrality</bold></td>
+<td align="justify" rowspan="1" colspan="1">MYC, ELF1, TAF1, E2F6, E2F1, EGR1, HDAC2, CHD2, GATA2, RAD21, USF1, IRF1, AR, GABPA, FOXA1, SMC3, GATA3, YBX1, SRF, ZNF143</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Maximum betweenness centrality</bold></td>
+<td align="justify" rowspan="1" colspan="1">MYC, E2F6, ELF1, YBX1, E2F1, STAT3, GABPA, CHD2, EGR1, ESR1, TAF1, SRF, ZNF143, RAD21, FOS, ELK4, GATA2, AR, TFAP2C, JUNB</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Maximum pagerank</bold></td>
+<td align="justify" rowspan="1" colspan="1">MYC, MYB, ATF3, RUNX3, BRCA1, PPARA, ESR1, SMAD7, CXCL12, ASCL1, LMO2, CDKN1A, E2F1, TCERG1, SOX9, TP53, ETS2, SMAD3, TFAP2C, MEIS2</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Innermost K-core</bold></td>
+<td align="justify" rowspan="1" colspan="1">MYC, ELF1, TAF1, E2F6, E2F1, HDAC2, EGR1, CHD2, USF1, RAD21, IRF1, GABPA, SMC3, SRF, RFX5, GATA3, ZNF143, YBX1, USF2, STAT3</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>We used three different criteria to evaluate the effectiveness of various strategies towards identifying core regulators of the MCF-7 estrogen response GRN: (i) randomization test, (ii) literature evidence, and (iii) quantitative modeling of gene expression.</p>
+</sec>
+<sec id="sec010">
+<title>Randomization test for core regulators</title>
+<p>We performed a randomization test to determine whether the core regulators of the MCF-7 estrogen response GRN identified by a ranking strategy were selected by chance. The randomization test evaluates the null hypothesis that the core regulatory molecules were selected due to the characteristics of the general TF-miRNA-mRNA network and not specifically for the MCF-7 ER network. In case the null hypothesis holds, further evaluation of whether the core regulators play an important role in regulating the MCF-7 estrogen response GRN will not be meaningful as the same set of core regulators will be reported by the ranking strategy for any biological process.</p>
+<p>We generated 10,000 networks by randomly sampling nodes from the general TF-miRNA-mRNA network maintaining the same number of nodes in each randomly sampled network as the MCF-7 estrogen response GRN. During random sampling we also maintained the same proportion of TFs (462 of which 106 have known targets), miRNAs (58), and mRNAs (5216) as the MCF-7 estrogen response GRN. In each randomly sampled network we used the abovementioned strategies for ranking genes and checked the coefficient of determination <italic>R</italic><sup>2</sup> (square of sample correlation coefficient) between the average rank of a regulator in a randomly sampled network (if it were present in a randomly sampled network) and its rank observed in the MCF-7 estrogen response GRN using the same strategy (Figs <xref rid="pcbi.1004504.g006" ref-type="fig">6</xref> and <xref rid="pcbi.1004504.g007" ref-type="fig">7</xref>). Except for “most differentially expressed regulators”, all other strategies for ranking genes could be evaluated by this method. Ranking of regulators based on maximum out-degree and closeness centrality was very similar in MCF-7 estrogen response GRN and randomly sampled networks (<italic>R</italic><sup>2</sup> &gt; 0.9 in Figs <xref rid="pcbi.1004504.g006" ref-type="fig">6</xref> and <xref rid="pcbi.1004504.g007" ref-type="fig">7</xref>). Rankings based on other strategies were mildly correlated. Thus the randomization test favored other ranking strategies over maximum out-degree and closeness centrality.</p>
+<fig id="pcbi.1004504.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>Randomization test to determine whether the core TFs and microRNAs identified in MCF-7 estrogen response GRN were obtained by chance.</title>
+<p>The scatter plot compares the core number of a TF in MCF-7 estrogen response GRN (y-axis) with its average core number over 10,000 randomly sampled networks (x-axis). To be comparable the randomly sampled networks contained the same number of TFs and miRNAs as the MCF-7 estrogen response GRN.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.g006" position="float" xlink:type="simple"/>
+</fig>
+<fig id="pcbi.1004504.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Randomization test to determine whether the core TFs and microRNAs identified in MCF-7 estrogen response GRN were obtained by chance.</title>
+<p>The scatter plot compares the core number of a microRNA in MCF-7 estrogen response GRN (y-axis) with its average core number over 10,000 randomly sampled networks (x-axis). To be comparable the randomly sampled networks contained the same number of TFs and miRNAs as the MCF-7 estrogen response GRN.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.g007" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec011">
+<title>Literature validation of core regulators</title>
+<p>We evaluated the biological relevance of core regulatory molecules identified by a ranking strategy to the MCF-7 estrogen response GRN by searching for evidence in the published literature. We used Google Scholar to quantify the number of publications in which a regulatory molecule has been cited in the context of estrogen stimulation of MCF-7 (see <xref rid="sec022" ref-type="sec">Methods</xref>). Based on this quantification we ranked all the regulatory molecules present in the MCF-7 ER network in descending order of the number of associated publications (see <xref rid="pcbi.1004504.s001" ref-type="supplementary-material">S1 Text</xref> for the full list). For instance, the gene ESR1 (Estrogen Receptor) was ranked 1<sup>st</sup> with 84,700 associated publications. We then summed up the ranks of all top 20 regulatory molecules identified by a ranking strategy to produce its “literature validation score”, so that a lower scoring ranking strategy was considered better. The scores of various ranking strategies are shown in <xref rid="pcbi.1004504.t004" ref-type="table">Table 4</xref>. In comparison, selection of any 20 regulators at random produced literature validation scores with a mean of 1349.8 and standard deviation 160.5 over 1000 random trials. The regulatory molecules identified using betweenness centrality and pagerank algorithms were found to have better literature evidence as compared to the other ranking strategies. Maximum out-degree and K-core measures also identified regulatory molecules that are well-known in the literature. However, regulatory molecules with maximum in-degree or that were most differentially expressed had poor literature validation.</p>
+<table-wrap id="pcbi.1004504.t004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.t004</object-id>
+<label>Table 4</label> <caption><title>Literature validation scores for various ranking strategies (lower scores are better).</title></caption>
+<alternatives>
+<graphic id="pcbi.1004504.t004g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.t004" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Ranking Strategy</th>
+<th align="left" rowspan="1" colspan="1">Literature validation score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Most differentially expressed regulators</td>
+<td align="center" rowspan="1" colspan="1">1563</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Maximum out-degree</td>
+<td align="center" rowspan="1" colspan="1">837</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Maximum target fold enrichment</td>
+<td align="center" rowspan="1" colspan="1">1165</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Maximum in-degree</td>
+<td align="center" rowspan="1" colspan="1">1584</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Maximum closeness centrality</td>
+<td align="center" rowspan="1" colspan="1">796</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Maximum betweenness centrality</td>
+<td align="center" rowspan="1" colspan="1">718</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Maximum pagerank</td>
+<td align="center" rowspan="1" colspan="1">728</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Innermost K-core</td>
+<td align="center" rowspan="1" colspan="1">894</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+<sec id="sec012">
+<title>Modeling of gene expression</title>
+<p>We investigated whether the core regulators identified by a ranking strategy could explain the expression levels of remaining genes in the GRN. Recent studies on quantitative modeling of gene expression have attempted to model real valued log fold change values [<xref rid="pcbi.1004504.ref038" ref-type="bibr">38</xref>,<xref rid="pcbi.1004504.ref039" ref-type="bibr">39</xref>]. However, we observed a fair amount of biological variance in log fold change measurements. Between the two high quality gene expression datasets GSE11324 and GSE51403 used to derive our MCF-7 estrogen response GRN, the log fold change measurements were only a moderately correlated (Pearson coefficient <italic>r</italic> = 0.80 using FDR&lt;0.001, and <italic>r</italic> = 0.663 using FDR&lt;0.05) (<xref rid="pcbi.1004504.g008" ref-type="fig">Fig 8</xref>). However, the direction of gene expression was largely consistent in the two datasets (97% consistency using FDR&lt;0.001, and 87% consistency using FDR&lt;0.05). In order to minimize the effect of biological variation on prediction accuracy, we focused on binary classification of genes into up or down expressed categories as in some previous studies [<xref rid="pcbi.1004504.ref009" ref-type="bibr">9</xref>,<xref rid="pcbi.1004504.ref040" ref-type="bibr">40</xref>] instead of predicting real valued log fold changes.</p>
+<fig id="pcbi.1004504.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>Comparison of gene expression measurements in two repeats of the same biological experiment.</title>
+<p>The scatter plot shows the measured fold changes of gene expression in E2 vs. Control treated MCF-7 cells in GSE11324 (x-axis) and GSE51304 (y-axis) experiments. Only genes which passed a FDR cutoff of 0.001 (a) or 0.05 (b) are shown. Although both datasets are of high quality, the absolute values of fold change are only moderately correlated. However, the direction of fold change is consistent for most of the genes.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.g008" position="float" xlink:type="simple"/>
+</fig>
+<p>We used the core regulators identified by a ranking strategy to model the expression of all other genes (called <italic>target genes</italic>) in a GRN. Only the edges directly connecting core regulators to target genes were considered in the model. Let there be <italic>m</italic> core regulators and <italic>n</italic> target genes. In the model a target gene <italic>i</italic>∈[1,…,<italic>n</italic>] is represented by an input-output pair (<italic>X</italic><sub><italic>i</italic></sub>,<italic>y</italic><sub><italic>i</italic></sub>) where <inline-formula id="pcbi.1004504.e002"><alternatives><graphic id="pcbi.1004504.e002g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e002" xlink:type="simple"/><mml:math display="inline" id="M2" overflow="scroll"><mml:mrow><mml:msub><mml:mi>X</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msubsup><mml:mi>x</mml:mi><mml:mi>i</mml:mi><mml:mn>1</mml:mn></mml:msubsup><mml:mo>,</mml:mo><mml:mo>…</mml:mo><mml:mo>,</mml:mo><mml:msubsup><mml:mi>x</mml:mi><mml:mi>i</mml:mi><mml:mi>m</mml:mi></mml:msubsup></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula> is a <italic>m</italic>-dimensional vector describing the regulation of the target gene by core regulators such that <inline-formula id="pcbi.1004504.e003"><alternatives><graphic id="pcbi.1004504.e003g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e003" xlink:type="simple"/><mml:math display="inline" id="M3" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>x</mml:mi><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:msubsup><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:math></alternatives></inline-formula> if there is an edge in the network connecting core regulator <italic>j</italic> to target gene <italic>i</italic>, or <inline-formula id="pcbi.1004504.e004"><alternatives><graphic id="pcbi.1004504.e004g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e004" xlink:type="simple"/><mml:math display="inline" id="M4" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>x</mml:mi><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:msubsup><mml:mo>=</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:math></alternatives></inline-formula> otherwise. The label <italic>y</italic><sub><italic>i</italic></sub> represents the expression level of target gene <italic>i</italic> as +1 if it is up expressed or -1 if down expressed. The classification model determines the closest possible approximation to the mapping <italic>f</italic>:<bold>X</bold>→<italic>Y</italic>. We used linear regression (LR) and support vector machines (support vector classification, SVC, and support vector regression, SVR) for supervised classification [<xref rid="pcbi.1004504.ref038" ref-type="bibr">38</xref>], and principal component analysis (PCA) for unsupervised classification [<xref rid="pcbi.1004504.ref041" ref-type="bibr">41</xref>]. An assumption built into our modeling strategy is that the core regulators act as mutually independent variables in controlling the expression of target genes. In LR and PCA models these variables combine additively (with a weight) whereas in SVC and SVR models they may combine nonlinearly such as multiplicatively.</p>
+<p><xref rid="pcbi.1004504.t005" ref-type="table">Table 5</xref> shows the classification accuracy obtained using core regulators identified by various ranking strategies using different classifiers. Classification accuracy was computed as area under the ROC curve (AUROC) or as Matthew’s correlation coefficient (MCC) averaged over a 5-fold cross validation procedure as described in Methods. AUROC value close to 0 (or MCC close to -1) indicates misclassification, AUROC = 0.5 (or MCC = 0) indicates random classification, and AUROC value close to 1.0 (or MCC close to 1.0) indicates perfect classification. Classification accuracies based on the core regulators selected by K-core, betweenness centrality, pagerank and maximum out-degree were comparable and consistently better than the other ranking strategies. The core regulators selected by K-core set into a SVR classifier reported the best classification accuracy of AUROC = 0.695 with the expression of slightly more than 70% of the genes correctly predicted in both up and down-regulated classes.</p>
+<table-wrap id="pcbi.1004504.t005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.t005</object-id>
+<label>Table 5</label> <caption><title>Performance of explaining gene expression in E2 vs. control treated MCF-7 cells using core regulators identified by various ranking strategies.</title> <p>Three different mathematical or AI models were used for modeling gene expression: linear regression (LR), support vector machines (classification, SVC, and regression, SVR) and principal component analysis (PCA). Performance was measured as area under the ROC curve (AUROC) for real-valued estimators and using Matthew’s correlation coefficient (MCC) for binary classifiers in 5-fold cross validation.</p></caption>
+<alternatives>
+<graphic id="pcbi.1004504.t005g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.t005" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="justify" rowspan="1" colspan="1">Ranking Strategy</th>
+<th colspan="3" align="center" rowspan="1">Area under ROC curve</th>
+<th align="center" rowspan="1" colspan="1">MCC</th>
+</tr>
+<tr>
+<th align="left" rowspan="1" colspan="1"/>
+<th align="center" rowspan="1" colspan="1">LR</th>
+<th align="center" rowspan="1" colspan="1">SVR</th>
+<th align="center" rowspan="1" colspan="1">PCA</th>
+<th align="center" rowspan="1" colspan="1">SVC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Most differentially expressed regulators</td>
+<td align="char" char="." rowspan="1" colspan="1">0.567</td>
+<td align="char" char="." rowspan="1" colspan="1">0.575</td>
+<td align="char" char="." rowspan="1" colspan="1">0.572</td>
+<td align="char" char="." rowspan="1" colspan="1">0.149</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Maximum out-degree</td>
+<td align="char" char="." rowspan="1" colspan="1">0.675</td>
+<td align="char" char="." rowspan="1" colspan="1">0.683</td>
+<td align="char" char="." rowspan="1" colspan="1">0.602</td>
+<td align="char" char="." rowspan="1" colspan="1">0.289</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Maximum target fold enrichment</td>
+<td align="char" char="." rowspan="1" colspan="1">0.681</td>
+<td align="char" char="." rowspan="1" colspan="1">0.632</td>
+<td align="char" char="." rowspan="1" colspan="1">0.590</td>
+<td align="char" char="." rowspan="1" colspan="1">0.222</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Maximum in-degree</td>
+<td align="char" char="." rowspan="1" colspan="1">0.586</td>
+<td align="char" char="." rowspan="1" colspan="1">0.585</td>
+<td align="char" char="." rowspan="1" colspan="1">0.586</td>
+<td align="char" char="." rowspan="1" colspan="1">0.155</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Maximum closeness centrality</td>
+<td align="char" char="." rowspan="1" colspan="1">0.676</td>
+<td align="char" char="." rowspan="1" colspan="1">0.684</td>
+<td align="char" char="." rowspan="1" colspan="1">0.602</td>
+<td align="char" char="." rowspan="1" colspan="1">0.285</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Maximum betweenness centrality</td>
+<td align="char" char="." rowspan="1" colspan="1">0.673</td>
+<td align="char" char="." rowspan="1" colspan="1">0.682</td>
+<td align="char" char="." rowspan="1" colspan="1">0.619</td>
+<td align="char" char="." rowspan="1" colspan="1">0.287</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Maximum pagerank</td>
+<td align="char" char="." rowspan="1" colspan="1">0.653</td>
+<td align="char" char="." rowspan="1" colspan="1">0.646</td>
+<td align="char" char="." rowspan="1" colspan="1">0.620</td>
+<td align="char" char="." rowspan="1" colspan="1">0.254</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Innermost K-core</td>
+<td align="char" char="." rowspan="1" colspan="1">0.674</td>
+<td align="char" char="." rowspan="1" colspan="1">0.695</td>
+<td align="char" char="." rowspan="1" colspan="1">0.605</td>
+<td align="char" char="." rowspan="1" colspan="1">0.294</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>We performed randomization tests to determine whether gene expression classification using network information was an artefact of machine learning algorithms. The null hypothesis is that the machine learning algorithm memorized the data so that network information did not play a role in classification results. Thus we replaced the inputs <bold>X</bold> which represent network information with randomly generated vectors of the same dimension while preserving the degree distribution of the network (using networkx function directed_configuration_model), and then performed gene expression classification with exactly the same procedure as before. In other words, we checked whether gene expression could be explained equally well using a random network. In 1000 trials of random networks, unsupervised classification using PCA yielded an average classification accuracy of AUROC = 0.501 with a standard deviation of 0.01, which is equivalent to a random predictor. Supervised classification using LR, SVR and SVC yielded a similar average classification accuracy of AUROC = 0.497 ± 0.02, AUROC = 0.504 ± 0.02 and MCC = -0.003 ± 0.01 respectively, leading to the conclusion that random networks are not explanatory of gene expression.</p>
+</sec>
+<sec id="sec013">
+<title>Comparative evaluation of ranking algorithms</title>
+<p>In summary, among the ranking strategies benchmarked here, the core regulators identified using most differentially expressed or maximum in-degree criteria had comparatively poor validation against published literature and low performance in quantitative modeling of mRNA expression. The core regulators identified by maximum out-degree and closeness centrality strategies fared well in these two evaluations. However, in randomization tests they appeared to have been selected generally based on their prominence (by out-degree or closeness centrality) in the general TF-miRNA-mRNA network rather than specific relevance to the MCF-7 estrogen response GRN. The core regulators identified by betweenness centrality, pagerank and K-core fared well in all the three evaluation criteria. The core regulators identified by betweenness centrality and pagerank had better literature evidence as compared to the K-core regulators, including important genes such as estrogen receptor (ESR1) and androgen receptor (AR), which are central to the estrogen response. In contrast, the K-core regulators were best suited for quantitative modeling of gene expression.</p>
+</sec>
+</sec>
+<sec id="sec014">
+<title>Hierarchical organization of MCF-7 estrogen response GRN using K-core</title>
+<sec id="sec015">
+<title>K-core structure of MCF-7 estrogen response GRN</title>
+<p>Apart from identifying core regulatory molecules it is also important to organize a GRN in a structure that helps in understanding the flow of regulatory information. Following previous studies on yeast and bacterial GRNs [<xref rid="pcbi.1004504.ref042" ref-type="bibr">42</xref>,<xref rid="pcbi.1004504.ref043" ref-type="bibr">43</xref>], we used the K-core algorithm to organize the regulatory molecules in MCF-7 estrogen response GRN in a layered hierarchy. The K-core algorithm is generally used for identifying a set of <italic>central</italic> or <italic>K-core</italic> nodes in a network all of which have a degree of at least K. It works by iteratively removing leaf nodes which have degree less than K (all nodes with degree one are removed in the first iteration, nodes with degree two are removed in the second iteration, and so forth) so that in the final or K’th iteration only the K-core set of nodes remains. Each node in the network is assigned a <italic>core number</italic> based on the iteration during which it was removed by K-core. The K-core nodes are well interconnected with each other as well as with the rest of the nodes in the network and thus most of the information flow in a network takes place through the K-core nodes [<xref rid="pcbi.1004504.ref044" ref-type="bibr">44</xref>,<xref rid="pcbi.1004504.ref045" ref-type="bibr">45</xref>]. In the MCF-7 estrogen response GRN, 29 iterations of K-core were required until the final core was obtained and it consisted of only one molecule, the transcription factor Myc, a well-known oncogene. We then ranked all the regulatory molecules from 1 to 29 in the opposite order of their core number, i.e., the iteration in which they were removed by K-core. This resulted in a hierarchical organization of all the molecules with Myc, having rank 1 in the innermost core, followed by other molecules (<xref rid="pcbi.1004504.g009" ref-type="fig">Fig 9</xref>).</p>
+<fig id="pcbi.1004504.g009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.g009</object-id>
+<label>Fig 9</label>
+<caption>
+<title>Hierarchical organization of all regulatory molecules, including 106TFs and 58miRNAs, in MCF-7 estrogen response GRN using K-core algorithm.</title>
+<p>TF and miRNA nodes are represented by rectangles and diamonds respectively. Nodes are colored red or green depending upon whether the molecule’s expression is up or down-regulated in E2 vs. Control cells. The hierarchy is based on the principle of network centrality where nodes which are more important for the flow of regulatory information are more towards the core. Nodes in core 1 (Myc) are most central, followed by nodes in cores 2, 3, and so on in decreasing order of centrality. Some cores have been clubbed together for ease of visualization.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.g009" position="float" xlink:type="simple"/>
+</fig>
+<p>Importantly the core number obtained using the K-core algorithm has no relationship with the cascade of gene expression that actually takes place in the biological system. For instance, the transcription factor estrogen receptor (ER), which is encoded by the gene ESR1, is the key TF responsible for estrogen response in MCF-7 cells. Upon estrogen stimulation, ER moves to the cell nucleus and activates the transcription of a number of important TFs (such as Myc), triggering a cascade of gene expression which ultimately results in the activation of thousands of genes. However, in K-core analysis the gene ESR1 was found in the 8<sup>th</sup> core. This is because ER is not central to information flow in the network as it has fewer direct targets compared to some of the other TFs that it regulates. On the other hand Myc is at the center of the core since it directly influences a large number of other TFs and miRNAs. As shown above (in the section titled “literature validation of core regulators”) we confirmed that the molecules placed within the first three cores are known in the literature to have key roles in the estrogen response of MCF-7 cells.</p>
+</sec>
+<sec id="sec016">
+<title>Nodes in the inner cores are more explanatory of gene expression</title>
+<p>In order to test the hypothesis that the layered hierarchy produced by K-core places more influential or core regulatory molecules in the inner cores, we studied the contribution of regulators in various cores of the MCF-7 estrogen response GRN towards explaining the expression levels of mRNAs. We repeated the quantitative gene expression classification experiments as described above using regulatory nodes selected with varying cutoffs of the core number, K. Initially, several regulatory nodes were selected with a loose criterion of K ≤ 15. Subsequently, the number of regulatory nodes was reduced by progressively decreasing the cutoff for K until a minimum of K ≤ 2, which considered only the innermost core regulators. The overall classification accuracy decreased slightly as the number of regulatory nodes was gradually reduced from 111 (K ≤ 15) to 29 (K ≤ 2): AUROC for LR decreased from 0.733 to 0.687, AUROC for SVR decreased from 0.742 to 0.693, and MCC for SVC decreased from 0.364 to 0.300 (<xref rid="pcbi.1004504.t006" ref-type="table">Table 6</xref>). The inner and outer core regulators were also used separately for gene expression classification in order to estimate their individual contributions (bottom half of <xref rid="pcbi.1004504.t006" ref-type="table">Table 6</xref>). Classification accuracy was highest (LR AUROC = 0.687, SVR AUROC = 0.693, SVC MCC = 0.300) using 29 innermost core regulators (K ≤ 2), lower (LR AUROC = 0.535, SVR AUROC = 0.580, SVC MCC = 0.130) for the next outer set of 16 regulators (K = 3), and further lower for subsequent sets of outer regulators. Thus, the inner K-core regulators were found to be more explanatory of gene expression than the outer ones.</p>
+<table-wrap id="pcbi.1004504.t006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.t006</object-id>
+<label>Table 6</label> <caption><title>Gene expression classification in the MCF-7 estrogen response GRN using various selections of regulatory nodes based on their core numbers, K, in K-core hierarchy.</title> <p>In the top half of the table the innermost core regulators (K ≤ 2) are always included and the cumulative effect of adding further core regulators is measured. In the bottom half of the table the innermost core regulators (K ≤ 2) are excluded in order to measure the individual contributions of regulators at various core levels. Classification accuracy is reported in terms of area under the ROC curve (AUROC) for real valued classifiers (LR, SVR and PCA) and Matthew’s correlation coefficient (MCC) for binary classifiers (SVC).</p></caption>
+<alternatives>
+<graphic id="pcbi.1004504.t006g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.t006" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th colspan="3" align="center" rowspan="1">Selected regulators</th>
+<th colspan="3" align="center" rowspan="1">Area under ROC curve</th>
+<th align="center" rowspan="1" colspan="1">MCC</th>
+</tr>
+<tr>
+<th align="justify" rowspan="1" colspan="1">K cutoff</th>
+<th align="center" rowspan="1" colspan="1"># Regulators</th>
+<th align="center" rowspan="1" colspan="1"># Targets</th>
+<th align="center" rowspan="1" colspan="1">LR</th>
+<th align="center" rowspan="1" colspan="1">PCA</th>
+<th align="center" rowspan="1" colspan="1">SVR</th>
+<th align="center" rowspan="1" colspan="1">SVC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="justify" rowspan="1" colspan="1">K ≤ 15</td>
+<td align="center" rowspan="1" colspan="1">111</td>
+<td align="center" rowspan="1" colspan="1">5625</td>
+<td align="char" char="." rowspan="1" colspan="1">0.733</td>
+<td align="char" char="." rowspan="1" colspan="1">0.609</td>
+<td align="char" char="." rowspan="1" colspan="1">0.742</td>
+<td align="char" char="." rowspan="1" colspan="1">0.364</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">K ≤ 10</td>
+<td align="center" rowspan="1" colspan="1">89</td>
+<td align="center" rowspan="1" colspan="1">5647</td>
+<td align="char" char="." rowspan="1" colspan="1">0.715</td>
+<td align="char" char="." rowspan="1" colspan="1">0.608</td>
+<td align="char" char="." rowspan="1" colspan="1">0.725</td>
+<td align="char" char="." rowspan="1" colspan="1">0.349</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">K ≤ 7</td>
+<td align="center" rowspan="1" colspan="1">61</td>
+<td align="center" rowspan="1" colspan="1">5675</td>
+<td align="char" char="." rowspan="1" colspan="1">0.696</td>
+<td align="char" char="." rowspan="1" colspan="1">0.606</td>
+<td align="char" char="." rowspan="1" colspan="1">0.703</td>
+<td align="char" char="." rowspan="1" colspan="1">0.309</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">K ≤ 3</td>
+<td align="center" rowspan="1" colspan="1">45</td>
+<td align="center" rowspan="1" colspan="1">5691</td>
+<td align="char" char="." rowspan="1" colspan="1">0.692</td>
+<td align="char" char="." rowspan="1" colspan="1">0.606</td>
+<td align="char" char="." rowspan="1" colspan="1">0.699</td>
+<td align="char" char="." rowspan="1" colspan="1">0.311</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">K ≤ 2</td>
+<td align="center" rowspan="1" colspan="1">29</td>
+<td align="center" rowspan="1" colspan="1">5707</td>
+<td align="char" char="." rowspan="1" colspan="1">0.687</td>
+<td align="char" char="." rowspan="1" colspan="1">0.610</td>
+<td align="char" char="." rowspan="1" colspan="1">0.693</td>
+<td align="char" char="." rowspan="1" colspan="1">0.300</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">K = 3</td>
+<td align="center" rowspan="1" colspan="1">16</td>
+<td align="center" rowspan="1" colspan="1">5720</td>
+<td align="char" char="." rowspan="1" colspan="1">0.584</td>
+<td align="char" char="." rowspan="1" colspan="1">0.535</td>
+<td align="char" char="." rowspan="1" colspan="1">0.580</td>
+<td align="char" char="." rowspan="1" colspan="1">0.130</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">3 &lt; K ≤ 7</td>
+<td align="center" rowspan="1" colspan="1">16</td>
+<td align="center" rowspan="1" colspan="1">5720</td>
+<td align="char" char="." rowspan="1" colspan="1">0.570</td>
+<td align="char" char="." rowspan="1" colspan="1">0.525</td>
+<td align="char" char="." rowspan="1" colspan="1">0.565</td>
+<td align="char" char="." rowspan="1" colspan="1">0.084</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">7 &lt; K ≤ 10</td>
+<td align="center" rowspan="1" colspan="1">28</td>
+<td align="center" rowspan="1" colspan="1">5708</td>
+<td align="char" char="." rowspan="1" colspan="1">0.569</td>
+<td align="char" char="." rowspan="1" colspan="1">0.525</td>
+<td align="char" char="." rowspan="1" colspan="1">0.568</td>
+<td align="char" char="." rowspan="1" colspan="1">0.091</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">10 &lt; K ≤ 15</td>
+<td align="center" rowspan="1" colspan="1">22</td>
+<td align="center" rowspan="1" colspan="1">5714</td>
+<td align="char" char="." rowspan="1" colspan="1">0.569</td>
+<td align="char" char="." rowspan="1" colspan="1">0.572</td>
+<td align="char" char="." rowspan="1" colspan="1">0.609</td>
+<td align="char" char="." rowspan="1" colspan="1">0.165</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+<sec id="sec017">
+<title>Nodes in the inner cores are biologically more relevant</title>
+<p>As described above and in the Methods section, we measured the biological relevance of individual genes by ranking them according to their number of Google scholar citations in the context of MCF-7 estrogen response. Then we computed the average rank of genes in each core to assess the overall biological relevance of a core. Lower average rank indicates greater known relevance to MCF-7 estrogen response biology. The average rank was lowest for the innermost cores (K≤2) and increased for each of the successive outer cores (<xref rid="pcbi.1004504.t007" ref-type="table">Table 7</xref>) indicating that the regulators in the inner cores are biologically more relevant than those in the outer cores to the estrogen response of MCF-7 cells.</p>
+<table-wrap id="pcbi.1004504.t007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.t007</object-id>
+<label>Table 7</label> <caption><title>Literature validation in terms of the average rank of genes in various cores of the K-core hierarchical organization of MCF-7 estrogen response GRN (lower scores are better).</title></caption>
+<alternatives>
+<graphic id="pcbi.1004504.t007g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.t007" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Core(s)</th>
+<th align="center" rowspan="1" colspan="1"># Regulators</th>
+<th align="center" rowspan="1" colspan="1">Average rank</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="justify" rowspan="1" colspan="1">K≤2</td>
+<td align="center" rowspan="1" colspan="1">29</td>
+<td align="char" char="." rowspan="1" colspan="1">47.8</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">K = 3</td>
+<td align="center" rowspan="1" colspan="1">16</td>
+<td align="char" char="." rowspan="1" colspan="1">52.4</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">4≤K≤7</td>
+<td align="center" rowspan="1" colspan="1">16</td>
+<td align="char" char="." rowspan="1" colspan="1">56.8</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">8≤K≤9</td>
+<td align="center" rowspan="1" colspan="1">16</td>
+<td align="char" char="." rowspan="1" colspan="1">78.1</td>
+</tr>
+<tr>
+<td align="justify" rowspan="1" colspan="1">K = 10</td>
+<td align="center" rowspan="1" colspan="1">12</td>
+<td align="char" char="." rowspan="1" colspan="1">80.4</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+<sec id="sec018">
+<title>Contribution of miRNAs in explaining gene expression</title>
+<p>miRNAs are fine regulators of gene expression. We tested the regulatory contribution of miRNAs by measuring the accuracy of gene expression classification with and without including miRNAs within the list of regulators. In the MCF-7 estrogen response GRN most of the miRNAs occupied the outer cores in the hierarchical organization produced by K-core while none of them was within the innermost core (K ≤ 2), supporting the conclusion that miRNAs are not among the most important molecules that direct information flow in a gene network (<xref rid="pcbi.1004504.g009" ref-type="fig">Fig 9</xref>). Classification accuracy dropped slightly when miRNAs were excluded (<xref rid="pcbi.1004504.t008" ref-type="table">Table 8</xref>) indicating a minor influence of miRNAs in regulating gene expression in the present network. A possible reason is that we have used <italic>in silico</italic> miRNA target information in this study which is generally considered inferior to experimental target information.</p>
+<table-wrap id="pcbi.1004504.t008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.t008</object-id>
+<label>Table 8</label> <caption><title>Performance of gene expression classification in the MCF-7 estrogen response GRN with and without the inclusion of miRNAs in the list of regulators.</title> <p>Each row of the table represents a different selection of regulatory nodes based on their core number, K, in the hierarchy produced by K-core. Classification accuracy is reported in terms of the area under the ROC curve (AUROC) for LR and SVR.</p></caption>
+<alternatives>
+<graphic id="pcbi.1004504.t008g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.t008" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="1" colspan="1">Selected regulators</th>
+<th colspan="2" align="center" rowspan="1">With miRNAs (AUROC)</th>
+<th colspan="2" align="center" rowspan="1">Without miRNAs (AUROC)</th>
+</tr>
+<tr>
+<th align="center" rowspan="1" colspan="1">K cutoff</th>
+<th align="center" rowspan="1" colspan="1">LR</th>
+<th align="center" rowspan="1" colspan="1">SVR</th>
+<th align="center" rowspan="1" colspan="1">LR</th>
+<th align="center" rowspan="1" colspan="1">SVR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" rowspan="1" colspan="1">K ≤ 15</td>
+<td align="char" char="." rowspan="1" colspan="1">0.733</td>
+<td align="char" char="." rowspan="1" colspan="1">0.742</td>
+<td align="char" char="." rowspan="1" colspan="1">0.695</td>
+<td align="char" char="." rowspan="1" colspan="1">0.705</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">K ≤ 10</td>
+<td align="char" char="." rowspan="1" colspan="1">0.715</td>
+<td align="char" char="." rowspan="1" colspan="1">0.725</td>
+<td align="char" char="." rowspan="1" colspan="1">0.695</td>
+<td align="char" char="." rowspan="1" colspan="1">0.705</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">K ≤ 7</td>
+<td align="char" char="." rowspan="1" colspan="1">0.696</td>
+<td align="char" char="." rowspan="1" colspan="1">0.703</td>
+<td align="char" char="." rowspan="1" colspan="1">0.694</td>
+<td align="char" char="." rowspan="1" colspan="1">0.700</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">K ≤ 3</td>
+<td align="char" char="." rowspan="1" colspan="1">0.692</td>
+<td align="char" char="." rowspan="1" colspan="1">0.699</td>
+<td align="char" char="." rowspan="1" colspan="1">0.689</td>
+<td align="char" char="." rowspan="1" colspan="1">0.696</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+</sec>
+</sec>
+<sec id="sec019" sec-type="conclusions">
+<title>Discussion</title>
+<p>We described the construction of human TF-miRNA-mRNA networks using experimental TF-target and <italic>in silico</italic> miRNA-target information from public databases and algorithms for identifying their core regulatory genes and organizing them into a meaningful hierarchy.</p>
+<p>Apart from its methodological contributions this study has also given some interesting insights into the topology of human GRNs. While most TFs tend to have high out-degrees, most mRNAs have low to medium in-degrees. There are only few hub mRNAs that attract many edges into them. This implies that there are many small cohorts of TFs that regulate various mRNAs. Usually a cohort of TFs regulates genes in a specific biological process. Thus could be many different cohorts of TFs regulating many varieties of biological processes. We observed that mRNAs with low in-degrees had low absolute expression levels and low tissue specificity and were usually present outside the nucleus performing housekeeping or signal transduction type of functions. On the other hand mRNAs with high in-degrees were associated with high expression level, high tissue specificity and were present in the nucleus taking part in transcriptional activity and other related functions in context of DNA. The association between high in-degree and tissue specificity makes biological sense as more number of TFs required for regulating a gene will allow greater fine tuning of its expression.</p>
+<p>Although our current network is incomplete with only 10–15% of the estimated number of TF-target interactions known, by extrapolation we attempted to describe the characteristics of a full TF-miRNA-mRNA network. A full network is estimated to contain ~5 million TF-target interactions with an average mRNA in-degree of 250 and a few hubs with up to 750 incoming edges. Assuming that a TFBS is on average 8 bp long and a TF has on average 5 binding sites per gene (these values are rough estimates based on ENCODE data), the total regulatory DNA would span 2 billion bp. This estimate is on the higher side as we have neglected overlapping or competing TFBS and we have made a generous estimate of the total number of TF-target interactions. However, a large chunk of human DNA could carry regulatory signals.</p>
+<p>The fact that betweenness centrality, pagerank and K-core algorithms performed the best in identifying core regulators of a GRN implies that nodes with higher and more direct connectivity with other nodes are more influential or core to biological processes. This is tied in to the hierarchical organization of GRNs. The concept of hierarchical organization in GRNs has been in place for many years. Earlier uses of terms such as “master regulators” [<xref rid="pcbi.1004504.ref046" ref-type="bibr">46</xref>] implied a pyramidal control structure similar to social organizations where few and influential individuals at the top of the hierarchy supervise a larger group of individuals below them. Initial studies of GRNs in simpler organisms such as <italic>E</italic>. <italic>coli</italic> and yeasts supported this idea [<xref rid="pcbi.1004504.ref047" ref-type="bibr">47</xref>,<xref rid="pcbi.1004504.ref048" ref-type="bibr">48</xref>]. However, the notion of hierarchy and master regulators has undergone changes as our understanding of transcriptional networks has evolved [<xref rid="pcbi.1004504.ref049" ref-type="bibr">49</xref>]. Regulation of gene expression is now understood to lie somewhere in between pyramidal “autocracy” (master regulators influencing thousands of genes) and flat “democracy” (all genes exerting regulatory influence on all other genes) [<xref rid="pcbi.1004504.ref050" ref-type="bibr">50</xref>]. For instance, Jothi et al. [<xref rid="pcbi.1004504.ref020" ref-type="bibr">20</xref>] used a vertex sort algorithm to organize yeast transcription factors in a three-layered hierarchy (top, core and bottom) having a feed-forward structure in which the top layer TFs regulate the core and the bottom layer TFs, the core layer TFs regulate the bottom layer, and the TFs in a layer regulate each other. Currently the study of modular structure of GRNs is gaining interest where groups of genes co-regulate and coordinate specific functions [<xref rid="pcbi.1004504.ref051" ref-type="bibr">51</xref>,<xref rid="pcbi.1004504.ref052" ref-type="bibr">52</xref>].</p>
+<p>Our K-core based hierarchical organization implies a notion of <italic>network centrality</italic> or the relative influence or importance of nodes in a network. Nodes found in the inner cores are considered to be more influential or <italic>central</italic> than those in the outer cores. Although there are many measures of centrality [<xref rid="pcbi.1004504.ref053" ref-type="bibr">53</xref>], our choice of K-core centrality was motivated by the virtue of its being a combination of both global and local properties of a node as it lies somewhere between degree centrality which identifies nodes that are globally hubs, and betweenness centrality which identifies nodes that are locally important for information flow in a network [<xref rid="pcbi.1004504.ref054" ref-type="bibr">54</xref>]. In protein interaction networks, essential and evolutionary conserved proteins were found towards the innermost cores [<xref rid="pcbi.1004504.ref055" ref-type="bibr">55</xref>]. In internet networks, nodes with better routing capabilities, <italic>i</italic>.<italic>e</italic>. which can choose several paths to connect to another node, were in the inner cores [<xref rid="pcbi.1004504.ref056" ref-type="bibr">56</xref>]. In social networks and in spread of infectious diseases the most efficient spreaders were those located within the core of the network as identified by K-core [<xref rid="pcbi.1004504.ref044" ref-type="bibr">44</xref>,<xref rid="pcbi.1004504.ref045" ref-type="bibr">45</xref>,<xref rid="pcbi.1004504.ref057" ref-type="bibr">57</xref>]. It appears that in our hierarchical organization regulators central to the flow of regulatory information are in the innermost cores as they are most explanatory of gene expression. Previously it has been shown that greater number of TF-mRNA interactions is associated with more number of cores in the hierarchical organization of a GRN [<xref rid="pcbi.1004504.ref042" ref-type="bibr">42</xref>]. We observed a total of 29 cores in the K-core organization of MCF-7 estrogen response GRN as compared to between 6–9 cores observed in yeast GRNs [<xref rid="pcbi.1004504.ref042" ref-type="bibr">42</xref>], which agrees with the observation that human GRNs have higher degree of interconnectivity between genes than yeast GRNs.</p>
+<sec id="sec020">
+<title>Sources of error</title>
+<p>While our knowledge of bacterial and yeast GRNs is fairly comprehensive, human GRNs have only been partially reconstructed. Recently, a core human GRN interconnecting 475 TFs was reported separately for 41 different tissue types [<xref rid="pcbi.1004504.ref058" ref-type="bibr">58</xref>] by combining <italic>in silico</italic> predicted TF binding sites and <italic>in vivo</italic> DNaseI footprints. A human GRN was also reconstructed from ENCODE data [<xref rid="pcbi.1004504.ref013" ref-type="bibr">13</xref>]. In the present study we reconstructed a network of human genes and microRNAs using experimental TF target and <italic>in silico</italic> predicted miRNA target information. The TF target information obtained from ENCODE and HTRIdB covered only 329 out of 1374 TF nodes in our network and hence target information for more than two-thirds of the TFs was missing. Our analysis based on an incomplete network is prone to errors. Furthermore, TF target information obtained from ENCODE and HTRIdB is not tissue specific and hence it is only approximately correct when used for a specific tissue or cell line. Another source of error in our network reconstruction is that biochemical binding of a TF in the promoter region of a gene does not necessarily translate to a functional interaction between the TF and the target gene. Functional interaction requires additional criteria to be fulfilled such as the position of TF binding relative to the transcription start site and the context of other TF binding sites in its vicinity. Some proprietary databases contain information of functional interaction between TFs and their target genes compiled from published literature. This information can in fact be more accurate for delineating true interactions between TFs and their target genes. Despite all of these limitations, our network was able to explain gene expression with up to 70% accuracy (MCC = 0.4), which was significant against randomization tests. We are optimistic that prediction accuracy can be substantially improved as more extensive and accurate data of TF targets becomes available in the near future.</p>
+<p>Due to lack of experimental data on miRNA targets, we obtained this information from a combination of four different publically available <italic>in silico</italic> miRNA target prediction tools, each of which has a different underlying methodology. A miRNA target was considered valid only if supported by at least two different tools (we also separately tried considering only targets supported by at least three different tools and observed similar results). We observed in our randomization tests that <italic>in silico</italic> miRNA target information contributed little towards explaining gene expression. Thus experimental data on miRNA targets would add important information to the network.</p>
+</sec>
+<sec id="sec021">
+<title>Conclusion</title>
+<p>In conclusion, this study presents an optimistic view of the usefulness of static gene networks for identifying core regulators within a densely interconnected system of genes and explaining gene expression.</p>
+</sec>
+</sec>
+<sec id="sec022" sec-type="materials|methods">
+<title>Methods</title>
+<sec id="sec023">
+<title>Transcriptional regulation data</title>
+<p>Regulatory targets of transcription factors (TFs) were identified using two public databases—Encode and HTRIdb. High throughput transcription factor binding profiles obtained from 423 ChIP Seq experiments on 76 different human cell types were downloaded from the ENCODE consortium website [<xref rid="pcbi.1004504.ref027" ref-type="bibr">27</xref>,<xref rid="pcbi.1004504.ref059" ref-type="bibr">59</xref>]. The ChIP Seq experiments reported a total of 5.8 million normalized peaks of 120 unique transcription factors in the human genome build 37 (hg19) reference assembly. The annotation of human genes and miRNAs in the same reference assembly was downloaded from the Gencode website (version 17) [<xref rid="pcbi.1004504.ref023" ref-type="bibr">23</xref>]. Following previous studies [<xref rid="pcbi.1004504.ref012" ref-type="bibr">12</xref>,<xref rid="pcbi.1004504.ref039" ref-type="bibr">39</xref>], any gene or miRNA whose TSS falls within ± 1kb of a transcription factor binding peak was considered as direct target of the transcription factor. Restricting or expanding the definition of target gene from ±0.25 kb to ±4kb had little effect on the number of TF-target or miRNA interactions (see <xref rid="pcbi.1004504.s001" ref-type="supplementary-material">S1 Text</xref>). Thus a total of 428,769 unique TF-gene interactions and 9,883 unique TF-miRNA interactions were identified. Furthermore, data of experimentally verified targets of 284 unique TFs totaling 51,871 TF-gene interactions, was downloaded from the HTRIdb database [<xref rid="pcbi.1004504.ref026" ref-type="bibr">26</xref>]. Combined together the Encode and HTRIdb data contributed a total of 466,534 unique TF-gene interactions for 329 unique TFs.</p>
+</sec>
+<sec id="sec024">
+<title>Post-transcriptional regulation data</title>
+<p><italic>In silico</italic> predicted miRNA-mRNA interactions were downloaded from four different databases, including miRanda [<xref rid="pcbi.1004504.ref060" ref-type="bibr">60</xref>], TargetScan [<xref rid="pcbi.1004504.ref061" ref-type="bibr">61</xref>], picTar [<xref rid="pcbi.1004504.ref062" ref-type="bibr">62</xref>] and miRDB [<xref rid="pcbi.1004504.ref063" ref-type="bibr">63</xref>]. Each of the above tools uses a different methodology for predicting miRNA targets. Interactions which were found in at least two out of four databases were chosen in the present study, which summed up to 1,768,780 miRNA-mRNA interactions as shown in <xref rid="pcbi.1004504.g010" ref-type="fig">Fig 10</xref>.</p>
+<fig id="pcbi.1004504.g010" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004504.g010</object-id>
+<label>Fig 10</label>
+<caption>
+<title>Overlap of miRNA-mRNA interactions predicted <italic>in silico</italic> by various tools.</title>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.g010" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec025">
+<title>Microarray data analysis</title>
+<p>All public microarray gene expression datasets were downloaded from NCBI’s Gene Expression Omnibus (GEO) [<xref rid="pcbi.1004504.ref064" ref-type="bibr">64</xref>] in the GSE series matrix format. The series matrix files were analyzed using the Bioconductor package <italic>limma</italic> [<xref rid="pcbi.1004504.ref065" ref-type="bibr">65</xref>] in R statistical language to obtain differential gene expression.</p>
+</sec>
+<sec id="sec026">
+<title>Network analysis</title>
+<p>Network analysis, including network construction, subsampling and computation of centrality measures for nodes was performed using version 1.9.1 of <italic>networkx</italic> library [<xref rid="pcbi.1004504.ref066" ref-type="bibr">66</xref>] in Python programming language. All networks were constructed as directed networks using DiGraph class of <italic>networkx</italic>. Definitions of centrality measures used in this study (out_degree_centrality, in_degree_centrality, closeness centrality, betweenness centrality, pagerank, core_number) can be accessed via <italic>networkx</italic> documentation:</p>
+<p><ext-link ext-link-type="uri" xlink:href="http://networkx.github.io/documentation/networkx-1.9.1/reference/algorithms.centrality.html" xlink:type="simple">http://networkx.github.io/documentation/networkx-1.9.1/reference/algorithms.centrality.html</ext-link></p>
+<p><ext-link ext-link-type="uri" xlink:href="http://networkx.github.io/documentation/networkx-1.9.1/reference/algorithms.link_analysis.html" xlink:type="simple">http://networkx.github.io/documentation/networkx-1.9.1/reference/algorithms.link_analysis.html</ext-link></p>
+<p><ext-link ext-link-type="uri" xlink:href="http://networkx.github.io/documentation/networkx-1.9.1/reference/algorithms.core.html" xlink:type="simple">http://networkx.github.io/documentation/networkx-1.9.1/reference/algorithms.core.html</ext-link></p>
+</sec>
+<sec id="sec027">
+<title>Literature validation of core regulators</title>
+<p>We used Google Scholar to perform a query using the format ‘+“MCF-7” +estrogen +<italic>regulator’</italic> where <italic>regulator</italic> is the gene symbol of the regulatory molecule whose biological relevance to the MCF-7 ER network is being evaluated. The number of results (publications) returned by Google Scholar was taken as a quantitative measure of the relevance of a molecule to the MCF-7 ER network. Since the same molecule may referred by different symbols in the literature, we downloaded all synonyms of a gene symbol from the HGNC website (<ext-link ext-link-type="uri" xlink:href="http://www.genenames.org/cgi-bin/download" xlink:type="simple">http://www.genenames.org/cgi-bin/download</ext-link>) and took the maximum number of results returned by any of the synonyms as the final number. For some genes such as AR, the gene symbol was too short to be meaningfully queried. In such cases we queried by the full name of the molecule, such as +“Androgen receptor” in this case.</p>
+</sec>
+<sec id="sec028">
+<title>Quantitative modeling of gene expression</title>
+<p>Quantitative modeling was used to explain the expression status of genes in a GRN as either up or down expressed based on the core regulators (TFs and miRNAs) that target them in the network. Let there be <italic>m</italic> core regulators and <italic>n</italic> target genes. In the model the target genes were represented by input-output pairs (<italic>X</italic><sub><italic>i</italic></sub>,<italic>y</italic><sub><italic>i</italic></sub>), <italic>i</italic>∈[1,…,<italic>n</italic>] where <inline-formula id="pcbi.1004504.e005"><alternatives><graphic id="pcbi.1004504.e005g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e005" xlink:type="simple"/><mml:math display="inline" id="M5" overflow="scroll"><mml:mrow><mml:msub><mml:mi>X</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msubsup><mml:mi>x</mml:mi><mml:mi>i</mml:mi><mml:mn>1</mml:mn></mml:msubsup><mml:mo>,</mml:mo><mml:mo>…</mml:mo><mml:mo>,</mml:mo><mml:msubsup><mml:mi>x</mml:mi><mml:mi>i</mml:mi><mml:mi>m</mml:mi></mml:msubsup></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula> is a <italic>m</italic>-dimensional vector such that <inline-formula id="pcbi.1004504.e006"><alternatives><graphic id="pcbi.1004504.e006g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e006" xlink:type="simple"/><mml:math display="inline" id="M6" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>x</mml:mi><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:msubsup><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:math></alternatives></inline-formula> if there is an edge connecting core regulator <italic>j</italic>∈[1,…,<italic>m</italic>] to the target gene <italic>i</italic>, or otherwise <inline-formula id="pcbi.1004504.e007"><alternatives><graphic id="pcbi.1004504.e007g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e007" xlink:type="simple"/><mml:math display="inline" id="M7" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>x</mml:mi><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:msubsup><mml:mo>=</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:math></alternatives></inline-formula>, and <italic>y</italic><sub><italic>i</italic></sub> = +1 if target gene <italic>i</italic> is up expressed or <italic>y</italic><sub><italic>i</italic></sub> = −1 if it is down expressed. We used various mathematical models to approximate target gene expression, <italic>Y</italic>, as a function of regulatory inputs, <bold>X</bold>, <italic>viz</italic>., linear regression (LR), support vector machines (support vector classification, SVC, and support vector regression, SVR) and principal component analysis (PCA), which are individually described below.</p>
+<p>We set up a K-fold validation procedure where the total set of <italic>n</italic> target genes was randomly subdivided into K subsets of equal sizes. K iterations of classification were performed where in each iteration K-1 subsets of genes were used for training a mathematical model while the one remaining subset was used for testing its classification performance. Over the K iterations, each gene subset was used exactly once as test set for assessing the performance of the mathematical model. The classification performance computed as area under the ROC curve (AUROC) was reported as its average over the K iterations. In our experiments we performed a 5-fold cross validation.</p>
+<p>Linear Regression (LR) was used to model the expression of target genes, <italic>y</italic><sub><italic>i</italic></sub>, as
+<disp-formula id="pcbi.1004504.e008">
+<alternatives>
+<graphic id="pcbi.1004504.e008g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e008" xlink:type="simple"/>
+<mml:math display="block" id="M8" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>y</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:msub><mml:mi>β</mml:mi><mml:mn>0</mml:mn></mml:msub><mml:mo>+</mml:mo><mml:mstyle displaystyle="true"><mml:munder><mml:mo>∑</mml:mo><mml:mi>j</mml:mi></mml:munder><mml:mrow><mml:msub><mml:mi>β</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:msubsup><mml:mi>x</mml:mi><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:msubsup></mml:mrow></mml:mstyle><mml:mo>+</mml:mo><mml:msub><mml:mi>ε</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>,</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula>
+where <italic>β</italic><sub>0</sub> is the intercept term representing basal expression level of all genes, <italic>ε</italic><sub><italic>i</italic></sub> is the error term, and <italic>β</italic><sub><italic>j</italic></sub> are the weights representing the relative influences of core regulators <italic>j</italic> in controlling the expression of target genes. The weights and intercept were analytically determined by the formula <inline-formula id="pcbi.1004504.e009"><alternatives><graphic id="pcbi.1004504.e009g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e009" xlink:type="simple"/><mml:math display="inline" id="M9" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>β</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mo>=</mml:mo><mml:msup><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msup><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>X</mml:mi></mml:mstyle><mml:mi>T</mml:mi></mml:msup><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>X</mml:mi></mml:mstyle></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msup><mml:msup><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>X</mml:mi></mml:mstyle><mml:mi>T</mml:mi></mml:msup><mml:mi>Y</mml:mi></mml:mrow></mml:math></alternatives></inline-formula>. The fitted expression levels of the genes <inline-formula id="pcbi.1004504.e010"><alternatives><graphic id="pcbi.1004504.e010g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e010" xlink:type="simple"/><mml:math display="inline" id="M10" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>i</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:msub><mml:mi>y</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mi>ε</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:math></alternatives></inline-formula> were computed as <inline-formula id="pcbi.1004504.e011"><alternatives><graphic id="pcbi.1004504.e011g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e011" xlink:type="simple"/><mml:math display="inline" id="M11" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>Y</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mo>=</mml:mo><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>X</mml:mi></mml:mstyle><mml:mover accent="true"><mml:mi>β</mml:mi><mml:mo>^</mml:mo></mml:mover></mml:mrow></mml:math></alternatives></inline-formula>.</p>
+</sec>
+<sec id="sec029">
+<title>Principal component analysis</title>
+<p>The principal components of the input matrix <bold>X</bold> were computed by determining the eigenvalues, {<italic>λ</italic><sub>1</sub>,<italic>λ</italic><sub>2</sub>,…,<italic>λ</italic><sub><italic>m</italic></sub>}, and eigenvectors, {<italic>v</italic><sub>1</sub>,<italic>v</italic><sub>2</sub>,…,<italic>v</italic><sub><italic>m</italic></sub>}, of its covariance matrix, <bold>XX</bold><sup><italic>T</italic></sup>, satisfying the condition
+<disp-formula id="pcbi.1004504.e012">
+<alternatives>
+<graphic id="pcbi.1004504.e012g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e012" xlink:type="simple"/>
+<mml:math display="block" id="M12" overflow="scroll">
+<mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>X</mml:mi></mml:mstyle><mml:msup><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>X</mml:mi></mml:mstyle><mml:mi>T</mml:mi></mml:msup></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:msub><mml:mi>v</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:msub><mml:mi>λ</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:msub><mml:mi>v</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo>,</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula>
+where <italic>λ</italic><sub><italic>j</italic></sub> are scalars, and <italic>v</italic><sub><italic>j</italic></sub> are <italic>n</italic>×1 dimensional column vectors. The normalized eigenvectors <inline-formula id="pcbi.1004504.e013"><alternatives><graphic id="pcbi.1004504.e013g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e013" xlink:type="simple"/><mml:math display="inline" id="M13" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>v</mml:mi><mml:mo>¯</mml:mo></mml:mover><mml:mi>j</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mrow><mml:mrow><mml:msub><mml:mi>v</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow><mml:mo>/</mml:mo><mml:mrow><mml:mrow><mml:mo>‖</mml:mo><mml:mrow><mml:msub><mml:mi>v</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow><mml:mo>‖</mml:mo></mml:mrow></mml:mrow></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula> were called the principal components of <bold>X</bold>. The principal components were ordered such that the largest eigenvalue corresponds to the first principal component and the smallest eigenvalue corresponds to the last (<italic>m</italic><sup>th</sup>) principal component. The first principal component was used as a predictor for target gene expression, i.e., <inline-formula id="pcbi.1004504.e014"><alternatives><graphic id="pcbi.1004504.e014g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e014" xlink:type="simple"/><mml:math display="inline" id="M14" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>Y</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mo>=</mml:mo><mml:msub><mml:mi>v</mml:mi><mml:mn>1</mml:mn></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>.</p>
+<p>Support vector machine was provided the <italic>m</italic>-dimensional rows of input matrix <bold>X</bold> as input vectors and the corresponding gene expression class, <italic>Y</italic>, as binary (+1 or -1) outputs. We used the libSVM software library [<xref rid="pcbi.1004504.ref067" ref-type="bibr">67</xref>] accessed via its in-built Python wrappers to implement both classification (SVC) and regression (SVR) models. In both models we used the radial basis function (RBF) kernel. The parameter γ of the kernel and the cost (or regularization) parameter <italic>C</italic> of the SVM model were chosen by optimization using grid search [<xref rid="pcbi.1004504.ref068" ref-type="bibr">68</xref>], but the cross-validation procedure was done differently in this case to avoid overfitting the parameters. We separated the data into 80% training and 20% held out test data. On the 80% training data we performed 5-fold cross validation while using grid search to select the best classification accuracy. Then the chosen parameters were used to train a SVM model on the entire 80% training data. The accuracy of this model was tested on the held out test data. The training data and held out test data were rotated in a 5-fold cross validation to obtain the average classification accuracy.</p>
+</sec>
+<sec id="sec030">
+<title>Computation of area under the ROC curve (AUROC)</title>
+<p>The LR, PCA and SVR models produced real valued estimates, <inline-formula id="pcbi.1004504.e015"><alternatives><graphic id="pcbi.1004504.e015g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e015" xlink:type="simple"/><mml:math display="inline" id="M15" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>, of the target gene expression levels, <italic>y</italic><sub><italic>i</italic></sub>. The real valued <inline-formula id="pcbi.1004504.e016"><alternatives><graphic id="pcbi.1004504.e016g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e016" xlink:type="simple"/><mml:math display="inline" id="M16" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:math></alternatives></inline-formula> were converted to binary class predictions by selecting a discrimination threshold <italic>t</italic> such that <inline-formula id="pcbi.1004504.e017"><alternatives><graphic id="pcbi.1004504.e017g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e017" xlink:type="simple"/><mml:math display="inline" id="M17" overflow="scroll"><mml:mrow><mml:msub><mml:mi>y</mml:mi><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>p</mml:mi><mml:mi>r</mml:mi><mml:mi>e</mml:mi><mml:mi>d</mml:mi><mml:mi>i</mml:mi><mml:mi>c</mml:mi><mml:mi>t</mml:mi><mml:mi>e</mml:mi><mml:mi>d</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mo>{</mml:mo><mml:mtable><mml:mtr><mml:mtd><mml:mrow><mml:mo>+</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mtext>if </mml:mtext><mml:msub><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>i</mml:mi></mml:msub><mml:mo>≥</mml:mo><mml:mi>t</mml:mi></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mtext>if </mml:mtext><mml:msub><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>i</mml:mi></mml:msub><mml:mo>&lt;</mml:mo><mml:mi>t</mml:mi></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:math></alternatives></inline-formula>. The threshold, <italic>t</italic>, was varied over the entire range of <inline-formula id="pcbi.1004504.e018"><alternatives><graphic id="pcbi.1004504.e018g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e018" xlink:type="simple"/><mml:math display="inline" id="M18" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>, i.e., from <inline-formula id="pcbi.1004504.e019"><alternatives><graphic id="pcbi.1004504.e019g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e019" xlink:type="simple"/><mml:math display="inline" id="M19" overflow="scroll"><mml:mrow><mml:munder><mml:mrow><mml:mtext>min</mml:mtext></mml:mrow><mml:mi>i</mml:mi></mml:munder><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>i</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula> to <inline-formula id="pcbi.1004504.e020"><alternatives><graphic id="pcbi.1004504.e020g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e020" xlink:type="simple"/><mml:math display="inline" id="M20" overflow="scroll"><mml:mrow><mml:munder><mml:mrow><mml:mtext>max</mml:mtext></mml:mrow><mml:mi>i</mml:mi></mml:munder><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>y</mml:mi><mml:mo>^</mml:mo></mml:mover><mml:mi>i</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>) and the ROC (receiver operating characteristics) curve was created by plotting true positive rate (TPR) against false positive rate (FPR) of classification at various settings of threshold <italic>t</italic>. The area under the ROC curve was computed by numerical integration using trapezoidal approximation.</p>
+<disp-formula id="pcbi.1004504.e021">
+<alternatives>
+<graphic id="pcbi.1004504.e021g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e021" xlink:type="simple"/>
+<mml:math display="block" id="M21" overflow="scroll">
+<mml:mrow><mml:mtable><mml:mtr><mml:mtd><mml:mrow/></mml:mtd><mml:mtd><mml:mrow/></mml:mtd><mml:mtd><mml:mrow><mml:mtext>Predicted</mml:mtext></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mtext>Class</mml:mtext></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow/></mml:mtd><mml:mtd><mml:mrow/></mml:mtd><mml:mtd><mml:mrow><mml:mo>+</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mtext>Actual</mml:mtext></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mo>+</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mi>F</mml:mi><mml:mi>N</mml:mi></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mtext>Class</mml:mtext></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mi>F</mml:mi><mml:mi>P</mml:mi></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mi>T</mml:mi><mml:mi>N</mml:mi></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula>
+<disp-formula id="pcbi.1004504.e022">
+<alternatives>
+<graphic id="pcbi.1004504.e022g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e022" xlink:type="simple"/>
+<mml:math display="block" id="M22" overflow="scroll">
+<mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi><mml:mi>R</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi></mml:mrow><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>N</mml:mi></mml:mrow></mml:mfrac><mml:mo>,</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula>
+<disp-formula id="pcbi.1004504.e023">
+<alternatives>
+<graphic id="pcbi.1004504.e023g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e023" xlink:type="simple"/>
+<mml:math display="block" id="M23" overflow="scroll">
+<mml:mrow><mml:mi>F</mml:mi><mml:mi>P</mml:mi><mml:mi>R</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mi>F</mml:mi><mml:mi>P</mml:mi></mml:mrow><mml:mrow><mml:mi>F</mml:mi><mml:mi>P</mml:mi><mml:mo>+</mml:mo><mml:mi>T</mml:mi><mml:mi>N</mml:mi></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula>
+</sec>
+<sec id="sec031">
+<title>Matthews correlation coefficient</title>
+<p>For binary classification using support vector classification (SVC), we computed the classification accuracy in terms of Matthews correlation coefficient (MCC) defined as: <inline-formula id="pcbi.1004504.e024"><alternatives><graphic id="pcbi.1004504.e024g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004504.e024" xlink:type="simple"/><mml:math display="inline" id="M24" overflow="scroll"><mml:mrow><mml:mi>M</mml:mi><mml:mi>C</mml:mi><mml:mi>C</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi><mml:mo>×</mml:mo><mml:mi>T</mml:mi><mml:mi>N</mml:mi><mml:mo>−</mml:mo><mml:mi>F</mml:mi><mml:mi>P</mml:mi><mml:mo>×</mml:mo><mml:mi>F</mml:mi><mml:mi>N</mml:mi></mml:mrow><mml:mrow><mml:msqrt><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>P</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>T</mml:mi><mml:mi>P</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>N</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>T</mml:mi><mml:mi>N</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>P</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>T</mml:mi><mml:mi>N</mml:mi><mml:mo>+</mml:mo><mml:mi>F</mml:mi><mml:mi>N</mml:mi></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:msqrt></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula>. MCC is generally regarded as a balanced measure taking into account the classification accuracy in both positive and negative classes.</p>
+</sec>
+<sec id="sec032">
+<title>Hierarchical network analysis</title>
+<p>Our method of constructing a hierarchy from a directed regulatory network is inspired by existing methods in the literature but is more suitable for identifying few important regulators in the network. Bhardwaj, et al., [<xref rid="pcbi.1004504.ref019" ref-type="bibr">19</xref>] reported a simple method of building a hierarchy in gene networks where they organized TFs into three different layers—TFs which are not regulated by other TFs were placed in the top layer, TFs with no out-going edges to other TFs were in the lowest layer, and TFs which both regulate other TFs and are themselves regulated by other TFs were in the middle layer. This method was extended to include miRNAs by Cheng, et al., [<xref rid="pcbi.1004504.ref012" ref-type="bibr">12</xref>] where miRNAs were placed in separate layers above the TFs they regulate and in-between the layers of TFs. We found that in our network there were no TFs which could be classified in the top layer. A simple hierarchy was in-fact impossible to construct due to the presence of loops (TFs regulating each other) where it is hard to distinguish which regulator should be on the top or below.</p>
+<p>We identified the hierarchy of genes based not only on their immediate regulatory interactions but also on their overall importance within the network. We used K-shell (also known as K-core) decomposition, a classical method in graph theory [<xref rid="pcbi.1004504.ref069" ref-type="bibr">69</xref>] which has been used to obtain a hierarchy of nodes based on their degree characteristics in bacteria and yeast GRNs [<xref rid="pcbi.1004504.ref042" ref-type="bibr">42</xref>,<xref rid="pcbi.1004504.ref043" ref-type="bibr">43</xref>]. Each K-shell was obtained by successively removing nodes of degree K beginning with degree 1. This was repeated until a final irreducible K-core was left. Recent literature has found that the K-core contains the nodes that have the greatest potential for information spread within the network [<xref rid="pcbi.1004504.ref045" ref-type="bibr">45</xref>]. Thus using K-core we retained the most essential central nodes for consideration.</p>
+</sec>
+</sec>
+<sec id="sec033">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1004504.s001" xlink:href="info:doi/10.1371/journal.pcbi.1004504.s001" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S1 Text</label>
+<caption>
+<title>Additional analyses.</title>
+<p>Provides additional analyses on (1) Four different MCF-7 E2 vs. Control public datasets used to build the MCF-7 ER network, (2) Literature support for regulatory nodes in the MCF-7 ER network, (3) Comparison of MCF-7 ER network with random networks.</p>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004504.s002" xlink:href="info:doi/10.1371/journal.pcbi.1004504.s002" mimetype="application/zip" position="float" xlink:type="simple">
+<label>S1 Data</label>
+<caption>
+<title>Datasets and source code.</title>
+<p>Contains integrated human TF-miRNA-mRNA network dataset, MCF-7 ER network dataset, source code for LR, PCA, SVR and SVC analysis on MCF-7 ER network.</p>
+<p>(ZIP)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004504.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Basso</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Margolin</surname> <given-names>AA</given-names></name>, <name name-style="western"><surname>Stolovitzky</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Klein</surname> <given-names>U</given-names></name>, <name name-style="western"><surname>Dalla-Favera</surname> <given-names>R</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Reverse engineering of regulatory networks in human B cells</article-title>. <source>Nat Genet</source> <volume>37</volume>: <fpage>382</fpage>–<lpage>390</lpage>. <object-id pub-id-type="pmid">15778709</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Franke</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>van Bakel</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Fokkens</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>de Jong</surname> <given-names>ED</given-names></name>, <name name-style="western"><surname>Egmont-Petersen</surname> <given-names>M</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Reconstruction of a functional human gene network, with an application for prioritizing positional candidate genes</article-title>. <source>Am J Hum Genet</source> <volume>78</volume>: <fpage>1011</fpage>–<lpage>1025</lpage>. <object-id pub-id-type="pmid">16685651</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dohr</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Klingenhoff</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Maier</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Hrabe de Angelis</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Werner</surname> <given-names>T</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Linking disease-associated genes to regulatory networks via promoter organization</article-title>. <source>Nucleic Acids Res</source> <volume>33</volume>: <fpage>864</fpage>–<lpage>872</lpage>. <object-id pub-id-type="pmid">15701758</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Buckingham</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Rigby</surname> <given-names>PW</given-names></name> (<year>2014</year>) <article-title>Gene regulatory networks and transcriptional mechanisms that control myogenesis</article-title>. <source>Dev Cell</source> <volume>28</volume>: <fpage>225</fpage>–<lpage>238</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.devcel.2013.12.020" xlink:type="simple">10.1016/j.devcel.2013.12.020</ext-link></comment> <object-id pub-id-type="pmid">24525185</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chen</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Alvarez</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Talos</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Dhruv</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Rieckhof</surname> <given-names>GE</given-names></name>, <etal>et al</etal>. (<year>2014</year>) <article-title>Identification of causal genetic drivers of human disease through systems-level analysis of regulatory networks</article-title>. <source>Cell</source> <volume>159</volume>: <fpage>402</fpage>–<lpage>414</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2014.09.021" xlink:type="simple">10.1016/j.cell.2014.09.021</ext-link></comment> <object-id pub-id-type="pmid">25303533</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nishio</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Usuda</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Matsui</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Kurata</surname> <given-names>H</given-names></name> (<year>2008</year>) <article-title>Computer-aided rational design of the phosphotransferase system for enhanced glucose uptake in Escherichia coli</article-title>. <source>Mol Syst Biol</source> <volume>4</volume>: <fpage>160</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/msb4100201" xlink:type="simple">10.1038/msb4100201</ext-link></comment> <object-id pub-id-type="pmid">18197177</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>McLeay</surname> <given-names>RC</given-names></name>, <name name-style="western"><surname>Lesluyes</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Cuellar Partida</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Bailey</surname> <given-names>TL</given-names></name> (<year>2012</year>) <article-title>Genome-wide in silico prediction of gene expression</article-title>. <source>Bioinformatics</source> <volume>28</volume>: <fpage>2789</fpage>–<lpage>2796</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/bts529" xlink:type="simple">10.1093/bioinformatics/bts529</ext-link></comment> <object-id pub-id-type="pmid">22954627</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cheng</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Gerstein</surname> <given-names>M</given-names></name> (<year>2012</year>) <article-title>Modeling the relative relationship of transcription factor binding and histone modifications to gene expression levels in mouse embryonic stem cells</article-title>. <source>Nucleic Acids Res</source> <volume>40</volume>: <fpage>553</fpage>–<lpage>568</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkr752" xlink:type="simple">10.1093/nar/gkr752</ext-link></comment> <object-id pub-id-type="pmid">21926158</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Middendorf</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Kundaje</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Wiggins</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Freund</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Leslie</surname> <given-names>C</given-names></name> (<year>2004</year>) <article-title>Predicting genetic regulatory response using classification</article-title>. <source>Bioinformatics</source> <volume>20</volume> <issue>Suppl 1</issue>: <fpage>i232</fpage>–<lpage>240</lpage>. <object-id pub-id-type="pmid">15262804</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Carter</surname> <given-names>GW</given-names></name>, <name name-style="western"><surname>Prinz</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Neou</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Shelby</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Marzolf</surname> <given-names>B</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Prediction of phenotype and gene expression for combinations of mutations</article-title>. <source>Mol Syst Biol</source> <volume>3</volume>: <fpage>96</fpage>. <object-id pub-id-type="pmid">17389876</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liu</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Yu</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Zack</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Zhu</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Qian</surname> <given-names>J</given-names></name> (<year>2008</year>) <article-title>TiGER: a database for tissue-specific gene expression and regulation</article-title>. <source>BMC Bioinformatics</source> <volume>9</volume>: <fpage>271</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2105-9-271" xlink:type="simple">10.1186/1471-2105-9-271</ext-link></comment> <object-id pub-id-type="pmid">18541026</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cheng</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Yan</surname> <given-names>KK</given-names></name>, <name name-style="western"><surname>Hwang</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Qian</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Bhardwaj</surname> <given-names>N</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Construction and analysis of an integrated regulatory network derived from high-throughput sequencing data</article-title>. <source>PLoS Comput Biol</source> <volume>7</volume>: <fpage>e1002190</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1002190" xlink:type="simple">10.1371/journal.pcbi.1002190</ext-link></comment> <object-id pub-id-type="pmid">22125477</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gerstein</surname> <given-names>MB</given-names></name>, <name name-style="western"><surname>Kundaje</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Hariharan</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Landt</surname> <given-names>SG</given-names></name>, <name name-style="western"><surname>Yan</surname> <given-names>K-K</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Architecture of the human regulatory network derived from ENCODE data</article-title>. <source>Nature</source> <volume>489</volume>: <fpage>91</fpage>–<lpage>100</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature11245" xlink:type="simple">10.1038/nature11245</ext-link></comment> <object-id pub-id-type="pmid">22955619</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schwanhausser</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Busse</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Dittmar</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Schuchhardt</surname> <given-names>J</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Global quantification of mammalian gene expression control</article-title>. <source>Nature</source> <volume>473</volume>: <fpage>337</fpage>–<lpage>342</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature10098" xlink:type="simple">10.1038/nature10098</ext-link></comment> <object-id pub-id-type="pmid">21593866</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Barabási</surname> <given-names>A-L</given-names></name>, <name name-style="western"><surname>Gulbahce</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Loscalzo</surname> <given-names>J</given-names></name> (<year>2011</year>) <article-title>Network Medicine: A Network-based Approach to Human Disease</article-title>. <source>Nature reviews Genetics</source> <volume>12</volume>: <fpage>56</fpage>–<lpage>68</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrg2918" xlink:type="simple">10.1038/nrg2918</ext-link></comment> <object-id pub-id-type="pmid">21164525</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Moreau</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Tranchevent</surname> <given-names>LC</given-names></name> (<year>2012</year>) <article-title>Computational tools for prioritizing candidate genes: boosting disease gene discovery</article-title>. <source>Nat Rev Genet</source> <volume>13</volume>: <fpage>523</fpage>–<lpage>536</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrg3253" xlink:type="simple">10.1038/nrg3253</ext-link></comment> <object-id pub-id-type="pmid">22751426</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vidal</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Cusick Michael</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Barabási</surname> <given-names>A-L</given-names></name> (<year>2011</year>) <article-title>Interactome Networks and Human Disease</article-title>. <source>Cell</source> <volume>144</volume>: <fpage>986</fpage>–<lpage>998</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2011.02.016" xlink:type="simple">10.1016/j.cell.2011.02.016</ext-link></comment> <object-id pub-id-type="pmid">21414488</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Gaiteri</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Bodea</surname> <given-names>LG</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>McElwee</surname> <given-names>J</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Integrated systems approach identifies genetic nodes and networks in late-onset Alzheimer's disease</article-title>. <source>Cell</source> <volume>153</volume>: <fpage>707</fpage>–<lpage>720</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2013.03.030" xlink:type="simple">10.1016/j.cell.2013.03.030</ext-link></comment> <object-id pub-id-type="pmid">23622250</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bhardwaj</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Yan</surname> <given-names>KK</given-names></name>, <name name-style="western"><surname>Gerstein</surname> <given-names>MB</given-names></name> (<year>2010</year>) <article-title>Analysis of diverse regulatory networks in a hierarchical context shows consistent tendencies for collaboration in the middle levels</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>107</volume>: <fpage>6841</fpage>–<lpage>6846</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0910867107" xlink:type="simple">10.1073/pnas.0910867107</ext-link></comment> <object-id pub-id-type="pmid">20351254</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jothi</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Balaji</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Wuster</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Grochow</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Gsponer</surname> <given-names>J</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Genomic analysis reveals a tight link between transcription factor dynamics and regulatory network architecture</article-title>. <source>Mol Syst Biol</source> <volume>5</volume>: <fpage>294</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/msb.2009.52" xlink:type="simple">10.1038/msb.2009.52</ext-link></comment> <object-id pub-id-type="pmid">19690563</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Budden</surname> <given-names>DM</given-names></name>, <name name-style="western"><surname>Hurley</surname> <given-names>DG</given-names></name>, <name name-style="western"><surname>Crampin</surname> <given-names>EJ</given-names></name> (<year>2015</year>) <article-title>Predictive modelling of gene expression from transcriptional regulatory elements</article-title>. <source>Brief Bioinform</source> <volume>16</volume>: <fpage>616</fpage>–<lpage>628</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bib/bbu034" xlink:type="simple">10.1093/bib/bbu034</ext-link></comment> <object-id pub-id-type="pmid">25231769</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bussemaker</surname> <given-names>HJ</given-names></name>, <name name-style="western"><surname>Foat</surname> <given-names>BC</given-names></name>, <name name-style="western"><surname>Ward</surname> <given-names>LD</given-names></name> (<year>2007</year>) <article-title>Predictive modeling of genome-wide mRNA expression: from modules to molecules</article-title>. <source>Annu Rev Biophys Biomol Struct</source> <volume>36</volume>: <fpage>329</fpage>–<lpage>347</lpage>. <object-id pub-id-type="pmid">17311525</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref023"><label>23</label><mixed-citation publication-type="other" xlink:type="simple">Gencode <ext-link ext-link-type="uri" xlink:href="http://www.gencodegenes.org/releases/17.html" xlink:type="simple">http://www.gencodegenes.org/releases/17.html</ext-link>.</mixed-citation></ref>
+<ref id="pcbi.1004504.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kozomara</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Griffiths-Jones</surname> <given-names>S</given-names></name> (<year>2011</year>) <article-title>miRBase: integrating microRNA annotation and deep-sequencing data</article-title>. <source>Nucleic Acids Res</source> <volume>39</volume>: <fpage>D152</fpage>–<lpage>157</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkq1027" xlink:type="simple">10.1093/nar/gkq1027</ext-link></comment> <object-id pub-id-type="pmid">21037258</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Matys</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Kel-Margoulis</surname> <given-names>OV</given-names></name>, <name name-style="western"><surname>Fricke</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Liebich</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Land</surname> <given-names>S</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>TRANSFAC and its module TRANSCompel: transcriptional gene regulation in eukaryotes</article-title>. <source>Nucleic Acids Res</source> <volume>34</volume>: <fpage>D108</fpage>–<lpage>110</lpage>. <object-id pub-id-type="pmid">16381825</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bovolenta</surname> <given-names>LA</given-names></name>, <name name-style="western"><surname>Acencio</surname> <given-names>ML</given-names></name>, <name name-style="western"><surname>Lemke</surname> <given-names>N</given-names></name> (<year>2012</year>) <article-title>HTRIdb: an open-access database for experimentally verified human transcriptional regulation interactions</article-title>. <source>BMC Genomics</source> <volume>13</volume>: <fpage>405</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2164-13-405" xlink:type="simple">10.1186/1471-2164-13-405</ext-link></comment> <object-id pub-id-type="pmid">22900683</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><collab xlink:type="simple">Encode</collab> (<year>2012</year>) <article-title>An integrated encyclopedia of DNA elements in the human genome</article-title>. <source>Nature</source> <volume>489</volume>: <fpage>57</fpage>–<lpage>74</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature11247" xlink:type="simple">10.1038/nature11247</ext-link></comment> <object-id pub-id-type="pmid">22955616</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bluthgen</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Brand</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Cajavec</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Swat</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Herzel</surname> <given-names>H</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Biological profiling of gene groups utilizing Gene Ontology</article-title>. <source>Genome Inform</source> <volume>16</volume>: <fpage>106</fpage>–<lpage>115</lpage>. <object-id pub-id-type="pmid">16362912</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huang da</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Sherman</surname> <given-names>BT</given-names></name>, <name name-style="western"><surname>Lempicki</surname> <given-names>RA</given-names></name> (<year>2009</year>) <article-title>Systematic and integrative analysis of large gene lists using DAVID bioinformatics resources</article-title>. <source>Nat Protoc</source> <volume>4</volume>: <fpage>44</fpage>–<lpage>57</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nprot.2008.211" xlink:type="simple">10.1038/nprot.2008.211</ext-link></comment> <object-id pub-id-type="pmid">19131956</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wu</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Orozco</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Boyer</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Leglise</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Goodale</surname> <given-names>J</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>BioGPS: an extensible and customizable portal for querying and organizing gene annotation resources</article-title>. <source>Genome Biol</source> <volume>10</volume>: <fpage>R130</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/gb-2009-10-11-r130" xlink:type="simple">10.1186/gb-2009-10-11-r130</ext-link></comment> <object-id pub-id-type="pmid">19919682</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Su</surname> <given-names>AI</given-names></name>, <name name-style="western"><surname>Wiltshire</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Batalov</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Lapp</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Ching</surname> <given-names>KA</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>A gene atlas of the mouse and human protein-encoding transcriptomes</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>101</volume>: <fpage>6062</fpage>–<lpage>6067</lpage>. <object-id pub-id-type="pmid">15075390</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xiao</surname> <given-names>SJ</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Zou</surname> <given-names>Q</given-names></name>, <name name-style="western"><surname>Ji</surname> <given-names>ZL</given-names></name> (<year>2010</year>) <article-title>TiSGeD: a database for tissue-specific genes</article-title>. <source>Bioinformatics</source> <volume>26</volume>: <fpage>1273</fpage>–<lpage>1275</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btq109" xlink:type="simple">10.1093/bioinformatics/btq109</ext-link></comment> <object-id pub-id-type="pmid">20223836</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref033"><label>33</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Levenson</surname> <given-names>AS</given-names></name>, <name name-style="western"><surname>Jordan</surname> <given-names>VC</given-names></name> (<year>1997</year>) <article-title>MCF-7: the first hormone-responsive breast cancer cell line</article-title>. <source>Cancer Res</source> <volume>57</volume>: <fpage>3071</fpage>–<lpage>3078</lpage>. <object-id pub-id-type="pmid">9242427</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref034"><label>34</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Carroll</surname> <given-names>JS</given-names></name>, <name name-style="western"><surname>Meyer</surname> <given-names>CA</given-names></name>, <name name-style="western"><surname>Song</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Geistlinger</surname> <given-names>TR</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Genome-wide analysis of estrogen receptor binding sites</article-title>. <source>Nat Genet</source> <volume>38</volume>: <fpage>1289</fpage>–<lpage>1297</lpage>. <object-id pub-id-type="pmid">17013392</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref035"><label>35</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lin</surname> <given-names>CY</given-names></name>, <name name-style="western"><surname>Vega</surname> <given-names>VB</given-names></name>, <name name-style="western"><surname>Thomsen</surname> <given-names>JS</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Kong</surname> <given-names>SL</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Whole-genome cartography of estrogen receptor alpha binding sites</article-title>. <source>PLoS Genet</source> <volume>3</volume>: <fpage>e87</fpage>. <object-id pub-id-type="pmid">17542648</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref036"><label>36</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kittler</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Zhou</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Hua</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Ma</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>Y</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>A comprehensive nuclear receptor network for breast cancer cells</article-title>. <source>Cell Rep</source> <volume>3</volume>: <fpage>538</fpage>–<lpage>551</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.celrep.2013.01.004" xlink:type="simple">10.1016/j.celrep.2013.01.004</ext-link></comment> <object-id pub-id-type="pmid">23375374</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref037"><label>37</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liu</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Zhou</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>White</surname> <given-names>KP</given-names></name> (<year>2014</year>) <article-title>RNA-seq differential expression studies: more sequence or more replication?</article-title> <source>Bioinformatics</source> <volume>30</volume>: <fpage>301</fpage>–<lpage>304</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btt688" xlink:type="simple">10.1093/bioinformatics/btt688</ext-link></comment> <object-id pub-id-type="pmid">24319002</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref038"><label>38</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Budden</surname> <given-names>DM</given-names></name>, <name name-style="western"><surname>Hurley</surname> <given-names>DG</given-names></name>, <name name-style="western"><surname>Crampin</surname> <given-names>EJ</given-names></name> (<year>2014</year>) <article-title>Predictive modelling of gene expression from transcriptional regulatory elements</article-title>. <source>Brief Bioinform</source>.</mixed-citation></ref>
+<ref id="pcbi.1004504.ref039"><label>39</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cheng</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Alexander</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Min</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Leng</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Yip</surname> <given-names>KY</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Understanding transcriptional regulation by integrative analysis of transcription factor binding data</article-title>. <source>Genome Res</source> <volume>22</volume>: <fpage>1658</fpage>–<lpage>1667</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.136838.111" xlink:type="simple">10.1101/gr.136838.111</ext-link></comment> <object-id pub-id-type="pmid">22955978</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref040"><label>40</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Natarajan</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Yardimci</surname> <given-names>GG</given-names></name>, <name name-style="western"><surname>Sheffield</surname> <given-names>NC</given-names></name>, <name name-style="western"><surname>Crawford</surname> <given-names>GE</given-names></name>, <name name-style="western"><surname>Ohler</surname> <given-names>U</given-names></name> (<year>2012</year>) <article-title>Predicting cell-type-specific gene expression from regions of open chromatin</article-title>. <source>Genome Res</source> <volume>22</volume>: <fpage>1711</fpage>–<lpage>1722</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1101/gr.135129.111" xlink:type="simple">10.1101/gr.135129.111</ext-link></comment> <object-id pub-id-type="pmid">22955983</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref041"><label>41</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Ghahramani</surname> <given-names>Z</given-names></name> (<year>2004</year>) <chapter-title>Unsupervised learning</chapter-title>. <source>Advanced Lectures on Machine Learning</source>: <publisher-name>Springer</publisher-name>. pp. <fpage>72</fpage>–<lpage>112</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004504.ref042"><label>42</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Balcan</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Kabakçıoğlu</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Mungan</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Erzan</surname> <given-names>A</given-names></name> (<year>2007</year>) <article-title>The Information Coded in the Yeast Response Elements Accounts for Most of the Topological Properties of Its Transcriptional Regulation Network</article-title>. <source>PLoS One</source> <volume>2</volume>: <fpage>e501</fpage>. <object-id pub-id-type="pmid">17551581</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref043"><label>43</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Malkoc</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Balcan</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Erzan</surname> <given-names>A</given-names></name> (<year>2010</year>) <article-title>Information content based model for the topological properties of the gene regulatory network of Escherichia coli</article-title>. <source>J Theor Biol</source> <volume>263</volume>: <fpage>281</fpage>–<lpage>294</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jtbi.2009.11.017" xlink:type="simple">10.1016/j.jtbi.2009.11.017</ext-link></comment> <object-id pub-id-type="pmid">19962388</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref044"><label>44</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>González-Bailón</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Borge-Holthoefer</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Rivero</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Moreno</surname> <given-names>Y</given-names></name> (<year>2011</year>) <article-title>The Dynamics of Protest Recruitment through an Online Network</article-title>. <source>Sci Rep</source> <volume>1</volume>.</mixed-citation></ref>
+<ref id="pcbi.1004504.ref045"><label>45</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kitsak</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Gallos</surname> <given-names>LK</given-names></name>, <name name-style="western"><surname>Havlin</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Liljeros</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Muchnik</surname> <given-names>L</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Identification of influential spreaders in complex networks</article-title>. <source>Nat Phys</source> <volume>6</volume>: <fpage>888</fpage>–<lpage>893</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004504.ref046"><label>46</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lewis</surname> <given-names>EB</given-names></name> (<year>1992</year>) <article-title>CLusters of master control genes regulate the development of higher organisms</article-title>. <source>JAMA</source> <volume>267</volume>: <fpage>1524</fpage>–<lpage>1531</lpage>. <object-id pub-id-type="pmid">1347087</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref047"><label>47</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ma</surname> <given-names>H-W</given-names></name>, <name name-style="western"><surname>Buer</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Zeng</surname> <given-names>A-P</given-names></name> (<year>2004</year>) <article-title>Hierarchical structure and modules in the Escherichia coli transcriptional regulatory network revealed by a new top-down approach</article-title>. <source>BMC Bioinformatics</source> <volume>5</volume>: <fpage>199</fpage>. <object-id pub-id-type="pmid">15603590</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref048"><label>48</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yu</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Gerstein</surname> <given-names>M</given-names></name> (<year>2006</year>) <article-title>Genomic analysis of the hierarchical structure of regulatory networks</article-title>. <source>Proceedings of the National Academy of Sciences</source> <volume>103</volume>: <fpage>14724</fpage>–<lpage>14731</lpage>. <object-id pub-id-type="pmid">17003135</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref049"><label>49</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chan</surname> <given-names>SS-K</given-names></name>, <name name-style="western"><surname>Kyba</surname> <given-names>M</given-names></name> (<year>2013</year>) <article-title>What is a Master Regulator?</article-title> <source>Journal of stem cell research &amp; therapy</source> <volume>3</volume>: <fpage>114</fpage>. <object-id pub-id-type="pmid">23885309</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref050"><label>50</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bar-Yam</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Harmon</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>de Bivort</surname> <given-names>B</given-names></name> (<year>2009</year>) <article-title>Attractors and Democratic Dynamics</article-title>. <source>Science</source> <volume>323</volume>: <fpage>1016</fpage>–<lpage>1017</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1163225" xlink:type="simple">10.1126/science.1163225</ext-link></comment> <object-id pub-id-type="pmid">19229023</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref051"><label>51</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mitra</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Carvunis</surname> <given-names>A-R</given-names></name>, <name name-style="western"><surname>Ramesh</surname> <given-names>SK</given-names></name>, <name name-style="western"><surname>Ideker</surname> <given-names>T</given-names></name> (<year>2013</year>) <article-title>Integrative approaches for finding modular structure in biological networks</article-title>. <source>Nat Rev Genet</source> <volume>14</volume>: <fpage>719</fpage>–<lpage>732</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrg3552" xlink:type="simple">10.1038/nrg3552</ext-link></comment> <object-id pub-id-type="pmid">24045689</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref052"><label>52</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Papin</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Reed</surname> <given-names>JL</given-names></name>, <name name-style="western"><surname>Palsson</surname> <given-names>BO</given-names></name> (<year>2004</year>) <article-title>Hierarchical thinking in network biology: the unbiased modularization of biochemical networks</article-title>. <source>Trends in Biochemical Sciences</source> <volume>29</volume>: <fpage>641</fpage>–<lpage>647</lpage>. <object-id pub-id-type="pmid">15544950</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref053"><label>53</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bonacich</surname> <given-names>P</given-names></name> (<year>1987</year>) <article-title>Power and Centrality: A Family of Measures</article-title>. <source>American Journal of Sociology</source> <volume>92</volume>: <fpage>1170</fpage>–<lpage>1182</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004504.ref054"><label>54</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Borgatti</surname> <given-names>SP</given-names></name> (<year>2005</year>) <article-title>Centrality and network flow</article-title>. <source>Social Networks</source> <volume>27</volume>: <fpage>55</fpage>–<lpage>71</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004504.ref055"><label>55</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wuchty</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Almaas</surname> <given-names>E</given-names></name> (<year>2005</year>) <article-title>Peeling the yeast protein network</article-title>. <source>PROTEOMICS</source> <volume>5</volume>: <fpage>444</fpage>–<lpage>449</lpage>. <object-id pub-id-type="pmid">15627958</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref056"><label>56</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alvarez-Hamelin</surname> <given-names>JI</given-names></name>, <name name-style="western"><surname>Dall’Asta</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Barrat</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Vespignani</surname> <given-names>A</given-names></name> (<year>2008</year>) <article-title>K-core decomposition of internet graphs: hierarchies, self-similarity and measurement biases</article-title>. <source>Networks and Heterogeneous Media</source> <volume>3</volume>: <fpage>371</fpage>–<lpage>393</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004504.ref057"><label>57</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Carmi</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Havlin</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Kirkpatrick</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Shavitt</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Shir</surname> <given-names>E</given-names></name> (<year>2007</year>) <article-title>A model of Internet topology using k-shell decomposition</article-title>. <source>Proceedings of the National Academy of Sciences</source> <volume>104</volume>: <fpage>11150</fpage>–<lpage>11154</lpage>. <object-id pub-id-type="pmid">17586683</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref058"><label>58</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Neph</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Stergachis Andrew</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Reynolds</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Sandstrom</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Borenstein</surname> <given-names>E</given-names></name>, <etal>et al</etal>. <article-title>Circuitry and Dynamics of Human Transcription Factor Regulatory Networks</article-title>. <source>Cell</source> <volume>150</volume>: <fpage>1274</fpage>–<lpage>1286</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.cell.2012.04.040" xlink:type="simple">10.1016/j.cell.2012.04.040</ext-link></comment> <object-id pub-id-type="pmid">22959076</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref059"><label>59</label><mixed-citation publication-type="other" xlink:type="simple">EncodeData (2012) <ext-link ext-link-type="uri" xlink:href="http://encodeproject.org/ENCODE/" xlink:type="simple">http://encodeproject.org/ENCODE/</ext-link> <ext-link ext-link-type="uri" xlink:href="http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/byDataType/peaks/jan2011/peakSeq/optimal/hub/" xlink:type="simple">http://ftp.ebi.ac.uk/pub/databases/ensembl/encode/integration_data_jan2011/byDataType/peaks/jan2011/peakSeq/optimal/hub/</ext-link>.</mixed-citation></ref>
+<ref id="pcbi.1004504.ref060"><label>60</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Betel</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Wilson</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Gabow</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Marks</surname> <given-names>DS</given-names></name>, <name name-style="western"><surname>Sander</surname> <given-names>C</given-names></name> (<year>2008</year>) <article-title>The microRNA.org resource: targets and expression</article-title>. <source>Nucleic Acids Res</source> <volume>36</volume>: <fpage>D149</fpage>–<lpage>153</lpage>. <object-id pub-id-type="pmid">18158296</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref061"><label>61</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lewis</surname> <given-names>BP</given-names></name>, <name name-style="western"><surname>Burge</surname> <given-names>CB</given-names></name>, <name name-style="western"><surname>Bartel</surname> <given-names>DP</given-names></name> (<year>2005</year>) <article-title>Conserved seed pairing, often flanked by adenosines, indicates that thousands of human genes are microRNA targets</article-title>. <source>Cell</source> <volume>120</volume>: <fpage>15</fpage>–<lpage>20</lpage>. <object-id pub-id-type="pmid">15652477</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref062"><label>62</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Krek</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Grun</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Poy</surname> <given-names>MN</given-names></name>, <name name-style="western"><surname>Wolf</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Rosenberg</surname> <given-names>L</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Combinatorial microRNA target predictions</article-title>. <source>Nat Genet</source> <volume>37</volume>: <fpage>495</fpage>–<lpage>500</lpage>. <object-id pub-id-type="pmid">15806104</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref063"><label>63</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>El Naqa</surname> <given-names>IM</given-names></name> (<year>2008</year>) <article-title>Prediction of both conserved and nonconserved microRNA targets in animals</article-title>. <source>Bioinformatics</source> <volume>24</volume>: <fpage>325</fpage>–<lpage>332</lpage>. <object-id pub-id-type="pmid">18048393</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref064"><label>64</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Barrett</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Wilhite</surname> <given-names>SE</given-names></name>, <name name-style="western"><surname>Ledoux</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Evangelista</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Kim</surname> <given-names>IF</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>NCBI GEO: archive for functional genomics data sets—update</article-title>. <source>Nucleic Acids Res</source> <volume>41</volume>: <fpage>D991</fpage>–<lpage>995</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gks1193" xlink:type="simple">10.1093/nar/gks1193</ext-link></comment> <object-id pub-id-type="pmid">23193258</object-id></mixed-citation></ref>
+<ref id="pcbi.1004504.ref065"><label>65</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Smyth</surname> <given-names>GK</given-names></name> (<year>2005</year>) <chapter-title>limma: Linear Models for Microarray Data</chapter-title>. In: <name name-style="western"><surname>Gentleman</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Carey</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Huber</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Irizarry</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Dudoit</surname> <given-names>S</given-names></name>, editors. <source>Bioinformatics and Computational Biology Solutions Using R and Bioconductor</source>: <publisher-name>Springer</publisher-name> <publisher-loc>New York</publisher-loc>. pp. <fpage>397</fpage>–<lpage>420</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004504.ref066"><label>66</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Hagberg</surname> <given-names>AA</given-names></name>, <name name-style="western"><surname>Schul</surname> <given-names>DA</given-names></name>, <name name-style="western"><surname>Swart</surname> <given-names>PJ</given-names></name> (<year>2008</year>) <chapter-title>Exploring Network Structure, Dynamics, and Function using NetworkX</chapter-title>. In: <name name-style="western"><surname>Varoquaux</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Vaught</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Millman</surname> <given-names>J</given-names></name>, editors. <source>Proceedings of the 7th Python in Science Conference</source>. <publisher-loc>Pasadena, CA USA</publisher-loc>. pp. <fpage>11</fpage>–<lpage>15</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004504.ref067"><label>67</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chang</surname> <given-names>C-C</given-names></name>, <name name-style="western"><surname>Lin</surname> <given-names>C-J</given-names></name> (<year>2011</year>) <article-title>LIBSVM: a library for support vector machines</article-title>. <source>ACM Transactions on Intelligent Systems and Technology</source> <volume>2</volume>: <fpage>27</fpage>:<fpage>21</fpage>–<lpage>27</lpage>:<fpage>27</fpage>.</mixed-citation></ref>
+<ref id="pcbi.1004504.ref068"><label>68</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Zhu</surname> <given-names>X</given-names></name> (<year>2003</year>) <article-title>Model Selection of SVM with RBF Kernel and its Application</article-title>. <source>Computer Engineering and Applications (in Chinese)</source> <volume>24</volume>: <fpage>72</fpage>–<lpage>73</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004504.ref069"><label>69</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pittel</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Spencer</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Wormald</surname> <given-names>N</given-names></name> (<year>1996</year>) <article-title>Sudden emergence of a giant k-core in a random graph</article-title>. <source>J Comb Theory Ser B</source> <volume>67</volume>: <fpage>111</fpage>–<lpage>151</lpage>.</mixed-citation></ref>
+</ref-list>
+</back>
+</article>

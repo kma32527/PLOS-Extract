@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+<front>
+<journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Computational Biology</journal-title></journal-title-group><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher></journal-meta>
+<article-meta><article-id pub-id-type="publisher-id">08-PLCB-RA-0722R3</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1000317</article-id><article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline"><subject>Computational Biology/Genomics</subject><subject>Genetics and Genomics/Gene Expression</subject><subject>Mathematics/Statistics</subject></subj-group></article-categories><title-group><article-title>Robust Detection and Genotyping of Single Feature Polymorphisms from Gene Expression Data</article-title><alt-title alt-title-type="running-head">Robust SFP Identification and Genotyping</alt-title></title-group><contrib-group>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple"><name name-style="western"><surname>Wang</surname><given-names>Minghui</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple"><name name-style="western"><surname>Hu</surname><given-names>Xiaohua</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>Gang</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Leach</surname><given-names>Lindsey J.</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Potokina</surname><given-names>Elena</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Druka</surname><given-names>Arnis</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Waugh</surname><given-names>Robbie</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Kearsey</surname><given-names>Michael J.</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Luo</surname><given-names>Zewei</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group><aff id="aff1"><label>1</label><addr-line>Laboratory of Population &amp; Quantitative Genetics, The State Key Laboratory of Genetic Engineering, Institute of Biostatistics, School of Life Sciences, Fudan University, Shanghai, China</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>School of Biosciences, The University of Birmingham, Edgbaston, Birmingham, United Kingdom</addr-line>       </aff><aff id="aff3"><label>3</label><addr-line>Scottish Crop Research Institute, Invergowrie, Dundee, United Kingdom</addr-line>       </aff><contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Stormo</surname><given-names>Gary D.</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group><aff id="edit1">Washington University, United States of America</aff><author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">z.luo@bham.ac.uk</email> or <email xlink:type="simple">zwluo@fudan.edu.cn</email></corresp>
+<fn fn-type="con"><p>Conceived and designed the experiments: XH RW MJK ZL. Performed the experiments: MW XH GL EP AD. Analyzed the data: MW GL LJL ZL. Contributed reagents/materials/analysis tools: MW GL EP AD RW ZL. Wrote the paper: MW MJK ZL.</p></fn>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn></author-notes><pub-date pub-type="collection"><month>3</month><year>2009</year></pub-date><pub-date pub-type="epub"><day>13</day><month>3</month><year>2009</year></pub-date><volume>5</volume><issue>3</issue><elocation-id>e1000317</elocation-id><history>
+<date date-type="received"><day>27</day><month>8</month><year>2008</year></date>
+<date date-type="accepted"><day>3</day><month>2</month><year>2009</year></date>
+</history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2009</copyright-year><copyright-holder>Wang et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+<p>It is well known that Affymetrix microarrays are widely used to predict genome-wide gene expression and genome-wide genetic polymorphisms from RNA and genomic DNA hybridization experiments, respectively. It has recently been proposed to integrate the two predictions by use of RNA microarray data only. Although the ability to detect single feature polymorphisms (SFPs) from RNA microarray data has many practical implications for genome study in both sequenced and unsequenced species, it raises enormous challenges for statistical modelling and analysis of microarray gene expression data for this objective. Several methods are proposed to predict SFPs from the gene expression profile. However, their performance is highly vulnerable to differential expression of genes. The SFPs thus predicted are eventually a reflection of differentially expressed genes rather than genuine sequence polymorphisms. To address the problem, we developed a novel statistical method to separate the binding affinity between a transcript and its targeting probe and the parameter measuring transcript abundance from perfect-match hybridization values of Affymetrix gene expression data. We implemented a Bayesian approach to detect SFPs and to genotype a segregating population at the detected SFPs. Based on analysis of three Affymetrix microarray datasets, we demonstrated that the present method confers a significantly improved robustness and accuracy in detecting the SFPs that carry genuine sequence polymorphisms when compared to its rivals in the literature. The method developed in this paper will provide experimental genomicists with advanced analytical tools for appropriate and efficient analysis of their microarray experiments and biostatisticians with insightful interpretation of Affymetrix microarray data.</p>
+</abstract><abstract abstract-type="summary"><title>Author Summary</title>
+<p>One of the ultimate goals of genomics is to explore structural and functional variations of all genes in a genome. High-density oligo-microarray techniques enable prediction of genome-wide gene expression and genome-wide genetic polymorphisms from using RNA and genomic DNA samples, respectively. A recent proposal to integrate the two predictions by use of RNA microarray data alone has great practical implications in genomics. However, it is essential but very challenging to develop an appropriate analytical method for detecting genetic polymorphisms (SFPs) from RNA expression data, which are inherently coupled with various sources of biological and technical variations. This paper presents a novel statistical approach to detect SFPs from gene expression data. We demonstrated that the new method is significantly more robust to variation due to differential expression of genes and improves the reliability of calling SFPs that bear genuine sequence polymorphisms than the other five methods in the mainstream literature on SFP prediction from microarray data. The improved predictability of detecting SFPs not only confers accuracy in evaluating gene expression from microarray information, but also opens up an opportunity to integrate structural and functional analyses by using only one set of microarray data.</p>
+</abstract><funding-group><funding-statement>This research was supported by research grants from the Nature Science Foundation and the Basic Science Research Program of China. Z.L., M.J.K. and R.W. are also supported by research grants from the Biotechnology and Biological Sciences Research Council of the United Kingdom. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="10"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Microarray technology has stimulated tremendous research interest in exploring genetic polymorphisms and gene expression at the genome wide level. Several studies have reported the use of oligonucleotide arrays for sequence variation discovery in a highly parallel manner. Winzeler et al pioneered the development of a high-throughput genotyping platform by hybridizing labelled total genomic DNA to oligonucleotide arrays <xref ref-type="bibr" rid="pcbi.1000317-Winzeler1">[1]</xref>. In yeast, it has proven useful in linkage analysis, the dissection of quantitative trait loci, and in assessing species population structure <xref ref-type="bibr" rid="pcbi.1000317-Hazen1">[2]</xref>. Recently, this approach has been applied to organisms with more complex genomes, such as <italic>Arabidopsis thaliana</italic> <xref ref-type="bibr" rid="pcbi.1000317-Borevitz1">[3]</xref>, to assess the molecular basis of natural phenotypic variation. This type of sequence variation detected by a single probe in an oligonucleotide array was termed a <italic>Single-Feature Polymorphism</italic> (SFP), where a feature refers to a probe in the array <xref ref-type="bibr" rid="pcbi.1000317-Borevitz1">[3]</xref>. By hybridizing cRNA from two parental yeast strains and their segregants onto yeast Affymetrix GeneChip arrays, Ronald et al was probably the first to propose the concept of simultaneous genotyping and gene expression analysis, and developed a method for identifying SFPs and genotyping the yeast strains at the SFPs mainly by combining a <italic>k</italic>-means clustering analysis and a mixture population analysis <xref ref-type="bibr" rid="pcbi.1000317-Ronald1">[4]</xref>. The idea behind the approach was the proposition that the presence of polymorphism in a perfect-match (PM) probe sequence between the parental strains, one of which was assumed to have the same reference sequence as the probe sequence, would lead to a detectable difference between the observed PM value of the probe and its corresponding predicted value from the positional-dependent-nearest-neighbour (PDNN) model <xref ref-type="bibr" rid="pcbi.1000317-Zhang1">[5]</xref>. This idea has been modified and implemented to predict SFPs using gene expression data profiled by Affymetrix GeneChip arrays in more complicated species such as <italic>Arabidopsis</italic> <xref ref-type="bibr" rid="pcbi.1000317-West1">[6]</xref> and barley <xref ref-type="bibr" rid="pcbi.1000317-Cui1">[7]</xref>,<xref ref-type="bibr" rid="pcbi.1000317-Rostoks1">[8]</xref>.</p>
+<p>On the basis of analyzing the Affymetrix microarray datasets of gene expression profiled at two developmental stages of two elite barley parental varieties and their 30 doubled-haploid segregation lines, Luo et al recently found that a large proportion of the SFPs predicted from the methods proposed in <xref ref-type="bibr" rid="pcbi.1000317-Ronald1">[4]</xref> and <xref ref-type="bibr" rid="pcbi.1000317-Winzeler1">[1]</xref> were actually gene expression markers (GEM) <xref ref-type="bibr" rid="pcbi.1000317-Luo1">[9]</xref>. Although the integration of genetic polymorphism detection and gene expression analysis undoubtedly has tremendous value in genomics studies, serious problems may arise if the SFPs so predicted are used as genetic markers in conventional QTL analysis or genetical genomics analysis <xref ref-type="bibr" rid="pcbi.1000317-Lander1">[10]</xref>–<xref ref-type="bibr" rid="pcbi.1000317-Schadt1">[12]</xref>. It is an essential feature for genetic markers to be devoid of effect on the traits under question. In the scenario of expression QTL (eQTL) analysis, an autocorrelation between the expression level and GEM for a gene will always lead to inference of a <italic>cis</italic>-acting regulator for the gene even though the gene is actually <italic>trans</italic>-regulated.</p>
+<p>In this paper, we present a novel method with improved robustness and accuracy for identifying and genotyping SFPs from Affymetrix gene expression data profiled on two parental lines (or strains) and their offspring population. We demonstrate the efficiency and robustness of the method by analyzing genomic DNA microarray hybridization profiles and RNA expression profiles of two laboratory strains of budding yeast (<italic>S. cerevisiae</italic>) and their 40 segregants as well as gene expression profiles at the embryonic stage of two elite barley varieties (Steptoe and Morex) and their 139 doubled haploid (DH) lines. The method was compared to those documented in both historical and more recent literature <xref ref-type="bibr" rid="pcbi.1000317-Winzeler1">[1]</xref>,<xref ref-type="bibr" rid="pcbi.1000317-Ronald1">[4]</xref>,<xref ref-type="bibr" rid="pcbi.1000317-West1">[6]</xref>,<xref ref-type="bibr" rid="pcbi.1000317-Cui1">[7]</xref>,<xref ref-type="bibr" rid="pcbi.1000317-Rostoks1">[8]</xref>.</p>
+</sec><sec id="s2">
+<title>Results</title>
+<p>It has been theoretically demonstrated that hybridization intensity of a transcript molecule onto its target probe on an Affymetrix GeneChip oligonucleotide microarray can be modelled as a product of the binding affinity between the transcript and probe sequences and the abundance of the transcript <xref ref-type="bibr" rid="pcbi.1000317-Luo1">[9]</xref>. This explains the multiplicative model for perfect match hybridization intensities, firstly proposed in <xref ref-type="bibr" rid="pcbi.1000317-Li1">[13]</xref>. The model confers two useful properties in the present context. Firstly, it enables separation of the binding affinity parameter from the transcript abundance parameter. The former reflects the degree of homogeneity between the transcript and its probe sequences. The latter is a function of the expression level of the gene represented by the probe set. Secondly, both parameters can be estimated from a properly designed experiment, thus avoiding the confounding influence of gene expression when comparing the binding affinity of the same probe between different genotypes. On the basis of this proposition, we developed a new method (Method <bold>1</bold>) for identifying and genotyping SFPs by making use of the estimated hybridization affinity from gene expression data profiled on two parental strains or lines and their segregating progeny with Affymetrix oligo-microarrays.</p>
+<p>We explored the new method and compared it with five existing methods for predicting SFPs, Method <bold>2</bold> <xref ref-type="bibr" rid="pcbi.1000317-Winzeler1">[1]</xref>, Method <bold>3</bold> <xref ref-type="bibr" rid="pcbi.1000317-Ronald1">[4]</xref>, Method <bold>4</bold> <xref ref-type="bibr" rid="pcbi.1000317-Cui1">[7]</xref>, Method <bold>5</bold> <xref ref-type="bibr" rid="pcbi.1000317-West1">[6]</xref> and Method <bold>6</bold> <xref ref-type="bibr" rid="pcbi.1000317-Rostoks1">[8]</xref>. Method <bold>1</bold> is explained in the <xref ref-type="sec" rid="s4">Methods</xref> section, and the others outlined in the supplementary <xref ref-type="supplementary-material" rid="pcbi.1000317.s001">Text S1</xref> available at the website of <italic>PLoS Computational Biology</italic>. We implemented all six methods in the Fortran-90 computer language to analyze three Affymetrix microarray datasets. The first two datasets were genomic DNA and cRNA microarray hybridization datasets collected from the same budding yeast population consisting of two parental strains, each of which was replicated three times, and their 40 haploid segregant offspring without replication. The third dataset was collected from a cRNA microarray hybridization experiment on two commercial varieties of barley, each of which was repeated three times, and their 139 doubled-haploid progeny lines without replication.</p>
+<sec id="s2a">
+<title>Consistency in SFPs predicted from parallel DNA and RNA datasets</title>
+<p>With gene expression data, one may anticipate a large variation in abundance of transcripts among different genes within the same individual or between different individual genotypes. However, with genomic DNA microarray data, one can expect uniformity in the number of DNA molecules hybridized onto a microarray chip across all genes interrogated on the chip. We first compared the SFPs from the two parallel yeast (DNA and RNA) microarray datasets by the six different methods. It can be seen from <xref ref-type="table" rid="pcbi-1000317-t001">Table 1</xref> that the present method (Method <bold>1</bold>) predicted a total number of 4107 (2077+2030) SFPs from the yeast DNA dataset and a total of 2388 (2077+311) from the RNA dataset. The number of SFPs called in both the datasets was 2077 by this method, indicating that 87% (2077/2388) of the SFPs called by the method in the RNA data were also detected in the DNA data. This percentage is the highest among the six methods. Because the SFPs called from RNA data, which were also recovered in DNA data, are more likely to be the true sequence polymorphisms, the present method thus confers the highest accuracy in identifying the SFPs bearing sequence polymorphisms from RNA microarray data. This also suggests that the present method could be implemented for predicting SFPs from the DNA dataset as well as from the RNA microarray dataset.</p>
+<table-wrap id="pcbi-1000317-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000317.t001</object-id><label>Table 1</label><caption>
+<title>The number of SFPs detected by the present and other methods from the yeast genomic DNA and RNA microarray datasets.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000317-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000317.t001" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">SFPs called</td>
+<td align="left" colspan="1" rowspan="1">Method 1</td>
+<td align="left" colspan="1" rowspan="1">Method 2</td>
+<td align="left" colspan="1" rowspan="1">Method 3</td>
+<td align="left" colspan="1" rowspan="1">Method 4</td>
+<td align="left" colspan="1" rowspan="1">Method 5</td>
+<td align="left" colspan="1" rowspan="1">Method 6</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">(Present)</td>
+<td align="left" colspan="1" rowspan="1">(Winzeler et al 1998)</td>
+<td align="left" colspan="1" rowspan="1">(Ronald et al 2005)</td>
+<td align="left" colspan="1" rowspan="1">(Cui et al 2005)</td>
+<td align="left" colspan="1" rowspan="1">(West et al 2006)</td>
+<td align="left" colspan="1" rowspan="1">(Rostoks et al 2005)</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Shared<xref ref-type="table-fn" rid="nt101">a</xref></td>
+<td align="left" colspan="1" rowspan="1">2077</td>
+<td align="left" colspan="1" rowspan="1">107</td>
+<td align="left" colspan="1" rowspan="1">2475</td>
+<td align="left" colspan="1" rowspan="1">429</td>
+<td align="left" colspan="1" rowspan="1">1260</td>
+<td align="left" colspan="1" rowspan="1">1401</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Unique in DNA<xref ref-type="table-fn" rid="nt102">b</xref></td>
+<td align="left" colspan="1" rowspan="1">2030</td>
+<td align="left" colspan="1" rowspan="1">3385</td>
+<td align="left" colspan="1" rowspan="1">1550</td>
+<td align="left" colspan="1" rowspan="1">574</td>
+<td align="left" colspan="1" rowspan="1">2062</td>
+<td align="left" colspan="1" rowspan="1">2697</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Unique in RNA<xref ref-type="table-fn" rid="nt103">c</xref></td>
+<td align="left" colspan="1" rowspan="1">311</td>
+<td align="left" colspan="1" rowspan="1">143</td>
+<td align="left" colspan="1" rowspan="1">732</td>
+<td align="left" colspan="1" rowspan="1">809</td>
+<td align="left" colspan="1" rowspan="1">424</td>
+<td align="left" colspan="1" rowspan="1">921</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">% shared<xref ref-type="table-fn" rid="nt104">d</xref></td>
+<td align="left" colspan="1" rowspan="1">87</td>
+<td align="left" colspan="1" rowspan="1">42.8</td>
+<td align="left" colspan="1" rowspan="1">77.1</td>
+<td align="left" colspan="1" rowspan="1">34.7</td>
+<td align="left" colspan="1" rowspan="1">74.8</td>
+<td align="left" colspan="1" rowspan="1">60.3</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt101"><label>a</label><p>the SFPs called in both DNA and RNA microarray datasets.</p></fn><fn id="nt102"><label>b</label><p>the SFPs called only in DNA microarray data.</p></fn><fn id="nt103"><label>c</label><p>the SFPs called only in RNA microarray data.</p></fn><fn id="nt104"><label>d</label><p>percentage of SFPs called in RNA data that were also called in the DNA.</p></fn></table-wrap-foot></table-wrap>
+<p>All the methods except for method <bold>4</bold> predicted a larger number of SFPs from the DNA dataset than from the RNA dataset, as expected given the fact that RNA microarray data involves much larger variation than genomic DNA data. Among the six methods explored here, method <bold>4</bold> proposed in <xref ref-type="bibr" rid="pcbi.1000317-Cui1">[7]</xref> shows the poorest performance, predicting the smallest number of SFPs in the two datasets and having the lowest consistency in the SFP prediction from the two parallel datasets. Method <bold>2</bold> was originally developed to predict SFPs from genomic DNA microarray data. <xref ref-type="table" rid="pcbi-1000317-t001">Table 1</xref> indicates that this method revealed a comparable number of SFPs from the DNA data to the numbers called by the other methods (except for Method <bold>4</bold>). However, its predictability was significantly worse in the RNA data analysis, reflecting a remarkable difference in recovering SFPs between the two types of Affymetrix microarray data.</p>
+</sec><sec id="s2b">
+<title>Efficiency in avoiding gene expression markers</title>
+<p>It has been demonstrated by Brem et al that up to 43% of genes may express differentially between two laboratory yeast strains <xref ref-type="bibr" rid="pcbi.1000317-Brem1">[14]</xref>. Differential gene expression between two parental strains has a high heritability with an average of 84%. These observations in yeast were also observed in the genomes of other more complex organisms <xref ref-type="bibr" rid="pcbi.1000317-Schadt1">[12]</xref>,<xref ref-type="bibr" rid="pcbi.1000317-Morley1">[15]</xref>,<xref ref-type="bibr" rid="pcbi.1000317-Mehrabian1">[16]</xref>,<xref ref-type="bibr" rid="pcbi.1000317-Luo1">[9]</xref>. This heritable variation in gene expression was referred to as gene expression markers (GEM) by West et al <xref ref-type="bibr" rid="pcbi.1000317-West1">[6]</xref>. It is essential to minimize the chance of calling a GEM in the SFP prediction for a robust genetical genomics analysis particularly when both genetic marker information and gene expression are extracted from the same RNA microarray dataset. <xref ref-type="table" rid="pcbi-1000317-t002">Table 2</xref> lists the numbers of SFPs and SFP-bearing genes, which carried at least one SFP, called by each of the six different methods as well as the proportion (in parentheses) of the SFP-bearing genes that were differentially expressed between the two parental lines in the yeast and barley RNA microarray experiments. A gene in these experiments was tested for differential expression between the two parental genotypes by fitting its expression level, which was evaluated from the Affymetrix recommended software MAS 5.0, if either of the genotypes exceeded the expression level of the other genotype by two fold or more. We explored use of SAM (Significance Analysis of Microarrays) proposed in <xref ref-type="bibr" rid="pcbi.1000317-Tusher1">[17]</xref> to test for significance of difference in gene expression between the two parental genotypes and found a very similar pattern to the MAS 5.0 analysis. Although Method <bold>3</bold> consistently detected the largest numbers of SFPs and SFP-bearing genes from both the RNA datasets (yeast and barley) among the six methods, the proportion of the differentially expressed genes called by this method was about two (in yeast data) to three (in barley data) times as many as that by Method <bold>1</bold> developed in the present study. The consistently lowest proportions of differentially expressed genes called by the present method in the two independent RNA microarray experiments demonstrated its effectiveness in avoiding GEMs in the SFP prediction. Method <bold>6</bold> was originally proposed to detect SFPs from Affymetrix microarray data from hybridizing RNA of multiple tissues of two genotypes <xref ref-type="bibr" rid="pcbi.1000317-Rostoks1">[8]</xref>. The number of SFPs predicted from the method depends on the use of different stringency parameters (see <xref ref-type="bibr" rid="pcbi.1000317-Rostoks1">[8]</xref>,<xref ref-type="bibr" rid="pcbi.1000317-Tusher1">[17]</xref> for details). Although SFP predictions were made at a series of stringency parameters (supplementary <xref ref-type="supplementary-material" rid="pcbi.1000317.s003">Table S1</xref>), we chose the one at which the number of SFPs predicted was comparable to that by Method <bold>1</bold>. It is clear from <xref ref-type="table" rid="pcbi-1000317-t002">Table 2</xref> that Method <bold>6</bold> calls SFPs associated with differentially expressed genes much more frequently than the method developed in the present study.</p>
+<table-wrap id="pcbi-1000317-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000317.t002</object-id><label>Table 2</label><caption>
+<title>The numbers of SFPs and SFP-bearing genes called by the six different methods from the yeast and barley gene expression datasets.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000317-t002-2" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000317.t002" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Method</td>
+<td align="center" colspan="4" rowspan="1">Species</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="2" rowspan="1">Yeast</td>
+<td align="left" colspan="2" rowspan="1">Barley</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">SFPs</td>
+<td align="left" colspan="1" rowspan="1">Genes (%)</td>
+<td align="left" colspan="1" rowspan="1">SFPs</td>
+<td align="left" colspan="1" rowspan="1">Genes (%)</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>1</bold> (Present)</td>
+<td align="left" colspan="1" rowspan="1">2388</td>
+<td align="left" colspan="1" rowspan="1">1801 (5.6)</td>
+<td align="left" colspan="1" rowspan="1">3206</td>
+<td align="left" colspan="1" rowspan="1">2509 (6.7)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>2</bold> (Winzeler et al 1998)</td>
+<td align="left" colspan="1" rowspan="1">250</td>
+<td align="left" colspan="1" rowspan="1">199 (9.0)</td>
+<td align="left" colspan="1" rowspan="1">2105</td>
+<td align="left" colspan="1" rowspan="1">1674 (8.4)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>3</bold> (Ronald et al 2005)</td>
+<td align="left" colspan="1" rowspan="1">3207</td>
+<td align="left" colspan="1" rowspan="1">2280 (9.2)</td>
+<td align="left" colspan="1" rowspan="1">4323</td>
+<td align="left" colspan="1" rowspan="1">2869 (18.2)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>4</bold> (Cui et al 2005)</td>
+<td align="left" colspan="1" rowspan="1">1238</td>
+<td align="left" colspan="1" rowspan="1">841 (11.7)</td>
+<td align="left" colspan="1" rowspan="1">2368</td>
+<td align="left" colspan="1" rowspan="1">1137 (28.1)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>5</bold> (West et al 2006)</td>
+<td align="left" colspan="1" rowspan="1">1684</td>
+<td align="left" colspan="1" rowspan="1">1297 (8.0)</td>
+<td align="left" colspan="1" rowspan="1">971</td>
+<td align="left" colspan="1" rowspan="1">753 (23.4)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>6</bold> (Rostoks et al 2005)</td>
+<td align="left" colspan="1" rowspan="1">2322</td>
+<td align="left" colspan="1" rowspan="1">1726 (8.2)</td>
+<td align="left" colspan="1" rowspan="1">3294</td>
+<td align="left" colspan="1" rowspan="1">2160 (21.2)</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt105"><p>The percentage of genes differentially expressed between the two parental lines is given in parentheses.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s2c">
+<title>Mutual predictability among the six methods</title>
+<p>One important aspect in comparing the different methods would be to compare their mutual predictability to the same SFPs. The figures listed in diagonal cells of <xref ref-type="table" rid="pcbi-1000317-t003">Table 3</xref> were the numbers of SFPs predicted from the yeast DNA data, yeast RNA data and the barley RNA data accordingly for the methods <bold>1</bold>–<bold>6</bold>. The upper and lower diagonal cells were the numbers and percentages (in parentheses) of the SFPs called by method <bold>j</bold> (<italic>j</italic> = 1<sup>st</sup>, 2<sup>nd</sup>, …, 7<sup>th</sup> column) and also by Method <bold>i</bold> (<italic>i</italic> = 1<sup>st</sup>, 2<sup>nd</sup>, …, 7<sup>th</sup> row, <italic>i</italic> ≠ <italic>j</italic>). For example, Method <bold>1</bold> predicted 1606 out of the 3492 SFPs predicted by Method <bold>2</bold> in the yeast DNA data. Thus, the predictability of Method <bold>1</bold> to Method <bold>2</bold> was 1606/3492 = 46%. Conversely, the predictability of Method <bold>2</bold> to Method <bold>1</bold> was 1606/4107 = 39% in the same dataset.</p>
+<table-wrap id="pcbi-1000317-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000317.t003</object-id><label>Table 3</label><caption>
+<title>Comparison in SFP predictability between methods 1–6 from the three datasets.</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000317-t003-3" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000317.t003" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Methods</td>
+<td align="left" colspan="1" rowspan="1">1</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>1</bold> (Present)</td>
+<td align="left" colspan="1" rowspan="1">4107<xref ref-type="table-fn" rid="nt107">a</xref></td>
+<td align="left" colspan="1" rowspan="1">1606(46%)</td>
+<td align="left" colspan="1" rowspan="1">3546(88%)</td>
+<td align="left" colspan="1" rowspan="1">967(96%)</td>
+<td align="left" colspan="1" rowspan="1">2963(89%)</td>
+<td align="left" colspan="1" rowspan="1">2237(54%)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2388<xref ref-type="table-fn" rid="nt108">b</xref></td>
+<td align="left" colspan="1" rowspan="1">61(24%)</td>
+<td align="left" colspan="1" rowspan="1">2141(67%)</td>
+<td align="left" colspan="1" rowspan="1">1040(84%)</td>
+<td align="left" colspan="1" rowspan="1">1384(82%)</td>
+<td align="left" colspan="1" rowspan="1">1665(71%)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">3206<xref ref-type="table-fn" rid="nt109">c</xref></td>
+<td align="left" colspan="1" rowspan="1">202(10%)</td>
+<td align="left" colspan="1" rowspan="1">1704(39%)</td>
+<td align="left" colspan="1" rowspan="1">1164(49%)</td>
+<td align="left" colspan="1" rowspan="1">588(61%)</td>
+<td align="left" colspan="1" rowspan="1">1688(51%)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>2</bold> (Winzeler et al 1998)</td>
+<td align="left" colspan="1" rowspan="1">1606(39%)</td>
+<td align="left" colspan="1" rowspan="1">3492</td>
+<td align="left" colspan="1" rowspan="1">1533(38%)</td>
+<td align="left" colspan="1" rowspan="1">5(0%)</td>
+<td align="left" colspan="1" rowspan="1">926(28%)</td>
+<td align="left" colspan="1" rowspan="1">900(21%)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">61(3%)</td>
+<td align="left" colspan="1" rowspan="1">250</td>
+<td align="left" colspan="1" rowspan="1">88(3%)</td>
+<td align="left" colspan="1" rowspan="1">7(1%)</td>
+<td align="left" colspan="1" rowspan="1">30(2%)</td>
+<td align="left" colspan="1" rowspan="1">20(0%)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">202(6%)</td>
+<td align="left" colspan="1" rowspan="1">2105</td>
+<td align="left" colspan="1" rowspan="1">261(6%)</td>
+<td align="left" colspan="1" rowspan="1">120(5%)</td>
+<td align="left" colspan="1" rowspan="1">31(3%)</td>
+<td align="left" colspan="1" rowspan="1">129(3%)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>3</bold> (Ronald et al 2005)</td>
+<td align="left" colspan="1" rowspan="1">3546(86%)</td>
+<td align="left" colspan="1" rowspan="1">1533(44%)</td>
+<td align="left" colspan="1" rowspan="1">4025</td>
+<td align="left" colspan="1" rowspan="1">934(93%)</td>
+<td align="left" colspan="1" rowspan="1">3023(91%)</td>
+<td align="left" colspan="1" rowspan="1">2260(55%)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">2141(90%)</td>
+<td align="left" colspan="1" rowspan="1">88(35%)</td>
+<td align="left" colspan="1" rowspan="1">3207</td>
+<td align="left" colspan="1" rowspan="1">1129(91%)</td>
+<td align="left" colspan="1" rowspan="1">1559(93%)</td>
+<td align="left" colspan="1" rowspan="1">1955(84%)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">1704(53%)</td>
+<td align="left" colspan="1" rowspan="1">261(12%)</td>
+<td align="left" colspan="1" rowspan="1">4323</td>
+<td align="left" colspan="1" rowspan="1">1102(47%)</td>
+<td align="left" colspan="1" rowspan="1">497(51%)</td>
+<td align="left" colspan="1" rowspan="1">1714(452%)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>4</bold> (Cui et al 2005)</td>
+<td align="left" colspan="1" rowspan="1">967(24%)</td>
+<td align="left" colspan="1" rowspan="1">5(0%)</td>
+<td align="left" colspan="1" rowspan="1">934(23%)</td>
+<td align="left" colspan="1" rowspan="1">1003</td>
+<td align="left" colspan="1" rowspan="1">979(29%)</td>
+<td align="left" colspan="1" rowspan="1">730(17%)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">1040(44%)</td>
+<td align="left" colspan="1" rowspan="1">7(3%)</td>
+<td align="left" colspan="1" rowspan="1">1129(35%)</td>
+<td align="left" colspan="1" rowspan="1">1238</td>
+<td align="left" colspan="1" rowspan="1">946(56%)</td>
+<td align="left" colspan="1" rowspan="1">1064(45%)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">1164(36%)</td>
+<td align="left" colspan="1" rowspan="1">120(6%)</td>
+<td align="left" colspan="1" rowspan="1">1102(25%)</td>
+<td align="left" colspan="1" rowspan="1">2368</td>
+<td align="left" colspan="1" rowspan="1">667(69%)</td>
+<td align="left" colspan="1" rowspan="1">1638(49%)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>5</bold> (West et al 2006)</td>
+<td align="left" colspan="1" rowspan="1">2963(72%)</td>
+<td align="left" colspan="1" rowspan="1">926(27%)</td>
+<td align="left" colspan="1" rowspan="1">3023(75%)</td>
+<td align="left" colspan="1" rowspan="1">979(98%)</td>
+<td align="left" colspan="1" rowspan="1">3322</td>
+<td align="left" colspan="1" rowspan="1">2044(49%)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">1384(58%)</td>
+<td align="left" colspan="1" rowspan="1">30(12%)</td>
+<td align="left" colspan="1" rowspan="1">1559(49%)</td>
+<td align="left" colspan="1" rowspan="1">946(76%)</td>
+<td align="left" colspan="1" rowspan="1">1684</td>
+<td align="left" colspan="1" rowspan="1">1328(57%)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">588(18%)</td>
+<td align="left" colspan="1" rowspan="1">31(1%)</td>
+<td align="left" colspan="1" rowspan="1">497(11%)</td>
+<td align="left" colspan="1" rowspan="1">667(28%)</td>
+<td align="left" colspan="1" rowspan="1">971</td>
+<td align="left" colspan="1" rowspan="1">752(22%)</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"><bold>6</bold> (Rostoks et al 2005)</td>
+<td align="left" colspan="1" rowspan="1">2237(54%)</td>
+<td align="left" colspan="1" rowspan="1">900(25%)</td>
+<td align="left" colspan="1" rowspan="1">2260(56%)</td>
+<td align="left" colspan="1" rowspan="1">730(72%)</td>
+<td align="left" colspan="1" rowspan="1">2044(61%)</td>
+<td align="left" colspan="1" rowspan="1">4098</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">1665(69%)</td>
+<td align="left" colspan="1" rowspan="1">20(8%)</td>
+<td align="left" colspan="1" rowspan="1">1955(60%)</td>
+<td align="left" colspan="1" rowspan="1">1064(85%)</td>
+<td align="left" colspan="1" rowspan="1">1328(78%)</td>
+<td align="left" colspan="1" rowspan="1">2322</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1">1688(52%)</td>
+<td align="left" colspan="1" rowspan="1">129(6%)</td>
+<td align="left" colspan="1" rowspan="1">1714(39%)</td>
+<td align="left" colspan="1" rowspan="1">1628(68%)</td>
+<td align="left" colspan="1" rowspan="1">752(77%)</td>
+<td align="left" colspan="1" rowspan="1">3294</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt106"><p>The upper and lower diagonal cells were the numbers and percentages (in parentheses) of the SFPs called by method <bold>j</bold> (<italic>j</italic> = 1<sup>st</sup>, 2<sup>nd</sup>, …, 7<sup>th</sup> column) and also by Method <bold>i</bold> (<italic>i</italic> = 1<sup>st</sup>, 2<sup>nd</sup>, …, 7<sup>th</sup> row, <italic>i</italic> ≠ <italic>j</italic>). For example, Method <bold>1</bold> predicted 1606 out of the 3492 SFPs, predicted by Method <bold>2</bold> in the yeast DNA data. Thus, the predictability of Method <bold>1</bold> to Method <bold>2</bold> was 1606/3492 = 46%. Conversely, the predictability of Method <bold>2</bold> to Method <bold>1</bold> was 1606/4107 = 39% in the same dataset.</p></fn><fn id="nt107"><label>a</label><p>Yeast DNA data.</p></fn><fn id="nt108"><label>b</label><p>Yeast RNA data.</p></fn><fn id="nt109"><label>c</label><p>Barley RNA data.</p></fn></table-wrap-foot></table-wrap>
+<p>It can be seen from this table that Method <bold>1</bold> predicted a high proportion of 54∼96% of SFPs called by Methods <bold>3</bold>–<bold>6</bold> in the two yeast (DNA and RNA) datasets. The proportion decreased to 39∼61% in the barley RNA data. Methods <bold>1</bold> and <bold>3</bold> predicted a very comparable and high proportion of the SFPs called by Methods <bold>4</bold> and <bold>5</bold>. However, the latter two methods predicted only a much smaller proportion of SFPs called by the former. This is partly a reflection that the numbers of SFPs predicted by Methods <bold>1</bold> and <bold>3</bold> are much larger than those by Methods <bold>4</bold> and <bold>5</bold> from all the three datasets. In the two RNA datasets, Method <bold>1</bold> predicted smaller proportions of SFPs called by Method <bold>3</bold> than the proportion predicted by Method <bold>1</bold> but also called by Method <bold>3</bold>. This reflects a larger number of SFPs called by Method <bold>3</bold> than by Method <bold>1</bold> because the former is prone to including GEMs in the SFPs called. If the comparison was made after removing those SFPs in the differentially expressed genes, the mutual predictability between the two methods becomes more comparable (47∼71% vs. 51∼90%).</p>
+</sec><sec id="s2d">
+<title>Efficiency to predict sequence polymorphisms</title>
+<p>Sequence information was available for 10 genes of the two yeast parental strains. A BLAST analysis revealed that the sequences cover a total of 98 probes interrogated on Affymetrix yeast 2.0 Gene Chips. In six of the 98 probe sequences, the two yeast strains were polymorphic. There were 518 DNA segments sequenced for the two barley parental lines, which covered a total of 4690 probes on Affymetrix barley 1.0 chips. The two parental lines were polymorphic at 167 probes sequenced. It should be stressed that these sequence data were collected from other independent research projects conducted before the present study. From these sequence data, we calculated the probability (<italic>s</italic>) of a probe bearing genetic polymorphism given it is called as an SFP and the probability (<italic>r</italic>) of a probe bearing genetic polymorphism given it is not called as an SFP. The former reflects the true discovery rate of genetic polymorphism from predicted SFPs and the latter measures the rate of false negatives in the predicted SFPs. By definition, 1-<italic>s</italic> gives the rate of false positives.</p>
+<p>Let <italic>N</italic> be the total number of probes interrogated on the yeast 2.0 or barley 1.0 Affymetrix microarray chip. Among <italic>M</italic> sequenced probes, there are <italic>m</italic> showing polymorphism between the two parental lines. For a given SFP prediction method under question here, <italic>K</italic> out of <italic>n</italic> predicted SFPs are included among the sequenced SFPs (<italic>K</italic>≤<italic>M</italic>) and <italic>k</italic> of the <italic>K</italic> SFPs are found polymorphic (<italic>k</italic>≤<italic>m</italic>). Based on the observed numbers, the most likely estimates of <italic>s</italic> and <italic>r</italic> can be calculated from <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e001" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e002" xlink:type="simple"/></inline-formula>.</p>
+<p><xref ref-type="table" rid="pcbi-1000317-t004">Table 4</xref> lists the observed numbers of the aforementioned parameters and the estimates of the parameters describing the true discovery rate and the rate of false negatives of SFPs predicted by the six different methods from the three microarray datasets. Method <bold>1</bold> recovered all 6 and 4 out of the 6 probes that carried genuine sequence polymorphism in the yeast DNA and RNA datasets respectively without making any false positive discoveries, showing that the method had an estimated true discovery rate of 100% and an estimated rate of zero false negatives in the SFPs predicted from the yeast DNA and RNA microarray datasets. In the barley RNA data, the method identified 57 SFPs out of 167 probes confirmed with sequence polymorphism, suggesting that 35% SFPs predicted by Method <bold>1</bold> bear genuine sequence polymorphism and 2% of polymorphism free probes were called as SFPs by the method. Although Method <bold>1</bold> performed much worse in recovering true polymorphic SFPs and avoiding false negatives in the predicted SFPs in the barley data than in the yeast datasets, it is clear that the method confers a better predictability of genuine sequence polymorphisms and a lower risk for calling polymorphism-free probes to be SFPs when compared the other five methods.</p>
+<table-wrap id="pcbi-1000317-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000317.t004</object-id><label>Table 4</label><caption>
+<title>The numbers of total probes interrogated on yeast 2.0 and barley 1.0 Affymetrix microarray chips (<italic>N</italic>), SFPs called (<italic>n</italic>), probes sequenced (<italic>M</italic>), probes bearing sequence polymorphism (<italic>m</italic>), probes sequenced and called as SFPs (<italic>K</italic>) and SFPs bearing sequence polymorphisms (<italic>k</italic>), and the estimates for rates of true discovery (<italic>s</italic>) and false negative (<italic>r</italic>).</title>
+</caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1000317-t004-4" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000317.t004" xlink:type="simple"/><table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" colspan="1" rowspan="1">Dataset</td>
+<td align="left" colspan="1" rowspan="1">Method<xref ref-type="table-fn" rid="nt110">a</xref></td>
+<td align="left" colspan="1" rowspan="1"><italic>N</italic></td>
+<td align="left" colspan="1" rowspan="1"><italic>n</italic></td>
+<td align="left" colspan="1" rowspan="1"><italic>M</italic></td>
+<td align="left" colspan="1" rowspan="1"><italic>m</italic></td>
+<td align="left" colspan="1" rowspan="1"><italic>K</italic></td>
+<td align="left" colspan="1" rowspan="1"><italic>k</italic></td>
+<td align="left" colspan="1" rowspan="1"><italic>s</italic></td>
+<td align="left" colspan="1" rowspan="1"><italic>r</italic></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" colspan="1" rowspan="1">Yeast (DNA)</td>
+<td align="left" colspan="1" rowspan="1"><bold>1</bold></td>
+<td align="left" colspan="1" rowspan="1">62810</td>
+<td align="left" colspan="1" rowspan="1">4107</td>
+<td align="left" colspan="1" rowspan="1">98</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">1.00</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>2</bold></td>
+<td align="left" colspan="1" rowspan="1">62810</td>
+<td align="left" colspan="1" rowspan="1">3492</td>
+<td align="left" colspan="1" rowspan="1">98</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0.67</td>
+<td align="left" colspan="1" rowspan="1">0.04</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>3</bold></td>
+<td align="left" colspan="1" rowspan="1">62810</td>
+<td align="left" colspan="1" rowspan="1">4025</td>
+<td align="left" colspan="1" rowspan="1">98</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">1.00</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>4</bold></td>
+<td align="left" colspan="1" rowspan="1">62810</td>
+<td align="left" colspan="1" rowspan="1">1003</td>
+<td align="left" colspan="1" rowspan="1">98</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">3</td>
+<td align="left" colspan="1" rowspan="1">2</td>
+<td align="left" colspan="1" rowspan="1">0.67</td>
+<td align="left" colspan="1" rowspan="1">0.04</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>5</bold></td>
+<td align="left" colspan="1" rowspan="1">62810</td>
+<td align="left" colspan="1" rowspan="1">3322</td>
+<td align="left" colspan="1" rowspan="1">98</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">1.00</td>
+<td align="left" colspan="1" rowspan="1">0.01</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>6</bold></td>
+<td align="left" colspan="1" rowspan="1">62810</td>
+<td align="left" colspan="1" rowspan="1">4098</td>
+<td align="left" colspan="1" rowspan="1">98</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">9</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">0.56</td>
+<td align="left" colspan="1" rowspan="1">0.01</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Yeast (RNA)</td>
+<td align="left" colspan="1" rowspan="1"><bold>1</bold></td>
+<td align="left" colspan="1" rowspan="1">62810</td>
+<td align="left" colspan="1" rowspan="1">2388</td>
+<td align="left" colspan="1" rowspan="1">98</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">1.00</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>2</bold></td>
+<td align="left" colspan="1" rowspan="1">62810</td>
+<td align="left" colspan="1" rowspan="1">250</td>
+<td align="left" colspan="1" rowspan="1">98</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+<td align="left" colspan="1" rowspan="1">0.06</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>3</bold></td>
+<td align="left" colspan="1" rowspan="1">62810</td>
+<td align="left" colspan="1" rowspan="1">3207</td>
+<td align="left" colspan="1" rowspan="1">98</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">0.80</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>4</bold></td>
+<td align="left" colspan="1" rowspan="1">62810</td>
+<td align="left" colspan="1" rowspan="1">1238</td>
+<td align="left" colspan="1" rowspan="1">98</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">5</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">0.80</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>5</bold></td>
+<td align="left" colspan="1" rowspan="1">62810</td>
+<td align="left" colspan="1" rowspan="1">1684</td>
+<td align="left" colspan="1" rowspan="1">98</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">13</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">0.46</td>
+<td align="left" colspan="1" rowspan="1">0.00</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>6</bold></td>
+<td align="left" colspan="1" rowspan="1">62810</td>
+<td align="left" colspan="1" rowspan="1">2322</td>
+<td align="left" colspan="1" rowspan="1">98</td>
+<td align="left" colspan="1" rowspan="1">6</td>
+<td align="left" colspan="1" rowspan="1">7</td>
+<td align="left" colspan="1" rowspan="1">4</td>
+<td align="left" colspan="1" rowspan="1">0.57</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1">Barley (RNA)</td>
+<td align="left" colspan="1" rowspan="1"><bold>1</bold></td>
+<td align="left" colspan="1" rowspan="1">250811</td>
+<td align="left" colspan="1" rowspan="1">3206</td>
+<td align="left" colspan="1" rowspan="1">4690</td>
+<td align="left" colspan="1" rowspan="1">167</td>
+<td align="left" colspan="1" rowspan="1">163</td>
+<td align="left" colspan="1" rowspan="1">57</td>
+<td align="left" colspan="1" rowspan="1">0.35</td>
+<td align="left" colspan="1" rowspan="1">0.02</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>2</bold></td>
+<td align="left" colspan="1" rowspan="1">250811</td>
+<td align="left" colspan="1" rowspan="1">2105</td>
+<td align="left" colspan="1" rowspan="1">4690</td>
+<td align="left" colspan="1" rowspan="1">167</td>
+<td align="left" colspan="1" rowspan="1">120</td>
+<td align="left" colspan="1" rowspan="1">19</td>
+<td align="left" colspan="1" rowspan="1">0.16</td>
+<td align="left" colspan="1" rowspan="1">0.03</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>3</bold></td>
+<td align="left" colspan="1" rowspan="1">250811</td>
+<td align="left" colspan="1" rowspan="1">4323</td>
+<td align="left" colspan="1" rowspan="1">4690</td>
+<td align="left" colspan="1" rowspan="1">167</td>
+<td align="left" colspan="1" rowspan="1">192</td>
+<td align="left" colspan="1" rowspan="1">44</td>
+<td align="left" colspan="1" rowspan="1">0.23</td>
+<td align="left" colspan="1" rowspan="1">0.03</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>4</bold></td>
+<td align="left" colspan="1" rowspan="1">250811</td>
+<td align="left" colspan="1" rowspan="1">2368</td>
+<td align="left" colspan="1" rowspan="1">4690</td>
+<td align="left" colspan="1" rowspan="1">167</td>
+<td align="left" colspan="1" rowspan="1">139</td>
+<td align="left" colspan="1" rowspan="1">43</td>
+<td align="left" colspan="1" rowspan="1">0.31</td>
+<td align="left" colspan="1" rowspan="1">0.03</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>5</bold></td>
+<td align="left" colspan="1" rowspan="1">250811</td>
+<td align="left" colspan="1" rowspan="1">971</td>
+<td align="left" colspan="1" rowspan="1">4690</td>
+<td align="left" colspan="1" rowspan="1">167</td>
+<td align="left" colspan="1" rowspan="1">83</td>
+<td align="left" colspan="1" rowspan="1">24</td>
+<td align="left" colspan="1" rowspan="1">0.29</td>
+<td align="left" colspan="1" rowspan="1">0.03</td>
+</tr>
+<tr>
+<td align="left" colspan="1" rowspan="1"/>
+<td align="left" colspan="1" rowspan="1"><bold>6</bold></td>
+<td align="left" colspan="1" rowspan="1">250811</td>
+<td align="left" colspan="1" rowspan="1">3294</td>
+<td align="left" colspan="1" rowspan="1">4690</td>
+<td align="left" colspan="1" rowspan="1">167</td>
+<td align="left" colspan="1" rowspan="1">147</td>
+<td align="left" colspan="1" rowspan="1">44</td>
+<td align="left" colspan="1" rowspan="1">0.30</td>
+<td align="left" colspan="1" rowspan="1">0.03</td>
+</tr>
+</tbody>
+</table></alternatives><table-wrap-foot><fn id="nt110"><label>a</label><p><bold>1</bold> – The present; <bold>2</bold> – Winzeler et al 1998; <bold>3</bold> – Ronald et al 2005; <bold>4</bold> – Cui et al 2005; <bold>5</bold> – West et al 2006; <bold>6</bold> – Rostoks et al 2005.</p></fn></table-wrap-foot></table-wrap>
+<p>It should be noted that the number of probes sequenced is very limited in comparison to the total number of probes. This indicates that the estimates of <italic>s</italic> and <italic>r</italic> may have large sampling variances, suggesting a larger number of probes need to be sequenced to provide more precise estimates of the parameters. However, as aforementioned, the sequenced probes represent an independently and arbitrarily chosen sample of all probes. Thus, comparative assessment of performance of the methods in predicting truly polymorphic SFPs should be informative. In addition, the number of SFPs predicted by one method varies markedly from that by other methods. Compared to Method <bold>1</bold>, Methods <bold>2</bold>, <bold>4</bold> and <bold>5</bold> predicted a much smaller number of SFPs. This may suggest that these methods may apply a more stringent selection criterion in prediction of SFPs. Nevertheless they did not produce more accurate prediction of true sequence polymorphisms in the predicted SFPs. Without influence of gene expression differentiation as in the yeast DNA microarray data, performance of Methods <bold>1</bold> and <bold>3</bold> is comparable. However, the former performed clearly better than the latter in the RNA, particularly in barley RNA data.</p>
+<p>All six methods consistently performed considerably better in SFP prediction from the yeast than from the barley data.</p>
+</sec><sec id="s2e">
+<title>Genotyping and map construction with SFPs</title>
+<p>Of the 139 DH lines in the barley RNA dataset, 30 were genotyped at the 518 single nucleotide polymorphic markers (SNPs) in another independent research project. We firstly explored Methods <bold>1</bold>–<bold>5</bold> for their ability to predict the genotypes of the 30 DH lines at the SFPs called by each of the methods and whose polymorphic status were confirmed by sequence information. Method <bold>6</bold> did not provide genotype prediction and was thus excluded from further analysis. Percentages of erroneously genotyped DH lines at different numbers (in parentheses) of truly polymorphic SFPs were 2.5 (57), 2.7 (19), 4.6 (44), 4.0 (43) and 2.0 (24) for each of the five methods accordingly. It is clear that the present method has a slightly higher (by 0.5%) genotyping error than Method <bold>5</bold>, but a lower genotyping error than the other methods. It should be noted that the erroneous genotyping rate reported for Method <bold>5</bold> was based on less than half the number of SFPs on which the present method was assessed.</p>
+<p>Another useful test of the accuracy in genotyping the DH lines at a larger scale of SFPs predicted by the present method is the extent of agreement in the haplotypes and genetic linkage maps which are constructed from the genotype data on the SNPs and the SFPs predicted. We performed a post-genotyping filtering process to eliminate those SFPs with &gt;10% missing genotypes scored, distorting from the 1∶1 segregation ratio and showing identical genotypes at any pair-wise loci. After this screening process, a total of 1381 SFP markers remained. JoinMap, a least-square based computer software <xref ref-type="bibr" rid="pcbi.1000317-Stam1">[18]</xref>, was employed to join the SFP markers into linkage maps. At LOD = 5.0, all but 3 SFP markers were clustered into 7 linkage groups, corresponding to the seven chromosomes of barley. We also compared chromosomal haplotypes constructed for each of the 30 DH lines from the SNP markers and from the SFPs. <xref ref-type="fig" rid="pcbi-1000317-g001">Figure 1</xref> illustrates the 7 chromosomal haplotypes of the DH line, which bears the largest number of recombination events, constructed from the SFP (left) and SNP (right) markers. The good agreement between the two groups of chromosomal haplotypes suggests that genetic maps built using the SFP markers identified and genotyped from the present method would be as reliable as those constructed by using conventional DNA molecular markers. The 1,378 SFPs predicted in the present study were well mapped into seven linkage groups, corresponding to the seven barley chromosomes. The linkage maps were illustrated as Supplementary <xref ref-type="supplementary-material" rid="pcbi.1000317.s002">Figure S1</xref>. This probably represents the barley linkage maps with the densest currently available marker coverage.</p>
+<fig id="pcbi-1000317-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000317.g001</object-id><label>Figure 1</label><caption>
+<title>Haplotypes of chromosomes from line SM116 drawn to compare SFP (left) and SNP (right) predictions.</title>
+<p>Black bars = St chromosomes, white = Mx chromosomes.</p>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000317.g001" xlink:type="simple"/></fig></sec></sec><sec id="s3">
+<title>Discussion</title>
+<p>Integrating identification of genetic polymorphisms and analysis of gene expression from a single experiment that hybridizes cRNA samples onto Affymetrix oligo-nucleotide microarrays has an extremely useful implication in at least two aspects. Firstly, it improves both accuracy and precision in calculating gene expression indices by excluding the probes involving genetic polymorphisms. Secondly, it enables generation of an abundant number of reliable genetic markers and, in turn, mapping genetic regulators controlling gene expression. Compared to modelling genomic DNA microarray data, modelling RNA data for this purpose raises remarkable analytical challenges because the effect of genetic polymorphism within a transcript molecule on hybridization signal of its target probe is always coupled with expression level of the gene represented by the probe. To minimize the influence of the confounding effect of gene expression has been the central topic for a robust diagnosis of the single feature polymorphisms (SFPs) from RNA microarray data <xref ref-type="bibr" rid="pcbi.1000317-West1">[6]</xref>,<xref ref-type="bibr" rid="pcbi.1000317-Cui1">[7]</xref>. In this paper, we proposed to separate binding affinity between a transcript and its target probe from the abundance parameter of the transcript based on the multiplicative regression model described in <xref ref-type="bibr" rid="pcbi.1000317-Li1">[13]</xref>. The binding affinity parameter would reflect any sequence variation in the transcript sequence, while the abundance parameter is a measure of expression level for the gene.</p>
+<p>We presented here a novel statistical approach for discovering and genotyping SFPs from oligonucleotide microarray expression data based on estimates of the binding affinity parameter. The approach (Method <bold>1</bold>) was compared to those which were designed for detecting SFPs in historical (Method <bold>2</bold>, <xref ref-type="bibr" rid="pcbi.1000317-Winzeler1">[1]</xref>) and more recent (Method <bold>3</bold>–<bold>6</bold>, <xref ref-type="bibr" rid="pcbi.1000317-Ronald1">[4]</xref>,<xref ref-type="bibr" rid="pcbi.1000317-Cui1">[7]</xref>,<xref ref-type="bibr" rid="pcbi.1000317-West1">[6]</xref> and <xref ref-type="bibr" rid="pcbi.1000317-Rostoks1">[8]</xref> accordingly) literature. We explored the methods from several angles. Firstly, their robustness to the influence of differential gene expression is assessed by comparing the SFPs predicted from parallel genomic DNA and mRNA hybridization datasets collected from the same set of two parental yeast strains and their 40 haploid offspring segregants. Because we can safely postulate a very high level of uniformity in the number of genomic DNA molecules hybridized onto their target probes across different arrays, a higher proportion of the SFPs predicted by a method from both the datasets must indicate greater robustness of the method to variation in gene expression. The present method yields a proportion of SFPs simultaneously detected from the two datasets which is at least 10% higher than each of the five other methods. In addition, we investigated the methods for their predicted SFPs in the genes that were differentially expressed in the yeast RNA dataset and another independent RNA dataset containing expression profiles from two commercial barley varieties and their 139 DH lines. Compared to its rivals, the present method calls the lowest proportion of SFPs involving differentially expressed genes. These observations clearly demonstrate that the SFPs called by the present method would be those more likely due to sequence variation than to differentiated gene expression. This is important for the SFPs to be used as genetic markers in mapping quantitative trait loci (QTL) or expression of genes (eQTL) because it is essential for any genetic markers to be devoid of any biological and functional effect. In particular, use of gene expression markers (GEMs) in eQTL analysis will inevitably result in false declaration of <italic>cis</italic>-transcriptional regulators resulting from autocorrelation between the GEMs and expression trait phenotype.</p>
+<p>Lack of full sequence information at the SFPs predicted to be used as “gold standard” hinders a direct assessment for their polymorphic status in the previous studies. In this study, we evaluated the six methods for their ability to recover true sequence polymorphisms in the SFPs predicted based on sequence information for a limited number of probes (98 in the yeast experiment and 4690 in the barley experiment). With information of sequenced probes in both yeast and barley datasets, we are able to calculate the probability of a probe bearing genetic polymorphism given it is called as an SFP and the probability of a probe bearing genetic polymorphism given it is not called as an SFP for each of the six methods. These probabilities enable evaluation of the methods for the true discovery rate and the rates of false positive and false negative in recovering true genetic polymorphisms from the predicted SFPs. The present method shows the highest true discovery rate and the lowest rate of false negative across all three datasets. The method, although developed for SFP prediction from RNA microarray data, performed markedly better in unravelling the true sequence polymorphisms from DNA microarray data when compared with Method <bold>2</bold> <xref ref-type="bibr" rid="pcbi.1000317-Winzeler1">[1]</xref>, which was originally designed for SFP prediction from the same dataset. Methods <bold>4</bold> and <bold>5</bold> (<xref ref-type="bibr" rid="pcbi.1000317-Cui1">[7]</xref>,<xref ref-type="bibr" rid="pcbi.1000317-West1">[6]</xref> respectively) predicted a considerably smaller number of SFPs when compared to Method <bold>1</bold> and this implies that these methods have applied a more stringent criterion in detecting the SFPs but this has not resulted in more accurate prediction of SFPs. The number of SFPs detected by Method <bold>6</bold> <xref ref-type="bibr" rid="pcbi.1000317-Rostoks1">[8]</xref> is largely dependent on the prior use of stringency parameters, so we compared this method using the stringency criterion that leads to a similar number of SFPs predicted by the method to that by Method 1. One may argue that the improved performance of Method <bold>1</bold> in predicting truly polymorphic SFPs is due to the markedly larger number of SFPs predicted by the method. Given the fact that, among the sequenced probes, the number of probes without polymorphism is much larger than that of the probes with genetic polymorphism, Method <bold>1</bold> has consistently the lowest estimated probability to call the polymorphism-free SFPs in all three datasets, indicating that the present method outperforms the others, but this is not due to its larger number of predicted SFPs.</p>
+<p>Methodologically, Methods <bold>1</bold> and <bold>3</bold> are developed on the multiplicative model described in equation (1) and the PDNN model <xref ref-type="bibr" rid="pcbi.1000317-Ronald1">[4]</xref> respectively for PM hybridization intensities from Affymetrix microarrays. We compared predictability of the two models by regressing the predicted PM intensities on the observed PM values from each of three replicates of the yeast parental strains and the barley parental lines. The regression coefficients of the predicted PM intensity from the multiplicative model on the observed PM intensity are 0.995∼0.998 (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e003" xlink:type="simple"/></inline-formula>) across the six yeast datasets and 0.994∼0.998 (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e004" xlink:type="simple"/></inline-formula>) across the six barley datasets, but those from the PDNN model are 0.749∼0.788 (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e005" xlink:type="simple"/></inline-formula>) and 0.623∼0.658 (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e006" xlink:type="simple"/></inline-formula>) respectively. <xref ref-type="fig" rid="pcbi-1000317-g002">Figure 2</xref> illustrates the correlation between the observed and predicted PM intensities from the present model (a, c) and PDNN (b, d) algorithm for the yeast (a, b) and barley (c, d) microarray datasets. It is clear that the multiplicative model shows remarkably better performance in predicting the PM intensities than the PDNN model. We also explored the predictability of the PDNN model in a logarithm-transformed scale and found that the logarithm transformation did not result in notable improvement in the predictability (data not shown but available upon request from the corresponding author). Obviously, an accurate prediction of the PM values constitutes an important basis for an accurate diagnosis of SFPs, and in turn, reliable genotyping of the SFPs. This at least partially, if not fully, explains why the two methods perform differently in the current context of application. It should be noted that this comparison does not necessarily indicate an evaluation of the methods' performance in calculating expression indices.</p>
+<fig id="pcbi-1000317-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1000317.g002</object-id><label>Figure 2</label><caption>
+<title>Regression analysis of predicted PM hybridization intensities from the multiplicative model (a and c) and PDNN model (b and d) with the yeast (a and b) and barley (c and d) data.</title>
+</caption><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000317.g002" xlink:type="simple"/></fig>
+<p>It should be highlighted that all six methods under investigation here consistently and considerably performed better in SFP prediction from the yeast microarray datasets (both DNA and RNA) than from the barley data. This difference could be largely explained by the fact that the yeast data were obtained from an advanced oligo-based microarray designed from information of the sequenced and well-annotated genome. In contrast, the barley gene expression data was obtained from the first generation Barley 1.0 Affymetrix microarray GeneChip assembled based on high quality expressed sequence tag information but without the benefit of whole genome sequence information. Design of the barley microarray probes could be less optimized than that of the yeast probes. Regardless of this limitation, Method <bold>1</bold> clearly outperformed its five rivals based on accuracy in detecting SFPs in the barley dataset.</p>
+<p>When an SFP is identified between two individual strains or lines, assignment of a genotype at the SFP to each of them and their offspring, i.e. genotyping at the SFP, makes the second part of the SFP analysis. The present study, in which offspring lines or strains are not replicated, considered a much less demanding design of expression microarray experiments, in which offspring lines or strains are not replicated, than those in <xref ref-type="bibr" rid="pcbi.1000317-West1">[6]</xref> and <xref ref-type="bibr" rid="pcbi.1000317-Cui1">[7]</xref>. A practical challenge for the present method is that the binding affinity parameter can not be directly and independently estimated for each offspring individual without setting replications for these individuals in both the yeast and barley microarray experiments. To address this problem, we once proposed to approximate the probe binding affinity as simple functions of PM and MM hybridization intensities and calculated the probe effect independently for each of the offspring individuals (Equations 4.1–4.3 in <xref ref-type="bibr" rid="pcbi.1000317-Luo1">[9]</xref>). The approximation may be questionable because it involves other effects in addition to the probe effect. Obviously, this biases estimates of the binding affinity parameter and thus could lead to poor prediction of the SFPs. Although there is insufficient data for directly estimating the binding affinity parameter at any given probe for each of the offspring, it is certain that each of the genes interrogated on the arrays must be from either of the two parental genotypes. On the basis of this observation, we developed a Bayesian approach to calculate the posterior probability of an offspring individual having inherited an allele from one of the two parents given the individual's and its parents' microarray data. We compared the genotypes predicted by the five different methods at the SFPs whose polymorphic status was confirmed by sequence information, for the 30 barley DH lines whose genotypes were known at 167 SFPs. At more than twice as many SFPs that contain confirmed sequence polymorphism, the present method correctly genotypes the DH lines with a rate very comparable to that by Method <bold>5</bold>, which has predicted the highest proportion of correct genotypes at the SFPs.</p>
+<p>Our ability to extract information of genetic polymorphism from microarray gene expression data would be useful in at least the following aspects. Firstly, this enables integration of genetic marker development and gene expression profiling from only one set of RNA hybridization experimental data for recently launched gene expression QTL analyses. Secondly, the ability to genotype a population, while simultaneously measuring gene expression, is very valuable in a context where mislabelling and other quality assurance issues can easily occur. SFP genotype can be used to confirm the identity of individual (or sample) source material because the SFP genotype may be checked directly against previously obtained SNP genotypes. Thirdly, SFP prediction may allow allele-specific preferential gene expression to be explored when relative expression of a specific gene can be compared with that of its allele through detecting significance of the SFP associated effect on the gene expression. However, in either of these analyses, accuracy and robustness in SFP prediction is a crucial basis for their efficiency and reliability.</p>
+</sec><sec id="s4">
+<title>Materials and Methods</title>
+<sec id="s4a">
+<title>Yeast genomic DNA and RNA microarray hybridization experiment</title>
+<p>YH1A, an isogenic haploid strain of the standard reference strain S288c, and YL1C, also a haploid strain that differed in ethanol tolerance from the former strain <xref ref-type="bibr" rid="pcbi.1000317-VanOoijen1">[19]</xref>, were crossed to generate two backcross populations with each of the parental strains as recurrent parents. From each of the backcross populations, 20 offspring were randomly selected. This yielded 40 backcross strains. Total genomic DNA and mRNA were extracted individually from both the parental strains and the offspring strains. Then DNA and cRNA samples were labelled and hybridized to the Affymetrix Yeast Genome 2.0 GeneChip according to the supplier's guide manual (Affymetrix, GeneChip Expression Analysis technical manual 701021 Rev. 5. 2004). Each of the parental strains was repeated three times in both genomic DNA and RNA hybridization experiments, while the offspring were not repeated.</p>
+<p>There were a total of 92 ( = 2×46) hybridized chips for yeast DNA and RNA datasets. Quality of the hybridization experiment was checked and confirmed by the standard method (GeneChip Expression Analysis Data Analysis Fundamentals; <ext-link ext-link-type="uri" xlink:href="http:/www.affymetrix.com" xlink:type="simple">http:/www.affymetrix.com</ext-link>). We extracted hybridization data for 5,716 genes interrogated on the yeast 2.0 microarray chips and excluded 6 of them, which were represented by less than 11 probes. This resulted in a data set consisting of 62,810 ( = 5710×11) probe pairs present as a perfect match (PM) and a mismatch (MM).</p>
+</sec><sec id="s4b">
+<title>Barley RNA microarray experiment</title>
+<p>Two commercial barley varieties, Steptoe (a feed variety)×Morex (a malting variety), were crossed to generate 150 doubled haploid (DH) lines. Preparation of plant material and embryo derived tissues for the microarray experiment can be found elsewhere <xref ref-type="bibr" rid="pcbi.1000317-Hu1">[20]</xref>. RNA was isolated from the two parental lines and the 150 DH lines, processed and hybridized onto the Barley 1.0 Affymetrix microarray GeneChip. Technical details and protocols for running the microarray experiment can be found at <ext-link ext-link-type="uri" xlink:href="http://www.biotech.iastate.edu/facilities/genechip/Genechip.htm" xlink:type="simple">www.biotech.iastate.edu/facilities/genechip/Genechip.htm</ext-link>. Each of the parental lines was repeated three times but the DH lines were not repeated in the microarray experiment. Of the 150 DH lines, 11 were removed for technical reasons. Thus, the barley RNA data analyzed in the present study was extracted from 145 (6+139) microarray chips. Altogether there were 22,801 different probe sets on every chip. Each probe set was represented by 11 pairs of perfect and mismatch hybridization values.</p>
+</sec><sec id="s4c">
+<title>Sources of sequence data</title>
+<p>A total of 10 genes were partially sequenced for both yeast parental strains YH1A and YL1C. The sequence data had a total length of 16.6 kb. A BLAST analysis revealed that the sequence covered 98 probes on the Affymetrix yeast 2.0 chip. Partial DNA sequence information was available for a sample of 518 genes on the Affymetrix barley 1.0 chip for both parents and 30 of 139 DH lines. The sequence of 595.4 kb covered a total of 4690 probes on the barley chip. The sequence data was collected from other independent research projects conducted before the present study and used as “gold-standard” to assess accuracy of the six methods in identifying SFPs.</p>
+</sec><sec id="s4d">
+<title>Detecting SFPs</title>
+<p>In an Affymetrix GeneChip, each gene is usually represented by a set of 11 probe pairs. Each of the probe pairs consists of a perfect match (PM) probe and a mismatch (MM) probe. The latter serves the role of distinguishing background noise from hybridization signal. Recent studies have shown that MM values do also detect hybridization signals <xref ref-type="bibr" rid="pcbi.1000317-Druka1">[21]</xref>–<xref ref-type="bibr" rid="pcbi.1000317-Wu1">[23]</xref>, which raises the question about the reliability of estimating background noise from MM values. We thus consider PM values only in this analysis.</p>
+<p>It has been shown that hybridization intensity of the <italic>j</italic>-th perfect match probe in the <italic>i</italic>-th probe set from an Affymetrix GeneChip can be modelled properly as a multiplicative model as given below<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e007" xlink:type="simple"/><label>(1)</label></disp-formula><xref ref-type="bibr" rid="pcbi.1000317-Li1">[13]</xref> and <xref ref-type="bibr" rid="pcbi.1000317-Luo1">[9]</xref>. In equation (1), <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e008" xlink:type="simple"/></inline-formula> represents the model-based expression index of the probe set <italic>i</italic>, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e009" xlink:type="simple"/></inline-formula> measures binding affinity between the transcript and probe <italic>j</italic> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e010" xlink:type="simple"/></inline-formula> is a normally distributed residual variable of the model.</p>
+<p>We consider a mating design in which two parental lines or strains are crossed to generate <italic>n</italic> offspring individuals. Genomic DNA or RNA samples are collected from the parents and offspring and hybridized to Affymetrix oligo-microarray chips. The hybridization experiment is repeated <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e011" xlink:type="simple"/></inline-formula> times for each of the parents, whose genotypes are denoted by <italic>H</italic> and <italic>L</italic> respectively, but done only once for each of the <italic>n</italic> offspring individuals. For simplicity but without loss of generality, the perfect-match hybridization signal may be represented by<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e012" xlink:type="simple"/><label>(2)</label></disp-formula>with <italic>X</italic> = <italic>H</italic> or <italic>L</italic>. For each probe set, there are <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e013" xlink:type="simple"/></inline-formula> PM values observed on each of the two parental genotypes and they can be used to estimate the parameters in equation (2) through a restrained iterative least-square algorithm with the constraint <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e014" xlink:type="simple"/></inline-formula> as proposed in <xref ref-type="bibr" rid="pcbi.1000317-Li1">[13]</xref>. For instance, let <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e015" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e016" xlink:type="simple"/></inline-formula> be the estimates of the 11 binding affinity parameters for the two parental genotypes respectively, then one calculates <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e017" xlink:type="simple"/></inline-formula> (<italic>j</italic> = 1, 2, …, 11). If the two parental genotypes are identical in the probe sequences, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e018" xlink:type="simple"/></inline-formula> will be expected to take a value of 1.0 but deviate from the expectation if the <italic>j</italic>-th probe bears a polymorphic sequence between the two parents. To screen for the polymorphism bearing probe(s), i.e. single feature polymorphisms, we calculate the first (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e019" xlink:type="simple"/></inline-formula>) and the third (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e020" xlink:type="simple"/></inline-formula>) quartiles and inter-quartile range (<inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e021" xlink:type="simple"/></inline-formula>) from <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e022" xlink:type="simple"/></inline-formula>. On the basis of the calculated quartiles, the <italic>j</italic>-th probe is inferred to be a candidate SFP if <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e023" xlink:type="simple"/></inline-formula> or <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e024" xlink:type="simple"/></inline-formula>.</p>
+</sec><sec id="s4e">
+<title>Genotyping SFPs</title>
+<p>When an SFP is detected between the two parental lines, the next step is to determine the genotypes of their offspring at the SFP. The challenge in genotyping the offspring lies in that the offspring individuals are not replicated in the microarray experiment so that the binding affinity parameters can not be estimated independently for each of these individuals. Nevertheless, the SFP genotype for one of the individuals must be either <italic>H</italic> or <italic>L</italic>. Based on the argument, we develop here a Bayesian approach to calculate the probability that a particular individual has a genotype of <italic>H</italic> or <italic>L</italic> given its observed PM value and the distribution of the binding affinities of the two parental lines at the SFP.</p>
+<p>We assume that binding affinity of each of the two parental genotypes (<italic>X</italic> = <italic>H</italic> and <italic>L</italic>) follows a normal distribution with mean and variance of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e025" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e026" xlink:type="simple"/></inline-formula> accordingly. Let <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e027" xlink:type="simple"/></inline-formula> be the estimate of binding affinity of the <italic>k</italic>-th offspring individual at the SFP probe <italic>j</italic> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e028" xlink:type="simple"/></inline-formula> denote genotype of the individual at the probe <italic>j</italic>. The Bayesian probability has a form of<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e029" xlink:type="simple"/><label>(3)</label></disp-formula>because the offspring individual takes either of the parental genotypes with an equal probability of ½. In above equation, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e030" xlink:type="simple"/></inline-formula> represents a conditional probability density function and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e031" xlink:type="simple"/></inline-formula> is the probability density function of the standard normal distribution.</p>
+<p>We propose the use of the sample mean and variance as approximations of <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e032" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e033" xlink:type="simple"/></inline-formula> (<italic>X</italic> = <italic>H</italic> or <italic>L</italic>). For <italic>m</italic> hybridization replicates for each of the parents, there are a total of <italic>m</italic>(<italic>m</italic>-1)/2 possible pairs of PM values. Each of these paired PM values may be used to fit the model (1) and to generate an estimate of the binding affinity, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e034" xlink:type="simple"/></inline-formula>. The sample mean and variance are then calculated from <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e035" xlink:type="simple"/></inline-formula>. We denote the sample means and variances as <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e036" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e037" xlink:type="simple"/></inline-formula>. It should be noted that the variance may be underestimated because the data points are not completely independent each other. However, this may become negligible when the number of replicates, <italic>m</italic>, becomes large. To calculate the conditional mean <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e038" xlink:type="simple"/></inline-formula> (<italic>X</italic> = <italic>H</italic> or <italic>L</italic>), we fit all <italic>m</italic> pairs of PM values (one from the conditional parent and the other from the offspring) to the model (1) and calculate the mean, <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e039" xlink:type="simple"/></inline-formula>, from the <italic>m</italic> estimates of binding affinity. On the basis of these estimates, we can numerically work out<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e040" xlink:type="simple"/><label>(4)</label></disp-formula>and infer the offspring individual has genotype <italic>H</italic> if <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e041" xlink:type="simple"/></inline-formula> or genotype <italic>L</italic> if <inline-formula><inline-graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1000317.e042" xlink:type="simple"/></inline-formula>, otherwise its genotype is uncertain.</p>
+</sec><sec id="s4f">
+<title>Computer programs and datasets</title>
+<p>The programs developed to carry out the SFP diagnosis and genotyping presented in this paper are written in FORTRAN-90 and their executable versions with instructions are available upon request. We will make more user-friendly Windows-based applications in the longer term. The datasets analysed here are also available from the corresponding author.</p>
+</sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1000317.s001" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000317.s001" xlink:type="simple"><label>Text S1</label><caption>
+<p>The supplementary text summarizes the key statistical algorithms developed by the five other methods under comparison in the present study for predicting single feature polymorphisms from Affymetrix microarray data.</p>
+<p>(0.09 MB PDF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000317.s002" mimetype="application/postscript" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000317.s002" xlink:type="simple"><label>Figure S1</label><caption>
+<p>Genetic linkage maps of 1,378 single feature polymorphism markers identified from two barley commercial varieties (Steptoe and Morex) and their 139 double haploid offspring.</p>
+<p>(0.41 MB EPS)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1000317.s003" mimetype="application/x-excel" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1000317.s003" xlink:type="simple"><label>Table S1</label><caption>
+<p>The number of SFPs called at different values of the stringency parameter delta by Method 6 (Rostoks et al 2005, Genome Biology 6, R54)</p>
+<p>(0.03 MB XLS)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We thank Dr. Leonid Kruglyak for allowing us to share his computer programs of SFP prediction and Dr. L. Zhang for discussion on the PDNN model and algorithm. We are grateful to two anonymous reviewers for their constructive comments and suggestions which have helped improve presentation and context of an earlier version of the paper.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1000317-Winzeler1"><label>1</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Winzeler</surname><given-names>EA</given-names></name>
+<name name-style="western"><surname>Richards</surname><given-names>DR</given-names></name>
+<name name-style="western"><surname>Conway</surname><given-names>AR</given-names></name>
+<name name-style="western"><surname>Goldstein</surname><given-names>AL</given-names></name>
+<name name-style="western"><surname>Kalman</surname><given-names>S</given-names></name>
+<etal/></person-group>             <year>1998</year>             <article-title>Direct allelic variation scanning of the yeast genome.</article-title>             <source>Science</source>             <volume>281</volume>             <fpage>1194</fpage>             <lpage>1197</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Hazen1"><label>2</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hazen</surname><given-names>SP</given-names></name>
+<name name-style="western"><surname>Kay</surname><given-names>SA</given-names></name>
+</person-group>             <year>2003</year>             <article-title>Gene arrays are not just for measuring gene expression.</article-title>             <source>Trends Plant Sci</source>             <volume>8</volume>             <fpage>413</fpage>             <lpage>416</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Borevitz1"><label>3</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Borevitz</surname><given-names>JO</given-names></name>
+<name name-style="western"><surname>Liang</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Plouffe</surname><given-names>D</given-names></name>
+<name name-style="western"><surname>Chang</surname><given-names>HS</given-names></name>
+<name name-style="western"><surname>Zhu</surname><given-names>T</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Large-scale identification of single-feature polymorphisms in complex genomes.</article-title>             <source>Genome Res</source>             <volume>13</volume>             <fpage>513</fpage>             <lpage>523</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Ronald1"><label>4</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Ronald</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Akey</surname><given-names>JM</given-names></name>
+<name name-style="western"><surname>Whittle</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Smith</surname><given-names>EN</given-names></name>
+<name name-style="western"><surname>Yvert</surname><given-names>G</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Simultaneous genotyping, gene-expression measurement, and detection of allele-specific expression with oligonucleotide arrays.</article-title>             <source>Genome Res</source>             <volume>15</volume>             <fpage>284</fpage>             <lpage>291</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Zhang1"><label>5</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Zhang</surname><given-names>L</given-names></name>
+<name name-style="western"><surname>Miles</surname><given-names>MF</given-names></name>
+<name name-style="western"><surname>Aldape</surname><given-names>KD</given-names></name>
+</person-group>             <year>2003</year>             <article-title>A model of molecular interactions on short oligonucleotide microarrays.</article-title>             <source>Nat Biotechnol</source>             <volume>21</volume>             <fpage>818</fpage>             <lpage>821</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-West1"><label>6</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>West</surname><given-names>MAL</given-names></name>
+<name name-style="western"><surname>van Leeuwen</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Kozik</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Kliebenstein</surname><given-names>DJ</given-names></name>
+<name name-style="western"><surname>Doerge</surname><given-names>RW</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>High-density haplotyping with microarray-based expression and single feature polymorphism markers in Arabidopsis.</article-title>             <source>Genome Res</source>             <volume>16</volume>             <fpage>787</fpage>             <lpage>795</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Cui1"><label>7</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Cui</surname><given-names>XP</given-names></name>
+<name name-style="western"><surname>Xu</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Asghar</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Condamine</surname><given-names>P</given-names></name>
+<name name-style="western"><surname>Svensson</surname><given-names>JT</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Detecting single-feature polymorphisms using oligonucleotide arrays and robustified projection pursuit.</article-title>             <source>Bioinformatics</source>             <volume>21</volume>             <fpage>3852</fpage>             <lpage>3858</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Rostoks1"><label>8</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Rostoks</surname><given-names>N</given-names></name>
+<name name-style="western"><surname>Borevitz</surname><given-names>JO</given-names></name>
+<name name-style="western"><surname>Hedley</surname><given-names>PE</given-names></name>
+<name name-style="western"><surname>Russell</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Mudie</surname><given-names>S</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Single-feature polymorphism discovery in the barley transcriptome.</article-title>             <source>Genome Biol</source>             <volume>6</volume>             <fpage>R54</fpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Luo1"><label>9</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Luo</surname><given-names>ZW</given-names></name>
+<name name-style="western"><surname>Potokina</surname><given-names>E</given-names></name>
+<name name-style="western"><surname>Druka</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Wise</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Waugh</surname><given-names>R</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>SFP genotyping from Affymetrix arrays is robust but largely detects cis-acting expression regulators.</article-title>             <source>Genetics</source>             <volume>176</volume>             <fpage>789</fpage>             <lpage>800</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Lander1"><label>10</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Lander</surname><given-names>ES</given-names></name>
+<name name-style="western"><surname>Botstein</surname><given-names>D</given-names></name>
+</person-group>             <year>1989</year>             <article-title>Mapping mendelian factors underlying quantitative traits using RFLP linkage maps.</article-title>             <source>Genetics</source>             <volume>121</volume>             <fpage>185</fpage>             <lpage>199</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Jansen1"><label>11</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Jansen</surname><given-names>RC</given-names></name>
+<name name-style="western"><surname>Nap</surname><given-names>JP</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Genetical genomics: the added value from segregation.</article-title>             <source>Trends Genet</source>             <volume>17</volume>             <fpage>388</fpage>             <lpage>391</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Schadt1"><label>12</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Schadt</surname><given-names>EE</given-names></name>
+<name name-style="western"><surname>Monks</surname><given-names>SA</given-names></name>
+<name name-style="western"><surname>Drake</surname><given-names>TA</given-names></name>
+<name name-style="western"><surname>Lusis</surname><given-names>AJ</given-names></name>
+<name name-style="western"><surname>Che</surname><given-names>N</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Genetics of gene expression surveyed in maize, mouse and man.</article-title>             <source>Nature</source>             <volume>422</volume>             <fpage>297</fpage>             <lpage>302</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Li1"><label>13</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Li</surname><given-names>C</given-names></name>
+<name name-style="western"><surname>Wong</surname><given-names>WH</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Model-based analysis of oligonucleotide arrays: Expression index computation and outlier detection.</article-title>             <source>Proc Natl Acad of Sci U S A</source>             <volume>98</volume>             <fpage>31</fpage>             <lpage>36</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Brem1"><label>14</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Brem</surname><given-names>RB</given-names></name>
+<name name-style="western"><surname>Yvert</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Clinton</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Kruglyak</surname><given-names>L</given-names></name>
+</person-group>             <year>2002</year>             <article-title>Genetic dissection of transcriptional regulation in budding yeast.</article-title>             <source>Science</source>             <volume>296</volume>             <fpage>752</fpage>             <lpage>755</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Morley1"><label>15</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Morley</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Molony</surname><given-names>CM</given-names></name>
+<name name-style="western"><surname>Weber</surname><given-names>TM</given-names></name>
+<name name-style="western"><surname>Devlin</surname><given-names>JL</given-names></name>
+<name name-style="western"><surname>Ewens</surname><given-names>KG</given-names></name>
+<etal/></person-group>             <year>2004</year>             <article-title>Genetic analysis of genome-wide variation in human gene expression.</article-title>             <source>Nature</source>             <volume>430</volume>             <fpage>743</fpage>             <lpage>747</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Mehrabian1"><label>16</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Mehrabian</surname><given-names>M</given-names></name>
+<name name-style="western"><surname>Allayee</surname><given-names>H</given-names></name>
+<name name-style="western"><surname>Stockton</surname><given-names>J</given-names></name>
+<name name-style="western"><surname>Lum</surname><given-names>PY</given-names></name>
+<name name-style="western"><surname>Drake</surname><given-names>TA</given-names></name>
+<etal/></person-group>             <year>2005</year>             <article-title>Integrating genotypic and expression data in a segregating mouse population to identify 5-lipoxygenase as a susceptibility gene for obesity and bone traits.</article-title>             <source>Nat Genet</source>             <volume>37</volume>             <fpage>1224</fpage>             <lpage>1233</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Tusher1"><label>17</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Tusher</surname><given-names>VG</given-names></name>
+<name name-style="western"><surname>Tibshirani</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Chu</surname><given-names>G</given-names></name>
+</person-group>             <year>2001</year>             <article-title>Significance analysis of microarrays applied to the ionizing radiation response.</article-title>             <source>Proc Natl Acad of Sci U S A</source>             <volume>98</volume>             <fpage>5116</fpage>             <lpage>5121</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Stam1"><label>18</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Stam</surname><given-names>P</given-names></name>
+</person-group>             <year>1993</year>             <article-title>Construction of integrated genetic linkage maps by means of a new computer package: JoinMap.</article-title>             <source>Plant Journal</source>             <volume>3</volume>             <fpage>739</fpage>             <lpage>744</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-VanOoijen1"><label>19</label><element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Van Ooijen</surname><given-names>JW</given-names></name>
+<name name-style="western"><surname>Voorrips</surname><given-names>RE</given-names></name>
+</person-group>             <year>2001</year>             <source>JoinMap® 3.0, Software for the calculation of genetic linkage maps</source>             <publisher-loc>Wageningen, the Netherlands</publisher-loc>             <publisher-name>Plant Research International</publisher-name>          </element-citation></ref>
+<ref id="pcbi.1000317-Hu1"><label>20</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Hu</surname><given-names>XH</given-names></name>
+<name name-style="western"><surname>Wang</surname><given-names>MH</given-names></name>
+<name name-style="western"><surname>Tan</surname><given-names>T</given-names></name>
+<name name-style="western"><surname>Li</surname><given-names>JR</given-names></name>
+<name name-style="western"><surname>Yang</surname><given-names>H</given-names></name>
+<etal/></person-group>             <year>2007</year>             <article-title>Genetic Dissection of Ethanol Tolerance in the Budding Yeast Saccharomyces cerevisiae.</article-title>             <source>Genetics</source>             <volume>175</volume>             <fpage>1479</fpage>             <lpage>1487</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Druka1"><label>21</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Druka</surname><given-names>A</given-names></name>
+<name name-style="western"><surname>Muehlbauer</surname><given-names>G</given-names></name>
+<name name-style="western"><surname>Druka</surname><given-names>I</given-names></name>
+<name name-style="western"><surname>Caldo</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Baumann</surname><given-names>U</given-names></name>
+<etal/></person-group>             <year>2006</year>             <article-title>An atlas of gene expression from seed to seed through barley development.</article-title>             <source>Funct Integr Genomics</source>             <volume>6</volume>             <fpage>202</fpage>             <lpage>211</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Irizarry1"><label>22</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Irizarry</surname><given-names>RA</given-names></name>
+<name name-style="western"><surname>Hobbs</surname><given-names>B</given-names></name>
+<name name-style="western"><surname>Collin</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Beazer-Barclay</surname><given-names>YD</given-names></name>
+<name name-style="western"><surname>Antonellis</surname><given-names>KJ</given-names></name>
+<etal/></person-group>             <year>2003</year>             <article-title>Exploration, normalization, and summaries of high density oligonucleotide array probe level data.</article-title>             <source>Biostatistics</source>             <volume>4</volume>             <fpage>249</fpage>             <lpage>264</lpage>          </element-citation></ref>
+<ref id="pcbi.1000317-Wu1"><label>23</label><element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author">
+<name name-style="western"><surname>Wu</surname><given-names>ZJ</given-names></name>
+<name name-style="western"><surname>Irizarry</surname><given-names>RA</given-names></name>
+<name name-style="western"><surname>Gentleman</surname><given-names>R</given-names></name>
+<name name-style="western"><surname>Martinez-Murillo</surname><given-names>F</given-names></name>
+<name name-style="western"><surname>Spencer</surname><given-names>F</given-names></name>
+</person-group>             <year>2004</year>             <article-title>A model-based background adjustment for oligonucleotide expression arrays.</article-title>             <source>J Amer Statistical Assoc</source>             <volume>99</volume>             <fpage>909</fpage>             <lpage>917</lpage>          </element-citation></ref>
+</ref-list>
+
+</back>
+</article>

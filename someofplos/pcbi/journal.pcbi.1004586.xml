@@ -1,0 +1,881 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004586</article-id>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-15-00613</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title><italic>AutoDockFR</italic>: Advances in Protein-Ligand Docking with Explicitly Specified Binding Site Flexibility</article-title>
+<alt-title alt-title-type="running-head"><italic>AutoDockFR</italic>: Docking Flexible Small Molecule into Flexible Receptors</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Ravindranath</surname>
+<given-names>Pradeep Anand</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"/>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Forli</surname>
+<given-names>Stefano</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"/>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Goodsell</surname>
+<given-names>David S.</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"/>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Olson</surname>
+<given-names>Arthur J.</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"/>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Sanner</surname>
+<given-names>Michel F.</given-names>
+</name>
+<xref rid="cor001" ref-type="corresp">*</xref>
+<xref rid="aff001" ref-type="aff"/>
+</contrib>
+</contrib-group>
+<aff id="aff001"><addr-line>Department of Integrative Structural and Computational Biology, The Scripps Research Institute, La Jolla, California, United States of America</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Fetrow</surname>
+<given-names>Jacquelyn S.</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Wake Forest University, UNITED STATES</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: PAR SF DSG AJO MFS. Performed the experiments: PAR MFS. Analyzed the data: PAR SF MFS. Contributed reagents/materials/analysis tools: PAR MFS. Wrote the paper: PAR SF DSG AJO MFS.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">sanner@scripps.edu</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>2</day>
+<month>12</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="collection">
+<month>12</month>
+<year>2015</year>
+</pub-date>
+<volume>11</volume>
+<issue>12</issue>
+<elocation-id>e1004586</elocation-id>
+<history>
+<date date-type="received">
+<day>14</day>
+<month>4</month>
+<year>2015</year>
+</date>
+<date date-type="accepted">
+<day>6</day>
+<month>10</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Ravindranath et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004586" xlink:type="simple"/>
+<abstract>
+<p>Automated docking of drug-like molecules into receptors is an essential tool in structure-based drug design. While modeling receptor flexibility is important for correctly predicting ligand binding, it still remains challenging. This work focuses on an approach in which receptor flexibility is modeled by explicitly specifying a set of receptor side-chains a-priori. The challenges of this approach include the: 1) exponential growth of the search space, demanding more efficient search methods; and 2) increased number of false positives, calling for scoring functions tailored for flexible receptor docking. We present <italic>AutoDockFR</italic>–<italic>AutoDock</italic> for Flexible Receptors (<italic>ADFR</italic>), a new docking engine based on the <italic>AutoDock4</italic> scoring function, which addresses the aforementioned challenges with a new Genetic Algorithm (GA) and customized scoring function. We validate <italic>ADFR</italic> using the Astex Diverse Set, demonstrating an increase in efficiency and reliability of its GA over the one implemented in <italic>AutoDock4</italic>. We demonstrate greatly increased success rates when cross-docking ligands into <italic>apo</italic> receptors that require side-chain conformational changes for ligand binding. These cross-docking experiments are based on two datasets: 1) SEQ17 –a receptor diversity set containing 17 pairs of <italic>apo-holo</italic> structures; and 2) CDK2 –a ligand diversity set composed of one CDK2 <italic>apo</italic> structure and 52 known bound inhibitors. We show that, when cross-docking ligands into the <italic>apo</italic> conformation of the receptors with up to 14 flexible side-chains, <italic>ADFR</italic> reports more correctly cross-docked ligands than <italic>AutoDock Vina</italic> on both datasets with solutions found for 70.6% vs. 35.3% systems on SEQ17, and 76.9% vs. 61.5% on CDK2. <italic>ADFR</italic> also outperforms <italic>AutoDock Vina</italic> in number of top ranking solutions on both datasets. Furthermore, we show that correctly docked CDK2 complexes re-create on average 79.8% of all pairwise atomic interactions between the ligand and moving receptor atoms in the <italic>holo</italic> complexes. Finally, we show that down-weighting the receptor internal energy improves the ranking of correctly docked poses and that runtime for <italic>AutoDockFR</italic> scales linearly when side-chain flexibility is added.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>Docking programs are widely used to identify drug-like molecules interacting with a given receptor to inhibit its function. Although receptors are known to change conformation upon ligand binding, most docking programs model small molecules as flexible while modeling receptors as rigid, thus limiting the range of therapeutic targets for which docking can be applied. Here we introduce a new docking program, <italic>AutoDockFR</italic>, which simulates partial receptor flexibility by allowing a large number of explicitly specified receptor side-chains to explore their conformational space, while searching for energetically favorable binding poses for a given ligand. We show that we achieve higher docking success rates by including receptor flexibility in the binding site of receptor conformations that are experimentally determined without the ligand present (i.e. <italic>apo</italic> conformations). Previous approaches based on the a-priori and explicit specification of the part of the receptor to be considered flexible, have so far been limited to a small number of flexible protein side-chains (2–5), thus requiring prior knowledge of receptor side-chains undergoing conformational change upon binding of a given ligand. The demonstrated ability of <italic>AutoDockFR</italic> in identifying correct solutions for problems with up to 14 flexible receptor side-chains lessens this requirement.</p>
+</abstract>
+<funding-group>
+<funding-statement>This work was supported by grant R01 GM096888-05 from the National Institute of Health to MFS. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="11"/>
+<table-count count="2"/>
+<page-count count="28"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>The software source code as well as the data-sets used in this paper are available at <ext-link ext-link-type="uri" xlink:href="http://adfr.scripps.edu" xlink:type="simple">http://adfr.scripps.edu</ext-link></meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<disp-quote>
+<p>“This is a <italic>PLOS Computational Biology</italic> Methods paper”</p>
+</disp-quote>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Structure-based computational drug design is an essential tool in computational medicinal chemistry [<xref rid="pcbi.1004586.ref001" ref-type="bibr">1</xref>–<xref rid="pcbi.1004586.ref003" ref-type="bibr">3</xref>]. Docking is used for optimizing known drugs and for identifying novel binders by predicting their binding mode and affinity [<xref rid="pcbi.1004586.ref004" ref-type="bibr">4</xref>, <xref rid="pcbi.1004586.ref005" ref-type="bibr">5</xref>]. While the exploration of the ligand conformational space during the docking procedure is common, modeling receptor flexibility upon ligand binding still remains a major challenge because of the computational resources required [<xref rid="pcbi.1004586.ref006" ref-type="bibr">6</xref>]. Recent reviews provide an excellent and detailed analysis of state-of-the-art techniques for modeling receptor flexibility in structure-based drug design [<xref rid="pcbi.1004586.ref007" ref-type="bibr">7</xref>, <xref rid="pcbi.1004586.ref008" ref-type="bibr">8</xref>]. In summary, the motions induced in receptors upon ligand binding range from small local adjustments to large re-arrangements [<xref rid="pcbi.1004586.ref009" ref-type="bibr">9</xref>]. Modeling the receptor as fully flexible during the docking calculation is too expensive computationally because of the large number of degrees of freedom to explore during the search [<xref rid="pcbi.1004586.ref010" ref-type="bibr">10</xref>]. Instead a number of computationally feasible approximations have been proposed that can broadly be classified into the following three categories: 1) methods altering interaction potentials, where repulsive potentials between ligand and receptor atoms are attenuated [<xref rid="pcbi.1004586.ref011" ref-type="bibr">11</xref>] or grids representing these potentials are deformed [<xref rid="pcbi.1004586.ref012" ref-type="bibr">12</xref>], or a consensus potential is created to represent various conformations of the receptor [<xref rid="pcbi.1004586.ref013" ref-type="bibr">13</xref>]; 2) ensemble docking methods [<xref rid="pcbi.1004586.ref013" ref-type="bibr">13</xref>, <xref rid="pcbi.1004586.ref014" ref-type="bibr">14</xref>], using a discrete set of receptor conformations; and 3) induced fit methods, where changes in receptor conformation are explored during the docking [<xref rid="pcbi.1004586.ref015" ref-type="bibr">15</xref>–<xref rid="pcbi.1004586.ref024" ref-type="bibr">24</xref>]. Some approaches may fall into multiple categories depending on the classification criteria. Potential altering approaches are computationally inexpensive; however the range of motions they can account for is rather limited. The elastic deformation of affinity grids has been shown to be a computationally effective way to increase the accuracy of cross-docking ligands into non-native structure. However, the authors observed that this approach failed on a case where a large receptor side-chain conformational change is needed for the ligand to bind. The ensemble docking approach does not require any modification to existing docking codes, is embarrassingly parallel, and has been used successfully in the design of an HIV reverse transcriptase inhibitor [<xref rid="pcbi.1004586.ref025" ref-type="bibr">25</xref>]. The success rate of this method depends on the presence of a suitable receptor conformation for the ligand being docked. This limitation is somewhat attenuated in approaches that use receptor conformations to define receptor fragments that are combined during the docking procedure, thus exploring a larger subset of the receptor conformational space [<xref rid="pcbi.1004586.ref015" ref-type="bibr">15</xref>, <xref rid="pcbi.1004586.ref016" ref-type="bibr">16</xref>]. Induced fit methods vary in their strategies for accounting for receptor and ligand flexibility. Some methods rely on pre-computed, low energy ligand conformers which are placed into the receptor structure, and either re-pack the receptor side-chains around the docked ligand, or adjust the receptor and the ligand conformations to resolve clashes. These techniques do not require the a-priori specification of the receptor side-chains to be made flexible and can potentially modify the conformation of a large number of binding-site side-chains. SLIDE [<xref rid="pcbi.1004586.ref017" ref-type="bibr">17</xref>] resolves the clashes by minimal rotations [<xref rid="pcbi.1004586.ref018" ref-type="bibr">18</xref>] and mean-field optimization of a simplified scoring function, making it efficient for virtual screening studies. In addition to modeling the motions of receptor side-chains, Rosetta Ligand can also induce changes in the backbone conformation [<xref rid="pcbi.1004586.ref026" ref-type="bibr">26</xref>], but this approach is computationally expensive. Other methods [<xref rid="pcbi.1004586.ref015" ref-type="bibr">15</xref>, <xref rid="pcbi.1004586.ref016" ref-type="bibr">16</xref>, <xref rid="pcbi.1004586.ref020" ref-type="bibr">20</xref>–<xref rid="pcbi.1004586.ref024" ref-type="bibr">24</xref>, <xref rid="pcbi.1004586.ref027" ref-type="bibr">27</xref>] rely on the explicit and a-priori specification of the parts of the receptor to be made flexible. These methods explore a solution space spanning all possible ligand rotations and translations, and all possible conformations of both the ligand and the flexible parts the receptor. <italic>ADFR</italic> falls into this category, which we refer to “<italic>explicit methods”</italic> as they require the explicit specification of the flexible parts of the receptor prior to docking. While these approaches have mostly focused on receptor side-chain motions, some of them also include limited backbone motion [<xref rid="pcbi.1004586.ref015" ref-type="bibr">15</xref>, <xref rid="pcbi.1004586.ref016" ref-type="bibr">16</xref>, <xref rid="pcbi.1004586.ref023" ref-type="bibr">23</xref>, <xref rid="pcbi.1004586.ref027" ref-type="bibr">27</xref>]. The main challenges of explicit methods include: 1) the difficulty of finding the global minimum in solution-spaces that grow exponentially with the number of degrees of freedom added by the receptor; and 2) the increased number of false positives arising from the evaluation of more potential solutions, using scoring functions with inherent approximations and defects as underlined in [<xref rid="pcbi.1004586.ref028" ref-type="bibr">28</xref>]. Because of these limitations, reports of successful usage of these programs have been limited to docking studies with relatively small numbers of flexible receptor side-chains, typically 2–5, putting the burden of selecting the side-chains that will move on the user.</p>
+<p><italic>AutoDock</italic> is a widely used docking program that allows the specification of flexible side-chains. However, its hardcoded limit of 32 rotatable bonds is easily exceeded when receptor side-chains are made flexible. Moreover, the Genetic Algorithm (GA) implemented in <italic>AutoDock</italic> does not perform well for docking complexes with more than ~20 rotatable bonds. Here, we present a new docking engine–<italic>AutoDockFR</italic>: <italic>AutoDock</italic> for Flexible Receptors (<italic>ADFR)</italic> - implementing a new genetic algorithm. We demonstrate its application to the high-dimensional solution spaces corresponding to docking a fully flexible ligand into a receptor with up to 14 explicitly specified, flexible side-chains. While <italic>ADFR</italic> is designed to allow the inclusion of a wide variety of receptor motions, this work focuses on receptor motion occurring in receptor side-chains with minor backbone motion. The previously developed Flexibility Tree (FT) data structure supports the encoding of a wide variety of hierarchically nested molecular motions [<xref rid="pcbi.1004586.ref029" ref-type="bibr">29</xref>] and was first used in our earlier docking software <italic>FLIPDock</italic> [<xref rid="pcbi.1004586.ref023" ref-type="bibr">23</xref>]. <italic>AutoDockFR</italic> supersedes <italic>FLIPDock</italic> and introduces a new and more efficient Genetic Algorithm (GA), as well as a new motion descriptor for the Flexibility Tree optimized for representing flexible receptor side-chains. The new GA developed for <italic>ADFR</italic> introduces the concept of clustering of the ensemble of solutions optimized by the GA (i.e. the population). Clustering enables maintaining diversity in the population and the implementation of an efficient termination criterion. This new GA also implements a new strategy for minimizing solutions during the GA optimization. In this paper, we provide an overview of the algorithm and describe the key concepts supporting the efficiency of the new GA. We validate the implementation of the <italic>AutoDock4</italic> scoring function [<xref rid="pcbi.1004586.ref030" ref-type="bibr">30</xref>] and quantify its improvement in efficiency over the one implemented in <italic>AutoDock</italic> by re-docking ligands of the Astex Diverse set into their native rigid receptors. Next, we demonstrate the ability of <italic>ADFR</italic> to cross-dock flexible ligands into flexible <italic>apo</italic> receptors using two datasets, one emphasizing receptor diversity and the other on ligand diversity. The first dataset (SEQ17) comprises 17 diverse <italic>apo</italic>-<italic>holo</italic> receptor pairs. These 17 systems were selected to represent a wide range of receptors and present at least one severe clash between a ligand atom and a receptor side-chain in its <italic>apo</italic> conformation. We show that <italic>ADFR</italic> significantly increases the docking success rate over <italic>AutoDock Vina</italic> when cross-docking each ligand into the <italic>apo</italic> conformation of its receptor, with up to 14 flexible receptor side-chains. The second dataset comprises an <italic>apo</italic> conformation of the Cyclin Dependent Kinase receptor (CDK2) and 52 ligands from <italic>holo</italic> complexes of this receptor. The 52 ligands are docked into the <italic>apo</italic> conformation of the receptor with a number of flexible receptor side-chains varying from 0 to 12. We show that increasing the number of flexible side-chains increases the docking success rate, and that <italic>ADFR</italic> achieves better success rates than <italic>AutoDock Vina</italic> with a linear scaling in run time when increasing the number of flexible receptor side-chains. For the CDK2 cross-docking experiment we also provide a detailed analysis of conformational changes induced by the ligands in the twelve side-chains made flexible in the <italic>apo</italic> conformation. We show that, in the docked complexes, the receptor side-chains move to re-create on average 79.8% of the atomic pairwise interactions observed in the <italic>holo</italic> complex. Finally, we show that in both cross-docking experiments, down weighting the contribution of the receptor internal energy in the score increases the ranking of correctly docked solutions.</p>
+</sec>
+<sec id="sec002" sec-type="materials|methods">
+<title>Methods</title>
+<sec id="sec003">
+<title>Algorithm overview</title>
+<p>The three main components of docking programs are: the representation (i.e. the encoding of the docking problem as a set of variables to be optimized), the scoring function for which these variable are optimized, and the search method. <italic>ADFR</italic> encodes the docking problem into a list of variables describing a docking solution and optimizes it for the <italic>AutoDock4</italic> force field using a Genetic Algorithm (GA) combined with a Solis-Wets local search [<xref rid="pcbi.1004586.ref031" ref-type="bibr">31</xref>]. The source code of the program is available online along with binaries and all input files for reproducing calculations reported in this paper [<ext-link ext-link-type="uri" xlink:href="http://adfr.scripps.edu/" xlink:type="simple">http://adfr.scripps.edu/</ext-link>].</p>
+</sec>
+<sec id="sec004">
+<title>Representation</title>
+<p>In <italic>ADFR</italic>, the problem of docking a flexible ligand into a receptor with flexible side-chains is encoded as a set of variables called a genome, and representing the degrees of freedom associated with: (i) the ligand orientation (rotation and translation); (ii) the ligand conformation; and (iii) the receptor conformation; (<xref rid="pcbi.1004586.g001" ref-type="fig">Fig 1</xref>). In our approach, the ligand translation adds three variables to the genome. The rotation of the ligand is described by a quaternion[<xref rid="pcbi.1004586.ref032" ref-type="bibr">32</xref>], which adds four variables corresponding to a quaternion. Quaternion representation is used over Euler angles to avoid gimbal lock singularities and for stable interpolations of rotations. The ligand conformation is encoded as torsion-angle values for rotatable bonds in the ligand. Hence, a ligand with two rotatable bonds will add two variables to the genome for its conformation. The receptor conformational changes are currently limited to side-chain motions. Each flexible side-chain adds its list of χ angles to the genome. For instance, a lysine will add four variables to the genome when made flexible. <xref rid="pcbi.1004586.g001" ref-type="fig">Fig 1</xref> shows an example of a genome for a ligand with two rotatable bonds and a receptor with two flexible side-chains. Related variables in the genome are called genes and are implemented as programmatic objects. For instance the three variables corresponding to the translation of the ligand are grouped in a translation gene object. This object-oriented approach enables the implementation of gene-specific operations for the initialization, randomization, perturbation, and mutation of the gene values. For instance the initialization operator of the ligand translation gene object randomly picks a translation from a pre-defined set, while the initialization operator of flexible receptor side-chains gene object initializes the χ angles with the angles obtained from the input conformation of the receptor. Likewise, the mutation of the translation genes modifies the x,y,z values of the gene using a Gaussian distribution centered on its current values, while the mutation operator of a flexible receptor side-chain object randomly selects a set of rotameric angles (with deviations) from the rotamer library. This object-oriented architecture is instrumental for the focused sampling of various dimensions of the search space (see below), which is one of the key features for successfully searching large solutions spaces. A given set of values for the variables in the genome (<italic>i</italic>.<italic>e</italic>. the genotype) corresponds to a docking solution for which the coordinates of the receptor and ligand atoms (<italic>i</italic>.<italic>e</italic>. phenotype) can be calculated and used to compute the value of the scoring function for this solution. In <italic>ADFR</italic> the genome is assembled dynamically at runtime from the description of molecular flexibility provided in the input files. The ligand is specified using the <italic>AutoDock</italic> file format (<italic>i</italic>.<italic>e</italic>. PDBQT), which describes ligand rotatable bonds. The receptor side-chains to be made flexible are specified in the docking settings file using residue names (i.e. residue type and number). The ligand translation is limited to a set of possible values called translational points (see below), which are stored in a file specified in the docking settings file.</p>
+<fig id="pcbi.1004586.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004586.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Genome used by <italic>ADFR</italic> to encode the docking of a flexible ligand into a receptor with two flexible side-chains.</title>
+<p>This figure illustrates a genome optimized by the GA implemented in <italic>ADFR</italic> for solving the problem of docking a flexible ligand with two rotatable bonds into a receptor with two flexible side-chains. The genome is the set of variables to optimize. A given set of values for these variables constitutes a docking solution also called an individual. Variables are grouped into the following genes: the ligand translation (3 values: x, y, z), rotation (4 values: quaternion), and conformation (1 torsion angle per ligand rotatable bond), and the receptor conformation (χ angles for each flexible receptor side-chain).</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004586.g001" position="float" xlink:type="simple"/>
+</fig>
+<p>Below we describe the scoring function and the GA implemented in <italic>AutoDockFR</italic>, followed by a description of focused sampling techniques that support the GA performance.</p>
+</sec>
+<sec id="sec005">
+<title>Scoring function</title>
+<p>The <italic>AutoDock</italic> energy function [<xref rid="pcbi.1004586.ref030" ref-type="bibr">30</xref>] (<xref rid="pcbi.1004586.e001" ref-type="disp-formula">Eq 1</xref>) is a weighted sum of terms representing van der Waals, hydrogen bond, electrostatic, and desolvation contributions, which are calculated between pairs of atoms.</p>
+<disp-formula id="pcbi.1004586.e001">
+<alternatives>
+<graphic id="pcbi.1004586.e001g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004586.e001" xlink:type="simple"/>
+<mml:math display="block" id="M1" overflow="scroll">
+<mml:mrow><mml:mi>E</mml:mi><mml:mo>=</mml:mo><mml:msub><mml:mrow><mml:mi>w</mml:mi></mml:mrow><mml:mrow><mml:mi>v</mml:mi><mml:mi>d</mml:mi><mml:mi>W</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mspace width="0.2em"/><mml:msub><mml:mstyle displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mrow><mml:mi>A</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msubsup><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mn>12</mml:mn></mml:mrow></mml:msubsup></mml:mrow></mml:mfrac><mml:mo>−</mml:mo><mml:mspace width="0.15em"/><mml:mfrac><mml:mrow><mml:msub><mml:mrow><mml:mi>B</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msubsup><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mn>6</mml:mn></mml:mrow></mml:msubsup></mml:mrow></mml:mfrac><mml:mo>)</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:mspace width="0.15em"/></mml:mrow></mml:mrow><mml:msub><mml:mrow><mml:mi>w</mml:mi></mml:mrow><mml:mrow><mml:mi>h</mml:mi><mml:mi>b</mml:mi><mml:mi>o</mml:mi><mml:mi>n</mml:mi><mml:mi>d</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mspace width="0.2em"/><mml:msub><mml:mstyle displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mspace width="0.15em"/><mml:mrow><mml:mi>E</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mi>t</mml:mi><mml:mo>)</mml:mo></mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mrow><mml:mi>C</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msubsup><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mn>12</mml:mn></mml:mrow></mml:msubsup></mml:mrow></mml:mfrac><mml:mo>−</mml:mo><mml:mspace width="0.15em"/><mml:mfrac><mml:mrow><mml:msub><mml:mrow><mml:mi>D</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msubsup><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mn>10</mml:mn></mml:mrow></mml:msubsup></mml:mrow></mml:mfrac><mml:mo>)</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi>w</mml:mi></mml:mrow><mml:mrow><mml:mi>e</mml:mi><mml:mi>l</mml:mi><mml:mi>e</mml:mi><mml:mi>c</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mspace width="0.2em"/><mml:msub><mml:mstyle displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mrow><mml:mi>q</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:msub><mml:mrow><mml:mi>q</mml:mi></mml:mrow><mml:mrow><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mrow><mml:mi>ϵ</mml:mi><mml:mspace width="0.2em"/><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>.</mml:mo><mml:msub><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac><mml:mo>)</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:mspace width="0.15em"/><mml:msub><mml:mrow><mml:mi>w</mml:mi></mml:mrow><mml:mrow><mml:mi>s</mml:mi><mml:mi>o</mml:mi><mml:mi>l</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mspace width="0.2em"/><mml:msub><mml:mstyle displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mrow><mml:mi>i</mml:mi><mml:mo>,</mml:mo><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:msub><mml:mrow><mml:mi>S</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:msub><mml:mrow><mml:mi>V</mml:mi></mml:mrow><mml:mrow><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:mspace width="0.2em"/><mml:msub><mml:mrow><mml:mi>S</mml:mi></mml:mrow><mml:mrow><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:msub><mml:mrow><mml:mi>V</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>)</mml:mo></mml:mrow><mml:msup><mml:mrow><mml:mi>e</mml:mi></mml:mrow><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mfrac><mml:mrow><mml:msubsup><mml:mrow><mml:mo>−</mml:mo><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mn>2</mml:mn></mml:mrow></mml:msubsup></mml:mrow><mml:mrow><mml:msup><mml:mrow><mml:mn>2</mml:mn><mml:mi>σ</mml:mi></mml:mrow><mml:mrow><mml:mn>2</mml:mn></mml:mrow></mml:msup></mml:mrow></mml:mfrac><mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:msup></mml:mrow></mml:mrow></mml:mrow></mml:mrow></mml:mrow></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(Eq. 1)</label>
+</disp-formula>
+<p>The <italic>ADFR</italic> score (<xref rid="pcbi.1004586.e002" ref-type="disp-formula">Eq 2</xref>) uses this energy function to independently score the interactions between the following three groups of atoms: Ligand atoms (L), Rigid Receptor atoms (RR) and Flexible Receptor atoms (FR). The total score is the sum of these interaction terms:
+<disp-formula id="pcbi.1004586.e002">
+<alternatives>
+<graphic id="pcbi.1004586.e002g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004586.e002" xlink:type="simple"/>
+<mml:math display="block" id="M2" overflow="scroll">
+<mml:mrow><mml:msub><mml:mrow><mml:mi>S</mml:mi></mml:mrow><mml:mrow><mml:mi>A</mml:mi><mml:mi>D</mml:mi><mml:mi>F</mml:mi><mml:mi>R</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mspace width="0.15em"/><mml:msub><mml:mrow><mml:mi>E</mml:mi></mml:mrow><mml:mrow><mml:mi>L</mml:mi><mml:mo>−</mml:mo><mml:mi>L</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi>E</mml:mi></mml:mrow><mml:mrow><mml:mi>L</mml:mi><mml:mo>−</mml:mo><mml:mi>R</mml:mi><mml:mi>R</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi>E</mml:mi></mml:mrow><mml:mrow><mml:mi>L</mml:mi><mml:mo>−</mml:mo><mml:mi>F</mml:mi><mml:mi>R</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi>E</mml:mi></mml:mrow><mml:mrow><mml:mi>F</mml:mi><mml:mi>R</mml:mi><mml:mo>−</mml:mo><mml:mi>F</mml:mi><mml:mi>R</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mrow><mml:mi>E</mml:mi></mml:mrow><mml:mrow><mml:mi>F</mml:mi><mml:mi>R</mml:mi><mml:mo>−</mml:mo><mml:mi>R</mml:mi><mml:mi>R</mml:mi></mml:mrow></mml:msub></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(Eq. 2)</label>
+</disp-formula></p>
+<p>In the case of a rigid receptor, only the first two terms (i.e., <italic>E</italic><sub><italic>L-L</italic></sub> or ligand intra-molecular and <italic>E</italic><sub><italic>L-RR</italic></sub> or ligand-rigid receptor inter-molecular interactions) are considered. The additional terms (<italic>E</italic><sub><italic>L-FR</italic></sub>, <italic>E</italic><sub><italic>FR-FR</italic></sub>, <italic>E</italic><sub><italic>FR-RR</italic></sub>) are automatically included in the scoring functions when receptor atoms are made flexible. A weight can be assigned to each term of the scoring function. Similarly to <italic>AutoDock</italic>, <italic>ADFR</italic> uses affinity maps to represent interactions between ligand or flexible receptor atoms and rigid receptor atoms; hence the E<sub>L-RR</sub> and E<sub>FR-RR</sub> terms are efficiently obtained by interpolating values in affinity maps. The remaining terms (E<sub>L-L,</sub> E<sub>L-FR,</sub> E<sub>FR-FR</sub>) are computed using explicit atom pairs for every non-bonded pair of atoms excluding 1–3 interactions, and 1–4 interactions not mediated by a rotatable bond.</p>
+<p>Affinity maps are regular 3D grids defined on a box aligned with the Cartesian axis. This box defines the space that ligand atoms can occupy. Affinity maps are computed prior to docking using <italic>AutoGrid</italic> from the <italic>AutoDockTools</italic> suite [<xref rid="pcbi.1004586.ref020" ref-type="bibr">20</xref>] with a default grid map spacing of 0.375Å. Affinity values calculated for grid points inside the protein present dramatic fluctuations with the highest values centered on receptor atoms, and the potential falling off rapidly around the atom centers (<xref rid="pcbi.1004586.g002" ref-type="fig">Fig 2A</xref>). We designed a map post-processing protocol, which replaces the potential on grid points inside the receptor with a repulsive potential that provides a gradient pointing toward ligand binding surface (<xref rid="pcbi.1004586.g002" ref-type="fig">Fig 2B</xref>). While this figure shows an example of an open pocket, the same protocol works for a buried cavity. This protocol produces maps that facilitate the search by providing a gradient for resolving clashes and by removing buried favorable cavities too small to accommodate a ligand e.g., trapped water cavities.</p>
+<fig id="pcbi.1004586.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004586.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Affinity maps processing.</title>
+<p>A) A cross-section of the <italic>AutoDock</italic> carbon affinity map. B) The same cross-section after processing the map to create a gradient inside the protein. Besides creating a potential gradient inside the receptor, this processing also removes the local minima inside the receptor volume. The color gradient outside the protein surface indicates favorable interactions going from weak (green) to strong (blue). Inside the protein surface the color gradient indicates unfavorable interactions going from low (yellow) to highly unfavorable (red).</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004586.g002" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec006">
+<title>Genetic Algorithm (GA)</title>
+<p>The overall workflow of <italic>ADFR</italic> is depicted in <xref rid="pcbi.1004586.g003" ref-type="fig">Fig 3</xref>. The ligand and receptor flexibility description is first used to assemble a list of variables (genome) encoding the flexible ligand—flexible receptor docking problem. The initial population is then generated by creating a list of initial solutions in which each solution (i.e. an individual) is a list of values, one for each variable in the genome. Initial ligand translations are randomly selected from translational points (see below); rotations are initialized using random quaternions; ligand torsions are set to random angles; and finally, flexible side chains are initialized with χ angles from the input conformation of the receptor. The size of the population can be specified by the user or can be inferred by <italic>ADFR</italic>. Once the initial population has been generated, the GA will optimize it by creating successive generations as follows. First, the population is sorted and the top-ranking individuals (i.e. within 2kcal/mol of the lowest energy solution) are clustered. Clustering of solutions is used to remove duplicate solutions from the population, thus ensuring diversity. It also supports the implementation of adaptive elitism by automatically adding to the next generation the best solution from each cluster. The use of clustering in our implementation leads to the simultaneous exploration and optimization of multiple minima during the search. Clustering also enables the implementation of an efficient termination criterion described below. The clustering is performed by using the lowest energy, not yet clustered solution as a cluster seed, and adding to the cluster all solutions with RMSD less than 2Å (for ligand atoms) with respect to the cluster seed. The procedure is repeated until all solutions to be clustered belong to a cluster. Next a mating population, containing the best individual of each cluster along with all un-clustered individuals is created. The best individual from each cluster is automatically copied into the next generation (adaptive elitism). The GA then selects parents to crossover, mutate, and minimize to generate offspring, which compete with their parents to be added to the next generation population. The probability of an individual to have offspring is proportional to its score. A pair of parents selected for mating is crossed-over 80% of the time and the resulting offspring are mutated and minimized. In the case, where no crossover takes place (20% of the time), the two parents are mutated and minimized to obtain offspring. Details of the implementation of crossover, mutation, and minimization are provided in Supporting Information [<xref rid="pcbi.1004586.s001" ref-type="supplementary-material">S1 Text</xref>]. All created individuals undergo a quick minimization step. If the minimized individual has a score that is better than the reference score (best score seen so far), it undergoes a more aggressive minimization and its score becomes the reference score. The best two individuals identified during this mating procedure are added to the next generation if they are not already present in that population. Once the population for the next generation is complete (i.e. its size reaches the size of the incoming population) it becomes the incoming population for the next generation in the GA optimization loop.</p>
+<p>If the clusters remain unchanged (i.e. the same number of clusters and the energy of the best solution of each cluster remains the same) for three consecutive generations, the entire population is submitted to an aggressive minimization. If the clusters remain unchanged for five consecutive generations the search is considered to have converged and the optimizations stops. The optimization also stops if user-specified limits such as the maximum number of generations or maximum number of scoring function evaluations are reached. After the optimization stops, the solutions within 1kcal/mol of the best solution are clustered and the best solution from each cluster is written to a file.</p>
+<fig id="pcbi.1004586.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004586.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Overall flowchart of ADFR.</title>
+<p>The flexibility information of the ligand (i.e. rotatable bonds) and receptor (i.e. flexible side-chains) is used to assemble the genome from which an initial list of solutions (i.e. population) is created. The population is scored, sorted, and top-ranking solutions are clustered. The GA seeds the next generation with the best solution of each cluster and completes it by crossing-over, mutating, and minimizing individuals from the mating population. The optimization stops when one of the termination criteria (maximum number of generations or evaluations) is reached or the search converges, at which point the solutions within 1 kcal/mol of the best solution are written out.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004586.g003" position="float" xlink:type="simple"/>
+</fig>
+<p>By default, an <italic>ADFR</italic> docking experiment performs 50 independent GA evolutions, each producing one solution. These solutions are then clustered to remove duplicated solutions and the best scoring individual from each cluster is reported, resulting in a ranked list of solutions for the docking.</p>
+</sec>
+<sec id="sec007">
+<title>Focused sampling of the solution space</title>
+<p>The solution space explored during an <italic>ADFR</italic> calculation is very large and reducing the extent of any of the variables in the genome facilitates the search. In <italic>ADFR</italic> we apply this principle by reducing the sampling of the ligand’s translation to a sub-space of translations more likely to yield good docking poses, thus eliminating ligand translations known to place it either inside the receptor, or too close or too far from the receptor. Likewise, so called “soft-rotamers” (see below) allow <italic>ADFR</italic> to sample receptor side-chain conformations resembling the ones observed in crystal structures more frequently.</p>
+<sec id="sec008">
+<title>Translational points</title>
+<p>In <italic>ADFR</italic>, the ligand is placed into the receptor by translating a central atom of the ligand (called the root atom) to a point inside the docking box. For a given docking solution in the GA this translation is stored in the ligand translation gene. When the initial population is created, this translation gene of individuals in the population is selected from a set of grid points, namely <italic>translational points</italic>. Translational points are defined by analyzing the carbon affinity map and selecting all points with affinity of -0.3 kcal/mol or better located outside the receptor volume (<xref rid="pcbi.1004586.g004" ref-type="fig">Fig 4A</xref>). The optimal value for the affinity cutoff of -0.3 kcal/mol was identified by analyzing grid maps calculated for the 85 complexes from the Astex Diverse Set [<xref rid="pcbi.1004586.ref033" ref-type="bibr">33</xref>] using a cubic box of size 26.6Å centered on the ligand geometric center. This analysis showed that down-sampling translational points to 1.125Å spacing (i.e., thrice the default grid map spacing) and filtering points with affinity of less than or equal to -0.3 kcal/mol provides the best trade-off between coverage of root atoms in the bound ligands and the reduction of the number of translational points (see <xref rid="pcbi.1004586.g004" ref-type="fig">Fig 4B</xref>). More stringent affinity cutoff values would further reduce the number of points, but reduce coverage. This protocol yielded on average 470 translational points (min: 60, max: 752, sigma: 170) from the initial set of 357,911 total grid points (71<sup>3</sup>), corresponding to an average reduction factor of 99.87%. Interestingly, the number of translational points scales with the fraction of the accessible receptor surface area in the docking box rather than the volume of the box. Therefore, the reduction factor is even more dramatic with larger docking boxes such as the ones used for blind docking experiments, where the actual binding region is unknown and the docking box encompasses the entire protein structure [<xref rid="pcbi.1004586.ref034" ref-type="bibr">34</xref>–<xref rid="pcbi.1004586.ref036" ref-type="bibr">36</xref>]. While ligand translation is reduced to a discrete set of points in the initial population, the minimizer modifies the translation values freely allowing off grid translations to be achieved.</p>
+<fig id="pcbi.1004586.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004586.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<p>A) Translational points. The surface enclosing points of the carbon affinity map located outside the protein and with carbon affinity less than or equal to -0.3 kcal/mol is shown in blue; protein atomic spheres (with reduced vdW radii) are shown in green. The set of translational points cover grooves and cavities that can accommodate a ligand and provide sensible initial placement points for the ligand root atom. B) Translational points cutoff value selection For energy cutoff values varying from 0.0 to -0.6 kcal/mol in decrements of 0.1 kcal/mol, the average number of grid points retained is plotted against the average number of retained grid points within 1Å of the ligand root atom. The average is computed over the 85 systems in the Astex Diverse set. Lower energy cutoff values produce fewer translational points, however they increase the chance of discarding points surrounding the ligand root atom (i.e. reducing coverage of the root). The value of -0.3 kcal/mol is the closest to the curve’s inflection point and was selected as the best cutoff value to maximize the reduction in retained points and maximize the coverage of the ligand root atom.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004586.g004" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec009">
+<title>Soft rotamers</title>
+<p>Side-chains of amino acids in a protein exist predominantly in a subset of conformations, referred to as rotamers. <italic>ADFR</italic> leverages this information during the search using a rotamer library compiled by Dunbrack [<xref rid="pcbi.1004586.ref037" ref-type="bibr">37</xref>]. The rotamer library provides a list of the most frequently observed χ angles and their deviations for each amino acid. During the docking, the soft-rotamer mutation operator modifies receptor side-chain conformations by randomly selecting a rotamer (i.e., a collection of χ angles) and adding random deviations to these angles, based on χ angle standard deviations provided by the library. The local search procedure modifies these angles freely, thus allowing them to potentially explore all values between 0° and 360°. Thus, the rotamer library is used to introduce a biased sampling of the genes representing flexible receptor side-chains rather than pruning the search space.</p>
+</sec>
+</sec>
+<sec id="sec010">
+<title>Dataset</title>
+<p>We performed docking experiments on three different datasets. The Astex Diverse Set is used to validate the implementation in <italic>ADFR</italic> of the <italic>AutoDock4</italic> scoring function, and quantify the increase in performance of <italic>ADFR</italic>’s GA over the one used by <italic>AutoDock</italic>. While the performance of <italic>AutoDock</italic> has been benchmarked [<xref rid="pcbi.1004586.ref038" ref-type="bibr">38</xref>] using other data sets such as the Astex Clean Set, we chose to the use the Astex Diverse Set in our study, as it is more recent and has been developed specifically to address the shortcomings of the Astex Clean Set [<xref rid="pcbi.1004586.ref033" ref-type="bibr">33</xref>]. The Astex Diverse Set contains 85 well-curated protein-ligand complexes, has no overlap with the Astex Clean Set, and is best suited for testing docking programs. We define two additional datasets for assessing cross-docking success rate when docking flexible ligands into <italic>apo</italic> conformations of receptors with explicitly specified flexible side-chains, specifically for cases where severe clashes need to be resolved in order to properly dock the ligand.</p>
+<sec id="sec011">
+<title>SEQ17 cross-docking set</title>
+<p>This dataset was built specifically to test the ability of <italic>ADFR</italic> to modify receptor side-chains’ conformations to enable correct ligand binding in an <italic>apo</italic> receptor. The dataset was obtained from the SEQ dataset [<xref rid="pcbi.1004586.ref039" ref-type="bibr">39</xref>], which contains <italic>apo</italic>-<italic>holo</italic> pairs for a diverse set of receptors. First, the receptor side-chains interacting with the ligands (i.e. side-chains with at least one pairwise interaction within 4Å) were identified in the <italic>holo</italic> complex. Backbone atoms of these amino acids were then used to superimpose the <italic>apo</italic> structure onto the <italic>holo</italic> structure, yielding an approximate position of the ligand in the <italic>apo</italic> conformation. Next, side-chains from the superimposed <italic>apo</italic> structure clashing with the ligand were identified as the ones for which the distance between a heavy atom of the ligand and a heavy atom of the receptor is within a distance corresponding to half the sum of the van der Waals radii of these two atoms. This selection yielded 35 complexes. We further eliminated 5 complexes in which the clashes involved backbone or Cβ atoms as these clashes cannot be resolved by side-chain conformational changes. We performed re-docking of the ligands into their rigid native complexes for the remaining 30 complexes and selected the final 17 systems for which both <italic>AutoDock Vina</italic> and <italic>ADFR</italic> successfully re-docked the ligand (RMSD &lt; 2Å). This last reduction was performed to eliminate complexes for which re-docking failure is likely due to scoring function limitation in one or the other program. The maximum deviation observed in Cα positions of residues interacting with the ligand between the <italic>holo</italic> and <italic>apo</italic> complexes in this dataset is 2.19Å, except for β-lactoglobulin (<italic>apo</italic>: 1BSQ, <italic>holo</italic>: 1GX9). In this system, Leu87 in the <italic>apo</italic> conformation clashes with the ligand. This residue is located in a loop region that re-arranges upon binding, resulting in a Cα deviation of 8.23Å with respect to the <italic>apo</italic> structure.</p>
+</sec>
+<sec id="sec012">
+<title>CDK2 cross-docking set</title>
+<p>This cross-docking dataset was built to provide a substantial set of ligands binding to the same receptor. It was built using structures of Cyclin-Dependent Kinase 2 (CDK2) catalytic domain retrieved from the Protein Data Bank (PDB; [<xref rid="pcbi.1004586.ref040" ref-type="bibr">40</xref>]). CDK2 is a kinase involved in cell cycle regulation, and therefore targeted for cancer therapy. This dataset was designed to test the influence of a variable number of side-chains on a diverse range of interactions between a series of different ligands bound to a single target. A high-resolution <italic>apo</italic> structure (4EK3, resolution of 1.34Å) was selected along with 52 ligand bound <italic>holo</italic> structures in which one or more side-chains interacting with the ligands presented different conformations with respect to the <italic>apo</italic> structure. The 52 <italic>holo</italic> structures were aligned to the <italic>apo</italic> structure by superimposing the backbone atoms, yielding deviations of up to 2Å between the Cα positions of the side-chains interacting with the ligand. A detailed analysis on backbone deviations is reported in the Supporting Information (<xref rid="pcbi.1004586.s004" ref-type="supplementary-material">S1 Table</xref>). The full list of PDB IDs used in this study is provided in Supporting Information (<xref rid="pcbi.1004586.s005" ref-type="supplementary-material">S2 Table</xref>).</p>
+</sec>
+</sec>
+<sec id="sec013">
+<title>Docking</title>
+<p>Rotatable ligand bonds are obtained by <italic>ADFR</italic> from the PDBQT files used by both <italic>AutoDock</italic> and <italic>AutoDock Vina</italic>. Flexible receptor side-chains are specified in <italic>ADFR</italic> calculations by listing the corresponding amino acids in the input configuration file.</p>
+<p>All RMSD values reported in this paper are computed using the Hungarian matching algorithm [<xref rid="pcbi.1004586.ref041" ref-type="bibr">41</xref>]. The open source Python implementation of the algorithm (<ext-link ext-link-type="uri" xlink:href="http://software.clapper.org/munkres/" xlink:type="simple">http://software.clapper.org/munkres/</ext-link>) was used to find the optimal pairing between atoms of the same type in the two binding poses for which RMSD is being computed. Details of the implementation are described in Supporting Information (<xref rid="pcbi.1004586.s002" ref-type="supplementary-material">S2 Text</xref>). Input ligand structures were randomized in their position, orientation and torsions prior to running dockings, using the <italic>AutoDock Vina</italic> randomization function. This prevents possible biases toward the initial conformation in the search algorithm. Flexible side-chains are not randomized in the initial population in order to start from a reasonable initial receptor conformation. This choice does not create a favorable bias in receptor conformation when cross-docking in the <italic>apo</italic> protein conformation. The population size used for <italic>AutoDock</italic> and <italic>ADFR</italic> was based on the following heuristic: 50 + 10 × <italic>L</italic><sub><italic>v</italic></sub>, where <italic>L</italic><sub><italic>v</italic></sub> is the number of variables pertaining to the ligand in the genome, i.e. 4 (rotation) + 3 (translation) + N<sub><italic>LRB</italic></sub> (number of ligand rotatable bonds). Details on the structure preparation for the 3 datasets are provided in Supporting Information (<xref rid="pcbi.1004586.s003" ref-type="supplementary-material">S3 Text</xref>).</p>
+<sec id="sec014">
+<title>Astex re-docking</title>
+<p><italic>AutoDock</italic> was run with default parameters, except for: 1) the inclusion of 1–4 interactions, 2) population sizes obtained from the heuristic described above, and 3) a total of 50 GA runs per docking. For each complex, two separate <italic>AutoDock</italic> runs were performed: one with the default number of energy evaluations of 2.5 million (namely <italic>AD</italic>2.5M), and one with a more thorough search with 25 million evaluations (namely <italic>AD</italic>25M). <italic>AutoDock</italic> terminates its GA evolution when it reaches the specified number of evaluations. <italic>ADFR</italic> was run with default parameters, which are 50 GA runs, population sizes obtained from the heuristic described above, and the inclusion of 1–4 interactions. Affinity maps were generated using <italic>AutoGrid</italic>, for cubic grid boxes (26.6Å on a side, i.e. 71-points on a side spaced at 0.375Å) centered on the bound ligand. These maps were used for docking the ligands using <italic>AutoDock</italic>. The maps were processed as described above to obtain the <italic>ADFR</italic> maps and extract translational points.</p>
+</sec>
+<sec id="sec015">
+<title>Cross-dockings</title>
+<p>Both <italic>ADFR</italic> and <italic>AutoDock Vina</italic> docking calculations were carried out with their default parameters. In the <italic>ADFR</italic> scoring function, the internal energy of the receptor <italic>E</italic><sub><italic>REC</italic></sub> = <italic>(E</italic><sub><italic>FR-FR</italic></sub> <italic>+ E</italic><sub><italic>FR-RR</italic></sub>) is down-weighted by a factor of 1/<italic>NFS</italic>, where <italic>NFS</italic> is the number of flexible side-chains. We use docking grid boxes centered on the ligand, and of size 71×71×71 points with the standard 0.375Å resolution in order to encompass all flexible side-chains. The same docking box was used for <italic>ADFR</italic> and <italic>AutoDock Vina</italic>. The translational points were identified in the carbon affinity map and the <italic>ADFR</italic> maps were generated, by processing the <italic>AutoGrid</italic> maps as described above.</p>
+</sec>
+<sec id="sec016">
+<title>SEQ17</title>
+<p>For cross-docking the SEQ17 ligands into the <italic>apo</italic> receptor, we identified side-chains to be made flexible as the ones with <italic>apo</italic> receptor side-chain heavy atom beyond Cβ within 4.0Å of a ligand heavy atom. The number of selected flexible side-chains varies from 6 to 14, with 11 to 36 rotatable χ angles. The ligands in this set have between 1 and 16 rotatable bonds. The PDB IDs and side-chains selected to be flexible are reported in Supporting Information (<xref rid="pcbi.1004586.s006" ref-type="supplementary-material">S3 Table</xref>). <italic>AutoGrid</italic> maps were calculated using the <italic>apo</italic> structure superimposed to the <italic>holo</italic> receptor and a docking box centered on the geometric center of the ligand in the <italic>holo</italic> complex. <italic>AutoDock Vina</italic> was run with default settings.</p>
+</sec>
+<sec id="sec017">
+<title>CDK2</title>
+<p>The flexible receptor side-chains were selected by tabulating residues interacting with the ligand in the <italic>holo</italic> complex by defining interacting residues as residues with at least one heavy atom beyond Cβ within 4Å of any ligand heavy atom. The resulting interaction pattern varies considerably in the dataset, with ligands contacting anywhere between 4 and 12 side-chains. We selected the following 3 sets of side-chains to be made flexible during the cross-docking: 1) the smallest number of side-chains contacted by a ligand (2R3I), named <italic>FS4</italic>: Ile10, Lys33, Phe82, Leu134; the largest set of interacting side-chains (2FVD), <italic>FS12</italic>: Ile10, Val18, Lys33, Val64, Phe80, Phe82, Gln85, Asp86, Lys89, Asn132, Leu134, Asp145); and finally <italic>FS10</italic>, containing the 10 amino acids most frequently interacting with the ligands: Ile10, Val18, Lys33, Val64, Phe80, Phe82, Asp86, Lys89, Leu134, Asp145. We cross-docked the 52 ligands first into the rigid <italic>apo</italic> structure, then into the <italic>apo</italic> structure with 4, 10 and 12 flexible side-chains. The flexible side-chain groups FS4, FS10 and FS12 contributed respectively: 10, 22, and 27 receptor variables to the genome. The number of rotatable bonds in the ligands varies from 0 to 13. <italic>AutoGrid</italic> maps were calculated using the <italic>apo</italic> structure for a docking box centered at (25.8, 27.6, 27.5). The same grid box definition was used for <italic>AutoDock Vina</italic> setup, and dockings were performed using default search settings (<italic>Vina</italic>8, with exhaustiveness set to 8), followed by runs performing more exhaustive searches with exhaustiveness set to 20 and 200 (named <italic>Vina</italic>20 and <italic>Vina</italic>200, respectively).</p>
+</sec>
+</sec>
+</sec>
+<sec id="sec018" sec-type="results">
+<title>Results</title>
+<sec id="sec019">
+<title>Astex Diverse Set re-docking</title>
+<p><italic>ADFR</italic> and <italic>AutoDock4</italic> re-dock the ligands of the Astex Diverse Set into their rigid receptors with the following success rates: ADFR: 74%, AD2.5M: 77.65% and AD25M: 73% using an RMSD cutoff of 2Å. We used these docking runs to verify our implementation of the <italic>AutoDock4</italic> scoring function and compare the performances of the search engines of these two programs. Scoring <italic>AutoDock</italic> solutions with <italic>ADFR</italic> and <italic>vice versa</italic> yielded identical results. Moreover, 76 out of 85 solutions (89.4%) have an energetic difference of less than 0.5 kcal/mol between the lowest energy solutions identified by <italic>ADFR</italic> and either AD2.5M or AD25M. For 76 and 80 systems (89.4% and 94.1%) both programs identified the same docking pose (RMSD&lt; 2.0 Å between the ADFR solution and the AD2.5M and AD25M solutions respectively). These results are strong evidence for the fact both programs explore the same energy landscape, thus validating our implementation of the <italic>AutoDock4</italic> scoring function and enabling a direct comparison of the GAs implemented in <italic>AutoDock4</italic> and <italic>ADFR</italic>. We compared the performance of the GA implementations using the following three properties: 1) the best score (i.e. lowest energy) found by the programs indicate the <italic>power</italic> of the search method. 2) The <italic>efficiency</italic> of the search engine pertains to the speed at which it finds the solution. For GA algorithms, this corresponds to the number of evaluations of the objective function (i.e. the scoring function). Finally, 3) since GAs are stochastic algorithms, multiple runs are carried out with different random seed numbers. The number of times a GA run identifies the same best solution, measures the algorithm’s <italic>reliability</italic>. The comparison of solutions used to verify that both programs explore the same energy landscape demonstrates that both search techniques have the same power. The fact that no significant energy improvements have been found by increasing the number of evaluations for <italic>AutoDock</italic> from 2.5 to 25 million confirms that <italic>AutoDock</italic> identified the global minimum after 2.5 million evaluations and both programs reached convergence identifying virtually the same solutions. <xref rid="pcbi.1004586.g005" ref-type="fig">Fig 5A</xref> shows the energy differences for the 9 systems with a difference of more than 0.5 kcal/mol. Only one system has a difference larger than 2.0 kcal/mol. <xref rid="pcbi.1004586.g005" ref-type="fig">Fig 5B</xref> shows that the GA implemented in <italic>ADFR</italic> is more efficient as it identifies the same solutions as <italic>AutoDock</italic>, but only using on average 810 thousand energy evaluations per GA evolution. Only three complexes required more than 2.5 million evaluations. The number of evaluations required by each system shows no correlation with either the number of variables in the genome, or the energy differences between scores obtained by <italic>ADFR</italic> and <italic>AutoDock</italic>. <xref rid="pcbi.1004586.g005" ref-type="fig">Fig 5C</xref> compares the reliability of the 2 GAs. In this figure, the 85 complexes are binned based on the fraction of the 50 runs for which the final pose is within 2.0Å RMSD from the pose with the best score. <italic>AutoDock</italic> shows an increased reliability in runs with 25 million evaluations. However, <italic>ADFR</italic> found the solutions more reliably with 59 complexes found with high reliability (i.e. blue and green bars), versus 54 for <italic>AD</italic>25M and 40 for <italic>AD</italic>2.5M. Conversely, the number of complexes found with low reliability (i.e., red bars) is smaller for <italic>ADFR</italic> (6 complexes) than in <italic>AD</italic>25M (12 complexes) and in <italic>AD</italic>2.5M (15 complexes). Overall, the GA implementation in <italic>ADFR</italic> is more efficient and reliable than the one in <italic>AutoDock</italic>, and its termination criterion is able to limit effectively the number of energy evaluations used during docking, while allocating more evaluations when needed.</p>
+<fig id="pcbi.1004586.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004586.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Astex Diverse Set re-docking.</title>
+<p>A) The bars depict the energy differences between lowest energy solution found by <italic>ADFR</italic> and <italic>AD</italic>2.5M (dark), and <italic>ADFR</italic> and <italic>AD</italic>25M (light). Negative values indicate a lower energy for the <italic>ADFR</italic> solution. Only complexes with at least one of the two differences larger than 0.5 kcal/mol are shown. 1R1H is the only complex where <italic>ADFR</italic> finds a significantly better solution than <italic>AutoDock</italic> (i.e. difference &gt; 2 kcal/mol). B) This histogram shows the distribution of number of evaluations of the scoring function performed by <italic>ADFR</italic> in the GA evolution leading to lowest energy solution. C) Each docking consists of 50 GA evolutions, each producing a solution. The 50 solutions are clustered with an RMSD cutoff of 2Å. In this diagram the 85 complexes are binned based on the cluster size of the lowest energy solution indicating how many of the 50 GA runs identified the pose corresponding to the lowest energy pose found across the 50 runs, i.e. the <italic>reliability</italic> of the GA.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004586.g005" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec020">
+<title>Cross-docking experiments</title>
+<p><italic>AutoDock</italic> has a hard-coded upper limit of 32 rotatable bonds that prevents a direct comparison with <italic>ADFR</italic> on the two datasets used for flexible cross-docking. Moreover, the GA implemented in <italic>AutoDock</italic> is known to lose efficiency for problems with more than ~20 rotatable bonds. <italic>AutoDock Vina</italic> has no implementation limit on the number of rotatable bonds it can search, and it uses the same explicit representation of flexible side-chains as <italic>ADFR</italic>, and finally it is known to have better performance than <italic>AutoDock</italic> for high dimensional searches. Hence it provides a good reference for comparing success rates when docking flexible ligands into receptors with explicitly specified flexible side-chains. For <italic>holo</italic> re-docking, an RMSD value of 2.0Å between experimental and docked structures for ligand atoms is widely accepted for identifying correctly docked poses. When docking a ligand into an <italic>apo</italic> structure, the reference position of the ligand is obtained by superimposing the <italic>holo</italic> and <italic>apo</italic> receptor structures. The alignment is influenced by the differences between the two receptor conformations, and by the subset of atoms used for the superposition. In order to mitigate these approximations, we relax the RMSD cutoff value to 2.5Å in our <italic>apo</italic> cross-docking experiments and analyses. Therefore, a rank of 1 for a solution indicates that the lowest energy solution has an RMSD less than 2.5Å RMSD, while a rank of <italic>N</italic> (<italic>N</italic>&gt;1) indicates that <italic>N</italic>-1 false positive solutions were reported.</p>
+<sec id="sec021">
+<title>SEQ17 dataset</title>
+<p><xref rid="pcbi.1004586.t001" ref-type="table">Table 1</xref> presents a summary of the SEQ17 cross-docking results. For rigid cross-docking <italic>AutoDock Vina</italic> reports a correct solution for one system: (1IKG) and <italic>ADFR</italic> for two systems: (1IT8 and 1Z6P). The binding pocket in the <italic>apo</italic> conformation of 1IT8 allows for a translation of its small rigid ligand (RMSD 1.26Å), which is sufficient to resolve the clash between the pyrimidine moiety in the ligand and the Phe229 side-chain. The nitrobenzoyl and the phthalic acid moieties of the ligand from 1Z6P have a severe clash with an amino group of Arg193 and Arg310, respectively. These clashes can be resolved in the binding pocket in the <italic>apo</italic> conformation of the receptor by rotating these groups generating a ligand RMSD of 1.86Å. The ranking improved from 9 to 2 when docking with flexible receptor side-chains. The ligand from 1IKG correctly docked by <italic>AutoDock Vina</italic>, severely clashes with the hydroxyl oxygen of Ser62 and is in very close proximity to Thr301 backbone carbonyl oxygen. <italic>AutoDock Vina</italic> finds a solution (rank 3, RMSD of 2.27Å) for the ligand by rotating and translating the peptide bond in the ligand to avoid the clash and makes it a rank 1 solution with RMSD 2.45Å when side-chains are made flexible. A clear improvement in success rate is observed with both programs when side-chains interacting with the ligand in the <italic>apo</italic> conformation are made flexible. <italic>AutoDock Vina</italic> finds 4 top ranking solutions (23.5%) and <italic>ADFR</italic> finds 5 (29.4%). <italic>AutoDock Vina</italic> reports an additional 2 solutions ranking 4 and 6 for a total of 6 receptors for which it sees solutions (35.3%). <italic>ADFR</italic> reports 4 more systems with ranks 2 and 3 (52.9%) and another 3 systems with solutions ranking 14 (70.6%). <xref rid="pcbi.1004586.t001" ref-type="table">Table 1</xref> also provides the difference in reported scores between the best correct solution and the best incorrect solution (ΔScore) for both <italic>ADFR</italic> and <italic>AutoDock Vina</italic>. These differences provide a level of confidence for the solution’s rank. A small ΔScore indicates the existence of an alternate pose that is very close energetically. If this difference is below the scoring function’s intrinsic error the two solutions are indistinguishable, and their relative ranking is not informative. A large ΔScore on the other hand indicates that the rank is more informative.</p>
+<p>Considering the top 10 ranking solutions <italic>ADFR</italic> is successful for 52.9% of the systems and <italic>AutoDock Vina</italic> for 35.3%. The RMSD values of the best scoring ligand pose and the RMSD of the best scoring solution and lowest energy correctly docked solution (if different) are provided in the Supporting Information (<xref rid="pcbi.1004586.s007" ref-type="supplementary-material">S4 Table</xref>).</p>
+<table-wrap id="pcbi.1004586.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004586.t001</object-id>
+<label>Table 1</label> <caption><title>SEQ17 cross-docking into <italic>apo</italic> conformations with receptor side-chains.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004586.t001g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004586.t001" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th colspan="2" align="center" rowspan="1"/>
+<th colspan="3" align="center" rowspan="1"/>
+<th colspan="6" align="center" rowspan="1">Rank (RMSD &lt; = 2.5 A)</th>
+</tr>
+<tr>
+<th colspan="2" align="center" rowspan="1">SEQ17</th>
+<th colspan="3" align="center" rowspan="1">Number of</th>
+<th colspan="2" align="center" rowspan="1">Rigid Cross Docking </th>
+<th colspan="4" align="center" rowspan="1">Flexible Cross Docking</th>
+</tr>
+<tr>
+<th colspan="2" align="left" rowspan="1"/>
+<th align="center" rowspan="1" colspan="1">Ligand</th>
+<th colspan="2" align="center" rowspan="1">Receptor</th>
+<th colspan="2" align="left" rowspan="1"/>
+<th colspan="4" align="left" rowspan="1"/>
+</tr>
+<tr>
+<th align="center" rowspan="1" colspan="1"><italic>holo</italic></th>
+<th align="center" rowspan="1" colspan="1"><italic>apo</italic></th>
+<th align="center" rowspan="1" colspan="1">Rot. Bonds</th>
+<th align="center" rowspan="1" colspan="1">Flexible side-chains</th>
+<th align="center" rowspan="1" colspan="1">Rot. χ angles</th>
+<th align="center" rowspan="1" colspan="1">Vina</th>
+<th align="center" rowspan="1" colspan="1">ADFR</th>
+<th align="center" rowspan="1" colspan="1">Vina</th>
+<th align="center" rowspan="1" colspan="1">ADFR</th>
+<th align="center" rowspan="1" colspan="1">ΔScore (Vina)</th>
+<th align="center" rowspan="1" colspan="1">ΔScore (ADFR)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" rowspan="1" colspan="1">1IT8</td>
+<td align="center" rowspan="1" colspan="1">1IQ8</td>
+<td align="center" rowspan="1" colspan="1">1</td>
+<td align="center" rowspan="1" colspan="1">6</td>
+<td align="center" rowspan="1" colspan="1">11</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">1</td>
+<td align="center" rowspan="1" colspan="1">1</td>
+<td align="center" rowspan="1" colspan="1">1</td>
+<td align="center" rowspan="1" colspan="1">0.1</td>
+<td align="center" rowspan="1" colspan="1">0.711</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">1K4H</td>
+<td align="center" rowspan="1" colspan="1">1PUD</td>
+<td align="center" rowspan="1" colspan="1">5</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="center" rowspan="1" colspan="1">19</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">1</td>
+<td align="center" rowspan="1" colspan="1">1</td>
+<td align="center" rowspan="1" colspan="1">0.0</td>
+<td align="center" rowspan="1" colspan="1">1.675</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">1GX9</td>
+<td align="center" rowspan="1" colspan="1">1BSQ</td>
+<td align="center" rowspan="1" colspan="1">5</td>
+<td align="center" rowspan="1" colspan="1">11</td>
+<td align="center" rowspan="1" colspan="1">27</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">1.916</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">2H8H</td>
+<td align="center" rowspan="1" colspan="1">1FMK</td>
+<td align="center" rowspan="1" colspan="1">4</td>
+<td align="center" rowspan="1" colspan="1">8</td>
+<td align="center" rowspan="1" colspan="1">16</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">0.054</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">3JRX</td>
+<td align="center" rowspan="1" colspan="1">2HJW</td>
+<td align="center" rowspan="1" colspan="1">6</td>
+<td align="center" rowspan="1" colspan="1">12</td>
+<td align="center" rowspan="1" colspan="1">30</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">1</td>
+<td align="center" rowspan="1" colspan="1">1</td>
+<td align="center" rowspan="1" colspan="1">0.3</td>
+<td align="center" rowspan="1" colspan="1">0.607</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">1Z6P</td>
+<td align="center" rowspan="1" colspan="1">2GPN</td>
+<td align="center" rowspan="1" colspan="1">7</td>
+<td align="center" rowspan="1" colspan="1">8</td>
+<td align="center" rowspan="1" colspan="1">24</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">0.318</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">1AQ1</td>
+<td align="center" rowspan="1" colspan="1">1HCL</td>
+<td align="center" rowspan="1" colspan="1">2</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="center" rowspan="1" colspan="1">22</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">2</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">1.512</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">1QKJ</td>
+<td align="center" rowspan="1" colspan="1">2BGT</td>
+<td align="center" rowspan="1" colspan="1">8</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="center" rowspan="1" colspan="1">24</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">0.763</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">1LNM</td>
+<td align="center" rowspan="1" colspan="1">1KXO</td>
+<td align="center" rowspan="1" colspan="1">3</td>
+<td align="center" rowspan="1" colspan="1">12</td>
+<td align="center" rowspan="1" colspan="1">27</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">4</td>
+<td align="center" rowspan="1" colspan="1">3</td>
+<td align="center" rowspan="1" colspan="1">0.2</td>
+<td align="center" rowspan="1" colspan="1">0.644</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">1IKG</td>
+<td align="center" rowspan="1" colspan="1">3PTE</td>
+<td align="center" rowspan="1" colspan="1">13</td>
+<td align="center" rowspan="1" colspan="1">14</td>
+<td align="center" rowspan="1" colspan="1">28</td>
+<td align="center" rowspan="1" colspan="1">3</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">1</td>
+<td align="center" rowspan="1" colspan="1">14</td>
+<td align="center" rowspan="1" colspan="1">0.1</td>
+<td align="center" rowspan="1" colspan="1">2.314</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">1C1H</td>
+<td align="center" rowspan="1" colspan="1">1DOZ</td>
+<td align="center" rowspan="1" colspan="1">8</td>
+<td align="center" rowspan="1" colspan="1">12</td>
+<td align="center" rowspan="1" colspan="1">31</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">14</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">3.342</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">3ERK</td>
+<td align="center" rowspan="1" colspan="1">1ERK</td>
+<td align="center" rowspan="1" colspan="1">4</td>
+<td align="center" rowspan="1" colspan="1">8</td>
+<td align="center" rowspan="1" colspan="1">20</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">14</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">2.114</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">1RBP</td>
+<td align="center" rowspan="1" colspan="1">1BRQ</td>
+<td align="center" rowspan="1" colspan="1">6</td>
+<td align="center" rowspan="1" colspan="1">8</td>
+<td align="center" rowspan="1" colspan="1">18</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">6</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="center" rowspan="1" colspan="1">1.9</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">1BR5</td>
+<td align="center" rowspan="1" colspan="1">1RTC</td>
+<td align="center" rowspan="1" colspan="1">7</td>
+<td align="center" rowspan="1" colspan="1">7</td>
+<td align="center" rowspan="1" colspan="1">16</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">1YXT</td>
+<td align="center" rowspan="1" colspan="1">1XQZ</td>
+<td align="center" rowspan="1" colspan="1">6</td>
+<td align="center" rowspan="1" colspan="1">11</td>
+<td align="center" rowspan="1" colspan="1">27</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">1ZG3</td>
+<td align="center" rowspan="1" colspan="1">1ZHF</td>
+<td align="center" rowspan="1" colspan="1">4</td>
+<td align="center" rowspan="1" colspan="1">8</td>
+<td align="center" rowspan="1" colspan="1">18</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">2A9K</td>
+<td align="center" rowspan="1" colspan="1">2A78</td>
+<td align="center" rowspan="1" colspan="1">16</td>
+<td align="center" rowspan="1" colspan="1">13</td>
+<td align="center" rowspan="1" colspan="1">36</td>
+<td align="center" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t001fn001"><p>The table lists the PDB IDs for the 17 <italic>apo</italic> and <italic>holo</italic> structure pairs in the dataset, the number of rotatable bonds in the ligand, the number of flexible receptor side-chains and the corresponding number of rotatable χ angles. Ranks for solutions with RMSD less than 2.5Å are reported. Empty cells denote no solution found within this RMSD cutoff.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+</sec>
+<sec id="sec022">
+<title>CDK2</title>
+<p>We cross-docked the 52 ligands from the CDK2 dataset into the <italic>apo</italic> structure with various levels of receptor flexibility, ranging from 0 to 12 flexible side-chains.</p>
+<p>The cross-docking results are summarized in <xref rid="pcbi.1004586.t002" ref-type="table">Table 2</xref>. The table shows the percentage of complexes for which the top ranking solution is correct (rank 1) as well as the percentage of systems for which a correct solution is in the top ten ranking solutions. <italic>ADFR</italic> outperforms <italic>AutoDock Vina</italic> in all the tests. In rigid cross-docking, the relatively small number of degrees of freedom (between 7 and 20) is unlikely to be the reason for the lower performance of <italic>AutoDock Vina</italic>. Hence, the better <italic>ADFR</italic> results suggest that the <italic>AutoDock</italic> scoring function might be less sensitive to small perturbations in the shape of the pocket, compared to the one implemented in <italic>AutoDock Vina</italic>. Overall docking performance improved for both programs with the increase of receptor flexibility in the binding site. Results with all flexible side-chain groups (FS4, FS10 and FS12) show that <italic>ADFR</italic> consistently achieves a better success rate using both “best ranked” and “top 10 results” metrics. RMSD values for the best scoring ligand pose and for the best scoring correctly docked pose (if different) are provided in the Supporting Information (<xref rid="pcbi.1004586.s008" ref-type="supplementary-material">S5 Table</xref>). Increasing <italic>AutoDock Vina</italic> exhaustiveness showed no improvement in success rate, with even worse results in some cases (Supporting Information–<xref rid="pcbi.1004586.s009" ref-type="supplementary-material">S6 Table</xref>).</p>
+<table-wrap id="pcbi.1004586.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004586.t002</object-id>
+<label>Table 2</label> <caption><title>Cross-docking results comparison between <italic>ADFR</italic> and <italic>AutoDock Vina</italic> with 0, 4, 10, 12 flexible receptor side-chains.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004586.t002g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004586.t002" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th colspan="2" align="center" rowspan="1">Flexible Side-Chains</th>
+<th colspan="4" align="center" rowspan="1">Solutions (RMSD &lt; = 2.5Å)</th>
+</tr>
+<tr>
+<th colspan="2" align="left" rowspan="1"/>
+<th colspan="2" align="center" rowspan="1"> Rank 1</th>
+<th colspan="2" align="center" rowspan="1">Rank &lt; 10</th>
+</tr>
+<tr>
+<th align="center" rowspan="1" colspan="1"># Active</th>
+<th align="center" rowspan="1" colspan="1"># Rot. χ angles</th>
+<th align="center" rowspan="1" colspan="1">Vina8</th>
+<th align="center" rowspan="1" colspan="1">ADFR</th>
+<th align="center" rowspan="1" colspan="1">Vina8</th>
+<th align="center" rowspan="1" colspan="1">ADFR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" rowspan="1" colspan="1">0</td>
+<td align="center" rowspan="1" colspan="1">0</td>
+<td align="center" rowspan="1" colspan="1">4 (7.7%)</td>
+<td align="center" rowspan="1" colspan="1">12 (23.1%)</td>
+<td align="center" rowspan="1" colspan="1">7 (13.5%)</td>
+<td align="center" rowspan="1" colspan="1">24 (46.2%)</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">4</td>
+<td align="center" rowspan="1" colspan="1">10</td>
+<td align="center" rowspan="1" colspan="1">12 (23.1%)</td>
+<td align="center" rowspan="1" colspan="1">19 (36.5%)</td>
+<td align="center" rowspan="1" colspan="1">26 (50.0%)</td>
+<td align="center" rowspan="1" colspan="1">40 (76.9%)</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">10</td>
+<td align="center" rowspan="1" colspan="1">22</td>
+<td align="center" rowspan="1" colspan="1">14 (26.9%)</td>
+<td align="center" rowspan="1" colspan="1">21 (40.4%)</td>
+<td align="center" rowspan="1" colspan="1">30 (57.7%)</td>
+<td align="center" rowspan="1" colspan="1">41 (78.8%)</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">12</td>
+<td align="center" rowspan="1" colspan="1">27</td>
+<td align="center" rowspan="1" colspan="1">16 (30.8%)</td>
+<td align="center" rowspan="1" colspan="1">23 (44.2%)</td>
+<td align="center" rowspan="1" colspan="1">32 (61.5%)</td>
+<td align="center" rowspan="1" colspan="1">40 (76.9%)</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t002fn001"><p>The left section (“Flexible side-chains”) show the number of side-chains considered flexible in each docking and the corresponding number of rotatable χ angles. The right section reports the number of systems (and percentage) for which the ligand-RMSD of the lowest energy solutions found by <italic>ADFR</italic> and <italic>AutoDock Vina</italic> are less than 2.5Å (rank 1) or a correctly docked solution is within the 10 top solutions (rank &lt; 10).</p></fn>
+</table-wrap-foot>
+</table-wrap>
+</sec>
+<sec id="sec023">
+<title>Efficiency and complexity considerations</title>
+<p>Unlike <italic>AutoDock</italic>, <italic>AutoDock Vina</italic> uses a different scoring function than <italic>ADFR</italic>. In addition, it does not report the number of evaluations of this scoring function, thus preventing a direct comparison in terms of efficiency. The average wall time for docking with 12 flexible receptor side-chains on a single core on XEON-EMT processor are: 1.85 hours for <italic>AutoDock Vina</italic> with exhaustiveness 8, and an average of 8.5 hours per GA evolution for the Python implementation of <italic>ADFR</italic>. The run-time for <italic>AutoDock Vina</italic> scales exponentially as the number of flexible receptor side-chains taking an average of 1.8, 13.0, 61.2 and 111.3 minutes for RCD, FCD4, FCD10 and FCD12 respectively. On the other hand, the run-time for <italic>ADFR</italic> increases linearly from 4.2 hours on average for RCD to 4.8, 7.3 and 8.6 hours per GA evolution for FCD4, FCD10 and FCD12 respectively. <xref rid="pcbi.1004586.g006" ref-type="fig">Fig 6</xref> shows the ratios of flexible docking run-times (FS4, FS10 and FS12) to rigid docking run-times for both programs using average run-times computed over the 52 systems. Docking into a receptor with 12 flexible side-chains takes more than 60 times longer than docking into a rigid receptor using <italic>AutoDock Vina</italic> with default search settings (<italic>Vina</italic>8). Higher exhaustiveness settings <italic>Vina</italic>20 and <italic>Vina</italic>200 increased run-times by 2-fold, and more than 20-fold than default <italic>Vina</italic>8, respectively (Supporting Information–<xref rid="pcbi.1004586.s010" ref-type="supplementary-material">S7 Table</xref>). On the other hand, the <italic>ADFR</italic> run-time with 12 flexible side-chains is only twice the run-time for rigid docking.</p>
+<fig id="pcbi.1004586.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004586.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>Scaling of docking runtimes as function of the number of flexible receptor side-chains.</title>
+<p>The Y-axis represents multiples of the rigid cross-docking runtimes. The times used in this graph are averages taken over all docking runs for the 52 complexes of the CDK2 cross-docking experiments. For <italic>AutoDock Vina</italic> the times corresponding to the default exhaustiveness 8 are used. The X-axis indicates the number of flexible receptor side-chains. <italic>ADFR</italic> scales by a factor of 2, while <italic>Vina</italic>8 scales by a factor of 62, when 12 protein side-chains are made flexible.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004586.g006" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec024">
+<title>Receptor side-chain motions</title>
+<p>Each flexible receptor side-chain starts the docking in the conformation of the input structure (i.e. the <italic>apo</italic> conformation in our cross-dockings). This conformation is modified during the docking procedure by the mutation operator and the local search procedure. The mutation assigns new conformations randomly using χ angles and deviations from the rotamer library. The local search procedure on the other hand freely modifies these χ angles. Subsets of flexible receptor side-chains can also be exchanged between individuals through a crossover operation. We analyzed all populations optimized by the GA during the FS12 docking runs to gain insight into the number of side-chains changing rotameric state over the course of the evolution. A side-chain conformation is deemed changed if at least one of its χ angles deviates by at least 50° from the input structure. This value corresponds to the smallest difference in χ angles in the rotamer library used by <italic>ADFR</italic>. The analysis of the data across all generations in all 50 runs for all 52 complexes reveals an interesting emergent property of the GA. While individuals with up to 12 modified side-chains are seen but are very rare, the average number of modified side-chains per individual is 5.6, out of 12. <xref rid="pcbi.1004586.g007" ref-type="fig">Fig 7</xref> shows a typical profile of the number of modified side-chains over consecutive generations of the GA. The figure shows that this number rises rapidly from 0 (in the initial population) to reach a plateau. This behavior is in agreement with the analysis of Gaudreault and co-workers [<xref rid="pcbi.1004586.ref039" ref-type="bibr">39</xref>], which reported that only 5 or fewer side-chains alter their rotameric conformation within an angular cutoff of 60° upon ligand binding.</p>
+<fig id="pcbi.1004586.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004586.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Frequency of receptor side-chain changes in the GA population during a successful docking of the 4EK6 ligand docked into the corresponding 4EK3 <italic>apo</italic> receptor with 12 flexible side-chains.</title>
+<p>The figure plots the evolution of the average number of receptor side-chains with a modified conformation over successive generations of the GA optimization. In the initial population all receptor side-chains are in the <italic>apo</italic> conformation. The number of side-chains changing rotameric state in individuals of the optimized population quickly increases in the first few generations and reaches a plateau. This profile is typical and observed in all runs for all system.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004586.g007" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec025">
+<title>Flexible receptor side-chain interactions with the ligand</title>
+<p>While the measure of success for our cross-docking experiment is the ligand atoms RMSD with respect to the approximate ligand superimposed to the <italic>apo</italic> structure, it is also important to understand how flexible receptor side-chains change conformation upon binding the ligand. <xref rid="pcbi.1004586.g008" ref-type="fig">Fig 8</xref> provides an example of conformational changes in the receptor between the <italic>apo</italic> structure (4EK3), the <italic>holo</italic> complex (1YKR), and the best docked solution (<italic>apo</italic> receptor with 12 flexible side-chains). <xref rid="pcbi.1004586.g008" ref-type="fig">Fig 8A</xref> shows that there are no significant deviations in Cα positions between the <italic>apo</italic> and <italic>holo</italic> structures. Lys33 and Lys89 in their <italic>apo</italic> conformation have a severe clash with the ligand in its <italic>holo</italic> conformation, thereby preventing its successful cross-docking into the rigid <italic>apo</italic> receptor (RMSD value of 5.96Å for the best energy solution). Also, Asp132 and Glu85 are flipped, while the remainder of the side-chains retain their <italic>apo</italic> conformation upon ligand binding. <xref rid="pcbi.1004586.g008" ref-type="fig">Fig 8B</xref> shows the docked ligand in the <italic>apo</italic> structure. All flexible side-chains have adjusted their positions. In particular, the two lysines have moved to a conformation closer to their <italic>holo</italic> conformation to enable the ligand to bind with an RMSD of 0.34Å. <xref rid="pcbi.1004586.g008" ref-type="fig">Fig 8C</xref> shows the docked solution with the <italic>holo</italic> complex. The two lysines have moved closer to their <italic>holo</italic> conformation. The difference in conformation of Gln85 could be due to the fact that in X-ray structures the similarity in electron density of oxygen and nitrogen limits the ability to assign the correct side-chain orientation for the amido groups of Asn and Gln. In the docked solution, Gln85 flips its amido group between the <italic>holo</italic> and <italic>apo</italic> structure because of its interaction (or lack thereof) with Lys89. Moreover, the amine group of Gln85 forms a hydrogen bond with a water molecule in the <italic>holo</italic> structure. In the docked solution this side-chains remains close to its <italic>apo</italic> conformation despite Lys89 moving closer to its <italic>holo</italic> conformation and interacts with the ligand sulphonate group to make a hydrogen bond. Hence, the conformation adopted by Gln85 is likely due to down-weighting the receptor energy term and the lack of explicit water molecules during the docking. A more detailed analysis of the side-chain interactions with the ligand across the set of successfully cross-docked solutions is described below.</p>
+<fig id="pcbi.1004586.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004586.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>Comparison of side-chain conformations between <italic>apo</italic>, <italic>holo</italic>, and successfully docked solution.</title>
+<p>This figure provides a pairwise comparison of the conformations of the <italic>apo</italic> (4EK3), <italic>holo</italic> complex (1YKR), and the 1YKR ligand docked solution with the 12 flexible receptor side-chains displayed as ball-and-sticks. A) <italic>Apo</italic> vs. <italic>holo</italic>: The native bound ligand is displayed as sticks with green carbon atoms along with a partially transparent green molecular surface. The 2 lysine side-chains in the <italic>apo</italic> conformation severely overlap with the space occupied by the ligand. B) Docked vs. <italic>apo</italic>. The docked solution is shown with purple carbon atoms and partially transparent ligand molecular surface. The <italic>apo</italic> structure is shown with orange carbon atoms. All 12 side-chains in the docked solution adopt conformations different from the initial <italic>apo</italic> conformation. Most of them settle for conformations corresponding to small adjustments while others adopt substantially different conformations to resolve steric clashes (Lys33 and Lys89). C) The docked solution (purple carbon atoms) is shown with the <italic>holo</italic> receptor (green carbon atoms). The ligand is docked perfectly (RMSD from the crystallographic structure is 0.34Å) and the receptor side-chains changed their conformations to accommodate the ligand binding in the correct binding mode.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004586.g008" position="float" xlink:type="simple"/>
+</fig>
+<p>We considered different metrics in order to assess the success in modeling the induced fit when docking in the <italic>apo</italic> structure with 12 flexible side-chains (FS12 calculation). We found that the RMSD of moving receptor atoms does not provide a good measure of the nature of the receptor side-chain motions (see <xref rid="sec027" ref-type="sec">Discussion</xref> section). Instead, we tabulate atomic pairwise interactions in the <italic>holo</italic> complex and analyze the recovery rate of these interactions in the 43 systems for which <italic>ADFR</italic> successfully generated at least one correct solution (RMSD &lt; 2.5Å). We define a pair of ligand-moving receptor atoms as interacting if they are located within 5Å of each other. Symmetry in ligand and receptor atoms was considered when matching pairwise atomic interactions. <xref rid="pcbi.1004586.g009" ref-type="fig">Fig 9</xref> shows the percentage of <italic>holo</italic> pairwise atomic interactions reproduced in docked solutions for the 43 complexes used for this analysis. A rate of 100% (green) in a cell of this heat map indicates that every pairwise atomic interaction between ligand and the side-chain atoms is reproduced in the docked solution. On average, every docked pose reproduces 79.8% of pairwise <italic>holo</italic> interactions, with a minimum of 57.1% interactions (for 3DDQ). For each pose, its rank in the 50 solutions prior to clustering is shown.</p>
+<fig id="pcbi.1004586.g009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004586.g009</object-id>
+<label>Fig 9</label>
+<caption>
+<title>Heat map of ligand-flexible receptor atomic contacts reproduced in docked poses.</title>
+<p>The 43 systems reported in this table are the ones for which ADFR correctly reports the docked solution (i.e. ligand RMSD &lt; 2.5Å). The rank of the solution among 50 GA runs is reported. White cells correspond to flexible side-chains not interacting with the ligand in either the <italic>holo</italic> or the docked complex. Grey cells indicate interactions formed in the docked solution, which do not exist in the <italic>holo</italic> complex. The remainder of the cells is colored using a red to green color scale indicating the percentage of <italic>holo</italic> interacting atomic pairs reproduced by the docked solution. A green cell (rate of 100%) indicates that every pairwise atomic interaction between ligand atoms and the side-chain atoms of the residue corresponding to that cell are reproduced in the docked solution. The histogram displays the percentage of <italic>holo</italic> interactions that are reproduced across all 12 side-chains for every ligand. The ligand reproduced at least 57.1% of all the interacting pairs in the <italic>holo</italic> complex, with an average of 79.8% interactions.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004586.g009" position="float" xlink:type="simple"/>
+</fig>
+<p>Some failures in reproducing the <italic>holo</italic> interaction patterns can be attributed to backbone atom deviations between <italic>apo</italic> and <italic>holo</italic>. The highest deviation values were found for Ile10, Val18 and Lys33 (about 2Å). The side-chains of Lys33 and Ile10 have enough flexibility to accommodate such variations. Val18, on the other hand, has only one χ angle, which rotates 2 carbon atoms in a plane parallel to the plane containing the ligand atoms. Thus side-chain flexibility on Val18 cannot compensate for the backbone shift away from the ligand observed in the <italic>apo</italic> structure.</p>
+<p>For 45.1% of the moving side-chain (across the 43 complexes), all interactions observed in the <italic>holo</italic> complex are reproduced in the docked pose, and 89.7% side-chains reproduce at least half of their <italic>holo</italic> interactions. 11.2% of the receptor side-chains that are not contacting the ligand in the <italic>holo</italic> structure created at least one interaction with the ligand (grey cells). Most of these additional interactions in the docked solutions are accounted for by Lys33 (14), Gln85 (16), and Asn132 (32). For these side-chains, the benefit of a weak interaction with the ligand outweighs the downscaled receptor-receptor interactions these side-chains make in the <italic>apo</italic> conformation.</p>
+</sec>
+</sec>
+<sec id="sec026">
+<title>Impact of down-weighting the receptor internal energy</title>
+<p>When the moving receptor atoms greatly outnumber the ligand atoms, the receptor internal energy component (<italic>E</italic><sub><italic>REC</italic></sub> = <italic>E</italic><sub><italic>FR-FR</italic></sub> <italic>+ E</italic><sub><italic>FR-RR</italic></sub>) dominates the score. Without correction, this leads the GA to primarily optimize the conformation of the flexible receptor rather than the ligand-receptor interactions (<italic>E</italic><sub><italic>LIG</italic></sub> = <italic>E</italic><sub><italic>L-FR</italic></sub> <italic>+ E</italic><sub><italic>L-RR</italic></sub>). Our results show that down weighting the receptor contribution <italic>E</italic><sub><italic>REC</italic></sub> by the inverse of the number of flexible side-chains (e.g., <italic>E</italic><sub><italic>REC</italic></sub>/12, for the FS12 set) results in an overall improvement in ranks of correct solutions. <xref rid="pcbi.1004586.g010" ref-type="fig">Fig 10A and 10B</xref> show the sorted ranks of the first correct solution without (blue) and with (green) weighted <italic>E</italic><sub><italic>REC</italic></sub> values for the SEQ17 and CDK2 FS12 cross-dockings respectively. We observe an overall improvement in ranks and, with an increased success rate from 61.5% to 76.9% in the CDK2 dataset and 35.2% to 52.9% in SEQ17 when considering the top 10 solutions. At the same time, the interaction energy improved significantly in docked solutions obtained by down-weighting the receptor internal energy. The improvement ranges from 1 to 7 kcal/mol (<xref rid="pcbi.1004586.g010" ref-type="fig">Fig 10C and 10D</xref>) with most complexes gaining 3 to 4 kcal/mol. This result supports the idea that without attenuating the receptor internal energy component, the GA fails to optimize the ligand-receptor interactions increasing the rate of false positives. It also indicates that applying separate weights for the different energy terms (i.e. <italic>E</italic><sub><italic>REC</italic></sub> vs. <italic>E</italic><sub><italic>LIG</italic></sub> vs. <italic>E</italic><sub><italic>REC-LIG</italic></sub>) allow shifting the focus of the search engine. In preliminary results on docking very large ligands such as peptides, we observe a reversed situation with the ligand internal energy dominating the score. Hence more sophisticated approaches for balancing energetic contributions of the various atom sets are needed. We are currently working on a more elaborate scheme for normalizing the various terms of the scoring function and deriving appropriate weight to apply to these normalized terms of the scoring function.</p>
+<fig id="pcbi.1004586.g010" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004586.g010</object-id>
+<label>Fig 10</label>
+<caption>
+<title>Impact of down-weighting the receptor internal energy.</title>
+<p>A) and B) Sorted ranks of the correct docked solutions without scaling the receptor energy (blue) and with a scaling factor of 1/<italic>NFS</italic> (green) where <italic>NFS</italic> is the number of flexible receptor side-chains, for the SEQ17 and CDK2 FS12 cross-docking calculations respectively. Overall down-weighting the receptor energy improves the rank of the lowest-energy correct solution. The top horizontal line (Rank 51) in the plots represents data points that did not find the solution in the 50 docking runs. C) and D) Distributions of improvements in receptor-ligand interaction energies (<italic>E</italic><sub><italic>R-L</italic></sub>) in kcal/mol, when the internal energy of the receptor is down-weighted in the scoring functions for SEQ17 and the CDK2 FS12 calculation respectively.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004586.g010" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+</sec>
+<sec id="sec027" sec-type="conclusions">
+<title>Discussion</title>
+<p>In this paper we introduce a new docking software, <italic>AutoDockFR</italic> (or <italic>ADFR</italic>), for docking flexible ligands into receptors with explicitly specified flexibility. We show that <italic>ADFR</italic> outperforms the widely used docking programs <italic>AutoDock</italic> and <italic>AutoDock Vina</italic> in various docking experiments and introduce two sets of protein complexes that require substantial conformational changes in receptor side-chains for successfully docking the ligand into the <italic>apo</italic> conformation.</p>
+<p>While AutoDock could handle flexible receptor side-chains explicitly since version 3.05 [<xref rid="pcbi.1004586.ref042" ref-type="bibr">42</xref>], its GA is known to perform best when less than 20 bonds are made rotatable, effectively limiting this option to 1 to 2 flexible side-chains. The re-docking of flexible ligands into the Astex Diverse Set provides quantitative assessment of differences between the new GA implemented in <italic>ADFR</italic> and the one implemented in <italic>AutoDock</italic>, showing increased efficiency and reliability. This performance increase is obtained through a combination of techniques including: population clustering, efficient termination criteria, and the encoding of knowledge such as translational points and soft rotamers helping the GA to identify good solutions faster. Other docking software (e.g. Gold, Fitted) use techniques similar to translational points and rotamers for pruning the search space. However, in <italic>ADFR</italic> this information is used to sample promising areas of the search space more frequently while retaining continuous sampling of the entire search space, rather than pruning it. We performed cross-docking experiments on two datasets. The SEQ17 dataset focuses on receptor diversity, while CDK2 focuses on ligand diversity. Both these cases are relevant docking scenarios and the choice of an <italic>apo</italic> conformation as the target provides a realistic scenario of the challenges associated with induced fit simulation.</p>
+<p>The SEQ17 dataset consists of 17 receptors in which substantial side-chain motion is necessary in the <italic>apo</italic> conformation for docking the ligand. The largely failed cross-docking observed with rigid <italic>apo</italic> conformation of the receptor confirms that the SEQ17 provides a challenging set of complexes. The cross-docking experiment demonstrates that adding flexibility to the receptor increases docking success rate. <italic>ADFR</italic> reports solutions for 70.6% for the complexes and solutions with rank less than 10 for 52.3% of these complexes, outperforming <italic>AutoDock Vina</italic> success rate of 35.3%. Refinements to the scoring function could further increase the docking success rate of ADFR in the future. In particular, the addition of rotatable terminal hydrogen atoms in flexible receptor side-chains will improve docking accuracy on this dataset as a substantial number of moving receptor side-chains contain such hydrogen atoms.</p>
+<p>The cross-docking of the CDK2 dataset shows a higher success rate for <italic>ADFR</italic> and a substantial improvement over <italic>AutoDock Vina</italic>. This docking scenario is different from the SEQ17 dataset as we are using a set of 52 ligands docked into a single <italic>apo</italic> conformation of the receptor. We show that <italic>ADFR</italic> outperforms <italic>AutoDock Vina</italic> in all scenarios of flexible docking, when we cross-dock 52 CDK2 ligands in a CDK2 <italic>apo</italic> receptor conformation with 0, 4, 10, and 12 flexible side-chains. We performed a detailed analysis receptor side-chain motions and the impact of adding receptor flexibility on docking success rate.</p>
+<sec id="sec028">
+<title>Receptor side-chain motion analysis</title>
+<p>The RMSD of moving receptor atoms is not a suitable metric for gaining insight into receptor side-chain motions for the following reasons. First, in many cases, including the SEQ17 and CDK2 datasets used here, only a small subset of receptor side-chains interacting with the ligand undergo a substantial change in their conformation. The contributions of these side-chains to the RMSD of moving receptor atoms is outweighed by the contributions of a larger number of side-chain staying close to their initial conformation. Second, computing RMSD requires a reference conformation, which is the target conformation to be achieved for success. Ideally the <italic>holo</italic> conformation should be induced when docking a ligand into an <italic>apo</italic> conformation. However, this would require the receptor to be fully flexible. In our experiments only side-chains interacting with the ligand can move. These side-chains exist in the context of an <italic>apo</italic> conformation; hence they are not always expected to achieve the <italic>holo</italic> conformation. For example, side-chains not interacting with a particular ligand have no reason to deviate much from their <italic>apo</italic> conformation. Moreover, even small backbone perturbations can change the Cα-Cβ vector potentially forcing a side-chain to adopt an alternate conformation to interact with the ligand. For these reasons, we used pairwise atomic interactions between ligand and moving receptor atoms in the <italic>holo</italic> complex to assess receptor side-chains motions. Results show that an average of 79.8% of these atomic pairwise interactions are recovered in docked solutions, showing that the flexible receptor side-chains move to re-create the interaction pattern observed in the <italic>holo</italic> complex.</p>
+</sec>
+<sec id="sec029">
+<title>Impact of adding receptor flexibility on docking success rate</title>
+<p><xref rid="pcbi.1004586.g011" ref-type="fig">Fig 11</xref> shows the success rates (i.e. percentages of CDK2 complexes for which the top ranking solutions have an RMSD from the crystallographic structure of less than 2Å (<italic>holo</italic>) and 2.5Å (<italic>apo</italic>)) achieved by <italic>ADFR</italic> when docking into both the <italic>apo</italic> and <italic>holo</italic> structures, rigidly and with 12 flexible side-chains. An expected decrease in performance is observed between docking a ligand into its rigid native <italic>holo</italic> receptor (69.2%) versus docking it into the same receptor with flexible side-chains (50%). This can be attributed to shortcomings of the model (e.g., implicit solvent, scoring function limitations) that result in false positives out-scoring the correct solution. However, adding flexible side-chains improves the results considerably when cross-docking ligands into the <italic>apo</italic> structure, increasing the success rate from 23% to 44%.</p>
+<fig id="pcbi.1004586.g011" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004586.g011</object-id>
+<label>Fig 11</label>
+<caption>
+<title>Impact of making 12 receptor side-chains flexible when docking ligands into the native <italic>holo</italic> receptor and the <italic>apo</italic> receptor.</title>
+<p>An expected loss of accuracy is observed when making the native <italic>holo</italic> receptor flexible, reflecting shortcomings in the scoring function and search method. Adding flexibility to the <italic>apo</italic> receptor, however, improves the docking success rate. <italic>Holo</italic> docking success rates are shown for ligand RMSD &lt; 2Å. The success rate for <italic>apo</italic> cross-docking increases from 17.3% to 36.5% with a 2.0 Å RMSD cutoff. This success rate increases from 23.1% to 44.2% when using a 2.5Å RMSD cutoff (darker shade bars).</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004586.g011" position="float" xlink:type="simple"/>
+</fig>
+<p>Cross-docking into the <italic>apo</italic> structure is a more challenging task compared to docking a ligand into a native or non-native <italic>holo</italic> structure [<xref rid="pcbi.1004586.ref043" ref-type="bibr">43</xref>], and represents a realistic scenario where candidate molecules are evaluated for their capability to bind into a given structure. Both cross-docking tests were performed using <italic>apo</italic> conformations. Further, the ability to handle as many as 12 side-chains reduces the burden of having to choose which side-chains should be considered flexible before running the docking calculation. The SEQ17 and CDK2 datasets are representative of specific, but relevant type of receptor conformational change. They have shown to be challenging for <italic>AutoDock Vina</italic> and <italic>ADFR</italic>. Comparing the merits of the various other approaches described in the introduction for dealing with receptor flexibility on these datasets will be interesting but is beyond the scope of this paper.</p>
+<sec id="sec030">
+<title>Open architecture for methods development</title>
+<p>The open architecture of <italic>ADFR</italic> is designed to incorporate a variety of motion objects and we are working on adding motion operators for local and global receptor backbone motion. This architecture supports exploring new techniques, but the python implementation gives it poor performances in execution time. The current implementation of <italic>ADFR</italic> is on average 230 times slower than the highly optimized C++ code of <italic>AutoDock Vina</italic> when docking into a receptor with 12 flexible side-chains. Currently, a GA evolution requires an average of 8.5 hours for receptors with 12 flexible side-chains. Hence, at this point, <italic>ADFR</italic> is only suitable for users having access to substantial computational resources (i.e. large clusters) in order to perform independent GA evolutions in parallel on different processors. We are working on a C++ implementation that will dramatically reduce execution times.</p>
+<p>In summary, we demonstrate that adding flexibility to the <italic>apo</italic> conformation of receptors increases docking success rate and that <italic>ADFR</italic> outperforms <italic>AutoDock Vina</italic> on receptors with up to 12 flexible side-chains. For docking approaches explicitly specifying receptor flexibility, the ability to handle such large numbers of side-chains eases the burden of predicting or arbitrarily picking the few side-chains that need to change their conformation upon ligand binding. Future improvements to the scoring function and the representation of receptor flexibility are likely to further increase success rates. In particular, we plan to incorporate a focused sampling of rotatable ligand bonds, and published propensities for particular side-chains to undergo conformational changes to simplify the search. The addition of fully flexible representation of all terminal hydrogen atoms on receptor side-chains will also increase the accuracy of the scoring function. Finally, the addition of new motion descriptors for including local backbone motions to alter the Cα-Cβ bond orientation, and global motions to model loop and domain motions will increase the range of therapeutic targets for which this software can be used successfully. The software is freely available under an Open Source license at <ext-link ext-link-type="uri" xlink:href="http://adfr.scripps.edu/" xlink:type="simple">http://adfr.scripps.edu/</ext-link> along with all data needed to reproduce the calculations presented in this paper.</p>
+</sec>
+</sec>
+</sec>
+<sec id="sec031">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1004586.s001" xlink:href="info:doi/10.1371/journal.pcbi.1004586.s001" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S1 Text</label>
+<caption>
+<title>Genetic Algorithm Implementation (Additional Details).</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004586.s002" xlink:href="info:doi/10.1371/journal.pcbi.1004586.s002" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S2 Text</label>
+<caption>
+<title>RMSD.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004586.s003" xlink:href="info:doi/10.1371/journal.pcbi.1004586.s003" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S3 Text</label>
+<caption>
+<title>Structure preparation.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004586.s004" xlink:href="info:doi/10.1371/journal.pcbi.1004586.s004" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S1 Table</label>
+<caption>
+<title>Cα deviations in the CDK2 data set.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004586.s005" xlink:href="info:doi/10.1371/journal.pcbi.1004586.s005" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S2 Table</label>
+<caption>
+<title>Astex Diverse Set and CDK2 datasets.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004586.s006" xlink:href="info:doi/10.1371/journal.pcbi.1004586.s006" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S3 Table</label>
+<caption>
+<title>SEQ17 dataset.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004586.s007" xlink:href="info:doi/10.1371/journal.pcbi.1004586.s007" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S4 Table</label>
+<caption>
+<title>SEQ17 cross-docking results.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004586.s008" xlink:href="info:doi/10.1371/journal.pcbi.1004586.s008" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S5 Table</label>
+<caption>
+<title>CDK2 cross-docking results.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004586.s009" xlink:href="info:doi/10.1371/journal.pcbi.1004586.s009" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S6 Table</label>
+<caption>
+<title>CDK2 docking success rates for <italic>AutoDock Vina</italic> with higher exhaustiveness.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004586.s010" xlink:href="info:doi/10.1371/journal.pcbi.1004586.s010" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S7 Table</label>
+<caption>
+<title><italic>AutoDock Vina</italic> execution time scaling for varying exhaustiveness and levels of flexibility.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>We thank Dr. Ruth Huey and Dr. William Lindstrom for contributing a C implementation of the <italic>AutoDock</italic> scoring function. We thank Michael E. Pique for his help with <italic>AutoDock</italic> and <italic>AutoGrid</italic>, and Dr. Daniel Santiago for providing the basis of the CDK2 dataset and for his assistance in using <italic>Maestro</italic>. We also thank Dr. Garrett Morris for his input and careful reading of the manuscript.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004586.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jorgensen</surname> <given-names>WL</given-names></name>. <article-title>The many roles of computation in drug discovery</article-title>. <source>Science</source>. <year>2004</year>;<volume>303</volume>(<issue>5665</issue>):<fpage>1813</fpage>–<lpage>8</lpage>. <object-id pub-id-type="pmid">15031495</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Taft</surname> <given-names>CA</given-names></name>, <name name-style="western"><surname>Da Silva</surname> <given-names>VB</given-names></name>, <name name-style="western"><surname>Da Silva</surname> <given-names>CH</given-names></name>. <article-title>Current topics in computer-aided drug design</article-title>. <source>Journal of pharmaceutical sciences</source>. <year>2008</year>;<volume>97</volume>(<issue>3</issue>):<fpage>1089</fpage>–<lpage>98</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/jps.21293" xlink:type="simple">10.1002/jps.21293</ext-link></comment> <object-id pub-id-type="pmid">18214973</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Talele</surname> <given-names>TT</given-names></name>, <name name-style="western"><surname>Khedkar</surname> <given-names>SA</given-names></name>, <name name-style="western"><surname>Rigby</surname> <given-names>AC</given-names></name>. <article-title>Successful applications of computer aided drug discovery: moving drugs from concept to the clinic</article-title>. <source>Current topics in medicinal chemistry</source>. <year>2010</year>;<volume>10</volume>(<issue>1</issue>):<fpage>127</fpage>–<lpage>41</lpage>. <object-id pub-id-type="pmid">19929824</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kitchen</surname> <given-names>DB</given-names></name>, <name name-style="western"><surname>Decornez</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Furr</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Bajorath</surname> <given-names>J</given-names></name>. <article-title>Docking and scoring in virtual screening for drug discovery: methods and applications</article-title>. <source>Nature reviews Drug discovery</source>. <year>2004</year>;<volume>3</volume>(<issue>11</issue>):<fpage>935</fpage>–<lpage>49</lpage>. <object-id pub-id-type="pmid">15520816</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Reddy</surname> <given-names>AS</given-names></name>, <name name-style="western"><surname>Pati</surname> <given-names>SP</given-names></name>, <name name-style="western"><surname>Kumar</surname> <given-names>PP</given-names></name>, <name name-style="western"><surname>Pradeep</surname> <given-names>HN</given-names></name>, <name name-style="western"><surname>Sastry</surname> <given-names>GN</given-names></name>. <article-title>Virtual screening in drug discovery—a computational perspective</article-title>. <source>Current protein &amp; peptide science</source>. <year>2007</year>;<volume>8</volume>(<issue>4</issue>):<fpage>329</fpage>–<lpage>51</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004586.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Verkhivker</surname> <given-names>GM</given-names></name>, <name name-style="western"><surname>Bouzida</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Gehlhaar</surname> <given-names>DK</given-names></name>, <name name-style="western"><surname>Rejto</surname> <given-names>PA</given-names></name>, <name name-style="western"><surname>Freer</surname> <given-names>ST</given-names></name>, <name name-style="western"><surname>Rose</surname> <given-names>PW</given-names></name>. <article-title>Complexity and simplicity of ligand-macromolecule interactions: the energy landscape perspective</article-title>. <source>Current opinion in structural biology</source>. <year>2002</year>;<volume>12</volume>(<issue>2</issue>):<fpage>197</fpage>–<lpage>203</lpage>. <object-id pub-id-type="pmid">11959497</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lexa</surname> <given-names>KW</given-names></name>, <name name-style="western"><surname>Carlson</surname> <given-names>HA</given-names></name>. <article-title>Protein flexibility in docking and surface mapping</article-title>. <source>Quarterly reviews of biophysics</source>. <year>2012</year>;<volume>45</volume>(<issue>3</issue>):<fpage>301</fpage>–<lpage>43</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1017/S0033583512000066" xlink:type="simple">10.1017/S0033583512000066</ext-link></comment> <object-id pub-id-type="pmid">22569329</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yuriev</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Holien</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Ramsland</surname> <given-names>PA</given-names></name>. <article-title>Improvements, trends, and new ideas in molecular docking: 2012–2013 in review</article-title>. <source>Journal of molecular recognition: JMR</source>. <year>2015</year>.</mixed-citation></ref>
+<ref id="pcbi.1004586.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Barnard</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Diaz</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Hettich</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Chuang</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>XF</given-names></name>, <name name-style="western"><surname>Avruch</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>Identification of the sites of interaction between c-Raf-1 and Ras-GTP</article-title>. <source>Oncogene</source>. <year>1995</year>;<volume>10</volume>(<issue>7</issue>):<fpage>1283</fpage>–<lpage>90</lpage>. <object-id pub-id-type="pmid">7731678</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huang</surname> <given-names>SY</given-names></name>, <name name-style="western"><surname>Zou</surname> <given-names>X</given-names></name>. <article-title>Advances and challenges in protein-ligand docking</article-title>. <source>International journal of molecular sciences</source>. <year>2010</year>;<volume>11</volume>(<issue>8</issue>):<fpage>3016</fpage>–<lpage>34</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3390/ijms11083016" xlink:type="simple">10.3390/ijms11083016</ext-link></comment> <object-id pub-id-type="pmid">21152288</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mizutani</surname> <given-names>MY</given-names></name>, <name name-style="western"><surname>Takamatsu</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Ichinose</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Nakamura</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Itai</surname> <given-names>A</given-names></name>. <article-title>Effective handling of induced-fit motion in flexible docking</article-title>. <source>Proteins-Structure Function and Bioinformatics</source>. <year>2006</year>;<volume>63</volume>(<issue>4</issue>):<fpage>878</fpage>–<lpage>91</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004586.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kazemi</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Kruger</surname> <given-names>DM</given-names></name>, <name name-style="western"><surname>Sirockin</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Gohlke</surname> <given-names>H</given-names></name>. <article-title>Elastic potential grids: accurate and efficient representation of intermolecular interactions for fully flexible docking</article-title>. <source>ChemMedChem</source>. <year>2009</year>;<volume>4</volume>(<issue>8</issue>):<fpage>1264</fpage>–<lpage>8</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/cmdc.200900146" xlink:type="simple">10.1002/cmdc.200900146</ext-link></comment> <object-id pub-id-type="pmid">19514026</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Osterberg</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Morris</surname> <given-names>GM</given-names></name>, <name name-style="western"><surname>Sanner</surname> <given-names>MF</given-names></name>, <name name-style="western"><surname>Olson</surname> <given-names>AJ</given-names></name>, <name name-style="western"><surname>Goodsell</surname> <given-names>DS</given-names></name>. <article-title>Automated docking to multiple target structures: incorporation of protein mobility and structural water heterogeneity in AutoDock</article-title>. <source>Proteins</source>. <year>2002</year>;<volume>46</volume>(<issue>1</issue>):<fpage>34</fpage>–<lpage>40</lpage>. <object-id pub-id-type="pmid">11746701</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lin</surname> <given-names>JH</given-names></name>, <name name-style="western"><surname>Perryman</surname> <given-names>AL</given-names></name>, <name name-style="western"><surname>Schames</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>McCammon</surname> <given-names>JA</given-names></name>. <article-title>Computational drug design accommodating receptor flexibility: the relaxed complex scheme</article-title>. <source>J Am Chem Soc</source>. <year>2002</year>;<volume>124</volume>(<issue>20</issue>):<fpage>5632</fpage>–<lpage>3</lpage>. <object-id pub-id-type="pmid">12010024</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Corbeil</surname> <given-names>CR</given-names></name>, <name name-style="western"><surname>Englebienne</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Moitessier</surname> <given-names>N</given-names></name>. <article-title>Docking ligands into flexible and solvated macromolecules. 1. Development and validation of FITTED 1.0</article-title>. <source>Journal of chemical information and modeling</source>. <year>2007</year>;<volume>47</volume>(<issue>2</issue>):<fpage>435</fpage>–<lpage>49</lpage>. <object-id pub-id-type="pmid">17305329</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Corbeil</surname> <given-names>CR</given-names></name>, <name name-style="western"><surname>Englebienne</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Yannopoulos</surname> <given-names>CG</given-names></name>, <name name-style="western"><surname>Chan</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Das</surname> <given-names>SK</given-names></name>, <name name-style="western"><surname>Bilimoria</surname> <given-names>D</given-names></name>, <etal>et al</etal>. <article-title>Docking ligands into flexible and solvated macromolecules. 2. Development and application of fitted 1.5 to the virtual screening of potential HCV polymerase inhibitors</article-title>. <source>Journal of chemical information and modeling</source>. <year>2008</year>;<volume>48</volume>(<issue>4</issue>):<fpage>902</fpage>–<lpage>9</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/ci700398h" xlink:type="simple">10.1021/ci700398h</ext-link></comment> <object-id pub-id-type="pmid">18341269</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schnecke</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Swanson</surname> <given-names>CA</given-names></name>, <name name-style="western"><surname>Getzoff</surname> <given-names>ED</given-names></name>, <name name-style="western"><surname>Tainer</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Kuhn</surname> <given-names>LA</given-names></name>. <article-title>Screening a peptidyl database for potential ligands to proteins with side-chain flexibility</article-title>. <source>Proteins</source>. <year>1998</year>;<volume>33</volume>(<issue>1</issue>):<fpage>74</fpage>–<lpage>87</lpage>. <object-id pub-id-type="pmid">9741846</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zavodszky</surname> <given-names>MI</given-names></name>, <name name-style="western"><surname>Kuhn</surname> <given-names>LA</given-names></name>. <article-title>Side-chain flexibility in protein-ligand binding: The minimal rotation hypothesis</article-title>. <source>Protein Sci</source>. <year>2005</year>;<volume>14</volume>(<issue>4</issue>):<fpage>1104</fpage>–<lpage>14</lpage>. <object-id pub-id-type="pmid">15772311</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Meiler</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Baker</surname> <given-names>D</given-names></name>. <article-title>ROSETTALIGAND: protein-small molecule docking with full side-chain flexibility</article-title>. <source>Proteins</source>. <year>2006</year>;<volume>65</volume>(<issue>3</issue>):<fpage>538</fpage>–<lpage>48</lpage>. <object-id pub-id-type="pmid">16972285</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Morris</surname> <given-names>GM</given-names></name>, <name name-style="western"><surname>Huey</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Lindstrom</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Sanner</surname> <given-names>MF</given-names></name>, <name name-style="western"><surname>Belew</surname> <given-names>RK</given-names></name>, <name name-style="western"><surname>Goodsell</surname> <given-names>DS</given-names></name>, <etal>et al</etal>. <article-title>AutoDock4 and AutoDockTools4: Automated docking with selective receptor flexibility</article-title>. <source>Journal of computational chemistry</source>. <year>2009</year>;<volume>30</volume>(<issue>16</issue>):<fpage>2785</fpage>–<lpage>91</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/jcc.21256" xlink:type="simple">10.1002/jcc.21256</ext-link></comment> <object-id pub-id-type="pmid">19399780</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Trott</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Olson</surname> <given-names>AJ</given-names></name>. <article-title>Software News and Update AutoDock Vina: Improving the Speed and Accuracy of Docking with a New Scoring Function, Efficient Optimization, and Multithreading</article-title>. <source>Journal of computational chemistry</source>. <year>2010</year>;<volume>31</volume>(<issue>2</issue>):<fpage>455</fpage>–<lpage>61</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/jcc.21334" xlink:type="simple">10.1002/jcc.21334</ext-link></comment> <object-id pub-id-type="pmid">19499576</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shin</surname> <given-names>WH</given-names></name>, <name name-style="western"><surname>Seok</surname> <given-names>C</given-names></name>. <article-title>GalaxyDock: Protein-Ligand Docking with Flexible Protein Side-chains</article-title>. <source>Journal of chemical information and modeling</source>. <year>2012</year>;<volume>52</volume>(<issue>12</issue>):<fpage>3225</fpage>–<lpage>32</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/ci300342z" xlink:type="simple">10.1021/ci300342z</ext-link></comment> <object-id pub-id-type="pmid">23198780</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhao</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Sanner</surname> <given-names>MF</given-names></name>. <article-title>FLIPDock: Docking flexible ligands into flexible receptors</article-title>. <source>Abstr Pap Am Chem S</source>. <year>2007</year>;<volume>233</volume>:<fpage>152</fpage>–.</mixed-citation></ref>
+<ref id="pcbi.1004586.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Verdonk</surname> <given-names>ML</given-names></name>, <name name-style="western"><surname>Cole</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Hartshorn</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Murray</surname> <given-names>CW</given-names></name>, <name name-style="western"><surname>Taylor</surname> <given-names>RD</given-names></name>. <article-title>Improved protein-ligand docking using GOLD</article-title>. <source>Proteins-Structure Function and Genetics</source>. <year>2003</year>;<volume>52</volume>(<issue>4</issue>):<fpage>609</fpage>–<lpage>23</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004586.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schames</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Henchman</surname> <given-names>RH</given-names></name>, <name name-style="western"><surname>Siegel</surname> <given-names>JS</given-names></name>, <name name-style="western"><surname>Sotriffer</surname> <given-names>CA</given-names></name>, <name name-style="western"><surname>Ni</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>McCammon</surname> <given-names>JA</given-names></name>. <article-title>Discovery of a novel binding trench in HIV integrase</article-title>. <source>Journal of medicinal chemistry</source>. <year>2004</year>;<volume>47</volume>(<issue>8</issue>):<fpage>1879</fpage>–<lpage>81</lpage>. <object-id pub-id-type="pmid">15055986</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Davis</surname> <given-names>IW</given-names></name>, <name name-style="western"><surname>Baker</surname> <given-names>D</given-names></name>. <article-title>ROSETTALIGAND Docking with Full Ligand and Receptor Flexibility</article-title>. <source>J Mol Biol</source>. <year>2009</year>;<volume>385</volume>(<issue>2</issue>):<fpage>381</fpage>–<lpage>92</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jmb.2008.11.010" xlink:type="simple">10.1016/j.jmb.2008.11.010</ext-link></comment> <object-id pub-id-type="pmid">19041878</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhao</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Sanner</surname> <given-names>MF</given-names></name>. <article-title>Protein-ligand docking with multiple flexible side chains</article-title>. <source>J Comput Aided Mol Des</source>. <year>2008</year>;<volume>22</volume>(<issue>9</issue>):<fpage>673</fpage>–<lpage>9</lpage>. <object-id pub-id-type="pmid">18034309</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>May</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Zacharias</surname> <given-names>M</given-names></name>. <article-title>Protein-ligand docking accounting for receptor side chain and global flexibility in normal modes: evaluation on kinase inhibitor cross docking</article-title>. <source>Journal of medicinal chemistry</source>. <year>2008</year>;<volume>51</volume>(<issue>12</issue>):<fpage>3499</fpage>–<lpage>506</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/jm800071v" xlink:type="simple">10.1021/jm800071v</ext-link></comment> <object-id pub-id-type="pmid">18517186</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhao</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Stoffler</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Sanner</surname> <given-names>M</given-names></name>. <article-title>Hierarchical and multi-resolution representation of protein flexibility</article-title>. <source>Bioinformatics</source>. <year>2006</year>;<volume>22</volume>(<issue>22</issue>):<fpage>2768</fpage>–<lpage>74</lpage>. <object-id pub-id-type="pmid">16984893</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Huey</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Morris</surname> <given-names>GM</given-names></name>, <name name-style="western"><surname>Olson</surname> <given-names>AJ</given-names></name>, <name name-style="western"><surname>Goodsell</surname> <given-names>DS</given-names></name>. <article-title>A semiempirical free energy force field with charge-based desolvation</article-title>. <source>Journal of computational chemistry</source>. <year>2007</year>;<volume>28</volume>(<issue>6</issue>):<fpage>1145</fpage>–<lpage>52</lpage>. <object-id pub-id-type="pmid">17274016</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wets</surname> <given-names>FJSRJ-B</given-names></name>. <article-title>Minimization by Random Search Techniques</article-title>. <source>Mathematics of Operations Research</source>. <year>1981</year>;<volume>6</volume>(<issue>1</issue>):<fpage>19</fpage>–<lpage>30</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004586.ref032"><label>32</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Hamilton</surname> <given-names>WR</given-names></name>. <chapter-title>Lectures on quaternions; containing a systematic statement of a new mathematical method; of which the principles were communicated in 1843 to the Royal Irish academy; and which has since formed the subject of successive courses of lectures, delivered in 1848 and subsequent years, in the halls of Trinity college, Dublin: with numerous illustrative diagrams, and with some geometrical and physical applications</chapter-title>. <publisher-loc>Dublin</publisher-loc>,: <publisher-name>Hodges and Smith; etc.</publisher-name>; <year>1853</year>. 3 p.l., <volume>lxxii</volume>, 736 p., 1 l. p.</mixed-citation></ref>
+<ref id="pcbi.1004586.ref033"><label>33</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hartshorn</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Verdonk</surname> <given-names>ML</given-names></name>, <name name-style="western"><surname>Chessari</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Brewerton</surname> <given-names>SC</given-names></name>, <name name-style="western"><surname>Mooij</surname> <given-names>WT</given-names></name>, <name name-style="western"><surname>Mortenson</surname> <given-names>PN</given-names></name>, <etal>et al</etal>. <article-title>Diverse, high-quality test set for the validation of protein-ligand docking performance</article-title>. <source>Journal of medicinal chemistry</source>. <year>2007</year>;<volume>50</volume>(<issue>4</issue>):<fpage>726</fpage>–<lpage>41</lpage>. <object-id pub-id-type="pmid">17300160</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref034"><label>34</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Davis</surname> <given-names>IW</given-names></name>, <name name-style="western"><surname>Raha</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Head</surname> <given-names>MS</given-names></name>, <name name-style="western"><surname>Baker</surname> <given-names>D</given-names></name>. <article-title>Blind docking of pharmaceutically relevant compounds using RosettaLigand</article-title>. <source>Protein Sci</source>. <year>2009</year>;<volume>18</volume>(<issue>9</issue>):<fpage>1998</fpage>–<lpage>2002</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/pro.192" xlink:type="simple">10.1002/pro.192</ext-link></comment> <object-id pub-id-type="pmid">19554568</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref035"><label>35</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Grosdidier</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Zoete</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Michielin</surname> <given-names>O</given-names></name>. <article-title>Blind docking of 260 protein-ligand complexes with EADock 2.0</article-title>. <source>Journal of computational chemistry</source>. <year>2009</year>;<volume>30</volume>(<issue>13</issue>):<fpage>2021</fpage>–<lpage>30</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/jcc.21202" xlink:type="simple">10.1002/jcc.21202</ext-link></comment> <object-id pub-id-type="pmid">19130502</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref036"><label>36</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hetenyi</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>van der Spoel</surname> <given-names>D</given-names></name>. <article-title>Blind docking of drug-sized compounds to proteins with up to a thousand residues</article-title>. <source>FEBS letters</source>. <year>2006</year>;<volume>580</volume>(<issue>5</issue>):<fpage>1447</fpage>–<lpage>50</lpage>. <object-id pub-id-type="pmid">16460734</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref037"><label>37</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dunbrack</surname> <given-names>RL</given-names> <suffix>Jr.</suffix></name>, <name name-style="western"><surname>Karplus</surname> <given-names>M</given-names></name>. <article-title>Conformational analysis of the backbone-dependent rotamer preferences of protein sidechains</article-title>. <source>Nature structural biology</source>. <year>1994</year>;<volume>1</volume>(<issue>5</issue>):<fpage>334</fpage>–<lpage>40</lpage>. <object-id pub-id-type="pmid">7664040</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref038"><label>38</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kruger</surname> <given-names>DM</given-names></name>, <name name-style="western"><surname>Jessen</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Gohlke</surname> <given-names>H</given-names></name>. <article-title>How Good Are State-of-the-Art Docking Tools in Predicting Ligand Binding Modes in Protein-Protein Interfaces?</article-title> <source>Journal of chemical information and modeling</source>. <year>2012</year>;<volume>52</volume>(<issue>11</issue>):<fpage>2807</fpage>–<lpage>11</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/ci3003599" xlink:type="simple">10.1021/ci3003599</ext-link></comment> <object-id pub-id-type="pmid">23072688</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref039"><label>39</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gaudreault</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Chartier</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Najmanovich</surname> <given-names>R</given-names></name>. <article-title>Side-chain rotamer changes upon ligand binding: common, crucial, correlate with entropy and rearrange hydrogen bonding</article-title>. <source>Bioinformatics</source>. <year>2012</year>;<volume>28</volume>(<issue>18</issue>):<fpage>I423</fpage>–<lpage>I30</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/bts395" xlink:type="simple">10.1093/bioinformatics/bts395</ext-link></comment> <object-id pub-id-type="pmid">22962462</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref040"><label>40</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Berman</surname> <given-names>HM</given-names></name>, <name name-style="western"><surname>Westbrook</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Feng</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Gilliland</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Bhat</surname> <given-names>TN</given-names></name>, <name name-style="western"><surname>Weissig</surname> <given-names>H</given-names></name>, <etal>et al</etal>. <article-title>The Protein Data Bank</article-title>. <source>Nucleic acids research</source>. <year>2000</year>;<volume>28</volume>(<issue>1</issue>):<fpage>235</fpage>–<lpage>42</lpage>. <object-id pub-id-type="pmid">10592235</object-id></mixed-citation></ref>
+<ref id="pcbi.1004586.ref041"><label>41</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kuhn</surname> <given-names>HW</given-names></name>. <article-title>The Hungarian method for the assignment problem</article-title>. <source>Naval Research Logistics Quarterly</source>. <year>1955</year>;<volume>2</volume>(<issue>1–2</issue>):<fpage>83</fpage>–<lpage>97</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004586.ref042"><label>42</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Morris</surname> <given-names>GM</given-names></name>, <name name-style="western"><surname>Goodsell</surname> <given-names>DS</given-names></name>, <name name-style="western"><surname>Halliday</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Huey</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Hart</surname> <given-names>WE</given-names></name>, <name name-style="western"><surname>Belew</surname> <given-names>RK</given-names></name>, <etal>et al</etal>. <article-title>Automated docking using a Lamarckian genetic algorithm and an empirical binding free energy function</article-title>. <source>Journal of computational chemistry</source>. <year>1998</year>;<volume>19</volume>(<issue>14</issue>):<fpage>1639</fpage>–<lpage>62</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004586.ref043"><label>43</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Erickson</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Jalaie</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Robertson</surname> <given-names>DH</given-names></name>, <name name-style="western"><surname>Lewis</surname> <given-names>RA</given-names></name>, <name name-style="western"><surname>Vieth</surname> <given-names>M</given-names></name>. <article-title>Lessons in molecular recognition: the effects of ligand and protein flexibility on molecular docking accuracy</article-title>. <source>Journal of medicinal chemistry</source>. <year>2004</year>;<volume>47</volume>(<issue>1</issue>):<fpage>45</fpage>–<lpage>55</lpage>. <object-id pub-id-type="pmid">14695819</object-id></mixed-citation></ref>
+</ref-list>
+</back>
+</article>

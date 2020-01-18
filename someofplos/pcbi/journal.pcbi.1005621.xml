@@ -1,0 +1,871 @@
+<!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.1d3 20150301//EN" "http://jats.nlm.nih.gov/publishing/1.1d3/JATS-journalpublishing1.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="1.1d3" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-17-00075</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1005621</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+<subj-group subj-group-type="Discipline-v3"><subject>Computer and information sciences</subject><subj-group><subject>Network analysis</subject><subj-group><subject>Protein interaction networks</subject></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Proteomics</subject><subj-group><subject>Protein interaction networks</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Physical sciences</subject><subj-group><subject>Mathematics</subject><subj-group><subject>Algebra</subject><subj-group><subject>Linear algebra</subject><subj-group><subject>Eigenvectors</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Physical sciences</subject><subj-group><subject>Mathematics</subject><subj-group><subject>Algebra</subject><subj-group><subject>Algebraic structures</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Physical sciences</subject><subj-group><subject>Mathematics</subject><subj-group><subject>Algebra</subject><subj-group><subject>Linear algebra</subject><subj-group><subject>Eigenvalues</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Molecular biology</subject><subj-group><subject>Macromolecular structure analysis</subject><subj-group><subject>Protein structure</subject><subj-group><subject>Protein structure comparison</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Proteins</subject><subj-group><subject>Protein structure</subject><subj-group><subject>Protein structure comparison</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Computer and information sciences</subject><subj-group><subject>Network analysis</subject></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Molecular biology</subject><subj-group><subject>Macromolecular structure analysis</subject><subj-group><subject>Protein structure</subject><subj-group><subject>Protein structure networks</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Proteins</subject><subj-group><subject>Protein structure</subject><subj-group><subject>Protein structure networks</subject></subj-group></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Molecular biology</subject><subj-group><subject>Macromolecular structure analysis</subject><subj-group><subject>Protein structure</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v3"><subject>Biology and life sciences</subject><subj-group><subject>Biochemistry</subject><subj-group><subject>Proteins</subject><subj-group><subject>Protein structure</subject></subj-group></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Vicus: Exploiting local structures to improve network-based analysis of biological data</article-title>
+<alt-title alt-title-type="running-head">Local structures for network analysis</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Wang</surname> <given-names>Bo</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Huang</surname> <given-names>Lin</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-9198-2227</contrib-id>
+<name name-style="western">
+<surname>Zhu</surname> <given-names>Yuke</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0003-3084-2287</contrib-id>
+<name name-style="western">
+<surname>Kundaje</surname> <given-names>Anshul</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Batzoglou</surname> <given-names>Serafim</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-2416-833X</contrib-id>
+<name name-style="western">
+<surname>Goldenberg</surname> <given-names>Anna</given-names></name>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+<xref ref-type="aff" rid="aff004"><sup>4</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<label>1</label>
+<addr-line>Department of Computer Science, Stanford University, Stanford, California, United States of America</addr-line>
+</aff>
+<aff id="aff002">
+<label>2</label>
+<addr-line>Genetics Department, Stanford University, Stanford, California, United States of America</addr-line>
+</aff>
+<aff id="aff003">
+<label>3</label>
+<addr-line>SickKids Research Institute, Toronto, Ontario, Canada</addr-line>
+</aff>
+<aff id="aff004">
+<label>4</label>
+<addr-line>Department of Computer Science, University of Toronto, Toronto, Ontario, Canada</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Ideker</surname> <given-names>Trey</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>University of California, San Diego, UNITED STATES</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con">
+<p>
+<list list-type="simple">
+<list-item>
+<p><bold>Conceptualization:</bold> BW AG.</p>
+</list-item>
+<list-item>
+<p><bold>Data curation:</bold> BW.</p>
+</list-item>
+<list-item>
+<p><bold>Formal analysis:</bold> BW AG.</p>
+</list-item>
+<list-item>
+<p><bold>Funding acquisition:</bold> AG.</p>
+</list-item>
+<list-item>
+<p><bold>Investigation:</bold> BW AG SB AK.</p>
+</list-item>
+<list-item>
+<p><bold>Methodology:</bold> BW LH YZ AG.</p>
+</list-item>
+<list-item>
+<p><bold>Project administration:</bold> AG SB AK.</p>
+</list-item>
+<list-item>
+<p><bold>Resources:</bold> BW.</p>
+</list-item>
+<list-item>
+<p><bold>Software:</bold> BW LH YZ.</p>
+</list-item>
+<list-item>
+<p><bold>Supervision:</bold> AG.</p>
+</list-item>
+<list-item>
+<p><bold>Validation:</bold> BW LH YZ.</p>
+</list-item>
+<list-item>
+<p><bold>Visualization:</bold> BW.</p>
+</list-item>
+<list-item>
+<p><bold>Writing – original draft:</bold> BW LH AG.</p>
+</list-item>
+<list-item>
+<p><bold>Writing – review &amp; editing:</bold> BW LH YZ SB AK AG.</p>
+</list-item>
+</list>
+</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">anna.goldenberg@utoronto.ca</email></corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<month>10</month>
+<year>2017</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>12</day>
+<month>10</month>
+<year>2017</year>
+</pub-date>
+<volume>13</volume>
+<issue>10</issue>
+<elocation-id>e1005621</elocation-id>
+<history>
+<date date-type="received">
+<day>13</day>
+<month>1</month>
+<year>2017</year>
+</date>
+<date date-type="accepted">
+<day>9</day>
+<month>6</month>
+<year>2017</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2017</copyright-year>
+<copyright-holder>Wang et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1005621"/>
+<abstract>
+<p>Biological networks entail important topological features and patterns critical to understanding interactions within complicated biological systems. Despite a great progress in understanding their structure, much more can be done to improve our inference and network analysis. Spectral methods play a key role in many network-based applications. Fundamental to spectral methods is the Laplacian, a matrix that captures the global structure of the network. Unfortunately, the Laplacian does not take into account intricacies of the network’s local structure and is sensitive to noise in the network. These two properties are fundamental to biological networks and cannot be ignored. We propose an alternative matrix <italic>Vicus</italic>. The Vicus matrix captures the local neighborhood structure of the network and thus is more effective at modeling biological interactions. We demonstrate the advantages of Vicus in the context of spectral methods by extensive empirical benchmarking on tasks such as single cell dimensionality reduction, protein module discovery and ranking genes for cancer subtyping. Our experiments show that using Vicus, spectral methods result in more accurate and robust performance in all of these tasks.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author summary</title>
+<p>Networks are a representation of choice for many problems in biology and medicine including protein interactions, metabolic pathways, evolutionary biology, cancer subtyping and disease modeling to name a few. The key to much of network analysis lies in the spectrum decomposition represented by eigenvectors of the network Laplacian. While possessing many desirable algebraic properties, Laplacian lacks the power to capture fine-grained structure of the underlying network. Our novel matrix, Vicus, introduced in this work, takes advantage of the local structure of the network while preserving algebraic properties of the Laplacian. We show that using Vicus in spectral methods leads to superior performance across fundamental biological tasks such as dimensionality reduction in single cell analysis, identifying genes for cancer subtyping and identifying protein modules in a PPI network. We postulate, that in tasks where it is important to take into account local network information, spectral-based methods should be using Vicus matrix in place of Laplacian.</p>
+</abstract>
+<funding-group>
+<award-group id="award001">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/501100002790</institution-id>
+<institution>Canadian Network for Research and Innovation in Machining Technology, Natural Sciences and Engineering Research Council of Canada</institution>
+</institution-wrap>
+</funding-source>
+<award-id>RGPIN-2014-04442</award-id>
+<principal-award-recipient>
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-2416-833X</contrib-id>
+<name name-style="western">
+<surname>Goldenberg</surname> <given-names>Anna</given-names></name>
+</principal-award-recipient>
+</award-group>
+<award-group id="award002">
+<funding-source>
+<institution>California HIV/AIDS Research Program (US)</institution>
+</funding-source>
+<award-id>CHRPJ 493626-16</award-id>
+<principal-award-recipient>
+<contrib-id authenticated="true" contrib-id-type="orcid">http://orcid.org/0000-0002-2416-833X</contrib-id>
+<name name-style="western">
+<surname>Goldenberg</surname> <given-names>Anna</given-names></name>
+</principal-award-recipient>
+</award-group>
+<award-group id="award003">
+<funding-source>
+<institution-wrap>
+<institution-id institution-id-type="funder-id">http://dx.doi.org/10.13039/100000002</institution-id>
+<institution>National Institutes of Health</institution>
+</institution-wrap>
+</funding-source>
+<award-id>1R01CA183904-01A1</award-id>
+<principal-award-recipient>
+<name name-style="western">
+<surname>Wang</surname> <given-names>Bo</given-names></name>
+</principal-award-recipient>
+</award-group>
+<award-group id="award004">
+<funding-source>
+<institution>National Institutes of Health (US)</institution>
+</funding-source>
+<award-id>1R01CA183904-01A1</award-id>
+<principal-award-recipient>
+<name name-style="western">
+<surname>Batzoglou</surname> <given-names>Serafim</given-names></name>
+</principal-award-recipient>
+</award-group>
+<funding-statement>AG is supported by Natural Sciences and Engineering Research Council of Canada (NSERC <ext-link ext-link-type="uri" xlink:href="http://www.nserc-crsng.gc.ca/index_eng.asp" xlink:type="simple">http://www.nserc-crsng.gc.ca/index_eng.asp</ext-link>) grant RGPIN-2014- 04442 and Collaborative Health Research Project (CHRP <ext-link ext-link-type="uri" xlink:href="http://www.nserc-crsng.gc.ca/Professors-Professeurs/Grants-Subs/CHRP-PRCS_eng.asp" xlink:type="simple">http://www.nserc-crsng.gc.ca/Professors-Professeurs/Grants-Subs/CHRP-PRCS_eng.asp</ext-link>) grant CHRPJ 493626-16 sponsored by the Canadian Institutes of Health Research (CIHR) and NSERC. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="5"/>
+<table-count count="2"/>
+<page-count count="18"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the paper and its Supporting Information files.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<disp-quote>
+<p>This is a <italic>PLOS Computational Biology</italic> Methods paper.</p></disp-quote>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Networks are a powerful paradigm for representing relations among objects from micro to macro level. It is no surprise that networks became a representation of choice for many problems in biology and medicine including gene-gene and protein-protein interaction networks [<xref ref-type="bibr" rid="pcbi.1005621.ref001">1</xref>], diseases [<xref ref-type="bibr" rid="pcbi.1005621.ref002">2</xref>] and their interrelations [<xref ref-type="bibr" rid="pcbi.1005621.ref003">3</xref>], cancer subtyping [<xref ref-type="bibr" rid="pcbi.1005621.ref004">4</xref>], genetic diversity [<xref ref-type="bibr" rid="pcbi.1005621.ref005">5</xref>], image retrieval [<xref ref-type="bibr" rid="pcbi.1005621.ref006">6</xref>], dimensionality reduction [<xref ref-type="bibr" rid="pcbi.1005621.ref007">7</xref>, <xref ref-type="bibr" rid="pcbi.1005621.ref008">8</xref>] and many other applications. Computational biologists routinely use networks to represent data and analyze networks to obtain better understanding of patterns and local structures hidden in the complex data they encode. One of the most standard graph-based methods to analyze networks is to decompose it into eigenvectors and eigenvalues, i.e. apply spectral methods to the network to understand its structure. At the heart of spectral methods is the so-called Laplacian matrix. Spectral clustering relies on the fact that the principle eigenvectors of the Laplacian capture membership of nodes in implicit network clusters. This principle is essential to clustering and dimensionality reduction.</p>
+<p>The traditional formulation of the Laplacian captures the global structure of the matrix, which is often insufficient in biology where local topologies are what needs to be sought and exploited. Moreover, recently algorithms designed to capture the local structure of the data have been shown to significantly outperform global methods [<xref ref-type="bibr" rid="pcbi.1005621.ref009">9</xref>, <xref ref-type="bibr" rid="pcbi.1005621.ref010">10</xref>]. These approaches aim to reconstruct each data point using its local neighbours and have been shown to be robust and powerful for unweighted networks. Weighted networks are richer representations of underlying data than unweighted networks: in biological networks weights can represent the strength of interactions or the strength of the evidence underlying each interaction, in patient networks weights represent the degree of similarity between patients [<xref ref-type="bibr" rid="pcbi.1005621.ref004">4</xref>]. In this paper, we provide a local formulation of the Laplacian for weighted networks which we call the <italic>Vicus</italic> matrix (<inline-formula id="pcbi.1005621.e001"><alternatives><graphic id="pcbi.1005621.e001g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e001" xlink:type="simple"/><mml:math display="inline" id="M1"><mml:msup><mml:mi mathvariant="script">V</mml:mi> <mml:mo>+</mml:mo></mml:msup></mml:math></alternatives></inline-formula>), from the Latin word ‘neighborhood’. Using Vicus in place of the Laplacian allows spectral methods to exploit local structures and makes them a lot more relevant to a variety of biological applications.</p>
+<p>In this paper we introduce Vicus and compare its performance to the Laplacian across a wide range of tasks. Our experiments include single cell dimensionality reduction, protein module discovery, feature ranking and large scale network clustering. Since we consider such a diverse set of biological questions, in each case we also compare to appropriate state-of-the-art methods corresponding to each question. Spectral clustering using Vicus outperforms competing approaches in all of these tasks. Our experiments show that Vicus is a more robust alternative to traditional Laplacian matrix for network analysis.</p>
+</sec>
+<sec id="sec002" sec-type="results">
+<title>Results</title>
+<sec id="sec003">
+<title>Simulations: Laplacian vs Vicus</title>
+<p>In this section we consider predetermined 2D and 3D structures, represent them as a graph and analyze the performance of local Vicus as compared to traditional Laplacian in the task of graph-based dimensionality reduction.</p>
+<p>First, let us consider a particular type of protein fold that has a complex structure in which four pairs of antiparallel beta sheets, only one of which is adjacent in sequence, are wrapped in three dimensions to form a barrel shape. This structure known as jelly roll or Swiss roll is particularly common in viral proteins and is schematically depicted in <xref ref-type="fig" rid="pcbi.1005621.g001">Fig 1A</xref>. Spectral methods assume that clusters of data points can be well described by the Euclidean distance. Though it looks relatively unambiguous to a human, this task is computationally challenging since the assumption that Euclidean proximity translates to similarity does not hold in the original data space for the Swiss roll structure. As expected, standard spectral decomposition fails to find a lower dimensional representation of the data due to the inability to capture the underlying manifolds in <xref ref-type="fig" rid="pcbi.1005621.g001">Fig 1A</xref>. Using Vicus in place of the Laplacian matrix helps spectral decomposition to transform the original data to the latent space with reduced complexity while preserving the contiguity and the cluster memberships of the original data.</p>
+<fig id="pcbi.1005621.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005621.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Four examples of three dimensional manifolds (left column) and their embeddings by global Laplacian (middle column) and the proposed Vicus (right column).</title>
+<p>A shows an example of the structure known as jelly roll or Swiss roll which is particularly common in viral proteins. B shows five random non-overlapping clusters in 3D space connected by sparsely measured channels. C shows a toroidal helix containing a circle as its basic geometric shape. D is an example of sampling in 3D space where we sample points from a solid bowl-shaped figure non-uniformly: the top of the bowl is more densely sampled, gradually reducing sampling towards the bottom of the bowl graph. On all the cases, Vicus is able to recover the underlying distributions of the input data more robustly.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005621.g001" xlink:type="simple"/>
+</fig>
+<p>Another simulation that we considered is a typical example in bioinformatic imaging, structured 3D data. A schematic of clustered signal within brain regions and connecting channels between them is captured in <xref ref-type="fig" rid="pcbi.1005621.g001">Fig 1B</xref>. Given five random non-overlapping clusters in 3D space connected by sparsely measured channels, Vicus maps the clusters into dense points while preserving the lines connecting them. This embedding indicates that, by considering local structures, local spectrum can highlight the obvious cluster structures without disregarding the structure of the data between clusters. By comparison, Laplacian-based embedding highlights the dense clusters while making the connectivity between them more ambiguous (<xref ref-type="fig" rid="pcbi.1005621.g001">Fig 1B</xref>). This example sheds light on how Vicus can preserve local structure of the data.</p>
+<p>A very common structure in protein folding is a helix. Among such foldings are toroidal helices, where the helix is wrapped around a toroid. These structures have a pore in the middle that allows unfolded DNA to pass through. The toroidal helix in <xref ref-type="fig" rid="pcbi.1005621.g001">Fig 1C</xref> has a circle as its basic geometric shape. Our local spectrum recovers the underlying 2D circle by considering the labels in local neighborhoods while the Laplacian finds a circle distorted by similarities of points in the 3D dimension. The distortions by the global spectrum result from a fundamental limitation in descriptive power of Euclidean distance in high dimensional spaces, while our local spectrum can avoid such limitation by focusing on the local rather than the global manifold structures.</p>
+<p>Our final example is the task of sampling in 3D space, such as sampling an image of a cell shape in a cell morphology study. We sampled points from a solid bowl-shaped figure (<xref ref-type="fig" rid="pcbi.1005621.g001">Fig 1D</xref>) non-uniformly: the top of the bowl is more densely sampled, gradually reducing sampling towards the bottom of the bowl graph. The Laplacian based 2D embedding has considerable bias towards the densely sampled region while Vicus’ embedding recognizes that sampling was done on a solid shape, again by capturing the labels in the local neighbourhoods.</p>
+<p>These examples show the benefits of capturing local structure in a network (graph) decomposition, which gives a better understanding of patterns and neighborhoods hidden in complex networks.</p>
+</sec>
+<sec id="sec004">
+<title>A case study in single-cell RNA-seq analysis</title>
+<p>Single-cell RNA sequencing (scRNA-seq) technologies have recently emerged as a powerful means to measure gene expression levels of individual cells [<xref ref-type="bibr" rid="pcbi.1005621.ref011">11</xref>]. Quantifying the variation across gene expression profiles of individual cells is key to the dissection of the heterogeneity and the identification of new populations among cells. The unique challenges associated with single-cell RNA-seq data include large noise in quantification of transcriptomes and high dropout rates, therefore reducing the usability of traditional unsupervised clustering methods. Vicus, employing local structures hidden in high-dimensional data, is able to tackle these challenges and improve many types of single-cell analyses including visualization, clustering and gene selection.</p>
+<p>We benchmark our method on four recently published single-cell RNA-seq datasets with validated cell populations:</p>
+<list list-type="bullet">
+<list-item>
+<p>Pollen data set [<xref ref-type="bibr" rid="pcbi.1005621.ref012">12</xref>] consists of 11 cell populations including neural cells and blood cells.</p>
+</list-item>
+<list-item>
+<p>Usoskin data set [<xref ref-type="bibr" rid="pcbi.1005621.ref013">13</xref>] consists of neuronal cells with sensory subtypes. This data set contains 622 cells from the mouse dorsal root ganglion, with an average of 1.14 million reads per cell. The authors divided the cells into four neuronal types: peptidergic nociceptors, non-peptidergic nociceptors, containing neurofilament and containing tyrosine hydroxylase.</p>
+</list-item>
+<list-item>
+<p>Buettner data set [<xref ref-type="bibr" rid="pcbi.1005621.ref014">14</xref>] consists of embryonic stem cells in different cell cycle stages. This dataset was obtained from a controlled study that quantified the effect of the cell cycle on gene expression level in individual mouse embryonic stem cells (mESCs).</p>
+</list-item>
+<list-item>
+<p>Kolodziejczyk data set [<xref ref-type="bibr" rid="pcbi.1005621.ref015">15</xref>] consists of pluripotent cells under different environmental conditions. This data set was obtained from a stem cell study on how different culture conditions influence pluripotent states of mESCs. Preprocessed data was obtained directly from [<xref ref-type="bibr" rid="pcbi.1005621.ref011">11</xref>].</p>
+</list-item>
+</list>
+<p>The main reason we chose these four single-cell datasets is that their ground-truth labels have been validated either experimentally or computationally in their original studies. We formulate the problem of clustering cells from RNA-seq data in terms of networks. First, cell-to-cell similarity networks (<xref ref-type="sec" rid="sec010">Materials and methods</xref>) are constructed from single-cell RNA-seq data. The advantage of using networks to represent this data are in network’s ability to capture a set of relationship between all pairs of cells. After the construction of cell-to-cell networks, we can apply our Vicus to obtain a low-dimensional representation that contains local structures in the networks and potential cluster memberships of cells.</p>
+<p>To demonstrate the representative power of the low-dimensional representations by Vicus, we ran t-SNE [<xref ref-type="bibr" rid="pcbi.1005621.ref016">16</xref>], the most common visualization method in single-cell studies, on the obtained low-dimensional representations and compare the 2-D visualization of both Vicus and Laplacian across the four single-cell datasets in <xref ref-type="fig" rid="pcbi.1005621.g002">Fig 2</xref>. Note that we are only using t-SNE for the purpose of visualization of Laplacian and Vicus. The cells, color-coded by the ground-truth labels from original studies [<xref ref-type="bibr" rid="pcbi.1005621.ref012">12</xref>–<xref ref-type="bibr" rid="pcbi.1005621.ref015">15</xref>], are clearly separated by Vicus (<xref ref-type="fig" rid="pcbi.1005621.g002">Fig 2</xref>), indicating greater power of Vicus to capture fine-grained structures in cell-to-cell similarity networks.</p>
+<fig id="pcbi.1005621.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005621.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Visualization of low-dimensional representations for single cells learned by Vicus and global Laplacian.</title>
+<p>Four columns represent the embedding results for Buettner data, Kolodziejczyk data, Pollen data, and Usoskin data respectively. In each dataset, cells are color-coded as their ground-truth labels. Larger separations between different clusters usually indicate better performances in low-dimensional embeddings.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005621.g002" xlink:type="simple"/>
+</fig>
+<p>We compare spectral decomposition using Vicus with spectral methods using traditional global Laplacian along with 6 other popular dimensionality reduction methods. The six methods include linear methods such as Principle Component Analysis (PCA), Factor Analysis(FA), and Probabilistic PCA (PPCA) and nonlinear methods such as multidimensional scaling (MDS), Kernel PCA, Maximum Variance Unfolding (MVU), Locality Preserving Projection (LPP) and Sammon mapping. We use a widely-used toolbox [<xref ref-type="bibr" rid="pcbi.1005621.ref016">16</xref>] implementing all these popular dimensionality reduction methods. Further, we also compare Vicus with three widely used state-of-the-art network-based clustering algorithms: InfoMap [<xref ref-type="bibr" rid="pcbi.1005621.ref017">17</xref>], modularity-based Louvian [<xref ref-type="bibr" rid="pcbi.1005621.ref018">18</xref>], and Affinity Propagation (AP) [<xref ref-type="bibr" rid="pcbi.1005621.ref019">19</xref>]. To compare these 11 methods we adopted two metrics: Normalized Mutual Information(NMI) [<xref ref-type="bibr" rid="pcbi.1005621.ref020">20</xref>] and Adjusted Rand Index(ARI) [<xref ref-type="bibr" rid="pcbi.1005621.ref021">21</xref>] (<xref ref-type="sec" rid="sec010">Materials and methods</xref>), evaluating the concordance of obtained label and the ground-truth. Higher values of these evaluation metrics indicate better ability of correctly identifying cell populations.</p>
+<p>Results in <xref ref-type="table" rid="pcbi.1005621.t001">Table 1</xref> illustrate Vicus’ superior performances compared to all ten other methods in most of the considered cases. It is noticeable that Vicus outputs much better module detection results than all other methods on Buettner data set [<xref ref-type="bibr" rid="pcbi.1005621.ref014">14</xref>]. This is due to the fact that Buettner data set [<xref ref-type="bibr" rid="pcbi.1005621.ref014">14</xref>] contains cells in three different continuous cell stages which are hard to detect due to large noise. In addition, PCA performs the best on Pollen data set [<xref ref-type="bibr" rid="pcbi.1005621.ref012">12</xref>] because the ground-truth is obtained by simple clustering with PCA on a set of pre-selected genes. Further, compared with the three network-based module detection methods (InfoMap, Louvian and AP), our Vicus is able to achieve much more accurate module discovery on each of the same networks.</p>
+<table-wrap id="pcbi.1005621.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005621.t001</object-id>
+<label>Table 1</label>
+<caption>
+<title>Clustering results comparison on the four single-cell datasets.</title>
+</caption>
+<alternatives>
+<graphic id="pcbi.1005621.t001g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005621.t001" xlink:type="simple"/>
+<table border="0" frame="box" rules="all">
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center"><italic>NMI</italic>/<italic>ARI</italic></th>
+<th align="center">Buettner</th>
+<th align="center">Kolodziejczk</th>
+<th align="center">Pollen</th>
+<th align="center">Usoskin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">PCA</td>
+<td align="center">0.429/0.394</td>
+<td align="center">0.553/0.539</td>
+<td align="center">0.946/0.941</td>
+<td align="center">0.468/0.395</td>
+</tr>
+<tr>
+<td align="center">FA</td>
+<td align="center">0.337/0.278</td>
+<td align="center">0.686/0.679</td>
+<td align="center">0.700/0.558</td>
+<td align="center">0.135/0.104</td>
+</tr>
+<tr>
+<td align="center">PPCA</td>
+<td align="center">0.182/0.174</td>
+<td align="center">0.770/0.727</td>
+<td align="center">0.922/0.890</td>
+<td align="center">0.694/0.731</td>
+</tr>
+<tr>
+<td align="center">MDS</td>
+<td align="center">0.429/0.395</td>
+<td align="center">0.557/0.543</td>
+<td align="center">0.931/0.885</td>
+<td align="center">0.468/0.438</td>
+</tr>
+<tr>
+<td align="center">Sammon</td>
+<td align="center">0.247/0.232</td>
+<td align="center">0.434/0.423</td>
+<td align="center">0.903/0.825</td>
+<td align="center">0.582/0.551</td>
+</tr>
+<tr>
+<td align="center">KPCA</td>
+<td align="center">0.286/0.204</td>
+<td align="center">0.413/0.339</td>
+<td align="center">0.701/0.692</td>
+<td align="center">0.268/0.189</td>
+</tr>
+<tr>
+<td align="center">LPP</td>
+<td align="center">0.314/0.229</td>
+<td align="center">0.720/0.699</td>
+<td align="center">0.890/0.801</td>
+<td align="center">0.632/0.654</td>
+</tr>
+<tr>
+<td align="center">MVU</td>
+<td align="center">0.247/0.154</td>
+<td align="center">0.610/0.652</td>
+<td align="center">0.839/0.690</td>
+<td align="center">0.226/0.175</td>
+</tr>
+<tr>
+<td align="center">InfoMap</td>
+<td align="center">0.584/0.274</td>
+<td align="center">0.688/0.443</td>
+<td align="center">0.930/0.884</td>
+<td align="center">0.580/0.257</td>
+</tr>
+<tr>
+<td align="center">Louvian</td>
+<td align="center">0.731/0.654</td>
+<td align="center">0.728/0.599</td>
+<td align="center">0.770/0.643</td>
+<td align="center">0.603/0.561</td>
+</tr>
+<tr>
+<td align="center">AP</td>
+<td align="center">0.214/0.135</td>
+<td align="center">0.712/0.699</td>
+<td align="center">0.816/0.671</td>
+<td align="center">0.256/0.172</td>
+</tr>
+<tr>
+<td align="center">Global Laplacian</td>
+<td align="center">0.271/0.166</td>
+<td align="center">0.600/0.495</td>
+<td align="center">0.855/0.790</td>
+<td align="center">0.592/0.555</td>
+</tr>
+<tr>
+<td align="center">Vicus</td>
+<td align="center">0.778/0.742</td>
+<td align="center">0.780/0.719</td>
+<td align="center">0.934/0.880</td>
+<td align="center">0.695/0.701</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+<sec id="sec005">
+<title>Vicus captures rare cell populations</title>
+<p>One of the major challenges in single-cell analysis is to detect rare populations of cells from noisy single-cell RNA-seq data. The signals of rare populations can be easily neglected due to the existence of various sources of noises. Our approach based on Vicus matrix is able to discover weak signals of rare populations by exploiting local structures while global Laplacian fails. We applied our method on a scRNA-seq data consisting of 2700 peripheral blood mononuclear cells (PBMC). It is generated by 10x Genomics GemCode platform, a droplet-based high-throughput technique and 2700 cells with UMI counts were identified by their customized computational pipeline [<xref ref-type="bibr" rid="pcbi.1005621.ref022">22</xref>]. This cell population includes five major immune cell types in a healthy human as well as a rare population of metakaryocytes (less than 0.5% abundance in PBMC). The processed data is available in [<xref ref-type="bibr" rid="pcbi.1005621.ref011">11</xref>] and was originally published in [<xref ref-type="bibr" rid="pcbi.1005621.ref022">22</xref>]. Vicus captures the rare population consisting of 11 cells (<xref ref-type="fig" rid="pcbi.1005621.g003">Fig 3A</xref>) while global Laplacian fails to find such rare population. Vicus is also able to detect differential genes that define each cluster (<xref ref-type="fig" rid="pcbi.1005621.g003">Fig 3B</xref>). Note that we used Vicus score to rank important genes (<xref ref-type="sec" rid="sec010">Materials and methods</xref>) and we only show top 5 genes for each cluster.</p>
+<fig id="pcbi.1005621.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005621.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Vicus detects rare population in PBMC data.</title>
+<p>A: a 3-D mapping of the learned low dimension by Vicus. Each cell is colored according to its ground-truth. The rare population of Megakaryocytes is shown in yellow. B: The top 5 differential genes for each cell types detected by Vicus.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005621.g003" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec006">
+<title>Stability in clustering <italic>E. coli</italic> PPI network</title>
+<p>Identification of functional modules in Protein-protein interaction (PPI) networks is an important challenge in bioinformatics. Network module detection algorithms can be employed to extract functionally homogenous proteins. In this application, first submodules are detected and subsequently these submodules are investigated for enrichment of proteins with a particular biological function. Stability is one of the essential goals of the multi-scale module detection problem [<xref ref-type="bibr" rid="pcbi.1005621.ref023">23</xref>]. It measures how robust the employed algorithm is able to recover the most dense subnetworks enriched to certain biological functions or physical interactions. Inside the definition of stability (<xref ref-type="sec" rid="sec010">Materials and methods</xref>), the Laplacian is used in a Markov process on the network which allows to compare and rank partitions at each iteration.</p>
+<p>To analyze the stability of our method we partition a Protein-Protein Interaction(PPI) network, which consists of 7,613 interactions between 2,283 Escherichia coli proteins [<xref ref-type="bibr" rid="pcbi.1005621.ref024">24</xref>]. This task is more challenging than traditional clustering problems due to the intrinsic complexity of the cell captured by the PPI network. Due to large noise in experimental measurements of protein interactions, proteins in the same pathway do not necessarily have higher density of interactions. This fact poses particular challenges to traditional network partition algorithms which usually fail to infer the true membership of proteins to their underlying pathways. Vicus-based spectrum exhibits higher stability along the Markovian timeline (<xref ref-type="fig" rid="pcbi.1005621.g004">Fig 4A</xref>) compared to the global Laplacian. Global spectrum and Vicus-based local spectrum exploit different modes of variation in the network (<xref ref-type="fig" rid="pcbi.1005621.g004">Fig 4B</xref>). Global spectrum tends to find large components in networks to reduce the variation and increase stability while local spectrum exploits deeper substructures of the large components and detects partitions in more fine-grained fashion.</p>
+<fig id="pcbi.1005621.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005621.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Stability and variations along different Markov time spans.</title>
+<p>Stability in Panel A indicates the robustness of the community detection algorithms (Vicus vs Laplacian) while Variations in Panel B show how the corresponding algorithm exploits the community membership information in the network.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005621.g004" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec007">
+<title>Ranking genes associated with cancer subtypes</title>
+<p>One of the holy grails of computational medicine is identification of robust biomarkers associated with the phenotype of interest. Here we consider the question of identifying genes associated with cancer subtyping in 5 cancers from 6 microarray datasets. These are benchmark datasets for feature selection in computational biology from <ext-link ext-link-type="uri" xlink:href="http://featureselection.asu.edu/datasets.php" xlink:type="simple">http://featureselection.asu.edu/datasets.php</ext-link>. <xref ref-type="table" rid="pcbi.1005621.t002">Table 2</xref> shows the statistics of these six datasets.</p>
+<table-wrap id="pcbi.1005621.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005621.t002</object-id>
+<label>Table 2</label>
+<caption>
+<title>Statistics summary of the six macro-array datasets for cancer subtypes.</title>
+</caption>
+<alternatives>
+<graphic id="pcbi.1005621.t002g" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005621.t002" xlink:type="simple"/>
+<table border="0" frame="box" rules="all">
+<colgroup>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+<col align="left" valign="middle"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center">Data Set</th>
+<th align="center"># Instances</th>
+<th align="center"># Features</th>
+<th align="center"># Classes</th>
+<th align="center">Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">ALLAML</td>
+<td align="center">72</td>
+<td align="center">7129</td>
+<td align="center">2</td>
+<td align="center">continuous, binary</td>
+</tr>
+<tr>
+<td align="center">Carcinom</td>
+<td align="center">174</td>
+<td align="center">9182</td>
+<td align="center">11</td>
+<td align="center">continuous, multi-class</td>
+</tr>
+<tr>
+<td align="center">GLIOMA</td>
+<td align="center">50</td>
+<td align="center">4434</td>
+<td align="center">4</td>
+<td align="center">continuous, multi-class</td>
+</tr>
+<tr>
+<td align="center">leukemia</td>
+<td align="center">72</td>
+<td align="center">7070</td>
+<td align="center">2</td>
+<td align="center">discrete, binary</td>
+</tr>
+<tr>
+<td align="center">lung</td>
+<td align="center">203</td>
+<td align="center">3312</td>
+<td align="center">5</td>
+<td align="center">continuous, multi-class</td>
+</tr>
+<tr>
+<td align="center">lung-discrete</td>
+<td align="center">73</td>
+<td align="center">325</td>
+<td align="center">7</td>
+<td align="center">discrete, binary</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>In the standard formulation of spectral clustering, the ranking of features (in this case, genes) is done using Laplacian score. Laplacian Score is a score derived based on the network spectrum that is commonly used to rank features in the order of their importance and relevance to the clusters. Given a feature <bold>f</bold>, the corresponding Laplacian Score (LS) is defined as follows:
+<disp-formula id="pcbi.1005621.e002"><alternatives><graphic id="pcbi.1005621.e002g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e002" xlink:type="simple"/><mml:math display="block" id="M2"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>L</mml:mi> <mml:mi>S</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi mathvariant="bold">f</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mfrac><mml:mrow><mml:msup><mml:mi mathvariant="bold">f</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:msup><mml:mi mathvariant="script">L</mml:mi> <mml:mo>+</mml:mo></mml:msup> <mml:mi mathvariant="bold">f</mml:mi></mml:mrow> <mml:mrow><mml:msup><mml:mi mathvariant="bold">f</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mi mathvariant="bold">f</mml:mi></mml:mrow></mml:mfrac> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(1)</label></disp-formula></p>
+<p>Unfortunately, LS has difficulty identifying features that are only relevant to one of the clusters (a certain local subnetwork) but not the whole network. Traditional LS will prefer features that are globally relevant to all the clusters, even if they are not as strongly indicative of any cluster in particular. We thus, propose to substitute the Laplacian matrix <inline-formula id="pcbi.1005621.e003"><alternatives><graphic id="pcbi.1005621.e003g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e003" xlink:type="simple"/><mml:math display="inline" id="M3"><mml:msup><mml:mi mathvariant="script">L</mml:mi> <mml:mo>+</mml:mo></mml:msup></mml:math></alternatives></inline-formula> with our Vicus matrix <inline-formula id="pcbi.1005621.e004"><alternatives><graphic id="pcbi.1005621.e004g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e004" xlink:type="simple"/><mml:math display="inline" id="M4"><mml:msup><mml:mi mathvariant="script">V</mml:mi> <mml:mo>+</mml:mo></mml:msup></mml:math></alternatives></inline-formula>. We define our Vicus Score (VS) analogously to Laplacian Score:
+<disp-formula id="pcbi.1005621.e005"><alternatives><graphic id="pcbi.1005621.e005g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e005" xlink:type="simple"/><mml:math display="block" id="M5"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>V</mml:mi> <mml:mi>S</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi mathvariant="bold">f</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mfrac><mml:mrow><mml:msup><mml:mi mathvariant="bold">f</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:msup><mml:mi mathvariant="script">V</mml:mi> <mml:mo>+</mml:mo></mml:msup> <mml:mi mathvariant="bold">f</mml:mi></mml:mrow> <mml:mrow><mml:msup><mml:mi mathvariant="bold">f</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mi mathvariant="bold">f</mml:mi></mml:mrow></mml:mfrac> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(2)</label></disp-formula></p>
+<p>For each data set presented in <xref ref-type="table" rid="pcbi.1005621.t002">Table 2</xref>, we rank the features by Laplacian Score and Vicus Score. We take <italic>N</italic> highest ranked features and then apply simple k-means clustering. If the feature ranking algorithm correctly ranks the relevant features, the clustering accuracy should be higher compared to the accuracy of the method that uses the same number of chosen but less relevant features. We varied the number of chosen features and plotted the accuracy of the ranking algorithms in <xref ref-type="fig" rid="pcbi.1005621.g005">Fig 5</xref>. Again, we use NMI and ARI as the evaluation metrics for the clustering results. We observe that features ranked using the Vicus matrix result in better accuracy when the number of chosen features is small, confirming that the most discriminative features are ranked among the top by Vicus.</p>
+<fig id="pcbi.1005621.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1005621.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>The results of feature ranking by Laplacian and Vicus.</title>
+<p>Experiments are performed on 6 cancer datasets. On each dataset, we vary the number of selected features (genes) and use k-means to report the clustering accuracy. NMI and ARI are used to measure the goodness of selected features. It is consistently observed across six datasets that Vicus can select better features than Laplacian.</p>
+</caption>
+<graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005621.g005" xlink:type="simple"/>
+</fig>
+</sec>
+</sec>
+<sec id="sec008" sec-type="conclusions">
+<title>Discussion</title>
+<p>The proposed Vicus matrix for weighted networks exhibits greater power to represent the underlying cluster structures of the networks than the traditional global Laplacian. The key observation is the ability of our local spectrum to make the top eigenvectors more robust to noise and hyper parameters in the process of constructing such weighted networks. The proposed Vicus-based local spectrum can supplant the usage of Laplacian-based spectral methods for weighted networks in various tasks such as clustering, community detection, feature ranking and dimensionality reduction. Sharing similar algebraic properties with global Laplacian, our local spectrum helps to understand the underlying structures of the noisy weighted networks. As demonstrated, local spectrum is robust with respect to noise and outliers. Finally, we have parallelized Vicus to achieve scalability. While the discussed applications contained at most a few thousands nodes, we have performed experiments on networks with up to 500,000 nodes. On this very large network, Laplacian based spectral clustering took 7.5min while Vicus took 12.9min with better performance (higher NMI). Thus, Vicus is not only more accurate but it can scale to very large networks, a property which will become important as we start constructing, for example, DNA co-methylation probe-based networks with hundreds of thousands of probes.</p>
+<sec id="sec009">
+<title>Conclusion</title>
+<p>The power of local network neighborhoods has become abundantly clear in many fields where the networks are used. Principled methods are needed to take advantage of the local network structure. In this work we have proposed the Vicus matrix, a new formulation that shares algebraic properties with the traditional Laplacian and yet improves the power of spectral methods across a wide range of tasks necessary to gain deeper understanding into biological data and behavior of the cell. Taking advantage of the local network structure, we showed improved performance in single cell RNA-seq clustering, feature ranking for identifying biomarkers associated with cancer subtyping and dimensionality reduction in single cell RNA-seq data. Further, we have shown that our method is amenable to parallelization which allows it to be performed in time comparable to the traditional methods.</p>
+</sec>
+</sec>
+<sec id="sec010" sec-type="materials|methods">
+<title>Materials and methods</title>
+<sec id="sec011">
+<title>Laplacian matrix</title>
+<p>Suppose we have a network <inline-formula id="pcbi.1005621.e006"><alternatives><graphic id="pcbi.1005621.e006g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e006" xlink:type="simple"/><mml:math display="inline" id="M6"><mml:mrow><mml:mi mathvariant="script">G</mml:mi> <mml:mo>=</mml:mo> <mml:mo>{</mml:mo> <mml:mi>V</mml:mi> <mml:mo>,</mml:mo> <mml:mi mathvariant="script">E</mml:mi> <mml:mo>}</mml:mo></mml:mrow></mml:math></alternatives></inline-formula> with a set of <italic>V</italic> nodes and <inline-formula id="pcbi.1005621.e007"><alternatives><graphic id="pcbi.1005621.e007g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e007" xlink:type="simple"/><mml:math display="inline" id="M7"><mml:mi mathvariant="script">E</mml:mi></mml:math></alternatives></inline-formula> weighted edges. Let <inline-formula id="pcbi.1005621.e008"><alternatives><graphic id="pcbi.1005621.e008g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e008" xlink:type="simple"/><mml:math display="inline" id="M8"><mml:mrow><mml:mi>W</mml:mi> <mml:mo>∈</mml:mo> <mml:msup><mml:mi mathvariant="double-struck">R</mml:mi> <mml:mrow><mml:mo>|</mml:mo> <mml:mi>V</mml:mi> <mml:mo>|</mml:mo> <mml:mo>×</mml:mo> <mml:mo>|</mml:mo> <mml:mi>V</mml:mi> <mml:mo>|</mml:mo></mml:mrow></mml:msup></mml:mrow></mml:math></alternatives></inline-formula> be the weighted ajacency matrix of this network, where |<italic>V</italic>| is the number of nodes. Here, <italic>W</italic><sub><italic>ij</italic></sub> represents the weight of the edge between the <italic>i</italic>th and <italic>j</italic>th nodes. Let diagonal matrix <italic>D</italic> be <italic>W</italic>’s degree matrix, where <inline-formula id="pcbi.1005621.e009"><alternatives><graphic id="pcbi.1005621.e009g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e009" xlink:type="simple"/><mml:math display="inline" id="M9"><mml:mrow><mml:msub><mml:mi>D</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>i</mml:mi></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:msubsup><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>j</mml:mi></mml:mrow> <mml:mrow><mml:mo>|</mml:mo> <mml:mi>V</mml:mi> <mml:mo>|</mml:mo></mml:mrow></mml:msubsup> <mml:msub><mml:mi>W</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:math></alternatives></inline-formula>. The classical formulation of the Laplacian of <italic>W</italic> is then matrix <inline-formula id="pcbi.1005621.e010"><alternatives><graphic id="pcbi.1005621.e010g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e010" xlink:type="simple"/><mml:math display="inline" id="M10"><mml:mrow><mml:mi mathvariant="script">L</mml:mi> <mml:mo>=</mml:mo> <mml:mi>D</mml:mi> <mml:mo>-</mml:mo> <mml:mi>W</mml:mi></mml:mrow></mml:math></alternatives></inline-formula> also known as the <italic>combinatorial Laplacian</italic>. A common variant of the Laplacian <inline-formula id="pcbi.1005621.e011"><alternatives><graphic id="pcbi.1005621.e011g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e011" xlink:type="simple"/><mml:math display="inline" id="M11"><mml:mi mathvariant="script">L</mml:mi></mml:math></alternatives></inline-formula> is <inline-formula id="pcbi.1005621.e012"><alternatives><graphic id="pcbi.1005621.e012g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e012" xlink:type="simple"/><mml:math display="inline" id="M12"><mml:mrow><mml:msup><mml:mi mathvariant="script">L</mml:mi> <mml:mo>+</mml:mo></mml:msup> <mml:mo>=</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:msup><mml:mi>D</mml:mi> <mml:mrow><mml:mo>-</mml:mo> <mml:mn>1</mml:mn> <mml:mo>/</mml:mo> <mml:mn>2</mml:mn></mml:mrow></mml:msup> <mml:mi>W</mml:mi> <mml:msup><mml:mi>D</mml:mi> <mml:mrow><mml:mo>-</mml:mo> <mml:mn>1</mml:mn> <mml:mo>/</mml:mo> <mml:mn>2</mml:mn></mml:mrow></mml:msup></mml:mrow></mml:math></alternatives></inline-formula> which is called the <italic>normalized Laplacian</italic>.</p>
+<p>Traditional state-of-the-art spectral clustering [<xref ref-type="bibr" rid="pcbi.1005621.ref025">25</xref>] aims to minimize RatioCut, an objective function that effectively combines MinCut and equipartitioning, by solving the following optimization problem:
+<disp-formula id="pcbi.1005621.e013"><alternatives><graphic id="pcbi.1005621.e013g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e013" xlink:type="simple"/><mml:math display="block" id="M13"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:munder><mml:mo form="prefix" movablelimits="true">min</mml:mo> <mml:mrow><mml:mi mathvariant="bold">Q</mml:mi> <mml:mo>∈</mml:mo> <mml:msup><mml:mi mathvariant="double-struck">R</mml:mi> <mml:mrow><mml:mi>n</mml:mi> <mml:mo>×</mml:mo> <mml:mi>C</mml:mi></mml:mrow></mml:msup></mml:mrow></mml:munder></mml:mtd> <mml:mtd/><mml:mtd columnalign="left"><mml:mrow><mml:mi>T</mml:mi> <mml:mi>r</mml:mi> <mml:mi>a</mml:mi> <mml:mi>c</mml:mi> <mml:mi>e</mml:mi> <mml:mo>(</mml:mo> <mml:msup><mml:mi mathvariant="bold">Q</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:msup><mml:mi mathvariant="script">L</mml:mi> <mml:mo>+</mml:mo></mml:msup> <mml:mi mathvariant="bold">Q</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>s</mml:mi> <mml:mo>.</mml:mo> <mml:mi>t</mml:mi> <mml:mo>.</mml:mo></mml:mrow></mml:mtd> <mml:mtd/><mml:mtd columnalign="left"><mml:mrow><mml:msup><mml:mi mathvariant="bold">Q</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mi mathvariant="bold">Q</mml:mi> <mml:mo>=</mml:mo> <mml:mi>I</mml:mi> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(3)</label></disp-formula>
+where <italic>C</italic> is the number of clusters, <italic>n</italic> is the number of nodes and <bold>Q</bold> = [<bold>q</bold><sup>1</sup>, <bold>q</bold><sup>2</sup>, …, <bold>q</bold><sup><italic>C</italic></sup>] is the set of eigenvectors, capturing the structure of the graph. Eigenvectors associated with the Laplacian matrix of the weighted network are used in many tasks (e.g., face clustering, dimensionality reduction, image retrieval, feature ranking, etc). These eigenvectors suffer from some limitations. For example, the top eigenvectors, in spite of their ability to map the data to a low-dimensional space, are sensitive to noisy measurements and outliers encoded by pairwise similarities (<xref ref-type="supplementary-material" rid="pcbi.1005621.s001">S1 Fig</xref>) [<xref ref-type="bibr" rid="pcbi.1005621.ref004">4</xref>]. Additionally, the Laplacian is very sensitive to the hyper-parameters used to construct the similarity matrices (<xref ref-type="sec" rid="sec010">Materials and methods</xref>, <xref ref-type="supplementary-material" rid="pcbi.1005621.s002">S2 Fig</xref>) [<xref ref-type="bibr" rid="pcbi.1005621.ref025">25</xref>].</p>
+</sec>
+<sec id="sec012">
+<title>Local spectrum matrix: <italic>Vicus</italic></title>
+<p>Our Vicus Matrix (<inline-formula id="pcbi.1005621.e014"><alternatives><graphic id="pcbi.1005621.e014g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e014" xlink:type="simple"/><mml:math display="inline" id="M14"><mml:msup><mml:mi mathvariant="script">V</mml:mi> <mml:mo>+</mml:mo></mml:msup></mml:math></alternatives></inline-formula>) is similar to the Laplacian (<inline-formula id="pcbi.1005621.e015"><alternatives><graphic id="pcbi.1005621.e015g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e015" xlink:type="simple"/><mml:math display="inline" id="M15"><mml:msup><mml:mi mathvariant="script">L</mml:mi> <mml:mo>+</mml:mo></mml:msup></mml:math></alternatives></inline-formula>) in functionality and in addition captures the local structure inherent in the data. The intuition behind Vicus is that we use local information from neighboring nodes, akin to label propagation [<xref ref-type="bibr" rid="pcbi.1005621.ref026">26</xref>] or random walks [<xref ref-type="bibr" rid="pcbi.1005621.ref027">27</xref>]. As we demonstrate, relying on local subnetworks makes the matrix more robust to noise, helping to alleviate the influence of outliers.</p>
+<p>Let our data be a set of points {<italic>x</italic><sub>1</sub>, <italic>x</italic><sub>2</sub>, …, <italic>x</italic><sub><italic>n</italic></sub>}. Then, each vertex <italic>v</italic><sub><italic>i</italic></sub>, in the weighted network <inline-formula id="pcbi.1005621.e016"><alternatives><graphic id="pcbi.1005621.e016g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e016" xlink:type="simple"/><mml:math display="inline" id="M16"><mml:mi mathvariant="script">G</mml:mi></mml:math></alternatives></inline-formula>, represents a point <italic>x</italic><sub><italic>i</italic></sub> and <inline-formula id="pcbi.1005621.e017"><alternatives><graphic id="pcbi.1005621.e017g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e017" xlink:type="simple"/><mml:math display="inline" id="M17"><mml:msub><mml:mi mathvariant="script">N</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:math></alternatives></inline-formula> represents <italic>x</italic><sub><italic>i</italic></sub>’s neighbours, <italic>not</italic> including <italic>x</italic><sub><italic>i</italic></sub>. We constrain the neighbourhood size to be held constant across nodes (i.e., <inline-formula id="pcbi.1005621.e018"><alternatives><graphic id="pcbi.1005621.e018g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e018" xlink:type="simple"/><mml:math display="inline" id="M18"><mml:mrow><mml:mrow><mml:mo>∥</mml:mo></mml:mrow> <mml:msub><mml:mi mathvariant="script">N</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>∥</mml:mo> <mml:mo>=</mml:mo> <mml:mi>K</mml:mi> <mml:mo>,</mml:mo> <mml:mi>i</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> <mml:mo>,</mml:mo> <mml:mn>2</mml:mn> <mml:mo>,</mml:mo> <mml:mo>…</mml:mo> <mml:mo>,</mml:mo> <mml:mi>n</mml:mi></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>).</p>
+<p>Our main assumption is that the labels (such as cluster assignments 1 … <italic>C</italic> for <italic>C</italic> clusters) of neighbouring points in the network are similar. Specifically, we assume that the cluster indicator value of the <italic>i</italic><sup><italic>th</italic></sup> datapoint (<italic>x</italic><sub><italic>i</italic></sub>) can be inferred from the labels of its direct neighbors (<inline-formula id="pcbi.1005621.e019"><alternatives><graphic id="pcbi.1005621.e019g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e019" xlink:type="simple"/><mml:math display="inline" id="M19"><mml:msub><mml:mi mathvariant="script">N</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:math></alternatives></inline-formula>). First, we extract a subnetwork <inline-formula id="pcbi.1005621.e020"><alternatives><graphic id="pcbi.1005621.e020g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e020" xlink:type="simple"/><mml:math display="inline" id="M20"><mml:mrow><mml:msub><mml:mi mathvariant="script">G</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>=</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>V</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>,</mml:mo> <mml:msub><mml:mi mathvariant="script">E</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula> such that <inline-formula id="pcbi.1005621.e021"><alternatives><graphic id="pcbi.1005621.e021g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e021" xlink:type="simple"/><mml:math display="inline" id="M21"><mml:mrow><mml:msub><mml:mi>V</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>=</mml:mo> <mml:msub><mml:mi mathvariant="script">N</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>∪</mml:mo> <mml:msub><mml:mi>x</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:math></alternatives></inline-formula> and <inline-formula id="pcbi.1005621.e022"><alternatives><graphic id="pcbi.1005621.e022g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e022" xlink:type="simple"/><mml:math display="inline" id="M22"><mml:mrow><mml:msub><mml:mi mathvariant="script">E</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>=</mml:mo> <mml:mi mathvariant="script">E</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>V</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula> which represents the edges connecting all the nodes in <italic>V</italic><sub><italic>i</italic></sub>. The similarity matrix associated with the subgraph <inline-formula id="pcbi.1005621.e023"><alternatives><graphic id="pcbi.1005621.e023g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e023" xlink:type="simple"/><mml:math display="inline" id="M23"><mml:msub><mml:mi mathvariant="script">G</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:math></alternatives></inline-formula> is <inline-formula id="pcbi.1005621.e024"><alternatives><graphic id="pcbi.1005621.e024g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e024" xlink:type="simple"/><mml:math display="inline" id="M24"><mml:mrow><mml:msup><mml:mi>W</mml:mi> <mml:mi>i</mml:mi></mml:msup> <mml:mo>=</mml:mo> <mml:mi>W</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi mathvariant="script">E</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>, representing the weights for all the edges associated with all the nodes in <italic>V</italic><sub><italic>i</italic></sub>. Using the label diffusion algorithm [<xref ref-type="bibr" rid="pcbi.1005621.ref028">28</xref>], we can reconstruct a virtual label indicator vector <inline-formula id="pcbi.1005621.e025"><alternatives><graphic id="pcbi.1005621.e025g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e025" xlink:type="simple"/><mml:math display="inline" id="M25"><mml:msubsup><mml:mi mathvariant="bold">p</mml:mi> <mml:msub><mml:mi>V</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mi>k</mml:mi></mml:msubsup></mml:math></alternatives></inline-formula> such that
+<disp-formula id="pcbi.1005621.e026"><alternatives><graphic id="pcbi.1005621.e026g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e026" xlink:type="simple"/><mml:math display="block" id="M26"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msubsup><mml:mi mathvariant="bold">p</mml:mi> <mml:msub><mml:mi>V</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mi>k</mml:mi></mml:msubsup> <mml:mo>=</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:mi>α</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>α</mml:mi> <mml:msub><mml:mi mathvariant="bold">S</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msup> <mml:msubsup><mml:mi mathvariant="bold">q</mml:mi> <mml:msub><mml:mi>V</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mi>k</mml:mi></mml:msubsup> <mml:mo>,</mml:mo> <mml:mn>1</mml:mn> <mml:mo>≤</mml:mo> <mml:mi>k</mml:mi> <mml:mo>≤</mml:mo> <mml:mi>C</mml:mi> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(4)</label></disp-formula>
+where <italic>α</italic> is a constant (0 &lt; <italic>α</italic> &lt; 1, empirically set to 0.9 in all our experiments, as suggested in [<xref ref-type="bibr" rid="pcbi.1005621.ref028">28</xref>]) and <inline-formula id="pcbi.1005621.e027"><alternatives><graphic id="pcbi.1005621.e027g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e027" xlink:type="simple"/><mml:math display="inline" id="M27"><mml:msubsup><mml:mi mathvariant="bold">q</mml:mi> <mml:msub><mml:mi>V</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mi>k</mml:mi></mml:msubsup></mml:math></alternatives></inline-formula> is the scaled cluster indicator vector of the subnetwork <inline-formula id="pcbi.1005621.e028"><alternatives><graphic id="pcbi.1005621.e028g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e028" xlink:type="simple"/><mml:math display="inline" id="M28"><mml:msub><mml:mi mathvariant="script">G</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:math></alternatives></inline-formula>. <bold>S</bold><sub><italic>i</italic></sub> represents the normalized transition matrix of <italic>W</italic><sup><italic>i</italic></sup>, i.e., <inline-formula id="pcbi.1005621.e029"><alternatives><graphic id="pcbi.1005621.e029g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e029" xlink:type="simple"/><mml:math display="inline" id="M29"><mml:mrow><mml:msub><mml:mi mathvariant="bold">S</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>u</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mfrac><mml:mrow><mml:msup><mml:mi>W</mml:mi> <mml:mi>i</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>u</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mrow> <mml:mrow><mml:msubsup><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>l</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mrow><mml:mi>K</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msubsup> <mml:msup><mml:mi>W</mml:mi> <mml:mi>i</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>u</mml:mi> <mml:mo>,</mml:mo> <mml:mi>l</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula>. Note that we do not actually perform any diffusion, since our setting is completely unsupervised. Instead we use <bold>p</bold><sub><italic>k</italic></sub> to estimate <italic>q</italic><sub><italic>ik</italic></sub>. <inline-formula id="pcbi.1005621.e030"><alternatives><graphic id="pcbi.1005621.e030g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e030" xlink:type="simple"/><mml:math display="inline" id="M30"><mml:msubsup><mml:mi mathvariant="bold">p</mml:mi> <mml:msub><mml:mi>V</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mi>k</mml:mi></mml:msubsup></mml:math></alternatives></inline-formula> is a vector of <italic>K</italic> + 1 elements, where <inline-formula id="pcbi.1005621.e031"><alternatives><graphic id="pcbi.1005621.e031g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e031" xlink:type="simple"/><mml:math display="inline" id="M31"><mml:mrow><mml:msubsup><mml:mover accent="true"><mml:mi>q</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mi>i</mml:mi> <mml:mi>k</mml:mi></mml:msubsup> <mml:mo>=</mml:mo> <mml:msubsup><mml:mi mathvariant="bold">p</mml:mi> <mml:msub><mml:mi>V</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mi>k</mml:mi></mml:msubsup> <mml:mrow><mml:mo>[</mml:mo> <mml:mi>K</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn> <mml:mo>]</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula> is the estimate of how likely datapoint <italic>i</italic> belongs to cluster <italic>k</italic> based on its neighbours. As we want maximal concordance between <inline-formula id="pcbi.1005621.e032"><alternatives><graphic id="pcbi.1005621.e032g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e032" xlink:type="simple"/><mml:math display="inline" id="M32"><mml:msubsup><mml:mover accent="true"><mml:mi>q</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mi>i</mml:mi> <mml:mi>k</mml:mi></mml:msubsup></mml:math></alternatives></inline-formula> and <inline-formula id="pcbi.1005621.e033"><alternatives><graphic id="pcbi.1005621.e033g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e033" xlink:type="simple"/><mml:math display="inline" id="M33"><mml:msubsup><mml:mi>q</mml:mi> <mml:mi>i</mml:mi> <mml:mi>k</mml:mi></mml:msubsup></mml:math></alternatives></inline-formula>, we set <inline-formula id="pcbi.1005621.e034"><alternatives><graphic id="pcbi.1005621.e034g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e034" xlink:type="simple"/><mml:math display="inline" id="M34"><mml:mrow><mml:msubsup><mml:mover accent="true"><mml:mi>q</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mi>i</mml:mi> <mml:mi>k</mml:mi></mml:msubsup> <mml:mo>=</mml:mo> <mml:msub><mml:mi>β</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:msubsup><mml:mi mathvariant="bold">q</mml:mi> <mml:msub><mml:mi>V</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mi>k</mml:mi></mml:msubsup></mml:mrow></mml:math></alternatives></inline-formula>, where <inline-formula id="pcbi.1005621.e035"><alternatives><graphic id="pcbi.1005621.e035g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e035" xlink:type="simple"/><mml:math display="inline" id="M35"><mml:mrow><mml:msub><mml:mi>β</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>∈</mml:mo> <mml:msup><mml:mi mathvariant="double-struck">R</mml:mi> <mml:mrow><mml:mi>K</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msup></mml:mrow></mml:math></alternatives></inline-formula> is the row of the matrix (1 − <italic>α</italic>)(<italic>I</italic> − <italic>α</italic><bold>S</bold><sub><italic>i</italic></sub>)<sup>−1</sup>, representing label propagation at its final state. Here, <italic>β</italic><sub><italic>i</italic></sub> represents the convergence of the label propagation for the datapoint <italic>i</italic> (Note that the original matrix was constructed as the concatenation of the neighborhood of <italic>i</italic> and datapoint <italic>i</italic> as the last row). Hence
+<disp-formula id="pcbi.1005621.e036"><alternatives><graphic id="pcbi.1005621.e036g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e036" xlink:type="simple"/><mml:math display="block" id="M36"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msubsup><mml:mover accent="true"><mml:mi>q</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mi>i</mml:mi> <mml:mi>k</mml:mi></mml:msubsup> <mml:mo>≈</mml:mo> <mml:mfrac><mml:mrow><mml:msub><mml:mi>β</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>[</mml:mo> <mml:mn>1</mml:mn> <mml:mo>:</mml:mo> <mml:mi>K</mml:mi> <mml:mo>]</mml:mo></mml:mrow> <mml:msubsup><mml:mi mathvariant="bold">q</mml:mi> <mml:msub><mml:mi mathvariant="script">N</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mi>k</mml:mi></mml:msubsup></mml:mrow> <mml:mrow><mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:msub><mml:mi>β</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>[</mml:mo> <mml:mi>K</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn> <mml:mo>]</mml:mo></mml:mrow></mml:mrow></mml:mfrac> <mml:mo>;</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(5)</label></disp-formula>
+where <italic>β</italic><sub><italic>i</italic></sub>[1: <italic>K</italic>] represents the first <italic>K</italic> elements of <italic>β</italic><sub><italic>i</italic></sub> and <italic>β</italic><sub><italic>i</italic></sub>[<italic>K</italic> + 1] is the <italic>K</italic> + 1st element in <italic>β</italic><sub><italic>i</italic></sub>, corresponding to the <italic>i</italic><sup><italic>th</italic></sup> datapoint.</p>
+<p>We can construct a matrix <italic>B</italic>, that represents a linear relationship <inline-formula id="pcbi.1005621.e037"><alternatives><graphic id="pcbi.1005621.e037g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e037" xlink:type="simple"/><mml:math display="inline" id="M37"><mml:mrow><mml:msup><mml:mover accent="true"><mml:mi mathvariant="bold">q</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mi>k</mml:mi></mml:msup> <mml:mo>≈</mml:mo> <mml:mi>B</mml:mi> <mml:msup><mml:mi mathvariant="bold">q</mml:mi> <mml:mi>k</mml:mi></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>, (<italic>k</italic> = 1, …, <italic>C</italic>), such that
+<disp-formula id="pcbi.1005621.e038"><alternatives><graphic id="pcbi.1005621.e038g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e038" xlink:type="simple"/><mml:math display="block" id="M38"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mi>B</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:mo>{</mml:mo> <mml:mtable><mml:mtr><mml:mtd columnalign="right"><mml:mfrac><mml:mrow><mml:msub><mml:mi>β</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>[</mml:mo> <mml:mi>j</mml:mi> <mml:mo>]</mml:mo></mml:mrow></mml:mrow> <mml:mrow><mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:msub><mml:mi>β</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>[</mml:mo> <mml:mi>K</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn> <mml:mo>]</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mspace width="4.pt"/><mml:mtext>if</mml:mtext> <mml:mspace width="4.pt"/><mml:mrow><mml:msub><mml:mi>x</mml:mi> <mml:mi>j</mml:mi></mml:msub> <mml:mo>∈</mml:mo> <mml:msub><mml:mi mathvariant="script">N</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:mrow> <mml:mspace width="4.pt"/><mml:mtext>and</mml:mtext> <mml:mspace width="4.pt"/><mml:msub><mml:mi>x</mml:mi> <mml:mi>j</mml:mi></mml:msub> <mml:mspace width="4.pt"/><mml:mtext>is</mml:mtext> <mml:mspace width="4.pt"/><mml:mtext>the</mml:mtext> <mml:mspace width="4.pt"/><mml:mi>j</mml:mi> <mml:mtext>-th</mml:mtext> <mml:mspace width="4.pt"/><mml:mtext>element</mml:mtext> <mml:mspace width="4.pt"/><mml:mtext>in</mml:mtext> <mml:mspace width="4.pt"/><mml:msub><mml:mi mathvariant="script">N</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd columnalign="right"><mml:mn>0</mml:mn></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mspace width="4.pt"/><mml:mtext>otherwise</mml:mtext></mml:mrow></mml:mtd></mml:mtr></mml:mtable> <mml:mo/></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(6)</label></disp-formula></p>
+<p>Our objective is to minimize the difference between <inline-formula id="pcbi.1005621.e039"><alternatives><graphic id="pcbi.1005621.e039g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e039" xlink:type="simple"/><mml:math display="inline" id="M39"><mml:msup><mml:mover accent="true"><mml:mi mathvariant="bold">q</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mi>k</mml:mi></mml:msup></mml:math></alternatives></inline-formula> and <bold>q</bold><sup><italic>k</italic></sup>:
+<disp-formula id="pcbi.1005621.e040"><alternatives><graphic id="pcbi.1005621.e040g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e040" xlink:type="simple"/><mml:math display="block" id="M40"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>n</mml:mi></mml:munderover> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>k</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>C</mml:mi></mml:munderover> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:msubsup><mml:mover accent="true"><mml:mi>q</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mi>i</mml:mi> <mml:mi>k</mml:mi></mml:msubsup> <mml:mo>-</mml:mo> <mml:msubsup><mml:mrow><mml:mi>q</mml:mi></mml:mrow> <mml:mi>i</mml:mi> <mml:mi>k</mml:mi></mml:msubsup> <mml:mo>)</mml:mo></mml:mrow> <mml:mn>2</mml:mn></mml:msup> <mml:mspace width="-14.22636pt"/></mml:mrow></mml:mtd> <mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>k</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>C</mml:mi></mml:munderover> <mml:msup><mml:mrow><mml:mrow><mml:mo>∥</mml:mo></mml:mrow> <mml:msup><mml:mi mathvariant="bold">q</mml:mi> <mml:mi>k</mml:mi></mml:msup> <mml:mo>-</mml:mo> <mml:msup><mml:mover accent="true"><mml:mi mathvariant="bold">q</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mi>k</mml:mi></mml:msup> <mml:mrow><mml:mo>∥</mml:mo></mml:mrow></mml:mrow> <mml:mn>2</mml:mn></mml:msup> <mml:mo>≈</mml:mo> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>k</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>C</mml:mi></mml:munderover> <mml:msup><mml:mrow><mml:mo>∥</mml:mo> <mml:msup><mml:mi mathvariant="bold">q</mml:mi> <mml:mi>k</mml:mi></mml:msup> <mml:mo>-</mml:mo> <mml:mi>B</mml:mi> <mml:msup><mml:mi mathvariant="bold">q</mml:mi> <mml:mi>k</mml:mi></mml:msup> <mml:mo>∥</mml:mo></mml:mrow> <mml:mn>2</mml:mn></mml:msup></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mspace width="-28.45274pt"/><mml:mspace width="-28.45274pt"/></mml:mrow></mml:mtd> <mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mi>T</mml:mi> <mml:mi>r</mml:mi> <mml:mi>a</mml:mi> <mml:mi>c</mml:mi> <mml:mi>e</mml:mi> <mml:mo>(</mml:mo> <mml:msup><mml:mi mathvariant="bold">Q</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>B</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>T</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>B</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mi mathvariant="bold">Q</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(7)</label></disp-formula>
+Setting <inline-formula id="pcbi.1005621.e041"><alternatives><graphic id="pcbi.1005621.e041g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e041" xlink:type="simple"/><mml:math display="inline" id="M41"><mml:mrow><mml:msup><mml:mi mathvariant="script">V</mml:mi> <mml:mo>+</mml:mo></mml:msup> <mml:mo>=</mml:mo> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>B</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>T</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>B</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>, we arrive at our novel <italic>local</italic> version of spectral clustering:
+<disp-formula id="pcbi.1005621.e042"><alternatives><graphic id="pcbi.1005621.e042g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e042" xlink:type="simple"/><mml:math display="block" id="M42"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:munder><mml:mo form="prefix" movablelimits="true">min</mml:mo> <mml:mrow><mml:mi mathvariant="bold">Q</mml:mi> <mml:mo>∈</mml:mo> <mml:msup><mml:mi mathvariant="double-struck">R</mml:mi> <mml:mrow><mml:mi>n</mml:mi> <mml:mo>×</mml:mo> <mml:mi>C</mml:mi></mml:mrow></mml:msup></mml:mrow></mml:munder></mml:mtd> <mml:mtd/><mml:mtd columnalign="left"><mml:mrow><mml:mi>T</mml:mi> <mml:mi>r</mml:mi> <mml:mi>a</mml:mi> <mml:mi>c</mml:mi> <mml:mi>e</mml:mi> <mml:mo>(</mml:mo> <mml:msup><mml:mi mathvariant="bold">Q</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:msup><mml:mi mathvariant="script">V</mml:mi> <mml:mo>+</mml:mo></mml:msup> <mml:mi mathvariant="bold">Q</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>s</mml:mi> <mml:mo>.</mml:mo> <mml:mi>t</mml:mi> <mml:mo>.</mml:mo></mml:mrow></mml:mtd> <mml:mtd/><mml:mtd columnalign="left"><mml:mrow><mml:msup><mml:mi mathvariant="bold">Q</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mi mathvariant="bold">Q</mml:mi> <mml:mo>=</mml:mo> <mml:mi>I</mml:mi> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(8)</label></disp-formula></p>
+<p>Similarly to the original spectral clustering formulation (<xref ref-type="disp-formula" rid="pcbi.1005621.e013">Eq 3</xref>), our clustering results can be obtained by performing eigen-decomposition of matrix <inline-formula id="pcbi.1005621.e043"><alternatives><graphic id="pcbi.1005621.e043g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e043" xlink:type="simple"/><mml:math display="inline" id="M43"><mml:msup><mml:mi mathvariant="script">V</mml:mi> <mml:mo>+</mml:mo></mml:msup></mml:math></alternatives></inline-formula> [<xref ref-type="bibr" rid="pcbi.1005621.ref025">25</xref>] to solve <xref ref-type="disp-formula" rid="pcbi.1005621.e042">Eq 8</xref>. The final grouping of datapoints into clusters is achieved by performing k-means clustering on <bold>Q</bold> as in [<xref ref-type="bibr" rid="pcbi.1005621.ref029">29</xref>].</p>
+<sec id="sec013">
+<title>Analysis of Vicus properties</title>
+<p>Our Vicus Matrix <inline-formula id="pcbi.1005621.e044"><alternatives><graphic id="pcbi.1005621.e044g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e044" xlink:type="simple"/><mml:math display="inline" id="M44"><mml:msup><mml:mi mathvariant="script">V</mml:mi> <mml:mo>+</mml:mo></mml:msup></mml:math></alternatives></inline-formula> shares many properties with Laplacian <inline-formula id="pcbi.1005621.e045"><alternatives><graphic id="pcbi.1005621.e045g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e045" xlink:type="simple"/><mml:math display="inline" id="M45"><mml:msup><mml:mi mathvariant="script">L</mml:mi> <mml:mo>+</mml:mo></mml:msup></mml:math></alternatives></inline-formula> [<xref ref-type="bibr" rid="pcbi.1005621.ref025">25</xref>]:</p>
+<list list-type="simple">
+<list-item>
+<p>1. Both matrices are symmetric and positive semi-definite.</p>
+</list-item>
+<list-item>
+<p>2. The smallest eigenvalue of both matrices is 0, the corresponding eigenvector is the constant vector <bold>l</bold>.</p>
+</list-item>
+<list-item>
+<p>3. Both matrices have <italic>n</italic> non-negative, real-valued eigenvalues 0 = <italic>λ</italic><sub>1</sub> ≤ <italic>λ</italic><sub>2</sub> ≤ … ≤ <italic>λ</italic><sub><italic>n</italic></sub></p>
+</list-item>
+<list-item>
+<p>4. The multiplicity of the eigenvalue 0 of both <inline-formula id="pcbi.1005621.e046"><alternatives><graphic id="pcbi.1005621.e046g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e046" xlink:type="simple"/><mml:math display="inline" id="M46"><mml:msup><mml:mi mathvariant="script">L</mml:mi> <mml:mo>+</mml:mo></mml:msup></mml:math></alternatives></inline-formula> and <inline-formula id="pcbi.1005621.e047"><alternatives><graphic id="pcbi.1005621.e047g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e047" xlink:type="simple"/><mml:math display="inline" id="M47"><mml:msup><mml:mi mathvariant="script">V</mml:mi> <mml:mo>+</mml:mo></mml:msup></mml:math></alternatives></inline-formula> equals the number of connected components in the network.</p>
+</list-item>
+</list>
+<p>Here <italic>n</italic> is the number of nodes in the network. To prove the first property, we note that <inline-formula id="pcbi.1005621.e048"><alternatives><graphic id="pcbi.1005621.e048g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e048" xlink:type="simple"/><mml:math display="inline" id="M48"><mml:mrow><mml:msup><mml:mrow><mml:msup><mml:mi mathvariant="script">V</mml:mi> <mml:mo>+</mml:mo></mml:msup></mml:mrow> <mml:mi>T</mml:mi></mml:msup> <mml:mo>=</mml:mo> <mml:msup><mml:mrow><mml:mo>{</mml:mo> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>B</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>T</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>B</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>}</mml:mo></mml:mrow> <mml:mi>T</mml:mi></mml:msup> <mml:mo>=</mml:mo> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>B</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>T</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>B</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:msup><mml:mi mathvariant="script">V</mml:mi> <mml:mo>+</mml:mo></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>, thus <inline-formula id="pcbi.1005621.e049"><alternatives><graphic id="pcbi.1005621.e049g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e049" xlink:type="simple"/><mml:math display="inline" id="M49"><mml:msup><mml:mi mathvariant="script">V</mml:mi> <mml:mo>+</mml:mo></mml:msup></mml:math></alternatives></inline-formula> is symmetric. Also, for any non-zero vector <bold>x</bold>, we have <inline-formula id="pcbi.1005621.e050"><alternatives><graphic id="pcbi.1005621.e050g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e050" xlink:type="simple"/><mml:math display="inline" id="M50"><mml:mrow><mml:msup><mml:mi mathvariant="bold">x</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mo>*</mml:mo> <mml:msup><mml:mi mathvariant="script">V</mml:mi> <mml:mo>+</mml:mo></mml:msup> <mml:mo>*</mml:mo> <mml:mi mathvariant="bold">x</mml:mi> <mml:mo>=</mml:mo> <mml:msup><mml:mi mathvariant="bold">x</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mo>*</mml:mo> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>B</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>T</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>B</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>*</mml:mo> <mml:mi mathvariant="bold">x</mml:mi> <mml:mo>=</mml:mo> <mml:mo>|</mml:mo> <mml:mo>|</mml:mo> <mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>B</mml:mi> <mml:mo>)</mml:mo> <mml:mo>*</mml:mo> <mml:mi mathvariant="bold">x</mml:mi> <mml:mo>|</mml:mo> <mml:mrow><mml:mo>|</mml:mo> <mml:mo>≥</mml:mo> <mml:mn>0</mml:mn></mml:mrow></mml:mrow></mml:math></alternatives></inline-formula>.</p>
+<p>For the second property, we first prove that <italic>B</italic> <bold>l</bold> = <bold>l</bold>, i.e., matrix <italic>B</italic> has an eigenvalue of 1 corresponding to an all-one constant vector. To prove the above, the following statement must be true:
+<disp-formula id="pcbi.1005621.e051"><alternatives><graphic id="pcbi.1005621.e051g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e051" xlink:type="simple"/><mml:math display="block" id="M51"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:munder><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>j</mml:mi> <mml:mo>∈</mml:mo> <mml:msub><mml:mi mathvariant="script">N</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:munder> <mml:msub><mml:mi>B</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> <mml:mo>,</mml:mo> <mml:mi>i</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> <mml:mo>,</mml:mo> <mml:mn>2</mml:mn> <mml:mo>,</mml:mo> <mml:mo>…</mml:mo> <mml:mo>,</mml:mo> <mml:mi>n</mml:mi> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+According to <xref ref-type="disp-formula" rid="pcbi.1005621.e038">Eq 6</xref>, <inline-formula id="pcbi.1005621.e052"><alternatives><graphic id="pcbi.1005621.e052g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e052" xlink:type="simple"/><mml:math display="inline" id="M52"><mml:mrow><mml:msub><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>j</mml:mi> <mml:mo>∈</mml:mo> <mml:msub><mml:mi mathvariant="script">N</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:msub> <mml:msub><mml:mi>B</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:mfrac><mml:mrow><mml:msub><mml:mo>∑</mml:mo> <mml:msub><mml:mi mathvariant="script">N</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:msub> <mml:msub><mml:mi>β</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>[</mml:mo> <mml:mi>j</mml:mi> <mml:mo>]</mml:mo></mml:mrow></mml:mrow> <mml:mrow><mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:msub><mml:mi>β</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>[</mml:mo> <mml:mi>K</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn> <mml:mo>]</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula>. Note that <italic>β</italic><sub><italic>i</italic></sub> is the last row of the transition kernel <inline-formula id="pcbi.1005621.e053"><alternatives><graphic id="pcbi.1005621.e053g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e053" xlink:type="simple"/><mml:math display="inline" id="M53"><mml:mrow><mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:mi>α</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>α</mml:mi> <mml:msub><mml:mi mathvariant="bold">L</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msup> <mml:mo>=</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:mi>α</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:msubsup><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>l</mml:mi> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn></mml:mrow> <mml:mi>∞</mml:mi></mml:msubsup> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mi>α</mml:mi> <mml:msub><mml:mi mathvariant="bold">L</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>l</mml:mi></mml:msup></mml:mrow></mml:math></alternatives></inline-formula>, hence we have <inline-formula id="pcbi.1005621.e054"><alternatives><graphic id="pcbi.1005621.e054g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e054" xlink:type="simple"/><mml:math display="inline" id="M54"><mml:mrow><mml:msub><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>j</mml:mi> <mml:mo>∈</mml:mo> <mml:msub><mml:mi mathvariant="script">N</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:msub> <mml:msub><mml:mi>β</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>[</mml:mo> <mml:mi>j</mml:mi> <mml:mo>]</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:msub><mml:mi>β</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>[</mml:mo> <mml:mi>K</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn> <mml:mo>]</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>-</mml:mo> <mml:mi>α</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:msubsup><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>l</mml:mi> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn></mml:mrow> <mml:mi>∞</mml:mi></mml:msubsup> <mml:msup><mml:mi>α</mml:mi> <mml:mi>l</mml:mi></mml:msup> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:math></alternatives></inline-formula>, considering the sum of each row of <bold>L</bold><sub><italic>i</italic></sub> is all one. Thus we prove <inline-formula id="pcbi.1005621.e055"><alternatives><graphic id="pcbi.1005621.e055g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e055" xlink:type="simple"/><mml:math display="inline" id="M55"><mml:mrow><mml:msub><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>j</mml:mi> <mml:mo>∈</mml:mo> <mml:msub><mml:mi mathvariant="script">N</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:msub> <mml:msub><mml:mi>B</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:math></alternatives></inline-formula> and therefore <italic>B</italic><bold>l</bold> = <bold>l</bold>.</p>
+<p>It is then easy to verify that
+<disp-formula id="pcbi.1005621.e056"><alternatives><graphic id="pcbi.1005621.e056g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e056" xlink:type="simple"/><mml:math display="block" id="M56"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msup><mml:mi mathvariant="script">V</mml:mi> <mml:mo>+</mml:mo></mml:msup> <mml:mi mathvariant="bold">l</mml:mi></mml:mrow></mml:mtd> <mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>B</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>T</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>B</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mi mathvariant="bold">l</mml:mi></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd/><mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>B</mml:mi> <mml:mo>-</mml:mo> <mml:msup><mml:mi>B</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mo>+</mml:mo> <mml:msup><mml:mi>B</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mi>B</mml:mi> <mml:mo>)</mml:mo> <mml:mi mathvariant="bold">l</mml:mi></mml:mrow></mml:mtd></mml:mtr> <mml:mtr><mml:mtd/><mml:mtd><mml:mo>=</mml:mo></mml:mtd> <mml:mtd columnalign="left"><mml:mrow><mml:mi mathvariant="bold">l</mml:mi> <mml:mo>-</mml:mo> <mml:mi mathvariant="bold">l</mml:mi> <mml:mo>=</mml:mo> <mml:mn mathvariant="bold">0</mml:mn> <mml:mspace width="1.em"/><mml:mo>□</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula></p>
+<p>Hence we proved that matrix <inline-formula id="pcbi.1005621.e057"><alternatives><graphic id="pcbi.1005621.e057g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e057" xlink:type="simple"/><mml:math display="inline" id="M57"><mml:msup><mml:mi mathvariant="script">V</mml:mi> <mml:mo>+</mml:mo></mml:msup></mml:math></alternatives></inline-formula> always has an eigenvalue of 0 corresponding to the eigenvector <bold>l</bold>. Property 3 follows directly from properties 1 and 2. Finally, the last property can be easily proven using an arguments similar to [<xref ref-type="bibr" rid="pcbi.1005621.ref025">25</xref>]. The above properties verify that our proposed Vicus matrix is a proper alternative to Laplacian including the desirable algebraic properties.</p>
+</sec>
+</sec>
+<sec id="sec014">
+<title>Similarity network constructions</title>
+<p>Given a feature set that describes a collection of objects, denoted as <bold>X</bold> = {<bold>x</bold><sub><bold>1</bold></sub>, <bold>x</bold><sub><bold>2</bold></sub>, …, <bold>x</bold><sub><bold>n</bold></sub>}, we want to construct a similarity network <inline-formula id="pcbi.1005621.e058"><alternatives><graphic id="pcbi.1005621.e058g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e058" xlink:type="simple"/><mml:math display="inline" id="M58"><mml:mrow><mml:mi mathvariant="script">N</mml:mi> <mml:mo>∈</mml:mo> <mml:msup><mml:mi>R</mml:mi> <mml:mrow><mml:mi>n</mml:mi> <mml:mo>×</mml:mo> <mml:mi>n</mml:mi></mml:mrow></mml:msup></mml:mrow></mml:math></alternatives></inline-formula> in which <inline-formula id="pcbi.1005621.e059"><alternatives><graphic id="pcbi.1005621.e059g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e059" xlink:type="simple"/><mml:math display="inline" id="M59"><mml:mrow><mml:mi mathvariant="script">N</mml:mi> <mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>,</mml:mo> <mml:mi>j</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:math></alternatives></inline-formula> indicates the similarity between the <italic>i</italic>-th and <italic>j</italic>-th object. The most widely used method is to assume a Gaussian distributions across pairwise similarites:
+<disp-formula id="pcbi.1005621.e060"><alternatives><graphic id="pcbi.1005621.e060g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e060" xlink:type="simple"/><mml:math display="block" id="M60"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi mathvariant="script">N</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>,</mml:mo> <mml:mi>j</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mo form="prefix">exp</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mo>-</mml:mo> <mml:mfrac><mml:mrow><mml:mrow><mml:mo>∥</mml:mo></mml:mrow> <mml:msub><mml:mi mathvariant="bold">x</mml:mi> <mml:mi mathvariant="bold">i</mml:mi></mml:msub> <mml:mo>-</mml:mo> <mml:msub><mml:mi mathvariant="bold">x</mml:mi> <mml:mi mathvariant="bold">j</mml:mi></mml:msub> <mml:msup><mml:mrow><mml:mo>∥</mml:mo></mml:mrow> <mml:mn>2</mml:mn></mml:msup></mml:mrow> <mml:mrow><mml:mn>2</mml:mn> <mml:msup><mml:mi>σ</mml:mi> <mml:mn>2</mml:mn></mml:msup></mml:mrow></mml:mfrac> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>;</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+Here <italic>σ</italic> is a hyper-parameter that needs careful manual setting. More advanced methods of constructing similarity networks can be seen in [<xref ref-type="bibr" rid="pcbi.1005621.ref004">4</xref>].</p>
+</sec>
+<sec id="sec015">
+<title>Normalized mutual information</title>
+<p>Throughout the paper, we used Normalized Mutual Information (NMI) [<xref ref-type="bibr" rid="pcbi.1005621.ref020">20</xref>] to evaluate the consistency between the obtained clustering and the groundthuth. Given two clustering results <italic>U</italic> and <italic>V</italic> on a set of data points, NMI is defined as: <italic>I</italic>(<italic>U</italic>, <italic>V</italic>)/ max{<italic>H</italic>(<italic>U</italic>), <italic>H</italic>(<italic>V</italic>)}, where <italic>I</italic>(<italic>U</italic>, <italic>V</italic>) is the mutual information between <italic>U</italic> and <italic>V</italic>, and <italic>H</italic>(<italic>U</italic>) represents the entropy of the clustering <italic>U</italic>. Specifically, assuming that <italic>U</italic> has <italic>P</italic> clusters, and <italic>V</italic> has <italic>Q</italic> clusters, the mutual information is computed as follows:
+<disp-formula id="pcbi.1005621.e061"><alternatives><graphic id="pcbi.1005621.e061g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e061" xlink:type="simple"/><mml:math display="block" id="M61"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>I</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>U</mml:mi> <mml:mo>,</mml:mo> <mml:mi>V</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>p</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>P</mml:mi></mml:munderover> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>q</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>Q</mml:mi></mml:munderover> <mml:mfrac><mml:mrow><mml:mrow><mml:mo>|</mml:mo></mml:mrow> <mml:msub><mml:mi>U</mml:mi> <mml:mi>p</mml:mi></mml:msub> <mml:mo>∩</mml:mo> <mml:msub><mml:mi>V</mml:mi> <mml:mi>q</mml:mi></mml:msub> <mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow> <mml:mi>N</mml:mi></mml:mfrac> <mml:mo form="prefix">log</mml:mo> <mml:mfrac><mml:mrow><mml:mrow><mml:mi>N</mml:mi> <mml:mo>|</mml:mo></mml:mrow> <mml:msub><mml:mi>U</mml:mi> <mml:mi>p</mml:mi></mml:msub> <mml:mo>∩</mml:mo> <mml:msub><mml:mi>V</mml:mi> <mml:mi>q</mml:mi></mml:msub> <mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow> <mml:mrow><mml:mrow><mml:mo>|</mml:mo></mml:mrow> <mml:msub><mml:mi>U</mml:mi> <mml:mi>p</mml:mi></mml:msub> <mml:mrow><mml:mo>|</mml:mo> <mml:mo>×</mml:mo> <mml:mo>|</mml:mo></mml:mrow> <mml:msub><mml:mi>V</mml:mi> <mml:mi>q</mml:mi></mml:msub> <mml:mrow><mml:mo>|</mml:mo></mml:mrow></mml:mrow></mml:mfrac></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+where |<italic>U</italic><sub><italic>p</italic></sub>| and |<italic>V</italic><sub><italic>q</italic></sub>| denote the cardinality of the <italic>p</italic>-th cluster in <italic>U</italic> and the <italic>q</italic>-th cluster in <italic>V</italic> respectively. The entropy of each cluster assignment is calculated by
+<disp-formula id="pcbi.1005621.e062"><alternatives><graphic id="pcbi.1005621.e062g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e062" xlink:type="simple"/><mml:math display="block" id="M62"><mml:mrow><mml:mi>H</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:mi>U</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo>=</mml:mo> <mml:mo>−</mml:mo> <mml:mstyle displaystyle="true"><mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>p</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>P</mml:mi></mml:munderover> <mml:mrow><mml:mfrac><mml:mrow><mml:mo>|</mml:mo> <mml:msub><mml:mi>U</mml:mi> <mml:mi>p</mml:mi></mml:msub> <mml:mo>|</mml:mo></mml:mrow> <mml:mi>N</mml:mi></mml:mfrac></mml:mrow></mml:mstyle> <mml:mtext>log</mml:mtext> <mml:mfrac><mml:mrow><mml:mo>|</mml:mo> <mml:msub><mml:mi>U</mml:mi> <mml:mi>p</mml:mi></mml:msub> <mml:mo>|</mml:mo></mml:mrow> <mml:mi>N</mml:mi></mml:mfrac></mml:mrow> <mml:mo>,</mml:mo></mml:math></alternatives></disp-formula>
+and
+<disp-formula id="pcbi.1005621.e063"><alternatives><graphic id="pcbi.1005621.e063g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e063" xlink:type="simple"/><mml:math display="block" id="M63"><mml:mrow><mml:mi>H</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:mi>V</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo>=</mml:mo> <mml:mo>−</mml:mo> <mml:mstyle displaystyle="true"><mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>q</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>Q</mml:mi></mml:munderover> <mml:mrow><mml:mfrac><mml:mrow><mml:mo>|</mml:mo> <mml:msub><mml:mi>V</mml:mi> <mml:mi>q</mml:mi></mml:msub> <mml:mo>|</mml:mo></mml:mrow> <mml:mi>N</mml:mi></mml:mfrac></mml:mrow></mml:mstyle> <mml:mtext>log</mml:mtext> <mml:mfrac><mml:mrow><mml:mo>|</mml:mo> <mml:msub><mml:mi>V</mml:mi> <mml:mi>q</mml:mi></mml:msub> <mml:mo>|</mml:mo></mml:mrow> <mml:mi>N</mml:mi></mml:mfrac></mml:mrow> <mml:mo>.</mml:mo></mml:math></alternatives></disp-formula></p>
+<p>Details can be found in [<xref ref-type="bibr" rid="pcbi.1005621.ref020">20</xref>]. NMI is a value between 0 and 1, measuring the concordance of two clustering results. In the simulation, we calculate the obtained clustering with respect to the ground-truth. Therefore, a higher NMI refers to higher concordance with truth, i.e. a more accurate result.</p>
+</sec>
+<sec id="sec016">
+<title>Adjusted Rand Index</title>
+<p>The Adjusted Rand Index (ARI) is another widely-used metric for measuring the concordance between two clustering results. Given two clustering <italic>U</italic> and <italic>V</italic>, we calculate the following four quantities:</p>
+<list list-type="simple">
+<list-item>
+<p><italic>a</italic>: number of objects in a pair are placed in the same group in <italic>U</italic> and in the same group in <italic>V</italic>;</p>
+</list-item>
+<list-item>
+<p><italic>b</italic>: number of objects in a pair are placed in the same group in <italic>U</italic> and in different groups in <italic>V</italic>;</p>
+</list-item>
+<list-item>
+<p><italic>c</italic>: number of objects in a pair are placed in the same group in <italic>V</italic> and in different groups in <italic>U</italic>;</p>
+</list-item>
+<list-item>
+<p><italic>d</italic>: number of objects in a pair are placed in different groups in <italic>U</italic> and in different groups in <italic>V</italic>.</p>
+</list-item>
+</list>
+<p>The (normal) Rand Index (RI) is simply <inline-formula id="pcbi.1005621.e064"><alternatives><graphic id="pcbi.1005621.e064g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e064" xlink:type="simple"/><mml:math display="inline" id="M64"><mml:mfrac><mml:mrow><mml:mi>a</mml:mi> <mml:mo>+</mml:mo> <mml:mi>d</mml:mi></mml:mrow> <mml:mrow><mml:mi>a</mml:mi> <mml:mo>+</mml:mo> <mml:mi>b</mml:mi> <mml:mo>+</mml:mo> <mml:mi>c</mml:mi> <mml:mo>+</mml:mo> <mml:mi>d</mml:mi></mml:mrow></mml:mfrac></mml:math></alternatives></inline-formula>. It basically weights those objects that were classified together and apart in both <italic>U</italic> and <italic>V</italic>. There are some known problems with this simple version of RI such as the fact that the Rand statistic approaches its upper limit of unity as the number of clusters increases. With the intention to overcome these limitations, ARI has been proposed in [<xref ref-type="bibr" rid="pcbi.1005621.ref021">21</xref>] in the form of
+<disp-formula id="pcbi.1005621.e065"><alternatives><graphic id="pcbi.1005621.e065g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e065" xlink:type="simple"/><mml:math display="block" id="M65"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>A</mml:mi> <mml:mi>R</mml:mi> <mml:mi>I</mml:mi> <mml:mo>=</mml:mo> <mml:mfrac><mml:mrow><mml:mo>(</mml:mo> <mml:mfrac linethickness="0pt"><mml:mi>n</mml:mi> <mml:mn>2</mml:mn></mml:mfrac> <mml:mo>)</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>+</mml:mo> <mml:mi>d</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:mrow><mml:mo>[</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>+</mml:mo> <mml:mi>b</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>+</mml:mo> <mml:mi>c</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>c</mml:mi> <mml:mo>+</mml:mo> <mml:mi>d</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>b</mml:mi> <mml:mo>+</mml:mo> <mml:mi>d</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>]</mml:mo></mml:mrow></mml:mrow> <mml:mrow><mml:mo>(</mml:mo> <mml:mfrac linethickness="0pt"><mml:mi>n</mml:mi> <mml:mn>2</mml:mn></mml:mfrac> <mml:mo>)</mml:mo> <mml:mo>-</mml:mo> <mml:mrow><mml:mo>[</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>+</mml:mo> <mml:mi>b</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>+</mml:mo> <mml:mi>c</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>c</mml:mi> <mml:mo>+</mml:mo> <mml:mi>d</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>b</mml:mi> <mml:mo>+</mml:mo> <mml:mi>d</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>]</mml:mo></mml:mrow></mml:mrow></mml:mfrac> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula></p>
+</sec>
+<sec id="sec017">
+<title>Stability and variations in Markov clustering</title>
+<p>Given a network on a set of <italic>N</italic> nodes with edge weights <italic>W</italic>, we first present a few related terms as follows</p>
+<list list-type="simple">
+<list-item>
+<p><italic>L</italic>: the Laplacian matrix for the network. It can either be traditional Laplacian or our newly proposed Vicus;</p>
+</list-item>
+<list-item>
+<p><italic>π</italic>: the stationary distribution vector with <italic>πL</italic> = 0</p>
+</list-item>
+<list-item>
+<p><italic>d</italic><sub><italic>i</italic></sub>: the degree of node <italic>i</italic> as <italic>d</italic><sub><italic>i</italic></sub> = ∑<sub><italic>j</italic></sub> <italic>W</italic><sub><italic>ij</italic></sub></p>
+</list-item>
+<list-item>
+<p>Σ: the normalized degree matrix with nonzero values only on the diagonal <inline-formula id="pcbi.1005621.e066"><alternatives><graphic id="pcbi.1005621.e066g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e066" xlink:type="simple"/><mml:math display="inline" id="M66"><mml:mrow><mml:msub><mml:mo>Σ</mml:mo> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>i</mml:mi></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:mfrac><mml:msub><mml:mi>d</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:msub><mml:mo>∑</mml:mo> <mml:mi>k</mml:mi></mml:msub> <mml:msub><mml:mi>d</mml:mi> <mml:mi>k</mml:mi></mml:msub></mml:mrow></mml:mfrac></mml:mrow></mml:math></alternatives></inline-formula>.</p>
+</list-item>
+<list-item>
+<p><italic>H</italic>: the partition indicator matrix with <italic>H</italic><sub><italic>ij</italic></sub> = 1 if the node <italic>i</italic> is classified with cluster <italic>j</italic> and <italic>H</italic><sub><italic>ij</italic></sub> = 0 otherwise.</p>
+</list-item>
+</list>
+<p>Then the stability measure on time <italic>t</italic> is defined in terms of the clustered auto-covariance matrix
+<disp-formula id="pcbi.1005621.e067"><alternatives><graphic id="pcbi.1005621.e067g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e067" xlink:type="simple"/><mml:math display="block" id="M67"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mi>R</mml:mi> <mml:mi>t</mml:mi></mml:msub> <mml:mo>=</mml:mo> <mml:msup><mml:mi>H</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mo>Σ</mml:mo> <mml:msup><mml:mrow><mml:mo>(</mml:mo> <mml:mi>I</mml:mi> <mml:mo>-</mml:mo> <mml:mi>L</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>t</mml:mi></mml:msup> <mml:mo>-</mml:mo> <mml:msup><mml:mi>π</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mi>π</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>H</mml:mi></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+as follows:
+<disp-formula id="pcbi.1005621.e068"><alternatives><graphic id="pcbi.1005621.e068g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e068" xlink:type="simple"/><mml:math display="block" id="M68"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>r</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>;</mml:mo> <mml:mi>H</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:munder><mml:mo form="prefix" movablelimits="true">min</mml:mo> <mml:mrow><mml:mn>0</mml:mn> <mml:mo>≤</mml:mo> <mml:mi>s</mml:mi> <mml:mo>≤</mml:mo> <mml:mi>t</mml:mi></mml:mrow></mml:munder> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>C</mml:mi></mml:munderover> <mml:msub><mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>R</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>i</mml:mi></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:munder><mml:mo form="prefix" movablelimits="true">min</mml:mo> <mml:mrow><mml:mn>0</mml:mn> <mml:mo>≤</mml:mo> <mml:mi>s</mml:mi> <mml:mo>≤</mml:mo> <mml:mi>t</mml:mi></mml:mrow></mml:munder> <mml:mi>t</mml:mi> <mml:mi>r</mml:mi> <mml:mi>a</mml:mi> <mml:mi>c</mml:mi> <mml:mi>e</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>R</mml:mi> <mml:mi>s</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>,</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+and the stability curve of the network is obtained by maximizing this measure over all possible partitions:
+<disp-formula id="pcbi.1005621.e069"><alternatives><graphic id="pcbi.1005621.e069g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e069" xlink:type="simple"/><mml:math display="block" id="M69"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>r</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:munder><mml:mo form="prefix" movablelimits="true">max</mml:mo> <mml:mi>H</mml:mi></mml:munder> <mml:mi>r</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>;</mml:mo> <mml:mi>H</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+A good clustering over time <italic>t</italic> will have large stability, with a large trace of <italic>R</italic><sub><italic>t</italic></sub> over such a time span.</p>
+<p>The variation is defined in terms of the asymptotic stability induced by going from the ‘finest’ to the ‘next finest’ partitions is:
+<disp-formula id="pcbi.1005621.e070"><alternatives><graphic id="pcbi.1005621.e070g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e070" xlink:type="simple"/><mml:math display="block" id="M70"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>V</mml:mi> <mml:mi>a</mml:mi> <mml:mi>r</mml:mi> <mml:mi>i</mml:mi> <mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi> <mml:mi>o</mml:mi> <mml:mi>n</mml:mi> <mml:mo>∼</mml:mo> <mml:munder><mml:mo>∑</mml:mo> <mml:mi>i</mml:mi></mml:munder> <mml:munder><mml:mo>∑</mml:mo> <mml:mi>j</mml:mi></mml:munder> <mml:msubsup><mml:mi>λ</mml:mi> <mml:mn>2</mml:mn> <mml:mi>t</mml:mi></mml:msubsup> <mml:msqrt><mml:mrow><mml:msub><mml:mi>d</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:msub><mml:mi>d</mml:mi> <mml:mi>j</mml:mi></mml:msub></mml:mrow></mml:msqrt> <mml:msub><mml:mi>u</mml:mi> <mml:mrow><mml:mn>2</mml:mn> <mml:mi>i</mml:mi></mml:mrow></mml:msub> <mml:msub><mml:mi>u</mml:mi> <mml:mrow><mml:mn>2</mml:mn> <mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula>
+where <bold>u</bold><sub>2</sub> is the normalized Fiedler eigenvector with its corresponding eigenvalue <italic>λ</italic><sub>2</sub>. We refer the mathematical details in deriving these two definitions to [<xref ref-type="bibr" rid="pcbi.1005621.ref023">23</xref>].</p>
+</sec>
+<sec id="sec018">
+<title>Hyper-parameters settings for Vicus</title>
+<p>There are mainly three hyper-parameters in Vicus: first the number of neighbors <italic>K</italic>, the variance in network construction <italic>σ</italic>, and the diffusion parameter <italic>α</italic>. Details about the meaning of these hyper-parameters can be seen in [<xref ref-type="bibr" rid="pcbi.1005621.ref030">30</xref>]. In all our experiments, we use the same setting of hyper-parameters as follows:
+<disp-formula id="pcbi.1005621.e071"><alternatives><graphic id="pcbi.1005621.e071g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e071" xlink:type="simple"/><mml:math display="block" id="M71"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>K</mml:mi> <mml:mo>=</mml:mo> <mml:mn>10</mml:mn> <mml:mo>,</mml:mo> <mml:mspace width="3.33333pt"/><mml:mspace width="3.33333pt"/><mml:mspace width="3.33333pt"/><mml:mi>σ</mml:mi> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn> <mml:mo>.</mml:mo> <mml:mn>5</mml:mn> <mml:mo>,</mml:mo> <mml:mspace width="3.33333pt"/><mml:mspace width="3.33333pt"/><mml:mspace width="3.33333pt"/><mml:mi>α</mml:mi> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn> <mml:mo>.</mml:mo> <mml:mn>9</mml:mn> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula></p>
+<p>The proposed Vicus is very robust to the choice of <italic>σ</italic> and <italic>α</italic> (<xref ref-type="supplementary-material" rid="pcbi.1005621.s003">S3 Fig</xref>). For the choice of <italic>K</italic>, we usually increase <italic>K</italic> as the number of nodes in the networks get larger (<xref ref-type="supplementary-material" rid="pcbi.1005621.s003">S3 Fig</xref>). We also provide a range of recommended choices for these hyper-parameters:
+<disp-formula id="pcbi.1005621.e072"><alternatives><graphic id="pcbi.1005621.e072g" mimetype="image" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1005621.e072" xlink:type="simple"/><mml:math display="block" id="M72"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>K</mml:mi> <mml:mo>∈</mml:mo> <mml:mo>[</mml:mo> <mml:mn>5</mml:mn> <mml:mo>,</mml:mo> <mml:mn>20</mml:mn> <mml:mo>]</mml:mo> <mml:mo>,</mml:mo> <mml:mspace width="3.33333pt"/><mml:mspace width="3.33333pt"/><mml:mspace width="3.33333pt"/><mml:mi>σ</mml:mi> <mml:mo>∈</mml:mo> <mml:mo>[</mml:mo> <mml:mn>0</mml:mn> <mml:mo>.</mml:mo> <mml:mn>3</mml:mn> <mml:mo>,</mml:mo> <mml:mn>0</mml:mn> <mml:mo>.</mml:mo> <mml:mn>6</mml:mn> <mml:mo>]</mml:mo> <mml:mo>,</mml:mo> <mml:mspace width="3.33333pt"/><mml:mspace width="3.33333pt"/><mml:mspace width="3.33333pt"/><mml:mi>α</mml:mi> <mml:mo>∈</mml:mo> <mml:mo>[</mml:mo> <mml:mn>0</mml:mn> <mml:mo>.</mml:mo> <mml:mn>8</mml:mn> <mml:mo>,</mml:mo> <mml:mn>0</mml:mn> <mml:mo>.</mml:mo> <mml:mn>95</mml:mn> <mml:mo>]</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives></disp-formula></p>
+<p>We also want to emphasize that, when performing clustering tasks, Vicus does not specify the number of clusters since Vicus is only providing a new form of Laplacian that captures local structures in the network. In our experiments of single-cell applications, we only feed the number of clusters to the clustering algorithms (i.e, K-means algorithm) as the true number of clusters.</p>
+</sec>
+</sec>
+<sec id="sec019">
+<title>Supporting information</title>
+<supplementary-material id="pcbi.1005621.s001" mimetype="application/eps" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005621.s001" xlink:type="simple">
+<label>S1 Fig</label>
+<caption>
+<title>An illustrative example showing Vicus is more robust to noise and outliers compared to Laplacian.</title>
+<p>Panel A shows the underlying ground-truth network heatmap consisting of 3 connected components. Given this perfect network, we manually add random noise. The random noise is generated from uniform distribution between [0, <italic>δ</italic>]. Larger <italic>δ</italic> indicates bigger magnitude of the noise therefore stronger corruption on the network. Panel B shows an example of the noisy network after corruption when <italic>δ</italic> = 1.2. Panel C is the clustering accuracy measured by NMI if we vary the number of noise strength <italic>δ</italic>.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005621.s002" mimetype="application/eps" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005621.s002" xlink:type="simple">
+<label>S2 Fig</label>
+<caption>
+<title>An illustrative example of comparison between Laplacian and Vicus to illustrate their sensitivity to hyper-parameters used in the construction of similarity network.</title>
+<p>The first column shows the groundtruth of the data distribution. Panel A is the 3D scattering of the data points used in the experiment. Panel E shows the corresponding 2D ground-truth distribution generating the data. This is also a desired output of low-dimensional embedding we want to recover. Panels B-D shows the results of low-dimensional embedding by Laplacian while Panels F-H are for Vicus using different values of hyper-parameters.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005621.s003" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005621.s003" xlink:type="simple">
+<label>S3 Fig</label>
+<caption>
+<title>Sensitivity test for three hyper-parameters in Vicus.</title>
+<p>We apply Vicus on the Buettner data set of single-cell RNA-seq. Panel A shows both NMI and ARI with different choices of number of neighbors <italic>K</italic> with fixed <italic>σ</italic> = 0.5 and <italic>α</italic> = 0.9. Panel B shows both NMI and ARI with different choices of <italic>σ</italic> with fixed <italic>K</italic> = 10 and <italic>α</italic> = 0.9. Panel C shows both NMI and ARI with different choices of <italic>α</italic> with fixed <italic>σ</italic> = 0.5 and <italic>K</italic> = 10.</p>
+<p>(TIFF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1005621.s004" mimetype="application/pdf" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1005621.s004" xlink:type="simple">
+<label>S1 File</label>
+<caption>
+<title/>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1005621.ref001">
+<label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>De Las Rivas</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Fontanillo</surname> <given-names>C</given-names></name>. <article-title>Protein–protein interactions essentials: key concepts to building and analyzing interactome networks</article-title> <source><italic>PLoS Comput Biol</italic></source>, <volume>6</volume>(<issue>6</issue>):<fpage>e1000807</fpage>, <year>2010</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1000807" xlink:type="simple">10.1371/journal.pcbi.1000807</ext-link></comment> <object-id pub-id-type="pmid">20589078</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref002">
+<label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Stam</surname> <given-names>CJ</given-names></name>. <article-title>Modern network science of neurological disorders</article-title>. <source><italic>Nature Reviews Neuroscience</italic></source>, <volume>15</volume>(<issue>10</issue>):<fpage>683</fpage>–<lpage>695</lpage>, <year>2014</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrn3801" xlink:type="simple">10.1038/nrn3801</ext-link></comment> <object-id pub-id-type="pmid">25186238</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref003">
+<label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Barabási</surname> <given-names>AL</given-names></name>, <name name-style="western"><surname>Gulbahce</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Loscalzo</surname> <given-names>J</given-names></name>. <article-title>Network medicine: a network-based approach to human disease</article-title>. <source><italic>Nature Reviews Genetics</italic></source>, <volume>12</volume>(<issue>1</issue>):<fpage>56</fpage>–<lpage>68</lpage>, <year>2011</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrg2918" xlink:type="simple">10.1038/nrg2918</ext-link></comment> <object-id pub-id-type="pmid">21164525</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref004">
+<label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Wang</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Mezlini</surname> <given-names>AM</given-names></name>, <name name-style="western"><surname>Demir</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Fiume</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Tu</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Brudno</surname> <given-names>M</given-names></name>, <etal>et al</etal>. <article-title>Similarity network fusion for aggregating data types on a genomic scale</article-title>. <source><italic>Nature methods</italic></source>, <volume>11</volume>(<issue>3</issue>):<fpage>333</fpage>–<lpage>337</lpage>, <year>2014</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nmeth.2810" xlink:type="simple">10.1038/nmeth.2810</ext-link></comment> <object-id pub-id-type="pmid">24464287</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref005">
+<label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Halary</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Leigh</surname> <given-names>JW</given-names></name>, <name name-style="western"><surname>Cheaib</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Lopez</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Bapteste</surname> <given-names>E</given-names></name>. <article-title>Network analyses structure genetic diversity in independent genetic worlds</article-title>. <source><italic>Proceedings of the National Academy of Sciences</italic></source>, <volume>107</volume>(<issue>1</issue>):<fpage>127</fpage>–<lpage>132</lpage>, <year>2010</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0908978107" xlink:type="simple">10.1073/pnas.0908978107</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref006">
+<label>6</label>
+<mixed-citation publication-type="other" xlink:type="simple">He X, Min W, Cai D, Zhou K. Laplacian optimal design for image retrieval. <italic>Proceedings of the 30th annual international ACM SIGIR conference on Research and development in information retrieval</italic>, 119–126, 2007.</mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref007">
+<label>7</label>
+<mixed-citation publication-type="other" xlink:type="simple">Wang B, Zhu J, Pourshafeie A, Ursu O, Batzoglou S, Kundaje A. Unsupervised Learning from Noisy Networks with Applications to Hi-C Data. <italic>Advances in Neural Information Processing Systems</italic>, pp. 3305-3313, 2016.</mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref008">
+<label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Belkin</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Niyogi</surname> <given-names>P</given-names></name>. <article-title>Laplacian eigenmaps for dimensionality reduction and data representation</article-title>. <source><italic>Neural computation</italic></source>, <volume>15</volume>(<issue>6</issue>):<fpage>1373</fpage>–<lpage>1396</lpage>, <year>2003</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1162/089976603321780317" xlink:type="simple">10.1162/089976603321780317</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref009">
+<label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Roweis</surname> <given-names>ST</given-names></name>, <name name-style="western"><surname>Saul</surname> <given-names>LK</given-names></name>. <article-title>Nonlinear dimensionality reduction by locally linear embedding</article-title>. <source><italic>Science</italic></source>, <volume>290</volume>(<issue>5500</issue>):<fpage>2323</fpage>–<lpage>2326</lpage>, <year>2000</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.290.5500.2323" xlink:type="simple">10.1126/science.290.5500.2323</ext-link></comment> <object-id pub-id-type="pmid">11125150</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref010">
+<label>10</label>
+<mixed-citation publication-type="other" xlink:type="simple">Wu M, Schölkopf B. A local learning approach for clustering. In <italic>Proceedings of Neural Information Processing Systems</italic>, pp. 1529–1536, 2006.</mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref011">
+<label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Wang</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Zhu</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Pierson</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Ramazzotti</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Batzoglou</surname> <given-names>S</given-names></name>. <article-title>Visualization and analysis of single-cell RNA-seq data by kernel-based similarity learning</article-title>. <source><italic>Nature Methods</italic></source>, <volume>14</volume>(<issue>4</issue>):<fpage>414</fpage>–<lpage>416</lpage>, <year>2017</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nmeth.4207" xlink:type="simple">10.1038/nmeth.4207</ext-link></comment> <object-id pub-id-type="pmid">28263960</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref012">
+<label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Pollen</surname> <given-names>AA</given-names></name>, <name name-style="western"><surname>Nowakowski</surname> <given-names>TJ</given-names></name>, <name name-style="western"><surname>Shuga</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Leyrat</surname> <given-names>AA</given-names></name>, <name name-style="western"><surname>Lui</surname> <given-names>JH</given-names></name>, <etal>et al</etal>. <article-title>Low-coverage single-cell mRNA sequencing reveals cellular heterogeneity and activated signaling pathways in developing cerebral cortex</article-title>. <source><italic>Nature biotechnology</italic></source>, <volume>32</volume>(<issue>10</issue>):<fpage>1053</fpage>–<lpage>1058</lpage>, <year>2014</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nbt.2967" xlink:type="simple">10.1038/nbt.2967</ext-link></comment> <object-id pub-id-type="pmid">25086649</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref013">
+<label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Usoskin</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Furlan</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Islam</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Abdo</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Lönnerberg</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Lou</surname> <given-names>D</given-names></name>, <etal>et al</etal>. <article-title>Unbiased classification of sensory neuron types by large-scale single-cell RNA sequencing</article-title>. <source><italic>Nature neuroscience</italic></source>, <volume>18</volume>(<issue>1</issue>):<fpage>145</fpage>–<lpage>153</lpage>, <year>2015</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nn.3881" xlink:type="simple">10.1038/nn.3881</ext-link></comment> <object-id pub-id-type="pmid">25420068</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref014">
+<label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Buettner</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Natarajan</surname> <given-names>KN</given-names></name>, <name name-style="western"><surname>Casale</surname> <given-names>FP</given-names></name>, <name name-style="western"><surname>Proserpio</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Scialdone</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Theis</surname> <given-names>FJ</given-names></name>, <etal>et al</etal>. <article-title>Computational analysis of cell-to-cell heterogeneity in single-cell RNA-sequencing data reveals hidden subpopulations of cells</article-title>. <source><italic>Nature biotechnology</italic></source>, <volume>33</volume>(<issue>2</issue>):<fpage>155</fpage>–<lpage>160</lpage>, <year>2015</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nbt.3102" xlink:type="simple">10.1038/nbt.3102</ext-link></comment> <object-id pub-id-type="pmid">25599176</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref015">
+<label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Kolodziejczyk</surname> <given-names>AA</given-names></name>, <name name-style="western"><surname>Kim</surname> <given-names>JK</given-names></name>, <name name-style="western"><surname>Tsang</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Ilicic</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Henriksson</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Natarajan</surname> <given-names>KN</given-names></name>, <etal>et al</etal>. <article-title>Single cell RNA-sequencing of pluripotent states unlocks modular transcriptional variation</article-title>. <source><italic>Cell stem cell</italic></source>, <volume>17</volume>(<issue>4</issue>):<fpage>471</fpage>–<lpage>485</lpage>, <year>2015</year> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.stem.2015.09.011" xlink:type="simple">10.1016/j.stem.2015.09.011</ext-link></comment> <object-id pub-id-type="pmid">26431182</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref016">
+<label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Van Der Maaten</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Postma</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Van den Herik</surname> <given-names>J</given-names></name>. <article-title>Dimensionality reduction: a comparative</article-title>. <source><italic>J Mach Learn Res</italic></source>, <volume>10</volume>:<fpage>66</fpage>–<lpage>71</lpage>, <year>2009</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref017">
+<label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Rosvall</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Bergstrom</surname> <given-names>CT</given-names></name>. <article-title>Maps of random walks on complex networks reveal community structure</article-title>. <source><italic>Proceedings of the National Academy of Sciences</italic></source>, <volume>105</volume>(<issue>4</issue>):<fpage>1118</fpage>–<lpage>1123</lpage>, <year>2008</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0706851105" xlink:type="simple">10.1073/pnas.0706851105</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref018">
+<label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Newman</surname> <given-names>ME</given-names></name>. <article-title>Modularity and community structure in networks</article-title>. <source><italic>Proceedings of the National Academy of Sciences</italic></source>, <volume>103</volume>(<issue>23</issue>):<fpage>8577</fpage>–<lpage>8582</lpage>, <year>2006</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0601602103" xlink:type="simple">10.1073/pnas.0601602103</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref019">
+<label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Frey</surname> <given-names>BJ</given-names></name>, <name name-style="western"><surname>Dueck</surname> <given-names>D</given-names></name>. <article-title>Clustering by passing messages between data points</article-title>. <source><italic>Science</italic></source>, <volume>315</volume>:<fpage>972</fpage>–<lpage>976</lpage>, <year>2007</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1136800" xlink:type="simple">10.1126/science.1136800</ext-link></comment> <object-id pub-id-type="pmid">17218491</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref020">
+<label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Vinh</surname> <given-names>NX</given-names></name>, <name name-style="western"><surname>Epps</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Bailey</surname> <given-names>J</given-names></name>. <article-title>Information Theoretic Measures for Clusterings Comparison: Variants, Properties, Normalization and Correction for Chance</article-title>. <source><italic>J Mach Learn Res</italic></source>, <volume>11</volume>(<issue>18</issue>):<fpage>2837</fpage>–<lpage>2854</lpage>, <year>2010</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref021">
+<label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Rand</surname> <given-names>WM</given-names></name> <article-title>Objective criteria for the evaluation of clustering methods</article-title> <source><italic>Journal of the American Statistical association</italic></source>, <volume>66</volume>(<issue>336</issue>), <fpage>846</fpage>–<lpage>850</lpage>, <year>1971</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1080/01621459.1971.10482356" xlink:type="simple">10.1080/01621459.1971.10482356</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref022">
+<label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Zheng</surname> <given-names>GX</given-names></name>, <name name-style="western"><surname>Terry</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Belgrader</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Ryvkin</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Bent</surname> <given-names>ZW</given-names></name>, <name name-style="western"><surname>Wilson</surname> <given-names>R</given-names></name>, <etal>et al</etal>. <article-title>Massively parallel digital transcriptional profiling of single cells</article-title>. <source><italic>Nature Communications</italic></source>, <volume>8</volume>:<fpage>14049</fpage>, <year>2017</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/ncomms14049" xlink:type="simple">10.1038/ncomms14049</ext-link></comment> <object-id pub-id-type="pmid">28091601</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref023">
+<label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Delvenne</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Yaliraki</surname> <given-names>SN</given-names></name>, <name name-style="western"><surname>Barahona</surname> <given-names>M</given-names></name>. <article-title>Stability of graph communities across time scales</article-title>. <source><italic>Proceedings of the National Academy of Sciences</italic></source>, <volume>107</volume>(<issue>29</issue>):<fpage>12755</fpage>–<lpage>12760</lpage>, <year>2010</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0903215107" xlink:type="simple">10.1073/pnas.0903215107</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref024">
+<label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Peregrín-Alvarez</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Xiong</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Su</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Parkinson</surname> <given-names>J</given-names></name>. <article-title>The modular organization of protein interactions in escherichia coli</article-title>. <source><italic>PLoS computational biology</italic></source>, <volume>5</volume>(<issue>10</issue>):<fpage>e1000523</fpage>, <year>2009</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1000523" xlink:type="simple">10.1371/journal.pcbi.1000523</ext-link></comment> <object-id pub-id-type="pmid">19798435</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref025">
+<label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Luxburg</surname> <given-names>UV</given-names></name>. <article-title>A tutorial on spectral clustering</article-title>. <source><italic>Statistics and computing</italic></source>, <volume>17</volume>(<issue>4</issue>):<fpage>395</fpage>–<lpage>416</lpage>, <year>2007</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s11222-007-9033-z" xlink:type="simple">10.1007/s11222-007-9033-z</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref026">
+<label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Gregory</surname> <given-names>S</given-names></name>. <article-title>Finding overlapping communities in networks by label propagation</article-title>. <source><italic>New Journal of Physics</italic></source>, <volume>12</volume>(<issue>10</issue>):<fpage>103018</fpage>, <year>2010</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1088/1367-2630/12/10/103018" xlink:type="simple">10.1088/1367-2630/12/10/103018</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref027">
+<label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple">
+<name name-style="western"><surname>Fallani</surname> <given-names>FD</given-names></name>, <name name-style="western"><surname>Nicosia</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Latora</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Chavez</surname> <given-names>M</given-names></name>. <article-title>Nonparametric resampling of random walks for spectral network clustering</article-title>. <source><italic>Physical Review E</italic></source>, <volume>89</volume>(<issue>1</issue>):<fpage>012802</fpage>, <year>2014</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevE.89.012802" xlink:type="simple">10.1103/PhysRevE.89.012802</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref028">
+<label>28</label>
+<mixed-citation publication-type="other" xlink:type="simple">Zhou DY, Bousquet O, Lal TN, Weston J, Schölkopf B. Learning with local and global consistency. In <italic>Proceedings of Neural Information Processing Systems</italic>, volume 16, pages 321–328, 2003.</mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref029">
+<label>29</label>
+<mixed-citation publication-type="other" xlink:type="simple">Cour T, Benezit F, Shi J. Spectral segmentation with multiscale graph decomposition. In <italic>Conference on Computer Vision and Pattern Recognition</italic>, 2:1124–1131, 2005.</mixed-citation>
+</ref>
+<ref id="pcbi.1005621.ref030">
+<label>30</label>
+<mixed-citation publication-type="other" xlink:type="simple">Wang B, Jiang J, Wang W, Zhou ZH, Tu Z. Unsupervised metric fusion by cross diffusion. In <italic>IEEE Conference on Computer Vision and Pattern Recognition (CVPR)</italic>, pp. 2997–3004, 2012.</mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

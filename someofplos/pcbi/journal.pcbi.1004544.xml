@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004544</article-id>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-15-00860</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Discrete Element Framework for Modelling Extracellular Matrix, Deformable Cells and Subcellular Components</article-title>
+<alt-title alt-title-type="running-head">Discrete Element Framework for Modelling Biological Tissues</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Gardiner</surname>
+<given-names>Bruce S.</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+<xref rid="cor001" ref-type="corresp">*</xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Wong</surname>
+<given-names>Kelvin K. L.</given-names>
+</name>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Joldes</surname>
+<given-names>Grand R.</given-names>
+</name>
+<xref rid="aff003" ref-type="aff"><sup>3</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Rich</surname>
+<given-names>Addison J.</given-names>
+</name>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Tan</surname>
+<given-names>Chin Wee</given-names>
+</name>
+<xref rid="aff004" ref-type="aff"><sup>4</sup></xref>
+<xref rid="aff005" ref-type="aff"><sup>5</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Burgess</surname>
+<given-names>Antony W.</given-names>
+</name>
+<xref rid="aff004" ref-type="aff"><sup>4</sup></xref>
+<xref rid="aff005" ref-type="aff"><sup>5</sup></xref>
+<xref rid="aff006" ref-type="aff"><sup>6</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Smith</surname>
+<given-names>David W.</given-names>
+</name>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+</contrib>
+</contrib-group>
+<aff id="aff001"><label>1</label> <addr-line>School of Engineering and Information Technology, Murdoch University, Perth, Australia</addr-line></aff>
+<aff id="aff002"><label>2</label> <addr-line>Engineering Computational Biology, School of Computer Science and Software Engineering, The University of Western Australia, Perth, Australia</addr-line></aff>
+<aff id="aff003"><label>3</label> <addr-line>Intelligent Systems for Medicine Laboratory, School of Mechanical and Chemical Engineering, The University of Western Australia, Perth, Australia</addr-line></aff>
+<aff id="aff004"><label>4</label> <addr-line>Structural Biology Division, The Walter and Eliza Hall Institute of Medical Research, Parkville, Victoria, Australia</addr-line></aff>
+<aff id="aff005"><label>5</label> <addr-line>Department of Medical Biology, University of Melbourne, Melbourne, Victoria, Australia</addr-line></aff>
+<aff id="aff006"><label>6</label> <addr-line>Department of Surgery, Royal Melbourne Hospital, Melbourne, Victoria, Australia</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Saucerman</surname>
+<given-names>Jeffrey J.</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>University of Virginia, UNITED STATES</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: BSG DWS CWT AWB. Performed the experiments: KKLW AJR GRJ. Analyzed the data: BSG KKLW AJR GRJ DWS. Wrote the paper: BSG GRJ.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">B.Gardiner@murdoch.edu.au</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>9</day>
+<month>10</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="collection">
+<month>10</month>
+<year>2015</year>
+</pub-date>
+<volume>11</volume>
+<issue>10</issue>
+<elocation-id>e1004544</elocation-id>
+<history>
+<date date-type="received">
+<day>28</day>
+<month>5</month>
+<year>2015</year>
+</date>
+<date date-type="accepted">
+<day>9</day>
+<month>9</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Gardiner et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004544" xlink:type="simple"/>
+<abstract>
+<p>This paper presents a framework for modelling biological tissues based on discrete particles. Cell components (e.g. cell membranes, cell cytoskeleton, cell nucleus) and extracellular matrix (e.g. collagen) are represented using collections of particles. Simple particle to particle interaction laws are used to simulate and control complex physical interaction types (e.g. cell-cell adhesion via cadherins, integrin basement membrane attachment, cytoskeletal mechanical properties). Particles may be given the capacity to change their properties and behaviours in response to changes in the cellular microenvironment (e.g., in response to cell-cell signalling or mechanical loadings). Each particle is in effect an ‘agent’, meaning that the agent can sense local environmental information and respond according to pre-determined or stochastic events. The behaviour of the proposed framework is exemplified through several biological problems of ongoing interest. These examples illustrate how the modelling framework allows enormous flexibility for representing the mechanical behaviour of different tissues, and we argue this is a more intuitive approach than perhaps offered by traditional continuum methods. Because of this flexibility, we believe the discrete modelling framework provides an avenue for biologists and bioengineers to explore the behaviour of tissue systems in a computational laboratory.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>Modelling is an important tool in understanding the behaviour of biological tissues. In this paper we advocate a new modelling framework in which cells and tissues are represented by a collection of particles with associated properties. The particles interact with each other and can change their behaviour in response to changes in their environment. We demonstrate how the propose framework can be used to represent the mechanical behaviour of different tissues with much greater flexibility as compared to traditional continuum based methods.</p>
+</abstract>
+<funding-group>
+<funding-statement>The financial support of the National Health and Medical Research Council (NHMRC, <ext-link ext-link-type="uri" xlink:href="https://www.nhmrc.gov.au/" xlink:type="simple">https://www.nhmrc.gov.au/</ext-link>) Project Grant 1029628 is gratefully acknowledged. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="12"/>
+<table-count count="4"/>
+<page-count count="23"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the paper and its Supporting Information files.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>The quality and scope of experimental data on cells and tissues has undergone rapid advances. High throughput technologies have given unprecedented insight into signal transduction, gene activation, and associated cell decision processes. New techniques have also enabled the physical manipulation of cells, which has spurred the potential for deeper understanding of cell-cell and cell-ECM (extracellular matrix) physical interactions [<xref rid="pcbi.1004544.ref001" ref-type="bibr">1</xref>]. Taken together, there is an opportunity to integrate this information into computational models that are capable of representing both the mechanical and chemical interactions in biological systems. The modelling frameworks that are most appropriate for the new types of problems and data sets presented by biological systems are yet to be determined.</p>
+<p>Tissues are generally in a state of flux. That is, an apparently static tissue is actually maintaining itself through continual renewal. Cells maintain themselves, proliferate, grow, differentiate, secrete and migrate to new locations, often undergoing substantial morphological change during these processes. The extracellular matrix is also continually ‘turned over’ and/or remodelled. It is therefore highly desirable to have a modelling environment that can easily represent very large deformations and other morphological changes in cells and the extracellular matrix, along with physical interactions between cells and cells and the extracellular matrix. It is also now apparent that cells behave as wet 'computers' for processing environmental information and forming appropriate responses to environmental signals. It is therefore highly desirable to accommodate decision logics in the modelling environment, based on the internal state of the cell and its external environment.</p>
+<p>Traditional modelling approaches have usually relied upon continuum mechanics modelling based on finite element or finite difference representations of partial differential equations [<xref rid="pcbi.1004544.ref002" ref-type="bibr">2</xref>–<xref rid="pcbi.1004544.ref005" ref-type="bibr">5</xref>]. The continuum approaches rely upon ‘homogenisation’ techniques, which by design average out lower scale information. This reduces the complexity of the model, but when the complexity of the lower scale has a strong influence at the scale of the problem, the complexity returns in the form of a complex constitutive law. This approach has been very useful in understanding the load-deformation of hard tissues such as bone, and some soft tissues such as cartilage [<xref rid="pcbi.1004544.ref006" ref-type="bibr">6</xref>,<xref rid="pcbi.1004544.ref007" ref-type="bibr">7</xref>]. However, these models need to pre-define a problem domain and can only model events requiring evolution of the spatial domain of interest with considerable difficulty (e.g. growth, fractures, contacts, multiphase processes). Typically the continuum mechanics models are based on advanced mathematical concepts and produce outputs that are often abstract representations of what a biologist observes through a microscope, so this type of modelling output is often non-intuitive to biologists and they struggle to engage with the methodology (which in unsurprising given that it usually takes engineers and mathematicians years to master the techniques).</p>
+<p>To overcome some of the limitations of continuum mechanics modelling, lower scale continuum models could be developed and coupled together to form multiscale models, to better represent heterogeneous tissues. In a biological context, one faces the problem of developing multiscale methods that can model extremely large deformations coupled with cell proliferation, growth and migration (often with changes in material properties); this presents enormous numerical challenges for conventional continuum approaches. Similar difficulties have been experienced when using continuum approaches to model turbulent fluid flows, foams, rock falls and explosive events [<xref rid="pcbi.1004544.ref008" ref-type="bibr">8</xref>–<xref rid="pcbi.1004544.ref010" ref-type="bibr">10</xref>]. For such problems, the so-called discrete methods have been developed and are often preferred. While continuum approaches are useful and valuable, they may not be the best or optimal way to integrate biological information.</p>
+<p>Discrete approaches have been gaining traction for modelling the behaviour of collections of cells [<xref rid="pcbi.1004544.ref011" ref-type="bibr">11</xref>–<xref rid="pcbi.1004544.ref013" ref-type="bibr">13</xref>]. In these approaches each cell is represented by a discrete ‘agent’, often a circular (2D) or spherical (3D) object that can move in response to external forces. These approaches have been used to model a range of tissues and their behaviour, such as colon crypt homeostasis [<xref rid="pcbi.1004544.ref014" ref-type="bibr">14</xref>–<xref rid="pcbi.1004544.ref016" ref-type="bibr">16</xref>], epidermis [<xref rid="pcbi.1004544.ref017" ref-type="bibr">17</xref>], cancer [<xref rid="pcbi.1004544.ref018" ref-type="bibr">18</xref>–<xref rid="pcbi.1004544.ref022" ref-type="bibr">22</xref>], morphogenesis and patterning in development [<xref rid="pcbi.1004544.ref023" ref-type="bibr">23</xref>,<xref rid="pcbi.1004544.ref024" ref-type="bibr">24</xref>], as well as branching structures in angiogenesis. These techniques have been given many names, including agent-based modelling [<xref rid="pcbi.1004544.ref025" ref-type="bibr">25</xref>], discrete element methods (DEM, granular mechanics) [<xref rid="pcbi.1004544.ref026" ref-type="bibr">26</xref>], molecular dynamics simulations [<xref rid="pcbi.1004544.ref027" ref-type="bibr">27</xref>] and smoothed particle hydrodynamics (chemistry, chemical engineering, fluid dynamics) [<xref rid="pcbi.1004544.ref028" ref-type="bibr">28</xref>], but when simulating mechanical behaviour they are all based on the idea of solving Newtonian physics on an ensemble of discrete particles. The advantage we see in this approach is that complex behaviour can emerge from relatively simple rules applied at the agent level. That is, there is arguably less abstraction than in the partial differential equation—finite element method (PDE-FEM) approach.</p>
+<p>In this paper we present a discrete-element agent-based modelling environment to model cell-cell and cell-ECM mechanical interactions. In contrast to the overwhelming majority of agent based models of biological tissues which use a single discrete agent to represent each cell, we propose to represent cells and ECM using multiple agents. This has the immediate advantage of increasing the simulation resolution, allowing large deformation of individual cells (e.g. to model cell spreading or epithelial-to-mesenchymal transitions), realistic cell-cell and cell-ECM physical interactions and a more nuanced control of cell behaviour, which is difficult in a continuum mechanics approach. The main disadvantage is an increase in computational expense; nevertheless, the proposed solution method is completely explicit and therefore perfectly suitable for parallel implementation on Graphics Processing Units, using techniques similar to those presented in [<xref rid="pcbi.1004544.ref029" ref-type="bibr">29</xref>]. We will demonstrate the flexibility of the proposed agent-based model on a number of biological problems of intense ongoing interest and compare it to competing simulation methods in order to demonstrate its benefits.</p>
+</sec>
+<sec id="sec002" sec-type="materials|methods">
+<title>Methods</title>
+<sec id="sec003">
+<title>Proposed discrete framework for modelling biological systems</title>
+<p>In the proposed discrete-particle, agent-based framework a whole cell is represented by multiple 'agents' or ‘particles’, each of which represent a portion of the cell's matter. This allows the freedom for each agent to have its own set of parameters, qualities, and rules for interacting with other agents. For example, at its most basic level, one group of agents could represent the cytoplasm, while another group of agents represents the cell's membrane. For a given set of distinct rules given to these agents, the interactions and emergent behaviour of the collection of agents can be observed. In this way, selecting the best model for a cell can be accomplished by comparing different agent rules and the emergent behaviour that follow.</p>
+<p>One of the most important aspects of this approach is that each particle (agent) keeps track of the mechanical forces acting upon it, and thus the agents can be displaced within the simulation space as a result of these forces. This movement can be visualized in animations, which represent the deformation of the cell as a result of internal and external forces acting upon discrete particles that make up the cell.</p>
+<p>Some examples of biological tissue representation in the proposed framework are presented in <xref rid="pcbi.1004544.g001" ref-type="fig">Fig 1</xref>. A single cell with a nucleus can be constructed using cytoplasm, membrane, nucleus and nuclear membrane particles. Many such cells can self-organise, due to strong cell-cell adhesion between membrane particles and internally and externally applied forces, to form a cell cluster reminiscent of a typical tissue sample. At a higher level of detail, cells can interact with various types of extracellular matrix particles representing a basement membrane, mucus or stroma, to simulate, for example, the epithelial lining of the intestine.</p>
+<fig id="pcbi.1004544.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Computational representations and analogous histological images.</title>
+<p>Simulations can be developed at various scales, from a single cell to cell clusters and complex tissues. Cells and tissues are modelled using multiple particles (agents) which interact to each other; the macroscopic tissue behaviour emerges from these inter-particles interactions.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.g001" position="float" xlink:type="simple"/>
+</fig>
+<p>Different properties of a cell can be created via suitable adjustment to the various properties of the component agents. External properties, such as basement adhesion and stromal stiffness, can be similarly recreated. Finer scale structures and processes can be represented by having more and smaller agent-based particles in a simulation. While there have been extraordinary advances in digital computers, which now permit the representation of tissues by many millions of particles, it remains important to do the computations as efficiently as possible. For this reason, multiscale agent-based discrete models may be developed. In this approach, a region of tissue may be represented generally using large particles, but particular regions of the tissue where more information is required may be represented using smaller particles, which provide higher local resolution. As importantly, for such particle-based methods, the position, material and biochemical properties are only stored at the particles rather than at every node in a spatial grid, avoiding unnecessary computations required for re-generating the grid every time the geometry of the cell structure changes. This allows the optimization of storage and reduction of processing bandwidth, enabling efficient parallelization of computations.</p>
+</sec>
+<sec id="sec004">
+<title>Particle interactions for a cell</title>
+<p>The cell models described here include 4 cell particle types: cell membrane (with cell cortex) (M), cytoplasm (C), nuclear membrane (NM), and nucleoplasm (N), as shown in <xref rid="pcbi.1004544.g002" ref-type="fig">Fig 2a</xref>. We also consider the potential for particle interactions with a mechanical testing plate (P) and a basement membrane (BM). Therefore the number of potential cell particle interactions is 18. However, we have chosen our model parameters (via a series of initial parametric studies) to limit inter-compartment transport of nucleoplasm or cytoplasm particles. Therefore, as shown in <xref rid="pcbi.1004544.t001" ref-type="table">Table 1</xref>, there are only 7 unique particle-particle interactions within a cell and an additional 2 external cell interactions (i.e. to plate or basement membrane). These interactions define our fundamental cell unit. More complicated tissue structures can be built by combining together multiple cells and ECM, as shown in <xref rid="pcbi.1004544.g002" ref-type="fig">Fig 2b</xref>.</p>
+<fig id="pcbi.1004544.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Representations of cells and extracellular components in the proposed discrete element framework.</title>
+<p>a) Example cell structure and possible interactions. b) Example tissue structure and possible interactions. The behaviour of each particle is influenced by its neighbouring particles through short range interaction forces.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.g002" position="float" xlink:type="simple"/>
+</fig>
+<table-wrap id="pcbi.1004544.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.t001</object-id>
+<label>Table 1</label> <caption><title>Interaction matrix for the constituents of a cell.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004544.t001g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.t001" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="1" colspan="1"/>
+<th align="center" rowspan="1" colspan="1">M</th>
+<th align="center" rowspan="1" colspan="1">C</th>
+<th align="center" rowspan="1" colspan="1">NM</th>
+<th align="center" rowspan="1" colspan="1">N</th>
+<th align="center" rowspan="1" colspan="1">P</th>
+<th align="center" rowspan="1" colspan="1">BM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" rowspan="1" colspan="1"><bold>M</bold></td>
+<td align="center" rowspan="1" colspan="1">X</td>
+<td align="center" rowspan="1" colspan="1">X</td>
+<td align="center" rowspan="1" colspan="1">-</td>
+<td align="center" rowspan="1" colspan="1">-</td>
+<td align="center" rowspan="1" colspan="1">X</td>
+<td align="center" rowspan="1" colspan="1">X</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1"><bold>C</bold></td>
+<td align="center" rowspan="1" colspan="1">X</td>
+<td align="center" rowspan="1" colspan="1">X</td>
+<td align="center" rowspan="1" colspan="1">X</td>
+<td align="center" rowspan="1" colspan="1">-</td>
+<td align="center" rowspan="1" colspan="1">-</td>
+<td align="center" rowspan="1" colspan="1">-</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1"><bold>NM</bold></td>
+<td align="center" rowspan="1" colspan="1">-</td>
+<td align="center" rowspan="1" colspan="1">X</td>
+<td align="center" rowspan="1" colspan="1">X</td>
+<td align="center" rowspan="1" colspan="1">X</td>
+<td align="center" rowspan="1" colspan="1">-</td>
+<td align="center" rowspan="1" colspan="1">-</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1"><bold>N</bold></td>
+<td align="center" rowspan="1" colspan="1">-</td>
+<td align="center" rowspan="1" colspan="1">-</td>
+<td align="center" rowspan="1" colspan="1">X</td>
+<td align="center" rowspan="1" colspan="1">X</td>
+<td align="center" rowspan="1" colspan="1">-</td>
+<td align="center" rowspan="1" colspan="1">-</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>We consider only short-range normal interaction forces between particles, which we model as a nonlinear spring [<xref rid="pcbi.1004544.ref026" ref-type="bibr">26</xref>]. The elastic (spring) interaction force acting on particle <italic>I</italic> due to particle <italic>J</italic> is defined as:
+<disp-formula id="pcbi.1004544.e001">
+<alternatives>
+<graphic id="pcbi.1004544.e001g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e001" xlink:type="simple"/>
+<mml:math display="block" id="M1" overflow="scroll">
+<mml:mrow><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>F</mml:mi></mml:mstyle><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mrow><mml:mo>[</mml:mo><mml:mrow><mml:msubsup><mml:mi>F</mml:mi><mml:mi>I</mml:mi><mml:mi>a</mml:mi></mml:msubsup><mml:mo>−</mml:mo><mml:msub><mml:mi>P</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>α</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mo>]</mml:mo></mml:mrow><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>n</mml:mi></mml:mstyle><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(1)</label>
+</disp-formula>
+where <inline-formula id="pcbi.1004544.e002"><alternatives><graphic id="pcbi.1004544.e002g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e002" xlink:type="simple"/><mml:math display="inline" id="M2" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>F</mml:mi></mml:mrow><mml:mrow><mml:mi>I</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> is a constant attractive force between particles of the same type (M, C, NM, N, P, or BM) and <italic>P</italic><sub><italic>I-J</italic></sub> is a force dependent on the overlap/separation between particles, defined as the sum of particles’ radii minus the distance between the particles’ positions:
+<disp-formula id="pcbi.1004544.e003">
+<alternatives>
+<graphic id="pcbi.1004544.e003g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e003" xlink:type="simple"/>
+<mml:math display="block" id="M3" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>α</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>R</mml:mi><mml:mi>I</mml:mi></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mi>R</mml:mi><mml:mi>J</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>−</mml:mo><mml:mo>|</mml:mo><mml:mo>|</mml:mo><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>x</mml:mi></mml:mstyle><mml:mi>I</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>x</mml:mi></mml:mstyle><mml:mi>J</mml:mi></mml:msub><mml:mo>|</mml:mo><mml:mo>|</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(2)</label>
+</disp-formula>
+and <bold>n</bold><sub><italic>I-J</italic></sub> is the unit vector from the position of particles <italic>I</italic> towards the position of particle <italic>J</italic>:
+<disp-formula id="pcbi.1004544.e004">
+<alternatives>
+<graphic id="pcbi.1004544.e004g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e004" xlink:type="simple"/>
+<mml:math display="block" id="M4" overflow="scroll">
+<mml:mrow><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>n</mml:mi></mml:mstyle><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>x</mml:mi></mml:mstyle><mml:mi>J</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>x</mml:mi></mml:mstyle><mml:mi>I</mml:mi></mml:msub></mml:mrow><mml:mrow><mml:mo>|</mml:mo><mml:mo>|</mml:mo><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>x</mml:mi></mml:mstyle><mml:mi>I</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>x</mml:mi></mml:mstyle><mml:mi>J</mml:mi></mml:msub><mml:mo>|</mml:mo><mml:mo>|</mml:mo></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(3)</label>
+</disp-formula></p>
+<p>We chose the force <italic>P</italic><sub><italic>I-J</italic></sub> as a simple linear attractive force when particles are separated (up to a maximum separation distance) [<xref rid="pcbi.1004544.ref026" ref-type="bibr">26</xref>] and as a Hertzian contact between two elastic spheres [<xref rid="pcbi.1004544.ref030" ref-type="bibr">30</xref>] when the particles penetrate each-other:
+<disp-formula id="pcbi.1004544.e005">
+<alternatives>
+<graphic id="pcbi.1004544.e005g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e005" xlink:type="simple"/>
+<mml:math display="block" id="M5" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>P</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mi>α</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo> <mml:mrow><mml:mtable><mml:mtr><mml:mtd><mml:mrow><mml:mn>0</mml:mn><mml:mo>,</mml:mo></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mo>−</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>I</mml:mi></mml:msub><mml:mo>&gt;</mml:mo><mml:msub><mml:mi>α</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:msubsup><mml:mi>k</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow><mml:mi>a</mml:mi></mml:msubsup><mml:msub><mml:mi>R</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:msub><mml:mi>α</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mo> </mml:mo><mml:mo>,</mml:mo></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:mn>0</mml:mn><mml:mo>&gt;</mml:mo><mml:msub><mml:mi>α</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mo>≥</mml:mo><mml:mo>−</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>I</mml:mi></mml:msub></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:msubsup><mml:mi>k</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow><mml:mi>r</mml:mi></mml:msubsup><mml:msqrt><mml:mrow><mml:msub><mml:mi>R</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:msqrt><mml:msubsup><mml:mi>α</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow><mml:mrow><mml:mn>3</mml:mn><mml:mo>/</mml:mo><mml:mn>2</mml:mn></mml:mrow></mml:msubsup><mml:mo> </mml:mo><mml:mo>,</mml:mo></mml:mrow></mml:mtd><mml:mtd><mml:mrow><mml:msub><mml:mi>α</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mo>≥</mml:mo><mml:mn>0</mml:mn></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow> </mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(4)</label>
+</disp-formula></p>
+<p>The elastic force and the attractive force are zero if particle <italic>J</italic> is outside the influence radius of particle <italic>I</italic>, −<italic>δ</italic><sub><italic>I</italic></sub> &gt; <italic>α</italic><sub><italic>I-J</italic></sub> (have limited range).</p>
+<p>The spring constants and equivalent radius appearing in <xref rid="pcbi.1004544.e005" ref-type="disp-formula">eq (4)</xref> are computed based on the individual properties of the two particles:
+<disp-formula id="pcbi.1004544.e006">
+<alternatives>
+<graphic id="pcbi.1004544.e006g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e006" xlink:type="simple"/>
+<mml:math display="block" id="M6" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>R</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:msub><mml:mi>R</mml:mi><mml:mi>I</mml:mi></mml:msub><mml:msub><mml:mi>R</mml:mi><mml:mi>J</mml:mi></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mi>R</mml:mi><mml:mi>I</mml:mi></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mi>R</mml:mi><mml:mi>J</mml:mi></mml:msub></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(5)</label>
+</disp-formula>
+<disp-formula id="pcbi.1004544.e007">
+<alternatives>
+<graphic id="pcbi.1004544.e007g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e007" xlink:type="simple"/>
+<mml:math display="block" id="M7" overflow="scroll">
+<mml:mrow><mml:msubsup><mml:mi>k</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow><mml:mi>a</mml:mi></mml:msubsup><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:msubsup><mml:mi>k</mml:mi><mml:mi>I</mml:mi><mml:mi>a</mml:mi></mml:msubsup><mml:msubsup><mml:mi>k</mml:mi><mml:mi>J</mml:mi><mml:mi>a</mml:mi></mml:msubsup></mml:mrow><mml:mrow><mml:msubsup><mml:mi>k</mml:mi><mml:mi>I</mml:mi><mml:mi>a</mml:mi></mml:msubsup><mml:mo>+</mml:mo><mml:msubsup><mml:mi>k</mml:mi><mml:mi>J</mml:mi><mml:mi>a</mml:mi></mml:msubsup></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(6)</label>
+</disp-formula>
+<disp-formula id="pcbi.1004544.e008">
+<alternatives>
+<graphic id="pcbi.1004544.e008g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e008" xlink:type="simple"/>
+<mml:math display="block" id="M8" overflow="scroll">
+<mml:mrow><mml:msubsup><mml:mi>k</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow><mml:mi>r</mml:mi></mml:msubsup><mml:mo>=</mml:mo><mml:mfrac><mml:mn>4</mml:mn><mml:mn>3</mml:mn></mml:mfrac><mml:msup><mml:mrow><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:msubsup><mml:mi>υ</mml:mi><mml:mi>I</mml:mi><mml:mn>2</mml:mn></mml:msubsup></mml:mrow><mml:mrow><mml:msub><mml:mi>E</mml:mi><mml:mi>I</mml:mi></mml:msub></mml:mrow></mml:mfrac><mml:mo>+</mml:mo><mml:mfrac><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:msubsup><mml:mi>υ</mml:mi><mml:mi>J</mml:mi><mml:mn>2</mml:mn></mml:msubsup></mml:mrow><mml:mrow><mml:msub><mml:mi>E</mml:mi><mml:mi>J</mml:mi></mml:msub></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow><mml:mrow><mml:mo>−</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:msup></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(7)</label>
+</disp-formula>
+where <italic>E</italic><sub><italic>I</italic></sub> and <italic>υ</italic><sub><italic>I</italic></sub> represent the Young’s modulus and Poisson’s ratio associated with particle <italic>I</italic> [<xref rid="pcbi.1004544.ref030" ref-type="bibr">30</xref>] and <inline-formula id="pcbi.1004544.e009"><alternatives><graphic id="pcbi.1004544.e009g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e009" xlink:type="simple"/><mml:math display="inline" id="M9" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>I</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> is the linear spring constant for attraction associated with particle <italic>I</italic>. The forces generated during interactions with linear objects (such as the plate or basement membrane) are computed by considering such objects as spheres with infinite radius.</p>
+<p>A viscous drag force acting on a particle <italic>I</italic> due to particle <italic>J</italic> is defined based on the difference in particles’ velocities (only for the <italic>n</italic><sub><italic>I</italic></sub> particles within a given distance to particle <italic>I</italic>), as:
+<disp-formula id="pcbi.1004544.e010">
+<alternatives>
+<graphic id="pcbi.1004544.e010g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e010" xlink:type="simple"/>
+<mml:math display="block" id="M10" overflow="scroll">
+<mml:mrow><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>D</mml:mi></mml:mstyle><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mrow><mml:mtable columnalign="left"><mml:mtr columnalign="left"><mml:mtd columnalign="left"><mml:mrow><mml:mtext>   </mml:mtext><mml:mn>0</mml:mn><mml:mo>,</mml:mo></mml:mrow></mml:mtd><mml:mtd columnalign="left"><mml:mrow><mml:mo>−</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>I</mml:mi></mml:msub><mml:mo>&gt;</mml:mo><mml:msub><mml:mi>α</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mtd></mml:mtr><mml:mtr columnalign="left"><mml:mtd columnalign="left"><mml:mrow><mml:mo>−</mml:mo><mml:msub><mml:mi>β</mml:mi><mml:mi>I</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>n</mml:mi><mml:mi>I</mml:mi></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>v</mml:mi></mml:mstyle><mml:mi>I</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>v</mml:mi></mml:mstyle><mml:mi>J</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>,</mml:mo></mml:mrow></mml:mtd><mml:mtd columnalign="left"><mml:mrow><mml:mtext>  </mml:mtext><mml:msub><mml:mi>α</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mo>≥</mml:mo><mml:mo>−</mml:mo><mml:msub><mml:mi>δ</mml:mi><mml:mi>I</mml:mi></mml:msub></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(8)</label>
+</disp-formula></p>
+</sec>
+<sec id="sec005">
+<title>Equation of motion</title>
+<p>The total force acting on particle <italic>I</italic> due to its neighbouring particles is obtained by summing the influences of all surrounding particles:
+<disp-formula id="pcbi.1004544.e011">
+<alternatives>
+<graphic id="pcbi.1004544.e011g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e011" xlink:type="simple"/>
+<mml:math display="block" id="M11" overflow="scroll">
+<mml:mrow><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>F</mml:mi></mml:mstyle><mml:mi>I</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:munder><mml:mrow><mml:msup><mml:mstyle mathsize="140%" displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mtext> </mml:mtext></mml:msup></mml:mrow><mml:mrow><mml:mi>J</mml:mi><mml:mo>≠</mml:mo><mml:mi>I</mml:mi></mml:mrow></mml:munder><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>F</mml:mi></mml:mstyle><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>D</mml:mi></mml:mstyle><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(9)</label>
+</disp-formula></p>
+<p>Because only short range interactions are consider, the summation in <xref rid="pcbi.1004544.e011" ref-type="disp-formula">eq (9)</xref> has non-zero terms only for <italic>n</italic><sub><italic>I</italic></sub> neighbouring particles, as resulting from eqs <xref rid="pcbi.1004544.e005" ref-type="disp-formula">(4)</xref> and <xref rid="pcbi.1004544.e010" ref-type="disp-formula">(8)</xref>. We will name <italic>N</italic><sub><italic>I</italic></sub> this set of neighbouring particles.</p>
+<p>The motion of particle <italic>I</italic> is governed by Newtonian physics [<xref rid="pcbi.1004544.ref026" ref-type="bibr">26</xref>]:
+<disp-formula id="pcbi.1004544.e012">
+<alternatives>
+<graphic id="pcbi.1004544.e012g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e012" xlink:type="simple"/>
+<mml:math display="block" id="M12" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>m</mml:mi><mml:mi>I</mml:mi></mml:msub><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mover accent="true"><mml:mi>x</mml:mi><mml:mo>¨</mml:mo></mml:mover></mml:mstyle><mml:mi>I</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:munder><mml:mrow><mml:msup><mml:mstyle mathsize="140%" displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mtext> </mml:mtext></mml:msup></mml:mrow><mml:mrow><mml:mi>J</mml:mi><mml:mo>∈</mml:mo><mml:msub><mml:mi>N</mml:mi><mml:mi>I</mml:mi></mml:msub></mml:mrow></mml:munder><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>F</mml:mi></mml:mstyle><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>D</mml:mi></mml:mstyle><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:msubsup><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>F</mml:mi></mml:mstyle><mml:mi>I</mml:mi><mml:mi>E</mml:mi></mml:msubsup></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(10)</label>
+</disp-formula>
+with the externally applied force <inline-formula id="pcbi.1004544.e013"><alternatives><graphic id="pcbi.1004544.e013g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e013" xlink:type="simple"/><mml:math display="inline" id="M13" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi mathvariant="bold">F</mml:mi></mml:mrow><mml:mrow><mml:mi>I</mml:mi></mml:mrow><mml:mrow><mml:mi>E</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> including any other forces other than particle interactions (such as gravity).</p>
+<p>The total drag force acting on a particle <italic>I</italic> due to all its neighbouring particles becomes, taking into account <xref rid="pcbi.1004544.e010" ref-type="disp-formula">eq (8)</xref>, as
+<disp-formula id="pcbi.1004544.e014">
+<alternatives>
+<graphic id="pcbi.1004544.e014g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e014" xlink:type="simple"/>
+<mml:math display="block" id="M14" overflow="scroll">
+<mml:mrow><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>D</mml:mi></mml:mstyle><mml:mi>I</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:munder><mml:mrow><mml:msup><mml:mstyle mathsize="140%" displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mtext> </mml:mtext></mml:msup></mml:mrow><mml:mrow><mml:mi>J</mml:mi><mml:mo>∈</mml:mo><mml:msub><mml:mi>N</mml:mi><mml:mi>I</mml:mi></mml:msub></mml:mrow></mml:munder><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>D</mml:mi></mml:mstyle><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mo>−</mml:mo><mml:msub><mml:mi>β</mml:mi><mml:mi>I</mml:mi></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>v</mml:mi></mml:mstyle><mml:mi>I</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:munder><mml:mrow><mml:msup><mml:mstyle mathsize="140%" displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mtext> </mml:mtext></mml:msup></mml:mrow><mml:mrow><mml:mi>J</mml:mi><mml:mo>∈</mml:mo><mml:msub><mml:mi>N</mml:mi><mml:mi>I</mml:mi></mml:msub></mml:mrow></mml:munder><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>v</mml:mi></mml:mstyle><mml:mi>J</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>n</mml:mi><mml:mi>I</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(11)</label>
+</disp-formula>
+and is therefore proportional to the difference between the velocity of particle <italic>I</italic> and the average velocity of the surrounding particles which exercise an influence on particle <italic>I</italic>. The chosen form for the drag force, which originates from multiple dissipative processes taking part at cellular level, is different from the form used in other discrete element simulations, where it only acts in the normal direction between particles [<xref rid="pcbi.1004544.ref026" ref-type="bibr">26</xref>]. This drag force resembles more a viscous drag, as it is proportional to the velocity of the reference particle relative to its surrounding particles. More complex constitutive equations can be employed to represent particular dissipative processes as required.</p>
+</sec>
+<sec id="sec006">
+<title>Numerical solution</title>
+<p>The equation of motion for a given particle <italic>I</italic> can be rewritten, considering the definition of forces involved, as:
+<disp-formula id="pcbi.1004544.e015">
+<alternatives>
+<graphic id="pcbi.1004544.e015g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e015" xlink:type="simple"/>
+<mml:math display="block" id="M15" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>m</mml:mi><mml:mi>I</mml:mi></mml:msub><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mover accent="true"><mml:mi>x</mml:mi><mml:mo>¨</mml:mo></mml:mover></mml:mstyle><mml:mi>I</mml:mi></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mi>β</mml:mi><mml:mi>I</mml:mi></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mover accent="true"><mml:mi>x</mml:mi><mml:mo>˙</mml:mo></mml:mover></mml:mstyle><mml:mi>I</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:munder><mml:mrow><mml:msup><mml:mstyle mathsize="140%" displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mtext> </mml:mtext></mml:msup></mml:mrow><mml:mrow><mml:mi>J</mml:mi><mml:mo>∈</mml:mo><mml:msub><mml:mi>N</mml:mi><mml:mi>I</mml:mi></mml:msub></mml:mrow></mml:munder><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mover accent="true"><mml:mi>x</mml:mi><mml:mo>˙</mml:mo></mml:mover></mml:mstyle><mml:mi>J</mml:mi></mml:msub><mml:mo>/</mml:mo><mml:msub><mml:mi>n</mml:mi><mml:mi>I</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>+</mml:mo><mml:munder><mml:mrow><mml:msup><mml:mstyle mathsize="140%" displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mtext> </mml:mtext></mml:msup></mml:mrow><mml:mrow><mml:mi>J</mml:mi><mml:mo>∈</mml:mo><mml:msub><mml:mi>N</mml:mi><mml:mi>I</mml:mi></mml:msub></mml:mrow></mml:munder><mml:msub><mml:mi>P</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>x</mml:mi></mml:mstyle><mml:mi>I</mml:mi></mml:msub><mml:mo>,</mml:mo><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>x</mml:mi></mml:mstyle><mml:mi>J</mml:mi></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>n</mml:mi></mml:mstyle><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:msubsup><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>F</mml:mi></mml:mstyle><mml:mi>I</mml:mi><mml:mi>E</mml:mi></mml:msubsup><mml:mo>+</mml:mo><mml:munder><mml:mrow><mml:msup><mml:mstyle mathsize="140%" displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mtext> </mml:mtext></mml:msup></mml:mrow><mml:mrow><mml:mi>J</mml:mi><mml:mo>∈</mml:mo><mml:msub><mml:mi>N</mml:mi><mml:mi>I</mml:mi></mml:msub></mml:mrow></mml:munder><mml:msubsup><mml:mi>F</mml:mi><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow><mml:mi>a</mml:mi></mml:msubsup><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>n</mml:mi></mml:mstyle><mml:mrow><mml:mi>I</mml:mi><mml:mo>−</mml:mo><mml:mi>J</mml:mi></mml:mrow></mml:msub></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(12)</label>
+</disp-formula></p>
+<p>The equations of motion for all particles in the model lead to a system of coupled second degree differential equations. This system of equations can be solved using a numerical integration method. We chose to use the Verlet integrator [<xref rid="pcbi.1004544.ref031" ref-type="bibr">31</xref>] for numerical integration. One deficiency of the Verlet integrator is the fact that it cannot handle velocities in the equation of motion. To overcome this limitation, we use in the time stepping procedure velocities estimated one time step behind the displacements. This also allows the decoupling of the equations of motion and results in an explicit integration algorithm, better suited for parallel implementation. While accurate inclusion of velocities would be needed in dynamic simulations, most biological simulations are quasi-static, and therefore viscous damping is only used to increase the stable time step and stabilise the numerical solution.</p>
+<p>An explicit integration procedure requires the time step used to be less than a critical time step. The critical time step is computed based on the properties of each pair of particles forming a basic spring, considering the mass of the particles, the stiffness of the system (the maximum stiffness in case of a non-linear system) and the damping as shown in [<xref rid="pcbi.1004544.ref026" ref-type="bibr">26</xref>]. The used time step is the computed as the critical time step multiplied with a subunitary safety factor. In dynamic simulations this safety factor must be chosen very low to guarantee solution accuracy. For quasi-static simulations, as those presented in this paper, a much higher safety factor can be used, close to one, as the time step is only chosen based on stability considerations [<xref rid="pcbi.1004544.ref032" ref-type="bibr">32</xref>].</p>
+<p>We implemented the presented computational framework in java using the Repast Simphony agent-based simulation tool-kit [<xref rid="pcbi.1004544.ref033" ref-type="bibr">33</xref>].</p>
+</sec>
+</sec>
+<sec id="sec007" sec-type="results">
+<title>Results</title>
+<p>This section contains several computational results obtained using the proposed framework. These results demonstrate the flexibility of the framework, with the macro-scale cell behaviour being controlled using a few easy to understand model parameters. Unless specified otherwise, the basic model parameters used in the simulations are presented in <xref rid="pcbi.1004544.t002" ref-type="table">Table 2</xref>. These parameters were calibrated to reproduce the experimental stress-strain behaviour of an isolated nucleus and of a whole cell in an unconfined compression plate-load test [<xref rid="pcbi.1004544.ref003" ref-type="bibr">3</xref>].</p>
+<table-wrap id="pcbi.1004544.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.t002</object-id>
+<label>Table 2</label> <caption><title>Basic model parameters.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004544.t002g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.t002" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="1" colspan="1">Parameter</th>
+<th align="center" rowspan="1" colspan="1">Symbol</th>
+<th align="center" rowspan="1" colspan="1">Unit</th>
+<th colspan="4" align="center" rowspan="1">Particle</th>
+</tr>
+<tr>
+<th align="center" rowspan="1" colspan="1"/>
+<th align="center" rowspan="1" colspan="1"/>
+<th align="center" rowspan="1" colspan="1"/>
+<th align="center" rowspan="1" colspan="1">M</th>
+<th align="center" rowspan="1" colspan="1">C</th>
+<th align="center" rowspan="1" colspan="1">NM</th>
+<th align="center" rowspan="1" colspan="1">N</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" rowspan="1" colspan="1">Average radius</td>
+<td align="center" rowspan="1" colspan="1"><italic>R</italic><sub><italic>I</italic></sub></td>
+<td align="center" rowspan="1" colspan="1">(×10<sup>−6</sup>) m</td>
+<td align="center" rowspan="1" colspan="1">0.15</td>
+<td align="center" rowspan="1" colspan="1">0.25</td>
+<td align="center" rowspan="1" colspan="1">0.15</td>
+<td align="center" rowspan="1" colspan="1">0.25</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Attractive force</td>
+<td align="center" rowspan="1" colspan="1"><inline-formula id="pcbi.1004544.e016"><alternatives><graphic id="pcbi.1004544.e016g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e016" xlink:type="simple"/><mml:math display="inline" id="M16" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>F</mml:mi></mml:mrow><mml:mrow><mml:mi>I</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula></td>
+<td align="center" rowspan="1" colspan="1">N</td>
+<td align="center" rowspan="1" colspan="1">1×10<sup>−10</sup></td>
+<td align="center" rowspan="1" colspan="1">5×10<sup>−11</sup></td>
+<td align="center" rowspan="1" colspan="1">1×10<sup>−10</sup></td>
+<td align="center" rowspan="1" colspan="1">5×10<sup>−11</sup></td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Influence radius</td>
+<td align="center" rowspan="1" colspan="1"><italic>δ</italic><sub><italic>I</italic></sub></td>
+<td align="center" rowspan="1" colspan="1">(×10<sup>−6</sup>) m</td>
+<td align="center" rowspan="1" colspan="1">2</td>
+<td align="center" rowspan="1" colspan="1">2</td>
+<td align="center" rowspan="1" colspan="1">2</td>
+<td align="center" rowspan="1" colspan="1">2</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Spring constant</td>
+<td align="center" rowspan="1" colspan="1"><inline-formula id="pcbi.1004544.e017"><alternatives><graphic id="pcbi.1004544.e017g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e017" xlink:type="simple"/><mml:math display="inline" id="M17" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>I</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula></td>
+<td align="center" rowspan="1" colspan="1">N/m</td>
+<td align="center" rowspan="1" colspan="1">1×10<sup>−8</sup></td>
+<td align="center" rowspan="1" colspan="1">1×10<sup>−8</sup></td>
+<td align="center" rowspan="1" colspan="1">1×10<sup>−8</sup></td>
+<td align="center" rowspan="1" colspan="1">1×10<sup>−8</sup></td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Young’s modulus</td>
+<td align="center" rowspan="1" colspan="1"><italic>E</italic><sub><italic>I</italic></sub></td>
+<td align="center" rowspan="1" colspan="1">Pa</td>
+<td align="center" rowspan="1" colspan="1">1×10<sup>7</sup></td>
+<td align="center" rowspan="1" colspan="1">1×10<sup>3</sup></td>
+<td align="center" rowspan="1" colspan="1">1×10<sup>7</sup></td>
+<td align="center" rowspan="1" colspan="1">5×10<sup>3</sup></td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Poisson’s ratio</td>
+<td align="center" rowspan="1" colspan="1"><italic>υ</italic><sub><italic>I</italic></sub></td>
+<td align="center" rowspan="1" colspan="1">-</td>
+<td align="center" rowspan="1" colspan="1">0.5</td>
+<td align="center" rowspan="1" colspan="1">0.5</td>
+<td align="center" rowspan="1" colspan="1">0.5</td>
+<td align="center" rowspan="1" colspan="1">0.5</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Drag factor</td>
+<td align="center" rowspan="1" colspan="1"><italic>β</italic><sub><italic>I</italic></sub></td>
+<td align="center" rowspan="1" colspan="1">kg/s</td>
+<td align="center" rowspan="1" colspan="1">0.05</td>
+<td align="center" rowspan="1" colspan="1">0.05</td>
+<td align="center" rowspan="1" colspan="1">0.05</td>
+<td align="center" rowspan="1" colspan="1">0.05</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<sec id="sec008">
+<title>Cell initialisation</title>
+<p>Before creating higher order cell structures, we need to make sure that we can create single cells with the desired properties. We have therefore initialised single cells and studied the influence of model parameters on their behaviour.</p>
+<p>The first step in initialising a cell is the creation of the particle distribution. Different algorithms can be used to create an initial particle assembly [<xref rid="pcbi.1004544.ref030" ref-type="bibr">30</xref>]. The initial cell shape varies depending on problem. In all the presented simulations we start with round cells. We initiate the creation of the cell by defining the position of the cell and nuclear membranes and populate them with equally spaced particles. We then populate the cytoplasm and nucleoplasm with the corresponding particles of initial radius <italic>R</italic>, at random positions, but with a number significantly less than the final target particle number <italic>N</italic> in each compartment (specifically we begin with <italic>N/<inline-formula id="pcbi.1004544.e018"><alternatives><graphic id="pcbi.1004544.e018g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e018" xlink:type="simple"/><mml:math display="inline" id="M18" overflow="scroll"><mml:msqrt><mml:mn>2</mml:mn></mml:msqrt></mml:math></alternatives></inline-formula></italic> particles). The cytoplasm and nucleoplasm particles are then allowed to slowly grow (with a linear growth rate over time) and divide (by adding another particle at the same location) upon reaching <inline-formula id="pcbi.1004544.e019"><alternatives><graphic id="pcbi.1004544.e019g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e019" xlink:type="simple"/><mml:math display="inline" id="M19" overflow="scroll"><mml:msqrt><mml:mn>2</mml:mn></mml:msqrt><mml:mi> </mml:mi></mml:math></alternatives></inline-formula><italic>R</italic> until a predefined threshold is reached in the cell membrane tension caused by the separating neighbouring membrane particles. To avoid crystalline packing that can occur with particles of the same size, a variance of 30% in the original particle radius was introduced. A fully developed cell after this process is illustrated in <xref rid="pcbi.1004544.g003" ref-type="fig">Fig 3</xref>.</p>
+<fig id="pcbi.1004544.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Cell initialisation procedure.</title>
+<p>a) Initial placement of particles defining the different parts of the cell. b) Cell after the initialisation procedure when no adhesion to the boundary is used. c) A spread cell geometry can be created by using attraction of membrane particles to the basement membrane (BM). The spread cell geometry depicted was achieved using a spring constant <inline-formula id="pcbi.1004544.e020"><alternatives><graphic id="pcbi.1004544.e020g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e020" xlink:type="simple"/><mml:math display="inline" id="M20" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>B</mml:mi><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 1×10<sup>−11</sup> N/m and an influence radius <italic>δ</italic><sub><italic>BM</italic></sub> = 3μm for the BM. We have used a colour scale to indicate the net contact force experienced by each of the cell’s internal particles—the darker the colour the higher the force.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.g003" position="float" xlink:type="simple"/>
+</fig>
+<p>A round cell can be readily achieved by the method described above (<xref rid="pcbi.1004544.g003" ref-type="fig">Fig 3b</xref>). However a spread cell (<xref rid="pcbi.1004544.g003" ref-type="fig">Fig 3c</xref>) requires additional steps. Specifically, a basement membrane (BM) is needed and an attraction force defined between the cell and the BM. As the cell becomes less round there is an increase in the membrane length and tension [<xref rid="pcbi.1004544.ref034" ref-type="bibr">34</xref>]. In the initialisation step we allow this tension to relax by adding additional membrane particles. Specifically a new membrane particle is added between any two neighbouring membrane particles separated by a gap of greater than half of a membrane particle size. This approach is consistent with experimental data showing that a cell responds to alterations in membrane tension by adjusting its overall membrane area [<xref rid="pcbi.1004544.ref034" ref-type="bibr">34</xref>].</p>
+<p>In the simulation the attraction of membrane particles to the BM is characterised by both a linear attractive force (adhesion) spring constant and an influence radius. These quantities correspond to, for example, the extension distance of filopodia to a surface and the force generated by the filopodia, although many aspects affecting cell attachment (cell behavior, material surface properties, and environmental factors) is captured by these parameters [<xref rid="pcbi.1004544.ref035" ref-type="bibr">35</xref>]. Changing the adhesion force spring constant and influence radius modifies the degree of spreading of a cell. The effect of changes in these parameters is shown in <xref rid="pcbi.1004544.g004" ref-type="fig">Fig 4</xref>.</p>
+<fig id="pcbi.1004544.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Influence of BM parameters on cell spreading.</title>
+<p>The attraction of membrane particles to the BM is characterised by both a linear attractive force (adhesion) spring constant and an influence radius. These quantities correspond to, for example, the extension distance of filopodia to a surface and the force generated by the filopodia. The influence radius <italic>δ</italic><sub><italic>BM</italic></sub> has a greater influence on the geometry of the cell as compared to the spring constant <inline-formula id="pcbi.1004544.e021"><alternatives><graphic id="pcbi.1004544.e021g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e021" xlink:type="simple"/><mml:math display="inline" id="M21" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>B</mml:mi><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula>.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.g004" position="float" xlink:type="simple"/>
+</fig>
+<p>The morphological properties of cells are fundamental to quantitative cytology. Our results demonstrate that cell spreading on a BM can be simulated by adjusting properties associated with the BM.</p>
+</sec>
+<sec id="sec009">
+<title>Mechanical response of a cell</title>
+<p>The mechanics of single cells has been investigated experimentally using a number of standard tests, including parallel plate compression [<xref rid="pcbi.1004544.ref003" ref-type="bibr">3</xref>] and micropipette aspiration [<xref rid="pcbi.1004544.ref036" ref-type="bibr">36</xref>–<xref rid="pcbi.1004544.ref038" ref-type="bibr">38</xref>]. These various methods, on a range of cells, have found that the cell nucleus is generally 1–20 times stiffer than the cytoplasm. Typically the force-displacement relationship of each is non-linear, the stiffness increasing with strain. Interestingly, the apparent stiffness of the cell depends on the ‘spreading’ of the cell, stiffness increasing with cell spreading [<xref rid="pcbi.1004544.ref003" ref-type="bibr">3</xref>].</p>
+<p>We will demonstrate how our cell model can be calibrated to reproduce experimental data from microplate compression tests. The calibration will be performed in a bottom-up fashion, with the nucleus parameters being determined first, followed by the cytoplasm and membrane parameters. This way only a limited number of parameters are determined at each step. Caille et al. [<xref rid="pcbi.1004544.ref003" ref-type="bibr">3</xref>] performed strain-controlled compression of single cells between parallel plates with the top plate moving at a velocity of 0.25μm/s. He recorded force-displacement relationships for isolated nuclei, single whole rounded cells and whole spread cells. Although the data for the mechanical and physical properties is for endothelial cells, the values are typical of a wide range of cells including epithelial cells, as shown by several reviews [<xref rid="pcbi.1004544.ref003" ref-type="bibr">3</xref>,<xref rid="pcbi.1004544.ref036" ref-type="bibr">36</xref>–<xref rid="pcbi.1004544.ref038" ref-type="bibr">38</xref>].</p>
+<p>Experimental cell diameters were in the range of 10 to 15 μm, with a nucleus diameter range of 3 to 7 μm. In our model we created a cell having a 15 μm diameter with a 6 μm nucleus. The computational domain for a single cell is represented by 981 circular discrete elements (726 cytoplasm, 155 membrane and 100 nucleus discrete elements).</p>
+<p>The parameters of the cell model can be divided into three categories: parameters that define the elastic properties (Young’s modulus, attractive force and spring constant for nucleus and cytoplasm), parameters defining the dynamic behaviour (viscosity) and parameters that control the integrity of the cell (the spring constant of the membrane). Because the simulated experiments are quasi-static, the viscosity was mainly used to increase the critical time step and simulation stability. The spring constant of the membrane was chosen high enough to prevent seepage at the maximum deformation.</p>
+<p>We start the calibration of our cell model by first identifying the parameters of an isolated nucleus based on the available experimental data. The calibrated nucleus is then placed within either a round or a spread cell. The nucleus is categorized as a much stiffer organelle in comparison with the cellular cytoplasm, and acts as an important compression-bearing material within the cell [<xref rid="pcbi.1004544.ref039" ref-type="bibr">39</xref>].</p>
+<p>We simulated the strain-controlled compression experiments, with the total force acting on the moving plate used for direct comparison to the experimental data. Because our simulations are in 2D, while the experimental tests are in 3D, we extended our results to 3D by considering, in a first approximation, that the axisymmetric 3D object is equivalent with a collection of independent, identical 2D sections rotated around the symmetry axis. Therefore, the total force acting on the compression plate was computed as the sum of the contributions <italic>F</italic><sub><italic>I</italic></sub> from all the membrane particles <italic>I</italic> contacting the plate weighted with the number of particles that would be found at the position of particle <italic>I</italic> relative to the position of the axis of symmetry on the plate <bold>x</bold><sub><italic>C</italic></sub> when particle <italic>I</italic> is rotated to form a circle of particles around the axis of symmetry:
+<disp-formula id="pcbi.1004544.e022">
+<alternatives>
+<graphic id="pcbi.1004544.e022g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e022" xlink:type="simple"/>
+<mml:math display="block" id="M22" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>F</mml:mi><mml:mrow><mml:mi>p</mml:mi><mml:mi>l</mml:mi><mml:mi>a</mml:mi><mml:mi>t</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:munder><mml:mrow><mml:msup><mml:mstyle mathsize="140%" displaystyle="true"><mml:mo>∑</mml:mo></mml:mstyle><mml:mtext> </mml:mtext></mml:msup></mml:mrow><mml:mi>I</mml:mi></mml:munder><mml:msub><mml:mi>F</mml:mi><mml:mi>I</mml:mi></mml:msub><mml:mfrac><mml:mrow><mml:mn>2</mml:mn><mml:mi>π</mml:mi><mml:mo>|</mml:mo><mml:mo>|</mml:mo><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>x</mml:mi></mml:mstyle><mml:mi>I</mml:mi></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mstyle mathvariant="bold" mathsize="normal"><mml:mi>x</mml:mi></mml:mstyle><mml:mi>C</mml:mi></mml:msub><mml:mo>|</mml:mo><mml:mo>|</mml:mo></mml:mrow><mml:mrow><mml:msub><mml:mi>R</mml:mi><mml:mi>I</mml:mi></mml:msub></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(13)</label>
+</disp-formula></p>
+<p>The nucleus calibration results are presented in <xref rid="pcbi.1004544.t003" ref-type="table">Table 3</xref> and <xref rid="pcbi.1004544.g005" ref-type="fig">Fig 5</xref>. While the main parameter influencing the stiffness of the nucleus is the Young’s modulus of the constitutive particles, when Young’s modulus is modified other parameters need to be scaled accordingly (for example to prevent particle seepage through the cell membrane).</p>
+<table-wrap id="pcbi.1004544.t003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.t003</object-id>
+<label>Table 3</label> <caption><title>Nucleus calibration parameters used in the simulations.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004544.t003g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.t003" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="1" colspan="1">Parameter</th>
+<th align="center" rowspan="1" colspan="1">Symbol</th>
+<th align="center" rowspan="1" colspan="1">Unit</th>
+<th colspan="3" align="center" rowspan="1">Young’s modulus <italic>E</italic><sub><italic>N</italic></sub>, <italic>E</italic><sub><italic>NM</italic></sub> [kPa]</th>
+</tr>
+<tr>
+<th align="center" rowspan="1" colspan="1"/>
+<th align="center" rowspan="1" colspan="1"/>
+<th align="center" rowspan="1" colspan="1"/>
+<th align="center" rowspan="1" colspan="1">1</th>
+<th align="center" rowspan="1" colspan="1">5</th>
+<th align="center" rowspan="1" colspan="1">30</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" rowspan="1" colspan="1">Attractive force</td>
+<td align="center" rowspan="1" colspan="1"><inline-formula id="pcbi.1004544.e023"><alternatives><graphic id="pcbi.1004544.e023g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e023" xlink:type="simple"/><mml:math display="inline" id="M23" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>F</mml:mi></mml:mrow><mml:mrow><mml:mi>N</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula></td>
+<td align="center" rowspan="1" colspan="1">N</td>
+<td align="center" rowspan="1" colspan="1">5×10<sup>−12</sup></td>
+<td align="center" rowspan="1" colspan="1">5×10<sup>−12</sup></td>
+<td align="center" rowspan="1" colspan="1">2.5×10<sup>−11</sup></td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Spring constant</td>
+<td align="center" rowspan="1" colspan="1"><inline-formula id="pcbi.1004544.e024"><alternatives><graphic id="pcbi.1004544.e024g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e024" xlink:type="simple"/><mml:math display="inline" id="M24" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>N</mml:mi><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula></td>
+<td align="center" rowspan="1" colspan="1">N/m</td>
+<td align="center" rowspan="1" colspan="1">1×10<sup>−8</sup></td>
+<td align="center" rowspan="1" colspan="1">1×10<sup>−8</sup></td>
+<td align="center" rowspan="1" colspan="1">5×10<sup>−8</sup></td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Drag factor</td>
+<td align="center" rowspan="1" colspan="1"><italic>β</italic><sub><italic>N</italic></sub></td>
+<td align="center" rowspan="1" colspan="1">kg/s</td>
+<td align="center" rowspan="1" colspan="1">0.003</td>
+<td align="center" rowspan="1" colspan="1">0.003</td>
+<td align="center" rowspan="1" colspan="1">0.01</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<fig id="pcbi.1004544.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Cell nucleus calibration.</title>
+<p>Comparison between experimental and simulation results for different values for Young’s modulus of the nucleus particles. Experimental data taken from Caille et al. [<xref rid="pcbi.1004544.ref003" ref-type="bibr">3</xref>]. The behaviour of the nucleus is well represented by the chosen force expressions and corresponding fitted parameters over a large range of deformation.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.g005" position="float" xlink:type="simple"/>
+</fig>
+<p>The cell calibration results are presented in <xref rid="pcbi.1004544.t004" ref-type="table">Table 4</xref> and <xref rid="pcbi.1004544.g006" ref-type="fig">Fig 6</xref> for spread and round cells. The stiffness of the nucleus was matched with the desired stiffness of the cell (stiffer nucleus used in a stiffer cell, as specified in <xref rid="pcbi.1004544.t004" ref-type="table">Table 4</xref>).</p>
+<table-wrap id="pcbi.1004544.t004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.t004</object-id>
+<label>Table 4</label> <caption><title>Upper and lower limits of cell calibration parameters used in the simulations.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004544.t004g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.t004" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="1" colspan="1">Parameter</th>
+<th align="center" rowspan="1" colspan="1">Symbol</th>
+<th align="center" rowspan="1" colspan="1">Unit</th>
+<th colspan="4" align="center" rowspan="1">Young’s modulus <italic>E</italic><sub><italic>C</italic></sub>, <italic>E</italic><sub><italic>M</italic></sub> [kPa]</th>
+</tr>
+<tr>
+<th align="center" rowspan="1" colspan="1"/>
+<th align="center" rowspan="1" colspan="1"/>
+<th align="center" rowspan="1" colspan="1"/>
+<th colspan="2" align="center" rowspan="1">Spread cell</th>
+<th colspan="2" align="center" rowspan="1">Round cell</th>
+</tr>
+<tr>
+<th align="center" rowspan="1" colspan="1"/>
+<th align="center" rowspan="1" colspan="1"/>
+<th align="center" rowspan="1" colspan="1"/>
+<th align="center" rowspan="1" colspan="1">1</th>
+<th align="center" rowspan="1" colspan="1">2.25</th>
+<th align="center" rowspan="1" colspan="1">0.1</th>
+<th align="center" rowspan="1" colspan="1">1.5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" rowspan="1" colspan="1">Attractive force</td>
+<td align="center" rowspan="1" colspan="1"><inline-formula id="pcbi.1004544.e025"><alternatives><graphic id="pcbi.1004544.e025g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e025" xlink:type="simple"/><mml:math display="inline" id="M25" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>F</mml:mi></mml:mrow><mml:mrow><mml:mi>C</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula></td>
+<td align="center" rowspan="1" colspan="1">N</td>
+<td align="center" rowspan="1" colspan="1">2.5×10<sup>−12</sup></td>
+<td align="center" rowspan="1" colspan="1">5×10<sup>−12</sup></td>
+<td align="center" rowspan="1" colspan="1">5×10<sup>−13</sup></td>
+<td align="center" rowspan="1" colspan="1">2.5×10<sup>−12</sup></td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Attractive force</td>
+<td align="center" rowspan="1" colspan="1"><inline-formula id="pcbi.1004544.e026"><alternatives><graphic id="pcbi.1004544.e026g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e026" xlink:type="simple"/><mml:math display="inline" id="M26" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>F</mml:mi></mml:mrow><mml:mrow><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula></td>
+<td align="center" rowspan="1" colspan="1">N</td>
+<td align="center" rowspan="1" colspan="1">5×10<sup>−11</sup></td>
+<td align="center" rowspan="1" colspan="1">1×10<sup>−10</sup></td>
+<td align="center" rowspan="1" colspan="1">1×10<sup>−11</sup></td>
+<td align="center" rowspan="1" colspan="1">5×10<sup>−11</sup></td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Spring constant</td>
+<td align="center" rowspan="1" colspan="1"><inline-formula id="pcbi.1004544.e027"><alternatives><graphic id="pcbi.1004544.e027g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e027" xlink:type="simple"/><mml:math display="inline" id="M27" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup><mml:mo>,</mml:mo><mml:mi> </mml:mi><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>N</mml:mi><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula></td>
+<td align="center" rowspan="1" colspan="1">N/m</td>
+<td align="center" rowspan="1" colspan="1">5×10<sup>−9</sup></td>
+<td align="center" rowspan="1" colspan="1">1×10<sup>−8</sup></td>
+<td align="center" rowspan="1" colspan="1">1×10<sup>−9</sup></td>
+<td align="center" rowspan="1" colspan="1">5×10<sup>−9</sup></td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Young’s modulus</td>
+<td align="center" rowspan="1" colspan="1"><italic>E</italic><sub><italic>N</italic></sub></td>
+<td align="center" rowspan="1" colspan="1">kPa</td>
+<td align="center" rowspan="1" colspan="1">1</td>
+<td align="center" rowspan="1" colspan="1">25</td>
+<td align="center" rowspan="1" colspan="1">1</td>
+<td align="center" rowspan="1" colspan="1">25</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Drag factor</td>
+<td align="center" rowspan="1" colspan="1"><italic>β</italic><sub><italic>I</italic></sub></td>
+<td align="center" rowspan="1" colspan="1">kg/s</td>
+<td align="center" rowspan="1" colspan="1">0.002</td>
+<td align="center" rowspan="1" colspan="1">0.003</td>
+<td align="center" rowspan="1" colspan="1">0.001</td>
+<td align="center" rowspan="1" colspan="1">0.002</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<fig id="pcbi.1004544.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>Cell calibration.</title>
+<p>Comparison between experimental and simulation results for different values for Young’s modulus of the cytoplasm particles. a) Spread cell. b) Round cell. Experimental data taken from Caille et al. [<xref rid="pcbi.1004544.ref003" ref-type="bibr">3</xref>]. The behaviour of the cells is well represented by the chosen force expressions and corresponding fitted parameters over a large range of deformation.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.g006" position="float" xlink:type="simple"/>
+</fig>
+<p>As indicated by the grey-shaded region shown the above figures, the experimental force-displacement data shows considerable variation. Nevertheless, model parameters can be found to reproduce the observed behaviour of the nucleus and the whole cell, in both the round and spread configurations. Although the Young’s moduli <italic>E</italic><sub><italic>N</italic></sub> and <italic>E</italic><sub><italic>C</italic></sub> correspond to particles’ stiffness rather than to ‘continuum’ stiffness observed in experiments, their ratio is similar to the ratio of nucleus to whole cell stiffness observed in experiments. The apparent stiffness of the cell in the compression experiments varies between round and spread cells [<xref rid="pcbi.1004544.ref003" ref-type="bibr">3</xref>]. Our simulations reproduce this behaviour, showing stiffer spread cells for similar particle material properties.</p>
+<p>A comparison between the simulated compression experiments and the experimental results are presented in <xref rid="pcbi.1004544.g007" ref-type="fig">Fig 7</xref> for a spread cell and in <xref rid="pcbi.1004544.g008" ref-type="fig">Fig 8</xref> for a round cell. We notice the very good qualitative match between the simulation and the experimental results in terms of cell deformation behaviour.</p>
+<fig id="pcbi.1004544.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Spread cell compression based on <italic>E</italic><sub><italic>C</italic></sub> = 2.5 kPa and <italic>E</italic><sub><italic>N</italic></sub> = 25 kPa.</title>
+<p>The computational simulation results for a) 10%, b) 20% and c) 30% compression are compared against the experimental results from [<xref rid="pcbi.1004544.ref003" ref-type="bibr">3</xref>]. The spread cell geometry depicted was achieved using a spring constant <inline-formula id="pcbi.1004544.e028"><alternatives><graphic id="pcbi.1004544.e028g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e028" xlink:type="simple"/><mml:math display="inline" id="M28" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>B</mml:mi><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 1×10<sup>−11</sup> N/m and an influence radius <italic>δ</italic><sub><italic>BM</italic></sub> = 3μm for the BM. Very good match between the simulation and the experimental results can be observed.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.g007" position="float" xlink:type="simple"/>
+</fig>
+<fig id="pcbi.1004544.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>Round cell compression based on <italic>E</italic><sub><italic>C</italic></sub> = 1.0 kPa and <italic>E</italic><sub><italic>N</italic></sub> = 25 kPa.</title>
+<p>The computational simulation results for a) 10%, b) 20% and c) 30% compression are compared against the experimental results from [<xref rid="pcbi.1004544.ref003" ref-type="bibr">3</xref>]. Very good match between the simulation and the experimental results can be observed.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.g008" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec010">
+<title>Comparison to previous modelling approaches</title>
+<p>Key applications of modelling and simulation in computational biology are the development of explanatory models for both generating and testing of new hypothesis. In many such cases there are no quantitative experimental data that can be used for comparison to the predictions of the model; nevertheless, there are competing modelling approaches which provide some data for validating a new model. In this section we demonstrate how the proposed modelling framework can be used to solve several cell biomechanics problems and compare our results to those obtained using competing modelling approaches.</p>
+</sec>
+<sec id="sec011">
+<title>Regulating cell shape in epithelial layers</title>
+<p>These experiments demonstrate the possibility to regulate cell shape in a cell layer by changing the properties of membrane particles and basement membrane (<xref rid="pcbi.1004544.g009" ref-type="fig">Fig 9</xref>). Similar to the adhesion to the basement membrane, which regulates the spreading of cells, adhesion between cells (e.g. via cadherins) can be easily controlled by modifying the spring constant <inline-formula id="pcbi.1004544.e029"><alternatives><graphic id="pcbi.1004544.e029g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e029" xlink:type="simple"/><mml:math display="inline" id="M29" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> and an influence radius <italic>δ</italic><sub><italic>M</italic></sub> for the membrane. The influence radius <italic>δ</italic><sub><italic>M</italic></sub> for the membrane is set to be short (0.2 microns), reflecting the short-range interactions of membrane bound cadherin molecules. However, it could be increased to represent cell projections if required in the simulation.</p>
+<fig id="pcbi.1004544.g009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.g009</object-id>
+<label>Fig 9</label>
+<caption>
+<title>Influence of membrane and basement membrane spring constants on cell shapes in an epithelial layer.</title>
+<p>In all cases the influence radii are <italic>δ</italic><sub><italic>BM</italic></sub> = 2μm and <italic>δ</italic><sub><italic>M</italic></sub> = 0.2μm. Increasing the adhesion to the basement membrane (<inline-formula id="pcbi.1004544.e030"><alternatives><graphic id="pcbi.1004544.e030g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e030" xlink:type="simple"/><mml:math display="inline" id="M30" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>B</mml:mi><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula>) leads to spread cells, while increasing adhesion between cells (<inline-formula id="pcbi.1004544.e031"><alternatives><graphic id="pcbi.1004544.e031g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e031" xlink:type="simple"/><mml:math display="inline" id="M31" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula>) leads to cells with a columnar appearance.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.g009" position="float" xlink:type="simple"/>
+</fig>
+<p>Increasing the adhesion to the basement membrane leads to spread cells, while increasing adhesion between cells leads to cells with a columnar appearance. These results are in correlations with the results presented in [<xref rid="pcbi.1004544.ref040" ref-type="bibr">40</xref>], where cells in an epithelial sheet were modelled as hexagonal prisms. Nevertheless, while in [<xref rid="pcbi.1004544.ref040" ref-type="bibr">40</xref>] the shape of a given cell is obtained by minimizing a carefully constructed energy function, in our framework the shape of the cell is controlled by direct modification of the adhesion parameters and the interaction between cell’s membrane and the environment. Also, the modelling approach presented in [<xref rid="pcbi.1004544.ref040" ref-type="bibr">40</xref>] induces epithelial sheet deformation by modifying the shape of the cells, without considering the influence of external stresses. Our approach allows the computation of epithelial sheet deformation under external stresses, such as those induced by cell proliferation, as we will show in the following section.</p>
+</sec>
+<sec id="sec012">
+<title>Epithelial sheet deformation</title>
+<p>Proliferation and reorganisation of the cells in epithelial tissues has an important role in the biological functions of the human body including the process of early vertebrate development [<xref rid="pcbi.1004544.ref041" ref-type="bibr">41</xref>], precise regulatory process and renewal of the colonic epithelial cell wall [<xref rid="pcbi.1004544.ref014" ref-type="bibr">14</xref>], as well as pancreatic islet development [<xref rid="pcbi.1004544.ref042" ref-type="bibr">42</xref>]. The mechanical disturbance caused by epithelial cells pushing against one another is not well studied. This section presents simulation results of the behaviour of an epithelial layers of cells under compression (possibly by newly generated cells e.g. as might occur during migration of cells along a colonic crypt [<xref rid="pcbi.1004544.ref014" ref-type="bibr">14</xref>,<xref rid="pcbi.1004544.ref043" ref-type="bibr">43</xref>]). The compression leads to the reorganisation of cell particles, resulting in changes of the shape and position of the cells.</p>
+<p>In many epithelial layers the connectivity between cells via cadherin and other mechanisms is critical to the function of the tissue, as it ensures the integrity of the epithelial barrier [<xref rid="pcbi.1004544.ref044" ref-type="bibr">44</xref>]. Cadherins are also known to be important for cell sorting and the epithelial-mesenchymal transitions. In the following simulation we investigate the effect of a loss or gain of cadherin cell-cell adhesion strength in an epithelial layer under mechanical stress, simply by adjusting the adhesion parameters. Later we will also explore the effect of the position of the nucleus within the cell on the deformation response of an epithelial layer.</p>
+<p>Our model consists of 20 cells placed on a basement membrane. The compression of this cell layer is simulated using a rigid vertical wall, initially on the far left, which moves from left to right, while a rigid vertical wall on the far right is kept static. The rate of compression used is 0.25 μm/s. The simulation results for different adhesion settings are presented in <xref rid="pcbi.1004544.g010" ref-type="fig">Fig 10</xref>.</p>
+<fig id="pcbi.1004544.g010" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.g010</object-id>
+<label>Fig 10</label>
+<caption>
+<title>Deformation of a single epithelial layer.</title>
+<p>a) Control state (<inline-formula id="pcbi.1004544.e032"><alternatives><graphic id="pcbi.1004544.e032g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e032" xlink:type="simple"/><mml:math display="inline" id="M32" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>B</mml:mi><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 1×10<sup>−11</sup> N/m, <italic>δ</italic><sub><italic>BM</italic></sub> = 0.3 μm, <inline-formula id="pcbi.1004544.e033"><alternatives><graphic id="pcbi.1004544.e033g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e033" xlink:type="simple"/><mml:math display="inline" id="M33" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 5x10<sup>-10</sup> N/m, <italic>δ</italic><sub><italic>M</italic></sub> = 0.2 μm). At 40% compression a single buckle emerges. b) By increasing the BM adhesion (<inline-formula id="pcbi.1004544.e034"><alternatives><graphic id="pcbi.1004544.e034g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e034" xlink:type="simple"/><mml:math display="inline" id="M34" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>B</mml:mi><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 1×10<sup>−10</sup> N/m, <italic>δ</italic><sub><italic>BM</italic></sub> = 0.4 μm) and using the same cell-cell adhesion parameters the buckling is suppressed. c) Reducing BM and cell-cell adhesion (<inline-formula id="pcbi.1004544.e035"><alternatives><graphic id="pcbi.1004544.e035g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e035" xlink:type="simple"/><mml:math display="inline" id="M35" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>B</mml:mi><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 1×10<sup>−12</sup> N/m, <italic>δ</italic><sub><italic>BM</italic></sub> = 0.2 μm, <inline-formula id="pcbi.1004544.e036"><alternatives><graphic id="pcbi.1004544.e036g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e036" xlink:type="simple"/><mml:math display="inline" id="M36" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 5x10<sup>-12</sup> N/m, <italic>δ</italic><sub><italic>M</italic></sub> = 0.1 μm) causes the cell layer to cascade quickly and easily without any resistance. d) Increasing the BM adhesion and weakening the cell-cell adhesion (<inline-formula id="pcbi.1004544.e037"><alternatives><graphic id="pcbi.1004544.e037g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e037" xlink:type="simple"/><mml:math display="inline" id="M37" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>B</mml:mi><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 5x10<sup>-10</sup> N/m, <italic>δ</italic><sub><italic>BM</italic></sub> = 0.2 μm, <inline-formula id="pcbi.1004544.e038"><alternatives><graphic id="pcbi.1004544.e038g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e038" xlink:type="simple"/><mml:math display="inline" id="M38" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 5x10<sup>-11</sup> N/m, <italic>δ</italic><sub><italic>M</italic></sub> = 0.1 μm) results in the budding of a cell from the layer of cells.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.g010" position="float" xlink:type="simple"/>
+</fig>
+<p>With an intermediate cell-cell adhesion and cell-basement membrane adhesion we see that the row of cells is predicted to buckle above the basement membrane (<xref rid="pcbi.1004544.g010" ref-type="fig">Fig 10a</xref>). A single-buckle develops at 40% compression. Theoretically buckling is the result of a local instability reflected by a bifurcation in the mathematical solution to the equations of static equilibrium (supplemented with appropriate constitutive equations). Traditionally the solutions to column and plate buckling are known as Euler buckling solutions. Higher buckling modes are obtained when the column or plate is suitably laterally restrained at various locations. Buckling of an epithelial layer has been theoretically studied previously and is relevant to morphogenesis and epithelial carcinogenesis [<xref rid="pcbi.1004544.ref045" ref-type="bibr">45</xref>–<xref rid="pcbi.1004544.ref048" ref-type="bibr">48</xref>].</p>
+<p>Although cells adhere to the basement membrane with a relatively weak (lateral) force, a progressive build up in longitudinal stress due to the compression (or cell growth) is relieved by the precipitation of a wrinkle or buckle. Cells within the buckle then detach from the basement membrane and move laterally. The shape of the buckle is determined by the ability of the cells to maintain a bending stiffness across the cell-cell contact, which is influenced by the membrane particles’ adhesion parameters (<xref rid="pcbi.1004544.g011" ref-type="fig">Fig 11</xref>).</p>
+<fig id="pcbi.1004544.g011" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.g011</object-id>
+<label>Fig 11</label>
+<caption>
+<title>Influence of adhesion parameters on the shape of the buckle.</title>
+<p>a) Weak BM adhesion (BMa) and weak cell-cell adhesion (CCa) (<inline-formula id="pcbi.1004544.e039"><alternatives><graphic id="pcbi.1004544.e039g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e039" xlink:type="simple"/><mml:math display="inline" id="M39" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>B</mml:mi><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 1×10<sup>−11</sup> N/m, <italic>δ</italic><sub><italic>BM</italic></sub> = 0.1 μm, <inline-formula id="pcbi.1004544.e040"><alternatives><graphic id="pcbi.1004544.e040g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e040" xlink:type="simple"/><mml:math display="inline" id="M40" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 1x10<sup>-11</sup> N/m, <italic>δ</italic><sub><italic>M</italic></sub> = 0.1 μm). b) Weak BM adhesion and strong cell-cell adhesion (<inline-formula id="pcbi.1004544.e041"><alternatives><graphic id="pcbi.1004544.e041g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e041" xlink:type="simple"/><mml:math display="inline" id="M41" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>B</mml:mi><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 1×10<sup>−11</sup> N/m, <italic>δ</italic><sub><italic>BM</italic></sub> = 0.1 μm, <inline-formula id="pcbi.1004544.e042"><alternatives><graphic id="pcbi.1004544.e042g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e042" xlink:type="simple"/><mml:math display="inline" id="M42" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 1x10<sup>-9</sup> N/m, <italic>δ</italic><sub><italic>M</italic></sub> = 0.3 μm). c) Strong BM adhesion and weak cell-cell adhesion (<inline-formula id="pcbi.1004544.e043"><alternatives><graphic id="pcbi.1004544.e043g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e043" xlink:type="simple"/><mml:math display="inline" id="M43" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>B</mml:mi><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 1×10<sup>−9</sup> N/m, <italic>δ</italic><sub><italic>BM</italic></sub> = 0.3 μm, <inline-formula id="pcbi.1004544.e044"><alternatives><graphic id="pcbi.1004544.e044g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e044" xlink:type="simple"/><mml:math display="inline" id="M44" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 1x10<sup>-11</sup> N/m, <italic>δ</italic><sub><italic>M</italic></sub> = 0.1 μm). d) Strong BM adhesion and strong cell-cell adhesion (<inline-formula id="pcbi.1004544.e045"><alternatives><graphic id="pcbi.1004544.e045g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e045" xlink:type="simple"/><mml:math display="inline" id="M45" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>B</mml:mi><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 1×10<sup>−9</sup> N/m, <italic>δ</italic><sub><italic>BM</italic></sub> = 0.3 μm, <inline-formula id="pcbi.1004544.e046"><alternatives><graphic id="pcbi.1004544.e046g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e046" xlink:type="simple"/><mml:math display="inline" id="M46" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 1x10<sup>-9</sup> N/m, <italic>δ</italic><sub><italic>M</italic></sub> = 0.3 μm). The adhesion parameters influence both the shape of the cells and the deformation of the epithelial layer.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.g011" position="float" xlink:type="simple"/>
+</fig>
+<p>With an increase in the attachment strength of the cells to the basement membrane, the sheet of cells is vertically restrained and buckling is suppressed (<xref rid="pcbi.1004544.g010" ref-type="fig">Fig 10b</xref>). No buckling is seen for strong BM adherence even at 40% compression. Instead the cells are squashed and observed to become ‘columnar’ in appearance (i.e. cells become tall and narrow, with elongated nuclei and a rounded top).</p>
+<p>A decreased BM adhesion and cell-cell adhesion leads to bigger gaps in between cells at the basement where they rest. With the vertical restraint reduced, a higher buckling mode with 3 buckles develops at 40% compression (<xref rid="pcbi.1004544.g010" ref-type="fig">Fig 10c</xref>). This observed behaviour is qualitatively consistent with the Euler buckling theory.</p>
+<p>We have also tested the influence of the number of cells and the drag factor on the buckling behaviour. Increasing the number of cells leads to the formation of higher buckling modes (the longer membrane tends to buckle at more points along its length). An increase in the drag factor leads to a shift of the buckle towards the moving wall, as motion does not propagate as fast from cell to cell due to the increased drag forces.</p>
+<p>There have been several papers dedicated to modelling the buckling of epithelial layers. In [<xref rid="pcbi.1004544.ref049" ref-type="bibr">49</xref>] the authors used a continuum approach, creating a 2D model of an epithelial layer consisting of a beam connected to the underlying BM using viscoelastic springs. They studied the influence of different parameters (rate of growth, adhesion to BM) on the initiation of tissue buckling, but did not describe the shape or evolution of nonlinear post-buckled states. The approach was extended to the nonlinear regime in [<xref rid="pcbi.1004544.ref046" ref-type="bibr">46</xref>], combined with a study of the effect of growth-induced buckling of an epithelial layer on a thin substrate using a bilayer beam. When using the continuum approach, the buckling states of the system are determined from the minimisation of the system’s energy, and therefore a mathematical model of the system needs to be created; this makes the extension to 3D difficult. The approach cannot easily incorporate changes in the system (such as evolving contacts between cells and BM or between different cells in the epithelial layer), the parameters defining the system have little biological meaning (such as the bending stiffness of the beam), and does not provide any insight into how individual cells are affected by the buckling of the layer. Our modelling approach easily overcomes all these limitations.</p>
+<p>Another approach in modelling epithelial layer deformation uses discrete, off-lattice cell-centre modelling approach [<xref rid="pcbi.1004544.ref050" ref-type="bibr">50</xref>]. In this approach cell centres are defined as nodes which evolve spatially according to an off-lattice definition of cell–cell mechanics. Spatial connectivity is determined by a Delaunay triangulation of cell centres, and the corresponding cell shapes are subsequently defined by the dual Voronoi tessellation. The interaction between the cells connected by the triangulation is modelled as linear springs. This model considers a deformable BM and includes its influence on the epithelial sheet deformation, but does not allow the two layers to separate. The model makes the same predictions regarding the influence of the cell-cell adhesion and cell-BM adhesion on the initiation of buckling and the shape of the compressed cells. The use of a triangulation to determine cell interactions means that new Delaunay triangulations need to be generated after cells change their position, therefore the approach does not scale well for large number of cells and in 3D. Cell shapes are only approximated by the Voronoi tessellation. While our model can perform all these tasks, it can also give a more accurate indication on what happens at cellular level.</p>
+<p>To demonstrate the capability of our model to give insights on the effect of cell’s geometry on the behaviour of a biological system, a capability that is lacking in the previously used models, we will investigate the effect of cell polarisation on the buckling of an epithelial layer. In the colonic crypt epithelial cells are polarised. Following polarisation, it is observed that the nucleus sits at the bottom of the cell near the basement membrane [<xref rid="pcbi.1004544.ref051" ref-type="bibr">51</xref>]. It could be argued that polarisation has the advantage of facilitating secretory activity by the cell, that it may provide a greater signalling interaction to the underlying stroma, or it may protect the nucleus from environmental toxins generated by microorganisms in the luminal environment. But here we wish to test a fourth option, that there is a mechanical advantage to having a cell nucleus close to the basement membrane. We adjusted the initial nucleus height relative to the basement membrane (<xref rid="pcbi.1004544.g012" ref-type="fig">Fig 12</xref>) and performed a compression test on the cell layer. The results show that the buckling takes place much more easily for nuclei positioned higher away from the base, whereas buckling is delayed when nuclei are positioned nearer to the base. If a buckle does occur in the latter case, the buckle tends to be smaller and of lower amplitude. This suggests that in the colonic crypt the position of the nucleus at the base of the cell reduces the likelihood of buckling. Although not shown here, we have observed in our simulations that buckling tends to occur more readily when the nuclei positions are more variable relative to one another in an epithelial layer. It is noted that dysplastic cells tend to have more nuclear variability [<xref rid="pcbi.1004544.ref052" ref-type="bibr">52</xref>].</p>
+<fig id="pcbi.1004544.g012" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004544.g012</object-id>
+<label>Fig 12</label>
+<caption>
+<title>Influence of nuclei position on the behaviour of a cell layer under 40% compression.</title>
+<p>a) Elevated nuclei position facilitates buckling. b) Nuclei positioned near the BM suppresses buckling. The BM and cell-cell adhesion parameters are given by <inline-formula id="pcbi.1004544.e047"><alternatives><graphic id="pcbi.1004544.e047g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e047" xlink:type="simple"/><mml:math display="inline" id="M47" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>B</mml:mi><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 1×10<sup>−11</sup> N/m, <italic>δ</italic><sub><italic>BM</italic></sub> = 0.3 μm, <inline-formula id="pcbi.1004544.e048"><alternatives><graphic id="pcbi.1004544.e048g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.e048" xlink:type="simple"/><mml:math display="inline" id="M48" overflow="scroll"><mml:msubsup><mml:mrow><mml:mi>k</mml:mi></mml:mrow><mml:mrow><mml:mi>M</mml:mi></mml:mrow><mml:mrow><mml:mi>a</mml:mi></mml:mrow></mml:msubsup></mml:math></alternatives></inline-formula> = 5x10<sup>-10</sup> N/m, <italic>δ</italic><sub><italic>M</italic></sub> = 0.2 μm. The position of the nucleus at the base of the cell reduces the likelihood of buckling.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004544.g012" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+</sec>
+<sec id="sec013" sec-type="conclusions">
+<title>Discussion</title>
+<p>In this paper we present a framework for modelling biological tissues based on discrete particles. The cell and tissue models consist of a collection of particle types and a set of simple interactions between particles. The particles interactions are controlled by parameters define at particle level, which simplifies the implementation of the computational framework. An explicit solution method leads to an algorithm easy to implement on parallel hardware, such as GPU.</p>
+<p>We have shown that an agent-based cell model with approx. 900 particles per cell can produce realistic cell morphologies that bear a remarkable resemblance to histological observations of cells <italic>in situ</italic>. By using just four particle types for each cell and defining a range of simple interactions between the particles types it is possible for our cell model to be calibrated to simulate mechanical loading experiments with great accuracy.</p>
+<p>The cell model is able to reproduce key cell features observed in vitro and in vivo, such as cell rounding when the cell is suspended in a solution, cell attachment when a basement membrane is close by and variable spreading of the cell upon attachment to the basement membrane [<xref rid="pcbi.1004544.ref034" ref-type="bibr">34</xref>]. Consistent with experimental data, our cell model predicts an increase in cell stiffness when the cell is attached to a basement membrane, cell stiffness increasing with cell spreading [<xref rid="pcbi.1004544.ref003" ref-type="bibr">3</xref>].</p>
+<p>The single cells can be assembled into sheets of cells with a variety of morphologies. We have studied the behaviour of a layer of cells under compression and shown that cell layer buckling behaviour can be significantly changed by modifying simple particle parameters.</p>
+<p>Finally, we have shown that cell polarisation can reduce the likelihood of buckling of a sheet of cells. This raises the intriguing possibility that polarisation may not only be significant in signalling and secretory functions of cells, but also contribute to the mechanical stability of the cell sheet.</p>
+<p>Cell behaviour and interactions between multiple cells or with the cell’s environment is complicated, involving many processes. There is a need to develop integrative tools to enable a system level understanding of these processes that are so critical to tissue development, homeostasis and disease. In this paper we have presented a discrete particle-based simulation framework and showed how, with relative simple adjustments to model parameters, we can reproduce cell mechanics, cell shape, histological aspects of epithelial geometries (e.g. columnar and squamous epithelia) and the onset of epithelial delamination from a basement membrane. Although we have primarily focussed on biomechanical aspects, we believe it is possible to incorporate chemical contributions to cell behaviour born from cell communication, as presented in [<xref rid="pcbi.1004544.ref015" ref-type="bibr">15</xref>]. Agent based fibrils can be easily incorporated in the framework [<xref rid="pcbi.1004544.ref053" ref-type="bibr">53</xref>]. Cell motility can be simulated by including tangential forces between the cell membrane and the BM particles. Cell proliferation and death can be incorporated in the framework, as well as sub-cellular particles which can move in the inter-cellular space or even diffuse through the cells. Therefore we consider this as a promising path to realistic, multiscale simulations of complex biological phenomena, with the potential to model a variety of mechanical and chemical interactions.</p>
+</sec>
+</body>
+<back>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004544.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kamgoué</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Ohayon</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Tracqui</surname> <given-names>P</given-names></name> (<year>2007</year>) <article-title>Estimation of cell Young's modulus of adherent cells probed by optical and magnetic tweezers: influence of cell thickness and bead immersion</article-title>. <source>J Biomech Eng</source> <volume>129</volume>: <fpage>523</fpage>–<lpage>530</lpage>. <object-id pub-id-type="pmid">17655473</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zamir</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Taber</surname> <given-names>L</given-names></name> (<year>2004</year>) <article-title>Material properties and residual stress in the stage 12 chick heart during cardiac looping</article-title>. <source>J Biomech Eng</source> <volume>126</volume>: <fpage>823</fpage>–<lpage>830</lpage>. <object-id pub-id-type="pmid">15796341</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Caille</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Thoumine</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Tardy</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Meister</surname> <given-names>J-J</given-names></name> (<year>2002</year>) <article-title>Contribution of the nucleus to the mechanical properties of endothelial cells</article-title>. <source>Journal of Biomechanics</source> <volume>35</volume> <fpage>177</fpage>–<lpage>187</lpage>. <object-id pub-id-type="pmid">11784536</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vaziri</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Lee</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Mofrad</surname> <given-names>MRK</given-names></name> (<year>2006</year>) <article-title>Deformation of the cell nucleus under indentation: Mechanics and mechanisms</article-title>. <source>J Mater Res</source> <volume>21</volume>: <fpage>2126</fpage>–<lpage>2135</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bidhendi</surname> <given-names>AJ</given-names></name>, <name name-style="western"><surname>Korhonen</surname> <given-names>RK</given-names></name> (<year>2012</year>) <article-title>A Finite Element Study of Micropipette Aspiration of Single Cells: Effect of Compressibility</article-title>. <source>Computational and Mathematical Methods in Medicine</source> 2012 <fpage>192618</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1155/2012/192618" xlink:type="simple">10.1155/2012/192618</ext-link></comment> <object-id pub-id-type="pmid">22400045</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mengoni</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Ponthot</surname> <given-names>JP</given-names></name> (<year>2015</year>) <article-title>An enhanced version of a bone-remodelling model based on the continuum damage mechanics theory</article-title>. <source>Computer Methods in Biomechanics and Biomedical Engineering</source> <volume>18</volume>: <fpage>1367</fpage>–<lpage>1376</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1080/10255842.2014.903933" xlink:type="simple">10.1080/10255842.2014.903933</ext-link></comment> <object-id pub-id-type="pmid">24697274</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Halloran</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Sibole</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>van Donkelaar</surname> <given-names>CC</given-names></name>, <name name-style="western"><surname>van Turnhout</surname> <given-names>MC</given-names></name>, <name name-style="western"><surname>Oomens</surname> <given-names>CW</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Multiscale mechanics of articular cartilage: potentials and challenges of coupling musculoskeletal, joint, and microscale computational models</article-title>. <source>Annals of Biomedical Engineering</source> <volume>40</volume>: <fpage>2456</fpage>–<lpage>2474</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10439-012-0598-0" xlink:type="simple">10.1007/s10439-012-0598-0</ext-link></comment> <object-id pub-id-type="pmid">22648577</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gardiner</surname> <given-names>BS</given-names></name>, <name name-style="western"><surname>Tordesillas</surname> <given-names>A</given-names></name> (<year>2005</year>) <article-title>The link between discrete and continuous modeling of liquid foam at the level of a single bubble</article-title>. <source>Journal of Rheology</source> <volume>49</volume>: <fpage>819</fpage>–<lpage>838</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gardiner</surname> <given-names>BS</given-names></name>, <name name-style="western"><surname>Dlugogorski</surname> <given-names>BZ</given-names></name>, <name name-style="western"><surname>Jameson</surname> <given-names>GJ</given-names></name> (<year>2000</year>) <article-title>The steady shear of three-dimensional wet polydisperse foams</article-title>. <source>Journal of Non-Newtonian Fluid Mechanics</source> <volume>92</volume>: <fpage>151</fpage>–<lpage>166</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tordesillas</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Peters</surname> <given-names>JF</given-names></name>, <name name-style="western"><surname>Gardiner</surname> <given-names>BS</given-names></name> (<year>2004</year>) <article-title>Shear band evolution and accumulated microstructural development in Cosserat media</article-title>. <source>International Journal for Numerical and Analytical Methods in Geomechanics</source> <volume>28</volume>: <fpage>981</fpage>–<lpage>1010</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Azuaje</surname> <given-names>F</given-names></name> (<year>2010</year>) <article-title>Computational discrete models of tissue growth and regeneration</article-title>. <source>Briefings in Bioinformatics</source> <volume>12</volume>: <fpage>64</fpage>–<lpage>77</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bib/bbq017" xlink:type="simple">10.1093/bib/bbq017</ext-link></comment> <object-id pub-id-type="pmid">20513669</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Walker</surname> <given-names>DC</given-names></name>, <name name-style="western"><surname>Southgate</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Hill</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Holcombe</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Hose</surname> <given-names>DR</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>The epitheliome: agent-based modelling of the social behaviour of cells</article-title>. <source>BioSystems</source> <volume>76</volume>: <fpage>89</fpage>–<lpage>100</lpage>. <object-id pub-id-type="pmid">15351133</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Machado</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Costa</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Rocha</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Ferreira</surname> <given-names>EC</given-names></name>, <name name-style="western"><surname>Tidor</surname> <given-names>B</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Modeling formalisms in Systems Biology</article-title>. <source>AMB Express</source> <volume>1</volume>: <fpage>45</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/2191-0855-1-45" xlink:type="simple">10.1186/2191-0855-1-45</ext-link></comment> <object-id pub-id-type="pmid">22141422</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Van der Wath</surname> <given-names>RC</given-names></name>, <name name-style="western"><surname>Gardiner</surname> <given-names>BS</given-names></name>, <name name-style="western"><surname>Burgess</surname> <given-names>AW</given-names></name>, <name name-style="western"><surname>Smith</surname> <given-names>DS</given-names></name> (<year>2013</year>) <article-title>Cell organisation in the colonic crypt: a theoretical comparison of the pedigree and niche concepts</article-title>. <source>PLoS ONE</source> <volume>8</volume>: <fpage>e73204</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0073204" xlink:type="simple">10.1371/journal.pone.0073204</ext-link></comment> <object-id pub-id-type="pmid">24069177</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Buske</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Galle</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Barker</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Aust</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Clevers</surname> <given-names>H</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>A Comprehensive Model of the Spatio-Temporal Stem Cell and Tissue Organisation in the Intestinal Crypt</article-title>. <source>PLoS Computational Biology</source> <volume>7</volume>: <fpage>e1001045</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1001045" xlink:type="simple">10.1371/journal.pcbi.1001045</ext-link></comment> <object-id pub-id-type="pmid">21253562</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>van Leeuwen</surname> <given-names>IMM</given-names></name>, <name name-style="western"><surname>Mirams</surname> <given-names>GR</given-names></name>, <name name-style="western"><surname>Walter</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Fletcher</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Murray</surname> <given-names>P</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>An integrative computational model for intestinal tissue renewal</article-title>. <source>Cell Proliferation</source> <volume>42</volume>: <fpage>617</fpage>–<lpage>636</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1365-2184.2009.00627.x" xlink:type="simple">10.1111/j.1365-2184.2009.00627.x</ext-link></comment> <object-id pub-id-type="pmid">19622103</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Adra</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Sun</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>MacNeil</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Holcombe</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Smallwood</surname> <given-names>R</given-names></name> (<year>2010</year>) <article-title>Development of a three dimensional multiscale computational model of the human epidermis</article-title>. <source>PLoS ONE</source> <volume>5</volume>: <fpage>e8511</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0008511" xlink:type="simple">10.1371/journal.pone.0008511</ext-link></comment> <object-id pub-id-type="pmid">20076760</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rejniak</surname> <given-names>KA</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>SE</given-names></name>, <name name-style="western"><surname>Bryce</surname> <given-names>NS</given-names></name>, <name name-style="western"><surname>Chang</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Parvin</surname> <given-names>B</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Linking changes in epithelial morphogenesis to cancer mutations using computational modeling</article-title>. <source>PLoS Computational Biology</source> <volume>6</volume>: <fpage>e1000900</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1000900" xlink:type="simple">10.1371/journal.pcbi.1000900</ext-link></comment> <object-id pub-id-type="pmid">20865159</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Birch</surname> <given-names>CM</given-names></name>, <name name-style="western"><surname>Sagotsky</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Deisboeck</surname> <given-names>TS</given-names></name> (<year>2009</year>) <article-title>Cross-scale, cross-pathway evaluation using an agent-based non-small cell lung cancer model</article-title>. <source>Bioinformatics</source> <volume>25</volume>: <fpage>2389</fpage>–<lpage>2396</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btp416" xlink:type="simple">10.1093/bioinformatics/btp416</ext-link></comment> <object-id pub-id-type="pmid">19578172</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Guillaud</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Clem</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>MacAulay</surname> <given-names>C</given-names></name> (<year>2010</year>) <article-title>An in silico platform for the study of epithelial pre-invasive neoplastic development</article-title>. <source>BioSystems</source> <volume>102</volume>: <fpage>22</fpage>–<lpage>31</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.biosystems.2010.07.008" xlink:type="simple">10.1016/j.biosystems.2010.07.008</ext-link></comment> <object-id pub-id-type="pmid">20655357</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kim</surname> <given-names>SHJ</given-names></name>, <name name-style="western"><surname>Debnath</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Mostov</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Park</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Hunt</surname> <given-names>CA</given-names></name> (<year>2009</year>) <article-title>A computational approach to resolve cell level contributions to early glandular epithelial cancer progression</article-title>. <source>BMC Systems Biology</source> <volume>3</volume>: <fpage>122</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1752-0509-3-122" xlink:type="simple">10.1186/1752-0509-3-122</ext-link></comment> <object-id pub-id-type="pmid">20043854</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Macklin</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Edgerton</surname> <given-names>ME</given-names></name>, <name name-style="western"><surname>Thompson</surname> <given-names>AM</given-names></name>, <name name-style="western"><surname>Cristini</surname> <given-names>V</given-names></name> (<year>2012</year>) <article-title>Patient-calibrated agent-based modelling of ductal carcinoma in situ (DCIS): From microscopic measurements to macroscopic predictions of clinicalprogression</article-title>. <source>Journal of Theoretical Biology</source> <volume>301</volume>: <fpage>122</fpage>–<lpage>140</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jtbi.2012.02.002" xlink:type="simple">10.1016/j.jtbi.2012.02.002</ext-link></comment> <object-id pub-id-type="pmid">22342935</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Thorne</surname> <given-names>BC</given-names></name>, <name name-style="western"><surname>Bailey</surname> <given-names>AM</given-names></name>, <name name-style="western"><surname>Peirce</surname> <given-names>SM</given-names></name> (<year>2007</year>) <article-title>Combining experiments with multi-cell agent-based modeling to study biological tissue patterning</article-title>. <source>Briefings in Bioinformatics</source> <volume>8</volume>: <fpage>245</fpage>–<lpage>257</lpage>. <object-id pub-id-type="pmid">17584763</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Setty</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Cohen</surname> <given-names>IR</given-names></name>, <name name-style="western"><surname>Dor</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Harel</surname> <given-names>D</given-names></name> (<year>2008</year>) <article-title>Four-dimensional realistic modeling of pancreatic organogenesis</article-title>. <source>PNAS</source> <volume>105</volume>: <fpage>20374</fpage>–<lpage>20379</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0808725105" xlink:type="simple">10.1073/pnas.0808725105</ext-link></comment> <object-id pub-id-type="pmid">19091945</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Macal</surname> <given-names>CM</given-names></name>, <name name-style="western"><surname>North</surname> <given-names>MJ</given-names></name> (<year>2010</year>) <article-title>Tutorial on agent-based modelling and simulation</article-title>. <source>J of Sim</source> <volume>4</volume>: <fpage>151</fpage>–<lpage>162</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Luding</surname> <given-names>S</given-names></name> (<year>2008</year>) <article-title>Introduction to discrete element methods</article-title>. <source>European Journal of Environmental and Civil Engineering</source> <volume>12</volume>: <fpage>785</fpage>–<lpage>826</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lindahl</surname> <given-names>ER</given-names></name> (<year>2008</year>) <article-title>Molecular dynamics simulations</article-title>. <source>Methods in Molecular Biology</source> <volume>443</volume>: <fpage>3</fpage>–<lpage>23</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/978-1-59745-177-2_1" xlink:type="simple">10.1007/978-1-59745-177-2_1</ext-link></comment> <object-id pub-id-type="pmid">18446279</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liu</surname> <given-names>MB</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>GR</given-names></name> (<year>2010</year>) <article-title>Smoothed Particle Hydrodynamics (SPH): an Overview and Recent Developments</article-title>. <source>Archives of Computational Methods in Engineering</source> <volume>17</volume>: <fpage>25</fpage>–<lpage>76</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Joldes</surname> <given-names>GR</given-names></name>, <name name-style="western"><surname>Wittek</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Miller</surname> <given-names>K</given-names></name> (<year>2010</year>) <article-title>Real-Time Nonlinear Finite Element Computations on GPU—Application to Neurosurgical Simulation</article-title>. <source>Computer Methods in Applied Mechanics and Engineering</source> <volume>199</volume>: <fpage>3305</fpage>–<lpage>3314</lpage>. <object-id pub-id-type="pmid">21179562</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Donzé</surname> <given-names>FV</given-names></name>, <name name-style="western"><surname>Richefeu</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Magnier</surname> <given-names>S-A</given-names></name> (<year>2009</year>) <article-title>Advances in discrete element method applied to soil, rock and concrete mechanics</article-title>. <source>State of the art of geotechnical engineering Electronic Journal of Geotechnical Engineering</source> <volume>44</volume>: <fpage>31</fpage>.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Verlet</surname> <given-names>L</given-names></name> (<year>1967</year>) <article-title>Computer "Experiments" on Classical Fluids. I. Thermodynamical Properties of Lennard—Jones Molecules</article-title>. <source>Physical Review</source> <volume>159</volume>: <fpage>98</fpage>–<lpage>103</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Miller</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Joldes</surname> <given-names>GR</given-names></name>, <name name-style="western"><surname>Lance</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Wittek</surname> <given-names>A</given-names></name> (<year>2007</year>) <article-title>Total Lagrangian Explicit Dynamics Finite Element Algorithm for Computing Soft Tissue Deformation</article-title>. <source>Communications in Numerical Methods in Engineering</source> <volume>23</volume>: <fpage>121</fpage>–<lpage>134</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref033"><label>33</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>North</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Howe</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Collier</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Vos</surname> <given-names>J</given-names></name> (<year>2007</year>) <source>A declarative model assembly infrastructure for verification and validation</source>. <publisher-name>Advancing Social Simulation: The First World Congress</publisher-name>.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref034"><label>34</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pietuch</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Janshoff</surname> <given-names>A</given-names></name> (<year>2013</year>) <article-title>Mechanics of spreading cells probed by atomic force microscopy</article-title>. <source>Open Biol</source> <volume>3</volume>: <fpage>130084</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rsob.130084" xlink:type="simple">10.1098/rsob.130084</ext-link></comment> <object-id pub-id-type="pmid">23864554</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref035"><label>35</label><mixed-citation publication-type="other" xlink:type="simple">Chang H-I, Wang Y (2011) Cell Responses to Surface and Architecture of Tissue Engineering Scaffolds.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref036"><label>36</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Maniotis</surname> <given-names>AJ</given-names></name>, <name name-style="western"><surname>Chen</surname> <given-names>CS</given-names></name>, <name name-style="western"><surname>Ingber</surname> <given-names>DE</given-names></name> (<year>1997</year>) <article-title>Demonstration of mechanical connections between integrins,cytoskelet al filaments, and nucleoplasm that stabilize nuclear structure</article-title>. <source>Proceeding of the National Academy of Sciences of the United States of America</source> <volume>94</volume>: <fpage>849</fpage>–<lpage>854</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref037"><label>37</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dong</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Skalak</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Sung</surname> <given-names>K-LP</given-names></name> (<year>1991</year>) <article-title>Cytoplasmic rheology of passive neutrophils</article-title>. <source>Biorheology</source> <volume>28</volume>: <fpage>557</fpage>–<lpage>567</lpage>. <object-id pub-id-type="pmid">1818744</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref038"><label>38</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Guilak</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Tedrow</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Burgkart</surname> <given-names>R</given-names></name> (<year>2000</year>) <article-title>Viscoelastic properties of the cell nucleus</article-title>. <source>Biochemical and Biophysical Research Communications</source> <volume>269</volume>: <fpage>781</fpage>–<lpage>786</lpage>. <object-id pub-id-type="pmid">10720492</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref039"><label>39</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Deguchi</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Maeda</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Ohashi</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Sato</surname> <given-names>M</given-names></name> (<year>2005</year>) <article-title>Flow-induced hardening of endothelial nucleus as an intracellular stress-bearing organelle</article-title>. <source>J Biomech</source> <volume>38</volume>: <fpage>1751</fpage> <object-id pub-id-type="pmid">16005465</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref040"><label>40</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hannezo</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Prost</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Joanny</surname> <given-names>J-F</given-names></name> (<year>2014</year>) <article-title>Theory of epithelial sheet morphology in three dimensions</article-title>. <source>Proceedings of the National Academy of Sciences</source> <volume>111</volume>: <fpage>27</fpage>–<lpage>32</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref041"><label>41</label><mixed-citation publication-type="book" xlink:type="simple"><name name-style="western"><surname>Alberts</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Johnson</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Lewis</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Raff</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Roberts</surname> <given-names>K</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <source>Molecular Biology of the Cell</source>. <publisher-loc>New York</publisher-loc>: <publisher-name>Garland Science</publisher-name>.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref042"><label>42</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gu</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Sarvetnick</surname> <given-names>N</given-names></name> (<year>1993</year>) <article-title>Epithelial cell proliferation and islet neogenesis in IFN-g transgenic mice</article-title>. <source>Development</source> <volume>118</volume>: <fpage>33</fpage>–<lpage>46</lpage>. <object-id pub-id-type="pmid">8104143</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref043"><label>43</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Buske</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Galle</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Barker</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Aust</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Clevers</surname> <given-names>H</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>A Comprehensive Model of the Spatio-Temporal Stem Cell and Tissue Organisation in the Intestinal Crypt</article-title> <source>PLoS Computational Biology</source> <volume>7</volume>: <fpage>e1001045</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1001045" xlink:type="simple">10.1371/journal.pcbi.1001045</ext-link></comment> <object-id pub-id-type="pmid">21253562</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref044"><label>44</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Man</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Hart</surname> <given-names>VJ</given-names></name>, <name name-style="western"><surname>Ring</surname> <given-names>CJA</given-names></name>, <name name-style="western"><surname>Sanjar</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>West</surname> <given-names>MR</given-names></name> (<year>2000</year>) <article-title>Loss of Epithelial Integrity Resulting from E-Cadherin Dysfunction Predisposes Airway Epithelial Cells to Adenoviral Infection</article-title>. <source>American Journal of Respiratory Cell and Molecular Biology</source> <volume>23</volume>: <fpage>610</fpage>–<lpage>617</lpage>. <object-id pub-id-type="pmid">11062139</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref045"><label>45</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Risler</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Basan</surname> <given-names>M</given-names></name> (<year>2013</year>.) <article-title>Morphological instabilities of stratified epithelia: a mechanical instability in tumour formation</article-title>. <source>New J Phys</source> <volume>15</volume> <fpage>065011</fpage>.</mixed-citation></ref>
+<ref id="pcbi.1004544.ref046"><label>46</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nelson</surname> <given-names>MR</given-names></name>, <name name-style="western"><surname>Howard</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Jensen</surname> <given-names>OE</given-names></name>, <name name-style="western"><surname>King</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Rose</surname> <given-names>FRAJ</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Growth-induced buckling of an epithelial layer</article-title>. <source>Biomechanics and Modeling in Mechanobiology</source> <volume>10</volume>: <fpage>883</fpage>–<lpage>900</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10237-010-0280-0" xlink:type="simple">10.1007/s10237-010-0280-0</ext-link></comment> <object-id pub-id-type="pmid">21191628</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref047"><label>47</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hannezo</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Prost</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Joanny</surname> <given-names>J-F</given-names></name> (<year>2011</year>) <article-title>Instabilities of Monolayered Epithelia: Shape and Structure of Villi and Crypts</article-title>. <source>Phys Rev Lett</source> <volume>107</volume>: <fpage>078104</fpage> <object-id pub-id-type="pmid">21902434</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref048"><label>48</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hannezo</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Prost</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Joanny</surname> <given-names>J-F</given-names></name> (<year>2014</year>) <article-title>Theory of epithelial sheet morphology in three dimensions</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source> <volume>111</volume>: <fpage>27</fpage>–<lpage>32</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1312076111" xlink:type="simple">10.1073/pnas.1312076111</ext-link></comment> <object-id pub-id-type="pmid">24367079</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref049"><label>49</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Edwards</surname> <given-names>CM</given-names></name>, <name name-style="western"><surname>Chapman</surname> <given-names>SJ</given-names></name> (<year>2007</year>) <article-title>Biomechanical modelling of colorectal crypt budding and fission</article-title>. <source>Bulletin of Mathematical Biology</source> <volume>69</volume>: <fpage>1927</fpage>–<lpage>1942</lpage>. <object-id pub-id-type="pmid">17443390</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref050"><label>50</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dunn</surname> <given-names>S-J</given-names></name>, <name name-style="western"><surname>Fletcher</surname> <given-names>AG</given-names></name>, <name name-style="western"><surname>Chapman</surname> <given-names>SJ</given-names></name>, <name name-style="western"><surname>Gavaghan</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Osborne</surname> <given-names>JM</given-names></name> (<year>2012</year>) <article-title>Modelling the role of the basement membrane beneath a growing epithelial monolayer</article-title>. <source>Journal of Theoretical Biology</source> <volume>298</volume>: <fpage>82</fpage>–<lpage>91</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jtbi.2011.12.013" xlink:type="simple">10.1016/j.jtbi.2011.12.013</ext-link></comment> <object-id pub-id-type="pmid">22200542</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref051"><label>51</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Weibel</surname> <given-names>ER</given-names></name> (<year>2015</year>) <article-title>On the Tricks Alveolar Epithelial Cells Play to Make a Good Lung</article-title> <source>Am J Respir Crit Care Med</source> <volume>191</volume>: <fpage>504</fpage>–<lpage>513</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1164/rccm.201409-1663OE" xlink:type="simple">10.1164/rccm.201409-1663OE</ext-link></comment> <object-id pub-id-type="pmid">25723823</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref052"><label>52</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Goldblum</surname> <given-names>JR</given-names></name> (<year>2003</year>) <article-title>Barrett's Esophagus and Barrett's-Related Dysplasia</article-title>. <source>Modern Pathology</source> <volume>16</volume>: <fpage>316</fpage>–<lpage>324</lpage>. <object-id pub-id-type="pmid">12692197</object-id></mixed-citation></ref>
+<ref id="pcbi.1004544.ref053"><label>53</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Reinhardt</surname> <given-names>JW</given-names></name>, <name name-style="western"><surname>Gooch</surname> <given-names>KJ</given-names></name> (<year>2014</year>) <article-title>Agent-based modeling traction force mediated compaction of cell-populated collagen gels using physically realistic fibril mechanics</article-title>. <source>Journal of Biomechanical Engineering</source> <volume>136</volume>: <fpage>021024</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1115/1.4026179" xlink:type="simple">10.1115/1.4026179</ext-link></comment> <object-id pub-id-type="pmid">24317298</object-id></mixed-citation></ref>
+</ref-list>
+</back>
+</article>

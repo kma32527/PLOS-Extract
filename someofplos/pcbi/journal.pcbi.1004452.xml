@@ -1,0 +1,929 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004452</article-id>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-15-00248</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Biofilm Formation Mechanisms of <italic>Pseudomonas aeruginosa</italic> Predicted via Genome-Scale Kinetic Models of Bacterial Metabolism</article-title>
+<alt-title alt-title-type="running-head">Analysis of <italic>P</italic>. <italic>aeruginosa</italic> Biofilms via Metabolic Models</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Vital-Lopez</surname>
+<given-names>Francisco G.</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"/>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Reifman</surname>
+<given-names>Jaques</given-names>
+</name>
+<xref rid="cor001" ref-type="corresp">*</xref>
+<xref rid="aff001" ref-type="aff"/>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Wallqvist</surname>
+<given-names>Anders</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"/>
+</contrib>
+</contrib-group>
+<aff id="aff001"><addr-line>Department of Defense Biotechnology High Performance Computing Software Applications Institute, Telemedicine and Advanced Technology Research Center, U.S. Army Medical Research and Materiel Command, Fort Detrick, Maryland, United States of America</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Maranas</surname>
+<given-names>Costas D.</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>The Pennsylvania State University, UNITED STATES</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: FGVL JR AW. Performed the experiments: FGVL. Analyzed the data: FGVL. Contributed reagents/materials/analysis tools: FGVL. Wrote the paper: FGVL AW JR. Performed the computational implementations: FGVL.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">jaques.reifman.civ@mail.mil</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>2</day>
+<month>10</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="collection">
+<month>10</month>
+<year>2015</year>
+</pub-date>
+<volume>11</volume>
+<issue>10</issue>
+<elocation-id>e1004452</elocation-id>
+<history>
+<date date-type="received">
+<day>13</day>
+<month>2</month>
+<year>2015</year>
+</date>
+<date date-type="accepted">
+<day>14</day>
+<month>7</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<license xlink:href="https://creativecommons.org/publicdomain/zero/1.0/" xlink:type="simple">
+<license-p>This is an open access article, free of all copyright, and may be freely reproduced, distributed, transmitted, modified, built upon, or otherwise used by anyone for any lawful purpose. The work is made available under the <ext-link ext-link-type="uri" xlink:href="https://creativecommons.org/publicdomain/zero/1.0/" xlink:type="simple">Creative Commons CC0</ext-link> public domain dedication</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004452" xlink:type="simple"/>
+<abstract>
+<p>A hallmark of <italic>Pseudomonas aeruginosa</italic> is its ability to establish biofilm-based infections that are difficult to eradicate. Biofilms are less susceptible to host inflammatory and immune responses and have higher antibiotic tolerance than free-living planktonic cells. Developing treatments against biofilms requires an understanding of bacterial biofilm-specific physiological traits. Research efforts have started to elucidate the intricate mechanisms underlying biofilm development. However, many aspects of these mechanisms are still poorly understood. Here, we addressed questions regarding biofilm metabolism using a genome-scale kinetic model of the <italic>P</italic>. <italic>aeruginosa</italic> metabolic network and gene expression profiles. Specifically, we computed metabolite concentration differences between known mutants with altered biofilm formation and the wild-type strain to predict drug targets against <italic>P</italic>. <italic>aeruginosa</italic> biofilms. We also simulated the altered metabolism driven by gene expression changes between biofilm and stationary growth-phase planktonic cultures. Our analysis suggests that the synthesis of important biofilm-related molecules, such as the quorum-sensing molecule <italic>Pseudomonas</italic> quinolone signal and the exopolysaccharide Psl, is regulated not only through the expression of genes in their own synthesis pathway, but also through the biofilm-specific expression of genes in pathways competing for precursors to these molecules. Finally, we investigated why mutants defective in anthranilate degradation have an impaired ability to form biofilms. Alternative to a previous hypothesis that this biofilm reduction is caused by a decrease in energy production, we proposed that the dysregulation of the synthesis of secondary metabolites derived from anthranilate and chorismate is what impaired the biofilms of these mutants. Notably, these insights generated through our kinetic model-based approach are not accessible from previous constraint-based model analyses of <italic>P</italic>. <italic>aeruginosa</italic> biofilm metabolism. Our simulation results showed that plausible, non-intuitive explanations of difficult-to-interpret experimental observations could be generated by integrating genome-scale kinetic models with gene expression profiles.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p><italic>Pseudomonas aeruginosa</italic> is one of the most frequently found bacterial pathogens in patients with chronic infections, such as chronic wounds and cystic fibrosis. The persistence of <italic>P</italic>. <italic>aeruginosa</italic> in these infections is enabled by its ability to form biofilms. Standard antibiotic treatments, effective against bacteria living as single cells, are generally unsuccessful against biofilms. Understanding the physiological adaptations of bacterial biofilms will make it possible to design specific countermeasures and treatments for biofilm-based persistent infections. In this study, we investigated mechanisms underlying biofilm formation using a genome-scale kinetic model of the <italic>P</italic>. <italic>aeruginosa</italic> metabolic network and gene expression profiles. Our analysis provides insights on how <italic>P</italic>. <italic>aeruginosa</italic> regulates its metabolism to synthesize molecules that are important for biofilm formation. Based on these insights, we predicted new enzymatic reactions that can be targeted to develop anti-biofilm drugs. Notably, our approach can be used to characterize important metabolic mechanisms and strategies adapted by pathogenic bacteria refractory to conventional antibiotic treatments.</p>
+</abstract>
+<funding-group>
+<funding-statement>The authors were supported by the U.S. Army Network Science Initiative, U.S. Army Medical Research and Materiel Command, Fort Detrick, MD (<ext-link ext-link-type="uri" xlink:href="http://mrmc.amedd.army.mil" xlink:type="simple">http://mrmc.amedd.army.mil</ext-link>). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="5"/>
+<table-count count="2"/>
+<page-count count="24"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the paper and its Supporting Information files.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p><italic>Pseudomonas aeruginosa</italic> is one of the most frequently found bacteria in chronic wounds and in the lungs of cystic fibrosis patients, where its ability to create opportunistic infections is potentiated by forming and maintaining biofilms [<xref rid="pcbi.1004452.ref001" ref-type="bibr">1</xref>]. Biofilms are communities of microorganisms that sustain themselves in a self-produced matrix of biopolymers (e.g., DNA, proteins, and polysaccharides) and exhibit a different physiology from that of planktonic (free-living) cells. Bacterial biofilms are often involved in chronic infections, where they can elicit recurring and persisting pathologies. Bacteria living in biofilms are less susceptible to the inflammatory and immune responses of their host and are considerably more resistant to antibiotic treatment than planktonic bacteria and, consequently, are more difficult to eradicate [<xref rid="pcbi.1004452.ref001" ref-type="bibr">1</xref>–<xref rid="pcbi.1004452.ref003" ref-type="bibr">3</xref>]. Thus, considerable efforts have been directed towards understanding mechanisms of biofilm development. Experimental analyses have identified several genetic components involved in initiation, growth, and maturation of biofilms [<xref rid="pcbi.1004452.ref004" ref-type="bibr">4</xref>], antibiotic resistance [<xref rid="pcbi.1004452.ref005" ref-type="bibr">5</xref>], and evasion of the host defenses [<xref rid="pcbi.1004452.ref006" ref-type="bibr">6</xref>] as contributing factors to the persistence of <italic>P</italic>. <italic>aeruginosa</italic> infections.</p>
+<p>Hampering the understanding of the physiological differences and driving forces between cells in bacterial biofilms and planktonic cells is that these systems are greatly dependent on the experimental and environmental conditions of a particular study. Thus, it is not surprising that there is little overlap among the sets of differentially expressed genes between biofilm and planktonic cells of <italic>P</italic>. <italic>aeruginosa</italic> identified in different studies [<xref rid="pcbi.1004452.ref007" ref-type="bibr">7</xref>–<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>]. In order to consistently interpret complex genomic and metabolic data across altered metabolic states associated with biofilm formation, we need to use a systems biology approach that has the capacity to model and account for metabolic capabilities emerging from the enzymatic ensemble encoded by a bacterial genome [<xref rid="pcbi.1004452.ref012" ref-type="bibr">12</xref>–<xref rid="pcbi.1004452.ref017" ref-type="bibr">17</xref>]. Previous theoretical studies on <italic>P</italic>. <italic>aeruginosa</italic> metabolism have used the original genome-scale network construction [<xref rid="pcbi.1004452.ref018" ref-type="bibr">18</xref>] to interpret the time-evolving metabolic states of <italic>P</italic>. <italic>aeruginosa</italic> in cystic fibrosis [<xref rid="pcbi.1004452.ref013" ref-type="bibr">13</xref>], to predict essential genes for biofilm formation [<xref rid="pcbi.1004452.ref019" ref-type="bibr">19</xref>, <xref rid="pcbi.1004452.ref020" ref-type="bibr">20</xref>], and as an exemplar system for simulating biofilm growth using agent-based models [<xref rid="pcbi.1004452.ref021" ref-type="bibr">21</xref>]. The latter biofilm-related works rely mainly on biomass growth for the prediction of metabolic genes that are essential for biofilm formation. In particular, Sigurdsson et al. used flux balance analysis (FBA) to predict genes essential for biomass growth under planktonic and biofilm conditions [<xref rid="pcbi.1004452.ref019" ref-type="bibr">19</xref>]. However, this approach identified the same genes as essential under both planktonic and biofilm conditions; i.e., no essential genes were predicted to be specific for the biofilm condition. As drug treatment is a potential inducer of biofilm formation, Xu et al. [<xref rid="pcbi.1004452.ref020" ref-type="bibr">20</xref>] used a different approach to prioritize the FBA-predicted essential genes based on avoidance of inducing biofilm formation. They gauged whether the inhibition of an essential gene would increase the flux through reactions that had been determined experimentally to be associated with <italic>P</italic>. <italic>aeruginosa</italic> biofilm formation [<xref rid="pcbi.1004452.ref022" ref-type="bibr">22</xref>], under the assumption that increased flux through such reactions would induce biofilm formation. They determined that inhibition of the bulk (132 out of 136) of the FBA-predicted essential genes would <italic>induce</italic> biofilm formation and, therefore, only four of these genes could be considered as potential drug targets.</p>
+<p>In order to address these limitations in both experimental interpretations and theoretical studies, we developed an augmented genome-scale kinetic metabolic network model of <italic>P</italic>. <italic>aeruginosa</italic> that incorporates all previous metabolic reactions, as well as biofilm-specific metabolic pathways. This model allows for context-dependent modeling of the <italic>P</italic>. <italic>aeruginosa</italic> metabolism based on commensurate metabolic fluxes and gene expression data. We used the model to address three questions regarding <italic>P</italic>. <italic>aeruginosa</italic> metabolism under biofilm growth. First, we defined a function based on predicted metabolite concentration changes to score the propensity of inhibiting a reaction to reduce biofilm formation. This function partially incorporates the complexity of biofilm regulation reflected in the diversity of experimentally determined mutants with altered biofilm phenotype [<xref rid="pcbi.1004452.ref022" ref-type="bibr">22</xref>]. With the scoring function, we predicted 126 reaction inhibitions that reduce biofilm formation. We further prioritized this list by selecting reactions that were associated with mutants with decreased drug tolerance or attenuated virulence.</p>
+<p>Then, we characterized metabolic fluxes and metabolite concentrations that were different between the biofilm and planktonic phenotypes. For this purpose, we used the gene expression profiles from Costaglioli et al. [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>], which were obtained for biofilm and planktonic cultures grown in similar conditions and had a number of mutants tested for biofilm formation based on the hypothesis derived from the gene expression data. Our analysis of the metabolic network model provided a means by which we could provide novel and alternative explanations to the experimental results. For example, Costaglioli et al. [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>] found only a few metabolic genes up-regulated in <italic>P</italic>. <italic>aeruginosa</italic> biofilms compared to stationary growth-phase planktonic cells (stationary cultures). These genes were mostly involved in the synthesis of the siderophore pyochelin and the degradation of anthranilate, a precursor of the <italic>Pseudomonas</italic> quinolone signal (PQS) molecule. In addition to the expected increased anthranilate degradation and pyochelin synthesis fluxes, we predicted that the synthesis of two biofilm-related molecules, PQS and the exopolysaccharide Psl, was altered in biofilms compared to stationary cultures, even though the expression of the genes associated with their synthesis did not significantly change. Finally, we explored the effects of blocking anthranilate degradation in <italic>P</italic>. <italic>aeruginosa</italic> biofilms. Costaglioli et al. [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>] found that mutations of the genes involved in anthranilate degradation reduce biofilm formation and hypothesized that this was caused by a reduction in energy production. Our simulation results suggested that inhibition of anthranilate degradation had a limited impact on energy production, but caused a considerable perturbation in the synthesis of biofilm-related metabolites (including PQS). Thus, the metabolic network analysis pointed to an alternative explanation in terms of altered synthesis of secondary metabolites, such as PQS, as the primary cause of the reduction in biofilm formation.</p>
+</sec>
+<sec id="sec002" sec-type="conclusions">
+<title>Results and Discussion</title>
+<sec id="sec003">
+<title>Model construction and validation</title>
+<p>We used our previously developed modeling framework [<xref rid="pcbi.1004452.ref017" ref-type="bibr">17</xref>] to construct a genome-scale condition-specific kinetic model of the <italic>P</italic>. <italic>aeruginosa</italic> metabolic network based on the metabolic network reconstruction developed by Oberhardt et al. [<xref rid="pcbi.1004452.ref018" ref-type="bibr">18</xref>]. We augmented the model by including pathways of relevant biofilm-related molecules, including anthranilate, the exopolysaccharides Psl and Pel, pyochelin, and modified lipopolysaccharides. The model had 876 genes, 685 reactions, and 504 metabolites, all of which were active under the experimental conditions considered [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>]. The list of reactions and metabolites in the model is provided in <xref rid="pcbi.1004452.s001" ref-type="supplementary-material">S1 Supporting Information</xref>.</p>
+<p>We provided the details for the derivation of the kinetic expressions in Materials and Methods and the kinetic model in <xref rid="pcbi.1004452.s002" ref-type="supplementary-material">S2 Supporting Information</xref>. An advantage of the proposed kinetic expressions is that the model parameters, namely, a reference flux distribution and gene expression ratios, can be directly derived or estimated from experimental data. In the present study, we computed the gene expression ratios between biofilm and planktonic cultures from the gene expression data from the study by Costaglioli et al. [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>]. However, experimental measurements (e.g., uptake and secretion rates of extracellular metabolites) to determine an accurate reference flux distribution were not available. Thus, instead of using a single reference flux distribution, we randomly sampled the space of feasible flux distributions to generate an ensemble of reference flux distributions for each simulation condition, and then carried out the simulations for each member of the ensemble (see <xref rid="sec009" ref-type="sec">Materials and Methods</xref> and <xref rid="pcbi.1004452.s004" ref-type="supplementary-material">S1 Text</xref>). Although this parameter space is large, the mass balance, thermodynamic, and simulation condition constraints considerably reduced the size of the parameter space. This allowed us to obtain reproducible estimates of the distributions of the predicted metabolite concentration and flux changes with a relatively small sample size (i.e., 100 random reference flux distributions), as we discussed in <xref rid="pcbi.1004452.s004" ref-type="supplementary-material">S1 Text</xref>.</p>
+<p>Note that the proposed model, or any kinetic model, is valid only under reasonably small changes in gene expression because the model parameters related to enzyme abundance are fixed once they are estimated for a given condition (excepts for models that incorporate gene regulatory networks, but such models are generally small). In our approach, we created a new model to simulate other conditions with different gene expressions profiles by re-estimating the related model parameters using gene expression data. Thus, in practice, we do not use a single model to simulate the difference between stationary and biofilm cultures, but a specifically parameterized model for each condition. For the simulations used to probe the inhibition of a reaction, gene expression data were not available. Thus, we carried out these simulations assuming constant gene expression levels and considered that the predicted response was indicative of the actual response, which may involve large gene expression changes. Therefore, we expect these simulations to be less accurate than the simulation of the metabolic differences between stationary and biofilm cultures.</p>
+<p>We validated the constructed kinetic model by predicting essential reactions that were overlooked by FBA under exponential planktonic conditions. First, we predicted essential reactions using FBA (<xref rid="pcbi.1004452.s005" ref-type="supplementary-material">S1 Table</xref>). The FBA-based approach yielded a sensitivity of 0.60 and an accuracy of 0.76 (see <xref rid="pcbi.1004452.s004" ref-type="supplementary-material">S1 Text</xref>), which were in line with previous FBA results of the <italic>P</italic>. <italic>aeruginosa</italic> metabolic network based on the inhibition of single genes instead of reactions [<xref rid="pcbi.1004452.ref018" ref-type="bibr">18</xref>, <xref rid="pcbi.1004452.ref019" ref-type="bibr">19</xref>]. Next, we used the kinetic model to simulate the effect of blocking the FBA-predicted non-essential reactions on the biomass growth rate for exponential cultures (see <xref rid="sec009" ref-type="sec">Materials and Methods</xref> for simulation details). Then, we ranked the reactions according to the change in the biomass growth rate caused by their inhibition (the lower the biomass growth rate, the higher the rank). Six of the predicted top 20 reactions were associated with genes that were in the set of experimentally determined essential genes for biomass growth (referred to just as <italic>essential genes</italic> hereafter) compiled by Sigurdsson et al. [<xref rid="pcbi.1004452.ref019" ref-type="bibr">19</xref>] (see <xref rid="pcbi.1004452.s006" ref-type="supplementary-material">S2 Table</xref>). The likelihood of randomly selecting six or more out of 20 reactions associated with essential genes in the model is 0.04 (see <xref rid="pcbi.1004452.s004" ref-type="supplementary-material">S1 Text</xref>). This result shows that our approach was able to identify important reactions for biomass growth in exponential cultures even if they were predicted to be non-essential by FBA.</p>
+</sec>
+<sec id="sec004">
+<title>Metabolite concentration changes indicative of biofilm formation</title>
+<p>We tested different approaches to predict reactions whose inhibition would reduce biofilm formation. Two of them were based on the effect of reaction inhibitions on the biomass growth rate or on the synthesis rate of the major components of the <italic>P</italic>. <italic>aeruginosa</italic> biofilms (i.e., the exopolysaccharides Psl and Pel, DNA, and proteins). We found that such approaches were not good predictors of mutants with altered biofilm phenotype (see <xref rid="pcbi.1004452.s004" ref-type="supplementary-material">S1 Text</xref>). This result, together with the observation that most of the experimentally determined mutants that have an altered biofilm phenotype [<xref rid="pcbi.1004452.ref022" ref-type="bibr">22</xref>] were associated with reactions that do not have a direct or obvious involvement in the synthesis of the major biofilm components, highlights the complexity of the underlying physiology of biofilm formation. In order to partially consider this complexity, we defined a scoring function based on the predicted metabolite concentration changes of known mutants with altered biofilm phenotype [<xref rid="pcbi.1004452.ref022" ref-type="bibr">22</xref>].</p>
+<p>The basic idea was to use a set of metabolic reactions known to be associated with genes that either reduce or increase biofilm formation (<xref rid="pcbi.1004452.s007" ref-type="supplementary-material">S3 Table</xref>) [<xref rid="pcbi.1004452.ref022" ref-type="bibr">22</xref>] and link the predicted metabolite concentration changes caused by the inhibition these reactions to biofilm formation. For simplicity, we referred to the metabolic reactions associated with genes whose mutation reduced or increased biofilm formation as biofilm-reducing or biofilm-increasing reactions, respectively. The metabolites were classified in four sets according to the predicted concentration changes. Sets 1 and 2 included metabolites that increased or decreased, respectively, when inhibiting biofilm-reducing reactions, whereas sets 3 and 4 included metabolites that increased or decreased, respectively, when inhibiting biofilm-increasing reactions. Then, for the inhibition of a metabolic reaction, the scoring function counts how many metabolite concentration changes were common to the inhibition of biofilm-reducing and biofilm-increasing reactions. If the inhibition of the reaction had more metabolite concentration changes in common with the biofilm-reducing reactions than with the biofilm-increasing reactions, then inhibiting this reaction was predicted to reduce biofilm formation, and vice versa. Note that for this analysis, in addition to the non-essential reactions, we included the inhibition of essential reactions by multiplying their reaction rate by a factor of 0.01. See <xref rid="sec009" ref-type="sec">Materials and Methods</xref> for a detailed explanation of the scoring function and the metabolite sets and <xref rid="pcbi.1004452.s004" ref-type="supplementary-material">S1 Text</xref> for the validation of this approach.</p>
+<p>We added 15 additional low biofilm-producing mutants that we found in the literature [<xref rid="pcbi.1004452.ref023" ref-type="bibr">23</xref>–<xref rid="pcbi.1004452.ref025" ref-type="bibr">25</xref>] (<xref rid="pcbi.1004452.s008" ref-type="supplementary-material">S4 Table</xref>) to the set identified by Musken et al. [<xref rid="pcbi.1004452.ref022" ref-type="bibr">22</xref>] to define the metabolite concentration changes that were specific to the inhibition of either biofilm-reducing or biofilm-increasing reactions. <xref rid="pcbi.1004452.s009" ref-type="supplementary-material">S5 Table</xref> lists the predicted metabolites for each set. We did not find evidence in the literature to support the predicted metabolite sets, except for one case. Musken et al. [<xref rid="pcbi.1004452.ref022" ref-type="bibr">22</xref>] identified the low biofilm-producing mutant <italic>hutU</italic> (PA5100) and the high biofilm-producing mutants <italic>hisC</italic>1 (PA4447), <italic>hisD</italic> (PA4448), <italic>hutH</italic> (PA5098), and PA0006. We predicted that urocanate was depleted in these high biofilm-producing mutants and accumulated in the <italic>hutU</italic> mutant. Urocanate is an effector of the transcriptional regulator <italic>hutC</italic> that represses the transcription of the <italic>hut</italic> genes, including itself. The protein hutC is bound to the promoters of the <italic>hut</italic> genes when the concentration of urocanate is low, and it disassociates when urocanate accumulates, freeing the promoters for transcription [<xref rid="pcbi.1004452.ref026" ref-type="bibr">26</xref>]. Thus, the transcription of <italic>hutC</italic> is expected to be low in these high biofilm producers. This is in line with the high biofilm-producing phenotype of a <italic>hutC</italic> transposon mutant reported by Yeung et al. [<xref rid="pcbi.1004452.ref027" ref-type="bibr">27</xref>], although the mechanism by which <italic>hutC</italic> mutation promotes biofilm formation is unknown.</p>
+<p>The metabolites in sets 1 to 4 were scattered across the metabolic network. Of the 95 metabolic pathways in the model (as defined in the KEGG database, <ext-link ext-link-type="uri" xlink:href="http://www.genome.jp/kegg/" xlink:type="simple">http://www.genome.jp/kegg/</ext-link>), 73 pathways included at least one metabolite. However, some pathways had a relatively high number of these metabolites; <xref rid="pcbi.1004452.s010" ref-type="supplementary-material">S6 Table</xref> lists the metabolic pathways with five or more metabolites from each metabolite set. The metabolites whose concentration increased when inhibiting biofilm-decreasing reactions (set 1) appeared in higher number in the pathways of valine, leucine, and isoleucine degradation; arginine and proline metabolism; cysteine and methionine metabolism; and glyoxylate and dicarboxylate metabolism. Fatty acid biosynthesis was the only pathway with more than five metabolites whose concentration decreased when inhibiting biofilm-reducing reactions (set 2), whereas the pentose phosphate pathway was the only one with five or more metabolites whose concentration increased when inhibiting biofilm-increasing reactions (set 3). The metabolites that decreased in biofilm-increasing reactions (set 4) appeared more frequently in the pathways of cysteine and methionine metabolism; glycine, serine, and threonine metabolism; and methane, pyruvate, and fatty acid metabolism.</p>
+<p>We observed a considerable overlap between the sets of metabolites that increased when inhibiting biofilm-reducing reactions (set 1) and decreased when inhibiting biofilm-increasing reactions (set 4), sharing 26 metabolites. These 26 metabolites frequently appeared in the methane metabolism, fatty acid metabolism, glycolysis/gluconeogenesis, cysteine and methionine metabolism, glyoxylate metabolism, and butanoate metabolism. We believe that these metabolites are reasonable candidates for having a role in the regulation of biofilm formation and provide leads for further studies to understand the physiology of bacterial biofilms.</p>
+</sec>
+<sec id="sec005">
+<title>Predicted target reactions to reduce biofilm formation</title>
+<p>We found 126 and 113 reactions whose inhibitions were predicted to decrease and increase biofilm formation, respectively. <xref rid="pcbi.1004452.s011" ref-type="supplementary-material">S7 Table</xref> provides the complete lists of these reaction sets. Reactions whose inhibition decreased biofilm formation frequently appeared in the fatty acid biosynthesis pathway, arginine and proline metabolism, cysteine and methionine metabolism, valine, leucine, and isoleucine degradation, and butanoate metabolism. In contrast, the reactions that increased biofilm formation frequently appeared in the amino sugar and nucleotide sugar metabolism, peptidoglycan biosynthesis, pentose phosphate pathway, purine metabolism, and glycolysis/gluconeogenesis pathway.</p>
+<p>Notably, the fatty acid biosynthesis pathway, cysteine and methionine metabolism, and purine metabolism had more than five reactions whose inhibition decreased biofilm formation and more than five reactions whose inhibition increased biofilm formation. This may explain why knocking out the wrong component in a pathway may cause unexpected results even when the pathway itself is obviously directly related to a given phenotype. For example, <italic>P</italic>. <italic>aeruginosa</italic> can synthesize the purine precursor 5-phosphoribosyl-4-carbamoyl-5-aminoimidazole (aicar) from 5-phosphoribosyl diphosphate by two alternative routes in the purine and histidine synthesis pathways. We predicted that blocking the reactions in the histidine synthesis pathway would increase biofilm formation, whereas inhibition of five and three reactions in the purine synthesis pathway would decrease and increase biofilm formation, respectively (<xref rid="pcbi.1004452.g001" ref-type="fig">Fig 1</xref>). In addition, of the four reactions involved in converting 5-phosphoribosyl-4-carbamoyl-5-aminoimidazole (aicar) to adenylate (amp), we predicted that one would have no effect, one would increase, and one would decrease biofilm formation. The fourth reaction was associated with the gene PA3516, whose mutation is known to increase biofilm formation [<xref rid="pcbi.1004452.ref022" ref-type="bibr">22</xref>]. Different effects for different targets in the same pathway have also been experimentally observed. For instance, Musken et al. [<xref rid="pcbi.1004452.ref022" ref-type="bibr">22</xref>] identified that a mutation of <italic>hutU</italic>, which catalyzes the second step in the histidine degradation pathway, decreased biofilm formation. Thus, one would expect that blocking histidine uptake (PA1257) or the first step of the histidine degradation pathway (<italic>hutH</italic>) would also decrease biofilm formation; however, they found the opposite effect for these mutants (<xref rid="pcbi.1004452.g001" ref-type="fig">Fig 1</xref>).</p>
+<fig id="pcbi.1004452.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004452.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Alteration of biofilm formation by different reaction inhibitions in the histidine and purine synthesis pathways.</title>
+<p>Reactions indicated with magenta and cyan arrows were experimentally identified by Musken et al. [<xref rid="pcbi.1004452.ref022" ref-type="bibr">22</xref>]. We predicted reactions indicated with red and green arrows. Abbreviations: aicar, 5-phosphoribosyl-4-carbamoyl-5-aminoimidazole; prpp, 5-phosphoribosyl diphosphate; amp, adenylate. See <xref rid="pcbi.1004452.s001" ref-type="supplementary-material">S1 Supporting Information</xref> for the definition of the remaining of the abbreviations.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004452.g001" position="float" xlink:type="simple"/>
+</fig>
+<p>The number of putative target reactions that reduce biofilm formation was relatively large with 78 experimentally determined (<xref rid="pcbi.1004452.s007" ref-type="supplementary-material">S3 Table</xref>) and 126 predicted (<xref rid="pcbi.1004452.s011" ref-type="supplementary-material">S7 Table</xref>) targets. We further reduced this set by filtering out reactions that were associated with genes whose mutations were known to increase the tolerance to at least one antimicrobial or have human homologs (see <xref rid="sec009" ref-type="sec">Materials and Methods</xref>). This resulted in a set of 56 putative target reactions against <italic>P</italic>. <italic>aeruginosa</italic> biofilm (<xref rid="pcbi.1004452.s012" ref-type="supplementary-material">S8 Table</xref>), 33 of which were predicted from our metabolic network analysis. Two of these reactions were associated with reduced tolerance mutants to at least one antimicrobial and 11 reactions were associated with attenuated virulence mutants, making these targets attractive from a drug design perspective (<xref rid="pcbi.1004452.t001" ref-type="table">Table 1</xref>). Note that we predicted target reactions that would reduce biofilm formation and antimicrobial tolerance, properties that could not be determined from the experimentally identified mutants alone. However, we did not identify any target reaction that would simultaneously reduce biofilm formation, antimicrobial tolerance, and virulence.</p>
+<table-wrap id="pcbi.1004452.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004452.t001</object-id>
+<label>Table 1</label> <caption><title>Putative target reactions against biofilm that also would decrease antimicrobial tolerance or attenuate virulence.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004452.t001g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004452.t001" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Reaction name</th>
+<th align="left" rowspan="1" colspan="1">Reaction</th>
+<th align="left" rowspan="1" colspan="1">Genes</th>
+<th align="left" rowspan="1" colspan="1">Identification method<xref rid="t001fn001" ref-type="table-fn"><sup>a</sup></xref></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="4" align="center" rowspan="1"><italic>Reduced antimicrobial tolerance</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">N-acetyl-g-glutamyl-phosphate reductase</td>
+<td align="left" rowspan="1" colspan="1">acg5sa + nadp + pi &lt; = &gt; acg5p + h + nadph</td>
+<td align="left" rowspan="1" colspan="1"><italic>argC</italic></td>
+<td align="left" rowspan="1" colspan="1">P</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Formimidoylglutamase</td>
+<td align="left" rowspan="1" colspan="1">forglu + h2o = &gt; frmd + glu-L</td>
+<td align="left" rowspan="1" colspan="1"><italic>hutG</italic> or PA3175</td>
+<td align="left" rowspan="1" colspan="1">P</td>
+</tr>
+<tr>
+<td colspan="4" align="center" rowspan="1"><italic>Attenuated virulence</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1,2-diacyl-sn-glycerol 3-phosphate synthesis</td>
+<td align="left" rowspan="1" colspan="1">1.02 2tocdACP + glyc3p + 0.26 hdeACP + 0.06 ocdACP + 0.66 palmACP = &gt; 12dag3p_PA + 2 ACP</td>
+<td align="left" rowspan="1" colspan="1">(<italic>plsY</italic> or <italic>plsX</italic> or <italic>plsB</italic>) and (<italic>lptA</italic> or <italic>olsA</italic>)</td>
+<td align="left" rowspan="1" colspan="1">E</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Isochorismate Synthase</td>
+<td align="left" rowspan="1" colspan="1">chor = &gt; ichor</td>
+<td align="left" rowspan="1" colspan="1"><italic>pchA</italic></td>
+<td align="left" rowspan="1" colspan="1">E</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Orotidine-5-phosphate decarboxylase</td>
+<td align="left" rowspan="1" colspan="1">h + orot5p = &gt; co2 + ump</td>
+<td align="left" rowspan="1" colspan="1"><italic>pyrF</italic></td>
+<td align="left" rowspan="1" colspan="1">E</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Protoporphyrinogen oxidase</td>
+<td align="left" rowspan="1" colspan="1">1.5 o2 + pppg9 = &gt; 3 h2o + ppp9</td>
+<td align="left" rowspan="1" colspan="1"><italic>hemY</italic> or <italic>hemK</italic></td>
+<td align="left" rowspan="1" colspan="1">E</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Arginine N-succinyltransferase</td>
+<td align="left" rowspan="1" colspan="1">arg-L + succoa = &gt; sucarg + coa + h</td>
+<td align="left" rowspan="1" colspan="1"><italic>aruF</italic> and <italic>aruG</italic></td>
+<td align="left" rowspan="1" colspan="1">E</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">1-hydroxyphenazine synthase</td>
+<td align="left" rowspan="1" colspan="1">h + nadh + o2 + pca = &gt; 1hphe + co2 + h2o + nad</td>
+<td align="left" rowspan="1" colspan="1"><italic>phzS</italic></td>
+<td align="left" rowspan="1" colspan="1">P</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Phenazine-1-carboxylic acid synthesis, step 1</td>
+<td align="left" rowspan="1" colspan="1">chor + gln-L = &gt; a4dic + glu-L</td>
+<td align="left" rowspan="1" colspan="1"><italic>phzE1</italic> or <italic>phzE2</italic></td>
+<td align="left" rowspan="1" colspan="1">P</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Phenazine-1-carboxylic acid synthesis, step 2</td>
+<td align="left" rowspan="1" colspan="1">a4dic + h2o = &gt; dhha + h + pyr</td>
+<td align="left" rowspan="1" colspan="1"><italic>phzD1</italic> or <italic>phzD2</italic></td>
+<td align="left" rowspan="1" colspan="1">P</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Rhamnosyltransferase chain A</td>
+<td align="left" rowspan="1" colspan="1">3hdeACP + coa = &gt; 3hdccoa + ACP</td>
+<td align="left" rowspan="1" colspan="1"><italic>rhlA</italic></td>
+<td align="left" rowspan="1" colspan="1">P</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Isochorismate-pyruvate lyase</td>
+<td align="left" rowspan="1" colspan="1">ichor = &gt; sal + pyr</td>
+<td align="left" rowspan="1" colspan="1"><italic>pchB</italic></td>
+<td align="left" rowspan="1" colspan="1">P</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Pyochelin synthesis <italic>pchDG</italic></td>
+<td align="left" rowspan="1" colspan="1">salamp + cysamp = &gt; hpthiazoline + 2 amp + h2o + h</td>
+<td align="left" rowspan="1" colspan="1"><italic>pchG</italic> and <italic>pchD</italic></td>
+<td align="left" rowspan="1" colspan="1">P</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t001fn001"><p><sup>a</sup> E, reaction associated with an experimentally determined mutant; P, predicted.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<p>An extension of the present analysis would be to predict pairs or higher-order combinations of reactions that simultaneously, but not separately, reduce biofilm formation. This would allow us to probe potential redundancies in the cellular metabolism that relates to biofilm formation. Computationally, this has been addressed using constraint-based methods to predict synthetically lethal double deletion mutants [<xref rid="pcbi.1004452.ref028" ref-type="bibr">28</xref>, <xref rid="pcbi.1004452.ref029" ref-type="bibr">29</xref>]. Performing a similar analysis using the proposed kinetic models would require developing efficient methods to probe a large multidimensional space, given the computational burden of evaluating the kinetic model. A potential solution could be to use a constraint-based approach to create a list of promising pairs, triplets, etc. of reactions and, then, use the kinetic model to refine the list.</p>
+</sec>
+<sec id="sec006">
+<title>Predicted metabolic differences between biofilm and planktonic phenotypes</title>
+<p>We investigated the metabolic flux and metabolite concentration differences between stationary and biofilm cultures of <italic>P</italic>. <italic>aeruginosa</italic> to increase the knowledge base of biofilm-specific physiology. In particular, we focused on the experimental study carried out by Costaglioli et al. [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>], in which they analyzed gene expression profiles of planktonic and biofilm cultures under similar conditions. We considered a metabolic flux or metabolite concentration to be substantially different between the biofilm and planktonic cultures if its median change was larger than two-fold, and if all the changes occurred in the same direction in all simulations using the ensemble of reference flux distributions. Based on the simulation results, we predicted that 15 reactions had a considerable flux increase and nine reactions had a considerable flux decrease in the biofilm conditions (<xref rid="pcbi.1004452.t002" ref-type="table">Table 2</xref>). The increased-flux reactions were mainly involved in the anthranilate degradation pathway, the pyochelin synthesis pathway, and the Psl synthesis pathway, causing substantial increase in the flux through these pathways. In contrast, of the nine decreased-flux reactions, only the two reactions associated with the genes <italic>pqsABCD</italic> and <italic>pqsH</italic> appeared to have a functional effect (i.e., a reduced synthesis of PQS). The decreases on the other reactions were compensated by increases in other neighboring reactions. We can derive several insights from these predictions. For instance, the predicted increased production of the low affinity siderophore pyochelin, and the fact that the genes involved in the synthesis of the high affinity siderophore pyoverdine were not differentially expressed, suggest that the biofilm experienced a moderate iron starvation even though it was grown in the same medium as the planktonic culture.</p>
+<table-wrap id="pcbi.1004452.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004452.t002</object-id>
+<label>Table 2</label> <caption><title>Reactions with predicted median flux ratio change of at least 2-fold in biofilm cultures compared to stationary cultures.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004452.t002g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004452.t002" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Reaction name</th>
+<th align="left" rowspan="1" colspan="1">Reaction</th>
+<th align="left" rowspan="1" colspan="1">Genes</th>
+<th align="left" rowspan="1" colspan="1">GE ratio<xref rid="t002fn001" ref-type="table-fn"><sup>a</sup></xref></th>
+<th colspan="3" align="center" rowspan="1">Flux ratio<xref rid="t002fn002" ref-type="table-fn"><sup>b</sup></xref></th>
+</tr>
+<tr>
+<th align="left" rowspan="1" colspan="1"/>
+<th align="left" rowspan="1" colspan="1"/>
+<th align="left" rowspan="1" colspan="1"/>
+<th align="left" rowspan="1" colspan="1"/>
+<th align="left" rowspan="1" colspan="1">Median</th>
+<th align="left" rowspan="1" colspan="1">Min.</th>
+<th align="left" rowspan="1" colspan="1">Max.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="7" align="center" rowspan="1"><italic>Down-regulated</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>HHQ synthesis</bold><xref rid="t002fn003" ref-type="table-fn"><sup>c</sup></xref></td>
+<td align="left" rowspan="1" colspan="1"><bold>3oxdeACP + anth + h = &gt; ACP + co2 + h2o + hhq</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>pqsABCD</italic></bold></td>
+<td align="char" char="." rowspan="1" colspan="1"><bold>0.60</bold></td>
+<td align="char" char="." rowspan="1" colspan="1"><bold>0.47</bold></td>
+<td align="char" char="." rowspan="1" colspan="1"><bold>0.33</bold></td>
+<td align="char" char="." rowspan="1" colspan="1"><bold>0.79</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Probable FAD-dependent monooxygenase (PQS synthesis)</bold><xref rid="t002fn003" ref-type="table-fn"><sup>c</sup></xref></td>
+<td align="left" rowspan="1" colspan="1"><bold>fadh2 + hhq + o2 = &gt; fad + h2o + pqs</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>pqsH</italic></bold></td>
+<td align="char" char="." rowspan="1" colspan="1"><bold>0.99</bold></td>
+<td align="char" char="." rowspan="1" colspan="1"><bold>0.47</bold></td>
+<td align="char" char="." rowspan="1" colspan="1"><bold>0.33</bold></td>
+<td align="char" char="." rowspan="1" colspan="1"><bold>0.79</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Acyl-ACP:malonyl-ACP C-acyltransferase (decarboxylating)</td>
+<td align="left" rowspan="1" colspan="1">acACP + h + malACP = &gt; ACP + actACP + co2</td>
+<td align="left" rowspan="1" colspan="1"><italic>fabB</italic> or <italic>fabF1</italic> or PA5174</td>
+<td align="char" char="." rowspan="1" colspan="1">0.75</td>
+<td align="char" char="." rowspan="1" colspan="1">0.44</td>
+<td align="char" char="." rowspan="1" colspan="1">0.25</td>
+<td align="char" char="." rowspan="1" colspan="1">0.77</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Glutamine transaminase</td>
+<td align="left" rowspan="1" colspan="1">glu-L + pydx5p = &gt; akg + pyam5p</td>
+<td align="left" rowspan="1" colspan="1"><italic>glyA1</italic> or <italic>glyA2</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">0.22</td>
+<td align="char" char="." rowspan="1" colspan="1">0.18</td>
+<td align="char" char="." rowspan="1" colspan="1">0.15</td>
+<td align="char" char="." rowspan="1" colspan="1">0.34</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Alanine transaminase</td>
+<td align="left" rowspan="1" colspan="1">ala-L + pydx5p = &gt; pyam5p + pyr</td>
+<td align="left" rowspan="1" colspan="1"><italic>glyA1</italic> or <italic>glyA2</italic> or <italic>glyA3</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">0.37</td>
+<td align="char" char="." rowspan="1" colspan="1">0.29</td>
+<td align="char" char="." rowspan="1" colspan="1">0.24</td>
+<td align="char" char="." rowspan="1" colspan="1">0.57</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3-deoxy-D-manno-octulosonic acid transferase</td>
+<td align="left" rowspan="1" colspan="1">PA_lipidA + ckdo = &gt; PA_KDOlipidA + cmp + h</td>
+<td align="left" rowspan="1" colspan="1"><italic>waaA</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">1.13</td>
+<td align="char" char="." rowspan="1" colspan="1">0.23</td>
+<td align="char" char="." rowspan="1" colspan="1">0.08</td>
+<td align="char" char="." rowspan="1" colspan="1">0.74</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Phosphate transport via ABC system</td>
+<td align="left" rowspan="1" colspan="1">atp + h2o + pi[e] = &gt; adp + h + 2 pi</td>
+<td align="left" rowspan="1" colspan="1"><italic>pstABCS</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">0.24</td>
+<td align="char" char="." rowspan="1" colspan="1">0.27</td>
+<td align="char" char="." rowspan="1" colspan="1">0.25</td>
+<td align="char" char="." rowspan="1" colspan="1">0.34</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">L-serine deaminase</td>
+<td align="left" rowspan="1" colspan="1">ser-L &lt; = &gt; nh4 + pyr</td>
+<td align="left" rowspan="1" colspan="1"><italic>sdaAB</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">0.45</td>
+<td align="char" char="." rowspan="1" colspan="1">0.28</td>
+<td align="char" char="." rowspan="1" colspan="1">0.09</td>
+<td align="char" char="." rowspan="1" colspan="1">0.43</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">O-succinylhomoserine lyase (H2S)</td>
+<td align="left" rowspan="1" colspan="1">h2s + suchms = &gt; hcys-L + succ</td>
+<td align="left" rowspan="1" colspan="1"><italic>metZ</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">0.58</td>
+<td align="char" char="." rowspan="1" colspan="1">0.44</td>
+<td align="char" char="." rowspan="1" colspan="1">0.35</td>
+<td align="char" char="." rowspan="1" colspan="1">0.57</td>
+</tr>
+<tr>
+<td colspan="7" align="center" rowspan="1"><italic>Up-regulated</italic></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Psl synthesis</bold><xref rid="t002fn003" ref-type="table-fn"><sup>c</sup></xref></td>
+<td align="left" rowspan="1" colspan="1"><bold>3 gdpman + udpg + dtdp6dm = &gt; psl[e] + 3 gdp + udp + dtdp</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>pslACDEFGHIJKL</italic></bold></td>
+<td align="char" char="." rowspan="1" colspan="1"><bold>0.88</bold></td>
+<td align="char" char="." rowspan="1" colspan="1"><bold>2.87</bold></td>
+<td align="char" char="." rowspan="1" colspan="1"><bold>1.22</bold></td>
+<td align="char" char="." rowspan="1" colspan="1"><bold>6.86</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Anthranilate 1,2-dioxygenase</td>
+<td align="left" rowspan="1" colspan="1">anth + nadph + 2 h + o2 = &gt; catechol + co2 + nadp + nh3</td>
+<td align="left" rowspan="1" colspan="1"><italic>antA</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">5.64</td>
+<td align="char" char="." rowspan="1" colspan="1">2.48</td>
+<td align="char" char="." rowspan="1" colspan="1">1.90</td>
+<td align="char" char="." rowspan="1" colspan="1">6.01</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3-oxoadipyl-CoA thiolase</td>
+<td align="left" rowspan="1" colspan="1">coa + oxadpcoa = &gt; accoa + succoa</td>
+<td align="left" rowspan="1" colspan="1"><italic>pcaF</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">1.93</td>
+<td align="char" char="." rowspan="1" colspan="1">2.06</td>
+<td align="char" char="." rowspan="1" colspan="1">1.32</td>
+<td align="char" char="." rowspan="1" colspan="1">3.24</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Catechol 1,2-dioxygenase</td>
+<td align="left" rowspan="1" colspan="1">catechol + o2 = &gt; muc</td>
+<td align="left" rowspan="1" colspan="1"><italic>catA</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">4.30</td>
+<td align="char" char="." rowspan="1" colspan="1">2.48</td>
+<td align="char" char="." rowspan="1" colspan="1">1.90</td>
+<td align="char" char="." rowspan="1" colspan="1">6.01</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3-oxoadipate enol-lactonase</td>
+<td align="left" rowspan="1" colspan="1">5odhf2a + h2o &lt; = &gt; 3oxadp + h</td>
+<td align="left" rowspan="1" colspan="1"><italic>pcaD</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">3.16</td>
+<td align="char" char="." rowspan="1" colspan="1">2.06</td>
+<td align="char" char="." rowspan="1" colspan="1">1.32</td>
+<td align="char" char="." rowspan="1" colspan="1">3.24</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">3-oxoadipate CoA-transferase</td>
+<td align="left" rowspan="1" colspan="1">3oxadp + succoa &lt; = &gt; oxadpcoa + succ</td>
+<td align="left" rowspan="1" colspan="1"><italic>dhcAB</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">0.92</td>
+<td align="char" char="." rowspan="1" colspan="1">2.06</td>
+<td align="char" char="." rowspan="1" colspan="1">1.32</td>
+<td align="char" char="." rowspan="1" colspan="1">3.24</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">NAD(P) transhydrogenase</td>
+<td align="left" rowspan="1" colspan="1">2 h[e] + nadh + nadp &lt; = &gt; 2 h + nad + nadph</td>
+<td align="left" rowspan="1" colspan="1"><italic>pntAA</italic> and <italic>pntB</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">1.12</td>
+<td align="char" char="." rowspan="1" colspan="1">3.51</td>
+<td align="char" char="." rowspan="1" colspan="1">1.99</td>
+<td align="char" char="." rowspan="1" colspan="1">4.88</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Isochorismate synthase</td>
+<td align="left" rowspan="1" colspan="1">chor = &gt; ichor</td>
+<td align="left" rowspan="1" colspan="1"><italic>pchA</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">6.24</td>
+<td align="char" char="." rowspan="1" colspan="1">3.91</td>
+<td align="char" char="." rowspan="1" colspan="1">3.46</td>
+<td align="char" char="." rowspan="1" colspan="1">4.22</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Isochorismate-pyruvate lyase</td>
+<td align="left" rowspan="1" colspan="1">ichor = &gt; sal + pyr</td>
+<td align="left" rowspan="1" colspan="1"><italic>pchB</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">7.86</td>
+<td align="char" char="." rowspan="1" colspan="1">3.91</td>
+<td align="char" char="." rowspan="1" colspan="1">3.46</td>
+<td align="char" char="." rowspan="1" colspan="1">4.22</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Pyochelin synthesis <italic>pchE</italic></td>
+<td align="left" rowspan="1" colspan="1">cys-L + atp = &gt; cysamp + ppi</td>
+<td align="left" rowspan="1" colspan="1"><italic>pchE</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">8.97</td>
+<td align="char" char="." rowspan="1" colspan="1">3.91</td>
+<td align="char" char="." rowspan="1" colspan="1">3.46</td>
+<td align="char" char="." rowspan="1" colspan="1">4.22</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Pyochelin synthesis <italic>pchD</italic></td>
+<td align="left" rowspan="1" colspan="1">sal + atp + h = &gt; salamp + ppi</td>
+<td align="left" rowspan="1" colspan="1"><italic>pchD</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">3.30</td>
+<td align="char" char="." rowspan="1" colspan="1">3.91</td>
+<td align="char" char="." rowspan="1" colspan="1">3.46</td>
+<td align="char" char="." rowspan="1" colspan="1">4.22</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Pyochelin synthesis <italic>pchDG</italic></td>
+<td align="left" rowspan="1" colspan="1">salamp + cysamp = &gt; hpthiazoline + 2 amp + h2o + h</td>
+<td align="left" rowspan="1" colspan="1"><italic>pchDG</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">2.73</td>
+<td align="char" char="." rowspan="1" colspan="1">3.91</td>
+<td align="char" char="." rowspan="1" colspan="1">3.46</td>
+<td align="char" char="." rowspan="1" colspan="1">4.22</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Pyochelin synthesis <italic>pchEF</italic></td>
+<td align="left" rowspan="1" colspan="1">hpthiazoline + cysamp = &gt; hpbthiazoline + amp + h2o + h</td>
+<td align="left" rowspan="1" colspan="1"><italic>pchEF</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">3.86</td>
+<td align="char" char="." rowspan="1" colspan="1">3.91</td>
+<td align="char" char="." rowspan="1" colspan="1">3.46</td>
+<td align="char" char="." rowspan="1" colspan="1">4.22</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Pyochelin synthesis <italic>pchGF</italic></td>
+<td align="left" rowspan="1" colspan="1">hpbthiazoline + nadph + h = &gt; dmpyochelin + nadp</td>
+<td align="left" rowspan="1" colspan="1"><italic>pchGF</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">1.94</td>
+<td align="char" char="." rowspan="1" colspan="1">3.91</td>
+<td align="char" char="." rowspan="1" colspan="1">3.46</td>
+<td align="char" char="." rowspan="1" colspan="1">4.22</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Pyochelin synthesis <italic>pchF</italic></td>
+<td align="left" rowspan="1" colspan="1">dmpyochelin + amet + h2o = &gt; pyochelin + ahcys + 3 h</td>
+<td align="left" rowspan="1" colspan="1"><italic>pchF</italic></td>
+<td align="char" char="." rowspan="1" colspan="1">1.66</td>
+<td align="char" char="." rowspan="1" colspan="1">3.91</td>
+<td align="char" char="." rowspan="1" colspan="1">3.46</td>
+<td align="char" char="." rowspan="1" colspan="1">4.22</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t002fn001"><p><sup>a</sup> GE ratio, gene expression ratio between biofilm and stationary planktonic conditions.</p></fn>
+<fn id="t002fn002"><p><sup>b</sup> The median, minimum (Min.), and maximum (Max.) values of the flux ratio of each reaction in the set of simulations carried out using each member of the ensemble of flux distributions.</p></fn>
+<fn id="t002fn003"><p><sup>c</sup> Biofilm-related reaction with considerable flux change but no significant gene expression changes.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<p>We predicted that the synthesis of two biofilm-related molecules would have a considerable flux change without significant expression changes of the genes associated with the corresponding enzymatic reactions. The production of PQS was reduced, while the synthesis of the polysaccharide Psl was increased. PQS is a quorum-sensing signal that regulates the production of virulence factors and biofilm development in a complex regulatory network with the N-acylhomoserine lactone-dependent quorum-sensing systems <italic>las</italic> and <italic>rhl</italic> [<xref rid="pcbi.1004452.ref030" ref-type="bibr">30</xref>]. Diggle et al. [<xref rid="pcbi.1004452.ref031" ref-type="bibr">31</xref>] reported increased biofilm formation in <italic>P</italic>. <italic>aeruginosa</italic> cultures treated with exogenous PQS after 72 h. Similarly, Guo et al. [<xref rid="pcbi.1004452.ref032" ref-type="bibr">32</xref>] reported that PQS promoted biofilm formation, but in their experiments the enhancement occurred within the first hour of incubation, and the cultures with and without exogenous PQS had similar biofilm formation rates from 1 to 24 h. This observation, coupled with the observation that the genes involved in PQS synthesis were not up-regulated in the biofilm, suggests that PQS may be more important at the early stages of biofilm formation and that its synthesis is down-regulated as the biofilm matures. Moreover, our simulation results indicated that further repression of PQS synthesis was achieved by increasing anthranilate degradation. We investigated whether PQS is indeed down-regulated as the biofilm matures, rather than as a consequence of the specific experimental condition in the study by Costaglioli et al. [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>]. To this end, we analyzed the expression of the PQS synthesis genes (<italic>pqsABCDH</italic>) in all datasets available in the Gene Expression Omnibus (GEO) database [<xref rid="pcbi.1004452.ref033" ref-type="bibr">33</xref>] for the wild-type PAO1 strain of <italic>P</italic>. <italic>aeruginosa</italic> growing in biofilm (see <xref rid="sec009" ref-type="sec">Materials and Methods</xref> for details on processing the gene expression data). We found that there was a significant negative correlation between the expression of the PQS synthesis genes and the biofilm age (<xref rid="pcbi.1004452.g002" ref-type="fig">Fig 2</xref>).</p>
+<fig id="pcbi.1004452.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004452.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Expression of <italic>pqs</italic>, <italic>psl</italic>, and <italic>pel</italic> operons as a function of biofilm age.</title>
+<p>(A) Correlation coefficient of the expression intensity of the genes in the <italic>pqs</italic>, <italic>psl</italic>, and <italic>pel</italic> operons and biofilm age (h). (B) Expression of one gene from each operon as a function of biofilm age. Gene expressions are shown in log<sub>2</sub> scale. Each dot corresponds to one condition in the dataset of gene expression for <italic>P</italic>. <italic>aeruginosa</italic> PAO1 biofilms. The circles correspond to the data obtained by Costaglioli et al. [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>]. AU, arbitrary units; h, hours.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004452.g002" position="float" xlink:type="simple"/>
+</fig>
+<p><xref rid="pcbi.1004452.g002" ref-type="fig">Fig 2</xref> also shows that the expression of the genes involved in the synthesis of Psl (<italic>psl</italic> genes) and Pel (<italic>pel</italic> genes), the two major exopolysaccharides forming the extracellular matrix in biofilms of the PAO1 strain [<xref rid="pcbi.1004452.ref034" ref-type="bibr">34</xref>], was correlated with the biofilm age, although with opposing signs. This is consistent with the observation that <italic>P</italic>. <italic>aeruginosa</italic> strains produce predominantly one polysaccharide at any given time [<xref rid="pcbi.1004452.ref035" ref-type="bibr">35</xref>]. But unexpectedly, the <italic>psl</italic> and <italic>pel</italic> genes were not up-regulated in the biofilm compared with the stationary culture in the study by Costaglioli et al. [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>]. A possible explanation for this observation could be that most of the nutrients in the medium have been consumed after 24 h and the synthesis of exopolysaccharides has been stalled in both cultures. Nonetheless, our simulations predicted that there was an increase in the synthesis rate of Psl (median flux ratio = 2.87, minimum flux ratio = 1.22) in the biofilm with respect to the stationary culture. There was also an increase, although small, in the Pel synthesis (median flux ratio = 1.53, minimum flux ratio = 1.32). To understand what caused this result in our simulations, we evaluated the effect of the overall gene expression change of each reaction on the predicted Psl synthesis rate (see <xref rid="sec009" ref-type="sec">Materials and Methods</xref>). We found that the increase in Psl synthesis was mainly caused by the down-regulation of a few reactions in pathways competing for Psl precursors. <xref rid="pcbi.1004452.g003" ref-type="fig">Fig 3A</xref> shows a sketch of the pathways associated with the increase in the synthesis of Psl. This figure also shows the genes associated with the nine reactions that had the highest effect on Psl production (the addition of more reactions did not have a significant effect), as well as the predicted median flux ratios in simulations with or without the gene expression changes of all of these genes. Psl production was increased by down-regulating the genes of seven of these reactions (although only two of them, <italic>purD</italic> and <italic>purF</italic>, by more than two-fold) and the other two reactions had a gene expression ratio only slightly higher than 1.0 (<italic>gcd</italic> and <italic>rmlA</italic>). Interestingly, the sensitivity of the nine reactions coincided with the correlation between their gene expression and the expression of the Psl pathway genes in the datasets obtained from the GEO database (<xref rid="pcbi.1004452.g003" ref-type="fig">Fig 3B</xref>). In other words, the gene expression of the reactions whose down-regulation increased Psl synthesis had a negative correlation with the gene expression of the Psl pathway, whereas the reactions whose up-regulation increased Psl synthesis had a positive correlation. Notably, with the exception of <italic>gcd</italic> (PA2290), the opposite was observed in planktonic cultures: the gene expression of the reactions whose down-regulation increased Psl synthesis had a positive correlation with the gene expression of the Psl pathway, whereas the reactions whose up-regulation increased Psl synthesis had a negative correlation (<xref rid="pcbi.1004452.g003" ref-type="fig">Fig 3B</xref>). This result led to the hypothesis that <italic>P</italic>. <italic>aeruginosa</italic> may increase the production of Psl (and possibly Pel) by not only regulating the genes in their synthesis pathways, but by down-regulating pathways competing for Psl precursors in a biofilm-specific manner.</p>
+<fig id="pcbi.1004452.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004452.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Coordinated regulation of Psl synthesis.</title>
+<p>(A) Sketch of the metabolic pathways involved in the increase of Psl and Pel production rates in our simulations. The figure shows the genes associated with the nine reactions that had the highest effect on Psl production. The number to the left of each gene name denotes the rank of the corresponding reaction. The number in parentheses denotes the overall gene expression ratio between the biofilm and the stationary cultures. The numbers to the left and right of the vertical bar denote the median flux ratios of the reactions associated with the genes in simulation with or without the gene expression ratios of the genes <italic>accABCD</italic>, <italic>fabD</italic>, <italic>purADF</italic>, <italic>pgl</italic>, <italic>edd</italic>, <italic>gcd</italic>, and <italic>rmlA</italic>. Only <italic>psl</italic>, <italic>pel</italic>, and those genes whose regulation contributes to increasing Psl and Pel production are shown. (B) Correlation between the expression of the genes that contribute to increasing Psl production and the <italic>psl</italic> operon genes for biofilm and stationary cultures. Solid and dashed arrows indicate single and multiple reaction steps in the model, respectively.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004452.g003" position="float" xlink:type="simple"/>
+</fig>
+<p>Importantly, the kinetic model-based analysis allowed us to make an enhanced interpretation of the gene expression data. Inspection of the gene expression data indicates that 18 of the genes in the metabolic network were up-regulated and 30 down-regulated in the biofilm culture (<xref rid="pcbi.1004452.s013" ref-type="supplementary-material">S9 Table</xref>). One would infer that the 20 reactions associated with the up-regulated genes have an increased flux, and the 36 reactions associated with the down-regulated genes have a decreased flux. However, only nine and four of these reactions had a considerable flux increase or decrease in our simulations, respectively (reactions with a gene expression ratio greater than 2.0 or lower than 0.5 in <xref rid="pcbi.1004452.t002" ref-type="table">Table 2</xref>). <xref rid="pcbi.1004452.t002" ref-type="table">Table 2</xref> also shows that six increased-flux and five decreased-flux reactions had an overall gene expression change less than two-fold. Thus, these reactions would not have been identified based on gene expression analysis alone. Conversely, there were four and eight reactions with overall gene expression ratios larger than 2.0 and smaller than 0.5, respectively, but for which the predicted flux changes were moderate (<xref rid="pcbi.1004452.s014" ref-type="supplementary-material">S10 Table</xref>). We expect that the predicted flux changes represent a better picture of the true metabolic changes than the conclusions that one can draw using only the gene expression data. This claim is supported by previous studies that demonstrated that metabolic network models combined with gene expression data are better predictors of metabolic flux changes than gene expression data alone [<xref rid="pcbi.1004452.ref017" ref-type="bibr">17</xref>, <xref rid="pcbi.1004452.ref036" ref-type="bibr">36</xref>].</p>
+<p>A critical aspect of biofilms that we have not explicitly accounted for is the progression of biofilm formation. This analysis would require a consistent set of gene expression data at different time points and measurements of metabolite concentration at the initial condition (i.e., the reference condition). An alternative approach would be to examine the dynamics of biofilm formation using aggregated time-dependent and averaged expression data from the datasets available in the GEO database. We could then employ our modeling framework, under pseudo-steady-state approximation, for each time point and construct a time-dependent solution. However, there are a number of assumptions and technical difficulties that would need to be resolved before such a technique would be considered reliable enough to infer biofilm dynamics. For instance, the gene expression data from the GEO database were collected under different conditions related to time, temperature, medium, culture mode, chemical treatments, etc. All of these conditions will, to some extent, influence the details of the biofilm formation analysis.</p>
+</sec>
+<sec id="sec007">
+<title>Dysregulation of secondary metabolites rather than energy shortage may explain low biofilm formation in anthranilate degradation mutants</title>
+<p>Costaglioli et al. reported that several genes in the anthranilate degradation pathway of <italic>P</italic>. <italic>aeruginosa</italic> were up-regulated in biofilms compared to stationary cultures, and that the mutation of such genes led to decreased biofilm formation [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>]. They suggested that the decrease in biofilm formation is caused by the inability of the mutants to use anthranilate as an energy source. However, simulations inhibiting anthranilate degradation reactions predicted no decrease in biomass growth rate (minimum relative growth rate = 1.0) or ATP concentration (minimum relative ATP concentration = 0.94). Similarly, FBA simulations predicted that blocking anthranilate degradation affects the optimal biomass growth rate only when tryptophan is the only carbon source, a scenario that is unlikely to occur, because the biofilm cultures were grown in a rich medium. Moreover, Brandenburg et al. [<xref rid="pcbi.1004452.ref037" ref-type="bibr">37</xref>] recently reported that tryptophan inhibits <italic>P</italic>. <italic>aeruginosa</italic> biofilm formation. Thus, this suggests that the mechanism for biofilm reduction is not directly related to a reduction of energy production.</p>
+<p>Anthranilate is a key node in a complex pathway for the synthesis of several important secondary metabolites for <italic>P</italic>. <italic>aeruginosa</italic> physiology derived from chorismate and tryptophan (<xref rid="pcbi.1004452.g004" ref-type="fig">Fig 4A</xref>). In simulations of the mutants that reduced biofilm formation in the study by Costaglioli et al. [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>], concentrations of 19 metabolites changed by a factor of two or more in at least one mutant (<xref rid="pcbi.1004452.s015" ref-type="supplementary-material">S11 Table</xref>). Of the altered metabolites, only tryptophan, formylkynurenine, and kynurenine appeared in the set of metabolites with increased concentration in the low biofilm producers (these mutants were used in the computation of the sets of metabolites associated with the biofilm-reducing and biofilm-increasing reactions). Formylkynurenine and kynurenine are intermediate metabolites in the conversion of tryptophan to anthranilate through the kynurenine pathway, and kynurenine is known to be an inducer of the genes (<italic>kynABU</italic>) in this pathway [<xref rid="pcbi.1004452.ref038" ref-type="bibr">38</xref>]. Notably, the expression of <italic>kynABU</italic> correlated with the expression of genes downstream of anthranilate and chorismate, as well as with <italic>psl</italic> genes, but had a negative correlation with the <italic>pel</italic> genes in the dataset for <italic>P</italic>. <italic>aeruginosa</italic> biofilms (<xref rid="pcbi.1004452.g004" ref-type="fig">Fig 4B</xref>). Thus, we hypothesized that kynurenine accumulation led to up-regulation of <italic>kynABU</italic> and increased flux to anthranilate, which could not be degraded and, therefore, it was diverted to the synthesis of other metabolites, such as PQS, pyocyanine, and hydroxyphenazine, altering the normal development of the biofilm. This hypothesis is supported in part by a study by Oglesby et al. [<xref rid="pcbi.1004452.ref039" ref-type="bibr">39</xref>], who demonstrated the link between the regulation of anthranilate degradation genes (<italic>antABC</italic>) and the synthesis of PQS by showing that the expression of <italic>antABC</italic> affected the production of PQS, and that overexpression of <italic>pqsR</italic> (a quorum-sensing regulator co-induced by PQS) inhibited <italic>antABC</italic> expression.</p>
+<fig id="pcbi.1004452.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004452.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Dysregulation of secondary metabolites related to biofilm formation by inhibition of anthranilate degradation.</title>
+<p>(A) Sketch of the metabolic pathways involved in anthranilate and chorismate metabolism. Metabolite names written in red were predicted to increase when the reactions marked with a red x, which correspond to the low biofilm producers identified by Costaglioli et al. [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>], were inhibited. (B) Correlation of the gene expression intensity of genes associated with anthranilate- and chorismate-derived secondary metabolites, <italic>psl</italic> and <italic>pel</italic> genes, with the genes of the kynurenine pathway.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004452.g004" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec008" sec-type="conclusions">
+<title>Conclusions</title>
+<p>We have investigated the metabolism of <italic>P</italic>. <italic>aeruginosa</italic> under biofilm conditions using a genome-scale kinetic model and gene expression profiles. Specifically, we identify potential target reactions to reduce biofilm formation using metabolite concentration changes predicted to be specific for the inhibition of either biofilm-reducing or biofilm-increasing reactions, in contrast with previous modeling analysis that used biomass growth as a surrogate of biofilm formation and failed to find biofilm-specific essential genes. We also predicted the metabolic differences between biofilm and stationary cultures and hypothesized a mechanism for regulating the synthesis of important biofilm-related molecules, such as Psl and PQS. Finally, we proposed a mechanistic explanation of why mutants defective in anthranilate degradation had a reduced biofilm formation. Our simulation data showed that the predicted mechanisms for Psl synthesis regulation and the effect of blocking anthranilate on biofilm formation had a subtle connection with the co-expression of several of the involved genes. Thus, our work highlighted how metabolic network analysis could generate non-intuitive hypotheses regarding poorly understood mechanisms of biofilm development.</p>
+</sec>
+</sec>
+<sec id="sec009" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="sec010">
+<title>Metabolic network of <italic>P</italic>. <italic>aeruginosa</italic></title>
+<p>We constructed a kinetic model based on the metabolic network reconstruction of Oberhardt et al. [<xref rid="pcbi.1004452.ref018" ref-type="bibr">18</xref>], with a number of modifications, as detailed in <xref rid="pcbi.1004452.s001" ref-type="supplementary-material">S1 Supporting Information</xref>. In particular, we completed the anthranilate degradation and pyochelin synthesis, and modified the lipopolysaccharide synthesis pathways, because these pathways are associated with genes differentially expressed in biofilm cultures in the data from Costaglioli et al. [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>]. We also included the synthesis pathways for the major exopolysaccharides produced by the strain PAO1, Psl and Pel [<xref rid="pcbi.1004452.ref034" ref-type="bibr">34</xref>]. For the simulated growth conditions, the modified model had 685 reactions associated with 876 genes and 504 metabolites.</p>
+</sec>
+<sec id="sec011">
+<title>Kinetic model</title>
+<p>We used our previously developed modeling framework [<xref rid="pcbi.1004452.ref017" ref-type="bibr">17</xref>] to construct a genome-scale kinetic model for the metabolic network of <italic>P</italic>. <italic>aeruginosa</italic>. Briefly, the constructed model can be used to simulate a specific condition or to predict the metabolic fluxes and metabolite concentration changes brought about by gene expression changes between two conditions: a reference condition and the condition of interest. Assuming pseudo-steady-state conditions, the kinetic model can be represented as
+<disp-formula id="pcbi.1004452.e001">
+<alternatives>
+<graphic id="pcbi.1004452.e001g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004452.e001" xlink:type="simple"/>
+<mml:math display="block" id="M1" overflow="scroll">
+<mml:mrow><mml:mi mathvariant="bold">S</mml:mi><mml:mo>⋅</mml:mo><mml:mi mathvariant="bold">r</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi mathvariant="bold">v</mml:mi><mml:mo>,</mml:mo><mml:mi mathvariant="bold">g</mml:mi><mml:mo>,</mml:mo><mml:mi mathvariant="bold">c</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mn mathvariant="bold">0</mml:mn><mml:mo>,</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(1)</label>
+</disp-formula>
+where <bold>S</bold> denotes the stoichiometric matrix of the metabolic network reconstruction, <bold>r</bold> represents the vector of reaction rates, <bold>v</bold> denotes the reference flux distribution, <bold>g</bold> represents the vector of gene expression ratios between the condition of interest and the reference condition, and <bold>c</bold> represents the vector of normalized metabolite concentrations. Thus, the model requires two sets of parameters, a flux distribution for one of the conditions and the gene expression ratios between the two conditions (see below). For the kinetic expression, we used a particular case of generalized mass action kinetics [<xref rid="pcbi.1004452.ref040" ref-type="bibr">40</xref>]. For a general irreversible reaction
+<disp-formula id="pcbi.1004452.e002">
+<alternatives>
+<graphic id="pcbi.1004452.e002g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004452.e002" xlink:type="simple"/>
+<mml:math display="block" id="M2" overflow="scroll">
+<mml:mrow><mml:mstyle displaystyle="true"><mml:msub><mml:mo>∑</mml:mo><mml:mi>i</mml:mi></mml:msub><mml:mrow><mml:msub><mml:mi>a</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:msub><mml:mi>A</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:mstyle><mml:mo>→</mml:mo><mml:mstyle displaystyle="true"><mml:msub><mml:mo>∑</mml:mo><mml:mi>j</mml:mi></mml:msub><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:msub><mml:mi>B</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow></mml:mstyle><mml:mo>,</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(2)</label>
+</disp-formula>
+we used the expression form
+<disp-formula id="pcbi.1004452.e003">
+<alternatives>
+<graphic id="pcbi.1004452.e003g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004452.e003" xlink:type="simple"/>
+<mml:math display="block" id="M3" overflow="scroll">
+<mml:mrow><mml:mi>r</mml:mi><mml:mo>=</mml:mo><mml:mi>v</mml:mi><mml:mi>g</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:mstyle displaystyle="true"><mml:msub><mml:mo>∏</mml:mo><mml:mrow><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:msup><mml:mrow><mml:mo stretchy="false">[</mml:mo><mml:msub><mml:mi>A</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo stretchy="false">]</mml:mo></mml:mrow><mml:mrow><mml:msub><mml:mi>a</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:msup></mml:mstyle></mml:mrow><mml:mrow><mml:mstyle displaystyle="true"><mml:msub><mml:mo>∏</mml:mo><mml:mi>j</mml:mi></mml:msub><mml:msup><mml:mrow><mml:mo stretchy="false">[</mml:mo><mml:msub><mml:mi>B</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo stretchy="false">]</mml:mo></mml:mrow><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow></mml:msup></mml:mstyle></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(3)</label>
+</disp-formula>
+where <italic>a</italic><sub><italic>i</italic></sub> and <italic>b</italic><sub><italic>j</italic></sub> denote the stoichiometric coefficients of species <italic>A</italic><sub><italic>i</italic></sub> and <italic>B</italic><sub><italic>j</italic></sub>, respectively, <italic>r</italic> represents the reaction rate, the parameter <italic>v</italic> denotes the value of the reaction rate or flux through the reaction at a reference condition, <italic>g</italic> represents the overall gene expression ratio (between a condition of interest and a reference condition) of the genes associated with the reaction, and the square brackets denote normalized metabolite concentrations. Note that we made the rate of irreversible reactions a function of their products to allow metabolites downstream of an irreversible reaction to have an effect on the flux through a pathway. In a living cell, these reactions are under control of multiple biological and regulatory processes not included in the model. The proposed kinetic expressions partially allow us to capture these processes; otherwise, the flux through a pathway would depend only on the substrates and enzyme level of its <italic>first</italic> irreversible reaction. We assumed that this scenario is not likely to occur in metabolic networks because enzyme level changes of downstream reactions would then not affect the flux through the pathway. In fact, gene expression data clearly show differential gene expression regulation of downstream reactions.</p>
+<p>Similarly, for a general reversible reaction, we used the expression form
+<disp-formula id="pcbi.1004452.e004">
+<alternatives>
+<graphic id="pcbi.1004452.e004g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004452.e004" xlink:type="simple"/>
+<mml:math display="block" id="M4" overflow="scroll">
+<mml:mrow><mml:mi>r</mml:mi><mml:mo>=</mml:mo><mml:mi>g</mml:mi><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:msup><mml:mi>v</mml:mi><mml:mrow><mml:mi>f</mml:mi></mml:mrow></mml:msup><mml:mstyle displaystyle="true"><mml:msub><mml:mo>∏</mml:mo><mml:mi>i</mml:mi></mml:msub><mml:msup><mml:mrow><mml:mo stretchy="false">[</mml:mo><mml:msub><mml:mi>A</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo stretchy="false">]</mml:mo></mml:mrow><mml:mrow><mml:msub><mml:mi>a</mml:mi><mml:mi>i</mml:mi></mml:msub></mml:mrow></mml:msup></mml:mstyle><mml:mo>−</mml:mo><mml:msup><mml:mi>v</mml:mi><mml:mi>b</mml:mi></mml:msup><mml:mstyle displaystyle="true"><mml:msub><mml:mo>∏</mml:mo><mml:mi>j</mml:mi></mml:msub><mml:msup><mml:mrow><mml:mo stretchy="false">[</mml:mo><mml:msub><mml:mi>B</mml:mi><mml:mi>j</mml:mi></mml:msub><mml:mo stretchy="false">]</mml:mo></mml:mrow><mml:mrow><mml:msub><mml:mi>b</mml:mi><mml:mi>j</mml:mi></mml:msub></mml:mrow></mml:msup></mml:mstyle></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mo>,</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(4)</label>
+</disp-formula>
+where <italic>v</italic><sup><italic>f</italic></sup> and <italic>v</italic><sup><italic>b</italic></sup> were determined as follows:
+<disp-formula id="pcbi.1004452.e005">
+<alternatives>
+<graphic id="pcbi.1004452.e005g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004452.e005" xlink:type="simple"/>
+<mml:math display="block" id="M5" overflow="scroll">
+<mml:mrow><mml:msup><mml:mi>v</mml:mi><mml:mi>f</mml:mi></mml:msup><mml:mo>=</mml:mo><mml:mi>β</mml:mi><mml:mi>v</mml:mi><mml:mspace width="0.25em"/><mml:mtext>and</mml:mtext><mml:mspace width="0.25em"/><mml:msup><mml:mi>v</mml:mi><mml:mi>b</mml:mi></mml:msup><mml:mo>=</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mi>β</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn><mml:mo stretchy="false">)</mml:mo><mml:mi>v</mml:mi><mml:mo>,</mml:mo><mml:mspace width="0.25em"/><mml:mtext>if</mml:mtext><mml:mspace width="0.25em"/><mml:mi>v</mml:mi><mml:mo>&gt;</mml:mo><mml:mn>0</mml:mn><mml:mo>,</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(5)</label>
+</disp-formula>
+<disp-formula id="pcbi.1004452.e006">
+<alternatives>
+<graphic id="pcbi.1004452.e006g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004452.e006" xlink:type="simple"/>
+<mml:math display="block" id="M6" overflow="scroll">
+<mml:mrow><mml:msup><mml:mi>v</mml:mi><mml:mi>f</mml:mi></mml:msup><mml:mo>=</mml:mo><mml:mo stretchy="false">(</mml:mo><mml:mi>β</mml:mi><mml:mo>−</mml:mo><mml:mn>1</mml:mn><mml:mo stretchy="false">)</mml:mo><mml:mi>v</mml:mi><mml:mspace width="0.25em"/><mml:mtext>and</mml:mtext><mml:mspace width="0.25em"/><mml:msup><mml:mi>v</mml:mi><mml:mi>b</mml:mi></mml:msup><mml:mo>=</mml:mo><mml:mi>β</mml:mi><mml:mi>v</mml:mi><mml:mo>,</mml:mo><mml:mspace width="0.25em"/><mml:mtext>if</mml:mtext><mml:mspace width="0.25em"/><mml:mi>v</mml:mi><mml:mo>&lt;</mml:mo><mml:mn>0</mml:mn><mml:mo>,</mml:mo></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(6)</label>
+</disp-formula>
+where <italic>β</italic> is a parameter that relates the rate of the forward and backward reactions to the overall flux at the reference condition. The value of <italic>β</italic> depends on the equilibrium constant and on the reactant’s concentration at the reference condition (see <xref rid="pcbi.1004452.s004" ref-type="supplementary-material">S1 Text</xref>). However, these data are generally not available as in the experiments analyzed here. Therefore, assuming that the model behavior had a low sensitivity to individual <italic>β</italic>s, we took all <italic>β</italic>s to have the same value, except for reactions in parallel pathways that must satisfy additional thermodynamic constraints as detailed in Vital-Lopez et al. [<xref rid="pcbi.1004452.ref017" ref-type="bibr">17</xref>]. The lower limit of <italic>β</italic> is 1.0. A value of <italic>β</italic> close to 1.0 corresponds to a reaction very far from the equilibrium, whereas a large value of <italic>β</italic> corresponds to near-equilibrium reactions. We assumed that all reversible reactions are near equilibrium and set <italic>β</italic> = 50 for reaction that do not participate in parallel pathways. The values of <italic>β</italic> for reactions in parallel pathways are provided in <xref rid="pcbi.1004452.s002" ref-type="supplementary-material">S2 Supporting Information</xref>. The simulation results had low sensitivity to <italic>β</italic> in the neighborhood of 50 (simulations with <italic>β</italic> = 30 or <italic>β</italic> = 100 produced similar results; see <xref rid="pcbi.1004452.s016" ref-type="supplementary-material">S12 Table</xref>). The simulations become more sensitive to <italic>β</italic> as the parameter approaches 1.0. Moreover, from practical experience, the model becomes unstable for values of <italic>β</italic> close to 1.0. For example, 70% of the simulations fail to stay at steady state when simulating the reference condition using <italic>β</italic> = 1.5. As we previously showed, approximating all <italic>β</italic>s to a single relatively large value produced satisfactory results [<xref rid="pcbi.1004452.ref017" ref-type="bibr">17</xref>]. More details of the modeling framework are provided in Vital-Lopez et al. [<xref rid="pcbi.1004452.ref017" ref-type="bibr">17</xref>].</p>
+<p>Note that we could have included the concentration of products in the forward reactions and the concentration of substrates in the backward reactions for the reversible reactions. However, we decided not to include them because the simpler kinetic expressions already captured the effect of both substrates and products in the reaction rate.</p>
+<p>In all analyses in this work, we simulated the model under the pseudo-steady-state assumption. Under this assumption, we have previously shown that the proposed modeling framework produced satisfactory results [<xref rid="pcbi.1004452.ref017" ref-type="bibr">17</xref>], even in the absence of alternative regulatory mechanisms and with the coarse approximation for some model parameters, such as the reference flux distribution and <italic>β</italic>. In fact, our modeling approach outperformed the method proposed by Moxley et al. [<xref rid="pcbi.1004452.ref036" ref-type="bibr">36</xref>], which incorporated known enzyme-metabolite interactions.</p>
+<p>Thus, the proposed kinetic model has four sets of parameters, namely, the gene expression ratios <bold>g</bold>, the reference flux distribution <bold>v</bold>, the exponent of the concentrations <italic>a</italic><sub><italic>i</italic></sub> and <italic>b</italic><sub><italic>j</italic></sub>, and the <italic>β</italic>s. In this work, the gene expression ratios were directly computed from gene expression data. We used an ensemble of random reference flux distributions, instead of a single flux distribution, to account for the lack of data to estimate an accurate flux distribution. The exponents of the concentrations are stoichiometric coefficients of the metabolites of each reaction and are directly taken from metabolic network model. As we mention above, with exception of the reactions that participate in parallel pathways, we approximate all <italic>β</italic>s to a single value without considerably affecting the simulation results. We provided all the parameter sets, including the <italic>β</italic>s for reactions in parallel pathways, in <xref rid="pcbi.1004452.s002" ref-type="supplementary-material">S2 Supporting Information</xref>.</p>
+</sec>
+<sec id="sec012">
+<title>Gene expression data</title>
+<p>We used the gene expression data obtained by Costaglioli et al. [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>] to simulate the metabolic changes in their experiments. We obtained the raw data with accession number GSE30021 from the GEO database [<xref rid="pcbi.1004452.ref033" ref-type="bibr">33</xref>] and processed the data using the MATLAB (2011b, The MathWorks Inc., Natick, MA) function affygcrma. We further smoothed the processed data to reduced non-random systematic error. Briefly, for each microarray in the dataset, we computed a correction factor for each gene such that the systematic deviations in the signal intensity of each microarray with respect to the average signal intensity of the dataset were reduced. The correction factor is equivalent to what is obtained using the MATLAB function malowess, although we used an in-house-developed function (<xref rid="pcbi.1004452.s018" ref-type="supplementary-material">S1 Fig</xref>). For the analysis of gene expression of multiple datasets of biofilm and planktonic cultures, we looked for microarray data in the GEO database using the search term “Pseudomonas aeruginosa PAO1 [porgn:__txid208964].” From the search results, we selected the microarray data that were associated with the wild-type strain (e.g., no mutants), where cells were grown in biofilms or liquid planktonic cultures, and the raw data (i.e., CEL files) were available. In addition, we included other datasets from the literature that met the conditions mentioned above, but were not retrieved from the search results (see <xref rid="pcbi.1004452.s017" ref-type="supplementary-material">S13 Table</xref> for the full list of the microarray data used). We processed these datasets the same way as described above.</p>
+</sec>
+<sec id="sec013">
+<title>Reference flux distribution</title>
+<p>Experimental measurements to determine the reference flux distribution for the exponential, stationary, or biofilm cultures in the study by Costaglioli et al. [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>] were not available. Therefore, we randomly sampled the space of feasible flux distributions to generate ensembles of reference flux distributions, and then carried out the simulations on each member of the ensemble. Briefly, we created two ensembles of 100 random reference flux distributions each for the exponential and stationary cultures. First, we carried out a flux variability analysis to compute the lower and upper bounds for each reaction. Then, we generated random flux vectors that were contained within these bounds using Latin hypercube sampling [<xref rid="pcbi.1004452.ref041" ref-type="bibr">41</xref>]. Finally, for each random flux vector, we computed a flux distribution that was as close as possible to the random flux vector while satisfying the mass balance, thermodynamics, simulation condition constrains (see <xref rid="pcbi.1004452.s004" ref-type="supplementary-material">S1 Text</xref> for details). For the exponential cultures, we assumed that the reference flux distributions could have any uptake rates for the nutrients in the Luria-Bertani medium and oxygen, as long as the biomass yield was at least 50% of the optimal biomass yield. We computed optimal biomass yield for exponential cultures by minimizing the total carbon uptake for a fixed biomass growth rate, without any restrictions in nutrients or oxygen uptake rates. For the stationary cultures, the reference flux distributions were also constrained to have a biomass yield of at least 50% of the optimal yield under the same conditions. We computed the optimal biomass yield for stationary cultures in the same way that the exponential cultures, but with two additional constrains. We restricted the oxygen consumption to 20% of the optimal uptake rate for the exponential culture and the major carbon source to contribute no more than 25% of the total used carbon (assuming that the preferred carbon source would be mainly used during the exponential growth-phase).</p>
+</sec>
+<sec id="sec014">
+<title>Prediction of essential reactions using FBA</title>
+<p>We predicted the effect of completely blocking each reaction on the biomass growth rate by solving the following FBA problem:
+<disp-formula id="pcbi.1004452.e007">
+<alternatives>
+<graphic id="pcbi.1004452.e007g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004452.e007" xlink:type="simple"/>
+<mml:math display="block" id="M7" overflow="scroll">
+<mml:mtable columnalign="left"><mml:mtr><mml:mtd><mml:munder><mml:mrow><mml:mtext>max</mml:mtext></mml:mrow><mml:mi mathvariant="bold">y</mml:mi></mml:munder><mml:mspace width="0.2em"/><mml:msub><mml:mi>y</mml:mi><mml:mrow><mml:mi>b</mml:mi><mml:mi>i</mml:mi><mml:mi>o</mml:mi></mml:mrow></mml:msub></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mtext>s.t.</mml:mtext></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mi mathvariant="bold">S</mml:mi><mml:mo>⋅</mml:mo><mml:mi mathvariant="bold">y</mml:mi><mml:mo>=</mml:mo><mml:mn mathvariant="bold">0</mml:mn></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mi mathvariant="bold">y</mml:mi><mml:mo>≥</mml:mo><mml:mi mathvariant="bold">l</mml:mi></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mi mathvariant="bold">y</mml:mi><mml:mo>≤</mml:mo><mml:mi mathvariant="bold">u</mml:mi></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:msub><mml:mi>y</mml:mi><mml:mi>i</mml:mi></mml:msub><mml:mo>=</mml:mo><mml:mn>0</mml:mn><mml:mo>,</mml:mo></mml:mtd></mml:mtr></mml:mtable>
+</mml:math>
+</alternatives>
+<label>(7)</label>
+</disp-formula>
+where <bold>S</bold> denotes the stoichiometric matrix of the metabolic network reconstruction, <bold>y</bold> represents the vector of fluxes, <italic>y</italic><sub><italic>bio</italic></sub> and <italic>y</italic><sub><italic>i</italic></sub> denote the biomass growth and the flux of the <italic>i</italic>-th reaction, respectively, and <bold>l</bold> and <bold>u</bold> represent the vectors of the lower and upper flux bounds, respectively. The lower and upper bounds are provided in the <xref rid="pcbi.1004452.s002" ref-type="supplementary-material">S2 Supporting Information</xref>. Note that we kept the biomass composition constant in the FBA, whereas we allowed variations in the kinetic model simulations. If constraining the flux of the <italic>i</italic>-th reaction to zero blocked the biomass growth, then the reaction was considered FBA-predicted essential, otherwise, the reaction was considered FBA-predicted non-essential.</p>
+</sec>
+<sec id="sec015">
+<title>Simulation of reaction inhibitions using the kinetic model</title>
+<p>We simulated the effect of inhibiting a metabolic reaction under exponential and biofilm culture conditions. For both conditions, we obtained an ensemble of reference flux distributions as described above. We simulated reaction inhibitions by multiplying each reaction rate, one at a time, by a factor of 0.0 or 0.01 for non-essential and essential reactions, respectively. Then, we solved <xref rid="pcbi.1004452.e001" ref-type="disp-formula">Eq 1</xref> for each reaction inhibition and each member of the ensemble of reference flux distributions. Note that for the simulations of the exponential cultures, we used the exponential cultures as the reference conditions themselves and, therefore, the simulations did not require gene expression (i.e., <bold>g</bold> = 1 in <xref rid="pcbi.1004452.e001" ref-type="disp-formula">Eq 1</xref>). For the biofilm cultures, we carried out the simulations using the same reference condition as in the analysis of the metabolic differences between the biofilm and planktonic cultures. The reference condition was the stationary culture because this culture is physiologically closer to the biofilm culture than the exponential culture [<xref rid="pcbi.1004452.ref010" ref-type="bibr">10</xref>, <xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>]. Thus, in addition to the reference flux distribution, these simulations required the gene expression ratio between the biofilm and stationary cultures [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>].</p>
+</sec>
+<sec id="sec016">
+<title>Scoring function to predict the effect of metabolic reaction inhibitions on biofilm formation</title>
+<p>For the inhibition of a metabolic reaction, we defined a scoring function to count how many metabolite concentration changes were in common with the concentration changes caused by inhibition of reactions associated with genes whose mutations are known to either reduce or increase biofilm formation [<xref rid="pcbi.1004452.ref022" ref-type="bibr">22</xref>] (see <xref rid="pcbi.1004452.s007" ref-type="supplementary-material">S3 Table</xref> for the list of the genes). We considered that a metabolite had a considerable concentration change if the median change was larger than two-fold and all the changes occurred in the same direction across the ensemble of reference flux distributions. Based on the predicted metabolite concentration changes caused by the inhibition of the biofilm-reducing and biofilm-increasing reactions, we defined four metabolite sets as follows (see <xref rid="pcbi.1004452.g005" ref-type="fig">Fig 5</xref>):
+<list list-type="order">
+<list-item><p>Metabolites whose concentrations increased when inhibiting at least one biofilm-reducing reaction (but their concentration did not decrease nor increase when inhibiting any biofilm-reducing or biofilm-increasing reactions, respectively).</p></list-item>
+<list-item><p>Metabolites whose concentrations decreased when inhibiting at least one biofilm-reducing reaction (but their concentration did not increase nor decrease when inhibiting any biofilm-reducing or biofilm-increasing reactions, respectively).</p></list-item>
+<list-item><p>Metabolites whose concentrations increased when inhibiting at least one biofilm-increasing reaction (but their concentration did not increase nor decrease when inhibiting any biofilm-reducing or biofilm-increasing reactions, respectively).</p></list-item>
+<list-item><p>Metabolites whose concentrations decreased when inhibiting at least one biofilm-increasing reaction (but their concentration did not decrease nor increase when inhibiting any biofilm-reducing or biofilm-increasing reactions, respectively).</p></list-item>
+</list></p>
+<fig id="pcbi.1004452.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004452.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Definition of metabolite sets whose concentration changes were specific to either biofilm-reducing or biofilm-increasing reactions.</title>
+<p>The defined sets are as follows: set 1, metabolites that specifically increased when inhibiting biofilm-reducing reactions; set 2, metabolites that specifically decreased when inhibiting biofilm-reducing reactions; set 3, metabolites that specifically increased when inhibiting biofilm-increasing reactions; and set 4, metabolites that decreased when inhibiting biofilm-increasing reactions. Note that each metabolite set includes metabolites from two subsets of the Venn diagram. The number in parentheses indicates the number of metabolites in each subset.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004452.g005" position="float" xlink:type="simple"/>
+</fig>
+<p>Then, for the inhibition of each reaction not used in the definition of any one of the metabolite sets, we defined the following scoring function:
+<disp-formula id="pcbi.1004452.e008">
+<alternatives>
+<graphic id="pcbi.1004452.e008g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004452.e008" xlink:type="simple"/>
+<mml:math display="block" id="M8" overflow="scroll">
+<mml:mrow><mml:msub><mml:mi>s</mml:mi><mml:mrow><mml:mi>m</mml:mi><mml:mi>e</mml:mi><mml:mi>t</mml:mi><mml:mo>,</mml:mo><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>=</mml:mo><mml:mo>−</mml:mo><mml:msub><mml:mi>n</mml:mi><mml:mrow><mml:mn>1</mml:mn><mml:mo>,</mml:mo><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>−</mml:mo><mml:msub><mml:mi>n</mml:mi><mml:mrow><mml:mn>2</mml:mn><mml:mo>,</mml:mo><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mi>n</mml:mi><mml:mrow><mml:mn>3</mml:mn><mml:mo>,</mml:mo><mml:mi>i</mml:mi></mml:mrow></mml:msub><mml:mo>+</mml:mo><mml:msub><mml:mi>n</mml:mi><mml:mrow><mml:mn>4</mml:mn><mml:mo>,</mml:mo><mml:mi>i</mml:mi></mml:mrow></mml:msub></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(8)</label>
+</disp-formula>
+where <italic>s</italic><sub><italic>met</italic>,<italic>i</italic></sub> denotes the score for <italic>i</italic>-th reaction, and <italic>n</italic><sub>1,<italic>i</italic></sub> to <italic>n</italic><sub>4,<italic>i</italic></sub> denote the number of metabolites concentration changes caused by inhibiting the <italic>i</italic>-th reaction that were similar to the metabolite concentration changes of sets 1 to 4, respectively. Thus, we assumed that inhibition of reactions with a negative or a positive score are likely to reduce or increase biofilm formation, respectively.</p>
+</sec>
+<sec id="sec017">
+<title>Filtering putative target reactions for biofilm reduction</title>
+<p>We collected mutants with altered tolerance to at least one antimicrobial from eight different studies [<xref rid="pcbi.1004452.ref042" ref-type="bibr">42</xref>–<xref rid="pcbi.1004452.ref049" ref-type="bibr">49</xref>]. The studies covered 18 antimicrobials from 10 chemical classes and reported a combined total of 262 and 459 mutants with decreased and increased tolerance to at least one antimicrobial (<xref rid="pcbi.1004452.s003" ref-type="supplementary-material">S3 Supporting Information</xref>). We also collected mutants with attenuated virulence identified with a <italic>Caenorhabditis elegans</italic> model [<xref rid="pcbi.1004452.ref050" ref-type="bibr">50</xref>], a rat model of respiratory infection [<xref rid="pcbi.1004452.ref051" ref-type="bibr">51</xref>], and from the Virulence Factor Database (accessed October 20, 2014) [<xref rid="pcbi.1004452.ref052" ref-type="bibr">52</xref>]. We found 526 unique mutants with attenuated virulence (<xref rid="pcbi.1004452.s003" ref-type="supplementary-material">S3 Supporting Information</xref>). We used the Pseudomonas Genome Database [<xref rid="pcbi.1004452.ref053" ref-type="bibr">53</xref>] to obtain a list of <italic>P</italic>. <italic>aeruginosa</italic> genes with human homologs (<xref rid="pcbi.1004452.s003" ref-type="supplementary-material">S3 Supporting Information</xref>). We obtained sets of experimentally determined reactions associated with each phenotype (e.g., increased tolerance to at least one antimicrobial) based on the compiled lists of genes whose mutations altered a given phenotype and the gene-reaction relationships in the metabolic network model.</p>
+</sec>
+<sec id="sec018">
+<title>Simulation of metabolic changes between biofilm and stationary planktonic cultures</title>
+<p>We used the same simulation conditions to predict the metabolic differences between biofilm and stationary cultures as in the simulations of reaction inhibitions. That is, we used the same ensemble of reference flux distributions and the same gene expression data [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>]. For each reference flux distribution in the ensemble, we computed a flux distribution and metabolite concentration changes for the biofilm culture by solving <xref rid="pcbi.1004452.e001" ref-type="disp-formula">Eq 1</xref>.</p>
+</sec>
+<sec id="sec019">
+<title>Simulation of the effect of gene expression changes on Psl synthesis</title>
+<p>We carried out these simulations using the same ensemble of flux distributions and gene expression data as in the simulations to predict the metabolic differences between the biofilm and stationary cultures. We simulated the effect of the gene expression changes of a reaction by running the model (<xref rid="pcbi.1004452.e001" ref-type="disp-formula">Eq 1</xref>) using all the gene expression changes except the gene expression changes for that reaction. We carried out this simulation for each reaction and determined which reaction had the largest effect on Psl synthesis (excluding the reaction for Psl synthesis).</p>
+</sec>
+</sec>
+<sec id="sec020">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1004452.s001" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s001" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S1 Supporting Information</label>
+<caption>
+<title>Metabolic network model of <italic>P</italic>. <italic>aeruginosa</italic>.</title>
+<p>An Excel file with the lists of the metabolic reactions and metabolites in the model.</p>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s002" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s002" mimetype="application/zip" position="float" xlink:type="simple">
+<label>S2 Supporting Information</label>
+<caption>
+<title>Kinetic model of <italic>P</italic>. <italic>aeruginosa</italic> metabolic network.</title>
+<p>A compressed archive containing MATLAB files to simulate the metabolism of <italic>P</italic>. <italic>aeruginosa</italic> under biofilm conditions.</p>
+<p>(ZIP)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s003" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s003" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S3 Supporting Information</label>
+<caption>
+<title><italic>P</italic>. <italic>aeruginosa</italic> genes associated with altered drug sensitivity or virulence, and with human homologs.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s004" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s004" mimetype="application/vnd.openxmlformats-officedocument.wordprocessingml.document" position="float" xlink:type="simple">
+<label>S1 Text</label>
+<caption>
+<title>A text document that provides details on the estimation of reference flux distribution, reproducibility of the simulation results, model validation, alternative predictive functions of biofilm formation, validation of the scoring function, and definition of the parameter <italic>β</italic>.</title>
+<p>(DOCX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s005" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s005" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S1 Table</label>
+<caption>
+<title>Essential reactions determined by FBA.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s006" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s006" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S2 Table</label>
+<caption>
+<title>Predicted reactions important for biomass growth for exponential and biofilm cultures.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s007" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s007" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S3 Table</label>
+<caption>
+<title>Biofilm-reducing and biofilm-increasing reactions of <italic>P</italic>. <italic>aeruginosa</italic> used to define metabolite sets indicative of biofilm effect.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s008" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s008" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S4 Table</label>
+<caption>
+<title>Genes found in the literature to affect biofilm formation.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s009" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s009" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S5 Table</label>
+<caption>
+<title>Metabolites that were altered specifically when inhibiting biofilm-reducing or biofilm-increasing reactions.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s010" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s010" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S6 Table</label>
+<caption>
+<title>Metabolic pathways with five or more metabolites in the metabolite sets specific for low and high biofilm producers.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s011" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s011" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S7 Table</label>
+<caption>
+<title>Reactions whose inhibition is predicted to alter biofilm formation.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s012" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s012" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S8 Table</label>
+<caption>
+<title>Reactions whose inhibition is predicted to alter biofilm formation after removing reactions associated with increased antimicrobial tolerance mutants and human homologs.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s013" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s013" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S9 Table</label>
+<caption>
+<title>Differentially expressed genes in biofilm with respect to stationary cultures in the study by Costaglioli et al. [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>].</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s014" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s014" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S10 Table</label>
+<caption>
+<title>Reactions with differentially expressed genes that did not have a considerable flux change.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s015" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s015" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S11 Table</label>
+<caption>
+<title>Metabolites with a predicted concentration change larger than two-fold in at least one of the mutants that had a reduced biofilm formation in the study by Costaglioli et al. [<xref rid="pcbi.1004452.ref011" ref-type="bibr">11</xref>].</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s016" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s016" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S12 Table</label>
+<caption>
+<title>Effect of the parameter <italic>β</italic> on the predicted flux and metabolite concentration ratios.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s017" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s017" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" position="float" xlink:type="simple">
+<label>S13 Table</label>
+<caption>
+<title>Microarray datasets used to determine gene expression correlations in biofilm and planktonic cultures.</title>
+<p>(XLSX)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004452.s018" xlink:href="info:doi/10.1371/journal.pcbi.1004452.s018" mimetype="image/tiff" position="float" xlink:type="simple">
+<label>S1 Fig</label>
+<caption>
+<title>Smoothing of the processed data for microarray GSM854799.</title>
+<p>(A) Smoothed and pre-smoothed data for the microarray with the highest deviation from the average expression intensity (GSM854799), compared to the average expression intensity of all microarrays in the dataset for <italic>P</italic>. <italic>aeruginosa</italic> PAO1 growing in biofilms (see <xref rid="pcbi.1004452.s017" ref-type="supplementary-material">S13 Table</xref> for microarray accession numbers). (B) Comparison of the microarray data smoothed using the in-house-developed smoothing function and the MATLAB function malowess.</p>
+<p>(TIF)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ack>
+<p>The opinions and assertions contained herein are the private views of the authors and are not to be construed as official or as reflecting the views of the U.S. Army or of the U.S. Department of Defense. This paper has been approved for public release with unlimited distribution.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004452.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bjarnsholt</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Kirketerp-Moller</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Jensen</surname> <given-names>PO</given-names></name>, <name name-style="western"><surname>Madsen</surname> <given-names>KG</given-names></name>, <name name-style="western"><surname>Phipps</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Krogfelt</surname> <given-names>K</given-names></name>, <etal>et al</etal>. <article-title>Why chronic wounds will not heal: a novel hypothesis</article-title>. <source>Wound Repair Regen</source>. <year>2008</year> <month>Jan-Feb</month>;<volume>16</volume>: <fpage>2</fpage>–<lpage>10</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1524-475X.2007.00283.x" xlink:type="simple">10.1111/j.1524-475X.2007.00283.x</ext-link></comment> <object-id pub-id-type="pmid">18211573</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hoiby</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Ciofu</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Johansen</surname> <given-names>HK</given-names></name>, <name name-style="western"><surname>Song</surname> <given-names>ZJ</given-names></name>, <name name-style="western"><surname>Moser</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Jensen</surname> <given-names>PO</given-names></name>, <etal>et al</etal>. <article-title>The clinical impact of bacterial biofilms</article-title>. <source>Int J Oral Sci</source>. <year>2011</year> <month>Apr</month>;<volume>3</volume>: <fpage>55</fpage>–<lpage>65</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.4248/IJOS11026" xlink:type="simple">10.4248/IJOS11026</ext-link></comment> <object-id pub-id-type="pmid">21485309</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mah TF</surname> <given-names>O</given-names></name><article-title>'Toole GA. Mechanisms of biofilm resistance to antimicrobial agents</article-title>. <source>Trends Microbiol</source>. <year>2001</year> <month>Jan</month>;<volume>9</volume>: <fpage>34</fpage>–<lpage>39</lpage>. <object-id pub-id-type="pmid">11166241</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mann</surname> <given-names>EE</given-names></name>, <name name-style="western"><surname>Wozniak</surname> <given-names>DJ</given-names></name>. <article-title><italic>Pseudomonas</italic> biofilm matrix composition and niche biology</article-title>. <source>FEMS Microbiol Rev</source>. <year>2012</year> <month>Jul</month>;<volume>36</volume>: <fpage>893</fpage>–<lpage>916</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1574-6976.2011.00322.x" xlink:type="simple">10.1111/j.1574-6976.2011.00322.x</ext-link></comment> <object-id pub-id-type="pmid">22212072</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stewart</surname> <given-names>PS</given-names></name>, <name name-style="western"><surname>Costerton</surname> <given-names>JW</given-names></name>. <article-title>Antibiotic resistance of bacteria in biofilms</article-title>. <source>Lancet</source>. <year>2001</year> <month>Jul</month> <day>14</day>;<volume>358</volume>: <fpage>135</fpage>–<lpage>138</lpage>. <object-id pub-id-type="pmid">11463434</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jensen</surname> <given-names>PO</given-names></name>, <name name-style="western"><surname>Givskov</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Bjarnsholt</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Moser</surname> <given-names>C</given-names></name>. <article-title>The immune system vs. <italic>Pseudomonas aeruginosa</italic> biofilms</article-title>. <source>FEMS Immunol Med Microbiol</source>. <year>2010</year> <month>Aug</month>;<volume>59</volume>: <fpage>292</fpage>–<lpage>305</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1574-695X.2010.00706.x" xlink:type="simple">10.1111/j.1574-695X.2010.00706.x</ext-link></comment> <object-id pub-id-type="pmid">20579098</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Whiteley</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Bangera</surname> <given-names>MG</given-names></name>, <name name-style="western"><surname>Bumgarner</surname> <given-names>RE</given-names></name>, <name name-style="western"><surname>Parsek</surname> <given-names>MR</given-names></name>, <name name-style="western"><surname>Teitzel</surname> <given-names>GM</given-names></name>, <name name-style="western"><surname>Lory</surname> <given-names>S</given-names></name>, <etal>et al</etal>. <article-title>Gene expression in <italic>Pseudomonas aeruginosa</italic> biofilms</article-title>. <source>Nature</source>. <year>2001</year> <month>Oct</month> <day>25</day>;<volume>413</volume>: <fpage>860</fpage>–<lpage>864</lpage>. <object-id pub-id-type="pmid">11677611</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Patell</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Gu</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Davenport</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Givskov</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Waite</surname> <given-names>RD</given-names></name>, <name name-style="western"><surname>Welch</surname> <given-names>M</given-names></name>. <article-title>Comparative microarray analysis reveals that the core biofilm-associated transcriptome of <italic>Pseudomonas aeruginosa</italic> comprises relatively few genes</article-title>. <source>Environ Microbiol Rep</source>. <year>2010</year> <month>Jun</month>;<volume>2</volume>: <fpage>440</fpage>–<lpage>448</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1758-2229.2010.00158.x" xlink:type="simple">10.1111/j.1758-2229.2010.00158.x</ext-link></comment> <object-id pub-id-type="pmid">23766118</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Waite</surname> <given-names>RD</given-names></name>, <name name-style="western"><surname>Papakonstantinopoulou</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Littler</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Curtis</surname> <given-names>MA</given-names></name>. <article-title>Transcriptome analysis of <italic>Pseudomonas aeruginosa</italic> growth: comparison of gene expression in planktonic cultures and developing and mature biofilms</article-title>. <source>J Bacteriol</source>. <year>2005</year> <month>Sep</month>;<volume>187</volume>: <fpage>6571</fpage>–<lpage>6576</lpage>. <object-id pub-id-type="pmid">16159792</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Folsom</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Richards</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Pitts</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Roe</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Ehrlich</surname> <given-names>GD</given-names></name>, <name name-style="western"><surname>Parker</surname> <given-names>A</given-names></name>, <etal>et al</etal>. <article-title>Physiology of <italic>Pseudomonas aeruginosa</italic> in biofilms as revealed by transcriptome analysis</article-title>. <source>BMC Microbiol</source>. <year>2010</year>;<volume>10</volume>: <fpage>294</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2180-10-294" xlink:type="simple">10.1186/1471-2180-10-294</ext-link></comment> <object-id pub-id-type="pmid">21083928</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Costaglioli</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Barthe</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Claverol</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Brozel</surname> <given-names>VS</given-names></name>, <name name-style="western"><surname>Perrot</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Crouzet</surname> <given-names>M</given-names></name>, <etal>et al</etal>. <article-title>Evidence for the involvement of the anthranilate degradation pathway in <italic>Pseudomonas aeruginosa</italic> biofilm formation</article-title>. <source>MicrobiologyOpen</source>. <year>2012</year> <month>Sep</month>;<volume>1</volume>: <fpage>326</fpage>–<lpage>339</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/mbo3.33" xlink:type="simple">10.1002/mbo3.33</ext-link></comment> <object-id pub-id-type="pmid">23170231</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Becker</surname> <given-names>SA</given-names></name>, <name name-style="western"><surname>Palsson</surname> <given-names>BO</given-names></name>. <article-title>Context-specific metabolic networks are consistent with experiments</article-title>. <source>PLOS Comput Biol</source>. <year>2008</year> <month>May</month>;<volume>4</volume>: <fpage>e1000082</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1000082" xlink:type="simple">10.1371/journal.pcbi.1000082</ext-link></comment> <object-id pub-id-type="pmid">18483554</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Oberhardt</surname> <given-names>MA</given-names></name>, <name name-style="western"><surname>Goldberg</surname> <given-names>JB</given-names></name>, <name name-style="western"><surname>Hogardt</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Papin</surname> <given-names>JA</given-names></name>. <article-title>Metabolic network analysis of <italic>Pseudomonas aeruginosa</italic> during chronic cystic fibrosis lung infection</article-title>. <source>J Bacteriol</source>. <year>2010</year> <month>Oct</month>;<volume>192</volume>: <fpage>5534</fpage>–<lpage>5548</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/JB.00900-10" xlink:type="simple">10.1128/JB.00900-10</ext-link></comment> <object-id pub-id-type="pmid">20709898</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shlomi</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Cabili</surname> <given-names>MN</given-names></name>, <name name-style="western"><surname>Herrgard</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Palsson</surname> <given-names>BO</given-names></name>, <name name-style="western"><surname>Ruppin</surname> <given-names>E</given-names></name>. <article-title>Network-based prediction of human tissue-specific metabolism</article-title>. <source>Nat Biotechnol</source>. <year>2008</year> <month>Sep</month>;<volume>26</volume>: <fpage>1003</fpage>–<lpage>1010</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nbt.1487" xlink:type="simple">10.1038/nbt.1487</ext-link></comment> <object-id pub-id-type="pmid">18711341</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Reifman</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Wallqvist</surname> <given-names>A</given-names></name>. <article-title>Modeling metabolism and stage-specific growth of <italic>Plasmodium falciparum</italic> HB3 during the intraerythrocytic developmental cycle</article-title>. <source>Mol Biosyst</source>. <year>2014</year> <month>Aug</month> <day>26</day>;<volume>10</volume>: <fpage>2526</fpage>–<lpage>2537</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1039/c4mb00115j" xlink:type="simple">10.1039/c4mb00115j</ext-link></comment> <object-id pub-id-type="pmid">25001103</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Wallqvist</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Reifman</surname> <given-names>J</given-names></name>. <article-title>Modeling phenotypic metabolic adaptations of <italic>Mycobacterium tuberculosis</italic> H37Rv under hypoxia</article-title>. <source>PLOS Comput Biol</source>. <year>2012</year>;<volume>8</volume>: <fpage>e1002688</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1002688" xlink:type="simple">10.1371/journal.pcbi.1002688</ext-link></comment> <object-id pub-id-type="pmid">23028286</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vital-Lopez</surname> <given-names>FG</given-names></name>, <name name-style="western"><surname>Wallqvist</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Reifman</surname> <given-names>J</given-names></name>. <article-title>Bridging the gap between gene expression and metabolic phenotype via kinetic models</article-title>. <source>BMC Syst Biol</source>. <year>2013</year>;<volume>7</volume>: <fpage>63</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1752-0509-7-63" xlink:type="simple">10.1186/1752-0509-7-63</ext-link></comment> <object-id pub-id-type="pmid">23875723</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Oberhardt</surname> <given-names>MA</given-names></name>, <name name-style="western"><surname>Puchalka</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Fryer</surname> <given-names>KE</given-names></name>, <name name-style="western"><surname>Martins dos Santos</surname> <given-names>VA</given-names></name>, <name name-style="western"><surname>Papin</surname> <given-names>JA</given-names></name>. <article-title>Genome-scale metabolic network analysis of the opportunistic pathogen <italic>Pseudomonas aeruginosa</italic> PAO1</article-title>. <source>J Bacteriol</source>. <year>2008</year> <month>Apr</month>;<volume>190</volume>: <fpage>2790</fpage>–<lpage>2803</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/JB.01583-07" xlink:type="simple">10.1128/JB.01583-07</ext-link></comment> <object-id pub-id-type="pmid">18192387</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sigurdsson</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Fleming</surname> <given-names>RM</given-names></name>, <name name-style="western"><surname>Heinken</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Thiele</surname> <given-names>I</given-names></name>. <article-title>A systems biology approach to drug targets in <italic>Pseudomonas aeruginosa</italic> biofilm</article-title>. <source>PLOS ONE</source>. <year>2012</year>;<volume>7</volume>: <fpage>e34337</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0034337" xlink:type="simple">10.1371/journal.pone.0034337</ext-link></comment> <object-id pub-id-type="pmid">22523548</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Xu</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Fang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Wood</surname> <given-names>TK</given-names></name>, <name name-style="western"><surname>Huang</surname> <given-names>ZJ</given-names></name>. <article-title>A systems-level approach for investigating <italic>Pseudomonas aeruginosa</italic> biofilm formation</article-title>. <source>PLOS ONE</source>. <year>2013</year>;<volume>8</volume>: <fpage>e57050</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0057050" xlink:type="simple">10.1371/journal.pone.0057050</ext-link></comment> <object-id pub-id-type="pmid">23451140</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Biggs</surname> <given-names>MB</given-names></name>, <name name-style="western"><surname>Papin</surname> <given-names>JA</given-names></name>. <article-title>Novel multiscale modeling tool applied to <italic>Pseudomonas aeruginosa</italic> biofilm formation</article-title>. <source>PLOS ONE</source>. <year>2013</year>;<volume>8</volume>: <fpage>e78011</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0078011" xlink:type="simple">10.1371/journal.pone.0078011</ext-link></comment> <object-id pub-id-type="pmid">24147108</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Musken</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Di Fiore</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Dotsch</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Fischer</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Haussler</surname> <given-names>S</given-names></name>. <article-title>Genetic determinants of <italic>Pseudomonas aeruginosa</italic> biofilm establishment</article-title>. <source>Microbiology</source>. <year>2010</year> <month>Feb</month>;<volume>156</volume>: <fpage>431</fpage>–<lpage>441</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1099/mic.0.033290-0" xlink:type="simple">10.1099/mic.0.033290-0</ext-link></comment> <object-id pub-id-type="pmid">19850623</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Byrd</surname> <given-names>MS</given-names></name>, <name name-style="western"><surname>Sadovskaya</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Vinogradov</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Lu</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Sprinkle</surname> <given-names>AB</given-names></name>, <name name-style="western"><surname>Richardson</surname> <given-names>SH</given-names></name>, <etal>et al</etal>. <article-title>Genetic and biochemical analyses of the <italic>Pseudomonas aeruginosa</italic> Psl exopolysaccharide reveal overlapping roles for polysaccharide synthesis enzymes in Psl and LPS production</article-title>. <source>Mol Microbiol</source>. <year>2009</year> <month>Aug</month>;<volume>73</volume>: <fpage>622</fpage>–<lpage>638</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1365-2958.2009.06795.x" xlink:type="simple">10.1111/j.1365-2958.2009.06795.x</ext-link></comment> <object-id pub-id-type="pmid">19659934</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Petrova</surname> <given-names>OE</given-names></name>, <name name-style="western"><surname>Schurr</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Schurr</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Sauer</surname> <given-names>K</given-names></name>. <article-title>Microcolony formation by the opportunistic pathogen <italic>Pseudomonas aeruginosa</italic> requires pyruvate and pyruvate fermentation</article-title>. <source>Mol Microbiol</source>. <year>2012</year> <month>Nov</month>;<volume>86</volume>: <fpage>819</fpage>–<lpage>835</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/mmi.12018" xlink:type="simple">10.1111/mmi.12018</ext-link></comment> <object-id pub-id-type="pmid">22931250</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ueda</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Attila</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Whiteley</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Wood</surname> <given-names>TK</given-names></name>. <article-title>Uracil influences quorum sensing and biofilm formation in <italic>Pseudomonas aeruginosa</italic> and fluorouracil is an antagonist</article-title>. <source>Microb Biotechnol</source>. <year>2009</year> <month>Jan</month>;<volume>2</volume>: <fpage>62</fpage>–<lpage>74</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1751-7915.2008.00060.x" xlink:type="simple">10.1111/j.1751-7915.2008.00060.x</ext-link></comment> <object-id pub-id-type="pmid">21261882</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hu</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Allison</surname> <given-names>SL</given-names></name>, <name name-style="western"><surname>Phillips</surname> <given-names>AT</given-names></name>. <article-title>Identification of multiple repressor recognition sites in the hut system of <italic>Pseudomonas putida</italic></article-title>. <source>J Bacteriol</source>. <year>1989</year> <month>Aug</month>;<volume>171</volume>: <fpage>4189</fpage>–<lpage>4195</lpage>. <object-id pub-id-type="pmid">2666390</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yeung</surname> <given-names>AT</given-names></name>, <name name-style="western"><surname>Torfs</surname> <given-names>EC</given-names></name>, <name name-style="western"><surname>Jamshidi</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Bains</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Wiegand</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Hancock</surname> <given-names>RE</given-names></name>, <etal>et al</etal>. <article-title>Swarming of <italic>Pseudomonas aeruginosa</italic> is controlled by a broad spectrum of transcriptional regulators, including</article-title> <source>MetR. J Bacteriol</source>. <year>2009</year> <month>Sep</month>;<volume>191</volume>: <fpage>5592</fpage>–<lpage>5602</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/JB.00157-09" xlink:type="simple">10.1128/JB.00157-09</ext-link></comment> <object-id pub-id-type="pmid">19592586</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Wallqvist</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Reifman</surname> <given-names>J</given-names></name>. <article-title>Development and analysis of an in vivo-compatible metabolic network of Mycobacterium tuberculosis</article-title>. <source>BMC Syst Biol</source>. <year>2010</year>;<volume>4</volume>: <fpage>160</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1752-0509-4-160" xlink:type="simple">10.1186/1752-0509-4-160</ext-link></comment> <object-id pub-id-type="pmid">21092312</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Suthers</surname> <given-names>PF</given-names></name>, <name name-style="western"><surname>Zomorrodi</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Maranas</surname> <given-names>CD</given-names></name>. <article-title>Genome-scale gene/reaction essentiality and synthetic lethality analysis</article-title>. <source>Mol Syst Biol</source>. <year>2009</year>;<volume>5</volume>: <fpage>301</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/msb.2009.56" xlink:type="simple">10.1038/msb.2009.56</ext-link></comment> <object-id pub-id-type="pmid">19690570</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Diggle</surname> <given-names>SP</given-names></name>, <name name-style="western"><surname>Matthijs</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Wright</surname> <given-names>VJ</given-names></name>, <name name-style="western"><surname>Fletcher</surname> <given-names>MP</given-names></name>, <name name-style="western"><surname>Chhabra</surname> <given-names>SR</given-names></name>, <name name-style="western"><surname>Lamont</surname> <given-names>IL</given-names></name>, <etal>et al</etal>. <article-title>The <italic>Pseudomonas aeruginosa</italic> 4-quinolone signal molecules HHQ and PQS play multifunctional roles in quorum sensing and iron entrapment</article-title>. <source>Chem Biol</source>. <year>2007</year> <month>Jan</month>;<volume>14</volume>: <fpage>87</fpage>–<lpage>96</lpage>. <object-id pub-id-type="pmid">17254955</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Diggle</surname> <given-names>SP</given-names></name>, <name name-style="western"><surname>Winzer</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Chhabra</surname> <given-names>SR</given-names></name>, <name name-style="western"><surname>Worrall</surname> <given-names>KE</given-names></name>, <name name-style="western"><surname>Camara</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Williams</surname> <given-names>P</given-names></name>. <article-title>The <italic>Pseudomonas aeruginosa</italic> quinolone signal molecule overcomes the cell density-dependency of the quorum sensing hierarchy, regulates rhl-dependent genes at the onset of stationary phase and can be produced in the absence of LasR</article-title>. <source>Mol Microbiol</source>. <year>2003</year> <month>Oct</month>;<volume>50</volume>: <fpage>29</fpage>–<lpage>43</lpage>. <object-id pub-id-type="pmid">14507361</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Guo</surname> <given-names>Q</given-names></name>, <name name-style="western"><surname>Kong</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Jin</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Chen</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Xu</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Duan</surname> <given-names>K</given-names></name>. <article-title>PqsR-dependent and PqsR-independent regulation of motility and biofilm formation by PQS in <italic>Pseudomonas aeruginosa</italic> PAO1</article-title>. <source>J Basic Microbiol</source>. <year>2014</year> <month>Jul</month>;<volume>54</volume>: <fpage>633</fpage>–<lpage>643</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/jobm.201300091" xlink:type="simple">10.1002/jobm.201300091</ext-link></comment> <object-id pub-id-type="pmid">23996096</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref033"><label>33</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Barrett</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Wilhite</surname> <given-names>SE</given-names></name>, <name name-style="western"><surname>Ledoux</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Evangelista</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Kim</surname> <given-names>IF</given-names></name>, <name name-style="western"><surname>Tomashevsky</surname> <given-names>M</given-names></name>, <etal>et al</etal>. <article-title>NCBI GEO: archive for functional genomics data sets–update</article-title>. <source>Nucleic Acids Res</source>. <year>2013</year> <month>Jan</month>;<volume>41</volume>: <fpage>D991</fpage>–<lpage>D995</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gks1193" xlink:type="simple">10.1093/nar/gks1193</ext-link></comment> <object-id pub-id-type="pmid">23193258</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref034"><label>34</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Colvin</surname> <given-names>KM</given-names></name>, <name name-style="western"><surname>Irie</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Tart</surname> <given-names>CS</given-names></name>, <name name-style="western"><surname>Urbano</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Whitney</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Ryder</surname> <given-names>C</given-names></name>, <etal>et al</etal>. <article-title>The Pel and Psl polysaccharides provide <italic>Pseudomonas aeruginosa</italic> structural redundancy within the biofilm matrix</article-title>. <source>Environ Microbiol</source>. <year>2012</year> <month>Aug</month>;<volume>14</volume>: <fpage>1913</fpage>–<lpage>1928</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1462-2920.2011.02657.x" xlink:type="simple">10.1111/j.1462-2920.2011.02657.x</ext-link></comment> <object-id pub-id-type="pmid">22176658</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref035"><label>35</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Franklin</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Nivens</surname> <given-names>DE</given-names></name>, <name name-style="western"><surname>Weadge</surname> <given-names>JT</given-names></name>, <name name-style="western"><surname>Howell</surname> <given-names>PL</given-names></name>. <article-title>Biosynthesis of the <italic>Pseudomonas aeruginosa</italic> extracellular polysaccharides, alginate, Pel, and Psl</article-title>. <source>Front Microbiol</source>. <year>2011</year>;<volume>2</volume>: <fpage>167</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3389/fmicb.2011.00167" xlink:type="simple">10.3389/fmicb.2011.00167</ext-link></comment> <object-id pub-id-type="pmid">21991261</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref036"><label>36</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Moxley</surname> <given-names>JF</given-names></name>, <name name-style="western"><surname>Jewett</surname> <given-names>MC</given-names></name>, <name name-style="western"><surname>Antoniewicz</surname> <given-names>MR</given-names></name>, <name name-style="western"><surname>Villas-Boas</surname> <given-names>SG</given-names></name>, <name name-style="western"><surname>Alper</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Wheeler</surname> <given-names>RT</given-names></name>, <etal>et al</etal>. <article-title>Linking high-resolution metabolic flux phenotypes and transcriptional regulation in yeast modulated by the global regulator Gcn4p</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2009</year> <month>Apr</month> <day>21</day>;<volume>106</volume>: <fpage>6477</fpage>–<lpage>6482</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0811091106" xlink:type="simple">10.1073/pnas.0811091106</ext-link></comment> <object-id pub-id-type="pmid">19346491</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref037"><label>37</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brandenburg</surname> <given-names>KS</given-names></name>, <name name-style="western"><surname>Rodriguez</surname> <given-names>KJ</given-names></name>, <name name-style="western"><surname>McAnulty</surname> <given-names>JF</given-names></name>, <name name-style="western"><surname>Murphy</surname> <given-names>CJ</given-names></name>, <name name-style="western"><surname>Abbott</surname> <given-names>NL</given-names></name>, <name name-style="western"><surname>Schurr</surname> <given-names>MJ</given-names></name>, <etal>et al</etal>. <article-title>Tryptophan inhibits biofilm formation by <italic>Pseudomonas aeruginosa</italic></article-title>. <source>Antimicrob Agents Chemother</source>. <year>2013</year> <month>Apr</month>;<volume>57</volume>: <fpage>1921</fpage>–<lpage>1925</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/AAC.00007-13" xlink:type="simple">10.1128/AAC.00007-13</ext-link></comment> <object-id pub-id-type="pmid">23318791</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref038"><label>38</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Knoten</surname> <given-names>CA</given-names></name>, <name name-style="western"><surname>Hudson</surname> <given-names>LL</given-names></name>, <name name-style="western"><surname>Coleman</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Farrow</surname> <given-names>JM</given-names></name>, <article-title>3rd, Pesci EC. KynR, a Lrp/AsnC-type transcriptional regulator, directly controls the kynurenine pathway in <italic>Pseudomonas aeruginosa</italic></article-title>. <source>J Bacteriol</source>. <year>2011</year> <month>Dec</month>;<volume>193</volume>: <fpage>6567</fpage>–<lpage>6575</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/JB.05803-11" xlink:type="simple">10.1128/JB.05803-11</ext-link></comment> <object-id pub-id-type="pmid">21965577</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref039"><label>39</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Oglesby</surname> <given-names>AG</given-names></name>, <name name-style="western"><surname>Farrow</surname> <given-names>JM</given-names> <suffix>3rd</suffix></name>, <name name-style="western"><surname>Lee</surname> <given-names>JH</given-names></name>, <name name-style="western"><surname>Tomaras</surname> <given-names>AP</given-names></name>, <name name-style="western"><surname>Greenberg</surname> <given-names>EP</given-names></name>, <name name-style="western"><surname>Pesci</surname> <given-names>EC</given-names></name>, <etal>et al</etal>. <article-title>The influence of iron on <italic>Pseudomonas aeruginosa</italic> physiology: a regulatory link between iron and quorum sensing</article-title>. <source>J Biol Chem</source>. <year>2008</year> <month>Jun</month> <day>6</day>;<volume>283</volume>: <fpage>15558</fpage>–<lpage>15567</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1074/jbc.M707840200" xlink:type="simple">10.1074/jbc.M707840200</ext-link></comment> <object-id pub-id-type="pmid">18424436</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref040"><label>40</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schwacke</surname> <given-names>JH</given-names></name>, <name name-style="western"><surname>Voit</surname> <given-names>EO</given-names></name>. <article-title>Computation and analysis of time-dependent sensitivities in Generalized Mass Action systems</article-title>. <source>J Theor Biol</source>. <year>2005</year> <month>Sep</month> <day>7</day>;<volume>236</volume>: <fpage>21</fpage>–<lpage>38</lpage>. <object-id pub-id-type="pmid">15967181</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref041"><label>41</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>McKay</surname> <given-names>MD</given-names></name>, <name name-style="western"><surname>Beckman</surname> <given-names>RJ</given-names></name>, <name name-style="western"><surname>Conover</surname> <given-names>WJ</given-names></name>. <article-title>A comparison of three methods for selecting values of input variables in the analysis of output from a computer code</article-title>. <source>Technometrics</source>. <year>1979</year>;<volume>21</volume>: <fpage>239</fpage>–<lpage>245</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004452.ref042"><label>42</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alvarez-Ortega</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Wiegand</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Olivares</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Hancock</surname> <given-names>RE</given-names></name>, <name name-style="western"><surname>Martinez</surname> <given-names>JL</given-names></name>. <article-title>Genetic determinants involved in the susceptibility of <italic>Pseudomonas aeruginosa</italic> to beta-lactam antibiotics</article-title>. <source>Antimicrob Agents Chemother</source>. <year>2010</year> <month>Oct</month>;<volume>54</volume>: <fpage>4159</fpage>–<lpage>4167</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/AAC.00257-10" xlink:type="simple">10.1128/AAC.00257-10</ext-link></comment> <object-id pub-id-type="pmid">20679510</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref043"><label>43</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Breidenstein</surname> <given-names>EB</given-names></name>, <name name-style="western"><surname>Khaira</surname> <given-names>BK</given-names></name>, <name name-style="western"><surname>Wiegand</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Overhage</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Hancock</surname> <given-names>RE</given-names></name>. <article-title>Complex ciprofloxacin resistome revealed by screening a <italic>Pseudomonas aeruginosa</italic> mutant library for altered susceptibility</article-title>. <source>Antimicrob Agents Chemother</source>. <year>2008</year> <month>Dec</month>;<volume>52</volume>: <fpage>4486</fpage>–<lpage>4491</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/AAC.00222-08" xlink:type="simple">10.1128/AAC.00222-08</ext-link></comment> <object-id pub-id-type="pmid">18824609</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref044"><label>44</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dotsch</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Becker</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Pommerenke</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Magnowska</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Jansch</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Haussler</surname> <given-names>S</given-names></name>. <article-title>Genomewide identification of genetic determinants of antimicrobial drug resistance in <italic>Pseudomonas aeruginosa</italic></article-title>. <source>Antimicrob Agents Chemother</source>. <year>2009</year> <month>Jun</month>;<volume>53</volume>: <fpage>2522</fpage>–<lpage>2531</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/AAC.00035-09" xlink:type="simple">10.1128/AAC.00035-09</ext-link></comment> <object-id pub-id-type="pmid">19332674</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref045"><label>45</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fajardo</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Martinez-Martin</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Mercadillo</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Galan</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Ghysels</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Matthijs</surname> <given-names>S</given-names></name>, <etal>et al</etal>. <article-title>The neglected intrinsic resistome of bacterial pathogens</article-title>. <source>PLOS ONE</source>. <year>2008</year>;<volume>3</volume>: <fpage>e1619</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0001619" xlink:type="simple">10.1371/journal.pone.0001619</ext-link></comment> <object-id pub-id-type="pmid">18286176</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref046"><label>46</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fernandez</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Alvarez-Ortega</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Wiegand</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Olivares</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Kocincova</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Lam</surname> <given-names>JS</given-names></name>, <etal>et al</etal>. <article-title>Characterization of the polymyxin B resistome of <italic>Pseudomonas aeruginosa</italic></article-title>. <source>Antimicrob Agents Chemother</source>. <year>2013</year> <month>Jan</month>;<volume>57</volume>: <fpage>110</fpage>–<lpage>119</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/AAC.01583-12" xlink:type="simple">10.1128/AAC.01583-12</ext-link></comment> <object-id pub-id-type="pmid">23070157</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref047"><label>47</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gallagher</surname> <given-names>LA</given-names></name>, <name name-style="western"><surname>Shendure</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Manoil</surname> <given-names>C</given-names></name>. <article-title>Genome-scale identification of resistance functions in <italic>Pseudomonas aeruginosa</italic> using Tn-seq</article-title>. <source>MBio</source>. <year>2011</year>;<volume>2</volume>: <fpage>e00315</fpage>–<lpage>00310</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/mBio.00315-10" xlink:type="simple">10.1128/mBio.00315-10</ext-link></comment> <object-id pub-id-type="pmid">21253457</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref048"><label>48</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lee</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Hinz</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Bauerle</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Angermeyer</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Juhaszova</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Kaneko</surname> <given-names>Y</given-names></name>, <etal>et al</etal>. <article-title>Targeting a bacterial stress response to enhance antibiotic action</article-title>. <source>Proc Natl Acad Sci U S A</source>. <year>2009</year> <month>Aug</month> <day>25</day>;<volume>106</volume>: <fpage>14570</fpage>–<lpage>14575</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0903619106" xlink:type="simple">10.1073/pnas.0903619106</ext-link></comment> <object-id pub-id-type="pmid">19706543</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref049"><label>49</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schurek</surname> <given-names>KN</given-names></name>, <name name-style="western"><surname>Marr</surname> <given-names>AK</given-names></name>, <name name-style="western"><surname>Taylor</surname> <given-names>PK</given-names></name>, <name name-style="western"><surname>Wiegand</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Semenec</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Khaira</surname> <given-names>BK</given-names></name>, <etal>et al</etal>. <article-title>Novel genetic determinants of low-level aminoglycoside resistance in <italic>Pseudomonas aeruginosa</italic></article-title>. <source>Antimicrob Agents Chemother</source>. <year>2008</year> <month>Dec</month>;<volume>52</volume>: <fpage>4213</fpage>–<lpage>4219</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1128/AAC.00507-08" xlink:type="simple">10.1128/AAC.00507-08</ext-link></comment> <object-id pub-id-type="pmid">18824604</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref050"><label>50</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Feinbaum</surname> <given-names>RL</given-names></name>, <name name-style="western"><surname>Urbach</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Liberati</surname> <given-names>NT</given-names></name>, <name name-style="western"><surname>Djonovic</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Adonizio</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Carvunis</surname> <given-names>AR</given-names></name>, <etal>et al</etal>. <article-title>Genome-wide identification of <italic>Pseudomonas aeruginosa</italic> virulence-related genes using a <italic>Caenorhabditis elegans</italic> infection model</article-title>. <source>PLOS Pathog</source>. <year>2012</year>;<volume>8</volume>: <fpage>e1002813</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.ppat.1002813" xlink:type="simple">10.1371/journal.ppat.1002813</ext-link></comment> <object-id pub-id-type="pmid">22911607</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref051"><label>51</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Potvin</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Lehoux</surname> <given-names>DE</given-names></name>, <name name-style="western"><surname>Kukavica-Ibrulj</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Richard</surname> <given-names>KL</given-names></name>, <name name-style="western"><surname>Sanschagrin</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Lau</surname> <given-names>GW</given-names></name>, <etal>et al</etal>. <article-title>In vivo functional genomics of <italic>Pseudomonas aeruginosa</italic> for high-throughput screening of new virulence factors and antibacterial targets</article-title>. <source>Environ Microbiol</source>. <year>2003</year> <month>Dec</month>;<volume>5</volume>: <fpage>1294</fpage>–<lpage>1308</lpage>. <object-id pub-id-type="pmid">14641575</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref052"><label>52</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chen</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Xiong</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Sun</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Yang</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Jin</surname> <given-names>Q</given-names></name>. <article-title>VFDB 2012 update: toward the genetic diversity and molecular evolution of bacterial virulence factors</article-title>. <source>Nucleic Acids Res</source>. <year>2012</year> <month>Jan</month>;<volume>40</volume>: <fpage>D641</fpage>–<lpage>D645</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkr989" xlink:type="simple">10.1093/nar/gkr989</ext-link></comment> <object-id pub-id-type="pmid">22067448</object-id></mixed-citation></ref>
+<ref id="pcbi.1004452.ref053"><label>53</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Winsor</surname> <given-names>GL</given-names></name>, <name name-style="western"><surname>Lam</surname> <given-names>DK</given-names></name>, <name name-style="western"><surname>Fleming</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Lo</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Whiteside</surname> <given-names>MD</given-names></name>, <name name-style="western"><surname>Yu</surname> <given-names>NY</given-names></name>, <etal>et al</etal>. <article-title><italic>Pseudomonas</italic> Genome Database: improved comparative analysis and population genomics capability for <italic>Pseudomonas</italic> genomes</article-title>. <source>Nucleic Acids Res</source>. <year>2011</year> <month>Jan</month>;<volume>39</volume>: <fpage>D596</fpage>–<lpage>D600</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkq869" xlink:type="simple">10.1093/nar/gkq869</ext-link></comment> <object-id pub-id-type="pmid">20929876</object-id></mixed-citation></ref>
+</ref-list>
+</back>
+</article>

@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+  <front>
+    <journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Computational Biology</journal-title></journal-title-group><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">PCOMPBIOL-D-12-00358</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1002519</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Education</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Computational biology</subject>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Science policy</subject>
+          <subj-group>
+            <subject>Science education</subject>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Computational Biology</subject>
+          <subject>Science Policy</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>Visualization and Analysis of 3D Microscopic Images</article-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Long</surname>
+            <given-names>Fuhui</given-names>
+          </name>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Zhou</surname>
+            <given-names>Jianlong</given-names>
+          </name>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Peng</surname>
+            <given-names>Hanchuan</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1">          <addr-line>Janelia Farm Research Campus, Howard Hughes Medical Institute, Ashburn, Virginia, United States of America</addr-line>       </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Lewitter</surname>
+            <given-names>Fran</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">Whitehead Institute, United States of America</aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">pengh@janelia.hhmi.org</email></corresp>
+      <fn fn-type="conflict">
+        <p>The authors have declared that no competing interests exist.</p>
+      </fn></author-notes><pub-date pub-type="collection">
+        <month>6</month>
+        <year>2012</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>14</day>
+        <month>6</month>
+        <year>2012</year>
+      </pub-date><volume>8</volume><issue>6</issue><elocation-id>e1002519</elocation-id><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2012</copyright-year><copyright-holder>Long et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+        <p>In a wide range of biological studies, it is highly desirable to visualize and analyze three-dimensional (3D) microscopic images. In this primer, we first introduce several major methods for visualizing typical 3D images and related multi-scale, multi-time-point, multi-color data sets. Then, we discuss three key categories of image analysis tasks, namely segmentation, registration, and annotation. We demonstrate how to pipeline these visualization and analysis modules using examples of profiling the single-cell gene-expression of <italic>C. elegans</italic> and constructing a map of stereotyped neurite tracts in a fruit fly brain.</p>
+      </abstract><funding-group><funding-statement>The authors are employed by the Howard Hughes Medical Institute. No specific funding was received for this article.</funding-statement></funding-group><counts>
+        <page-count count="7"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>Multidimensional microscopic image data sets (<xref ref-type="fig" rid="pcbi-1002519-g001">Figure 1</xref>) are widely used in modern biology studies, especially in screening various phenotypic data. Analyzing microscopic data is highly useful and fruitful, such as observing the dynamics of microtubule spindles during mitosis <xref ref-type="bibr" rid="pcbi.1002519-Inou1">[1]</xref>, profiling gene expression of cells <xref ref-type="bibr" rid="pcbi.1002519-Rbel1">[2]</xref>–<xref ref-type="bibr" rid="pcbi.1002519-Long1">[4]</xref>, and reconstructing the three-dimensional (3D) morphology of neurons <xref ref-type="bibr" rid="pcbi.1002519-Peng1">[5]</xref>–<xref ref-type="bibr" rid="pcbi.1002519-Meijering1">[7]</xref>. Image visualization also enables effective development of high-content high-throughput bioimage informatics techniques <xref ref-type="bibr" rid="pcbi.1002519-Peng3">[8]</xref> to extract biologically meaningful knowledge from microscopic images. It is also critical for visualizing raw images and respectively processed results (in terms of surface objects).</p>
+      <fig id="pcbi-1002519-g001" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pcbi.1002519.g001</object-id>
+        <label>Figure 1</label>
+        <caption>
+          <title>Examples of 3D microscopic images.</title>
+          <p>(a) A confocal image of kinetochores (EGFP labeled) and chromosomes (histone-mCherry labeled) used in studying the first meiotic division in mouse oocytes <xref ref-type="bibr" rid="pcbi.1002519-Kitajima1">[17]</xref>. (b) A confocal image of the first larval stage of <italic>C. elegans</italic> <xref ref-type="bibr" rid="pcbi.1002519-Liu1">[18]</xref>. Gray: DAPI labeled nuclei; yellow: myo3:EGFP. (c) A confocal image of an adult fruit fly brain <xref ref-type="bibr" rid="pcbi.1002519-Peng6">[19]</xref>. Gray: NC82 labeled neuropil; green: ato-GAL4 (courtesy of Julie Simpson). (d) A serial section electron microscopic image of mouse visual cortex <xref ref-type="bibr" rid="pcbi.1002519-Bock1">[20]</xref>. (e) A digital scanned laser light sheet fluorescence microscopic image of a Medaka juvenile <xref ref-type="bibr" rid="pcbi.1002519-Keller1">[21]</xref>. Green: acetylated tubulin immuno-staining of the developing brain and spinal cord.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002519.g001" xlink:type="simple"/>
+      </fig>
+      <p>In this primer, we briefly introduce the basic concepts and methods of 3D microscopic image visualization and analysis, which are the two core components for a number of bioimage informatics applications. We emphasize fluorescent microscopic images as examples, and occasionally also mention other types of image data in our discussion. On the other hand, the essential visualization and analysis methods introduced here can be applied to a wide range of data, including many of those not explicitly discussed. Due to the length limitations of this educational note, here we do not intend to comprehensively survey software tools or biological applications, which can be found in a few previous reviews <xref ref-type="bibr" rid="pcbi.1002519-Peng3">[8]</xref>–<xref ref-type="bibr" rid="pcbi.1002519-Helmstaedter1">[11]</xref>.</p>
+    </sec>
+    <sec id="s2">
+      <title>Visualization of 3D Microscopic Images</title>
+      <p>Visualizing 3D microscopic images helps better understand the data. It also helps determine appropriate analysis methods or parameters. In addition, visualizing analysis results on top of, or side-by-side with, the input image(s) is critical for checking the meaningfulness of an analysis and making necessary corrections (“proof-editing” <xref ref-type="bibr" rid="pcbi.1002519-Peng4">[12]</xref>).</p>
+      <p>Two-dimensional (2D) cross-sectional display (<xref ref-type="table" rid="pcbi-1002519-t001">Table 1</xref>) of a 3D image stack is still the most prevailing method for biologists to observe 3D data sets, probably due to its simplicity. ImageJ <xref ref-type="bibr" rid="pcbi.1002519-Abramoff1">[13]</xref> (a newer variant bears the name Fiji), a popular tool to visualize and analyze microscopic images, uses mainly the z-section display to visualize 3D images, although various additional ImageJ modules or plugins were also developed to render 3D views. Tri-view display (<xref ref-type="table" rid="pcbi-1002519-t001">Table 1</xref>) is a natural extension of the z-slice display of 3D data, displaying all XY, XZ, and ZY cross-sectional planes at the same time. Cutting through the volumetric data from an arbitrary angle and displaying the 2D image data on this cutting plane is also useful. These features have been incorporated in other scientific visualization software packages (e.g., Vaa3D (previously known as V3D <xref ref-type="bibr" rid="pcbi.1002519-Peng5">[14]</xref>) or GoFigure <xref ref-type="bibr" rid="pcbi.1002519-Gouaillard1">[15]</xref>). Electronic microscopic (EM) images typically have a large cross-sectional size in the XY plane. It is particularly convenient to view EM images using 2D or tri-view display methods, such as in the ImageJ-based software TrakEM <xref ref-type="bibr" rid="pcbi.1002519-Cardona1">[16]</xref>.</p>
+      <table-wrap id="pcbi-1002519-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1002519.t001</object-id><label>Table 1</label><caption>
+          <title>Often-used visualization methods for multi-dimensional microscopic image data.</title>
+        </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1002519-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002519.t001" xlink:type="simple"/><table>
+          <colgroup span="1">
+            <col align="left" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+            <col align="center" span="1"/>
+          </colgroup>
+          <thead>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">Visualization mode</td>
+              <td align="left" colspan="1" rowspan="1">Dimension</td>
+              <td align="left" colspan="1" rowspan="1">Often Applied to</td>
+              <td align="left" colspan="1" rowspan="1">Pros</td>
+              <td align="left" colspan="1" rowspan="1">Cons</td>
+              <td align="left" colspan="1" rowspan="1">Example Figure(s)</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">
+                <bold>
+                  <italic>Cross-sectional view(s)</italic>
+                </bold>
+              </td>
+              <td align="left" colspan="1" rowspan="1">2D</td>
+              <td align="left" colspan="1" rowspan="1">FM/WM/EM</td>
+              <td align="left" colspan="1" rowspan="1">Fast</td>
+              <td align="left" colspan="1" rowspan="1">Not 3D</td>
+              <td align="left" colspan="1" rowspan="1">—</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">
+                <bold>
+                  <italic>Tri-view</italic>
+                </bold>
+              </td>
+              <td align="left" colspan="1" rowspan="1">2D</td>
+              <td align="left" colspan="1" rowspan="1">FM/EM</td>
+              <td align="left" colspan="1" rowspan="1">Fast</td>
+              <td align="left" colspan="1" rowspan="1">Partial 3D</td>
+              <td align="left" colspan="1" rowspan="1">3a</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">
+                <bold>
+                  <italic>Maximum intensity projection (MIP)</italic>
+                </bold>
+              </td>
+              <td align="left" colspan="1" rowspan="1">3D</td>
+              <td align="left" colspan="1" rowspan="1">FM</td>
+              <td align="left" colspan="1" rowspan="1">3D</td>
+              <td align="left" colspan="1" rowspan="1">Hardware-limited (HL)</td>
+              <td align="left" colspan="1" rowspan="1">1a, 1b, 1c, 1e, 2b</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">
+                <bold>
+                  <italic>Alpha-value blending</italic>
+                </bold>
+              </td>
+              <td align="left" colspan="1" rowspan="1">3D</td>
+              <td align="left" colspan="1" rowspan="1">FM/EM</td>
+              <td align="left" colspan="1" rowspan="1">Surface-display effect</td>
+              <td align="left" colspan="1" rowspan="1">HL</td>
+              <td align="left" colspan="1" rowspan="1">1d, 2a</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">
+                <bold>
+                  <italic>Multi-channel/multi-color 3D (MC-3D)</italic>
+                </bold>
+              </td>
+              <td align="left" colspan="1" rowspan="1">4D</td>
+              <td align="left" colspan="1" rowspan="1">FM</td>
+              <td align="left" colspan="1" rowspan="1">3D</td>
+              <td align="left" colspan="1" rowspan="1">Need color-blending (CB), HL</td>
+              <td align="left" colspan="1" rowspan="1">1a, 1b, 1c, 1e, 2b</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">
+                <bold>
+                  <italic>Multi-time-point MC 3D (MT-MC-3D)</italic>
+                </bold>
+              </td>
+              <td align="left" colspan="1" rowspan="1">5D</td>
+              <td align="left" colspan="1" rowspan="1">FM</td>
+              <td align="left" colspan="1" rowspan="1">3D</td>
+              <td align="left" colspan="1" rowspan="1">CB, HL</td>
+              <td align="left" colspan="1" rowspan="1">2b</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">
+                <bold>
+                  <italic>Multi-scale MT-MC 3D (MS-MT-MC-3D)</italic>
+                </bold>
+              </td>
+              <td align="left" colspan="1" rowspan="1">6D</td>
+              <td align="left" colspan="1" rowspan="1">FM</td>
+              <td align="left" colspan="1" rowspan="1">Hardware-friendly, 3D</td>
+              <td align="left" colspan="1" rowspan="1">Need 3D interaction of image content</td>
+              <td align="left" colspan="1" rowspan="1">2a</td>
+            </tr>
+            <tr>
+              <td align="left" colspan="1" rowspan="1">
+                <bold>
+                  <italic>3D surface-object and image rendering</italic>
+                </bold>
+              </td>
+              <td align="left" colspan="1" rowspan="1">Heterogeneous 3D/4D/5D/6D</td>
+              <td align="left" colspan="1" rowspan="1">FM/EM</td>
+              <td align="left" colspan="1" rowspan="1">Allow proof-reading/editing</td>
+              <td align="left" colspan="1" rowspan="1">HL</td>
+              <td align="left" colspan="1" rowspan="1">2a, 4b</td>
+            </tr>
+          </tbody>
+        </table></alternatives><table-wrap-foot>
+          <fn id="nt101">
+            <label/>
+            <p>CB, color-blending; EM, electron microscopic images; FM, fluorescent microscopic images (often laser-scanning-microscopic images); HL, hardware-limited; WM, wide-field light microscopic images.</p>
+          </fn>
+        </table-wrap-foot></table-wrap>
+      <p>However, cross-sectional views are not able to visualize the 3D information of volumetric images. Visualizing the <italic>complete</italic> 3D information in a volumetric image requires seeing (a) all individual image voxels' (pixels) intensity, and (b) the 3D spatial adjacency information of all voxels. However, since normally a rendered image is a 2D projection to a computer screen and our retina, it is hard to meet both requirements at the same time. Tiling all image voxels on a single 2D plane will not appropriately display the 3D spatial adjacency information. On the other hand, in a 3D volumetric rendering, while the spatial adjacency relationship is retained, not all image voxels' intensity is visible, as voxels near the viewer will occlude far-away voxels. Therefore, selectively discarding the non-important voxel intensity information is the central trick used in 3D volumetric image visualization.</p>
+      <p>3D image visualization calls for depth-blended views from any angle. Maximal (or minimal) intensity projection (MIP or mIP) and alpha-value blended views (<xref ref-type="table" rid="pcbi-1002519-t001">Table 1</xref>) are two main types of methods to display 3D data. MIP is mainly used to visualize high-intensity structures within volumetric data. This is the typical situation for most fluorescent microscopic (FM) images, e.g., GFP-labeled neuron structures. Usually, MIP contains no shading information; depth and occlusion information are not visible. Structures with higher intensity value lying behind a lower valued object appear to be in front of it. Thus, MIP may not accurately display the actual 3D relationships of structures. While alpha-blended views can display the depth information more meaningfully, the most common solution is to animate or interactively change the viewpoint while viewing using MIP (or even alpha-blended views). Therefore, a real-time 3D renderer for large datasets is highly desirable. This often needs both good hardware (i.e., high-throughput graphics card with large memory) and optimized software (e.g., to optimize the OpenGL-based graphics rendering). Vaa3D (<ext-link ext-link-type="uri" xlink:href="http://vaa3d.org" xlink:type="simple">http://vaa3d.org</ext-link>) meets this requirement and has been used in recent large-scale 3D image visualization applications, e.g., the Janelia Fly WorkStation that currently screens more than 50 terabytes of fruit fly brain images (private communication with the Janelia FlyLight project).</p>
+      <p>In many cases, each voxel in a 3D microscopic image could have multiple color components that correspond to various features of the biological entities (e.g., different fluorephores with different wavelengths in fluorescent imaging). Visualizing multi-channel (MC) 3D image stacks (thus four-dimension [4D], see <xref ref-type="table" rid="pcbi-1002519-t001">Table 1</xref>) requires blending the data in different channels to the RGB space for rendering. When the number of channels, <italic>N</italic>, is not larger than 3, a simple mapping, e.g., channel 1 to Red or Magenta, channel 2 to Green, and channel 3 to Blue, is often used. When <italic>N</italic>&gt;3, e.g., in the cases of dozens of co-localized antibody-probes, or thousands of 3D registered image stacks organized as different channels <xref ref-type="bibr" rid="pcbi.1002519-Peng6">[19]</xref>, a spreadsheet-based color-blending manager (e.g., the one provided in Vaa3D) will be critical for effective visualization.</p>
+      <p>Live imaging experiments produce multi-time-point (MT) multi-color 3D image series (thus five-dimension [5D], see <xref ref-type="table" rid="pcbi-1002519-t001">Table 1</xref>). In addition, when an image is large (e.g., 20 Gbytes/image), it is usually impractical and also unnecessary to load all image voxels in the computer memory and graphics card to visualize. Thus, there is a need to visualize an image dataset at multiple scales. The MT-MC-3D data sets, and multi-scale (MS) rendering (thus six-dimensional visualization [6D], see <xref ref-type="table" rid="pcbi-1002519-t001">Table 1</xref>), impose significant challenges to current visualization hardware and software, due to the limited bandwidth between hard drives, computer memory, and graphics card. When the entire image series could be loaded in computer memory, Vaa3D could be used to produce real-time 5D or 6D rendering (<xref ref-type="fig" rid="pcbi-1002519-g002">Figure 2</xref>). Yet, in general they are unsolved problems for terabyte-sized image data sets.</p>
+      <fig id="pcbi-1002519-g002" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pcbi.1002519.g002</object-id>
+        <label>Figure 2</label>
+        <caption>
+          <title>Vaa3D visualization of 4D and 5D microscopic images, as well as associated 3D surface objects, of different model animals.</title>
+          <p>(a) The hierarchical (multi-scale) 3D visualization of a fluorescent confocal image of fruit fly (<italic>Drosophila melanogaster</italic>) brain using both global and local 3D viewers. In the global viewer, different brain compartments rendered using surface meshes (in different colors) are overlaid on top of the 3D volume of a fruit fly brain. When an image is very large, the global viewer can serve for navigation purpose. A user can quickly define any 3D local region of interest and display it in a local 3D viewer using full resolution. In this example, the brain voxels can be rendered in a different color from the global viewer, while the user can optionally display other surface objects, such as the single 3D-reconstructed neuron (yellow). (b) 5D visualization of a series of multi-color 3D image stacks of <italic>C. elegans</italic> (courtesy of Rex Kerr). Different 3D viewing angles can be adjusted in real-time in Vaa3D, with which the user can freely change the displayed time point (bottom).</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002519.g002" xlink:type="simple"/>
+      </fig>
+      <p>Surface-object rendering (<xref ref-type="table" rid="pcbi-1002519-t001">Table 1</xref>) is a powerful way to visualize image analysis results (e.g., image segmentation) and provides ways for quantitative measurement or editing. Isosurface-based mesh-extraction and rendering has also been used in 3D biomedical image visualization. However, commonly used algorithms, e.g., marching cubes <xref ref-type="bibr" rid="pcbi.1002519-Lorensen1">[22]</xref>, are computationally expensive. In addition, isosurfaces can hardly capture the internal structures in a 3D image.</p>
+      <p>Interactive visualization techniques are important for microscopic image analysis. Through interactions, users can collect much more information of the multi-dimensional data than passively observing the 3D rendered data. Interacting with 3D rendered surface-objects is straightforward. It is more difficult to directly interact with 3D rendered volumetric data to define interesting 3D locations, 3D curves, and other objects. The concept of 3D-WYSIWYG (what you see is what you get) was recently proposed in the Vaa3D system to define an unambiguous 3D location (point) using one computer mouse click, or define a unique 3D curve using one mouse stroke on the 2D computer screen. This approach has been demonstrated to boost both the reconstruction speed and accuracy of 3D neuron morphology <xref ref-type="bibr" rid="pcbi.1002519-Peng4">[12]</xref>, <xref ref-type="bibr" rid="pcbi.1002519-Peng5">[14]</xref>. In the long run, integrating these 3D interaction techniques in immersive visualization of very large data, possibly also equipped with other virtual reality techniques and a very large display wall, may demonstrate its power in detecting interesting patterns or associations in very large data sets.</p>
+      <p>In practice, 3D visualization of multi-dimensional image data may involve many other considerations. For instance, in both 3D tomographic EM imaging and laser scanning microscopy, anisotropy is an often seen property of the data. Software tools (e.g., Vaa3D) can reslice the data in the 3D rendering based on the relative pixel size in three dimensions, thus providing a more realistic display of the data. In Vaa3D, this auto-slicing function is combined with some image analysis functions (e.g., fibrous structure tracing) discussed below to generate various 3D reconstructions of the image objects. In addition, data filtering techniques (e.g., non-linear anisotropic diffusion, recursive median filtering, bilateral filtering, etc.) have been provided in many software tools (e.g., ImageJ). Integrating all these tools together could lead to more interesting insight in the data (see the last section on “pipelining”).</p>
+    </sec>
+    <sec id="s3">
+      <title>Analysis of 3D Microscopic Images</title>
+      <p>The overarching goal of microscopic image analysis is to quantitatively measure “objects” in microscopic images, preferably in an automatic manner. Various labeled molecules (e.g., proteins or protein complexes), sub-cellular organelles, cells, or super-cellular objects (e.g., neuron populations or cell lineages) often need to be extracted, named, and compared with each other, before they can be measured. Most microscopic image analysis techniques can be categorized into three major classes, namely <italic>segmentation, registration</italic>, and <italic>annotation</italic>.</p>
+      <list list-type="bullet">
+        <list-item>
+          <p>Segmentation is the process of partitioning an image into multiple regions, so that voxels within each region share certain common features. Image segmentation is often used to locate objects and their boundaries (lines, curves, etc., e.g., <xref ref-type="bibr" rid="pcbi.1002519-Baker1">[23]</xref>), as well as to perform qualitative and quantitative analysis in images <xref ref-type="bibr" rid="pcbi.1002519-Danuser1">[24]</xref>, <xref ref-type="bibr" rid="pcbi.1002519-Carpenter1">[25]</xref>. In microscopic image analysis, segmentation is typically used to locate, track, and classify bio-structures such as cells or nuclei <xref ref-type="bibr" rid="pcbi.1002519-Long1">[4]</xref>, fibrous structures (e.g., axonal fibers <xref ref-type="bibr" rid="pcbi.1002519-Peng1">[5]</xref>, <xref ref-type="bibr" rid="pcbi.1002519-Meijering1">[7]</xref>, microtubules <xref ref-type="bibr" rid="pcbi.1002519-Sargin1">[26]</xref>), and anatomical/functional tissue regions. Thresholding <xref ref-type="bibr" rid="pcbi.1002519-Sieracki1">[27]</xref>, watershed <xref ref-type="bibr" rid="pcbi.1002519-Vincent1">[28]</xref>, <xref ref-type="bibr" rid="pcbi.1002519-Carpenter1">[25]</xref>, and deformable models <xref ref-type="bibr" rid="pcbi.1002519-McInerney1">[29]</xref> are the basis for the most commonly used segmentation techniques for microscopic images.</p>
+        </list-item>
+        <list-item>
+          <p>Registration <xref ref-type="bibr" rid="pcbi.1002519-Zitov1">[30]</xref> is the process to map multiple or many images geometrically, via a linear or nonlinear transform, so that image objects or features can be compared directly in a “standard” space. Registration is particularly widely used in three types of microscopic image processing tasks: stitching of image tiles <xref ref-type="bibr" rid="pcbi.1002519-Yu1">[31]</xref> (e.g., electron and light microscopic tiles), registration of multiple samples of the same biological entity <xref ref-type="bibr" rid="pcbi.1002519-Peng6">[19]</xref>, <xref ref-type="bibr" rid="pcbi.1002519-Jefferis1">[32]</xref> (e.g., different images of the same neuron-population), fusion of multi-different views <xref ref-type="bibr" rid="pcbi.1002519-RubioGuivernau1">[33]</xref> of one object (e.g., tomography used in electron microscopy or selective plane illumination microscopy). Rigid or affine transforms are often used to register images globally. These linear transforms can be iteratively applied to images at different scales to achieve nonlinear registration. However, it is more common to use B-spline or thin-plate-spline to derive nonlinear smooth transforms <xref ref-type="bibr" rid="pcbi.1002519-Bookstein1">[34]</xref>, which are often used to register images locally.</p>
+        </list-item>
+        <list-item>
+          <p>Annotation is the process to label/name images or image objects (e.g., cells) or assign their phenotypic properties with predefined terms. For example, controlled vocabularies of ontology have been assigned to images for annotating gene expression patterns (e.g., <xref ref-type="bibr" rid="pcbi.1002519-Zhou1">[35]</xref>–<xref ref-type="bibr" rid="pcbi.1002519-Li1">[37]</xref>). Another significant type of application is to recognize special objects of interest (e.g., cells) automatically <xref ref-type="bibr" rid="pcbi.1002519-Long1">[4]</xref>, <xref ref-type="bibr" rid="pcbi.1002519-Qu1">[38]</xref> and therefore to facilitate the quantitative measurement of biological entities (e.g., single-cell resolution gene expression).</p>
+        </list-item>
+      </list>
+    </sec>
+    <sec id="s4">
+      <title>Pipelining 3D Visualization and Analysis Modules</title>
+      <p>In many biological applications, different image analysis techniques need to be used as a whole pipeline. For instance, for profiling the gene expression at the single nucleus resolution of <italic>Caenorhabditis elegans</italic> <xref ref-type="bibr" rid="pcbi.1002519-Long1">[4]</xref>, laser scanning microscopic images of this animal are first straightened (<xref ref-type="fig" rid="pcbi-1002519-g003">Figure 3a</xref>) <xref ref-type="bibr" rid="pcbi.1002519-Peng9">[40]</xref>, which can be categorized as a registration step. Then, <italic>C. elegans</italic> cells that are stained using DAPI are segmented (<xref ref-type="fig" rid="pcbi-1002519-g003">Figure 3b</xref>) using an adaptive 3D watershed algorithm. Cells are then recognized (<xref ref-type="fig" rid="pcbi-1002519-g003">Figure 3</xref>) based on their relative location patterns in the 3D standardized space. Once the cell identities are determined, quantifying the gene expression is as simple as computing the normalized intensity within the nucleus region. The segmentation and recognition steps can also be unified using a recent approach of atlas-to-image deforming model <xref ref-type="bibr" rid="pcbi.1002519-Qu1">[38]</xref>.</p>
+      <fig id="pcbi-1002519-g003" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pcbi.1002519.g003</object-id>
+        <label>Figure 3</label>
+        <caption>
+          <title>3D image visualization and analysis for measuring single-cell gene expression of <italic>C. elegans</italic>.</title>
+          <p>(a) Tri-view display of a confocal image of <italic>C. elegans</italic> (L1 stage). Green: DAPI staining (pseudo-colored); red: myo3:GFP labeled muscle cells. (b) Tri-view display of the 3D watershed segmented nuclei of (a). The co-localized image objects are indicated by crosses (white). (c) A spreadsheet display of 3D measured gene expression of various cells. All sub-figures are produced using VANO <xref ref-type="bibr" rid="pcbi.1002519-Peng8">[39]</xref>, a 3D annotation tool.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002519.g003" xlink:type="simple"/>
+      </fig>
+      <p>Pipelining image analysis modules and other more sophisticated data analysis/mining modules is a powerful way to generate quantitative biology. One such pipeline is shown in <xref ref-type="fig" rid="pcbi-1002519-g004">Figure 4a</xref>, which illustrates the main steps to construct the first 3D map of spatially invariant neurite tracts of a brain. Confocal images of adult fruit fly brains are first registered in 3D using the BrainAligner system <xref ref-type="bibr" rid="pcbi.1002519-Peng6">[19]</xref> (<xref ref-type="fig" rid="pcbi-1002519-g004">Figure 4a</xref>, Step 2), so that different populations of neurons labeled using a number of GAL4 lines can be aligned and compared within the same 3D coordinate system. Then, neurite tracts are segmented and traced in 3D (<xref ref-type="fig" rid="pcbi-1002519-g004">Figure 4a</xref>, Step 3). The neurite tracts reconstructed from the same GAL4 line have a clear correspondence. They are then annotated (<xref ref-type="fig" rid="pcbi-1002519-g004">Figure 4a</xref>, Step 4). A neuron/neurite comparison and mining module is then used to determine the spatial divergence of the corresponding neurite tracts (<xref ref-type="fig" rid="pcbi-1002519-g004">Figure 4a</xref>, Step 5), followed by a final mapping to the standard space of the 3D fly brain atlas (<xref ref-type="fig" rid="pcbi-1002519-g004">Figure 4a</xref>, Step 5). With this approach, it is possible to measure hundreds of stereotyped neurite tracts in a fruit fly's brain (<xref ref-type="fig" rid="pcbi-1002519-g004">Figure 4b</xref>). The same pipeline can be used to study other brain wiring-maps of neurons.</p>
+      <fig id="pcbi-1002519-g004" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pcbi.1002519.g004</object-id>
+        <label>Figure 4</label>
+        <caption>
+          <title>A pipeline of image analysis and data mining tools for building the neuronal atlases of fruit fly brains.</title>
+          <p>(a) A flowchart of the key steps in building a fruit fly brain atlas. (b) A 3D digital atlas of 269 stereotyped neurite tracts reconstructed from GAL4-label fruit fly brains <xref ref-type="bibr" rid="pcbi.1002519-Peng6">[19]</xref>. Pseudo colors are used to distinguish different tracts. The width of each tract equals its spatial divergence.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002519.g004" xlink:type="simple"/>
+      </fig>
+    </sec>
+    <sec id="s5">
+      <title>Conclusions</title>
+      <p>Visualization and analysis methods are critical for understanding and using 3D microscopic images for various cell biology, structural biology, neurosciences, and systems biology applications. These tools become indispensable for the ever-increasing need to screen tens of gigabytes to many terabytes of microscopic images. Pipelining these tools and other data analysis/mining methods is a new trend for producing interesting biology.</p>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>We thank Yang Yu, Ting Zhao, Hang Xiao, and Yinan Wan for discussion of this article, Jan Ellenberg, Philipp Keller, Rex Kerr, Stuart Kim, Tomoya Kitajima, Xiao Liu, Davi Bock, Clay Reid, and Julie Simpson for providing microscopic images, and Christine Morkunas for proofreading the manuscript.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pcbi.1002519-Inou1">
+        <label>1</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Inoué</surname><given-names>S</given-names></name></person-group>             <year>2008</year>             <article-title>Microtubule dynamics in cell division: exploring living cells with polarized light microscopy.</article-title>             <source>Cell Develop Biol</source>             <volume>24</volume>             <fpage>1</fpage>             <lpage>28</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Rbel1">
+        <label>2</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Rübel</surname><given-names>O</given-names></name><name name-style="western"><surname>Weber</surname><given-names>GH</given-names></name><name name-style="western"><surname>Huang</surname><given-names>M-Y</given-names></name><name name-style="western"><surname>Bethel</surname><given-names>EW</given-names></name><name name-style="western"><surname>Biggin</surname><given-names>M</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Integrating data clustering and visualization for the analysis of 3d gene expression data.</article-title>             <source>IEEE Trans Comput Biol Bioinformatics</source>             <volume>7</volume>             <issue>1</issue>             <fpage>64</fpage>             <lpage>79</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-RafalskaMetcalf1">
+        <label>3</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Rafalska-Metcalf</surname><given-names>IU</given-names></name><name name-style="western"><surname>Janicki</surname><given-names>SM</given-names></name></person-group>             <year>2007</year>             <article-title>Show and tell: visualizing gene expression in living cells.</article-title>             <source>J?Cell Science</source>             <volume>120(14)</volume>             <fpage>2301</fpage>             <lpage>2307</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Long1">
+        <label>4</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Long</surname><given-names>F</given-names></name><name name-style="western"><surname>Peng</surname><given-names>H</given-names></name><name name-style="western"><surname>Liu</surname><given-names>X</given-names></name><name name-style="western"><surname>Kim</surname><given-names>SK</given-names></name><name name-style="western"><surname>Myers</surname><given-names>E</given-names></name></person-group>             <year>2009</year>             <article-title>A 3D digital atlas of C. elegans and its application to single-cell analyses.</article-title>             <source>Nat Methods</source>             <volume>6</volume>             <issue>9</issue>             <fpage>667</fpage>             <lpage>672</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Peng1">
+        <label>5</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Peng</surname><given-names>H</given-names></name><name name-style="western"><surname>Ruan</surname><given-names>Z</given-names></name><name name-style="western"><surname>Atasoy</surname><given-names>D</given-names></name><name name-style="western"><surname>Sternson</surname><given-names>S</given-names></name></person-group>             <year>2010</year>             <article-title>Automatic reconstruction of 3d neuron structures using a graph-augmented deformable model.</article-title>             <source>Bioinformatics</source>             <volume>26</volume>             <issue>12</issue>             <fpage>38</fpage>             <lpage>46</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Peng2">
+        <label>6</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Peng</surname><given-names>H</given-names></name><name name-style="western"><surname>Long</surname><given-names>F</given-names></name><name name-style="western"><surname>Myers</surname><given-names>E</given-names></name></person-group>             <year>2011</year>             <article-title>Automatic 3D neuron tracing using all-path pruning.</article-title>             <source>Bioinformatics</source>             <volume>27</volume>             <issue>13</issue>             <fpage>i239</fpage>             <lpage>i247</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Meijering1">
+        <label>7</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Meijering</surname><given-names>E</given-names></name><name name-style="western"><surname>Jacob</surname><given-names>M</given-names></name><name name-style="western"><surname>Sarria</surname><given-names>JC</given-names></name><name name-style="western"><surname>Steiner</surname><given-names>P</given-names></name><name name-style="western"><surname>Hirling</surname><given-names>H</given-names></name><name name-style="western"><surname>Unser</surname><given-names>M</given-names></name></person-group>             <year>2004</year>             <article-title>Design and validation of a tool for neurite tracing and analysis in fluorescence microscopy images.</article-title>             <source>Cytometry</source>             <volume>58A</volume>             <fpage>167</fpage>             <lpage>176</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Peng3">
+        <label>8</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Peng</surname><given-names>H</given-names></name></person-group>             <year>2008</year>             <article-title>Bioimage informatics: a new area of engineering biology.</article-title>             <source>Bioinformatics</source>             <volume>24</volume>             <issue>17</issue>             <fpage>1827</fpage>             <lpage>1836</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Shamir1">
+        <label>9</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Shamir</surname><given-names>L</given-names></name><name name-style="western"><surname>Delaney</surname><given-names>JD</given-names></name><name name-style="western"><surname>Orlov</surname><given-names>N</given-names></name><name name-style="western"><surname>Eckley</surname><given-names>M</given-names></name><name name-style="western"><surname>Goldberg</surname><given-names>IG</given-names></name></person-group>             <year>2010</year>             <article-title>Pattern recognition software and techniques for biological image analysis.</article-title>             <source>PLoS Comput Biol</source>             <volume>6</volume>             <issue>11</issue>     <fpage>e1000974</fpage>        <comment>10.1371/journal.pcbi.1000974</comment>        </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Ljosa1">
+        <label>10</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ljosa</surname><given-names>V</given-names></name><name name-style="western"><surname>Carpenter</surname><given-names>AE</given-names></name></person-group>             <year>2009</year>             <article-title>Introduction to the quantitative analysis of two-dimensional fluorescence microscopy images for cell-based screening.</article-title>             <source>PLoS Comput Biol</source>             <volume>5</volume>             <issue>12</issue>             <fpage>e1000603</fpage>             <comment>10.1371/journal.pcbi.1000603</comment>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Helmstaedter1">
+        <label>11</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Helmstaedter</surname><given-names>M</given-names></name><name name-style="western"><surname>Mitra</surname><given-names>PP</given-names></name></person-group>             <year>2012</year>             <article-title>Computational methods and challenges for large-scale circuit mapping.</article-title>             <source>Curr Opin Neurobiol</source>             <volume>22(1)</volume>             <fpage>162</fpage>             <lpage>169</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Peng4">
+        <label>12</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Peng</surname><given-names>H</given-names></name><name name-style="western"><surname>Long</surname><given-names>F</given-names></name><name name-style="western"><surname>Zhao</surname><given-names>T</given-names></name><name name-style="western"><surname>Myers</surname><given-names>EW</given-names></name></person-group>             <year>2011</year>             <article-title>Proof-editing is the bottleneck of 3d neuron reconstruction: the problem and solutions.</article-title>             <source>Neuroinformatics</source>             <volume>9</volume>             <issue>2–3</issue>             <fpage>103</fpage>             <lpage>105</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Abramoff1">
+        <label>13</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Abramoff</surname><given-names>MD</given-names></name><name name-style="western"><surname>Magelhaes</surname><given-names>PJ</given-names></name><name name-style="western"><surname>Ram</surname><given-names>SJ</given-names></name></person-group>             <year>2004</year>             <article-title>Image processing with ImageJ.</article-title>             <source>Biophotonics Int</source>             <volume>11</volume>             <fpage>36</fpage>             <lpage>42</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Peng5">
+        <label>14</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Peng</surname><given-names>H</given-names></name><name name-style="western"><surname>Ruan</surname><given-names>Z</given-names></name><name name-style="western"><surname>Long</surname><given-names>F</given-names></name><name name-style="western"><surname>Simpson</surname><given-names>JH</given-names></name><name name-style="western"><surname>Myers</surname><given-names>EW</given-names></name></person-group>             <year>2010</year>             <article-title>V3D enables real-time 3D visualization and quantitative analysis of large-scale biological image data sets.</article-title>             <source>Nat Biotechnol</source>             <volume>28</volume>             <issue>4</issue>             <fpage>348</fpage>             <lpage>353</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Gouaillard1">
+        <label>15</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Gouaillard</surname><given-names>A</given-names></name><name name-style="western"><surname>Brown</surname><given-names>T</given-names></name><name name-style="western"><surname>Bronner-Fraser</surname><given-names>M</given-names></name><name name-style="western"><surname>Fraser</surname><given-names>SE</given-names></name><name name-style="western"><surname>Megason</surname><given-names>SG</given-names></name></person-group>             <year>2007</year>             <article-title>GoFigure and The Digital Fish Project: open tools and open data for an imaging based approach to system biology. Insight Journal - special edition “2007 MICCAI Open Science Workshop”</article-title>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Cardona1">
+        <label>16</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Cardona</surname><given-names>A</given-names></name><name name-style="western"><surname>Saalfeld</surname><given-names>S</given-names></name><name name-style="western"><surname>Preibisch</surname><given-names>S</given-names></name><name name-style="western"><surname>Schmid</surname><given-names>B</given-names></name><name name-style="western"><surname>Cheng</surname><given-names>A</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>An integrated micro- and macroarchitectural analysis of the drosophila brain by computer-assisted serial section electron microscopy</article-title>             <source>PLoS Biol</source>             <volume>8</volume>             <issue>10</issue>       <fpage>e1000502</fpage>      <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pbio.1000502" xlink:type="simple">10.1371/journal.pbio.1000502</ext-link></comment></element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Kitajima1">
+        <label>17</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Kitajima</surname><given-names>TS</given-names></name><name name-style="western"><surname>Ohsugi</surname><given-names>M</given-names></name><name name-style="western"><surname>Ellenberg</surname><given-names>J</given-names></name></person-group>             <year>2011</year>             <article-title>Complete kinetochore tracking reveals error-prone homologous chromosome biorientation in mammalian oocytes.</article-title>             <source>Cell</source>             <volume>146(4)</volume>             <fpage>568</fpage>             <lpage>581</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Liu1">
+        <label>18</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Liu</surname><given-names>X</given-names></name><name name-style="western"><surname>Long</surname><given-names>F</given-names></name><name name-style="western"><surname>Peng</surname><given-names>H</given-names></name><name name-style="western"><surname>Aerni</surname><given-names>SJ</given-names></name><name name-style="western"><surname>Jiang</surname><given-names>M</given-names></name><etal/></person-group>             <year>2009</year>             <article-title>Analysis of cell fate from single-cell gene expression profiles in C. elegans.</article-title>             <source>Cell</source>             <volume>139</volume>             <fpage>623</fpage>             <lpage>633</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Peng6">
+        <label>19</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Peng</surname><given-names>H</given-names></name><name name-style="western"><surname>Chung</surname><given-names>P</given-names></name><name name-style="western"><surname>Long</surname><given-names>F</given-names></name><name name-style="western"><surname>Qu</surname><given-names>L</given-names></name><name name-style="western"><surname>Jenett</surname><given-names>A</given-names></name><etal/></person-group>             <year>2011</year>             <article-title>BrainAligner: 3D registration atlases of Drosophila brains.</article-title>             <source>Nat Methods</source>             <volume>8</volume>             <fpage>493</fpage>             <lpage>498</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Bock1">
+        <label>20</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bock</surname><given-names>D</given-names></name><name name-style="western"><surname>Lee</surname><given-names>W-C</given-names></name><name name-style="western"><surname>Kerlin</surname><given-names>AM</given-names></name><name name-style="western"><surname>Andermann</surname><given-names>ML</given-names></name><name name-style="western"><surname>Yurgenson</surname><given-names>S</given-names></name><etal/></person-group>             <year>2011</year>             <article-title>Network anatomy and in vivo physiology of a group of visual cortical neurons.</article-title>             <source>Nature</source>             <volume>471</volume>             <fpage>177</fpage>             <lpage>182</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Keller1">
+        <label>21</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Keller</surname><given-names>P</given-names></name><name name-style="western"><surname>Schmidt</surname><given-names>AD</given-names></name><name name-style="western"><surname>Wittbrodt</surname><given-names>J</given-names></name><name name-style="western"><surname>Stelzer</surname><given-names>EHK</given-names></name></person-group>             <year>2008</year>             <article-title>Reconstruction of zebrafish early embryonic development by scanned light sheet microscopy.</article-title>             <source>Science</source>             <volume>322(5904)</volume>             <fpage>1065</fpage>             <lpage>1069</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Lorensen1">
+        <label>22</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Lorensen</surname><given-names>WE</given-names></name><name name-style="western"><surname>Cline</surname><given-names>HE</given-names></name></person-group>             <year>1987</year>             <article-title>Marching Cubes: A high resolution 3D surface construction algorithm.</article-title>             <source>Comput Graph</source>             <volume>21(4)</volume>             <fpage>163</fpage>             <lpage>169</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Baker1">
+        <label>23</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Baker</surname><given-names>ML</given-names></name><name name-style="western"><surname>Yu</surname><given-names>Z</given-names></name><name name-style="western"><surname>Chiu</surname><given-names>W</given-names></name><name name-style="western"><surname>Bajaj</surname><given-names>C</given-names></name></person-group>             <year>2003</year>             <article-title>Automated segmentation of molecular subunits in electron cryomicroscopy density maps.</article-title>             <source>J?Struct Biol</source>             <volume>156(3)</volume>             <fpage>432</fpage>             <lpage>441</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Danuser1">
+        <label>24</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Danuser</surname><given-names>G</given-names></name></person-group>             <year>2011</year>             <article-title>Computer vision in cell biology.</article-title>             <source>Cell</source>             <volume>147(5)</volume>             <fpage>973</fpage>             <lpage>978</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Carpenter1">
+        <label>25</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Carpenter</surname><given-names>AE</given-names></name><name name-style="western"><surname>Jones</surname><given-names>TR</given-names></name><name name-style="western"><surname>Lamprecht</surname><given-names>MR</given-names></name><name name-style="western"><surname>Clarke</surname><given-names>C</given-names></name><name name-style="western"><surname>Kang</surname><given-names>IH</given-names></name><etal/></person-group>             <year>2006</year>             <article-title>CellProfiler: image analysis software for identifying and quantifying cell phenotypes.</article-title>             <source>Genom Biol</source>             <volume>7</volume>             <fpage>R100</fpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Sargin1">
+        <label>26</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Sargin</surname><given-names>ME</given-names></name><name name-style="western"><surname>Altinok</surname><given-names>A</given-names></name><name name-style="western"><surname>Kiris</surname><given-names>E</given-names></name><name name-style="western"><surname>Feinstein</surname><given-names>SC</given-names></name><name name-style="western"><surname>Wilson</surname><given-names>L</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Tracing microtubules in live cell images.</article-title>             <source>ISBI 2007</source>             <fpage>296</fpage>             <lpage>299</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Sieracki1">
+        <label>27</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Sieracki</surname><given-names>ME</given-names></name><name name-style="western"><surname>Reichenbach</surname><given-names>SE</given-names></name><name name-style="western"><surname>Webb</surname><given-names>KL</given-names></name></person-group>             <year>1989</year>             <article-title>Evaluation of automated threshold selection methods for accurately sizing microscopic fluorescent cells by image analysis.</article-title>             <source>Appl Environ Microbiol</source>             <volume>55(11)</volume>             <fpage>2762</fpage>             <lpage>2772</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Vincent1">
+        <label>28</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Vincent</surname><given-names>L</given-names></name><name name-style="western"><surname>Soille</surname><given-names>P</given-names></name></person-group>             <year>1991</year>             <article-title>Watersheds in digital spaces: an efficient algorithm based on immersion simulations.</article-title>             <source>IEEE Trans Pattern Anal Machine Intell</source>             <volume>13(6)</volume>             <fpage>583</fpage>             <lpage>598</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-McInerney1">
+        <label>29</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>McInerney</surname><given-names>T</given-names></name><name name-style="western"><surname>Terzopoulos</surname><given-names>D</given-names></name></person-group>             <year>1996</year>             <article-title>Deformable models in medical image analysis: a survey.</article-title>             <source>Med Image Anal</source>             <volume>1(2)</volume>             <fpage>91</fpage>             <lpage>108</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Zitov1">
+        <label>30</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Zitová</surname><given-names>B</given-names></name><name name-style="western"><surname>Flusser</surname><given-names>J</given-names></name></person-group>             <year>2003</year>             <article-title>Image registration methods: a survey.</article-title>             <source>Imag Vis Comput</source>             <volume>21(11)</volume>             <fpage>977</fpage>             <lpage>1000</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Yu1">
+        <label>31</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Yu</surname><given-names>Y</given-names></name><name name-style="western"><surname>Peng</surname><given-names>H</given-names></name></person-group>             <year>2011</year>             <article-title>Automated high speed stitching of large 3D microscopic images. Proc. of IEEE 2011 Int</article-title>             <source>Symp Biomed Imaging: From Nano to Macro (ISBI'2011</source>             <fpage>238</fpage>             <lpage>241</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Jefferis1">
+        <label>32</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Jefferis</surname><given-names>GS</given-names></name><name name-style="western"><surname>Potter</surname><given-names>CJ</given-names></name><name name-style="western"><surname>Chan</surname><given-names>AM</given-names></name><name name-style="western"><surname>Marin</surname><given-names>EC</given-names></name><name name-style="western"><surname>Rohlfing</surname><given-names>T</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Comprehensive maps of Drosophila higher olfactory centers: spatially segregated fruit and pheromone representation.</article-title>             <source>Cell</source>             <volume>128</volume>             <fpage>1187</fpage>             <lpage>1203</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-RubioGuivernau1">
+        <label>33</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Rubio-Guivernau</surname><given-names>JL</given-names></name><name name-style="western"><surname>Gurchenkov</surname><given-names>V</given-names></name><name name-style="western"><surname>Luengo-Oroz</surname><given-names>MA</given-names></name><name name-style="western"><surname>Duloquin</surname><given-names>L</given-names></name><name name-style="western"><surname>Bourgine</surname><given-names>P</given-names></name><etal/></person-group>             <year>2012</year>             <article-title>Wavelet-based image fusion in multi-view three-dimensional microscopy.</article-title>             <source>Bioinformatics</source>             <volume>28(2)</volume>             <fpage>238</fpage>             <lpage>245</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Bookstein1">
+        <label>34</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bookstein</surname><given-names>FL</given-names></name></person-group>             <year>1989</year>             <article-title>Principal warps: thin plate splines and the decomposition of deformations.</article-title>             <source>IEEE Trans Pattern Anal Machine Intell</source>             <volume>11</volume>             <fpage>567</fpage>             <lpage>585</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Zhou1">
+        <label>35</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Zhou</surname><given-names>J</given-names></name><name name-style="western"><surname>Peng</surname><given-names>H</given-names></name></person-group>             <year>2007</year>             <article-title>Automatic recognition and annotation of gene expression patterns of fly embryos.</article-title>             <source>Bioinformatics</source>             <volume>23(5)</volume>             <fpage>589</fpage>             <lpage>596</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Peng7">
+        <label>36</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Peng</surname><given-names>H</given-names></name><name name-style="western"><surname>Long</surname><given-names>F</given-names></name><name name-style="western"><surname>Zhou</surname><given-names>J</given-names></name><name name-style="western"><surname>Leung</surname><given-names>G</given-names></name><name name-style="western"><surname>Eisen</surname><given-names>M</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Automatic image analysis for gene expression patterns of fly embryos.</article-title>             <source>BMC Cell Biol</source> <!--===== Restructure page-count as size[@units="page"] =====--><size units="page">S7</size>           </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Li1">
+        <label>37</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Li</surname><given-names>YX</given-names></name><name name-style="western"><surname>Ji</surname><given-names>S</given-names></name><name name-style="western"><surname>Kumar</surname><given-names>S</given-names></name><name name-style="western"><surname>Ye</surname><given-names>J</given-names></name><name name-style="western"><surname>Zhou</surname><given-names>Z-H</given-names></name></person-group>             <year>2010</year>             <article-title>Drosophila gene expression pattern annotation through multi-instance multi-label learning.</article-title>             <source>IEEE/ACM Trans Comput Biol Bioinformatics</source>             <volume>2009</volume>             <fpage>1445</fpage>             <lpage>1450</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Qu1">
+        <label>38</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Qu</surname><given-names>L</given-names></name><name name-style="western"><surname>Long</surname><given-names>F</given-names></name><name name-style="western"><surname>Liu</surname><given-names>X</given-names></name><name name-style="western"><surname>Kim</surname><given-names>S</given-names></name><name name-style="western"><surname>Myers</surname><given-names>E</given-names></name><etal/></person-group>             <year>2011</year>             <article-title>Simultaneous recognition and segmentation of cells: application in C. elegans.</article-title>             <source>Bioinformatics</source>             <volume>27(20)</volume>             <fpage>2895</fpage>             <lpage>2902</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Peng8">
+        <label>39</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Peng</surname><given-names>H</given-names></name><name name-style="western"><surname>Long</surname><given-names>F</given-names></name><name name-style="western"><surname>Myers</surname><given-names>E</given-names></name></person-group>             <year>2009</year>             <article-title>VANO: a volume-object image annotation system.</article-title>             <source>Bioinformatics</source>             <volume>25(5)</volume>             <fpage>695</fpage>             <lpage>697</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002519-Peng9">
+        <label>40</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Peng</surname><given-names>H</given-names></name><name name-style="western"><surname>Long</surname><given-names>F</given-names></name><name name-style="western"><surname>Liu</surname><given-names>X</given-names></name><name name-style="western"><surname>Kim S</surname><given-names>K</given-names></name><name name-style="western"><surname>Myers</surname><given-names>EW</given-names></name></person-group>             <year>2008</year>             <article-title>Straightening Caenorhabditis elegans images.</article-title>             <source>Bioinformatics</source>             <volume>24(2)</volume>             <fpage>234</fpage>             <lpage>242</lpage>          </element-citation>
+      </ref>
+    </ref-list>
+    
+  </back>
+</article>

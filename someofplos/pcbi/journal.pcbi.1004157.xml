@@ -1,0 +1,854 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004157</article-id>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-14-01567</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Ligand-Target Prediction by Structural Network Biology Using nAnnoLyze</article-title>
+<alt-title alt-title-type="running-head">Ligand-Target Prediction by Structural Network Biology</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Martínez-Jiménez</surname>
+<given-names>Francisco</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Marti-Renom</surname>
+<given-names>Marc A.</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+<xref rid="aff003" ref-type="aff"><sup>3</sup></xref>
+<xref rid="cor001" ref-type="corresp">*</xref>
+</contrib>
+</contrib-group>
+<aff id="aff001"><label>1</label> <addr-line>Genome Biology Group, Centre Nacional d’Aanàlisi Genòmica (CNAG), Barcelona, Spain</addr-line></aff>
+<aff id="aff002"><label>2</label> <addr-line>Gene Regulation, Stem Cells and Cancer Program, Centre for Genomic Regulation (CRG), Barcelona, Spain</addr-line></aff>
+<aff id="aff003"><label>3</label> <addr-line>Institució Catalana de Recerca i Estudis Avançats (ICREA), Barcelona, Spain</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Schlessinger</surname>
+<given-names>Avner</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Icahn School of Medicine at Mount Sinai, UNITED STATES</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: FMJ MAMR. Performed the experiments: FMJ. Analyzed the data: FMJ. Contributed reagents/materials/analysis tools: FMJ MAMR. Wrote the paper: FMJ MAMR.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">mmarti@pcb.ub.cat</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>27</day>
+<month>3</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="collection">
+<month>3</month>
+<year>2015</year>
+</pub-date>
+<volume>11</volume>
+<issue>3</issue>
+<elocation-id>e1004157</elocation-id>
+<history>
+<date date-type="received">
+<day>26</day>
+<month>8</month>
+<year>2014</year>
+</date>
+<date date-type="accepted">
+<day>27</day>
+<month>1</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Martínez-Jiménez, Marti-Renom</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004157" xlink:type="simple"/>
+<abstract>
+<p>Target identification is essential for drug design, drug-drug interaction prediction, dosage adjustment and side effect anticipation. Specifically, the knowledge of structural details is essential for understanding the mode of action of a compound on a target protein. Here, we present nAnnoLyze, a method for target identification that relies on the hypothesis that structurally similar binding sites bind similar ligands. nAnnoLyze integrates structural information into a bipartite network of interactions and similarities to predict structurally detailed compound-protein interactions at proteome scale. The method was benchmarked on a dataset of 6,282 pairs of known interacting ligand-target pairs reaching a 0.96 of area under the Receiver Operating Characteristic curve (AUC) when using the drug names as an input feature for the classifier, and a 0.70 of AUC for “anonymous” compounds or compounds not present in the training set. nAnnoLyze resulted in higher accuracies than its predecessor, AnnoLyze. We applied the method to predict interactions for all the compounds in the DrugBank database with each human protein structure and provide examples of target identification for known drugs against human diseases. The accuracy and applicability of our method to any compound indicate that a comparative docking approach such as nAnnoLyze enables large-scale annotation and analysis of compound–protein interactions and thus may benefit drug development.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>Description of the “mode-of-action” of a small chemical compound against a protein target is essential for the drug discovery process. Such description relies on three main steps: i) the identification of the target protein within the thousands of proteins in an organism, ii) the localization of the binding interaction site in the identified target protein, and iii) the molecular characterization of the compound’s binding mode in the binding site of the target protein. Here, we introduce a new computational method, called nAnnoLyze, which uses graph theory principles to relate compounds and target proteins based on comparative principles. nAnnoLyze aims at addressing two of the three previous steps, that is, target identification and binding site localization. Our results suggest that the nAnnoLyze accuracy and proteome-wide applicability enables the large-scale annotation and analysis of compound–protein interaction and thus may benefit drug development.</p>
+</abstract>
+<funding-group>
+<funding-statement>This work was supported by the Spanish MINECO (BFU2010-19310, BFU2013-47736-P and PIM2010EPA-00719 to MAMR.). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="4"/>
+<table-count count="5"/>
+<page-count count="19"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>All the structural data and all the predictions can be downloaded from the server at <ext-link ext-link-type="uri" xlink:href="http://www.marciuslab.org/services/nAnnoLyze" xlink:type="simple">http://www.marciuslab.org/services/nAnnoLyze</ext-link>.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>The number of newly approved drugs has been significantly decreasing over the last two decades [<xref rid="pcbi.1004157.ref001" ref-type="bibr">1</xref>]. To make things worse, the therapeutic dogma that has prevailed over the years aimed at single target-specific ‘magic bullets’ against each disease. However, proteins act in complex interconnected networks, and thus, this ‘one gene, one drug, one disease’ paradigm is now clearly challenged [<xref rid="pcbi.1004157.ref002" ref-type="bibr">2</xref>,<xref rid="pcbi.1004157.ref003" ref-type="bibr">3</xref>]. The polypharmacology concept, which relies on the fact that a drug can modulate its activity by interacting with multiple targets rather than just one, was proposed to address these limitations [<xref rid="pcbi.1004157.ref002" ref-type="bibr">2</xref>]. Polypharmacology is especially valid in complex diseases like cancer or central nervous system disorders where the modulation of the activity of one single protein is not sufficient to obtain a therapeutic effect [<xref rid="pcbi.1004157.ref004" ref-type="bibr">4</xref>–<xref rid="pcbi.1004157.ref006" ref-type="bibr">6</xref>]. Therefore, identification of all possible targets of a chemical compound is critical in the drug discovery process.</p>
+<p>Many <italic>in silico</italic> methods have been published for drug target identification using network approaches [<xref rid="pcbi.1004157.ref007" ref-type="bibr">7</xref>,<xref rid="pcbi.1004157.ref008" ref-type="bibr">8</xref>]. Broadly, we can distinguish two different classes of methods, structure-free methods and structure-based methods. Within the first group, there are methods based on ligand features [<xref rid="pcbi.1004157.ref009" ref-type="bibr">9</xref>] that have been successfully used to identify numerous experimentally validated interactions. However, they have difficulties in identifying interactions for drugs with novel scaffolds [<xref rid="pcbi.1004157.ref010" ref-type="bibr">10</xref>] or for targets with no bioactivity information. Others, named network-based approaches, exploit network properties to provide the drug target interactions and drug repositioning opportunities [<xref rid="pcbi.1004157.ref011" ref-type="bibr">11</xref>–<xref rid="pcbi.1004157.ref018" ref-type="bibr">18</xref>]. Although the accuracy of predictions by these methods has significantly increased, the majority cannot explain the mode of action of the drug over the predicted target due to the lack of three-dimensional (3D) information about the ligand and/or the target. The use of 3D structural data helps addressing such limitation. The most popular structured-based methods rely on molecular docking approaches performing a virtual screening of a compound against a limited number of protein targets or of several compounds against one protein target [<xref rid="pcbi.1004157.ref019" ref-type="bibr">19</xref>–<xref rid="pcbi.1004157.ref021" ref-type="bibr">21</xref>]. As a result, they provide structurally detailed information about the likely interaction between the compound and its target/s. However, the computational requirements of such approaches make them not generally applicable at proteomic scales. An exception to this limitation is the recent massive human screening of 600,000 drugs against 7,000 human protein pockets by Cardozo and colleagues whose results are available online [<xref rid="pcbi.1004157.ref022" ref-type="bibr">22</xref>]. To overcome the computational limitations, new structure-based methods use the so-called “comparative docking” approaches that solely rely on structural comparisons, both of compounds and protein targets, to infer new interactions [<xref rid="pcbi.1004157.ref023" ref-type="bibr">23</xref>,<xref rid="pcbi.1004157.ref024" ref-type="bibr">24</xref>]. Other methods use local structural comparisons of small molecule binding sites to infer the localization and specificity of binding pockets [<xref rid="pcbi.1004157.ref025" ref-type="bibr">25</xref>,<xref rid="pcbi.1004157.ref026" ref-type="bibr">26</xref>] as well as to infer new ligand interactions in known binding pockets [<xref rid="pcbi.1004157.ref027" ref-type="bibr">27</xref>]. Finally, several other methods that rely on 3D structure comparisons that aim at functionally annotating structures [<xref rid="pcbi.1004157.ref023" ref-type="bibr">23</xref>,<xref rid="pcbi.1004157.ref024" ref-type="bibr">24</xref>,<xref rid="pcbi.1004157.ref028" ref-type="bibr">28</xref>].</p>
+<p>Here we introduce nAnnoLyze, a network-based version of the comparative docking method AnnoLyze [<xref rid="pcbi.1004157.ref023" ref-type="bibr">23</xref>]. Our new method predicts interactions for any query compound against an entire 3D proteome by relying on a bi-partite network of interactions and similarities. Unlike Annolyze, nAnnolyze can predict interactions for any compound regardless if they have been previously co-crystallized with a protein. We have benchmarked nAnnoLyze against a dataset composed by all the interactions for approved drugs present in the Protein Data Bank (PDB) [<xref rid="pcbi.1004157.ref029" ref-type="bibr">29</xref>]. The method outperforms AnnoLyze precision by 27 folds. Both Annolyze and nAnnolyze have been already successfully applied. Annolyze was used in an open source drug discovery initiative against neglected tropical diseases [<xref rid="pcbi.1004157.ref030" ref-type="bibr">30</xref>] while nAnnoLyze has been applied to a set of anti-tubercular drugs against the <italic>Mycobacterium tuberculosis</italic> proteome [<xref rid="pcbi.1004157.ref031" ref-type="bibr">31</xref>]. Here, we describe the method alongside the predictions for all the small molecule drugs present in DrugBank [<xref rid="pcbi.1004157.ref032" ref-type="bibr">32</xref>] against the human 3D proteome. To our knowledge, this is the first screening of almost 6,000 drugs against the entire human structure proteome predicted by comparative approaches. The nAnnoLyze network, method and predictions are available online at <ext-link ext-link-type="uri" xlink:href="http://www.marciuslab.org/services/nAnnoLyze" xlink:type="simple">http://www.marciuslab.org/services/nAnnoLyze</ext-link>.</p>
+</sec>
+<sec id="sec002" sec-type="results">
+<title>Results</title>
+<sec id="sec003">
+<title>Benchmark dataset creation</title>
+<p>The correct selection of a benchmark dataset is one of the most important steps in assessing the accuracy of a newly developed method. Unfortunately, there were no available and adequate datasets for benchmarking structure-based network methods for ligand-target prediction. The “Yamanishi-2008” dataset [<xref rid="pcbi.1004157.ref011" ref-type="bibr">11</xref>], which has widely been used previously, could not be used here due to the limited structural coverage of its targets, which added to the increasing concern on biases of the current drug-target interaction datasets [<xref rid="pcbi.1004157.ref033" ref-type="bibr">33</xref>]. To address these issues, we have generated a benchmark set consisting of a “positive” and a “negative” set. The “positive” set contains all drug-protein annotated pairs between any structure in the PDB and any compound approved by the FDA. The “positive” benchmark set resulted in a total of 6,282 interactions and is considered the “true” set of interactions. The “negative” set was generated by randomly selecting pairs of compounds and targets that have never been annotated in the DrugBank or PDB databases. To assess how many of these drug-protein negative pairs could result as a potentially miss-annotated negative interactions we looked for similar compounds interacting with the “negative” target of each compound. The search resulted in 118 (∼2%) out of the 5,981 pairs that could result in a miss-annotated negative interaction. However, the removal of these pairs of putative miss-annotated “negative pairs” from the set had no effect on the assessment of the nAnnoLyze accuracy. Our final benchmark dataset included thus a total of 6,282 drug-target in the “positive” interactions and 5,981 negative pairs.</p>
+</sec>
+<sec id="sec004">
+<title>nAnnoLyze benchmarking</title>
+<p>The nAnnoLyze precision varies at different Z-score thresholds (<xref rid="pcbi.1004157.g001" ref-type="fig">Fig. 1A</xref>) with an optimal threshold at −2.5 local Z-score resulting in a precision of 0.63 and coverage of 0.19 corresponding to 1,148 true positive predictions (<xref rid="pcbi.1004157.g001" ref-type="fig">Fig. 1B</xref>). It is important to note that both the precision and coverage of our method depend dramatically on the definition of false positives for our predictions. Given that our benchmark set relies only on deposited data in the PDB, many of the predictions by nAnnoLyze are likely to be correct despite not being present in our benchmark. For example, the drug Enalapril (DB00584 DrugBank identifier) has been co-solved in only two PDB entries (<italic>i</italic>.<italic>e</italic>., 2X90 and 1UZE). However, nAnnoLyze predicts interactions between Enalapril and three other targets in the PDB (<italic>i</italic>.<italic>e</italic>., 2X91, 1J36 and 2X8Z). Those structures actually correspond to the same target sequence (Q10714 UniProt id) being solved with no ligands.</p>
+<fig id="pcbi.1004157.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004157.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>nAnnoLyze benchmarking.</title>
+<p>A) ROC plots for predictions in the benchmark dataset using 10-fold cross-validation. Blue line for predictions based on our RFC trained using the compound ID, red line for predictions based on our RFC trained with anonymous compounds. Light red lines correspond to the predictions based on individual nAnnoLyze scores. B) Precision/Recall curves for nAnnoLyze local Z-score. C) Enrichment plots for nAnnoLyze local Z-score (dashed black line) nAnnoLyze global Z-Score (solid black line) predictions.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004157.g001" position="float" xlink:type="simple"/>
+</fig>
+<p>To further increase the accuracy of our predictions, we implemented a Random Forest Classifier (RFC) that classifies pairs of compound-protein as binders or not by combining several of the nAnnoLyze scores (that is, the raw score, the Local Z-score, and the Global Z-score). The RFC correctly recalled 66% of the pairs with a precision of 0.73 and an AUC of 0.71 using a 10-fold cross validation (<xref rid="pcbi.1004157.t001" ref-type="table">Table 1</xref>). The tested RFC did not include the DrugBank ID as input feature to simulate a situation where a completely new compound not deposited in the databases was tested. However, by using the DrugBank ID as an input feature, the accuracy of nAnnoLyze dramatically improves to a 0.93 precision, 0.93 recall and a 0.97 of AUC (<xref rid="pcbi.1004157.g001" ref-type="fig">Fig. 1A</xref> and <xref rid="pcbi.1004157.t001" ref-type="table">Table 1</xref>). These results suggest that predictions for known drugs already in our dataset are much more precise than those for unknown or anonymous compounds. The RFC outperformed the use of any of the single scores from nAnnoLyze (<xref rid="pcbi.1004157.t001" ref-type="table">Table 1</xref>).</p>
+<table-wrap id="pcbi.1004157.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004157.t001</object-id>
+<label>Table 1</label> <caption><title>RFC benchmark.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004157.t001g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004157.t001" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Type of classification</th>
+<th align="left" rowspan="1" colspan="1">Precision</th>
+<th align="left" rowspan="1" colspan="1">Recall</th>
+<th align="left" rowspan="1" colspan="1">AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>RFC (DrugID, SCORE, Global Z-score, Local Z-Score)</bold></td>
+<td align="left" rowspan="1" colspan="1">0.93±0.01</td>
+<td align="left" rowspan="1" colspan="1">0.93±0.01</td>
+<td align="left" rowspan="1" colspan="1">0.97±0.01</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>RFC (SCORE, Global Z-score, Local Z-Score)</bold></td>
+<td align="left" rowspan="1" colspan="1">0.73±0.01</td>
+<td align="left" rowspan="1" colspan="1">0.66±0.01</td>
+<td align="left" rowspan="1" colspan="1">0.71±0.01</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Score</bold></td>
+<td align="left" rowspan="1" colspan="1">0.70±0.02</td>
+<td align="left" rowspan="1" colspan="1">0.64±0.02</td>
+<td align="left" rowspan="1" colspan="1">0.68±0.02</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Global Z-score</bold></td>
+<td align="left" rowspan="1" colspan="1">0.70±0.02</td>
+<td align="left" rowspan="1" colspan="1">0.64±0.02</td>
+<td align="left" rowspan="1" colspan="1">0.68±0.02</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Local Z-score</bold></td>
+<td align="left" rowspan="1" colspan="1">0.73±0.02</td>
+<td align="left" rowspan="1" colspan="1">0.64±0.02</td>
+<td align="left" rowspan="1" colspan="1">0.67±0.01</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+<table-wrap-foot>
+<fn id="t001fn001"><p>Mean values and standard deviation after 10-fold cross-validation.</p></fn>
+</table-wrap-foot>
+</table-wrap>
+<p>Comparatively, nAnnoLyze reached a 0.61 increase in precision at the optimal cut-off (from 0.02 to 0.63) at the expenses of a decrease in recall by 0.38 with respect to AnnoLyze (<xref rid="pcbi.1004157.t002" ref-type="table">Table 2</xref>). Finally, It is important to note that the benchmark set used for this test resulted more difficult for AnnoLyze than the original test-set used to benchmark it [<xref rid="pcbi.1004157.ref023" ref-type="bibr">23</xref>] (<xref rid="pcbi.1004157.t002" ref-type="table">Table 2</xref>).</p>
+<table-wrap id="pcbi.1004157.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004157.t002</object-id>
+<label>Table 2</label> <caption><title>nAnnoLyze benchmark.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004157.t002g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004157.t002" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1"/>
+<th align="left" rowspan="1" colspan="1"/>
+<th align="left" rowspan="1" colspan="1">optimal cut-off (max value)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>nAnnoLyze</bold></td>
+<td align="left" rowspan="1" colspan="1">Precision</td>
+<td align="left" rowspan="1" colspan="1">0.63 (1.00)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Recall</td>
+<td align="left" rowspan="1" colspan="1">0.19 (0.59)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>AnnoLyze</bold></td>
+<td align="left" rowspan="1" colspan="1">Precision</td>
+<td align="left" rowspan="1" colspan="1">0.02 (0.06)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Recall</td>
+<td align="left" rowspan="1" colspan="1">0.57 (0.67)</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+<sec id="sec005">
+<title>nAnnoLyze prediction examples</title>
+<p>The human Cyclooxygenase-1 is targeted by NSAID drugs. Cyclooxygenase (COX) is the enzyme responsible for the formation of prostanoids, which are classified in 3 different groups: prostaglandins, prostacyclins, and thromboxanes, each of them is involved in the inflammatory response, among other processes. There are two COX isoenzymes. COX-1 promotes the production of the natural mucus that protects the inner stomach lining while COX-2, is primarily present at sites of inflammation [<xref rid="pcbi.1004157.ref034" ref-type="bibr">34</xref>]. Traditional non-steroidal anti-inflammatory drugs (NSAIDs) such as Aspirin, Ibuprofen or Flurbiprofen are considered non-selective because they inhibit both COX-1 and COX-2. The inhibition of COX-2 by NSAIDs results in the anti-inflammatory effect, while the inhibition of COX-1 can lead the undesired side effects such as damage to the gastrointestinal tract [<xref rid="pcbi.1004157.ref035" ref-type="bibr">35</xref>]. nAnnoLyze predicted interactions for several NSAIDs with the 3D model of the human COX-1. Specifically, nAnnoLyze predicted 21 (out of the 44 approved drugs against COX-1) as binders of the COX-1 target (<xref rid="pcbi.1004157.t003" ref-type="table">Table 3</xref>). In particular, nAnnoLyze predicted the binding of Flurbiprofen (DB00712) and Ibuprofen (DB01050) to COX-1, which are known inhibitory drugs of the human COX-1 (<xref rid="pcbi.1004157.g002" ref-type="fig">Fig. 2A</xref>). The nAnnoLyze path between Flubiprofen and COX-1 starts from a ligand node composed by tripotassium (1R)-4-biphenyl-4-yl-1-phosphonatobutane-1-sulfonate (B70) and two stereoisomers of Flubiprofen (FLR and FLP). Thorough the binding site of FLP to ovine COX-1 (1QEH), nAnnoLyze predicts its binding site of the COX-1 human 3D model. Conversely, the path between Ibuprofen and COX-1 starts in the ligand node composed by 1-(4-ethylphenyl)propan-1-one (I3E) and two stereoisomers of Ibuprofen (IBP and IZP). Those ligands are predicted to bind the same predicted binding site of the human COX-1 thanks to its similarity to the crystal structure of the ovine COX-1 (1EQG). Remarkably, the human COX-1 predicted binding site includes the tyrosine 385, which is known to be responsible of the catalytic reaction with the NSAID drugs (<xref rid="pcbi.1004157.g002" ref-type="fig">Fig. 2A</xref>). However, not all the NSAIDs performed with the same accuracy. Aspirin (DB00945), also a known inhibitor of the human COX-1 and COX-2, results in false positive predictions (<xref rid="pcbi.1004157.t004" ref-type="table">Table 4</xref> and <xref rid="pcbi.1004157.g002" ref-type="fig">Fig. 2B</xref>). The nAnnoLyze search with Aspirin as input molecule results in many proteases predicted targets. This false-positive pathway starts from the ligand node composed by two Benzoic Acids, the 4-Guanidinobenzoic Acid (GBS) and the Acetylsalicylic acid (AIN). GBS has been crystallized with different trypsin proteins so the pathway goes thorough the GSB binding site of the guanidinobenzoyl-trypsin acyl-enzyme (2AH4) reaching eventually the predicted binding site for the human Trypsin-2 (P07478). The same pathway is used to find other proteases like the Airway trypsin-like protease 4 (Q6ZWK6) or the Trypsin-3 (P35030) resulting in several false positive predictions. Conversely, the Aspirin-COX1 network pathway starts from the ligand node composed by 3,6-dichloro-2-methoxy-benzoic acid (D3M) and Salicylic acid (SAL) (<xref rid="pcbi.1004157.g002" ref-type="fig">Fig. 2B</xref>). The RFC classifier identified a network link between Aspirin and the SAL compound with a similarity score of 0.86. This SAL mediated pathway guides the nAnnoLyze search towards its binding site in the ovine COX-1 (3N8Y), which is homologous to the human COX-1 binding site. This pathway is also the responsible of the link between Aspirin and the human COX-2 with a score of 0.77. However, the lower similarity between the predicted human COX-2 binding site and the ovine COX-1 (3N8Y) introduces a penalty that significantly decreases the score of the link.</p>
+<fig id="pcbi.1004157.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004157.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>nAnnoLyze network pathways.</title>
+<p>A) Network pathways for the predicted interactions between Flurbiprofen and Ibuprofen with the generated three-dimensional model of the Human Cox-1 (PDB Template: 2AYL with 94% sequence identity). B) Aspirin network pathway for miss predicted Aspirin-Trypsin2 (PDB Template: 3P95 with 98% Sequence Identity) and correctly predicted Aspirin-COX1 hit found by the method. Link between Aspirin and SAL was made by the RFC classifier with a score of 0.86 (Tanimoto value of 0.76). In both panels, the arrows represent edges with their weights representing the distance (i.e: the inverse of the similarity). The higher the distance value the lower the similarity between the compounds or binding sites. Ligand network nodes are encircled with the ligand responsible of the predicted pathway represented in larger size. For clarity, only one binding site per node has been plotted.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004157.g002" position="float" xlink:type="simple"/>
+</fig>
+<table-wrap id="pcbi.1004157.t003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004157.t003</object-id>
+<label>Table 3</label> <caption><title>COX-1 interactions.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004157.t003g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004157.t003" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Drug ID</th>
+<th align="left" rowspan="1" colspan="1">Drug name</th>
+<th align="left" rowspan="1" colspan="1">nAnnoLyze score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB00712</bold></td>
+<td align="left" rowspan="1" colspan="1">Flurbiprofen</td>
+<td align="char" char="." rowspan="1" colspan="1">0.97</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB00328</bold></td>
+<td align="left" rowspan="1" colspan="1">Indomethacin</td>
+<td align="char" char="." rowspan="1" colspan="1">0.97</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB01600</bold></td>
+<td align="left" rowspan="1" colspan="1">Tiaprofenicacid</td>
+<td align="char" char="." rowspan="1" colspan="1">0.96</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB00870</bold></td>
+<td align="left" rowspan="1" colspan="1">Suprofen</td>
+<td align="char" char="." rowspan="1" colspan="1">0.96</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB00821</bold></td>
+<td align="left" rowspan="1" colspan="1">Carprofen</td>
+<td align="char" char="." rowspan="1" colspan="1">0.96</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB00788</bold></td>
+<td align="left" rowspan="1" colspan="1">Naproxen</td>
+<td align="char" char="." rowspan="1" colspan="1">0.96</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB00500</bold></td>
+<td align="left" rowspan="1" colspan="1">Tolmetin</td>
+<td align="char" char="." rowspan="1" colspan="1">0.94</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB00465</bold></td>
+<td align="left" rowspan="1" colspan="1">Ketorolac</td>
+<td align="char" char="." rowspan="1" colspan="1">0.94</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB00963</bold></td>
+<td align="left" rowspan="1" colspan="1">Bromfenac</td>
+<td align="char" char="." rowspan="1" colspan="1">0.92</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB00586</bold></td>
+<td align="left" rowspan="1" colspan="1">Diclofenac</td>
+<td align="char" char="." rowspan="1" colspan="1">0.91</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB06802</bold></td>
+<td align="left" rowspan="1" colspan="1">Nepafenac</td>
+<td align="char" char="." rowspan="1" colspan="1">0.90</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB01283</bold></td>
+<td align="left" rowspan="1" colspan="1">Lumiracoxib</td>
+<td align="char" char="." rowspan="1" colspan="1">0.90</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB00784</bold></td>
+<td align="left" rowspan="1" colspan="1">Mefenamicacid</td>
+<td align="char" char="." rowspan="1" colspan="1">0.89</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB00861</bold></td>
+<td align="left" rowspan="1" colspan="1">Diflunisal</td>
+<td align="char" char="." rowspan="1" colspan="1">0.88</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB04552</bold></td>
+<td align="left" rowspan="1" colspan="1">NiflumicAcid</td>
+<td align="char" char="." rowspan="1" colspan="1">0.88</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB00991</bold></td>
+<td align="left" rowspan="1" colspan="1">Oxaprozin</td>
+<td align="char" char="." rowspan="1" colspan="1">0.88</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB01050</bold></td>
+<td align="left" rowspan="1" colspan="1">Ibuprofen</td>
+<td align="char" char="." rowspan="1" colspan="1">0.87</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB00939</bold></td>
+<td align="left" rowspan="1" colspan="1">Meclofenamicacid</td>
+<td align="char" char="." rowspan="1" colspan="1">0.86</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB01399</bold></td>
+<td align="left" rowspan="1" colspan="1">Salsalate</td>
+<td align="char" char="." rowspan="1" colspan="1">0.86</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB01009</bold></td>
+<td align="left" rowspan="1" colspan="1">Ketoprofen</td>
+<td align="char" char="." rowspan="1" colspan="1">0.86</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>DB00605</bold></td>
+<td align="left" rowspan="1" colspan="1">Sulindac</td>
+<td align="char" char="." rowspan="1" colspan="1">0.85</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<table-wrap id="pcbi.1004157.t004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004157.t004</object-id>
+<label>Table 4</label> <caption><title>Aspirin top 10 predicted targets as well as COX-1 and COX-2 scores.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004157.t004g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004157.t004" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">UniProt ID</th>
+<th align="left" rowspan="1" colspan="1">nAnnoLyze Score</th>
+<th align="left" rowspan="1" colspan="1">Protein Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>P07478</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.94</td>
+<td align="left" rowspan="1" colspan="1">Trypsin-2</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Q6ZWK6</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.93</td>
+<td align="left" rowspan="1" colspan="1">Airway trypsin-like protease 4</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>E7ESG9</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.93</td>
+<td align="left" rowspan="1" colspan="1">Transmembrane protease serine 4</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>A6NL71</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.92</td>
+<td align="left" rowspan="1" colspan="1">Transmembrane protease serine 11E</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Q8IXD7</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.92</td>
+<td align="left" rowspan="1" colspan="1">Kallikrein-11</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Q0WXX5</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.92</td>
+<td align="left" rowspan="1" colspan="1">Kallikrein 11 isoform 1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>A8CED1</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.92</td>
+<td align="left" rowspan="1" colspan="1">Trypsin-3</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>O60235</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.92</td>
+<td align="left" rowspan="1" colspan="1">Transmembrane protease serine 11D protease</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>A8CED3</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.92</td>
+<td align="left" rowspan="1" colspan="1">Protease serine 3 (mesotrypsin) isoform CRA_c</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>A9Z1Y4</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.92</td>
+<td align="left" rowspan="1" colspan="1">Protease serine 3</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Q5T7T7</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.81</td>
+<td align="left" rowspan="1" colspan="1">COX-1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>A8K802</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.77</td>
+<td align="left" rowspan="1" colspan="1">COX-2</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>Sorafenib pathway targeting through binding of several proteins. Sorafenib, which is marketed as Nexavar, is an approved drug for the treatment of advanced renal cell carcinoma. It is also in Phase III trials for Hepatocellular carcinoma, Non-small-cell lung carcinoma (NSCLC) and melanoma and in Phase II trials for Myelodysplastic syndrome, Acute Myeloid Leukemia (AML), head and neck, breast, colon, ovarian and pancreatic cancers. Arising as one of the most promising anticancer drugs, Nexavar is known to perform its activity by targeting the Raf/Mek/Erk pathways [<xref rid="pcbi.1004157.ref036" ref-type="bibr">36</xref>,<xref rid="pcbi.1004157.ref037" ref-type="bibr">37</xref>]. Specifically it is known to inhibit Raf kinases, Receptor-type tyrosine-protein kinase (FLT3), platelet-derived growth factor (PDGF), Vascular endothelial growth factor receptor 2 &amp; 3 (VEGF2/3) and the Mast/stem cell growth factor receptor Kit. Within our predictions, we found 4 of these links alongside other interesting links for targets involved in the same pathways (<xref rid="pcbi.1004157.t005" ref-type="table">Table 5</xref> and <xref rid="pcbi.1004157.g003" ref-type="fig">Fig. 3A</xref>). Interestingly, most of the links have been previously annotated either in DrugBank, PubChem or in the PDB as a crystal structure. However, there are two links not annotated within the predictions, the serine/threonine-protein kinase A-Raf (ARAF) and the Cyclin-dependent kinase 10 (CDK10). ARAF is involved in several pathways, including AML and FoxO signaling and together with FLT3, BRAF, MAPK14 could be a good opportunity to exploit the polyphamarcological profile of Sorafenib against AML. In fact, Phase II trials are showing very promising results in AML combining Sorafenib with other marketed drugs [<xref rid="pcbi.1004157.ref038" ref-type="bibr">38</xref>,<xref rid="pcbi.1004157.ref039" ref-type="bibr">39</xref>]. Of the ten predicted targets, only 3 have been co-crystallized with Sorafenib (BRAF, MAPK14 and CDK8), while in the other seven nAnnoLyze proposes the binding site localization of the drug providing insights into the mode of action of the compound. nAnnoLyze predicted the correct binding site for the three targets (<xref rid="pcbi.1004157.g003" ref-type="fig">Fig. 3B</xref>). The predicted binding sites were 75%, 62%, and 86% correct (<italic>i</italic>.<italic>e</italic>., % of predicted residues defined as binding site in LigBase) for CDK8, BRAF, and MAPK14, respectively.</p>
+<fig id="pcbi.1004157.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004157.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>nAnnoLyze multiple-target example.</title>
+<p>A) Extraction of the Sorafenib sub network. B) Drug and the predicted binding site in CDK8 (PDB 3RGF, blue), BRAF (PDB 1UWH, grey) and MAPK14 (PDB 3GCS, red). C) ProBiS comparison of the binding site of predicted targets for DrugBank molecule Sorafenib (DB00398).</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004157.g003" position="float" xlink:type="simple"/>
+</fig>
+<table-wrap id="pcbi.1004157.t005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004157.t005</object-id>
+<label>Table 5</label> <caption><title>Sorafenib targets.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004157.t005g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004157.t005" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Target</th>
+<th align="left" rowspan="1" colspan="1">Prediction Score</th>
+<th align="left" rowspan="1" colspan="1">Annotated</th>
+<th align="left" rowspan="1" colspan="1">Target Structure</th>
+<th align="left" rowspan="1" colspan="1">KEGG OV Pathways</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>MAPK 14 (Q13083)</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.99</td>
+<td align="left" rowspan="1" colspan="1">PDB</td>
+<td align="left" rowspan="1" colspan="1">Yes</td>
+<td align="left" rowspan="1" colspan="1">MAPK signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">PubChem</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">FoxO signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">VEGF signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Rap1 signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">RIG-I-like receptor signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Acute myeloid leukemia</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>CDK19 (Q9BWU1)</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.97</td>
+<td align="left" rowspan="1" colspan="1">PubChem</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>FLT1 (P17948)</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.90</td>
+<td align="left" rowspan="1" colspan="1">PubChem</td>
+<td align="left" rowspan="1" colspan="1">Yes</td>
+<td align="left" rowspan="1" colspan="1">Ras signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Rap1 signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>RAF1 (P04049)</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.89</td>
+<td align="left" rowspan="1" colspan="1">DrugBank</td>
+<td align="left" rowspan="1" colspan="1">Yes </td>
+<td align="left" rowspan="1" colspan="1">MAPK signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">PubChem</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Ras signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Rap1 signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">VEGF signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">FoxO signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Acute myeloid leukemia </td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>ARAF (Q5H9B3)</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.88</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">Yes (partially)</td>
+<td align="left" rowspan="1" colspan="1">FoxO signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Acute myeloid leukemia </td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>CDK10 (Q15131)</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.88</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>BRAF (Q9Y6T3)</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.88</td>
+<td align="left" rowspan="1" colspan="1">DrugBank</td>
+<td align="left" rowspan="1" colspan="1">Yes</td>
+<td align="left" rowspan="1" colspan="1">MAPK signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">PDB</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Rap1 signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">PubChem</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">FoxO signaling pathway</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Acute myeloid leukemia</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>CDK8 (P49336)</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.87</td>
+<td align="left" rowspan="1" colspan="1">Pubchem</td>
+<td align="left" rowspan="1" colspan="1">Yes</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">PDB</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>FLT3 (Q5VTU6)</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.86</td>
+<td align="left" rowspan="1" colspan="1">PubChem</td>
+<td align="left" rowspan="1" colspan="1">Yes</td>
+<td align="left" rowspan="1" colspan="1">Acute myeloid leukemia</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="char" char="." rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">DrugBank</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>MAPK 15 (Q8TD08)</bold></td>
+<td align="char" char="." rowspan="1" colspan="1">0.86</td>
+<td align="left" rowspan="1" colspan="1">Pubchem</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+<td align="left" rowspan="1" colspan="1">-</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>Since structurally similar binding sites are more likely to bind the same small molecule. We wanted to assess if the 7 predicted binding sites (<italic>i</italic>.<italic>e</italic>., FLT3, CDK10, ARAF, MAPK15, FLT1, RAF1, and CDK19) have similarity with the 3 Sorafenib known binding sites (<italic>i</italic>.<italic>e</italic>., BRAF, MAPK14, and CDK8). All of the 7 predicted binding sites are similar to at least one of the already known (<xref rid="pcbi.1004157.g003" ref-type="fig">Fig. 3C</xref>). Within the annotated interactions with non-crystallized structure, FLT3 is the one with lowest similarity to a known structure (ProBiS Z-score of 1.04 with the CDK8 binding site). Unlike FLT3, FLT1 binding site has MAPK14 as the most similar binding site with a higher score (2.25 ProBiS Z-score). Regarding the Cyclin dependent kinases CDK10 and CDK19 proposed binding sites, CDK10 binding site has a high similarity (ProBiS Z-score of 2.09) with the MAPK14´s one while the CDK19 binding site is almost identical to that of CDK8 (ProBiS 2.9). As expected, RAF predicted protein binding sites ARAF and RAF1 have BRAF binding site as the most similar (3.5 and 3.94 ProBiS Z-scores, respectively). Following the same trend, the MAPK14 binding site is the most similar to MAPK15 (2.51 ProBiS Z-score). Although small changes in the catalytic site could have a dramatic impact on the binding-affinity of a small molecule, the overall high similarity among the Sorafenib predicted binding sites shows a clear trend towards binding site conservation within this set of proteins. This example shows not only the capability of the method to find drug targets but also the possibility to explore pathways rather than individual proteins as targets.</p>
+</sec>
+</sec>
+<sec id="sec006" sec-type="conclusions">
+<title>Discussion</title>
+<p>The increase of compound phenotypic screenings over the last years has dramatically increased the number of small molecules with non-annotated protein targets [<xref rid="pcbi.1004157.ref040" ref-type="bibr">40</xref>–<xref rid="pcbi.1004157.ref042" ref-type="bibr">42</xref>]. Because target annotation is a crucial step when developing a drug, and specifically the elucidation of the amino acids involved in the interactions is key to understand the mode of action of the compound, many methods have been developed to annotate drug protein targets. However, most of them do not provide any structural information about the link, and for those providing it, the application at proteome scale for any query compound is unfeasible. Here we introduced nAnnoLyze a method for drug target interaction prediction that provides structural details at proteome scale. nAnnoLyze relies on a pre-built network of structural similarities to perform its prediction for any query molecule providing not only the connection between the molecule and its predicted target but also the binding site of the ligand in the protein. It is important to note that nAnnoLyze has been specifically tested for drug-target interaction prediction. The accuracy of our method on less studied compounds, such as non-drug like molecules, could lead to a reduction of the precision and the coverage.</p>
+<p>The lack of crystal structure for several proteins in other datasets prompted us to build a new dataset of approved drugs. The reduction of the precision by our previous method [<xref rid="pcbi.1004157.ref023" ref-type="bibr">23</xref>] with this dataset is indicative of the complexity of the new benchmark. The new dataset includes real set of interactions that better simulates a scenario where the different molecules have different affinities to one or many targets. This addressed a current concern about the possible bias of artificial datasets [<xref rid="pcbi.1004157.ref033" ref-type="bibr">33</xref>]. Unfortunately, the lack of a real “negative” set of drug-protein pairs (<italic>i</italic>.<italic>e</italic>., pairs of molecules known not to interact) hampered the creation of the complete dataset. To overcome this issue, we generated a set of drug-protein pairs that, so far, are not annotated as interactions. The nAnnoLyze benchmark using these newly created datasets resulted in satisfactory accuracies, especially in light of the fact that the dataset is bound to produce an overestimation of the false-positive rate (<italic>i</italic>.<italic>e</italic>., a drug and a protein are not interacting if they have not been crystallized together) [<xref rid="pcbi.1004157.ref043" ref-type="bibr">43</xref>]. The limitation of the maximum distance in the search for the shortest pathway can explain some of the missed drug-protein pairs and, consequently, limits the recall reached by the method. Analysis of the precision and recall of specific compounds in the benchmark dataset indicate that nAnnoLyze results in higher accuracy for moderate promiscuous compounds compared to highly promiscuous compounds. Indeed, promiscuous compounds have high-degrees of connectivity in our network, which makes it very difficult to identify specific targets. A similar analysis to identify trends in the accuracy of nAnnoLyze for targets for different protein Pfam families did not result in any clear trend. The usage of binding site to represent a family of targets instead of whole protein domain structures may explain the homogeneity in the performance for different protein families.</p>
+<p>Several scores for each prediction permits to explore the effect of the selection of different thresholds values depending of the user needs. For instance, when extracting only the most confident targets for a drug, very low values of Global Z-score will be suitable; while when retrieving the most specific targets for a compound filtering by low values of Local Z-score will be the best option. This, of course, makes it difficult to provide a specific score threshold for the predictions. Despite this, we studied the variation of the performance at different thresholds measured by a ROC curve. The AUC was excellent when using drug names and scores as input feature for the predictions. When only the scores of the predictions were used (that is, treating the compound as anonymous), there was a clear decrease in the AUC suggesting that the method performs better for already known chemical entities rather than for new unseen compounds. This fact makes sense since the method is based upon comparative approaches relating compounds by their structural similarities.</p>
+<p>The comparison of the nAnnoLyze method against the original AnnoLyze indicates that our network-based approach predicts drug-protein complexes with higher precision. Importantly, nAnnolyze is a clear progress over Annolyze by improving not only the performance (27-fold higher precision) but also the applicability, since it can be applied to any compound regardless whether it has been previously deposited in the PDB. Moreover, the network-based paradigm implemented in nAnnoLyze allows for the integration of other types of additional information such as the diseases linked to the protein targets, which may eventually allow for drug indication predictions. A successful example of a method for predicting drug-like targets using the modelable human proteome with medical data integration is the Computational Analysis of Novel Drug Opportunities (CANDO) platform [<xref rid="pcbi.1004157.ref043" ref-type="bibr">43</xref>]. While the aim of our work is accurately predicting drug-protein interactions, future developments of nAnnoLyze could include medical indications of drugs.</p>
+<p>To demonstrate the applicability of the method, we screened all the drugs in the DrugBank database against the entire human 3D proteome that could be modeled by comparative protein structure prediction. We not only provided the drug-protein predictions but also the structural binding localization of the interaction. We carefully described two examples of this screening. The first example illustrates the nAnnoLyze ability to correctly (or incorrectly) predict the binding of a NSAIDs set of drugs to the COX-1 human protein. Within the correctly predicted interactions (<italic>i</italic>.<italic>e</italic>., true positives), we included Flurbiprofen and Ibuprofen detailed information about the network routes. In the case of the incorrectly predicted interaction between Aspirin and proteases proteins, the analysis indicates that the clustering in a ligand node of two similar Benzenoids compounds lead to the undesired drug-target association. It is thus likely that adding extra information beyond the chemical similarity during the clustering of the core-network may result in more functionally homogeneous clusters of compounds. Even though, nAnnoLyze was able to reach the two main targets of aspirin (<italic>i</italic>.<italic>e</italic>., COX-1 and COX-2) through alternatives network pathways. However, the lower similarity of the human predicted COX-2 binding site with the ovine COX-1 included in the core network penalized the score of the hit. This example also illustrates the nAnnoLyze capacity of predicting interactions when no crystal structure is available for the target.</p>
+<p>The second example studied the polypharmacological profile of the anticancer drug Sorafenib. The method correctly retrieved most of the known targets and proposed some others with structural similarities in the binding site and that are involved in the same metabolic pathways as the known ones. This example shows the possibility of studying pathways rather than individual proteins as drug targets, which could be even more interesting in complex diseases such as cancer or Alzheimer where multiple factors play a role in the progress of the disease.</p>
+<p>The major limitation of the method is the restricted applicability because is based on structural data, which is still scarce compared to sequence data. In spite of it, we were able to cover 42% of the human proteome with either a crystal structure or a reliable model. Moreover, the amount of crystal structures in the PDB has significantly increased over the past years [<xref rid="pcbi.1004157.ref044" ref-type="bibr">44</xref>] and the percentage of a proteome that can be modeled by homology has increased thanks to initiatives like the Protein Structure Initiative [<xref rid="pcbi.1004157.ref045" ref-type="bibr">45</xref>,<xref rid="pcbi.1004157.ref046" ref-type="bibr">46</xref>]. The more structural information we have, the more information can be extracted and therefore applied in nAnnoLyze. Indeed, the underlying network in nAnnoLyze can continue growing with the integration of new molecules or sets of biomolecules (both compounds and protein targets). To this end, we have developed a Web server that allows everyone to submit their own sets of compounds and check the predictions against pre-built networks for the human and <italic>Mycobacterium</italic> proteomes. So far, we have applied the method in an open source drug discovery initiative against <italic>Mycobacterium tuberculosis</italic> [<xref rid="pcbi.1004157.ref031" ref-type="bibr">31</xref>] and are currently working in other projects and initiatives. Our goal is to encourage open source drug discovery by releasing the method with all the predictions expecting that other researchers can benefit from our work. Finally, the scientific community could experimentally validate the predictions providing us a feedback to improve the quality of this tool and of future ones.</p>
+</sec>
+<sec id="sec007" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<p>Next, we describe the different steps (<xref rid="pcbi.1004157.g004" ref-type="fig">Fig. 4A</xref>) performed to build a bi-partite network of structural similarities and interactions (<xref rid="pcbi.1004157.g004" ref-type="fig">Fig. 4B</xref>). We continue by describing the methods used to assess the accuracy of nAnnoLyze.</p>
+<fig id="pcbi.1004157.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004157.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>nAnnoLyze network building.</title>
+<p>A) nAnnoLyze flow chart for building the network of structural similarities between ligands and targets. B) nAnnoLyze underlying sub-networks of drugs (purple circles), compounds in PDB (blue circles), targets in PDB (red triangles), and human target 3D models (green triangles). For easy visualization, the panel shows only part of the final nAnnoLyze network.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004157.g004" position="float" xlink:type="simple"/>
+</fig>
+<sec id="sec008">
+<title>Ligand sub-network</title>
+<p>To build the ligand sub-network, only compounds with a pharmaceutical or a biological function on their co-crystallized proteins were retrieved from the PDB. To perform the filtering, we calculated, for each compound in the PDB, the weighted quantitative estimate of drug-likeness (wQED). Briefly, the wQED is calculated by combining a set of the chemical features of the compound (<italic>i</italic>.<italic>e</italic>., molecular weight, octanol-water partition coefficient as LogP, polar surface area, number hydrogen bond donors, number of hydrogen bond acceptors, number of rotatable bonds, number of aromatic rings, and number of possible toxic scaffolds) to quantify its drug-likeness given the pre-calculated value for that chemical features in a gold standard set of drugs [<xref rid="pcbi.1004157.ref047" ref-type="bibr">47</xref>]. Compounds with good drug-like properties (<italic>i</italic>.<italic>e</italic>., wQED ≥0.35) were selected resulting in 7,609 PDB compounds. Each selected compound was then represented as a vertex in the ligand network. Links between vertices of the network (<italic>i</italic>.<italic>e</italic>., edges) were obtained by structurally comparing all compounds. The weights of the edges were obtained using a Random Forest Classifier (RFC) developed to identify compound similarities [<xref rid="pcbi.1004157.ref031" ref-type="bibr">31</xref>]. Briefly, the RFC classifier predicts whether two small molecules are likely to bind the same target-binding site by comparing their structural and chemical properties. The usage of a classifier allows for an automatically determination of optimal thresholds after the RFC has been trained with the training-set. Therefore, the all-against-all comparison performed by the RFC resulted in 134,493 pairs of similar compounds. To reduce redundancy in the network we created groups of connected compounds by identifying k-cores in the network. A k-core in a network N, is a maximal connected sub-graph of N in which all vertices have degree at least k. Thus, every k-core in the non-redundant network represents a vertex and edges between vertices indicate the existence of at least one similar compound between the two k-cores. In the ligand network, a k-core would be a set of ligands such every two ligands within the set are similar to each other (<italic>i</italic>.<italic>e</italic>., they have an edge in the network). An edge between two k-cores vertices was given the maximum weight of all possible edges between their constitutive compounds. The resulting non-redundant ligand sub-network had 4,101 vertices connected by 24,856 edges.</p>
+</sec>
+<sec id="sec009">
+<title>Protein binding sites sub-network</title>
+<p>We first downloaded from the LigBase database (February 19<sup>th</sup>, 2013) [<xref rid="pcbi.1004157.ref048" ref-type="bibr">48</xref>], a database containing all ligand-binding sites of known protein structures, all unique protein binding sites composed of at least seven residues within a radius of 5 Å, binding any of the selected 7,609 highly drug-like compounds in the ligand sub-network. We defined “highly drug-like” compounds as those compounds with very good absorption, distribution, metabolism, and excretion properties (<italic>i</italic>.<italic>e</italic>., with an wQED ≥0.35). This initial protein binding site sub-network resulted in 28,299 binding sites from 22,959 different proteins in the PDB. Next, we populated the network with links (edges) between two proteins by structurally comparing their binding sites. The structural comparison of the binding sites was performed using ProBiS [<xref rid="pcbi.1004157.ref049" ref-type="bibr">49</xref>], a tool for local structural alignment of binding sites based on geometry as well as physicochemical properties. We defined two binding sites as similar if their similarity Z-score is higher than 2.0. An all-against-all structural comparison of the selected binding sites was performed resulting in 579,155 pairs of similar binding sites. Next, we removed redundancy from the sub-network by applying a similar filtering that is used for the ligand sub-network. The final non-redundant sub-network for binding sites contained 19,487 vertices and 29,811 edges.</p>
+</sec>
+<sec id="sec010">
+<title>Final bi-partite network</title>
+<p>Finally, we joined the two sub-networks by creating edges between protein binding sites and ligands. A binding site was linked to a ligand if both have been experimentally observed to interact (<italic>i</italic>.<italic>e</italic>., a solved structure with the target and the ligand exists in the PDB). The two sub-networks were linked by 22,832 edges and the final nAnnoLyze bi-partite network contained 23,588 vertices and 54,667 edges.</p>
+</sec>
+<sec id="sec011">
+<title>Integration of the human structural proteome</title>
+<p>To populate the nAnnoLyze network with structures for human targets, we downloaded all human 3D models deposited in ModBase (November 11<sup>th</sup>, 2013) [<xref rid="pcbi.1004157.ref050" ref-type="bibr">50</xref>–<xref rid="pcbi.1004157.ref052" ref-type="bibr">52</xref>] with at least a 1.1 ModPipe Protein quality score [<xref rid="pcbi.1004157.ref053" ref-type="bibr">53</xref>]. ModBase is a database of comparative protein structure models calculated by the automatic modeling pipeline ModPipe [<xref rid="pcbi.1004157.ref053" ref-type="bibr">53</xref>]. The likely accuracy of the ModPipe models is predicted by the ModPipe Protein Quality score defined as a composite score that includes sequence identity to the template, coverage, and the three individual scores: the alignment e-value, z-dope [<xref rid="pcbi.1004157.ref054" ref-type="bibr">54</xref>], and GA341 [<xref rid="pcbi.1004157.ref055" ref-type="bibr">55</xref>]. This resulted in a total of 31,734 reliable 3D models from 16,694 unique human target sequences. Next, we structurally compared this set of selected models to any non-redundant (90% sequence identity) set of 29,772 structures from the PDB solved with at least one ligand compound. Structural comparisons between two proteins were performed using the MAMMOTH algorithm, which is based on a fast and accurate heuristic method to find, in a sequence-independent mode, the maximal structural subset between two proteins structures [<xref rid="pcbi.1004157.ref056" ref-type="bibr">56</xref>]. Four different scores were stored for each structural superposition: percentage of sequence and structure identity for the entire protein and percentage of sequence and structure identity for the residues involved in the binding site of the known structure as defined by LigBase. The structure identity between two structures was defined as the percentage of residues with their Cα atoms within 4 Å after optimal superposition. A binding site in a model was considered then similar to a binding site in a known PDB structure if at least the binding site sequence and structure identity were higher than 40%. This identity cut-off was previously validated in a large-scale comparison of known ligand-protein pairs [<xref rid="pcbi.1004157.ref023" ref-type="bibr">23</xref>]. A total of 576,675 binding sites were predicted for the human proteins (that is, ∼18 binding sites per model). Due to the high redundancy in the predicted binding sites, we excluded binding sites fulfilling the following requisites: redundant binding sites (<italic>i</italic>.<italic>e</italic>., more than 80% sequence identity to any other binding site) or small binding sites (<italic>i</italic>.<italic>e</italic>., with less than 6 residues). A total of 64,275 binding sites (∼2 binding sites per model) remained after the redundancy and size filtering. Next, we compared all human predicted binding sites against all binding sites in our network using ProBiS resulting in 459,356 similarity links (Z-score &gt; 1.0) between any of the human 64,275 binding sites and the 28,299 binding sites in the network. Every significant pair became an edge with a weight equal to the normalized Z-score of the comparison. The final human network included the 7,609 compounds, the 28,299 known binding sites and the 64,275 human predicted binding sites.</p>
+</sec>
+<sec id="sec012">
+<title>Integration of the DrugBank compounds</title>
+<p>A total of 6,540 small compounds were downloaded from the DrugBank database (May 15<sup>th</sup>, 2013). We then looked for similarity with the compounds present in the PDB ligand sub-network by using our trained RFC classifier as described above. Next, all the drugs were integrated in our network by making an edge between every DrugBank compound and their similar PDB compounds retaining the link with higher RFC when more than one link between a DrugBank compound and one network vertex (<italic>i</italic>.<italic>e</italic>., a k-core of PDB compounds) was found. A total of 5,824 drugs were integrated into the network through 149,538 edges.</p>
+</sec>
+<sec id="sec013">
+<title>Network-based prediction of DrugBank ligand and human target pairs</title>
+<p>Once the network was completed, to predict all possible interactions between DrugBank compounds and any of the modeled targets of the human proteome, we simply calculated the shortest path in the network from every queried DrugBank compound to any human binding sites. We implemented a version of the Dijkstra algorithm that limits the maximum reachable distance in order to speed up the computational time of the search [<xref rid="pcbi.1004157.ref057" ref-type="bibr">57</xref>]. Each hit was then scored by using the inverse of the sum of all edge weights of the path between the compound and the human target. Such score was then normalized and Z-scored. Specifically, two different Z-scores were calculated for each prediction.</p>
+<disp-formula id="pcbi.1004157.e001">
+<alternatives>
+<graphic id="pcbi.1004157.e001g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004157.e001" xlink:type="simple"/>
+<mml:math display="block" id="M1" overflow="scroll">
+<mml:mrow><mml:mi>G</mml:mi><mml:mi>z</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mi>s</mml:mi><mml:mo>−</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mi>G</mml:mi></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mi>σ</mml:mi><mml:mi>G</mml:mi></mml:msub></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula>
+<p>The “Global Z-score” (Gz) is obtained by running the predictions of all drugs present in DrugBank against all targets, obtaining a global mean (<italic>μ</italic><sub><italic>G</italic></sub>) and a global standard deviation (<italic>σ</italic><sub><italic>G</italic></sub>) to Z-score a specific predicted pair. The “Global Z-score” represents how good is a prediction given its score in the constructed network.</p>
+<disp-formula id="pcbi.1004157.e002">
+<alternatives>
+<graphic id="pcbi.1004157.e002g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004157.e002" xlink:type="simple"/>
+<mml:math display="block" id="M2" overflow="scroll">
+<mml:mrow><mml:mi>L</mml:mi><mml:mi>z</mml:mi><mml:mo>=</mml:mo><mml:mfrac><mml:mrow><mml:mi>s</mml:mi><mml:mo>−</mml:mo><mml:msub><mml:mi>μ</mml:mi><mml:mi>L</mml:mi></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mi>σ</mml:mi><mml:mi>L</mml:mi></mml:msub></mml:mrow></mml:mfrac></mml:mrow>
+</mml:math>
+</alternatives>
+</disp-formula>
+<p>The “Local Z-score” (Lz), is similarly calculated by running the predictions of all drugs present in DrugBank retrieving the mean (<italic>μ</italic><sub><italic>L</italic></sub>) and the standard deviation (<italic>σ</italic><sub><italic>L</italic></sub>) of the score for a specific target. The “Local Z-score” represents how good is a prediction for a specific binding site or target. For example, highly promiscuous binding sites tend to have higher local Z-scores.</p>
+<p>Finally, we combined the three scores (that is, the inverse of the sum of all edge weights, the global Z-score and the local Z-score through a Random Forest Classifier that aims at predicting the interaction of a compound and a target. Two RFCs were trained with and without the DrugBank ID as an input feature of the compound. The RFC classifier, thus, results in a single Boolean score indicating interaction or non-interaction between the compound and the target. To train the RFC, we used the Weka software for data mining tasks [<xref rid="pcbi.1004157.ref058" ref-type="bibr">58</xref>].</p>
+</sec>
+<sec id="sec014">
+<title>nAnnoLyze benchmark</title>
+<p>To benchmark nAnnoLyze, we retrieved all the compound-protein complexes for DrugBank approved drugs from the PDB. A total of 213 approved drugs were uniquely mapped into compounds bound to a protein deposited in the PDB. Next, we retrieved all the proteins binding to those compounds resulting in a protein-compound set of 6,282 entries. To test the method, we first created the benchmark network: the 213 compounds were integrated in the clustered network by using the RFC classifier. To avoid overestimation in the benchmark, we did not create any edge between a ligand in the benchmark and any identical (<italic>i</italic>.<italic>e</italic>., RFC score of 1.0) ligand in the network. Next, we extracted from LigBase the 7,074 protein binding sites of the 213 aforementioned compounds and integrated them in the network following the procedure used for the human binding sites. Similarly, we did not create links between identical binding sites in the benchmark and any protein in the network. We then selected all interactions between the 213 compounds and any of the 7,074 binding sites. To assess the accuracy of our method in finding real interactions, we then calculated two different statistics. First, the precision defined as the ratio between the true positives (TP; true drug-protein interactions found by nAnnoLyze) and the sum of TP and false positives (FP, a link between a drug and a protein not in the PDB). Second, the sensitivity (or recall) defined as the ratio of TP and the TP+ false negatives (FN, a link between a compound and protein not found by nAnnoLyze).</p>
+</sec>
+<sec id="sec015">
+<title>nAnnoLyze Web site implementation</title>
+<p>We have implemented a Web server where an end user can retrieve all pre-calculated predictions for the DrugBank and human protein as well as submit its own set of compounds. The server takes as input a compound ID and its SMILE in case of a new compound or only the DrugBank ID in case of a DrugBank drug. Then the user needs to select which organism proteome should be searched against. Currently nAnnoLyze has pre-calculated networks for the human and three <italic>Mycobacterium</italic> proteomes. The server search results in a list of all the predicted compound-protein pairs presented as a sortable table for easy filtering depending on the Global Z-score cut-off. A graphical enrichment of the Gene Ontology Terms [<xref rid="pcbi.1004157.ref059" ref-type="bibr">59</xref>] and KEGG pathways [<xref rid="pcbi.1004157.ref060" ref-type="bibr">60</xref>] of the predicted targets is also shown above the result table. Each prediction is further detailed by providing a GLMol based visualization (<ext-link ext-link-type="uri" xlink:href="http://webglmol.sourceforge.jp" xlink:type="simple">http://webglmol.sourceforge.jp</ext-link>) of the compound and the protein structure alongside the predicted binding site. All the structural data and all the predictions can be downloaded from the nAnnoLyze Web server at <ext-link ext-link-type="uri" xlink:href="http://www.marciuslab.org/services/nAnnoLyze" xlink:type="simple">http://www.marciuslab.org/services/nAnnoLyze</ext-link>.</p>
+</sec>
+</sec>
+</body>
+<back>
+<ack>
+<p>We thank Stefania Bosi and Prof. Anna Tramontano for their valuable input. Finally, we thank the Sali Lab for maintaining up-to-date their ModBase database.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004157.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hopkins</surname> <given-names>AL</given-names></name>, <name name-style="western"><surname>Mason</surname> <given-names>JS</given-names></name>, <name name-style="western"><surname>Overington</surname> <given-names>JP</given-names></name> (<year>2006</year>) <article-title>Can we rationally design promiscuous drugs?</article-title> <source>Curr Opin Struct Biol</source> <volume>16</volume>: <fpage>127</fpage>–<lpage>136</lpage>. <object-id pub-id-type="pmid">16442279</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hopkins</surname> <given-names>AL</given-names></name> (<year>2008</year>) <article-title>Network pharmacology: the next paradigm in drug discovery</article-title>. <source>Nat Chem Biol</source> <volume>4</volume>: <fpage>682</fpage>–<lpage>690</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nchembio.118" xlink:type="simple">10.1038/nchembio.118</ext-link></comment> <object-id pub-id-type="pmid">18936753</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Narayan</surname> <given-names>VA</given-names></name>, <name name-style="western"><surname>Mohwinckel</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Pisano</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Yang</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Manji</surname> <given-names>HK</given-names></name> (<year>2013</year>) <article-title>Beyond magic bullets: true innovation in health care</article-title>. <source>Nat Rev Drug Discov</source> <volume>12</volume>: <fpage>85</fpage>–<lpage>86</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrd3944" xlink:type="simple">10.1038/nrd3944</ext-link></comment> <object-id pub-id-type="pmid">23370233</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dar</surname> <given-names>AC</given-names></name>, <name name-style="western"><surname>Das</surname> <given-names>TK</given-names></name>, <name name-style="western"><surname>Shokat</surname> <given-names>KM</given-names></name>, <name name-style="western"><surname>Cagan</surname> <given-names>RL</given-names></name> (<year>2012</year>) <article-title>Chemical genetic discovery of targets and anti-targets for cancer polypharmacology</article-title>. <source>Nature</source> <volume>486</volume>: <fpage>80</fpage>–<lpage>84</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature11127" xlink:type="simple">10.1038/nature11127</ext-link></comment> <object-id pub-id-type="pmid">22678283</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Roth</surname> <given-names>BL</given-names></name>, <name name-style="western"><surname>Sheffler</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Kroeze</surname> <given-names>WK</given-names></name> (<year>2004</year>) <article-title>Magic shotguns versus magic bullets: selectively non-selective drugs for mood disorders and schizophrenia</article-title>. <source>Nat Rev Drug Discov</source> <volume>3</volume>: <fpage>353</fpage>–<lpage>359</lpage>. <object-id pub-id-type="pmid">15060530</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Knight</surname> <given-names>ZA</given-names></name>, <name name-style="western"><surname>Lin</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Shokat</surname> <given-names>KM</given-names></name> (<year>2010</year>) <article-title>Targeting the cancer kinome through polypharmacology</article-title>. <source>Nat Rev Cancer</source> <volume>10</volume>: <fpage>130</fpage>–<lpage>137</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nrc2787" xlink:type="simple">10.1038/nrc2787</ext-link></comment> <object-id pub-id-type="pmid">20094047</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lecca</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Priami</surname> <given-names>C</given-names></name> (<year>2013</year>) <article-title>Biological network inference for drug discovery</article-title>. <source>Drug Discov Today</source> <volume>18</volume>: <fpage>256</fpage>–<lpage>264</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.drudis.2012.11.001" xlink:type="simple">10.1016/j.drudis.2012.11.001</ext-link></comment> <object-id pub-id-type="pmid">23147668</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Harrold</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Ramanathan</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Mager</surname> <given-names>DE</given-names></name> (<year>2013</year>) <article-title>Network-based approaches in drug discovery and early development</article-title>. <source>Clin Pharmacol Ther</source> <volume>94</volume>: <fpage>651</fpage>–<lpage>658</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/clpt.2013.176" xlink:type="simple">10.1038/clpt.2013.176</ext-link></comment> <object-id pub-id-type="pmid">24025802</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Keiser</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Setola</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Irwin</surname> <given-names>JJ</given-names></name>, <name name-style="western"><surname>Laggner</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Abbas</surname> <given-names>AI</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Predicting new molecular targets for known drugs</article-title>. <source>Nature</source> <volume>462</volume>: <fpage>175</fpage>–<lpage>181</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature08506" xlink:type="simple">10.1038/nature08506</ext-link></comment> <object-id pub-id-type="pmid">19881490</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yabuuchi</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Niijima</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Takematsu</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Ida</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Hirokawa</surname> <given-names>T</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Analysis of multiple compound-protein interactions reveals novel bioactive molecules</article-title>. <source>Mol Syst Biol</source> <volume>7</volume>: <fpage>472</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/msb.2011.5" xlink:type="simple">10.1038/msb.2011.5</ext-link></comment> <object-id pub-id-type="pmid">21364574</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yamanishi</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Araki</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Gutteridge</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Honda</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Kanehisa</surname> <given-names>M</given-names></name> (<year>2008</year>) <article-title>Prediction of drug-target interaction networks from the integration of chemical and genomic spaces</article-title>. <source>Bioinformatics</source> <volume>24</volume>: <fpage>i232</fpage>–<lpage>240</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btn162" xlink:type="simple">10.1093/bioinformatics/btn162</ext-link></comment> <object-id pub-id-type="pmid">18586719</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yamanishi</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Kotera</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Kanehisa</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Goto</surname> <given-names>S</given-names></name> (<year>2010</year>) <article-title>Drug-target interaction prediction from chemical, genomic and pharmacological data in an integrated framework</article-title>. <source>Bioinformatics</source> <volume>26</volume>: <fpage>i246</fpage>–<lpage>254</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btq176" xlink:type="simple">10.1093/bioinformatics/btq176</ext-link></comment> <object-id pub-id-type="pmid">20529913</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chen</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Liu</surname> <given-names>MX</given-names></name>, <name name-style="western"><surname>Yan</surname> <given-names>GY</given-names></name> (<year>2012</year>) <article-title>Drug-target interaction prediction by random walk on the heterogeneous network</article-title>. <source>Mol Biosyst</source> <volume>8</volume>: <fpage>1970</fpage>–<lpage>1978</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1039/c2mb00002d" xlink:type="simple">10.1039/c2mb00002d</ext-link></comment> <object-id pub-id-type="pmid">22538619</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>van Laarhoven</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Marchiori</surname> <given-names>E</given-names></name> (<year>2013</year>) <article-title>Predicting Drug-Target Interactions for New Drug Compounds Using a Weighted Nearest Neighbor Profile</article-title>. <source>PLoS One</source> <volume>8</volume>: <fpage>e66952</fpage>. <object-id pub-id-type="pmid">23840562</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>van Laarhoven</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Nabuurs</surname> <given-names>SB</given-names></name>, <name name-style="western"><surname>Marchiori</surname> <given-names>E</given-names></name> (<year>2011</year>) <article-title>Gaussian interaction profile kernels for predicting drug-target interaction</article-title>. <source>Bioinformatics</source> <volume>27</volume>: <fpage>3036</fpage>–<lpage>3043</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btr500" xlink:type="simple">10.1093/bioinformatics/btr500</ext-link></comment> <object-id pub-id-type="pmid">21893517</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alaimo</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Pulvirenti</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Giugno</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Ferro</surname> <given-names>A</given-names></name> (<year>2013</year>) <article-title>Drug-target interaction prediction through domain-tuned network-based inference</article-title>. <source>Bioinformatics</source> <volume>29</volume>: <fpage>2004</fpage>–<lpage>2008</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btt307" xlink:type="simple">10.1093/bioinformatics/btt307</ext-link></comment> <object-id pub-id-type="pmid">23720490</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Emig</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Ivliev</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Pustovalova</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Lancashire</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Bureeva</surname> <given-names>S</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Drug target prediction and repositioning using an integrated network-based approach</article-title>. <source>PLoS One</source> <volume>8</volume>: <fpage>e60618</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0060618" xlink:type="simple">10.1371/journal.pone.0060618</ext-link></comment> <object-id pub-id-type="pmid">23593264</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Zeng</surname> <given-names>J</given-names></name> (<year>2013</year>) <article-title>Predicting drug-target interactions using restricted Boltzmann machines</article-title>. <source>Bioinformatics</source> <volume>29</volume>: <fpage>i126</fpage>–<lpage>134</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btt234" xlink:type="simple">10.1093/bioinformatics/btt234</ext-link></comment> <object-id pub-id-type="pmid">23812976</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cheng</surname> <given-names>AC</given-names></name>, <name name-style="western"><surname>Coleman</surname> <given-names>RG</given-names></name>, <name name-style="western"><surname>Smyth</surname> <given-names>KT</given-names></name>, <name name-style="western"><surname>Cao</surname> <given-names>Q</given-names></name>, <name name-style="western"><surname>Soulard</surname> <given-names>P</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Structure-based maximal affinity model predicts small-molecule druggability</article-title>. <source>Nat Biotechnol</source> <volume>25</volume>: <fpage>71</fpage>–<lpage>75</lpage>. <object-id pub-id-type="pmid">17211405</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Morris</surname> <given-names>GM</given-names></name>, <name name-style="western"><surname>Huey</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Lindstrom</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Sanner</surname> <given-names>MF</given-names></name>, <name name-style="western"><surname>Belew</surname> <given-names>RK</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>AutoDock4 and AutoDockTools4: Automated docking with selective receptor flexibility</article-title>. <source>J Comput Chem</source> <volume>30</volume>: <fpage>2785</fpage>–<lpage>2791</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/jcc.21256" xlink:type="simple">10.1002/jcc.21256</ext-link></comment> <object-id pub-id-type="pmid">19399780</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Gao</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Kang</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Yang</surname> <given-names>K</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>TarFisDock: a web server for identifying drug targets with docking approach</article-title>. <source>Nucleic Acids Res</source> <volume>34</volume>: <fpage>W219</fpage>–<lpage>224</lpage>. <object-id pub-id-type="pmid">16844997</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Reardon</surname> <given-names>S</given-names></name> (<year>2013</year>) <article-title>Project ranks billions of drug interactions</article-title>. <source>Nature</source> <volume>503</volume>: <fpage>449</fpage>–<lpage>450</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/503449a" xlink:type="simple">10.1038/503449a</ext-link></comment> <object-id pub-id-type="pmid">24284710</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Marti-Renom</surname> <given-names>MA</given-names></name>, <name name-style="western"><surname>Rossi</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Al-Shahrour</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Davis</surname> <given-names>FP</given-names></name>, <name name-style="western"><surname>Pieper</surname> <given-names>U</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>The AnnoLite and AnnoLyze programs for comparative annotation of protein structures</article-title>. <source>BMC Bioinformatics</source> <volume>8</volume> <issue>Suppl 4</issue>: <fpage>S4</fpage>. <object-id pub-id-type="pmid">17570147</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kalinina</surname> <given-names>OV</given-names></name>, <name name-style="western"><surname>Wichmann</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Apic</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Russell</surname> <given-names>RB</given-names></name> (<year>2011</year>) <article-title>Combinations of protein-chemical complex structures reveal new targets for established drugs</article-title>. <source>PLoS Comput Biol</source> <volume>7</volume>: <fpage>e1002043</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1002043" xlink:type="simple">10.1371/journal.pcbi.1002043</ext-link></comment> <object-id pub-id-type="pmid">21573205</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Morris</surname> <given-names>RJ</given-names></name>, <name name-style="western"><surname>Najmanovich</surname> <given-names>RJ</given-names></name>, <name name-style="western"><surname>Kahraman</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Thornton</surname> <given-names>JM</given-names></name> (<year>2005</year>) <article-title>Real spherical harmonic expansion coefficients as 3D shape descriptors for protein binding pocket and ligand comparisons</article-title>. <source>Bioinformatics</source> <volume>21</volume>: <fpage>2347</fpage>–<lpage>2355</lpage>. <object-id pub-id-type="pmid">15728116</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Najmanovich</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Kurbatova</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Thornton</surname> <given-names>J</given-names></name> (<year>2008</year>) <article-title>Detection of 3D atomic similarities and their use in the discrimination of small molecule protein-binding sites</article-title>. <source>Bioinformatics</source> <volume>24</volume>: <fpage>i105</fpage>–<lpage>111</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/bioinformatics/btn263" xlink:type="simple">10.1093/bioinformatics/btn263</ext-link></comment> <object-id pub-id-type="pmid">18689810</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hoffmann</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Zaslavskiy</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Vert</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Stoven</surname> <given-names>V</given-names></name> (<year>2010</year>) <article-title>A new protein binding pocket similarity measure based on comparison of clouds of atoms in 3D: application to ligand prediction</article-title>. <source>BMC Bioinformatics</source> <volume>11</volume>: <fpage>99</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/1471-2105-11-99" xlink:type="simple">10.1186/1471-2105-11-99</ext-link></comment> <object-id pub-id-type="pmid">20175916</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Roy</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Yang</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>Y</given-names></name> (<year>2012</year>) <article-title>COFACTOR: an accurate comparative algorithm for structure-based protein function annotation</article-title>. <source>Nucleic Acids Res</source> <volume>40</volume>: <fpage>W471</fpage>–<lpage>477</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gks372" xlink:type="simple">10.1093/nar/gks372</ext-link></comment> <object-id pub-id-type="pmid">22570420</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Berman</surname> <given-names>HM</given-names></name>, <name name-style="western"><surname>Battistuz</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Bhat</surname> <given-names>TN</given-names></name>, <name name-style="western"><surname>Bluhm</surname> <given-names>WF</given-names></name>, <name name-style="western"><surname>Bourne</surname> <given-names>PE</given-names></name>, <etal>et al</etal>. (<year>2002</year>) <article-title>The Protein Data Bank</article-title>. <source>Acta Crystallogr D Biol Crystallogr</source> <volume>58</volume>: <fpage>899</fpage>–<lpage>907</lpage>. <object-id pub-id-type="pmid">12037327</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Orti</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Carbajo</surname> <given-names>RJ</given-names></name>, <name name-style="western"><surname>Pieper</surname> <given-names>U</given-names></name>, <name name-style="western"><surname>Eswar</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Maurer</surname> <given-names>SM</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>A kernel for open source drug discovery in tropical diseases</article-title>. <source>PLoS Negl Trop Dis</source> <volume>3</volume>: <fpage>e418</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pntd.0000418" xlink:type="simple">10.1371/journal.pntd.0000418</ext-link></comment> <object-id pub-id-type="pmid">19381286</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Martinez-Jimenez</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Papadatos</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Yang</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Wallace</surname> <given-names>IM</given-names></name>, <name name-style="western"><surname>Kumar</surname> <given-names>V</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Target prediction for an open access set of compounds active against Mycobacterium tuberculosis</article-title>. <source>PLoS Comput Biol</source> <volume>9</volume>: <fpage>e1003253</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1003253" xlink:type="simple">10.1371/journal.pcbi.1003253</ext-link></comment> <object-id pub-id-type="pmid">24098102</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wishart</surname> <given-names>DS</given-names></name>, <name name-style="western"><surname>Knox</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Guo</surname> <given-names>AC</given-names></name>, <name name-style="western"><surname>Cheng</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Shrivastava</surname> <given-names>S</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>DrugBank: a knowledgebase for drugs, drug actions and drug targets</article-title>. <source>Nucleic Acids Res</source> <volume>36</volume>: <fpage>D901</fpage>–<lpage>906</lpage>. <object-id pub-id-type="pmid">18048412</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref033"><label>33</label><mixed-citation publication-type="other" xlink:type="simple">van Laarhoven T, Marchiori E (2014) Biases of drug–target interaction network data.</mixed-citation></ref>
+<ref id="pcbi.1004157.ref034"><label>34</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Fitzpatrick</surname> <given-names>FA</given-names></name> (<year>2004</year>) <article-title>Cyclooxygenase enzymes: regulation and function</article-title>. <source>Curr Pharm Des</source> <volume>10</volume>: <fpage>577</fpage>–<lpage>588</lpage>. <object-id pub-id-type="pmid">14965321</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref035"><label>35</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hawkey</surname> <given-names>CJ</given-names></name> (<year>2001</year>) <article-title>COX-1 and COX-2 inhibitors</article-title>. <source>Best Pract Res Clin Gastroenterol</source> <volume>15</volume>: <fpage>801</fpage>–<lpage>820</lpage>. <object-id pub-id-type="pmid">11566042</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref036"><label>36</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Peng</surname> <given-names>CL</given-names></name>, <name name-style="western"><surname>Guo</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Ji</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Ren</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Yang</surname> <given-names>Y</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Sorafenib induces growth inhibition and apoptosis in human synovial sarcoma cells via inhibiting the RAF/MEK/ERK signaling pathway</article-title>. <source>Cancer Biol Ther</source> <volume>8</volume>: <fpage>1729</fpage>–<lpage>1736</lpage>. <object-id pub-id-type="pmid">19633425</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref037"><label>37</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Liu</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Cao</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Chen</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>McNabola</surname> <given-names>A</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Sorafenib blocks the RAF/MEK/ERK pathway, inhibits tumor angiogenesis, and induces tumor cell apoptosis in hepatocellular carcinoma model PLC/PRF/5</article-title>. <source>Cancer Res</source> <volume>66</volume>: <fpage>11851</fpage>–<lpage>11858</lpage>. <object-id pub-id-type="pmid">17178882</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref038"><label>38</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ravandi</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Cortes</surname> <given-names>JE</given-names></name>, <name name-style="western"><surname>Jones</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Faderl</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Garcia-Manero</surname> <given-names>G</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Phase I/II study of combination therapy with sorafenib, idarubicin, and cytarabine in younger patients with acute myeloid leukemia</article-title>. <source>J Clin Oncol</source> <volume>28</volume>: <fpage>1856</fpage>–<lpage>1862</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1200/JCO.2009.25.4888" xlink:type="simple">10.1200/JCO.2009.25.4888</ext-link></comment> <object-id pub-id-type="pmid">20212254</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref039"><label>39</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ravandi</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Alattar</surname> <given-names>ML</given-names></name>, <name name-style="western"><surname>Grunwald</surname> <given-names>MR</given-names></name>, <name name-style="western"><surname>Rudek</surname> <given-names>MA</given-names></name>, <name name-style="western"><surname>Rajkhowa</surname> <given-names>T</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Phase 2 study of azacytidine plus sorafenib in patients with acute myeloid leukemia and FLT-3 internal tandem duplication mutation</article-title>. <source>Blood</source> <volume>121</volume>: <fpage>4655</fpage>–<lpage>4662</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1182/blood-2013-01-480228" xlink:type="simple">10.1182/blood-2013-01-480228</ext-link></comment> <object-id pub-id-type="pmid">23613521</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref040"><label>40</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Eggert</surname> <given-names>US</given-names></name> (<year>2013</year>) <article-title>The why and how of phenotypic small-molecule screens</article-title>. <source>Nat Chem Biol</source> <volume>9</volume>: <fpage>206</fpage>–<lpage>209</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nchembio.1206" xlink:type="simple">10.1038/nchembio.1206</ext-link></comment> <object-id pub-id-type="pmid">23508174</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref041"><label>41</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gamo</surname> <given-names>FJ</given-names></name>, <name name-style="western"><surname>Sanz</surname> <given-names>LM</given-names></name>, <name name-style="western"><surname>Vidal</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>de Cozar</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Alvarez</surname> <given-names>E</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Thousands of chemical starting points for antimalarial lead identification</article-title>. <source>Nature</source> <volume>465</volume>: <fpage>305</fpage>–<lpage>310</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature09107" xlink:type="simple">10.1038/nature09107</ext-link></comment> <object-id pub-id-type="pmid">20485427</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref042"><label>42</label><mixed-citation publication-type="other" xlink:type="simple">Ballell L, Bates RH, Young RJ, Alvarez-Gomez D, Alvarez-Ruiz E, et al. (2013) Fueling Open-Source Drug Discovery: 177 Small-Molecule Leads against Tuberculosis. ChemMedChem.</mixed-citation></ref>
+<ref id="pcbi.1004157.ref043"><label>43</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Minie</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Chopra</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Sethi</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Horst</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>White</surname> <given-names>G</given-names></name>, <etal>et al</etal>. (<year>2014</year>) <article-title>CANDO and the infinite drug discovery frontier</article-title>. <source>Drug Discov Today</source> <volume>19</volume>: <fpage>1353</fpage>–<lpage>1363</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.drudis.2014.06.018" xlink:type="simple">10.1016/j.drudis.2014.06.018</ext-link></comment> <object-id pub-id-type="pmid">24980786</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref044"><label>44</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Berman</surname> <given-names>HM</given-names></name>, <name name-style="western"><surname>Coimbatore</surname> <given-names>Narayanan B</given-names></name>, <name name-style="western"><surname>Di Costanzo</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Dutta</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Ghosh</surname> <given-names>S</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Trendspotting in the Protein Data Bank</article-title>. <source>FEBS Lett</source> <volume>587</volume>: <fpage>1036</fpage>–<lpage>1045</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.febslet.2012.12.029" xlink:type="simple">10.1016/j.febslet.2012.12.029</ext-link></comment> <object-id pub-id-type="pmid">23337870</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref045"><label>45</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Norvell</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Berg</surname> <given-names>JM</given-names></name> (<year>2007</year>) <article-title>Update on the protein structure initiative</article-title>. <source>Structure</source> <volume>15</volume>: <fpage>1519</fpage>–<lpage>1522</lpage>. <object-id pub-id-type="pmid">18073099</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref046"><label>46</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Khafizov</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Madrid-Aliste</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Almo</surname> <given-names>SC</given-names></name>, <name name-style="western"><surname>Fiser</surname> <given-names>A</given-names></name> (<year>2014</year>) <article-title>Trends in structural coverage of the protein universe and the impact of the Protein Structure Initiative</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>111</volume>: <fpage>3733</fpage>–<lpage>3738</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1321614111" xlink:type="simple">10.1073/pnas.1321614111</ext-link></comment> <object-id pub-id-type="pmid">24567391</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref047"><label>47</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bickerton</surname> <given-names>GR</given-names></name>, <name name-style="western"><surname>Paolini</surname> <given-names>GV</given-names></name>, <name name-style="western"><surname>Besnard</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Muresan</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Hopkins</surname> <given-names>AL</given-names></name> (<year>2012</year>) <article-title>Quantifying the chemical beauty of drugs</article-title>. <source>Nat Chem</source> <volume>4</volume>: <fpage>90</fpage>–<lpage>98</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nchem.1243" xlink:type="simple">10.1038/nchem.1243</ext-link></comment> <object-id pub-id-type="pmid">22270643</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref048"><label>48</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Stuart</surname> <given-names>AC</given-names></name>, <name name-style="western"><surname>Ilyin</surname> <given-names>VA</given-names></name>, <name name-style="western"><surname>Sali</surname> <given-names>A</given-names></name> (<year>2002</year>) <article-title>LigBase: a database of families of aligned ligand binding sites in known protein sequences and structures</article-title>. <source>Bioinformatics</source> <volume>18</volume>: <fpage>200</fpage>–<lpage>201</lpage>. <object-id pub-id-type="pmid">11836232</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref049"><label>49</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Konc</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Janezic</surname> <given-names>D</given-names></name> (<year>2010</year>) <article-title>ProBiS: a web server for detection of structurally similar protein binding sites</article-title>. <source>Nucleic Acids Res</source> <volume>38</volume>: <fpage>W436</fpage>–<lpage>440</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkq479" xlink:type="simple">10.1093/nar/gkq479</ext-link></comment> <object-id pub-id-type="pmid">20504855</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref050"><label>50</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pieper</surname> <given-names>U</given-names></name>, <name name-style="western"><surname>Webb</surname> <given-names>BM</given-names></name>, <name name-style="western"><surname>Dong</surname> <given-names>GQ</given-names></name>, <name name-style="western"><surname>Schneidman-Duhovny</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Fan</surname> <given-names>H</given-names></name>, <etal>et al</etal>. (<year>2014</year>) <article-title>ModBase, a database of annotated comparative protein structure models and associated resources</article-title>. <source>Nucleic Acids Res</source> <volume>42</volume>: <fpage>D336</fpage>–<lpage>346</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkt1144" xlink:type="simple">10.1093/nar/gkt1144</ext-link></comment> <object-id pub-id-type="pmid">24271400</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref051"><label>51</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pieper</surname> <given-names>U</given-names></name>, <name name-style="western"><surname>Webb</surname> <given-names>BM</given-names></name>, <name name-style="western"><surname>Barkan</surname> <given-names>DT</given-names></name>, <name name-style="western"><surname>Schneidman-Duhovny</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Schlessinger</surname> <given-names>A</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>ModBase, a database of annotated comparative protein structure models, and associated resources</article-title>. <source>Nucleic Acids Res</source> <volume>39</volume>: <fpage>D465</fpage>–<lpage>474</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/nar/gkq1091" xlink:type="simple">10.1093/nar/gkq1091</ext-link></comment> <object-id pub-id-type="pmid">21097780</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref052"><label>52</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Pieper</surname> <given-names>U</given-names></name>, <name name-style="western"><surname>Eswar</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Stuart</surname> <given-names>AC</given-names></name>, <name name-style="western"><surname>Ilyin</surname> <given-names>VA</given-names></name>, <name name-style="western"><surname>Sali</surname> <given-names>A</given-names></name> (<year>2002</year>) <article-title>MODBASE, a database of annotated comparative protein structure models</article-title>. <source>Nucleic Acids Res</source> <volume>30</volume>: <fpage>255</fpage>–<lpage>259</lpage>. <object-id pub-id-type="pmid">11752309</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref053"><label>53</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Eswar</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>John</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Mirkovic</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Fiser</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Ilyin</surname> <given-names>VA</given-names></name>, <etal>et al</etal>. (<year>2003</year>) <article-title>Tools for comparative protein structure modeling and analysis</article-title>. <source>Nucleic Acids Res</source> <volume>31</volume>: <fpage>3375</fpage>–<lpage>3380</lpage>. <object-id pub-id-type="pmid">12824331</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref054"><label>54</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shen</surname> <given-names>MY</given-names></name>, <name name-style="western"><surname>Sali</surname> <given-names>A</given-names></name> (<year>2006</year>) <article-title>Statistical potential for assessment and prediction of protein structures</article-title>. <source>Protein Sci</source> <volume>15</volume>: <fpage>2507</fpage>–<lpage>2524</lpage>. <object-id pub-id-type="pmid">17075131</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref055"><label>55</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Eramian</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Shen</surname> <given-names>MY</given-names></name>, <name name-style="western"><surname>Devos</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Melo</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Sali</surname> <given-names>A</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>A composite score for predicting errors in protein structure models</article-title>. <source>Protein Sci</source> <volume>15</volume>: <fpage>1653</fpage>–<lpage>1666</lpage>. <object-id pub-id-type="pmid">16751606</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref056"><label>56</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ortiz</surname> <given-names>AR</given-names></name>, <name name-style="western"><surname>Strauss</surname> <given-names>CE</given-names></name>, <name name-style="western"><surname>Olmea</surname> <given-names>O</given-names></name> (<year>2002</year>) <article-title>MAMMOTH (matching molecular models obtained from theory): an automated method for model comparison</article-title>. <source>Protein Sci</source> <volume>11</volume>: <fpage>2606</fpage>–<lpage>2621</lpage>. <object-id pub-id-type="pmid">12381844</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref057"><label>57</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dijkstra</surname> <given-names>EW</given-names></name> (<year>1959</year>) <article-title>A note on two problems in connexion with graphs</article-title>. <source>Numerische Mathematik</source> <volume>1</volume>: <fpage>269</fpage>–<lpage>271</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004157.ref058"><label>58</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hall</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Frank</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Holmes</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Pfahringer</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Reutemann</surname> <given-names>P</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>The WEKA Data Mining Software: An Update</article-title>. <source>SIGKDD Explorations</source> <volume>11</volume>.</mixed-citation></ref>
+<ref id="pcbi.1004157.ref059"><label>59</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ashburner</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Ball</surname> <given-names>CA</given-names></name>, <name name-style="western"><surname>Blake</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Botstein</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Butler</surname> <given-names>H</given-names></name>, <etal>et al</etal>. (<year>2000</year>) <article-title>Gene ontology: tool for the unification of biology. The Gene Ontology Consortium</article-title>. <source>Nat Genet</source> <volume>25</volume>: <fpage>25</fpage>–<lpage>29</lpage>. <object-id pub-id-type="pmid">10802651</object-id></mixed-citation></ref>
+<ref id="pcbi.1004157.ref060"><label>60</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ogata</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Goto</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Sato</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Fujibuchi</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Bono</surname> <given-names>H</given-names></name>, <etal>et al</etal>. (<year>1999</year>) <article-title>KEGG: Kyoto Encyclopedia of Genes and Genomes</article-title>. <source>Nucleic Acids Res</source> <volume>27</volume>: <fpage>29</fpage>–<lpage>34</lpage>. <object-id pub-id-type="pmid">9847135</object-id></mixed-citation></ref>
+</ref-list>
+</back>
+</article>

@@ -1,0 +1,888 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="EN">
+  <front>
+    <journal-meta><journal-id journal-id-type="publisher-id">plos</journal-id><journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id><journal-id journal-id-type="pmc">ploscomp</journal-id><!--===== Grouping journal title elements =====--><journal-title-group><journal-title>PLoS Computational Biology</journal-title></journal-title-group><issn pub-type="ppub">1553-734X</issn><issn pub-type="epub">1553-7358</issn><publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher></journal-meta>
+    <article-meta><article-id pub-id-type="publisher-id">PCOMPBIOL-D-11-00925</article-id><article-id pub-id-type="doi">10.1371/journal.pcbi.1002513</article-id><article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Neuroscience</subject>
+            <subj-group>
+              <subject>Cognitive neuroscience</subject>
+              <subject>Computational neuroscience</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Neuroscience</subject>
+        </subj-group>
+      </article-categories><title-group><article-title>Measuring Granger Causality between Cortical Regions from Voxelwise fMRI BOLD Signals with LASSO</article-title><alt-title alt-title-type="running-head">Interregional Granger Causality Using LASSO</alt-title></title-group><contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Tang</surname>
+            <given-names>Wei</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Bressler</surname>
+            <given-names>Steven L.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1">
+            <sup>1</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff2">
+            <sup>2</sup>
+          </xref>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Sylvester</surname>
+            <given-names>Chad M.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">
+            <sup>3</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Shulman</surname>
+            <given-names>Gordon L.</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff4">
+            <sup>4</sup>
+          </xref>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Corbetta</surname>
+            <given-names>Maurizio</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff3">
+            <sup>3</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff4">
+            <sup>4</sup>
+          </xref>
+          <xref ref-type="aff" rid="aff5">
+            <sup>5</sup>
+          </xref>
+        </contrib>
+      </contrib-group><aff id="aff1"><label>1</label><addr-line>Center for Complex Systems and Brain Sciences, Florida Atlantic University, Boca Raton, Florida, United States of America</addr-line>       </aff><aff id="aff2"><label>2</label><addr-line>Department of Psychology, Florida Atlantic University, Boca Raton, Florida, United States of America</addr-line>       </aff><aff id="aff3"><label>3</label><addr-line>Department of Radiology, Washington University School of Medicine, St. Louis, Missouri, United States of America</addr-line>       </aff><aff id="aff4"><label>4</label><addr-line>Department of Neurology, Washington University School of Medicine, St. Louis, Missouri, United States of America</addr-line>       </aff><aff id="aff5"><label>5</label><addr-line>Department of Neurobiology, Washington University School of Medicine, St. Louis, Missouri, United States of America</addr-line>       </aff><contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Sporns</surname>
+            <given-names>Olaf</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group><aff id="edit1">Indiana University, United States of America</aff><author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">bressler@fau.edu</email></corresp>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: WT SLB CMS GLS MC. Performed the experiments: WT CMS. Analyzed the data: WT SLB CMS. Contributed reagents/materials/analysis tools: WT. Wrote the paper: WT SLB CMS GLS MC.</p>
+        </fn>
+      <fn fn-type="conflict">
+        <p>The authors have declared that no competing interests exist.</p>
+      </fn></author-notes><pub-date pub-type="collection">
+        <month>5</month>
+        <year>2012</year>
+      </pub-date><pub-date pub-type="epub">
+        <day>24</day>
+        <month>5</month>
+        <year>2012</year>
+      </pub-date><volume>8</volume><issue>5</issue><elocation-id>e1002513</elocation-id><history>
+        <date date-type="received">
+          <day>27</day>
+          <month>6</month>
+          <year>2011</year>
+        </date>
+        <date date-type="accepted">
+          <day>27</day>
+          <month>3</month>
+          <year>2012</year>
+        </date>
+      </history><!--===== Grouping copyright info into permissions =====--><permissions><copyright-year>2012</copyright-year><copyright-holder>Tang et al</copyright-holder><license><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions><abstract>
+        <p>Functional brain network studies using the Blood Oxygen-Level Dependent (BOLD) signal from functional Magnetic Resonance Imaging (fMRI) are becoming increasingly prevalent in research on the neural basis of human cognition. An important problem in functional brain network analysis is to understand directed functional interactions between brain regions during cognitive performance. This problem has important implications for understanding top-down influences from frontal and parietal control regions to visual occipital cortex in visuospatial attention, the goal motivating the present study. A common approach to measuring directed functional interactions between two brain regions is to first create nodal signals by averaging the BOLD signals of all the voxels in each region, and to then measure directed functional interactions between the nodal signals. Another approach, that avoids averaging, is to measure directed functional interactions between all pairwise combinations of voxels in the two regions. Here we employ an alternative approach that avoids the drawbacks of both averaging and pairwise voxel measures. In this approach, we first use the Least Absolute Shrinkage Selection Operator (LASSO) to pre-select voxels for analysis, then compute a Multivariate Vector AutoRegressive (MVAR) model from the time series of the selected voxels, and finally compute summary Granger Causality (GC) statistics from the model to represent directed interregional interactions. We demonstrate the effectiveness of this approach on both simulated and empirical fMRI data. We also show that averaging regional BOLD activity to create a nodal signal may lead to biased GC estimation of directed interregional interactions. The approach presented here makes it feasible to compute GC between brain regions without the need for averaging. Our results suggest that in the analysis of functional brain networks, careful consideration must be given to the way that network nodes and edges are defined because those definitions may have important implications for the validity of the analysis.</p>
+      </abstract><abstract abstract-type="summary">
+        <title>Author Summary</title>
+        <p>Modern cognitive neuroscience views cognition in terms of brain network function. A network is a physical system of nodes connected to each other by edges. From the network perspective, cognitive function depends on activity patterns involving the nodes and edges of functional brain networks. It is important then, to appropriately define the nodes and edges of functional brain networks in order to understand cognition. In this study we consider the nodes of functional brain networks to be brain regions, and demonstrate a method that effectively measures the edge pattern between regions with a technique called Granger Causality. Our method is made possible by the utilization of recent advances from the field of statistics. Our approach is generally applicable to functional brain network analysis and contributes to the understanding of network properties of the brain.</p>
+      </abstract><funding-group><funding-statement>The authors received no specific funding for this article.</funding-statement></funding-group><counts>
+        <page-count count="14"/>
+      </counts></article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>The modern understanding of human cognition relies heavily on the concept of large-scale functional brain networks, and large-scale functional network analysis of Blood-Oxygenation-Level-Dependent (BOLD) signals from functional Magnetic Resonance Imaging (fMRI) is playing an increasingly important role in cognitive neuroscience <xref ref-type="bibr" rid="pcbi.1002513-Bressler1">[1]</xref>. From this perspective, knowledge of cognition may be obtained from BOLD signals by identification of the nodes and edges of large-scale functional brain networks. An important unresolved question remaining in the field, however, is how best to define the nodes and edges of large-scale functional brain networks.</p>
+      <p>A node is typically represented in brain network studies of fMRI BOLD activity as a lumped Region Of Interest (ROI), formed by averaging the BOLD signals of all the ROI's voxels <xref ref-type="bibr" rid="pcbi.1002513-Greicius1">[2]</xref>–<xref ref-type="bibr" rid="pcbi.1002513-Zhang1">[6]</xref>. This collapse of the ROI by averaging has the benefit of reducing the dimensionality of analysis, but rests on the twin assumptions: (1) that the BOLD activity of an ROI is homogeneous over all its voxels; and (2) that the functional interactions (connectivity) between the voxels of an ROI with those in other ROIs is also homogeneous. If these homogeneity assumptions are not true, edge measurements computed from ROI-averaged BOLD signals may be erroneous since averaging may distort the time series information.</p>
+      <p>Here we present a novel procedure for the analysis of directed interregional functional interactions that is based on the BOLD activity of the individual voxels of ROIs and the Granger Causality (GC) measure of directed interaction between voxels. GC tests whether the prediction of the present value of one time series by its own past values can be significantly improved by including past values of another time series in the prediction. If so, the second time series is said to Granger cause the first, and the degree of significance of the improvement may be taken as the strength of GC <xref ref-type="bibr" rid="pcbi.1002513-Wiener1">[7]</xref>. The GC measure is typically implemented by AutoRegressive (AR) modeling <xref ref-type="bibr" rid="pcbi.1002513-Granger1">[8]</xref> and has been shown to be a powerful and flexible tool for measuring the predictability of one neural time series from another <xref ref-type="bibr" rid="pcbi.1002513-Bernasconi1">[9]</xref>–<xref ref-type="bibr" rid="pcbi.1002513-Bressler2">[14]</xref>. It has advantages as an edge measure over the typically utilized correlation: first, it provides the strength of functional interaction between time series in both directions, as opposed to a single non-directional strength; second, its grounding in prediction allows stronger statements to be made about functional interactions than does simple correlation. The use of GC to measure directed interactions in the brain from fMRI BOLD data has received intense scrutiny in recent years, with some arguing in its favor <xref ref-type="bibr" rid="pcbi.1002513-Roebroeck1">[15]</xref>–<xref ref-type="bibr" rid="pcbi.1002513-Roebroeck3">[18]</xref> and others opposed to it <xref ref-type="bibr" rid="pcbi.1002513-David1">[19]</xref>–<xref ref-type="bibr" rid="pcbi.1002513-David2">[23]</xref>. In the present work, we focus on improving the application of GC analysis to fMRI BOLD data in order to better understand the role of top-down influences in visuospatial attention.</p>
+      <p>Previous evidence from GC analysis of fMRI BOLD data argues against the assumption of homogeneous interregional functional interactions, and thus suggests that averaging BOLD signals prior to edge measurement may not be appropriate. Bressler et al. <xref ref-type="bibr" rid="pcbi.1002513-Bressler3">[24]</xref> found that GC between ROIs varies considerably across voxel pairs, with the distribution of GC values being highly skewed and only a small fraction of values in the tail of the distribution being significantly different from zero. These results indicate that GC is heterogeneous across voxel pairs, suggesting that the investigation of functional interactions between ROIs should take into account the interactions of all the voxels within the ROIs.</p>
+      <p>An approach to the problem of heterogeneous functional interaction between ROIs is to compute the distribution of GC values using a bivariate AR model for each pairwise combination of voxels in the ROIs. This pairwise-GC approach, followed by Bressler et al. <xref ref-type="bibr" rid="pcbi.1002513-Bressler3">[24]</xref>, not only avoids the possible pitfalls of averaging, but also makes feasible the separate measurement of GC density and strength between ROIs, two factors that are conflated by averaging. Thus, deriving a summary GC statistic between ROIs from the distribution of GC values across all voxel-voxel pairs may be statistically more informative than simply setting it to the GC between across-voxel averages. There is a further problem, however, with the pairwise-GC measure: some GC values may be identified as being significant when actually they are not. This problem arises, for example, if one voxel (<italic>x</italic>) ‘drives’ a second voxel (<italic>y</italic>), while voxel <italic>y</italic> ‘drives’ a third voxel (<italic>z</italic>), without there being a ‘drive’ from voxel <italic>x</italic> to voxel <italic>z</italic> (<xref ref-type="fig" rid="pcbi-1002513-g001">Figure 1A</xref>). In this case, the GC from voxel <italic>x</italic> to voxel <italic>z</italic> may be spuriously identified as being significant. As another example, the problem also occurs if voxel <italic>x</italic> ‘drives’ both voxels <italic>y</italic> and <italic>z</italic> with different delays, without there being a ‘drive’ from <italic>y</italic> to <italic>z</italic> (<xref ref-type="fig" rid="pcbi-1002513-g001">Figure 1B</xref>). In this case, the GC from <italic>y</italic> to <italic>z</italic> may be spuriously identified as being significant. Since <italic>x</italic>, <italic>y</italic>, and <italic>z</italic> may be in the same or different ROIs, one point these examples make clear is that the GC within ROIs should be taken into account in order to reduce the possibility of spuriously identifying GCs as being significant. A second point is that improvement in the GC computation may be possible by using a method that can mitigate the problem of spurious GC significance.</p>
+      <fig id="pcbi-1002513-g001" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pcbi.1002513.g001</object-id>
+        <label>Figure 1</label>
+        <caption>
+          <title>Simple driving patterns that can lead to spurious identification of significant Granger Causality.</title>
+          <p>A) Sequential driving pattern, where voxel <italic>x</italic> drives voxel <italic>y</italic>, which in turn drives voxel <italic>z</italic>. GC from <italic>x</italic> to <italic>z</italic> may be spuriously identified as being significant. B) Differentially delayed driving, where voxel x drives voxel <italic>y</italic> with shorter delay and <italic>z</italic> with longer delay. GC from <italic>y</italic> to <italic>z</italic> may be spuriously identified as being significant. Modified from <xref ref-type="bibr" rid="pcbi.1002513-Chen1">[26]</xref>.</p>
+        </caption>
+        <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.g001" xlink:type="simple"/>
+      </fig>
+      <p>Our approach to the problem of spurious GC significance rests on the concept of conditional GC <xref ref-type="bibr" rid="pcbi.1002513-Geweke1">[25]</xref>–<xref ref-type="bibr" rid="pcbi.1002513-Seth1">[27]</xref>. Conditional GC analysis tests for a significant GC from one time series to a second with the effect of a third time series removed. By this procedure, it is possible to determine whether a significant GC measured between two time series is attributable to the third time series. In this paper, we utilize the conditional GC concept for ROI-level analysis in an approach that essentially measures the GC between any pair of voxels in two ROIs conditional on all the other voxels in the ROIs. This is accomplished by constructing a single Multivariate Vector AutoRegressive (MVAR) model from the voxel time series, as opposed to the pairwise-GC method, in which a separate bivariate AR model is constructed for each voxel pair. Use of the MVAR model offers the promise of reducing or eliminating the problem of spurious significant GC identification in the assessment of directed functional interactions from fMRI BOLD signals.</p>
+      <p>To make use of the MVAR model for ROI-level GC analysis necessitates overcoming one further problem that often occurs in model estimation: the number of available observations (data points) limits the number of parameters (model coefficients) that can accurately be estimated. This problem commonly arises in neurobehavioral studies where the number of data points that can realistically be acquired limits the size of the MVAR model that can be estimated. This limitation can be mitigated, however, if it is assumed that the voxel-voxel functional interactions between ROIs are sparse (i.e., have a low connectivity density) <xref ref-type="bibr" rid="pcbi.1002513-ValdesSosa1">[28]</xref>. Under the assumption of sparseness (low connectivity density), the Least Absolute Shrinkage and Selection Operator (LASSO) algorithm <xref ref-type="bibr" rid="pcbi.1002513-Tibshirani1">[29]</xref> is used to pre-select variables for inclusion in the MVAR model, and thus to overcome the problem of a limited number of data points. The LASSO algorithm has previously been tested on numerical experiments <xref ref-type="bibr" rid="pcbi.1002513-Arnold1">[30]</xref>, gene-network data <xref ref-type="bibr" rid="pcbi.1002513-Shojaie1">[31]</xref> and simulated and experimental fMRI BOLD data <xref ref-type="bibr" rid="pcbi.1002513-ValdesSosa1">[28]</xref>, <xref ref-type="bibr" rid="pcbi.1002513-Shojaie1">[31]</xref>–<xref ref-type="bibr" rid="pcbi.1002513-Garg1">[33]</xref>.</p>
+      <p>This paper presents a novel application of the MVAR model to study voxel-based region-to-region interactions in the brain, particularly long-range, top-down interregional interactions in visuospatial attention. We demonstrate that the LASSO algorithm can be effectively used to pre-select model variables, thereby enabling estimation of the coefficients of a voxel-based MVAR model of two predefined ROIs. The originality of our methods derives from: (1) estimation of the MVAR model for fMRI voxel-level BOLD time series from two ROIs; (2) use of the LASSO algorithm for variable pre-selection prior to MVAR model estimation; (3) use of the General Cross-Validation criterion for determining optimal predictors in the MVAR model from the LASSO algorithm; and (4) creation of two types of summary statistics at the ROI level that represent the separate measurement of density and strength of GC between ROIs.</p>
+      <p>We report the results of both MVAR model simulations and the application of MVAR model estimation to an empirical fMRI BOLD dataset obtained during a visuospatial attention task <xref ref-type="bibr" rid="pcbi.1002513-Sylvester1">[34]</xref>. The simulation results demonstrate that voxel-based approaches can better capture the GC between two ROIs than the averaging approach. When LASSO is used to pre-select variables for inclusion in the MVAR model estimation, voxel-based GC summary statistics are more sensitive to coefficient changes in the model than GC values computed from averaged signals. LASSO pre-selection allows MVAR model estimation to fit the simulated data accurately as long as the GC functional connectivity is sparse, i.e. has relatively low density. We also report that construction of the voxel-based GC distribution by pairwise bivariate AR model estimation, instead of by MVAR model estimation with LASSO pre-selection, may yield spuriously significant GC values. The empirical results show that the assumption of sparse GC functional connectivity is realistic, and that LASSO variable pre-selection followed by MVAR model estimation is thus effective, for empirical fMRI BOLD data. Also, the low GC connectivity density observed for this dataset suggests that directed interregional functional interaction in the brain is heterogeneous and that averaging the voxels of an ROI prior to GC connectivity analysis is inappropriate. Furthermore, the observed directional asymmetry, as measured by the GC strength summary statistic, is consistent with current theory on top-down modulation in visuospatial attention.</p>
+      <p>We conclude that LASSO variable pre-selection and MVAR model estimation can be effectively used to measure Granger Causality between cortical regions from voxelwise fMRI BOLD signals. Through the MVAR model, it is beneficial to analyze all the voxels in an ROI, instead of taking an average over the ROI. In this way, directed interregional functional interactions are captured with less distortion of the information carried in the BOLD time series.</p>
+    </sec>
+    <sec id="s2">
+      <title>Results</title>
+      <sec id="s2a">
+        <title>Application to simulated data</title>
+        <p>Simulation MVAR models were created based on Equation 3 (see <xref ref-type="sec" rid="s4">Methods</xref>), and iterated to generate simulated fMRI BOLD time series data for pseudo-voxels in two pseudo-ROIs having fixed sizes (30 pseudo-voxels in X and 50 pseudo-voxels in Y). The innovation process for the simulation model was created by iterative random sampling of a zero-mean normal distribution with 0.1 standard deviation. The predictors were initialized with random values also taken from a zero-mean normal distribution with 0.1 standard deviation. The four coefficient submatrices (B<sub>xx</sub>, B<sub>yx</sub>, B<sub>xy</sub> and B<sub>yy</sub>) were constructed separately. For each submatrix, some coefficients (<italic>b<sub>ij</sub></italic>) were randomly set to zero and the rest were randomly drawn from a normal distribution with zero-mean and a specific standard deviation (0.08 for B<sub>xx</sub> and B<sub>yy</sub>, 0.2 for B<sub>yx</sub>, and 0.1 for B<sub>xy</sub>). For each simulation, 200-point-long time series for each pseudo-voxel were created by model iteration. A total of 56 simulation models were created. The density of model connectivity was systematically increased with increasing model identification number by augmenting the number of voxel pairs connected by non-zero <italic>b</italic> values (<xref ref-type="table" rid="pcbi-1002513-t001">Table 1</xref>).</p>
+        <table-wrap id="pcbi-1002513-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1002513.t001</object-id><label>Table 1</label><caption>
+            <title>The fraction of non-zero coefficients in each of the 4 submatrices for each of the 56 simulation models.</title>
+          </caption><!--===== Grouping alternate versions of objects =====--><alternatives><graphic id="pcbi-1002513-t001-1" mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.t001" xlink:type="simple"/><table>
+            <colgroup span="1">
+              <col align="left" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+              <col align="center" span="1"/>
+            </colgroup>
+            <thead>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">Sim. ID</td>
+                <td align="left" colspan="1" rowspan="1">B<sub>xx</sub></td>
+                <td align="left" colspan="1" rowspan="1">B<sub>yy</sub></td>
+                <td align="left" colspan="1" rowspan="1">B<sub>yx</sub></td>
+                <td align="left" colspan="1" rowspan="1">B<sub>xy</sub></td>
+                <td align="left" colspan="1" rowspan="1">Sim. ID</td>
+                <td align="left" colspan="1" rowspan="1">B<sub>xx</sub></td>
+                <td align="left" colspan="1" rowspan="1">B<sub>yy</sub></td>
+                <td align="left" colspan="1" rowspan="1">B<sub>yx</sub></td>
+                <td align="left" colspan="1" rowspan="1">B<sub>xy</sub></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">1</td>
+                <td align="left" colspan="1" rowspan="1">0.0656</td>
+                <td align="left" colspan="1" rowspan="1">0.0592</td>
+                <td align="left" colspan="1" rowspan="1">0.0493</td>
+                <td align="left" colspan="1" rowspan="1">0.0420</td>
+                <td align="left" colspan="1" rowspan="1">29</td>
+                <td align="left" colspan="1" rowspan="1">0.1944</td>
+                <td align="left" colspan="1" rowspan="1">0.1768</td>
+                <td align="left" colspan="1" rowspan="1">0.1593</td>
+                <td align="left" colspan="1" rowspan="1">0.1580</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">2</td>
+                <td align="left" colspan="1" rowspan="1">0.0656</td>
+                <td align="left" colspan="1" rowspan="1">0.0592</td>
+                <td align="left" colspan="1" rowspan="1">0.0473</td>
+                <td align="left" colspan="1" rowspan="1">0.0373</td>
+                <td align="left" colspan="1" rowspan="1">30</td>
+                <td align="left" colspan="1" rowspan="1">0.1944</td>
+                <td align="left" colspan="1" rowspan="1">0.1768</td>
+                <td align="left" colspan="1" rowspan="1">0.1413</td>
+                <td align="left" colspan="1" rowspan="1">0.1473</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">3</td>
+                <td align="left" colspan="1" rowspan="1">0.0656</td>
+                <td align="left" colspan="1" rowspan="1">0.0592</td>
+                <td align="left" colspan="1" rowspan="1">0.0453</td>
+                <td align="left" colspan="1" rowspan="1">0.0427</td>
+                <td align="left" colspan="1" rowspan="1">31</td>
+                <td align="left" colspan="1" rowspan="1">0.1944</td>
+                <td align="left" colspan="1" rowspan="1">0.1768</td>
+                <td align="left" colspan="1" rowspan="1">0.1373</td>
+                <td align="left" colspan="1" rowspan="1">0.1627</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">4</td>
+                <td align="left" colspan="1" rowspan="1">0.0656</td>
+                <td align="left" colspan="1" rowspan="1">0.0592</td>
+                <td align="left" colspan="1" rowspan="1">0.0400</td>
+                <td align="left" colspan="1" rowspan="1">0.0433</td>
+                <td align="left" colspan="1" rowspan="1">32</td>
+                <td align="left" colspan="1" rowspan="1">0.1944</td>
+                <td align="left" colspan="1" rowspan="1">0.1768</td>
+                <td align="left" colspan="1" rowspan="1">0.1240</td>
+                <td align="left" colspan="1" rowspan="1">0.1647</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">5</td>
+                <td align="left" colspan="1" rowspan="1">0.0656</td>
+                <td align="left" colspan="1" rowspan="1">0.0592</td>
+                <td align="left" colspan="1" rowspan="1">0.0427</td>
+                <td align="left" colspan="1" rowspan="1">0.0453</td>
+                <td align="left" colspan="1" rowspan="1">33</td>
+                <td align="left" colspan="1" rowspan="1">0.1944</td>
+                <td align="left" colspan="1" rowspan="1">0.1964</td>
+                <td align="left" colspan="1" rowspan="1">0.1853</td>
+                <td align="left" colspan="1" rowspan="1">0.1500</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">6</td>
+                <td align="left" colspan="1" rowspan="1">0.0656</td>
+                <td align="left" colspan="1" rowspan="1">0.0592</td>
+                <td align="left" colspan="1" rowspan="1">0.0413</td>
+                <td align="left" colspan="1" rowspan="1">0.0520</td>
+                <td align="left" colspan="1" rowspan="1">34</td>
+                <td align="left" colspan="1" rowspan="1">0.1944</td>
+                <td align="left" colspan="1" rowspan="1">0.1964</td>
+                <td align="left" colspan="1" rowspan="1">0.1707</td>
+                <td align="left" colspan="1" rowspan="1">0.1460</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">7</td>
+                <td align="left" colspan="1" rowspan="1">0.0656</td>
+                <td align="left" colspan="1" rowspan="1">0.0592</td>
+                <td align="left" colspan="1" rowspan="1">0.0320</td>
+                <td align="left" colspan="1" rowspan="1">0.0580</td>
+                <td align="left" colspan="1" rowspan="1">35</td>
+                <td align="left" colspan="1" rowspan="1">0.2267</td>
+                <td align="left" colspan="1" rowspan="1">0.2160</td>
+                <td align="left" colspan="1" rowspan="1">0.1807</td>
+                <td align="left" colspan="1" rowspan="1">0.1620</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">8</td>
+                <td align="left" colspan="1" rowspan="1">0.0656</td>
+                <td align="left" colspan="1" rowspan="1">0.0592</td>
+                <td align="left" colspan="1" rowspan="1">0.0340</td>
+                <td align="left" colspan="1" rowspan="1">0.0507</td>
+                <td align="left" colspan="1" rowspan="1">36</td>
+                <td align="left" colspan="1" rowspan="1">0.2267</td>
+                <td align="left" colspan="1" rowspan="1">0.2160</td>
+                <td align="left" colspan="1" rowspan="1">0.2000</td>
+                <td align="left" colspan="1" rowspan="1">0.1920</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">9</td>
+                <td align="left" colspan="1" rowspan="1">0.0978</td>
+                <td align="left" colspan="1" rowspan="1">0.0984</td>
+                <td align="left" colspan="1" rowspan="1">0.0973</td>
+                <td align="left" colspan="1" rowspan="1">0.0553</td>
+                <td align="left" colspan="1" rowspan="1">37</td>
+                <td align="left" colspan="1" rowspan="1">0.2267</td>
+                <td align="left" colspan="1" rowspan="1">0.2160</td>
+                <td align="left" colspan="1" rowspan="1">0.1800</td>
+                <td align="left" colspan="1" rowspan="1">0.1767</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">10</td>
+                <td align="left" colspan="1" rowspan="1">0.0978</td>
+                <td align="left" colspan="1" rowspan="1">0.0984</td>
+                <td align="left" colspan="1" rowspan="1">0.0860</td>
+                <td align="left" colspan="1" rowspan="1">0.0727</td>
+                <td align="left" colspan="1" rowspan="1">38</td>
+                <td align="left" colspan="1" rowspan="1">0.2267</td>
+                <td align="left" colspan="1" rowspan="1">0.2160</td>
+                <td align="left" colspan="1" rowspan="1">0.1727</td>
+                <td align="left" colspan="1" rowspan="1">0.2193</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">11</td>
+                <td align="left" colspan="1" rowspan="1">0.0978</td>
+                <td align="left" colspan="1" rowspan="1">0.0984</td>
+                <td align="left" colspan="1" rowspan="1">0.0827</td>
+                <td align="left" colspan="1" rowspan="1">0.0760</td>
+                <td align="left" colspan="1" rowspan="1">39</td>
+                <td align="left" colspan="1" rowspan="1">0.1944</td>
+                <td align="left" colspan="1" rowspan="1">0.1964</td>
+                <td align="left" colspan="1" rowspan="1">0.1367</td>
+                <td align="left" colspan="1" rowspan="1">0.1860</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">12</td>
+                <td align="left" colspan="1" rowspan="1">0.0978</td>
+                <td align="left" colspan="1" rowspan="1">0.0984</td>
+                <td align="left" colspan="1" rowspan="1">0.0860</td>
+                <td align="left" colspan="1" rowspan="1">0.0607</td>
+                <td align="left" colspan="1" rowspan="1">40</td>
+                <td align="left" colspan="1" rowspan="1">0.2267</td>
+                <td align="left" colspan="1" rowspan="1">0.2160</td>
+                <td align="left" colspan="1" rowspan="1">0.1687</td>
+                <td align="left" colspan="1" rowspan="1">0.2160</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">13</td>
+                <td align="left" colspan="1" rowspan="1">0.0978</td>
+                <td align="left" colspan="1" rowspan="1">0.0984</td>
+                <td align="left" colspan="1" rowspan="1">0.0907</td>
+                <td align="left" colspan="1" rowspan="1">0.0680</td>
+                <td align="left" colspan="1" rowspan="1">41</td>
+                <td align="left" colspan="1" rowspan="1">0.2589</td>
+                <td align="left" colspan="1" rowspan="1">0.2552</td>
+                <td align="left" colspan="1" rowspan="1">0.2380</td>
+                <td align="left" colspan="1" rowspan="1">0.2200</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">14</td>
+                <td align="left" colspan="1" rowspan="1">0.0978</td>
+                <td align="left" colspan="1" rowspan="1">0.0984</td>
+                <td align="left" colspan="1" rowspan="1">0.0713</td>
+                <td align="left" colspan="1" rowspan="1">0.0847</td>
+                <td align="left" colspan="1" rowspan="1">42</td>
+                <td align="left" colspan="1" rowspan="1">0.2267</td>
+                <td align="left" colspan="1" rowspan="1">0.2356</td>
+                <td align="left" colspan="1" rowspan="1">0.2113</td>
+                <td align="left" colspan="1" rowspan="1">0.1947</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">15</td>
+                <td align="left" colspan="1" rowspan="1">0.0978</td>
+                <td align="left" colspan="1" rowspan="1">0.0984</td>
+                <td align="left" colspan="1" rowspan="1">0.0787</td>
+                <td align="left" colspan="1" rowspan="1">0.0800</td>
+                <td align="left" colspan="1" rowspan="1">43</td>
+                <td align="left" colspan="1" rowspan="1">0.2267</td>
+                <td align="left" colspan="1" rowspan="1">0.2356</td>
+                <td align="left" colspan="1" rowspan="1">0.2213</td>
+                <td align="left" colspan="1" rowspan="1">0.1927</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">16</td>
+                <td align="left" colspan="1" rowspan="1">0.0978</td>
+                <td align="left" colspan="1" rowspan="1">0.0984</td>
+                <td align="left" colspan="1" rowspan="1">0.0713</td>
+                <td align="left" colspan="1" rowspan="1">0.0907</td>
+                <td align="left" colspan="1" rowspan="1">44</td>
+                <td align="left" colspan="1" rowspan="1">0.2267</td>
+                <td align="left" colspan="1" rowspan="1">0.2356</td>
+                <td align="left" colspan="1" rowspan="1">0.2113</td>
+                <td align="left" colspan="1" rowspan="1">0.2180</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">17</td>
+                <td align="left" colspan="1" rowspan="1">0.1300</td>
+                <td align="left" colspan="1" rowspan="1">0.1376</td>
+                <td align="left" colspan="1" rowspan="1">0.1233</td>
+                <td align="left" colspan="1" rowspan="1">0.0933</td>
+                <td align="left" colspan="1" rowspan="1">45</td>
+                <td align="left" colspan="1" rowspan="1">0.2589</td>
+                <td align="left" colspan="1" rowspan="1">0.2552</td>
+                <td align="left" colspan="1" rowspan="1">0.2220</td>
+                <td align="left" colspan="1" rowspan="1">0.2360</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">18</td>
+                <td align="left" colspan="1" rowspan="1">0.1300</td>
+                <td align="left" colspan="1" rowspan="1">0.1376</td>
+                <td align="left" colspan="1" rowspan="1">0.1220</td>
+                <td align="left" colspan="1" rowspan="1">0.1073</td>
+                <td align="left" colspan="1" rowspan="1">46</td>
+                <td align="left" colspan="1" rowspan="1">0.2267</td>
+                <td align="left" colspan="1" rowspan="1">0.2356</td>
+                <td align="left" colspan="1" rowspan="1">0.2027</td>
+                <td align="left" colspan="1" rowspan="1">0.2113</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">19</td>
+                <td align="left" colspan="1" rowspan="1">0.1300</td>
+                <td align="left" colspan="1" rowspan="1">0.1376</td>
+                <td align="left" colspan="1" rowspan="1">0.1187</td>
+                <td align="left" colspan="1" rowspan="1">0.1107</td>
+                <td align="left" colspan="1" rowspan="1">47</td>
+                <td align="left" colspan="1" rowspan="1">0.2267</td>
+                <td align="left" colspan="1" rowspan="1">0.2356</td>
+                <td align="left" colspan="1" rowspan="1">0.1740</td>
+                <td align="left" colspan="1" rowspan="1">0.2013</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">20</td>
+                <td align="left" colspan="1" rowspan="1">0.1300</td>
+                <td align="left" colspan="1" rowspan="1">0.1376</td>
+                <td align="left" colspan="1" rowspan="1">0.1300</td>
+                <td align="left" colspan="1" rowspan="1">0.0993</td>
+                <td align="left" colspan="1" rowspan="1">48</td>
+                <td align="left" colspan="1" rowspan="1">0.2589</td>
+                <td align="left" colspan="1" rowspan="1">0.2552</td>
+                <td align="left" colspan="1" rowspan="1">0.1720</td>
+                <td align="left" colspan="1" rowspan="1">0.2613</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">21</td>
+                <td align="left" colspan="1" rowspan="1">0.1300</td>
+                <td align="left" colspan="1" rowspan="1">0.1376</td>
+                <td align="left" colspan="1" rowspan="1">0.1193</td>
+                <td align="left" colspan="1" rowspan="1">0.1147</td>
+                <td align="left" colspan="1" rowspan="1">49</td>
+                <td align="left" colspan="1" rowspan="1">0.2911</td>
+                <td align="left" colspan="1" rowspan="1">0.2944</td>
+                <td align="left" colspan="1" rowspan="1">0.2847</td>
+                <td align="left" colspan="1" rowspan="1">0.2467</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">22</td>
+                <td align="left" colspan="1" rowspan="1">0.1300</td>
+                <td align="left" colspan="1" rowspan="1">0.1376</td>
+                <td align="left" colspan="1" rowspan="1">0.0993</td>
+                <td align="left" colspan="1" rowspan="1">0.1213</td>
+                <td align="left" colspan="1" rowspan="1">50</td>
+                <td align="left" colspan="1" rowspan="1">0.2589</td>
+                <td align="left" colspan="1" rowspan="1">0.2552</td>
+                <td align="left" colspan="1" rowspan="1">0.2387</td>
+                <td align="left" colspan="1" rowspan="1">0.1773</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">23</td>
+                <td align="left" colspan="1" rowspan="1">0.1300</td>
+                <td align="left" colspan="1" rowspan="1">0.1376</td>
+                <td align="left" colspan="1" rowspan="1">0.0980</td>
+                <td align="left" colspan="1" rowspan="1">0.1313</td>
+                <td align="left" colspan="1" rowspan="1">51</td>
+                <td align="left" colspan="1" rowspan="1">0.2911</td>
+                <td align="left" colspan="1" rowspan="1">0.2944</td>
+                <td align="left" colspan="1" rowspan="1">0.2540</td>
+                <td align="left" colspan="1" rowspan="1">0.2680</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">24</td>
+                <td align="left" colspan="1" rowspan="1">0.1300</td>
+                <td align="left" colspan="1" rowspan="1">0.1376</td>
+                <td align="left" colspan="1" rowspan="1">0.0880</td>
+                <td align="left" colspan="1" rowspan="1">0.1327</td>
+                <td align="left" colspan="1" rowspan="1">52</td>
+                <td align="left" colspan="1" rowspan="1">0.2589</td>
+                <td align="left" colspan="1" rowspan="1">0.2552</td>
+                <td align="left" colspan="1" rowspan="1">0.2373</td>
+                <td align="left" colspan="1" rowspan="1">0.2120</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">25</td>
+                <td align="left" colspan="1" rowspan="1">0.1944</td>
+                <td align="left" colspan="1" rowspan="1">0.1768</td>
+                <td align="left" colspan="1" rowspan="1">0.1800</td>
+                <td align="left" colspan="1" rowspan="1">0.0920</td>
+                <td align="left" colspan="1" rowspan="1">53</td>
+                <td align="left" colspan="1" rowspan="1">0.2589</td>
+                <td align="left" colspan="1" rowspan="1">0.2552</td>
+                <td align="left" colspan="1" rowspan="1">0.1880</td>
+                <td align="left" colspan="1" rowspan="1">0.2280</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">26</td>
+                <td align="left" colspan="1" rowspan="1">0.1944</td>
+                <td align="left" colspan="1" rowspan="1">0.1768</td>
+                <td align="left" colspan="1" rowspan="1">0.1727</td>
+                <td align="left" colspan="1" rowspan="1">0.0933</td>
+                <td align="left" colspan="1" rowspan="1">54</td>
+                <td align="left" colspan="1" rowspan="1">0.2911</td>
+                <td align="left" colspan="1" rowspan="1">0.2944</td>
+                <td align="left" colspan="1" rowspan="1">0.2367</td>
+                <td align="left" colspan="1" rowspan="1">0.2947</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">27</td>
+                <td align="left" colspan="1" rowspan="1">0.1944</td>
+                <td align="left" colspan="1" rowspan="1">0.1768</td>
+                <td align="left" colspan="1" rowspan="1">0.1587</td>
+                <td align="left" colspan="1" rowspan="1">0.1473</td>
+                <td align="left" colspan="1" rowspan="1">55</td>
+                <td align="left" colspan="1" rowspan="1">0.2911</td>
+                <td align="left" colspan="1" rowspan="1">0.2944</td>
+                <td align="left" colspan="1" rowspan="1">0.2053</td>
+                <td align="left" colspan="1" rowspan="1">0.2680</td>
+              </tr>
+              <tr>
+                <td align="left" colspan="1" rowspan="1">28</td>
+                <td align="left" colspan="1" rowspan="1">0.1944</td>
+                <td align="left" colspan="1" rowspan="1">0.1768</td>
+                <td align="left" colspan="1" rowspan="1">0.1560</td>
+                <td align="left" colspan="1" rowspan="1">0.1500</td>
+                <td align="left" colspan="1" rowspan="1">56</td>
+                <td align="left" colspan="1" rowspan="1">0.2911</td>
+                <td align="left" colspan="1" rowspan="1">0.2944</td>
+                <td align="left" colspan="1" rowspan="1">0.1827</td>
+                <td align="left" colspan="1" rowspan="1">0.2907</td>
+              </tr>
+            </tbody>
+          </table></alternatives><table-wrap-foot>
+            <fn id="nt101">
+              <label/>
+              <p>The fraction changed over the models from values of approximately 0.05 to values of approximately 0.29, increasing by approximately 0.04 every 8 models.</p>
+            </fn>
+          </table-wrap-foot></table-wrap>
+        <p>To verify model validity, we determined that the correlations of the model residuals were low for all 56 models. A representative residuals correlation matrix from one of the simulations is displayed in the <xref ref-type="supplementary-material" rid="pcbi.1002513.s006">Figure S6</xref>, showing randomly distributed weak correlation across simulated voxel pairs. We considered the models to be valid based on these observations.</p>
+        <p>We then considered the effect of averaging the BOLD activity of all voxels in an ROI on the measurement of interregional GC. The GC between two ROIs, each of which is represented by an averaged time series, was measured by a single <italic>t</italic>-score in each direction (see <xref ref-type="sec" rid="s4">Methods</xref>). For it to properly portray the connectivity between ROIs, the <italic>t</italic>-score was expected to follow the change of parameters across the simulation models shown in <xref ref-type="table" rid="pcbi-1002513-t001">Table 1</xref>. We tested this prediction by measuring the correlation of the <italic>t</italic>-scores from the averaged time series with two summary statistics (the fraction of significant connections, <italic>f</italic>, and the average connectivity strength, <italic>W</italic>) (see <xref ref-type="sec" rid="s4">Methods</xref>). These summary statistics were computed directly from the simulation models, and thus followed the change of parameters across the simulation models. The <italic>t</italic>-scores derived from averaged time series were not significantly correlated (<italic>p</italic>&lt;0.05) with either summary statistic (<xref ref-type="fig" rid="pcbi-1002513-g002">Figure 2</xref>). That the <italic>t</italic>-scores did not follow the change of parameters across simulation models indicates that computing GC from averaged voxel time series does not accurately capture inter-ROI connectivity patterns.</p>
+        <fig id="pcbi-1002513-g002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002513.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>Granger Causality patterns between simulated ROIs.</title>
+            <p>GC was computed from averaged voxel time series as <italic>t</italic><sub>yx</sub> and <italic>t</italic><sub>xy</sub>, and then normalized to <italic>z</italic>-scores, for a range of simulation models (top row). GC was also computed as voxel-based <italic>W</italic> (middle row) and <italic>f</italic> (bottom row) summary statistics computed directly from the parameters of the same simulation models (<italic>b</italic> values normalized to <italic>z</italic>-scores before computing <italic>W</italic>). The horizontal axis labels the 56 simulation models in the order of <xref ref-type="table" rid="pcbi-1002513-t001">Table 1</xref>, representing different connectivity parameter settings. The <italic>t</italic>-scores do not significantly correlate with either <italic>W</italic> or <italic>f</italic> across simulation models, demonstrating that GC computed from averaged voxel time series is not sensitive to true connectivity.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.g002" xlink:type="simple"/>
+        </fig>
+        <p>We next examined how well voxel-based methods recovered the actual GC patterns of the four submatrices across the simulation models shown in <xref ref-type="table" rid="pcbi-1002513-t001">Table 1</xref>. The analysis for each simulation model consisted first of estimating the full B matrix from the simulated data generated by that model using two methods: (1) pairwise-GC estimation; and (2) LASSO-GC estimation, i.e. LASSO pre-selection of variables for inclusion in an MVAR model, followed by GC estimation from the model. Then, the results from each method were compared with the actual values in the model. Each of these two methods is voxel-based. The pairwise-GC method constructs the B matrix by estimating a separate bivariate AR model for each voxel pair, whereas the LASSO-GC method computes the B matrix by estimating an MVAR model whose variables are pre-selected by LASSO. Unlike the approach of averaging across voxels, both methods compute a <italic>t</italic>-score for each <italic>b</italic> coefficient in the B matrix, testing whether the value of that coefficient significantly deviates from zero. A significant non-zero <italic>b</italic> value is equivalent to a significant GC value when the model order is one. <xref ref-type="fig" rid="pcbi-1002513-g003">Figure 3</xref> illustrates the results from a simulation in which the LASSO-GC method (<xref ref-type="fig" rid="pcbi-1002513-g003">Figure 3B</xref>) closely estimated the pattern of <italic>b</italic> values of the model (<xref ref-type="fig" rid="pcbi-1002513-g003">Figure 3A</xref>), whereas the pairwise-GC method (<xref ref-type="fig" rid="pcbi-1002513-g003">Figure 3C</xref>) yielded a large number of spurious non-zero values.</p>
+        <fig id="pcbi-1002513-g003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002513.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>Comparison of model estimation by LASSO-GC and pairwise-GC methods for one simulation model.</title>
+            <p>The X voxels in A-C are represented by green dots and Y voxels by red dots. All the <italic>t</italic> and <italic>b</italic> values are <italic>z</italic>-normalized. A) Simulated connectivity pattern of the model for the four B matrices, with orange arrows representing positive <italic>b</italic> values and blue arrows negative <italic>b</italic> values. B) Estimated connectivity pattern with LASSO-GC method. Significant <italic>t</italic>-scores are shown as arrows, with the thickness representing the absolute magnitude of the <italic>t</italic>-scores, and the color representing the sign of the <italic>t</italic>-score (orange for positive, blue for negative). The pattern is similar to that in the model. C) Estimated connectivity pattern with pairwise-GC method, shown in the same manner as for the LASSO-GC result. The connectivity is much denser than the model pattern. D) Summary statistics <italic>f</italic> and <italic>W</italic> for the patterns shown in the previous three panels. LASSO-GC values match the model values more closely than do pairwise-GC values.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.g003" xlink:type="simple"/>
+        </fig>
+        <p>To determine how typical were the results seen in <xref ref-type="fig" rid="pcbi-1002513-g003">Figure 3</xref> across all simulation models, summary statistics from pairwise-GC and LASSO-GC estimations were compared with those computed directly from the models. First to be used was the <italic>f</italic> summary statistic, which measures the fraction of significant <italic>b</italic> values. <xref ref-type="fig" rid="pcbi-1002513-g004">Figure 4</xref> compares how well the pairwise-GC and LASSO-GC methods recovered the actual <italic>f</italic> summary statistic computed directly from the simulation models. It reveals that in most simulations the <italic>f</italic> summary statistic from pairwise-GC estimation was greater than the actual simulation model value, whereas that from LASSO-GC estimation closely matched the actual simulation model value. We defined the distance between estimated and model <italic>f</italic> values by their absolute difference, and compared the distances resulting from the LASSO-GC method with that from the pairwise-GC method. Paired <italic>t</italic>-tests showed highly significantly (<italic>p</italic>&lt;0.01) smaller distances with the LASSO-GC method for all four submatrices.</p>
+        <fig id="pcbi-1002513-g004" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002513.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>Comparison of LASSO-GC and pairwise-GC methods in recovering the <italic>f</italic> summary statistic.</title>
+            <p>The fraction of significant <italic>b</italic> coefficients (<italic>f</italic> summary statistic) in each submatrix, computed directly from the simulation model, is compared with the <italic>f</italic> statistic estimated by the LASSO-GC and pairwise-GC methods. The estimated LASSO-GC <italic>f</italic> statistic more closely matches the <italic>f</italic> statistic of the model across simulation models than does the estimated pairwise-GC <italic>f</italic> statistic. The horizontal axis is arranged the same way as in <xref ref-type="fig" rid="pcbi-1002513-g002">Figure 2</xref>. The example shown in <xref ref-type="fig" rid="pcbi-1002513-g003">Figure 3</xref> is from the 28th model.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.g004" xlink:type="simple"/>
+        </fig>
+        <p>The <italic>W</italic> summary statistic, which reflects the average strength of significant GC from voxels in one ROI to voxels in another, was used next to compare the pairwise-GC and LASSO methods. As with the <italic>f</italic> statistic, the <italic>W</italic> statistic from the LASSO method matched the actual <italic>W</italic> statistic computed from the simulation model more closely than that from the pairwise-GC method (<xref ref-type="fig" rid="pcbi-1002513-g005">Figure 5</xref>). Also as with the <italic>f</italic> statistic, the distances between estimated and model <italic>W</italic> values for the two methods were compared. Paired <italic>t</italic>-tests showed highly significantly (<italic>p</italic>&lt;0.01) smaller distances with the LASSO-GC method for all four submatrices.</p>
+        <fig id="pcbi-1002513-g005" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002513.g005</object-id>
+          <label>Figure 5</label>
+          <caption>
+            <title>Comparison of LASSO-GC and pairwise-GC methods in recovering the <italic>W</italic> summary statistic.</title>
+            <p>The GC strength (W summary statistic) in each submatrix, computed directly from the simulation model, is compared with the <italic>W</italic> statistic estimated by the LASSO-GC and pairwise-GC methods. The estimated LASSO-GC <italic>W</italic> statistic more closely matches the <italic>W</italic> statistic of the model across simulation models than does the estimated pairwise-GC <italic>W</italic> statistic. Since the estimated <italic>W</italic> statistic is based on <italic>t</italic>-scores and the <italic>W</italic> statistic computed directly from the simulation model is based on <italic>b</italic> coefficient values, both <italic>b</italic> and <italic>t</italic>-scores were normalized to standard <italic>z</italic>-scores before calculating <italic>W</italic>. The horizontal axis is arranged the same way as in <xref ref-type="fig" rid="pcbi-1002513-g002">Figure 2</xref>.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.g005" xlink:type="simple"/>
+        </fig>
+        <p>The comparison of LASSO-GC versus pairwise-GC across 56 runs can be considered as 56 repeated tests of the two methods for their efficiency in estimating model parameters. The fact that LASSO-GC yielded more accurate estimations than pairwise-GC over a range of different parameter settings demonstrates LASSO-GC's robustness. To further validate this conclusion, we repeated each 56-run test on 20 separate iterations, each iteration using an independently generated dataset with the parameters from <xref ref-type="table" rid="pcbi-1002513-t001">Table 1</xref>. The resulting GC patterns across the 20 iterations are consistent with those shown in <xref ref-type="fig" rid="pcbi-1002513-g002">Figures 2</xref>, <xref ref-type="fig" rid="pcbi-1002513-g004">4</xref> and <xref ref-type="fig" rid="pcbi-1002513-g005">5</xref> (as demonstrated in <xref ref-type="supplementary-material" rid="pcbi.1002513.s001">Figures S1</xref>, <xref ref-type="supplementary-material" rid="pcbi.1002513.s002">S2</xref> and <xref ref-type="supplementary-material" rid="pcbi.1002513.s003">S3</xref>). To summarize the results up to this point, the LASSO-GC method was found to outperform the pairwise-GC method and the average-signal based method in recovering simulation model connectivity. We next applied the LASSO-GC method to explore functional connectivity in an empirical fMRI BOLD dataset.</p>
+      </sec>
+      <sec id="s2b">
+        <title>Application to fMRI BOLD data from a visuospatial attention task</title>
+        <p>An fMRI BOLD dataset from a slow event-related visuospatial attention task paradigm was analyzed with the LASSO-GC method. Details about the experimental design and the fMRI recording are available in <xref ref-type="bibr" rid="pcbi.1002513-Bressler3">[24]</xref> and <xref ref-type="bibr" rid="pcbi.1002513-Sylvester1">[34]</xref>. Within each of 6 subjects, bilateral areas V1v, V2v, VP, V3A and V4 were in the Visual Occipital Cortex (VOC), and bilateral areas Frontal Eye Field (FEF) and anterior and posterior IntraParietal Sulcus (aIPS and pIPS) were in the Dorsal Attention Network (DAN). MVAR models of order-one were estimated from the time series of all voxels from each pair of VOC and DAN ROIs by the LASSO-GC method. The largest MVAR model contained approximately 150 voxels. Repeated trials (average number ∼70) at each time point were used as observations. For each ROI pair, a full B matrix was first estimated, and the <italic>f</italic> and <italic>W</italic> statistics were then computed for each of the four submatrices.</p>
+        <p>As with the simulation results, the correlations of the MVAR model residuals were found to be low, indicating that the models were valid. Because of the large data dimension, not all ROI pairs could be examined. Instead, 10 ROI pairs were randomly selected from each subject for examination: the residuals correlation matrix for one representative ROI pair is displayed in <xref ref-type="supplementary-material" rid="pcbi.1002513.s007">Figure S7</xref>. Since most of the correlation scores were weak (near or below 0.5), the MVAR models were considered to be valid representations of the fMRI BOLD data, and we thus proceeded to explore the connectivity patterns.</p>
+        <p>The results of functional connectivity analysis between the VOC and DAN are presented in <xref ref-type="fig" rid="pcbi-1002513-g006">Figure 6</xref> for a representative ROI pair in one subject. GC connectivity diagrams are shown between the right VP region (having 25 voxels) in VOC and the right FEF region (having 56 voxels) in the DAN (<xref ref-type="fig" rid="pcbi-1002513-g006">Figure 6A</xref>). The four diagrams represent GC connectivity within right VP (VP → VP), from right FEF to right VP (FEF → VP), from right VP to right FEF (VP → FEF), and within right FEF (FEF → FEF). GC connectivity is sparse both within and between ROIs, meaning that a low fraction of <italic>t</italic>-scores is significant at <italic>p</italic>&lt;0.05 (<italic>f<sub>VP−&gt;VP</sub></italic> = 0.08, <italic>f<sub>FEF−&gt;VP</sub></italic> = 0.04, <italic>f<sub>VP−&gt;FEF</sub></italic> = 0.06, <italic>f<sub>FEF−&gt;FEF</sub></italic> = 0.03). Both significantly positive (orange arrows) and significantly negative (blue arrows) GCs are present both within and between ROIs. A positive GC indicates that increased activity of the “sending” voxel predicts increased activity of the “receiving” voxel, whereas a negative GC signifies that increased activity of the “sending” voxel predicts decreased activity of the “receiving” voxel.</p>
+        <fig id="pcbi-1002513-g006" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002513.g006</object-id>
+          <label>Figure 6</label>
+          <caption>
+            <title>Comparison of connectivity patterns with LASSO-GC and correlation measures.</title>
+            <p>Patterns are shown for one exemplary ROI pair from one subject. The <italic>t</italic>-scores from LASSO-GC analysis were z-normalized. Green dots represent voxels from right VP and red dots represent voxels from right FEF. A) Estimated connectivity patterns with the LASSO-GC measure. Significant <italic>t</italic>-scores are shown as arrows, with the thickness representing the absolute magnitude of the <italic>t</italic>-scores, and the color representing the sign of the <italic>t</italic>-score (orange for positive, blue for negative). B) Estimated connectivity patterns with the correlation measure. Significant cross-correlation coefficients are shown as lines, with the thickness representing the absolute magnitude and the color representing the sign (orange for positive, blue for negative). C) Summary statistics for the patterns shown in the previous two panels. For the correlation measure, FEF→VP and VP→FEF have the same summary scores since the measure is non-directional.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.g006" xlink:type="simple"/>
+        </fig>
+        <p>Connectivity based on the correlation measure is also considered. For correlations measured directly on the fMRI BOLD time series, a larger fraction of connections is significant at <italic>p</italic>&lt;0.05 (<italic>f<sub>VP−VP</sub></italic> = 0.67, <italic>f<sub>VP−FEF</sub></italic> = 0.30, <italic>f<sub>FEF−FEF</sub></italic> = 0.45) for the same ROI pair and subject (<xref ref-type="fig" rid="pcbi-1002513-g006">Figure 6B</xref>), suggesting that a large portion of the voxels are correlated. More sparse connectivity from LASSO-GC than from correlations is clearly seen in the <italic>f</italic> and <italic>W</italic> summary statistics (<xref ref-type="fig" rid="pcbi-1002513-g006">Figure 6C</xref>). This more sparse connectivity found with LASSO-GC than with correlation might have been a simple effect of LASSO pre-selection. However, this was found not to be the case since the correlations still showed much more dense patterns than the LASSO-GC results even when computed after LASSO pre-selection (<xref ref-type="supplementary-material" rid="pcbi.1002513.s004">Figures S4</xref>, <xref ref-type="supplementary-material" rid="pcbi.1002513.s005">S5</xref>). That the average correlation connectivity strength (<italic>W</italic> in <xref ref-type="fig" rid="pcbi-1002513-g006">Figure 6C</xref>) is greater than 2, both within and between ROIs, indicates that each voxel receives, on average, connections from more than 2 other voxels. This observation of relatively high correlation density suggests that the LASSO-GC method is needed to reduce correlation-induced spurious GC estimates.</p>
+        <p>To extend the functional connectivity analysis to the full fMRI BOLD dataset, we applied the LASSO-GC method to all 60 VOC-DAN ROI pairs in each of the 6 subjects. The <italic>f</italic> and <italic>W</italic> summary statistics were then averaged across ROI pairs and subjects, yielding mean <italic>f</italic> and <italic>W</italic> summary statistics for VOC-to-VOC connectivity, DAN-to-DAN connectivity, DAN-to-VOC connectivity, and VOC-to-DAN connectivity (<xref ref-type="fig" rid="pcbi-1002513-g007">Figure 7</xref>). These four connectivity types correspond to the four coefficient submatrices of the estimated B matrix in LASSO-GC analysis (see <xref ref-type="sec" rid="s4">Methods</xref>): VOC-to-VOC and DAN-to-DAN connectivity refers to connectivity within a single region of VOC or DAN, not to connectivity between different VOC or DAN regions. The mean <italic>f</italic> summary statistic is below 0.1 for all submatrices, indicating overall sparse within- and between-ROI GC connectivity.</p>
+        <fig id="pcbi-1002513-g007" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002513.g007</object-id>
+          <label>Figure 7</label>
+          <caption>
+            <title>Functional connectivity analysis of Dorsal Attention Network and Visual Occipital Cortex in visual spatial attention.</title>
+            <p>The <italic>f</italic> and <italic>W</italic> summary statistics were computed from LASSO-GC for each of 60 ROI pairs and 6 subjects, and then averaged over pairs and subjects. For each ROI pair, one ROI was in the Dorsal Attention Network (DAN) and the other was in Visual Occipital Cortex (VOC). The bars represent mean <italic>f</italic> and <italic>W</italic> summary statistics for VOC-to-VOC connectivity, DAN-to-DAN connectivity, DAN-to-VOC connectivity, and VOC-to-DAN connectivity. Error bars represent the standard error of the mean. Significant differences from paired-sample <italic>t</italic>-tests are marked (*: <italic>p</italic>&lt;0.05).</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.g007" xlink:type="simple"/>
+        </fig>
+        <p>Paired-sample t-tests with subjects as repeated measures (df = 5 for all comparisons) were performed on both <italic>f</italic> and <italic>W</italic> to compare: (1) top-down (DAN-to-VOC) with bottom-up (VOC-to-DAN) connectivity; (2) within-VOC with within-DAN connectivity; (3) top-down with within-VOC connectivity; and (4) bottom-up with within-DAN connectivity. The comparison of top-down with within-DAN connectivity and the comparison of bottom-up with within-VOC connectivity were not performed because these comparisons are ambiguous, i.e., they are based on GC to voxels in a sending region, whereas the <italic>W</italic> summary statistic is based on voxels in a receiving region (see <xref ref-type="sec" rid="s4">Methods</xref>). The results show that within-VOC (VOC→VOC) connectivity was significantly greater than top-down (DAN→VOC) connectivity for both the <italic>f</italic> (<italic>t</italic> = 4.60, <italic>p</italic>&lt;0.05) and <italic>W</italic> (<italic>t</italic> = 2.85, <italic>p</italic>&lt;0.05) summary statistics, indicating that the local GC between voxels within VOC is both more dense and stronger than the long-range, top-down GC from the DAN. Connectivity within DAN (DAN→DAN) was also significantly greater than that in the bottom-up direction (VOC-to-DAN) for the <italic>W</italic> summary statistic (<italic>t</italic> = 4.07, <italic>p</italic>&lt;0.05), but not for the <italic>f</italic> summary statistic, indicating that the local GC between voxels within DAN is stronger, but not more dense, than the long-range GC from VOC. Finally, connectivity in the top-down direction (DAN→VOC) was significantly greater than that in the bottom-up direction (VOC→DAN) for the <italic>W</italic> summary statistic (<italic>t</italic> = 3.93, <italic>p</italic>&lt;0.05) but not for the <italic>f</italic> summary statistic, indicating a long-range directional strength asymmetry between DAN and VOC, with stronger top-down connectivity.</p>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Discussion</title>
+      <p>We have shown that Granger Causality (GC) computed from voxel-level BOLD signals better reflects the pattern of directed functional interaction between ROIs than that computed from voxel-averaged signals. We conclude that brain regions are not unitary elements, that network structure exists at the voxel level, and that ROI-level GC connectivity is best measured by summary scores computed over voxel-level connectivity patterns.</p>
+      <p>We emphasize that our conclusions apply specifically to GC between pre-defined ROIs, and do not necessarily extend to the computation of maps showing GC between a “seed” signal, averaged over the voxels in one cortical region, and voxels throughout the rest of the cortex <xref ref-type="bibr" rid="pcbi.1002513-Roebroeck4">[35]</xref>. In fact, an interesting extension to the mapping approach has recently been proposed by Garg et al. <xref ref-type="bibr" rid="pcbi.1002513-Garg1">[33]</xref>. Their technique, called Full-brain AutoRegressive Modeling (FARM), also adopts LASSO for voxel-level analysis. Although their use of LASSO to make MVAR modeling feasible for large numbers of voxels is similar to ours, their problem of GC mapping for the entire brain is different from the interregional interaction question that we have investigated. It is possible that full-brain mapping and interregional analysis will prove complementary to each other. To explore the relationship of a particular region to the remainder of the cortex, the mapping method would appear to be more appropriate since it yields a global functional interaction pattern. However, to test specific theories in cognitive neuroscience that involve particular cortical networks, might require the use of regions that are pre-defined from previous clinical or experimental evidence. In that case, one would be interested in examining the details of functional interaction between regions, and a full-brain LASSO algorithm could be insufficient because its tuning parameter might be too severe, making the model overly sparse: even if the global connectivity pattern were preserved, the details of interregional connectivity might still be lost. With these concerns in mind, one might use full-brain mapping as a first step to establish global functional interaction patterns, and then a more detailed exploration could be performed using voxel-based interregional analysis.</p>
+      <p>In addition to mapping, another common analytic method in the literature examines region-to-region correlations based on averaged signals and identifies topological properties from large-scale networks that involve hundreds of ROIs <xref ref-type="bibr" rid="pcbi.1002513-Cohen1">[36]</xref>. Our findings do not necessarily negate this approach: since GC and correlation are different measures, inhomogeneity in GC does not imply inhomogeneity in correlation. It is possible that correlation-based connectivity with averaged signals may be effective even though GC analysis requires a voxel-based approach.</p>
+      <p>We have demonstrated that the LASSO-GC method can better identify GC connectivity between ROIs in simulated fMRI BOLD data than the pairwise-GC method by more accurately estimating the connectivity density and strength. The pairwise-GC method can yield spuriously significant coefficients if correlated predictors are present in the MVAR model. The close fit of the LASSO-GC results to the actual results from the simulation models demonstrates that the LASSO-GC method is better able to avoid false positives, and also shows the sensitivity of this method in detecting model changes. By contrast, GC values computed from averaged data do not systematically follow changes in simulated ROI models, suggesting that summary statistics computed from voxel-to-voxel GCs are better able to represent ROI-level connectivity than single region-to-region GCs computed after averaging over ROI voxels.</p>
+      <p>The estimated <italic>f</italic> summary statistics from the LASSO-GC method matched the actual <italic>f</italic> statistics from the simulation models better when the B matrices were more sparse. Although the LASSO algorithm could potentially fail for high connectivity densities, we were not able to observe such a failure because the simulated voxel activity at high connectivity density becomes unstable. Nonetheless, it is unlikely that the low <italic>f</italic> values observed for the empirical BOLD data are artifactual because if the B matrices were ill-estimated, then the directional asymmetry found with the <italic>W</italic> statistic would not display the high degree of consistency across subjects that was observed. The fact that the range of <italic>f</italic> found for the empirical BOLD data fell within the range of <italic>f</italic> in the simulations further suggests the suitability of the LASSO-GC technique for application to BOLD data. Moreover, the low values of the <italic>f</italic> summary statistic from the empirical BOLD data indicate that GC connectivity between cortical ROIs is sparse. Given evidence from anatomical studies that axonal connectivity of the cortex is generally sparse <xref ref-type="bibr" rid="pcbi.1002513-He2">[37]</xref>, <xref ref-type="bibr" rid="pcbi.1002513-Gong1">[38]</xref>, it is more likely that the sparse GC connectivity reflects actual functional interaction patterns than that it is a mere statistical byproduct.</p>
+      <p>Directional asymmetry in GC connectivity between the Dorsal Attention Network (DAN) and Visual Occipital Cortex (VOC) was reported in our previous work <xref ref-type="bibr" rid="pcbi.1002513-Bressler3">[24]</xref> using the pairwise-GC method for computing GC and <italic>f</italic> as the summary statistic. Using the LASSO-GC method, we report here that the directional asymmetry is found in the <italic>W</italic>, but not the <italic>f</italic>, summary statistic (<xref ref-type="fig" rid="pcbi-1002513-g005">Figure 5</xref>). The difference in results from the pairwise-GC and LASSO-GC methods may be understood by examining the properties of the <italic>W</italic> summary statistic. The finding that <italic>W</italic> values in the top-down DAN-to-VOC direction are significantly greater than in the bottom-up VOC-to-DAN direction suggests that VOC voxels are modulated more strongly by DAN voxels than DAN voxels are by VOC voxels, despite there being similar fractions of voxels being modulated in both directions. The greater top-down modulation strength may have introduced a bias in the pairwise-GC results from our previous work, yielding an apparently greater fraction of significant top-down GC values. Relatively high correlation density (<xref ref-type="fig" rid="pcbi-1002513-g006">Figure 6</xref>) may have contributed to such a bias.</p>
+      <p>The problem of bias actually has multiple facets. It is known from theory that the LASSO method may be biased if predictors are highly correlated. There are two main problems caused by correlated predictors. First, some predictors in a system may not be included in the model of the system. This is the case when estimation of multiple bivariate AR models is employed in place of MVAR model estimation: the estimation may be biased by undetected influences from the excluded predictors. The use of LASSO helps to mitigate this problem by allowing estimation of a full MVAR model. Second, even when all the predictors are taken into account, correlation among predictors may still bias model estimation, a situation often referred to as the collinearity problem for multiple regressions. An example of such bias would be the case of a group of strongly correlated predictors, where LASSO tended to select only one predictor from the group. Extensions of LASSO have been proposed to mitigate this problem by selecting the entire group instead of a single predictor. Such extensions include fused LASSO <xref ref-type="bibr" rid="pcbi.1002513-Tibshirani2">[39]</xref>, the elastic net <xref ref-type="bibr" rid="pcbi.1002513-Zou1">[40]</xref> and the group LASSO <xref ref-type="bibr" rid="pcbi.1002513-Yuan1">[41]</xref>. A thorough review of this issue is available in <xref ref-type="bibr" rid="pcbi.1002513-Hesterberg1">[42]</xref>. Whether such selection bias becomes a problem in brain network analysis depends on the specific research question being considered. On the one hand, if the exact relationship among predictors is of central interest, as when large-scale cortical network structure is explored using ROIs as predictors <xref ref-type="bibr" rid="pcbi.1002513-ValdesSosa1">[28]</xref>, one may consider the use of extended LASSO algorithms to avoid losing important correlated ROIs. On the other hand, in our voxel-based investigation of pre-selected ROIs, the voxels are used as multiple representations of the corresponding ROIs, and omitting some of the correlated voxels in a group is not expected to radically change the collective functional connectivity at the ROI level. In the present study, we are more interested in the summary statistics over the entire connectivity matrix than in the details of the connectivity patterns within the matrix. Thus, in our study, although the collinearity problem may exist, and a complete solution is not currently available from theory, our results are nonetheless not invalidated. We found that the <italic>f</italic> and <italic>W</italic> summary statistics effectively recovered the modeled connectivity values from simulated data, even though those data had significant correlations between most voxel pairs. Furthermore, in empirical BOLD data analysis, it is often desirable to compare summary statistics across different conditions rather than to precisely identify their values. For such comparison, any possible bias introduced by voxel-voxel correlations would exist in both conditions and thus would not alter the comparison.</p>
+      <p>Although the MVAR models used in this paper were implemented with order one, models having higher order (<italic>p</italic>&gt;1 in Equation 3) can be implemented within the same framework. For model orders greater than one, multiple <italic>b</italic> coefficients at different time lags (t-k) contribute to the GC from one voxel to another, and it is not sufficient simply to test the significance of a single <italic>b</italic> coefficient. In that case, testing for significant between-voxel GC would need to be performed differently, and the summary statistics would accordingly be defined differently. For example, a criterion for between-voxel GC to be significant might be that at least one of the <italic>b</italic> coefficients from different lags must be significant. A summary statistic equivalent to <italic>f</italic> might then be defined as the fraction of significant between-voxel GCs rather than the fraction of significant <italic>b</italic> values. Similarly, a summary statistic equivalent to <italic>W</italic> could base the average strength of significant GC on all significant <italic>b</italic> values for a voxel pair instead of a single <italic>b</italic> value. A straightforward way to do this would be to sum the significant <italic>b</italic> values from different lags over all inputs to receiving voxels. In this way the <italic>W</italic> statistic would be sensitive to three factors: the magnitude of all significant <italic>b</italic> values, their corresponding time lags, and the total number of converging significant inputs to receiving voxels. However, to compare the <italic>W</italic> statistic between models of different order, the time-lag factor would need to be removed, possibly by averaging <italic>b</italic> values over time lags, to avoid bias due to different total numbers of <italic>b</italic> values.</p>
+      <p>In conclusion, our work suggests that the LASSO algorithm can be effectively employed for pre-selection of voxels that are then used in an MVAR model to measure functional connectivity between ROIs, using voxel-based fMRI BOLD signals. It indicates that the <italic>f</italic> and <italic>W</italic> summary statistics reveal different aspects of directed influence between ROIs. Used in tandem, these statistics may provide consistent information about influences between brain regions that is richer than that from either one alone. Additional summary statistics will likely be found in the future that will further our understanding of directed influences between brain regions.</p>
+    </sec>
+    <sec id="s4" sec-type="methods">
+      <title>Methods</title>
+      <sec id="s4a">
+        <title>The MultiVariate AutoRegressive (MVAR) model</title>
+        <p>We first consider an fMRI BOLD dataset from <italic>m</italic> voxels in ROI X and <italic>n</italic> voxels in ROI Y. The dataset consists of time series of <italic>t</italic> points recorded from every voxel in X and Y, and can be written in matrix form as:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.e001" xlink:type="simple"/><label>(1)</label></disp-formula><disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.e002" xlink:type="simple"/><label>(2)</label></disp-formula></p>
+        <p>The relationship between X and Y can be expressed in the form of a Multivariate Vector AutoRegressive (MVAR) model. A general matrix representation of the model is:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.e003" xlink:type="simple"/><label>(3)</label></disp-formula>where Z<italic><sub>t</sub></italic> is the dependent variable in vector form, representing the BOLD data values at arbitrary time <italic>t</italic> of all voxels in X and Y; Z<italic><sub>t-k</sub></italic> represents the values of the Z vector at arbitrary earlier time point <italic>t</italic>-<italic>k</italic>; lag <italic>k</italic> ranges from 1 to <italic>p</italic>, the model order; B<italic><sub>k</sub></italic> is the corresponding coefficient matrix at lag <italic>k</italic>; and E<italic><sub>t</sub></italic> is the residual vector.</p>
+        <p>When expanded, the product term in Equation 3 becomes:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.e004" xlink:type="simple"/><label>(4)</label></disp-formula></p>
+        <p>Each element of the Z<italic><sub>t-k</sub>th</italic> vector is a predictor, and each element (<italic>b<sup>k</sup><sub>ij</sub></italic>) of the B<italic><sub>k</sub></italic> matrix is a coefficient representing the degree of prediction of the <italic>i</italic>th element of Z<italic><sub>t</sub></italic> by the <italic>j</italic>th predictor. If a value of <italic>b<sup>k</sup><sub>ij</sub></italic> significantly differs from zero, then a significant GC is said to exist from voxel <italic>j</italic> to voxel <italic>i</italic>. The magnitude (strength) of that GC may be assessed by the magnitude of the statistic (e.g. <italic>t</italic>-statistic) used to measure the difference of the <italic>b</italic> value from zero. The sum of product terms over all lags is the total prediction of Z<italic><sub>t</sub></italic> by the model.</p>
+        <p>The model order (<italic>p</italic>) was set to one in this paper, based on our prior experience with the analysis of fMRI BOLD data <xref ref-type="bibr" rid="pcbi.1002513-Bressler3">[24]</xref>. The MVAR model in Equation 3, with model order one, was used here for both simulation and GC analysis. For simulation, the residual vector represented an innovation process that generates random values, the B matrix was known, and the X and Y time series data were simulated. For GC analysis, the X and Y time series data were known, the B matrix was estimated in order to determine GC, and the residual vector represented prediction errors.</p>
+        <p>We also employed pairwise-GC analysis for comparison with MVAR analysis. In the pairwise-GC approach, coefficients are estimated (and the significance of GC determined) by constructing a separate bivariate model for each pair of voxels, one in X and one in Y:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.e005" xlink:type="simple"/><label>(5)</label></disp-formula></p>
+        <p>In pairwise-GC analysis, the assumption is made that the predictors are independent of one another. Under this assumption, the GC between X and Y can be assessed solely from the bivariate models in Equation 5, and it is not necessary to estimate the coefficients representing GC within X or Y. In fact, however, the predictors may be correlated for BOLD time series, making the pairwise-GC approach problematic. If the predictors are correlated, estimation by separate bivariate (or partial) models may be biased, and all of the coefficients in the B matrix should be estimated simultaneously <xref ref-type="bibr" rid="pcbi.1002513-Greene1">[43]</xref>. Nonetheless, simultaneous estimation may be impossible in the analysis of data from neurobehavioral studies, in which the number of observations is often limited.</p>
+      </sec>
+      <sec id="s4b">
+        <title>The Least Absolute Shrinkage and Selection Operator (LASSO)</title>
+        <p>The Least Absolute Shrinkage and Selection Operator (LASSO) technique is a method that makes model estimation feasible when only a limited number of observations is available. Under the assumption that the B matrix is sparse (i.e., many coefficients are zero), the LASSO algorithm effectively determines which <italic>b</italic> values are actually zero. Our goal in using LASSO is to identify non-zero coefficients and then estimate them simultaneously, thus avoiding bias due to partial regression with correlated predictors. The pre-selection process in LASSO involves determining an optimal set of predictors.</p>
+        <p>In the MVAR model, pre-selection is carried out in a row-wise manner. LASSO adds a constraint on each row equation of Equation 3 that restricts the total absolute values of the coefficients. The constraint is expressed as:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.e006" xlink:type="simple"/><label>(6)</label></disp-formula>where <italic>c</italic> is a tuning parameter.</p>
+        <p>Regression of the <italic>i</italic>th row of Equation 3 under the constraint provided by Equation 6 is equivalent to the regression of:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.e007" xlink:type="simple"/><label>(7)</label></disp-formula></p>
+        <p>Finding a least-squares solution of Equation 7 requires a subset of the <italic>b</italic> values to be set to zero. To achieve this goal we use the Least Angle RegreSsion (LARS) algorithm developed by Efron et al. <xref ref-type="bibr" rid="pcbi.1002513-Efron1">[44]</xref>, which starts with all <italic>b</italic>'s equal to zero and then iteratively adjusts their values to fit the model. Some of the <italic>b</italic>'s remain zero after the adjustment, resulting in the identification of an optimal set of non-zero <italic>b</italic> values for a particular <italic>c</italic> value (corresponding to λ in Equation 7).</p>
+      </sec>
+      <sec id="s4c">
+        <title>The General Cross-Validation (GCV) criterion for determining optimal predictors</title>
+        <p>The next step in model estimation is to tune the parameter <italic>c</italic> to achieve a best fit of Equation 7. The minimum value that <italic>c</italic> can take is zero, corresponding to the extreme case where all <italic>b</italic>'s are zero. The upper boundary is reached when LARS does not penalize any <italic>b</italic> to zero, making <italic>c</italic> equal to the sum of the absolute values of all <italic>b</italic>'s. Within this interval, a number (approximately 100 in our case) of <italic>c</italic> values is chosen to compute the subsets of <italic>b</italic>'s. For each <italic>c</italic> value, after an optimal subset has been found, the corresponding Residual Sum of Squares (RSS) is used to calculate a General Cross-Validation (GCV) statistic <xref ref-type="bibr" rid="pcbi.1002513-ValdesSosa1">[28]</xref>:<disp-formula><graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.e008" xlink:type="simple"/><label>(8)</label></disp-formula>where <italic>n</italic> is the number of independent observations and <italic>df</italic> is the estimated degrees of freedom from the LARS algorithm. From all the solutions, a GCV curve is plotted. The minimum GCV value determines the single most optimal set of predictors over all <italic>c</italic> values.</p>
+        <p>A subsequent Ordinary Least Squares (OLS) procedure is then applied to the new row equation with the selected predictors. To avoid using the same data to estimate the LASSO and OLS models, we randomly sort the data trials into two sets. One set is used to estimate the LASSO coefficients for model selection, and the other is then used to estimate OLS coefficients for the new row equation. In the second step, if the model order is one, as in our application, there is only one coefficient for each predictor. Either an <italic>F</italic>-test or a <italic>t</italic>-test is performed for each coefficient to determine whether its value is significantly different from zero. The resulting <italic>F</italic>-score or <italic>t</italic>-score characterizes the prediction by a predictor on the RHS of Equation 3 of the dependent variable on the LHS, and corresponds to the GC strength from that predictor to the dependent variable. Here we used the <italic>t</italic>-score to measure GC because it has a signed value, and thus indicates whether the GC is enhancing or reducing, in addition to indicating GC strength.</p>
+      </sec>
+      <sec id="s4d">
+        <title>Summary statistics of GC between two ROIs</title>
+        <p>The full B matrix may be estimated by following the above procedures for every row equation in Equation 3. It consists of four submatrices (B<sub>xy</sub>, B<sub>yx</sub>, B<sub>xx</sub>, and B<sub>yy</sub>), where the first subscripted index represents the predictor and the second represents the dependent variable. Thus, B<sub>xy</sub> represents connectivity from X to Y, B<sub>yx</sub> represents connectivity from Y to X, and B<sub>xx</sub> and B<sub>yy</sub> represent connectivity within X and within Y, respectively. In order to measure GC from one ROI to another (i.e., X→Y or Y→X), one or more statistics are needed to summarize the voxel-to-voxel GCs represented by significant coefficients in B<sub>xy</sub> or B<sub>yx</sub>.</p>
+        <p>The first summary statistic that we used was the fraction (<italic>f</italic>) of significant <italic>b</italic> values in the B matrix or one of its submatrices (representing the fraction of significant GCs) (<xref ref-type="fig" rid="pcbi-1002513-g008">Figure 8</xref>). The fraction of <italic>b</italic> values found to be significantly different from zero at p&lt;0.05 was corrected for multiple-comparisons by the False Discovery Rate (FDR). This summary statistic is a measure of density of the ROI-level connectivity. Because each <italic>b</italic> value represents a potential functional “connection”, the <italic>f</italic> summary statistic summarizes the fraction of all possible voxel-to-voxel connections from one ROI to another by which the two ROIs are actually connected.</p>
+        <fig id="pcbi-1002513-g008" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002513.g008</object-id>
+          <label>Figure 8</label>
+          <caption>
+            <title>Schematic illustration of the computation of summary statistics <italic>f</italic> and <italic>W</italic> for hypothetical submatrix B<sub>yx</sub>.</title>
+            <p>Red dots represent the voxels of ROI Y, green dots the voxels of ROI X, and arrows the significant <italic>t</italic>-scores between interregional voxel pairs. Positive values are colored orange and negative values are colored blue.</p>
+          </caption>
+          <graphic mimetype="image" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.g008" xlink:type="simple"/>
+        </fig>
+        <p>The second summary statistic used was the average strength of significant GC from voxels in one ROI to voxels in another (<xref ref-type="fig" rid="pcbi-1002513-g008">Figure 8</xref>). Consider, for example, the GC from (“sending”) ROI Y to (“receiving”) ROI X. Significant voxel-to-voxel GCs are represented by significant coefficients in B<sub>yx</sub>. For any given voxel <italic>x</italic> in ROI X having at least one significant (<italic>p</italic>&lt;0.05) <italic>t</italic>-score (indicating a significant GC) from ROI Y, we first summed the <italic>t</italic>-scores of all the GCs to <italic>x</italic>. This sum represents the total significant “input” to the “receiving” voxel <italic>x</italic> from all “sending” voxels in Y. Because the <italic>t</italic>-scores can be positive or negative, signifying that changes of activity in the “sending” voxel contribute to a change of activity in the “receiving” voxel either in the same or opposite direction, the sum of <italic>t</italic>-scores takes into account the balancing effect of positive and negative inputs to the same receiving voxel. We then computed the average strength of significant input over all receiving voxels in ROI X as the <italic>W</italic> summary statistic. The significance threshold for determining the number of significant inputs was corrected for multiple-comparisons by the FDR. The same procedure was also followed to assess the average strength of significant GC in the other direction, i.e. from ROI X to ROI Y using B<sub>xy</sub>. Although not the focus of this paper, <italic>W</italic> could also be computed to assess the average strength of significant GC within ROI X using B<sub>xx</sub>, or within ROI Y using B<sub>yy</sub>. <italic>W</italic> measures the average strength of GC from ROI Y to ROI X, but is not simply a weighted version of the <italic>f</italic> summary statistic. For example, a high <italic>W</italic> value from Y to X depends on a combination of the following: 1) many voxels in Y have high GC values to voxels in X; and 2) single voxels in X have significant GC values from multiple voxels in Y.</p>
+        <p>Simulation models were constructed using the R statistical computing package. For the purpose of comparing the GC strength of a simulation model with its estimated values, we computed the simulation <italic>W</italic> statistic directly from the <italic>b</italic> values of the simulation model. To make the estimated and simulation <italic>W</italic> measures comparable, we normalized the <italic>t</italic> and <italic>b</italic> values to <italic>z</italic>-scores (i.e. subtracted the mean and then divided by the standard deviation). Computer code used in this study will be freely provided for legitimate research purposes upon request from the first author.</p>
+      </sec>
+    </sec>
+    <sec id="s5">
+      <title>Supporting Information</title>
+      <supplementary-material id="pcbi.1002513.s001" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.s001" xlink:type="simple">
+        <label>Figure S1</label>
+        <caption>
+          <p><bold>Granger Causality patterns between simulated ROIs with multiple iterations.</bold> Comparison of <italic>t</italic>-scores from the averaging approach and the voxel-based <italic>f</italic> and <italic>W</italic> summary statistics computed directly from the model parameters, as in <xref ref-type="fig" rid="pcbi-1002513-g002">Figure 2</xref> but with multiple iterations of each parameter set. Each parameter set was repeatedly simulated with 20 iterations. Vertical bars show the standard error across runs.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002513.s002" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.s002" xlink:type="simple">
+        <label>Figure S2</label>
+        <caption>
+          <p><bold>Comparison of LASSO-GC and pairwise-GC methods in recovering the </bold><bold><italic>f</italic></bold><bold> summary statistic.</bold> Same comparison as in <xref ref-type="fig" rid="pcbi-1002513-g004">Figure 4</xref>, but with multiple iterations of each parameter set. Each parameter set was repeatedly simulated with 20 iterations. Vertical bars show the standard error across runs.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002513.s003" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.s003" xlink:type="simple">
+        <label>Figure S3</label>
+        <caption>
+          <p><bold>Comparison of LASSO-GC and pairwise-GC methods in recovering the </bold><bold><italic>W</italic></bold><bold> summary statistic.</bold> Same comparison as in <xref ref-type="fig" rid="pcbi-1002513-g005">Figure 5</xref>, but with multiple iterations of each parameter set. Each parameter set was repeatedly simulated with 20 iterations. Vertical bars show the standard error across runs.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002513.s004" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.s004" xlink:type="simple">
+        <label>Figure S4</label>
+        <caption>
+          <p><bold>Estimated connectivity patterns with the correlation measure.</bold> After the LASSO procedure, some of the coefficients in the connectivity matrix of the MVAR model were set to zero. The correlation scores were then computed for the voxel pairs having non-zero coefficients. Since both GC and correlation measures were computed after the LASSO procedure, they could be compared without the possibility of a connectivity bias due to LASSO. The display scheme is the same as in <xref ref-type="fig" rid="pcbi-1002513-g006">Figure 6B</xref>.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002513.s005" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.s005" xlink:type="simple">
+        <label>Figure S5</label>
+        <caption>
+          <p><bold>Comparison of the </bold><bold><italic>f</italic></bold><bold> summary scores.</bold> The <italic>f</italic> summary score is compared for measures of correlation without LASSO (blue), correlation with LASSO (red), and LASSO-GC (yellow). Supplementary to <xref ref-type="fig" rid="pcbi-1002513-g006">Figure 6C</xref>.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002513.s006" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.s006" xlink:type="simple">
+        <label>Figure S6</label>
+        <caption>
+          <p><bold>The model residuals correlation matrix for one simulation run.</bold> Each cell represents a color-coded correlation score between model residuals from two simulated voxels in the MVAR model. The diagonal cells represent the correlation of the voxel with itself, which always equals 1.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002513.s007" mimetype="image/tiff" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1002513.s007" xlink:type="simple">
+        <label>Figure S7</label>
+        <caption>
+          <p><bold>The model residuals correlation matrix for a representative ROI pair.</bold> Each cell represents a color-coded correlation score between model residuals from two voxels in the MVAR model estimated from the fMRI BOLD data. The diagonal cells represent correlation of the voxel with itself, which always equals 1.</p>
+          <p>(TIF)</p>
+        </caption>
+      </supplementary-material>
+    </sec>
+  </body>
+  <back>
+    <ref-list>
+      <title>References</title>
+      <ref id="pcbi.1002513-Bressler1">
+        <label>1</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bressler</surname><given-names>SL</given-names></name><name name-style="western"><surname>Menon</surname><given-names>V</given-names></name></person-group>             <year>2010</year>             <article-title>Large-scale brain networks in cognition: Emerging methods and principles.</article-title>             <source>Trends Cogn Sci</source>             <volume>14</volume>             <fpage>277</fpage>             <lpage>290</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Greicius1">
+        <label>2</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Greicius</surname><given-names>MD</given-names></name><name name-style="western"><surname>Krasnow</surname><given-names>B</given-names></name><name name-style="western"><surname>Reiss</surname><given-names>AL</given-names></name><name name-style="western"><surname>Menon</surname><given-names>V</given-names></name></person-group>             <year>2003</year>             <article-title>Functional connectivity in the resting brain: A network analysis of the default mode hypothesis.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>100</volume>             <fpage>253</fpage>             <lpage>258</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-He1">
+        <label>3</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>He</surname><given-names>BJ</given-names></name><name name-style="western"><surname>Snyder</surname><given-names>AZ</given-names></name><name name-style="western"><surname>Vincent</surname><given-names>JL</given-names></name><name name-style="western"><surname>Epstein</surname><given-names>A</given-names></name><name name-style="western"><surname>Shulman</surname><given-names>GL</given-names></name><etal/></person-group>             <year>2007</year>             <article-title>Breakdown of functional connectivity in frontoparietal networks underlies behavioral deficits in spatial neglect.</article-title>             <source>Neuron</source>             <volume>53</volume>             <fpage>905</fpage>             <lpage>918</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Hagmann1">
+        <label>4</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hagmann</surname><given-names>P</given-names></name><name name-style="western"><surname>Cammoun</surname><given-names>L</given-names></name><name name-style="western"><surname>Gigandet</surname><given-names>X</given-names></name><name name-style="western"><surname>Meuli</surname><given-names>R</given-names></name><name name-style="western"><surname>Honey</surname><given-names>CJ</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>Mapping the structural core of human cerebral cortex.</article-title>             <source>PLoS Biol</source>             <volume>6</volume>             <fpage>e159</fpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Anderson1">
+        <label>5</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Anderson</surname><given-names>JS</given-names></name><name name-style="western"><surname>Ferguson</surname><given-names>MA</given-names></name><name name-style="western"><surname>Lopez-Larson</surname><given-names>M</given-names></name><name name-style="western"><surname>Yurgelun-Todd</surname><given-names>D</given-names></name></person-group>             <year>2010</year>             <article-title>Topographic maps of multisensory attention.</article-title>             <source>Proc Natl Acad Sci U S A</source>             <volume>107</volume>             <fpage>20110</fpage>             <lpage>20114</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Zhang1">
+        <label>6</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Zhang</surname><given-names>L</given-names></name><name name-style="western"><surname>Zhong</surname><given-names>G</given-names></name><name name-style="western"><surname>Wu</surname><given-names>Y</given-names></name><name name-style="western"><surname>Vangel</surname><given-names>MG</given-names></name><name name-style="western"><surname>Jiang</surname><given-names>B</given-names></name><etal/></person-group>             <year>2010</year>             <article-title>Using Granger-Geweke causality model to evaluate the effective connectivity of primary motor cortex (M1), supplementary motor area (SMA) and cerebellum.</article-title>             <source>J Biomed Sci Eng</source>             <volume>3</volume>             <fpage>848</fpage>             <lpage>860</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Wiener1">
+        <label>7</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Wiener</surname><given-names>N</given-names></name></person-group>             <year>1956</year>             <article-title>The theory of prediction.</article-title>             <source>Modern Mathematics for the Engineer</source>             <publisher-loc>New York</publisher-loc>             <publisher-name>McGraw-Hill</publisher-name>             <fpage>165</fpage>             <lpage>190</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Granger1">
+        <label>8</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Granger</surname><given-names>CWJ</given-names></name></person-group>             <year>1969</year>             <article-title>Investigating causal relations by econometric models and cross-spectral methods.</article-title>             <source>Econometrica</source>             <volume>37</volume>             <fpage>424</fpage>             <lpage>38</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Bernasconi1">
+        <label>9</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bernasconi</surname><given-names>C</given-names></name><name name-style="western"><surname>Konig</surname><given-names>P</given-names></name></person-group>             <year>1999</year>             <article-title>On the directionality of cortical interactions studied by structural analysis of electrophysiological recordings.</article-title>             <source>Biol Cybern</source>             <volume>81</volume>             <fpage>199</fpage>             <lpage>210</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Ding1">
+        <label>10</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ding</surname><given-names>M</given-names></name><name name-style="western"><surname>Bressler</surname><given-names>SL</given-names></name><name name-style="western"><surname>Yang</surname><given-names>W</given-names></name><name name-style="western"><surname>Liang</surname><given-names>H</given-names></name></person-group>             <year>2000</year>             <article-title>Short-window spectral analysis of cortical event-related potentials by adaptive multivariate autoregressive modeling: data preprocessing, model validation, and variability assessment.</article-title>             <source>Biol Cybern</source>             <volume>83</volume>             <fpage>35</fpage>             <lpage>45</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Kaminski1">
+        <label>11</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Kaminski</surname><given-names>M</given-names></name><name name-style="western"><surname>Ding</surname><given-names>M</given-names></name><name name-style="western"><surname>Truccolo</surname><given-names>WA</given-names></name><name name-style="western"><surname>Bressler</surname><given-names>SL</given-names></name></person-group>             <year>2001</year>             <article-title>Evaluating causal relations in neural systems: Granger causality, directed transfer function and statistical assessment of significance.</article-title>             <source>Biol Cybern</source>             <volume>85</volume>             <fpage>145</fpage>             <lpage>157</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Hesse1">
+        <label>12</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hesse</surname><given-names>W</given-names></name><name name-style="western"><surname>Moller</surname><given-names>E</given-names></name><name name-style="western"><surname>Arnold</surname><given-names>M</given-names></name><name name-style="western"><surname>Schack</surname><given-names>B</given-names></name></person-group>             <year>2003</year>             <article-title>The use of time-variant EEG Granger causality for inspecting directed interdependencies of neural assemblies.</article-title>             <source>J Neurosci Meth</source>             <volume>124</volume>             <fpage>27</fpage>             <lpage>44</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Ding2">
+        <label>13</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Ding</surname><given-names>M</given-names></name><name name-style="western"><surname>Chen</surname><given-names>Y</given-names></name><name name-style="western"><surname>Bressler</surname><given-names>SL</given-names></name></person-group>             <year>2006</year>             <article-title>Granger causality: Basic theory and application to neuroscience.</article-title>             <person-group person-group-type="editor"><name name-style="western"><surname>Schelter</surname><given-names>S</given-names></name><name name-style="western"><surname>Winterhalder</surname><given-names>M</given-names></name><name name-style="western"><surname>Timmer</surname><given-names>J</given-names></name></person-group>             <source>Handbook of time series analysis</source>             <publisher-loc>Wienheim</publisher-loc>             <publisher-name>Wiley</publisher-name>             <fpage>438</fpage>             <lpage>460</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Bressler2">
+        <label>14</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bressler</surname><given-names>SL</given-names></name><name name-style="western"><surname>Seth</surname><given-names>AK</given-names></name></person-group>             <year>2011</year>             <article-title>Wiener–Granger Causality: A well established methodology.</article-title>             <source>Neuroimage</source>             <volume>58</volume>             <fpage>323</fpage>             <lpage>329</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Roebroeck1">
+        <label>15</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Roebroeck</surname><given-names>A</given-names></name><name name-style="western"><surname>Formisano</surname><given-names>E</given-names></name><name name-style="western"><surname>Goebel</surname><given-names>R</given-names></name></person-group>             <year>2005</year>             <article-title>Mapping directed influence over the brain using Granger causality and fMRI.</article-title>             <source>Neuroimage</source>             <volume>25</volume>             <fpage>230</fpage>             <lpage>242</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Deshpande1">
+        <label>16</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Deshpande</surname><given-names>G</given-names></name><name name-style="western"><surname>Hu</surname><given-names>X</given-names></name><name name-style="western"><surname>Stilla</surname><given-names>R</given-names></name><name name-style="western"><surname>Sathian</surname><given-names>K</given-names></name></person-group>             <year>2008</year>             <article-title>Effective connectivity during haptic perception: A study using Granger causality analysis of functional magnetic resonance imaging data.</article-title>             <source>Neuroimage</source>             <volume>40</volume>             <fpage>1807</fpage>             <lpage>1814</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Roebroeck2">
+        <label>17</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Roebroeck</surname><given-names>A</given-names></name><name name-style="western"><surname>Formisano</surname><given-names>E</given-names></name><name name-style="western"><surname>Goebel</surname><given-names>R</given-names></name></person-group>             <year>2011</year>             <article-title>The identification of interacting networks in the brain using fMRI: Model selection, causality and deconvolution.</article-title>             <source>Neuroimage</source>             <volume>58</volume>             <fpage>296</fpage>             <lpage>302</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Roebroeck3">
+        <label>18</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Roebroeck</surname><given-names>A</given-names></name><name name-style="western"><surname>Formisano</surname><given-names>E</given-names></name><name name-style="western"><surname>Goebel</surname><given-names>R</given-names></name></person-group>             <year>2011</year>             <article-title>Reply to Friston and David: After comments on: The identification of interacting networks in the brain using fMRI: Model selection, causality and deconvolution.</article-title>             <source>Neuroimage</source>             <volume>58</volume>             <fpage>310</fpage>             <lpage>311</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-David1">
+        <label>19</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>David</surname><given-names>O</given-names></name><name name-style="western"><surname>Guillemain</surname><given-names>I</given-names></name><name name-style="western"><surname>Saillet</surname><given-names>S</given-names></name><name name-style="western"><surname>Reyt</surname><given-names>S</given-names></name><name name-style="western"><surname>Deransart</surname><given-names>C</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>Identifying neural drivers with functional MRI: An electrophysiological validation.</article-title>             <source>PLoS Biol</source>             <volume>6</volume>             <fpage>2683</fpage>             <lpage>2697</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Friston1">
+        <label>20</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Friston</surname><given-names>K</given-names></name></person-group>             <year>2009</year>             <article-title>Causal modelling and brain connectivity in functional magnetic resonance imaging.</article-title>             <source>PLoS Biol</source>             <volume>7</volume>             <fpage>e1000033</fpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Friston2">
+        <label>21</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Friston</surname><given-names>K</given-names></name></person-group>             <year>2011</year>             <article-title>Functional and effective connectivity: A review.</article-title>             <source>Brain Connect</source>             <volume>1</volume>             <fpage>13</fpage>             <lpage>36</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Friston3">
+        <label>22</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Friston</surname><given-names>K</given-names></name></person-group>             <year>2011</year>             <article-title>Dynamic causal modeling and Granger causality Comments on: The identification of interacting networks in the brain using fMRI: Model selection, causality and deconvolution.</article-title>             <source>Neuroimage</source>             <volume>58</volume>             <fpage>303</fpage>             <lpage>305</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-David2">
+        <label>23</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>David</surname><given-names>O</given-names></name></person-group>             <year>2011</year>             <article-title>fMRI connectivity, meaning and empiricism Comments on: The identification of interacting networks in the brain using fMRI: Model selection, causality and deconvolution.</article-title>             <source>Neuroimage</source>             <volume>58</volume>             <fpage>306</fpage>             <lpage>309</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Bressler3">
+        <label>24</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Bressler</surname><given-names>SL</given-names></name><name name-style="western"><surname>Tang</surname><given-names>W</given-names></name><name name-style="western"><surname>Sylvester</surname><given-names>CM</given-names></name><name name-style="western"><surname>Shulman</surname><given-names>GL</given-names></name><name name-style="western"><surname>Corbetta</surname><given-names>M</given-names></name></person-group>             <year>2008</year>             <article-title>Top-down control of human visual cortex by frontal and parietal cortex in anticipatory visual spatial attention.</article-title>             <source>J Neurosci</source>             <volume>28</volume>             <fpage>10056</fpage>             <lpage>10061</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Geweke1">
+        <label>25</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Geweke</surname><given-names>JF</given-names></name></person-group>             <year>1984</year>             <article-title>Measures of conditional linear dependence and feedback between time series.</article-title>             <source>J Amer Stat Assoc</source>             <volume>79</volume>             <fpage>907</fpage>             <lpage>915</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Chen1">
+        <label>26</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Chen</surname><given-names>Y</given-names></name><name name-style="western"><surname>Bressler</surname><given-names>S</given-names></name><name name-style="western"><surname>Ding</surname><given-names>M</given-names></name></person-group>             <year>2006</year>             <article-title>Frequency decomposition of conditional Granger causality and application to multivariate neural field potential data.</article-title>             <source>J Neurosci Meth</source>             <volume>150</volume>             <fpage>228</fpage>             <lpage>237</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Seth1">
+        <label>27</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Seth</surname><given-names>AK</given-names></name><name name-style="western"><surname>Edelman</surname><given-names>GM</given-names></name></person-group>             <year>2007</year>             <article-title>Distinguishing causal interactions in neural populations.</article-title>             <source>Neur Comp</source>             <volume>19</volume>             <fpage>910</fpage>             <lpage>933</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-ValdesSosa1">
+        <label>28</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Valdes-Sosa</surname><given-names>PA</given-names></name><name name-style="western"><surname>Sanchez-Bornot</surname><given-names>JM</given-names></name><name name-style="western"><surname>Lage-Castellanos</surname><given-names>A</given-names></name><name name-style="western"><surname>Vega-Hernandez</surname><given-names>M</given-names></name><name name-style="western"><surname>Bosch-Bayard</surname><given-names>J</given-names></name><etal/></person-group>             <year>2005</year>             <article-title>Estimating brain functional connectivity with sparse multivariate autoregression.</article-title>             <source>Philos Trans Royal Soc B: Biol Sci</source>             <volume>360</volume>             <fpage>969</fpage>             <lpage>981</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Tibshirani1">
+        <label>29</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Tibshirani</surname><given-names>R</given-names></name></person-group>             <year>2011</year>             <article-title>Regression shrinkage and selection via the lasso: A retrospective.</article-title>             <source>J R Stat Soc B Stat Methodol</source>             <volume>73</volume>             <fpage>273</fpage>             <lpage>282</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Arnold1">
+        <label>30</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Arnold</surname><given-names>A</given-names></name><name name-style="western"><surname>Liu</surname><given-names>Y</given-names></name><name name-style="western"><surname>Abe</surname><given-names>N</given-names></name></person-group>             <year>2007</year>             <article-title>Temporal causal modeling with graphical granger methods.</article-title>             <fpage>66</fpage>             <lpage>75</lpage>             <comment>In: Proceedings of the 13th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining; 12–15 August 2007; San Jose, California, United States</comment>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Shojaie1">
+        <label>31</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Shojaie</surname><given-names>A</given-names></name><name name-style="western"><surname>Michailidis</surname><given-names>G</given-names></name></person-group>             <year>2010</year>             <article-title>Discovering graphical Granger causality using the truncating lasso penalty.</article-title>             <source>Bioinf</source>             <volume>26</volume>             <fpage>i517</fpage>             <lpage>i523</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-SanchezBornot1">
+        <label>32</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Sanchez-Bornot</surname><given-names>JM</given-names></name><name name-style="western"><surname>Martinez-Montes</surname><given-names>E</given-names></name><name name-style="western"><surname>Lage-Castellanos</surname><given-names>A</given-names></name><name name-style="western"><surname>Vega-Hernandez</surname><given-names>M</given-names></name><name name-style="western"><surname>Valdes-Sosa</surname><given-names>PA</given-names></name></person-group>             <year>2008</year>             <article-title>Uncovering sparse brain effective connectivity: A voxel-based approach using penalized regression.</article-title>             <source>Stat Sin</source>             <volume>18</volume>             <fpage>1501</fpage>             <lpage>1518</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Garg1">
+        <label>33</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Garg</surname><given-names>R</given-names></name><name name-style="western"><surname>Cecchi</surname><given-names>GA</given-names></name><name name-style="western"><surname>Rao</surname><given-names>AR</given-names></name></person-group>             <year>2011</year>             <article-title>Full-brain auto-regressive modeling (FARM) using fMRI.</article-title>             <source>Neuroimage</source>             <volume>58</volume>             <fpage>416</fpage>             <lpage>441</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Sylvester1">
+        <label>34</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Sylvester</surname><given-names>CM</given-names></name><name name-style="western"><surname>Shulman</surname><given-names>GL</given-names></name><name name-style="western"><surname>Jack</surname><given-names>AI</given-names></name><name name-style="western"><surname>Corbetta</surname><given-names>M</given-names></name></person-group>             <year>2007</year>             <article-title>Asymmetry of anticipatory activity in visual cortex predicts the locus of attention and perception.</article-title>             <source>J Neurosci</source>             <volume>27</volume>             <fpage>14424</fpage>             <lpage>14433</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Roebroeck4">
+        <label>35</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Roebroeck</surname><given-names>A</given-names></name><name name-style="western"><surname>Formisano</surname><given-names>E</given-names></name><name name-style="western"><surname>Goebel</surname><given-names>R</given-names></name></person-group>             <year>2005</year>             <article-title>Mapping directed influence over the brain using Granger causality and fMRI.</article-title>             <source>Neuroimage</source>             <volume>25</volume>             <fpage>230</fpage>             <lpage>242</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Cohen1">
+        <label>36</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Cohen</surname><given-names>AL</given-names></name><name name-style="western"><surname>Fair</surname><given-names>DA</given-names></name><name name-style="western"><surname>Dosenbach</surname><given-names>NUF</given-names></name><name name-style="western"><surname>Miezin</surname><given-names>FM</given-names></name><name name-style="western"><surname>Dierker</surname><given-names>D</given-names></name><etal/></person-group>             <year>2008</year>             <article-title>Defining functional areas in individual human brains using resting functional connectivity MRI.</article-title>             <source>Neuroimage</source>             <volume>41</volume>             <fpage>45</fpage>             <lpage>57</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-He2">
+        <label>37</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>He</surname><given-names>Y</given-names></name><name name-style="western"><surname>Chen</surname><given-names>ZJ</given-names></name><name name-style="western"><surname>Evans</surname><given-names>AC</given-names></name></person-group>             <year>2007</year>             <article-title>Small-world anatomical networks in the human brain revealed by cortical thickness from MRI.</article-title>             <source>Cereb Cortex</source>             <volume>17</volume>             <fpage>2407</fpage>             <lpage>2419</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Gong1">
+        <label>38</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Gong</surname><given-names>G</given-names></name><name name-style="western"><surname>He</surname><given-names>Y</given-names></name><name name-style="western"><surname>Concha</surname><given-names>L</given-names></name><name name-style="western"><surname>Lebel</surname><given-names>C</given-names></name><name name-style="western"><surname>Gross</surname><given-names>DW</given-names></name><etal/></person-group>             <year>2009</year>             <article-title>Mapping anatomical connectivity patterns of human cerebral cortex using in vivo diffusion tensor imaging tractography.</article-title>             <source>Cereb Cortex</source>             <volume>19</volume>             <fpage>524</fpage>             <lpage>536</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Tibshirani2">
+        <label>39</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Tibshirani</surname><given-names>R</given-names></name><name name-style="western"><surname>Saunders</surname><given-names>M</given-names></name><name name-style="western"><surname>Rosset</surname><given-names>S</given-names></name><name name-style="western"><surname>Zhu</surname><given-names>J</given-names></name><name name-style="western"><surname>Knight</surname><given-names>K</given-names></name></person-group>             <year>2005</year>             <article-title>Sparsity and smoothness via the fused lasso.</article-title>             <source>J R Stat Soc Ser B Stat Methodol</source>             <volume>67</volume>             <fpage>91</fpage>             <lpage>108</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Zou1">
+        <label>40</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Zou</surname><given-names>H</given-names></name><name name-style="western"><surname>Hastie</surname><given-names>T</given-names></name></person-group>             <year>2005</year>             <article-title>Regularization and variable selection via the elastic net.</article-title>             <source>J R Stat Soc Ser B Stat Methodol</source>             <volume>67</volume>             <fpage>301</fpage>             <lpage>320</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Yuan1">
+        <label>41</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Yuan</surname><given-names>M</given-names></name><name name-style="western"><surname>Lin</surname><given-names>Y</given-names></name></person-group>             <year>2006</year>             <article-title>Model selection and estimation in regression with grouped variables.</article-title>             <source>J R Stat Soc Ser B Stat Methodol</source>             <volume>68</volume>             <fpage>49</fpage>             <lpage>67</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Hesterberg1">
+        <label>42</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Hesterberg</surname><given-names>T</given-names></name><name name-style="western"><surname>Choi</surname><given-names>NH</given-names></name><name name-style="western"><surname>Meier</surname><given-names>L</given-names></name><name name-style="western"><surname>Fraley</surname><given-names>C</given-names></name></person-group>             <year>2008</year>             <article-title>Least angle and <italic>l</italic><sub>1</sub> penalized regression: A review.</article-title>             <source>Statist Surv</source>             <volume>2</volume>             <fpage>61</fpage>             <lpage>93</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Greene1">
+        <label>43</label>
+        <element-citation publication-type="other" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Greene</surname><given-names>W</given-names></name></person-group>             <year>2003</year>             <article-title>Least squares.</article-title>             <source>Econometric Analysis</source>             <publisher-loc>Upper Saddle River, NJ</publisher-loc>             <publisher-name>Prentice Hall</publisher-name>             <fpage>19</fpage>             <lpage>40</lpage>          </element-citation>
+      </ref>
+      <ref id="pcbi.1002513-Efron1">
+        <label>44</label>
+        <element-citation publication-type="journal" xlink:type="simple">             <person-group person-group-type="author"><name name-style="western"><surname>Efron</surname><given-names>B</given-names></name><name name-style="western"><surname>Hastie</surname><given-names>T</given-names></name><name name-style="western"><surname>Johnstone</surname><given-names>I</given-names></name><name name-style="western"><surname>Tibshirani</surname><given-names>R</given-names></name></person-group>             <year>2004</year>             <article-title>Least angle regression.</article-title>             <source>Ann Stat</source>             <volume>32</volume>             <fpage>407</fpage>             <lpage>499</lpage>          </element-citation>
+      </ref>
+    </ref-list>
+    
+  </back>
+</article>

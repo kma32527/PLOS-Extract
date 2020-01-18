@@ -1,0 +1,969 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" dtd-version="3.0" xml:lang="en" article-type="research-article">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-15-01015</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004642</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Predicting Surgery Targets in Temporal Lobe Epilepsy through Structural Connectome Based Simulations</article-title>
+<alt-title alt-title-type="running-head">Predicting Epilepsy Surgery Targets with Connectome Based Simulations</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Hutchings</surname> <given-names>Frances</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Han</surname> <given-names>Cheol E.</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Keller</surname> <given-names>Simon S.</given-names></name>
+<xref ref-type="aff" rid="aff004"><sup>4</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Weber</surname> <given-names>Bernd</given-names></name>
+<xref ref-type="aff" rid="aff005"><sup>5</sup></xref>
+<xref ref-type="aff" rid="aff006"><sup>6</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Taylor</surname> <given-names>Peter N.</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff007"><sup>7</sup></xref>
+<xref ref-type="fn" rid="econtrib001"><sup>‡</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Kaiser</surname> <given-names>Marcus</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="aff" rid="aff007"><sup>7</sup></xref>
+<xref ref-type="fn" rid="econtrib001"><sup>‡</sup></xref>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<label>1</label>
+<addr-line>Interdisciplinary Computing and Complex BioSystems, School of Computing Science, Newcastle University, Newcastle upon Tyne, United Kingdom</addr-line>
+</aff>
+<aff id="aff002">
+<label>2</label>
+<addr-line>Department of Biomedical Engineering, Korea University, Seoul, Republic of Korea</addr-line>
+</aff>
+<aff id="aff003">
+<label>3</label>
+<addr-line>Department of Brain Cognitive Sciences, Seoul National University, Seoul, Republic of Korea</addr-line>
+</aff>
+<aff id="aff004">
+<label>4</label>
+<addr-line>Department of Molecular and Clinical Pharmacology, Institute of Translational Medicine, University of Liverpool, Liverpool, United Kingdom</addr-line>
+</aff>
+<aff id="aff005">
+<label>5</label>
+<addr-line>Center for Economics and Neuroscience, University of Bonn, Bonn, Germany</addr-line>
+</aff>
+<aff id="aff006">
+<label>6</label>
+<addr-line>Department of Epileptology, University of Bonn, Bonn, Germany</addr-line>
+</aff>
+<aff id="aff007">
+<label>7</label>
+<addr-line>Institute of Neuroscience, Newcastle University, Newcastle upon Tyne, United Kingdom</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Sporns</surname> <given-names>Olaf</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>Indiana University, UNITED STATES</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: PNT MK FH. Performed the experiments: FH. Analyzed the data: FH PNT MK SSK. Contributed reagents/materials/analysis tools: BW CEH PNT. Wrote the paper: FH PNT MK SSK CEH BW.</p>
+</fn>
+<fn fn-type="other" id="econtrib001">
+<p>‡PNT and MK are joint senior authors.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">f.hutchings@newcastle.ac.uk</email></corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<month>12</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>10</day>
+<month>12</month>
+<year>2015</year>
+</pub-date>
+<volume>11</volume>
+<issue>12</issue>
+<elocation-id>e1004642</elocation-id>
+<history>
+<date date-type="received">
+<day>24</day>
+<month>6</month>
+<year>2015</year>
+</date>
+<date date-type="accepted">
+<day>29</day>
+<month>10</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Hutchings et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004642" xlink:type="simple"/>
+<abstract>
+<p>Temporal lobe epilepsy (TLE) is a prevalent neurological disorder resulting in disruptive seizures. In the case of drug resistant epilepsy resective surgery is often considered. This is a procedure hampered by unpredictable success rates, with many patients continuing to have seizures even after surgery. In this study we apply a computational model of epilepsy to patient specific structural connectivity derived from diffusion tensor imaging (DTI) of 22 individuals with left TLE and 39 healthy controls. We validate the model by examining patient-control differences in simulated seizure onset time and network location. We then investigate the potential of the model for surgery prediction by performing <italic>in silico</italic> surgical resections, removing nodes from patient networks and comparing seizure likelihood post-surgery to pre-surgery simulations. We find that, first, patients tend to transit from non-epileptic to epileptic states more often than controls in the model. Second, regions in the left hemisphere (particularly within temporal and subcortical regions) that are known to be involved in TLE are the most frequent starting points for seizures in patients in the model. In addition, our analysis also implicates regions in the contralateral and frontal locations which may play a role in seizure spreading or surgery resistance. Finally, the model predicts that patient-specific surgery (resection areas chosen on an individual, model-prompted, basis and not following a predefined procedure) may lead to better outcomes than the currently used routine clinical procedure. Taken together this work provides a first step towards patient specific computational modelling of epilepsy surgery in order to inform treatment strategies in individuals.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>Temporal lobe epilepsy (TLE) is a disorder characterised by unpredictable seizures, where surgical removal of brain tissue is often the final treatment option. In roughly 30% of cases surgery procedures are unsuccessful at preventing future seizures. This paper shows the application of a computational model which uses patient derived brain connectivity to predict the success rates of surgery in people with TLE. We consider the brains of 22 patients as networks, with brain regions as nodes and the white matter connections between them as edges. The brain network is unique to each subject and produced from brain imaging scans of 22 patients and 39 controls. Seizures are simulated before and after surgery, where surgery in the model is the removal of nodes from the network. The model successfully identifies regions known to be involved in TLE, and its predicted success rates for surgery are close to the results found in reality. The model additionally provides patient specific recommendations for surgical procedures, which in simulations show improved results compared to standard surgery in every case. This is a first step towards designing personalised surgery procedures in order to improve surgery success rates.</p>
+</abstract>
+<funding-group>
+<funding-statement>PNT and MK were supported by the Engineering and Physical Sciences Research Council of the United Kingdom (EP/K026992/1) as part of the Human Brain Development Project (<ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.greenbrainproject.org/">http://www.greenbrainproject.org/</ext-link>). SSK was supported by the Medical Research Council New Investigator Research Grant (Grant Number: MR/K023152/1). CEH was supported by National Research Foundation of South Korea funded by the Ministry of Education, Science and Technology (R32-10142, MSIP-2010-0028631, MSIP-2013-004157, MSIP-R1A1A1008173). BW was supported by a Heisenberg Grant of the German Research Council (DFG; We 4427/3-2). FH acknowledges support from the Engineering and Physical Sciences Research Council of the United Kingdom. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="7"/>
+<table-count count="1"/>
+<page-count count="24"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>The data underlying the figures and conclusions of the manuscript are now available for public access at the Zenodo repository, DOI: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.5281/zenodo.33639" xlink:type="simple">10.5281/zenodo.33639</ext-link>, URL: <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="https://zenodo.org/record/33639#.VkN-WivY_l8">https://zenodo.org/record/33639#.VkN-WivY_l8</ext-link>.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Epilepsy is a spectrum of disorders characterised by recurrent seizures originating in the brain. Epileptic seizures are defined as spontaneous occurrences of signs and symptoms due to abnormal neuronal activity in the brain [<xref ref-type="bibr" rid="pcbi.1004642.ref001">1</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref002">2</xref>]. Roughly 50 million people suffer from epilepsy [<xref ref-type="bibr" rid="pcbi.1004642.ref003">3</xref>] and in many cases it can be exceedingly debilitating. There are many types of epilepsy, classified by where in the brain seizures start or what the root cause is thought to be [<xref ref-type="bibr" rid="pcbi.1004642.ref004">4</xref>]. In this study we focus on the most common medically intractable form of epilepsy, temporal lobe epilepsy (TLE), characterised by a supposed focal origin of seizures in the temporal lobe.</p>
+<p>Anti-convulsant drugs are the main method of treatment for epilepsy, however in about 30% of cases they are unsuccessful at preventing seizures. When drug therapies fail, surgery is an alternative treatment option for many patients. In TLE this involves the resection of regions of the temporal lobe assumed to be the source of the epileptic activity. Short term results show 53%-84% of patients achieving seizure freedom following surgery [<xref ref-type="bibr" rid="pcbi.1004642.ref005">5</xref>], however post-surgery longitudinal studies report only around 47%—65% of patients become seizure free following the resection of focal areas [<xref ref-type="bibr" rid="pcbi.1004642.ref006">6</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref007">7</xref>].</p>
+<p>Atrophy of focal brain areas in and around the temporal lobe is frequently found in people with TLE [<xref ref-type="bibr" rid="pcbi.1004642.ref008">8</xref>–<xref ref-type="bibr" rid="pcbi.1004642.ref014">14</xref>] using magnetic resonance imaging (MRI). However, recent suggestions are that TLE may involve areas far beyond the temoral lobe, forming a suggested epileptogenic network [<xref ref-type="bibr" rid="pcbi.1004642.ref015">15</xref>]. Diffusion weighted MRI (DW-MRI) allows for the inference of hypothesised white matter fibre tracts which connect brain areas [<xref ref-type="bibr" rid="pcbi.1004642.ref016">16</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref017">17</xref>]. This can be used to create a patient specific network of structural brain connectivity between the aforementioned brain areas [<xref ref-type="bibr" rid="pcbi.1004642.ref018">18</xref>–<xref ref-type="bibr" rid="pcbi.1004642.ref023">23</xref>].</p>
+<p>Epilepsy is a disorder which involves propagation of high amplitude oscillatory dynamics over large areas of brain tissue during seizures. This means that modelling a disorder such as epilepsy ideally requires a large scale model of the brain, with realistic connections through which the activity can spread. To this end the brain can be modelled as a network, with structurally distinct regions abstracted to single nodes and the connections between these discrete regions mapped through imaging techniques such as DW-MRI. Using such simplified brain networks, seizure initiation and spreading can be modelled using connectivity specific to individual patients [<xref ref-type="bibr" rid="pcbi.1004642.ref002">2</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref024">24</xref>–<xref ref-type="bibr" rid="pcbi.1004642.ref026">26</xref>].</p>
+<p>Computational modelling of epilepsy has been accomplished in various forms, though very few have used patient specific whole brain network data [<xref ref-type="bibr" rid="pcbi.1004642.ref027">27</xref>]. Most commonly neural mass models—simulated populations of connected neurons—have been used to produce or explore models of epileptogenesis [<xref ref-type="bibr" rid="pcbi.1004642.ref028">28</xref>–<xref ref-type="bibr" rid="pcbi.1004642.ref037">37</xref>]. Various mechanisms for seizure initiation have been proposed, and one of the most commonly used is bistability (see [<xref ref-type="bibr" rid="pcbi.1004642.ref002">2</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref038">38</xref>] for reviews). This mechanism requires the system to have two stable states which coexist, a resting state (e.g. fixed point) and a state with seizure-like dynamics, (e.g. a high amplitude limit cycle). While in a parameter region where both these states are potentially available, the system is set to receive a noisy input such that when the noise passes a certain threshold the system transitions from one state to the other. A clear example of this in the context of epilepsy is the model described by Kalitzin <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004642.ref039">39</xref>] and refined by Benjamin <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004642.ref040">40</xref>], where one parameter controls the attraction of the system to the two stable states. This has been applied to network models to investigate the spread and likelihood of seizures dependent on connectivity [<xref ref-type="bibr" rid="pcbi.1004642.ref040">40</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref041">41</xref>]. However, those studies did not use structural connectivity derived from DTI.</p>
+<p>We aim to develop a framework for predicting surgical outcomes in patients following resective epilepsy surgery using a bistable model and DTI data obtained from patients with epilepsy. Following previous reported surgical success rates of around 50%-80% [<xref ref-type="bibr" rid="pcbi.1004642.ref005">5</xref>–<xref ref-type="bibr" rid="pcbi.1004642.ref007">7</xref>] we hypothesise that our model predictions shall also be in this range. Furthermore, we hypothesise that subject-specific surgery will give greater seizure reduction than that of standard resection procedures in our simulations.</p>
+</sec>
+<sec id="sec002" sec-type="results">
+<title>Results</title>
+<p>As detailed in the modelling section, we applied a mathematical model to DW-MRI acquired patient specific connectivity networks and observed the results of simulations of regions of interest (ROI), or ‘node’, activity over time. Each ROI can transition (‘escape’) into a seizure state with a probability influenced by the region’s surface area, connectivity, and fluctuations in background noise. Escape times are taken to be representative of seizure likelihood, as a fast escape time means there would be more seizures on average for that node than for one with a slower escape time, i.e. a greater likelihood of a seizure occurring. Our analysis includes the simulations of 39 controls and 22 patients with left TLE.</p>
+<sec id="sec003">
+<title>Model validation</title>
+<p>In reality controls have a significantly lower likelihood of having seizures than patients. <xref ref-type="fig" rid="pcbi.1004642.g001">Fig 1</xref> shows this, on average, to be the case in the model. A comparison of the times taken for the first three ROIs to escape from the resting state into the pseudo-seizure state for patients versus controls is shown in the figure, with a clear difference in distribution evident. The time taken for three nodes to escape was taken to be the seizure start time (‘escape time’) as we considered this to be evidence of the beginning of spreading of the seizure activity. The simulation was repeated 100 times with different noise seeds on each iteration, and the escape times were averaged over the 100 runs. These results are significant (<italic>p</italic> &lt; 0.001) checked using a Mann-Whitney U test. These results also hold true for the first and second escape (<xref ref-type="supplementary-material" rid="pcbi.1004642.s001">S1 Fig</xref>).</p>
+<fig id="pcbi.1004642.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004642.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Patient’s nodes tend to escape to the seizure state faster than control’s.</title>
+<p>Comparison of patients and controls initial transition times into the seizure state. A seizure state was deemed to have occurred once three nodes had escaped, so the times here are when the third node hit the seizure state. Asterisks represent a significant difference found at <italic>p</italic> &lt; 0.001 using a Mann-Whitney U test. Each dot represents the mean escape time for one individual subject over 100 iterations, grey bars reach the mean of each subject group, error bars show the standard error of the mean. Higher times indicate that the individual took longer to reach a seizure state.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004642.g001"/>
+</fig>
+<p>Our second validation of the model examines where the initial escaping nodes are situated in the brain. In left TLE a seizure origin in the left temporal lobe would be expected for the model to match clinical observations. <xref ref-type="fig" rid="pcbi.1004642.g002">Fig 2a)</xref> shows the top ten escaping nodes, found by taking the mode for patient and control populations, in blue and red respectively. The five green nodes indicate locations in the top ten of both populations. <xref ref-type="supplementary-material" rid="pcbi.1004642.s004">S2 Table</xref> shows the top three nodes for every subject, from which the overall top ten were found, separately for patients and controls. While the red control escape locations are scattered with no discernible pattern, the blue patient escape locations are concentrated on the left hemisphere of the brain and predominantly in the temporal (temporal pole) or in subcortical (amygdala, putamen, thalamus) areas. Furthermore, there was a greater consistency of escaping nodes in patients than controls, with nodes in the top ten appearing 60.6% of the time. The left hemisphere amygdala was in the top three in 54% of the patients when taking the modes for each patient over all iterations, and occurred at least once in each patient top three over the 100 iterations. The consistency was reduced in controls, where nodes in the top ten appeared 30.7% of the time, with no one node occurring in more than 50% of controls over 100 iterations. <xref ref-type="fig" rid="pcbi.1004642.g002">Fig 2b)</xref> illustrates the difference with a bar plot comparison between patients and controls. The model therefore also reproduces a more stereotyped seizure pattern in patients, than in controls. This is in agreement with previous studies [<xref ref-type="bibr" rid="pcbi.1004642.ref025">25</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref042">42</xref>].</p>
+<fig id="pcbi.1004642.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004642.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Patient-control ten earliest escape locations compared.</title>
+<p>Part a) shows the locations of the top ten most ‘seizure-prone’ nodes. These were found by taking the mode over the first three nodes to escape for each subject (split into patient and control groups) for all simulations without resections. The nodes represent locations in the brain network, and are coloured according to the group they escaped first in—blue for patients, red for controls and green for where the location was in the top ten to escape for both groups. Smaller grey circles show the locations of other nodes in the network which were not in either top ten. The main figure has location labels for patient areas, and the inset figure (transverse plane) has a dashed line encircling the main group of nodes for patients which are clustered in or around the temporal lobe. It is perhaps worth noting that while escape times are not apparent in this image controls nodes did take longer to escape than patients for all locations. Part b) shows the consistency of the top ten nodes compared for patients and controls, where patients show greater consistency for all the shared nodes and strikingly the left hemisphere amygdala escaped to the seizure state in every single patient at least once over 100 iterations.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004642.g002"/>
+</fig>
+</sec>
+<sec id="sec004">
+<title>Model underpinnings</title>
+<p>In order to pinpoint why we see the pattern of escaping nodes found in <xref ref-type="fig" rid="pcbi.1004642.g002">Fig 2</xref> a number of network measures were tested. In the model the two major influences on node escape times are surface area and connectivity. Surface area alone does not correlate strongly with the pattern of fastest escaping nodes (see <xref ref-type="supplementary-material" rid="pcbi.1004642.s005">S3 Table</xref>) therefore we looked at the connectivity to see whether there were any clear markers of seizure prone nodes from connectivity measures. One possibility was that hub nodes could prove to be more seizure prone, as there are ROIs with a large number of incoming connections and as such may receive large inputs pushing them closer to the seizure threshold. Additionally the high number of connections means they are more likely to receive input from a node which has already hit a seizure state and are then liable to be pushed over the seizure threshold themselves by the pathological input. We predicted that the nodes which appear as fast escapers for both patients and controls may be natural hubs, explaining their appearance in <xref ref-type="fig" rid="pcbi.1004642.g002">Fig 2</xref>.</p>
+<p>
+<xref ref-type="fig" rid="pcbi.1004642.g003">Fig 3</xref> focuses on the five nodes which occurred in the top ten escaping nodes of both patients and controls. The node measures for the shared five are displayed beneath a map of the distribution of that node measure for all subjects. The results do support the idea that the shared nodes are liable to be network hubs, showing a low clustering coefficient value but much higher node strength and degree values than most ROIs. <xref ref-type="fig" rid="pcbi.1004642.g004">Fig 4</xref> shows the remaining unshared nodes in the top ten for patients and controls compared using a Mann-Whitney U test for the ROI in patients against the same region in controls for given network measures. Because these differ between groups we looked for evidence that there were differences in the node network properties between the groups. However there were no clear trends to indicate that any one network measure could account for these nodes being in the top ten.</p>
+<fig id="pcbi.1004642.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004642.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Commonly escaping nodes shared between patients and controls are network hubs.</title>
+<p>Five of the most commonly escaping nodes in patients and controls occurred in both groups, and different node measures are compared for these nodes here. For each network measure in the figure the distribution for all nodes in all subjects is shown in the top section of the plots. The dots in the lower section reveal where in this distribution the shared nodes occur for the given measure. These locations are shown separately for the ROI in patients and controls (coloured green and red respectively) displaying the median value for the groups. The high node strength, degree and eigenvector centrality values for the shared nodes with a low clustering coefficient support the idea that these regions may be network hubs.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004642.g003"/>
+</fig>
+<fig id="pcbi.1004642.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004642.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Commonly escaping nodes which differ between patients and controls compared.</title>
+<p>As these nodes have different escape time patterns in patients and controls we checked for network differences between the two groups. Z scores were found using a Mann-Whitney U test comparing network measures for the unshared nodes between patients and controls. A negative value means that the node score was lower in patients than in controls, and a positive z score means the node score was higher in patients than in controls. There are no clear differences which implies more complex origins for the different escape time results.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004642.g004"/>
+</fig>
+<p>In summary, the rapid escape time of some nodes can be attributed to shared properties of being network hubs. However, the complex interplay of connectivity, surface area, variations in streamline length (delays) and nonlinearities in the model, leads to highly nontrivial outcomes in the simulations.</p>
+</sec>
+<sec id="sec005">
+<title>Model prediction</title>
+<p>Here we test the impact of removing 1) randomly selected adjacent nodes, 2) nodes routinely removed clinically (amygdala, hippocampus and parahippocampal gyrus) and 3) optimised patient specific nodes. It is worth noting here that the patient specific resections removed the top three most seizure prone nodes for each individual patient. This did not account for whether the chosen ROIs would be practical to remove in an actual surgery procedure. <xref ref-type="fig" rid="pcbi.1004642.g005">Fig 5(a)</xref> shows a comparison of the simulation results when using different resection methods. The percentage improvements were found for each resection technique, and the mean improvement for each patient is plotted in this figure. There is a clear increase in improvement from random resections to clinical, and then again to the subject specific resections. Asterisks indicate that the distributions of improvement times are significantly different between techniques. The simulations were repeated over 100 iterations with differing noise seeds, and comparisons of the escape times were patient by patient. Subject specific resections removed the top 3 fastest escaping nodes for each patient. (<xref ref-type="supplementary-material" rid="pcbi.1004642.s004">S2 Table</xref> shows the top 3 escaping nodes for each patient).</p>
+<fig id="pcbi.1004642.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004642.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Simulated surgery results comparisons.</title>
+<p>For every patient three different methods of resection were used and then the escape times were compared for each patient pre and post surgery (surgery simulation results compared to results from simulations where no surgery was carried out). Plot <bold>(a)</bold> shows the mean percentage improvement in escape time for each patient by resection method, where escape time was taken to be the time by which 3 nodes had hit a seizure state. Grey bars reach the mean of each subject group, error bars show the standard error of the mean. The circled values are the means for the patient shown in plot (b). A single patient representative example is shown in plot <bold>(b)</bold>, with the percentage improvements found for each simulation plotted and compared by resection technique. Stars represent the significance level, 1 star for significance at <italic>p</italic> &lt; 0.05, 2 stars for <italic>p</italic> &lt; 0.01 and 3 stars for <italic>p</italic> &lt; 0.001. A Mann-Whitney U test with Bonferroni correction was carried out to find the p-values following significant results found from Kruskal-Wallis tests.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004642.g005"/>
+</fig>
+<p>
+<xref ref-type="fig" rid="pcbi.1004642.g005">Fig 5(b)</xref> shows a comparison of improvements in escape time for different resection methods for a single subject. In this case the simulated clinical resection was successful, producing significant improvements. The subject specific resection was even more successful, significantly reducing seizure likelihood compared to unresected and also the clinical resections. When looking directly at escape times the difference between the unresected and random resection simulations was insignificant at <italic>p</italic> &lt; 0.05, both for the patient singled out in <xref ref-type="fig" rid="pcbi.1004642.g005">Fig 5(b)</xref> and when comparing all patient simulations together.</p>
+<p>Finally <xref ref-type="table" rid="pcbi.1004642.t001">Table 1</xref> compares the percentage of patients who show significant improvements in our model following resection of clinically removed areas with established literature on surgery success. Simulation results were found using a paired t-test comparing before and after escape times for each patient over all iterations, with a significance level of <italic>p</italic> &lt; 0.05. The removal of clinically resected regions in our model produced significant improvements in 72.7% of patients, and the subject specific resections showed improvements in 100% of cases (also included in the table). There is a wide range of reported success rates in literature, partially due to the time scales of studies (ranging from 1 year after surgery to 18) and due to different definitions of significant improvement. Despite the variability the model results fit squarely in the middle of the reported range, while the subject specific results show significant improvements in every case.</p>
+<table-wrap id="pcbi.1004642.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004642.t001</object-id>
+<label>Table 1</label>
+<caption>
+<title>Percentage of subjects with significant improvements following surgery.</title>
+<p>A comparison of the model generated success rate with reports in literature. In studies there have not been any patient specific procedures reported to compare, so these reports only include widely used clinical procedures including the amygdalohippocampectomy. The wide ranges in some reports are due to studies grouping patients by different criteria such as lateralisation of atrophy, or in other cases due to longitudinal studies measuring improvements at several different time points after the surgery. There is a general trend of decreased improvement the longer the time period after surgery, reducing the reported successes.</p>
+</caption>
+<alternatives>
+<graphic id="pcbi.1004642.t001g" mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004642.t001"/>
+<table frame="box" rules="all" border="0">
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="1" colspan="1">Source</th>
+<th align="center" rowspan="1" colspan="1">Clinical (%)</th>
+<th align="center" rowspan="1" colspan="1">Patient Specific (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Model simulations</td>
+<td align="center" rowspan="1" colspan="1">72.7</td>
+<td align="center" rowspan="1" colspan="1">100</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Spencer <italic>et al</italic>. 2008 [<xref ref-type="bibr" rid="pcbi.1004642.ref005">5</xref>]</td>
+<td align="center" rowspan="1" colspan="1">53–84</td>
+<td align="center" rowspan="1" colspan="1">-</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Hemb <italic>et al</italic>. 2013 [<xref ref-type="bibr" rid="pcbi.1004642.ref006">6</xref>]</td>
+<td align="center" rowspan="1" colspan="1">62–65</td>
+<td align="center" rowspan="1" colspan="1">-</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">de Tisi <italic>et al</italic>. 2011 [<xref ref-type="bibr" rid="pcbi.1004642.ref007">7</xref>]</td>
+<td align="center" rowspan="1" colspan="1">52–47</td>
+<td align="center" rowspan="1" colspan="1">-</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Arruda <italic>et al</italic>. 1996 [<xref ref-type="bibr" rid="pcbi.1004642.ref043">43</xref>]</td>
+<td align="center" rowspan="1" colspan="1">50–93.6</td>
+<td align="center" rowspan="1" colspan="1">-</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+</sec>
+<sec id="sec006" sec-type="conclusions">
+<title>Discussion</title>
+<p>In this work we have presented three key findings. First, we have demonstrated how the combination of subject specific data and a nonlinear computational model can lead to successful identification of TLE associated nodes in patients. Control subjects show few similarities in identified nodes indicating clear differences in network organisation (<xref ref-type="fig" rid="pcbi.1004642.g002">Fig 2</xref>). Secondly, we have shown in the model, in agreement with with clinical observations [<xref ref-type="bibr" rid="pcbi.1004642.ref006">6</xref>], that selective amygdalohippocampectomy can result in reduced seizure likelihood in 72.7% of patients, which is within the range reported in the literature for patients with similar conditions (<xref ref-type="fig" rid="pcbi.1004642.g005">Fig 5</xref> and <xref ref-type="table" rid="pcbi.1004642.t001">Table 1</xref>). Third, we suggest that patient-specific operations (where different regions are selected for different patients) will result in a better outcome. Furthermore, to our knowledge, this is the first study to combine computational modelling of brain dynamics with diffusion MRI based connectivity data from patients with temporal lobe epilepsy.</p>
+<sec id="sec007">
+<title>Model validation</title>
+<p>The model validation Figs <xref ref-type="fig" rid="pcbi.1004642.g001">1</xref> and <xref ref-type="fig" rid="pcbi.1004642.g002">2</xref> demonstrate results in line with clinical observations—a higher propensity for seizures in patients and the spatial origin of seizure activity in the ipsilateral temporal lobe. Indeed, validation of any model should always be the crucial first step. One aspect the model does not accurately capture is that healthy controls still have seizures in the model. Healthy controls <italic>can</italic> have a seizure—they have a propensity to seize, however, this would typically be a result of an external factor such as trauma and therefore may be mechanistically different. It is plausible to suggest that there may be other mechanisms and contributors to seizure transition (besides those included here) which may be important to improving the model, especially when considering healthy controls.</p>
+<p>Another aspect that the model successfully validated was the spatial profile and consistency (stereopy) of the ‘escaping’ nodes. Several areas located in the ipsilateral temporal lobe and subcortical areas were involved in agreement with experimental / clinical observations [<xref ref-type="bibr" rid="pcbi.1004642.ref020">20</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref044">44</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref045">45</xref>]. Four areas not in the left hemisphere were involved—the amygdala, insula, thalamus and the superior frontal region. Contralateral abnormalities have been noted in TLE before [<xref ref-type="bibr" rid="pcbi.1004642.ref020">20</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref046">46</xref>], particularly in temporal lobe areas [<xref ref-type="bibr" rid="pcbi.1004642.ref015">15</xref>]. It has been speculated that this could be indicative of compensatory mechanisms of some form, as increased contralateral functional connectivity has been previously noted in epilepsy patients [<xref ref-type="bibr" rid="pcbi.1004642.ref047">47</xref>]. If there is a structural correlate for this potential compensatory connectivity increase then a larger number of connections may put these regions more at risk of seizures in the model, for the same reasons as highly connected hub nodes are vulnerable. A high number of inbound connections increases the likelihood of receiving abnormal input from a seizing node, and increases the input received pushing the node closer to the seizure threshold. The involvement of the amygdala, thalamus and insula in TLE has long been known [<xref ref-type="bibr" rid="pcbi.1004642.ref048">48</xref>–<xref ref-type="bibr" rid="pcbi.1004642.ref050">50</xref>]. Interhemispheric connectivity between the mirrored regions in both hemispheres may be the cause of the seizure vulnerability of the contralateral amygdala, thalamus and insula. Abnormal activity from the ipsilateral hemispheric counterparts may spread through interhemispheric connections. The superior frontal region involvement is less intuitive, and the lateral orbitofrontal region is also a rapidly escaping node located in the frontal lobe. Abnormalities in frontal lobe areas have been documented in TLE [<xref ref-type="bibr" rid="pcbi.1004642.ref051">51</xref>–<xref ref-type="bibr" rid="pcbi.1004642.ref053">53</xref>], with frontal regions frequently involved in seizure propagation, especially the orbitofrontal cortex [<xref ref-type="bibr" rid="pcbi.1004642.ref054">54</xref>]. This may provide an explanation for the susceptibility of these nodes to seizures in our model.</p>
+</sec>
+<sec id="sec008">
+<title>Model underpinnings</title>
+<p>Network measures were tested for the most frequently escaping nodes in an attempt to distinguish further the influences behind the seizure susceptibility. Five of the top ten escaping nodes are consistent in both patients and controls, and were found to exhibit properties of network hubs, as shown in <xref ref-type="fig" rid="pcbi.1004642.g003">Fig 3</xref>. These were the thalamus (bilaterally), insula (bilaterally) and the contralateral superior frontal area. The thalamus and insula are already known to be highly connected and hub-like in the general population [<xref ref-type="bibr" rid="pcbi.1004642.ref055">55</xref>]. The high node strength and centrality measures of these regions make them both good candidates for network hubs [<xref ref-type="bibr" rid="pcbi.1004642.ref056">56</xref>], and also more likely to propagate abnormal activity. Having a greater number of incoming connections puts hubs at greater risk of receiving input from a seizing area, and it follows that they would also propagate the abnormal activity to a large number of regions they connect to. For the remaining five nodes that differ for patients and controls seizure susceptibility is less clear. There is no defining contribution from either topological (see <xref ref-type="fig" rid="pcbi.1004642.g004">Fig 4</xref>) or spatial (e.g. surface area, fibre tract length—see <xref ref-type="supplementary-material" rid="pcbi.1004642.s005">S3 Table</xref>) features, although the lambda parameter derived from surface area does have an effect on the patient nodes. Previous studies have looked for network differences in TLE, finding changes in clustering coefficient in some areas, small world-ness and network efficiency when comparing to controls [<xref ref-type="bibr" rid="pcbi.1004642.ref019">19</xref>–<xref ref-type="bibr" rid="pcbi.1004642.ref021">21</xref>], summarised in [<xref ref-type="bibr" rid="pcbi.1004642.ref027">27</xref>]. However a recent study into the same dataset we use here found that spatial measures show far greater changes in TLE than network measures [<xref ref-type="bibr" rid="pcbi.1004642.ref008">8</xref>]. Whilst it is possible that a feature may have been missed, it seems that a combination of multiple interacting factors is most likely at play in determining which ROIs are most seizure prone in the model.</p>
+</sec>
+<sec id="sec009">
+<title>Model prediction</title>
+<p>The <italic>in silico</italic> resection experiments showed improvements for the clinically removed nodes to a similar extent to results found in reality, with 72% of patients (16 out of 22) showing significant improvements (<italic>p</italic> &lt; 0.05) in seizure likelihood after simulated surgery. In this instance statistically significant improvements were taken to be analogous to successful surgery procedures. In many surgery cases the patients are not completely seizure free but they do see some reduction in seizure likelihood or intensity. This is a phenomenon which is reflected in some ways in our results, with an overall skew of improvement, but not in all cases statistically significant.</p>
+<p>The random resection experiments showed that the clinical resection results are not simply due to the removal of any 3 nodes from the network. There was some improvement for the random resections, although this was only to a statistically significant extent in one or two cases (depending on the nodes removed), much less than for clinical resections.</p>
+<p>The personalised resections showed by far the most success at reducing seizure likelihood. These were based on the top three fastest escaping nodes for each patient. The ipsilateral hippocampus did not appear in any of the top escaping node vectors for patients. This is surprising given the well established phenomenon of hippocampal sclerosis in TLE [<xref ref-type="bibr" rid="pcbi.1004642.ref057">57</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref058">58</xref>], and the fact that it is commonly removed in resection surgery. In one of the random node tests the ipsilateral hippocampus was included in the 3 randomly selected regions to be removed, but this did not show any greater improvement than other random node assortments. The reasons for this unexpected result are unclear, and possibly due to the difficulty of parcelating subcortical structures in Freesurfer [<xref ref-type="bibr" rid="pcbi.1004642.ref059">59</xref>]. Although the outputs were checked visually [<xref ref-type="bibr" rid="pcbi.1004642.ref008">8</xref>] this may have impacted results. If the hippocampus had a significant impact on ictal genesis then it would seem logical that removing it would have a greater impact on seizure likelihood.</p>
+<p>As well as the ipsilateral temporal pole, the thalamus and insula both appeared commonly in the sets of earliest escaping nodes. The insula has been linked to TLE, with studies suggesting that a number of patients with unsuccessful surgical outcomes may have an ictal focus in the insula, hence the lack of results from temporal lobe resections [<xref ref-type="bibr" rid="pcbi.1004642.ref049">49</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref060">60</xref>–<xref ref-type="bibr" rid="pcbi.1004642.ref062">62</xref>]. The thalamus may similarly play a role in surgery resistent TLE [<xref ref-type="bibr" rid="pcbi.1004642.ref063">63</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref064">64</xref>], and has been indicated to have an important role in the propagation and generation of TLE seizures [<xref ref-type="bibr" rid="pcbi.1004642.ref050">50</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref065">65</xref>]. The thalamus has been found to exhibit abnormalities in TLE [<xref ref-type="bibr" rid="pcbi.1004642.ref066">66</xref>] with cell atrophy and reduced surface area [<xref ref-type="bibr" rid="pcbi.1004642.ref067">67</xref>]. However the thalamus is crucial for sensory-motor functions and therefore not an option for resection. We speculate that the partial disconnection of the ipsilateral thalamus (rather than the complete resection) may lead to improved clinical results.</p>
+</sec>
+<sec id="sec010">
+<title>Surgery prediction in the context of other works</title>
+<p>This is not the first or only attempt to try and accomplish prediction of the affects of neurosurgical procedures. Imaging studies have been used to predicted how TLE surgery effects memory and cognitive ability in individuals [<xref ref-type="bibr" rid="pcbi.1004642.ref068">68</xref>]. While computer modelling has been applied to measure the effects of <italic>in silico</italic> lesions on connectivity networks [<xref ref-type="bibr" rid="pcbi.1004642.ref069">69</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref070">70</xref>], none have used DTI derived networks of people with TLE. One study by Honey <italic>et al</italic>. [<xref ref-type="bibr" rid="pcbi.1004642.ref071">71</xref>] used computational modelling of macaque connectivity with Kuramoto oscillators and a neural mass model to examine how region synchrony and interaction differed after lesions. However, that study did not look specifically at effects on seizure activity.</p>
+<p>Recent modelling work has attempted to better characterise and identify epileptogenic areas [<xref ref-type="bibr" rid="pcbi.1004642.ref028">28</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref034">34</xref>] with mention of the potential effects of surgical intervention dependent on tissue characteristics. Accurately identifying regions of seizure initiation is clearly an important consideration in surgery planning and prediction. These studies did not use whole brain connectivity, but rather a model representing a subset of cortical areas. Another recent work, incorporating patient derived connectivity, found encouraging results in simulations of stimulation applied to abate seizures [<xref ref-type="bibr" rid="pcbi.1004642.ref026">26</xref>]. This is an intriguing alternative to surgery and one which can also benefit from subject-specific modelling work.</p>
+<p>A study by Sinha <italic>et al</italic> [<xref ref-type="bibr" rid="pcbi.1004642.ref072">72</xref>] is closer to the aims and findings of this current project. Using ECoG data to derive connectivity from functional synchrony the study applied a very similar model to the one we have used here, without the incorporated surface area data. The model predicted areas for surgery removal and tested <italic>in silico</italic> resections against <italic>in silico</italic> randomised resection trials. The predicted regions for removal overlapped with clinically chosen resection areas (identified by the ECoG testing among other clinical evaluations) in 5 out of 6 cases. The model also predicted additional removal sites not identified by clinical tests. Those predictions were not experimentally validated, but this is another strong example of how computational modelling has the potential to be useful for surgery prediction, not limited to one method of connectivity data acquisition.</p>
+</sec>
+<sec id="sec011">
+<title>Limitations of the study</title>
+<p>The connectivity is assumed here to be a good and accurate representation of the white matter tracts in the individual’s brains. However, there are restrictions of resolution and noise in this imaging technique and the connectivity matrices produced may not always be fully accurate [<xref ref-type="bibr" rid="pcbi.1004642.ref073">73</xref>]. A key limitation of diffusion inferred networks is that they are bi-directional. This assumption of bi-directionality may be inaccurate, with one recent study into the Macaque brain finding a higher incidence of unidirectional links than anticipated [<xref ref-type="bibr" rid="pcbi.1004642.ref074">74</xref>]. Directionality has been shown to play a key role in the dynamics of a system and therefore should be considered a limitation of this and all diffusion based connectivity studies [<xref ref-type="bibr" rid="pcbi.1004642.ref075">75</xref>]. However the assumption of bi-directionality has also been defended in other studies which claim that the majority of brain connections do exhibit bi-directionality [<xref ref-type="bibr" rid="pcbi.1004642.ref076">76</xref>]. There is currently no better alternative for imaging structural connectivity <italic>in vivo</italic>, but this is still a potential limitation. One possible solution to this, which could especially be done in the case of epilepsy patients, would be to map the directionality through active stimulation [<xref ref-type="bibr" rid="pcbi.1004642.ref077">77</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref078">78</xref>].</p>
+<p>Another limitation is the use of deterministic tractography in this study. Crossing fibres are not well resolved in deterministic approaches, which can lead to inaccurate representations of brain connectivity [<xref ref-type="bibr" rid="pcbi.1004642.ref079">79</xref>].</p>
+<p>This is not an optimal protocol, and probabilistic algorithms would likely improve the accuracy of the connectivity matrices by resolving the crossing fibre problem [<xref ref-type="bibr" rid="pcbi.1004642.ref080">80</xref>]. However, there have been studies which have found that deterministic tractography can succeed at capturing key features of the connectome and thus can provide useful information [<xref ref-type="bibr" rid="pcbi.1004642.ref081">81</xref>–<xref ref-type="bibr" rid="pcbi.1004642.ref084">84</xref>]. Additionally deterministic tractography can have greater success at characterising long range connections [<xref ref-type="bibr" rid="pcbi.1004642.ref085">85</xref>], which are important when attempting to characterise seizure spreading patterns. Deterministic and probabilistic tractography capture graph theory metrics similarly, share common features [<xref ref-type="bibr" rid="pcbi.1004642.ref086">86</xref>], and can be remarkably reproducible [<xref ref-type="bibr" rid="pcbi.1004642.ref087">87</xref>]. That being said, as probabilistic tractography has been found to be the superior method in terms of reproducibility and crossing fibre resolution giving a more reliable connectome [<xref ref-type="bibr" rid="pcbi.1004642.ref080">80</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref086">86</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref088">88</xref>] it may therefore be beneficial to rerun simulations using a probabilistic algorithm.</p>
+<p>In addition to the innate issues with DTI, there is also the question of how to decide on the brain atlas to use for parcellating into regions, and the choice of weighting used for edges. The dataset used here split the brain into 82 different regions. There is no gold standard for choosing the number of regions to use, and this choice can make a difference to the network’s properties [<xref ref-type="bibr" rid="pcbi.1004642.ref089">89</xref>]. Comparisons have found that network organizational principles seem to remain independent of the parcellation scheme, but quantified measures do change [<xref ref-type="bibr" rid="pcbi.1004642.ref090">90</xref>]. A future direction would be to replicate this study with an alternative, functionally defined atlas (e.g. [<xref ref-type="bibr" rid="pcbi.1004642.ref091">91</xref>]). However, functional parcellations often don’t include subcortical areas and are based on functional observations in healthy subjects. The possibility of changes in underlying processes due to epileptic activity may make existing functional schemes inaccurate for patients. Applying alternative anatomical atlases would also be worthwhile further work. We anticipate, though it should be tested, that results shown here would be reproducible with other atlases at similar scales. This prediction is based on comparisons of our results with previous studies [<xref ref-type="bibr" rid="pcbi.1004642.ref092">92</xref>] including work simulating epilepsy dynamics with human connectome data using different atlases (AAL and Desikan) [<xref ref-type="bibr" rid="pcbi.1004642.ref024">24</xref>–<xref ref-type="bibr" rid="pcbi.1004642.ref026">26</xref>]. Choosing the weighting of edges is another factor to take into account. In this instance the dataset weighted edges by the number of streamlines identified, however other options are available such as fractional anisotropy, which weights edges according to the degree of anisotropy in voxels between regions, thought to give an idea of fibre myelination or integrity [<xref ref-type="bibr" rid="pcbi.1004642.ref093">93</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref094">94</xref>].</p>
+<p>Another criticism of the model could be found in the level of abstraction used. Limitations in the computational resources available inevitably leads to a trade off when abstracting a model. There may be a danger of losing information from the system which is present in biological reality, for example meso- and micro-scale connectivity were not modelled here, yet may be important [<xref ref-type="bibr" rid="pcbi.1004642.ref095">95</xref>]. As a model to assess the impact of global connectivity on TLE, having too many other interacting factors would make it more difficult to identify the contribution of heterogeneous networks and a danger of over-fitting the parameters may occur. However, as a model for surgery prediction perhaps more biological detail would be useful to improve accuracy when looking to match <italic>in vivo</italic> results more closely. The compromise between simulation speed and biological detail can be difficult. Even though this model is phenomenological, the simple co-dependence on region surface area and connectivity makes it computationally feasible to simulate while producing encouraging results.</p>
+</sec>
+<sec id="sec012">
+<title>Future work and improvements</title>
+<p>It is necessary to validate the model prediction of subject specific surgical success with patient outcomes if the model will ever be useful clinically. Diffusion imaging is not routinely done and it is extremely difficult to obtain data for a significant number of subjects with follow-up metadata of surgical outcome. One of the key advantages of our study is that we have a fairly homogeneous subject group (all patients with left TLE), however, statistical power becomes an issue with a total sample size of only 22 subjects. We anticipate that in the future a multi-site study with large cohorts will be required. With that we hope to enable better guidance for epilepsy surgery.</p>
+</sec>
+</sec>
+<sec id="sec013" sec-type="materials|methods">
+<title>Methods</title>
+<sec id="sec014">
+<title>Dataset</title>
+<p>We collected data from 22 individuals with left mesial TLE showing unilateral hippocampal sclerosis and 39 age-matched controls. Written informed consent was obtained, signed by all participants, and conformed to local ethics requirements. IRB approval (032/08) was given by the ethical review board of the medical faculty of Bonn. None of the individuals with mTLE had undergone any previous neurosurgery. T1 weighted MRI scans and diffusion tensor imaging (DTI) data were obtained using a 3 Tesla scanner, a Siemens MAGNETOM TrioTim syngo (Erlangen, Germany). The T1 images were obtained using 1mm isovoxel, TR = 2500ms and TE = 3.5ms. The DTI data used 2mm isovoxel, TR = 10,000ms, TE = 91ms and 64 diffusion directions, b-factor 1000s mm<sup>−2</sup> and 12 b0 images. In both cases FoV was 256mm.</p>
+<p>Connectome creation from the acquired data is summarised in <xref ref-type="fig" rid="pcbi.1004642.g006">Fig 6</xref>, while <xref ref-type="fig" rid="pcbi.1004642.g007">Fig 7</xref> shows nodes and connections imaged in pseudo-3D space averaged over all subjects, and indicates how this is then used to generate simulations of activity for each node. Firstly FreeSurfer [<xref ref-type="bibr" rid="pcbi.1004642.ref096">96</xref>] was used to obtain surface meshes of gray and white matter boundries from the MRI data, and to parcellate the brain into regions of interest (ROI) based on the Desikan atlas [<xref ref-type="bibr" rid="pcbi.1004642.ref097">97</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref098">98</xref>]. There were 82 ROI included, spanning cortical and subcortical regions (subcortical regions included the Nucleus accumbens, Amygdala, Caudate, Hippocampus, Pallidum, Putamen and the Thalamus). Streamline tractography was obtained from DTI images using the Fiber Assignment by Continuous Tracking (FACT) algorithm [<xref ref-type="bibr" rid="pcbi.1004642.ref099">99</xref>] through the Diffusion toolkit along with TrackVis [<xref ref-type="bibr" rid="pcbi.1004642.ref100">100</xref>]. First we performed eddy-correction of the image by applying an affine transform of each diffusion volume to the b0 volume and rotating b-vectors using FSL toolbox (FSL, <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.fmrib.ox.ac.uk/fsl/">http://www.fmrib.ox.ac.uk/fsl/</ext-link>). After the diffusion tensor and its eigenvector was estimated for every voxel, we applied a deterministic tractography algorithm [<xref ref-type="bibr" rid="pcbi.1004642.ref099">99</xref>] initiating a single streamline from the center of each voxel. Tracking was stopped when the angle change was too large (35 degree of angle threshold) or when tracking reached a voxel with a fractional anisotropy value of less than 0.2 [<xref ref-type="bibr" rid="pcbi.1004642.ref084">84</xref>]. For further details see [<xref ref-type="bibr" rid="pcbi.1004642.ref081">81</xref>].</p>
+<fig id="pcbi.1004642.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004642.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>The creation of a connectome.</title>
+<p>A diagrammatic representation of the connectome creation process, combining information from T1 MRI and DTI to create a network formed from brain regions connected by white matter fibres. In this case parcellation of the brain into different regions split the grey matter into 82 ROI, including 14 subcortical regions. The bottom images show the resulting connectivity matrix (left) of the connectome and the connectome visualised as nodes and edges overlaid on a brain shadow (right), where colours denote lobe areas.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004642.g006"/>
+</fig>
+<fig id="pcbi.1004642.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004642.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Connectivity, node placement and how this relates to the mathematical model.</title>
+<p>Connectivity is shown where connections exist in 60% or more of subjects, for visualisation only—all connections were included on a subject specific basis for simulations. Nodes and connections are overlaid on a 3D brain image to show the rough positioning of the nodes and the distance of connections between them. The nodes are the positions of ROI, with colours corresponding to different lobes, and the black lines show the connections between different regions. The zoomed in top left graphic shows how connections between nodes are weighted, and the blue box shows how the activity change of one node is found using the model. The bottom right figure shows a time series of the model simulation. The model begins in the background state with low amplitude oscillations and transits to a high amplitude seizure-like state at approximately t = 14, indicated by the dashed line. In this exemplary case the escape time would be taken as 14 for the node in this simulation.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004642.g007"/>
+</fig>
+<p>The centre coordinates of each voxel were the start of a single streamline, the total number of streamlines never exceeded the number of seed voxels. The number of connecting streamlines were used to determine the connectivity matrix (<italic>S</italic>), as the streamline count has recently been confirmed to provide a realistic estimate of white matter pathway projection strength [<xref ref-type="bibr" rid="pcbi.1004642.ref101">101</xref>]. Distance matrices were also constructed using the mean fibre length of the streamlines connecting each pair of ROIs. The surface area of each ROI was found using FreeSurfer for cortical regions and for subcortical areas by computing the interface area to the white matter in T1 space [<xref ref-type="bibr" rid="pcbi.1004642.ref102">102</xref>].</p>
+</sec>
+<sec id="sec015">
+<title>Model</title>
+<p>We apply a mathematical model to simulate activity of ROI in a network formed from acquired DTI data. The network connectivity matrix, <italic>M</italic>, is determined by the patient specific weighted connectivity produced in connectome creation as detailed in the previous section. The connection weights were derived from the streamline counts between ROIs and were normalised as shown in <xref ref-type="disp-formula" rid="pcbi.1004642.e002">Eq (2)</xref>, where <italic>S</italic> is the matrix of streamline counts for an individual subject.
+<disp-formula id="pcbi.1004642.e001"><alternatives><graphic id="pcbi.1004642.e001g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004642.e001"/><mml:math id="M1" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>M</mml:mi> <mml:mo>=</mml:mo> <mml:mfrac><mml:mrow><mml:mi>l</mml:mi> <mml:mi>o</mml:mi> <mml:mi>g</mml:mi> <mml:mo>(</mml:mo> <mml:mi>S</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mi>m</mml:mi> <mml:mi>a</mml:mi> <mml:mi>x</mml:mi> <mml:mo>(</mml:mo> <mml:mi>l</mml:mi> <mml:mi>o</mml:mi> <mml:mi>g</mml:mi> <mml:mo>(</mml:mo> <mml:mi>S</mml:mi> <mml:mo>)</mml:mo> <mml:mo>)</mml:mo></mml:mrow></mml:mfrac></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(1)</label></disp-formula></p>
+<p>The model used in this paper is adapted from Benjamin et al.’s 2012 paper [<xref ref-type="bibr" rid="pcbi.1004642.ref040">40</xref>] which is derived from the work of Kalitzin [<xref ref-type="bibr" rid="pcbi.1004642.ref039">39</xref>] and has been previously used for simulating epilepsy surgery [<xref ref-type="bibr" rid="pcbi.1004642.ref072">72</xref>]. To summarise, this model allows for noise dependent transitions from low to high amplitude oscillations while in a bistable parameter region. The activation level of the <italic>i</italic>th node, <italic>z</italic><sub><italic>i</italic></sub>, is determined by <xref ref-type="disp-formula" rid="pcbi.1004642.e002">Eq (2)</xref> below:
+<disp-formula id="pcbi.1004642.e002"><alternatives><graphic id="pcbi.1004642.e002g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004642.e002"/><mml:math id="M2" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>d</mml:mi> <mml:msub><mml:mi>z</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mo>(</mml:mo> <mml:mi>f</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>z</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:mi>β</mml:mi> <mml:munder><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>j</mml:mi> <mml:mo>≠</mml:mo> <mml:mi>i</mml:mi></mml:mrow></mml:munder> <mml:msub><mml:mi>M</mml:mi> <mml:mrow><mml:mi>j</mml:mi> <mml:mi>i</mml:mi></mml:mrow></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>z</mml:mi> <mml:mi>j</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>-</mml:mo> <mml:msub><mml:mi>τ</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:msub><mml:mi>z</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>)</mml:mo> <mml:mi>d</mml:mi> <mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mi>α</mml:mi> <mml:mi>d</mml:mi> <mml:msub><mml:mi>w</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(2)</label></disp-formula>
+where <italic>f</italic>(<italic>z</italic><sub><italic>i</italic></sub>) is a function of <italic>z</italic><sub><italic>i</italic></sub> described in <xref ref-type="disp-formula" rid="pcbi.1004642.e003">Eq (3)</xref>, <italic>w</italic><sub><italic>i</italic></sub>(<italic>t</italic>) is a normally distributed noise term, <italic>α</italic> scales the noise, <italic>β</italic> scales the connectivity matrix <italic>M</italic>. <italic>M</italic><sub><italic>i</italic>,<italic>j</italic></sub> is the connection strength between the <italic>i</italic>th and <italic>j</italic>th nodes, and <italic>τ</italic><sub><italic>i</italic>,<italic>j</italic></sub> is the delay between them. <italic>f</italic>(<italic>z</italic><sub><italic>i</italic></sub>) is defined by:
+<disp-formula id="pcbi.1004642.e003"><alternatives><graphic id="pcbi.1004642.e003g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004642.e003"/><mml:math id="M3" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>f</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>z</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>λ</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn> <mml:mo>+</mml:mo> <mml:mover accent="true"><mml:mi>i</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mi>ω</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:msub><mml:mi>z</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>+</mml:mo> <mml:mn>2</mml:mn> <mml:msub><mml:mi>z</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mrow><mml:mo>|</mml:mo></mml:mrow> <mml:msub><mml:mi>z</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:msup><mml:mrow><mml:mo>|</mml:mo></mml:mrow> <mml:mn>2</mml:mn></mml:msup> <mml:mo>-</mml:mo> <mml:msub><mml:mi>z</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:msup><mml:mrow><mml:mo>|</mml:mo> <mml:msub><mml:mi>z</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>|</mml:mo></mml:mrow> <mml:mn>4</mml:mn></mml:msup></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(3)</label></disp-formula></p>
+<p>Where <italic>z</italic> is complex, <italic>λ</italic><sub><italic>i</italic></sub> controls basin of attraction to the background and seizure-like states, <italic>ω</italic> controls frequency of oscillations and <inline-formula id="pcbi.1004642.e004"><alternatives><graphic id="pcbi.1004642.e004g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004642.e004"/><mml:math id="M4" display="inline" overflow="scroll"><mml:mover accent="true"><mml:mi>i</mml:mi> <mml:mo>^</mml:mo></mml:mover></mml:math></alternatives></inline-formula> is imaginary.</p>
+<p>Delays between areas (<italic>τ</italic><sub><italic>i</italic>,<italic>j</italic></sub>) are incorporated into the model as proportional to the mean streamline length, grouped into bins, and use a biologically plausible propagation speed of 7 metres per second [<xref ref-type="bibr" rid="pcbi.1004642.ref025">25</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref103">103</xref>]. <xref ref-type="supplementary-material" rid="pcbi.1004642.s002">S2 Fig</xref> explores a comparison between mean and median fibre lengths as a justification for this approach.</p>
+<p>The parameter <italic>λ</italic><sub><italic>i</italic></sub> is derived from the difference (<italic>D</italic><sub><italic>i</italic></sub>) of the specific subject’s region surface area from the control group distribution of region surface areas for the region <italic>i</italic>, as described in <xref ref-type="disp-formula" rid="pcbi.1004642.e005">Eq (4)</xref>:
+<disp-formula id="pcbi.1004642.e005"><alternatives><graphic id="pcbi.1004642.e005g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004642.e005"/><mml:math id="M5" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mi>λ</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>=</mml:mo> <mml:mfrac><mml:mrow><mml:mo>-</mml:mo> <mml:msub><mml:mi>D</mml:mi> <mml:mi>i</mml:mi></mml:msub></mml:mrow> <mml:mi>ψ</mml:mi></mml:mfrac> <mml:mo>+</mml:mo> <mml:mn>0</mml:mn> <mml:mo>.</mml:mo> <mml:mn>5</mml:mn></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(4)</label></disp-formula>
+The difference (<italic>D</italic><sub><italic>i</italic></sub>) is a measure of how many standard deviations away from the control group distribution the subject is, found through standard scores with tie-adjustment and continuity correction. In our case a very negative difference indicates a reduced surface area in region <italic>i</italic> compared to the control group, and <italic>vice-versa</italic>. In the controls a leave-one-out method was used to quantify how far each control was from the remaining controls. The <italic>ψ</italic> is set to 15, giving a wide spread for <italic>λ</italic> whilst ensuring 0 &lt; <italic>λ</italic> &lt; 1, i.e the bifurcations to monostability for all subjects.</p>
+<p>The <italic>ω</italic> value controls the frequency of oscillations, and in all results detailed here this was set to a value of 15 to produce an oscillation frequency of 3Hz in the seizure state, which is typically observed in the intracranial electrocorticographic recordings of many patients with TLE [<xref ref-type="bibr" rid="pcbi.1004642.ref104">104</xref>]. The randomised noise <italic>w</italic>(<italic>t</italic>) is a complex Wiener process approximated by the Matlab function randn, generating normally distributed random numbers; this noise is scaled by <italic>α</italic>. Matlab was used to implement the model, and a fixed step Euler-Maruyama solver was employed to find solutions to the equations. Parameter <italic>β</italic> was fixed at a value of 0.01 for all subjects, and delays were found using the mean fibre lengths. The parameter <italic>α</italic>, which scales the amplitude of the noise, was set to a fixed value of 0.05 in order to allow a fair comparison of escape times without biasing by external factors, i.e. the only parameters influencing comparisons are those derived from the subject specific MRI (<italic>M</italic>, <italic>λ</italic>, <italic>τ</italic>).</p>
+<p>In line with previous studies [<xref ref-type="bibr" rid="pcbi.1004642.ref040">40</xref>, <xref ref-type="bibr" rid="pcbi.1004642.ref072">72</xref>] we use ‘escape time’ as a measure of epileptogenecity. Simulations are performed with the initial conditions placing all nodes in the background state, then upon simulation we measure how long it takes for each node to transit to the seizure state. This is determined by measuring the Euclidean distance <italic>E</italic><sub><italic>i</italic></sub> from the fixed point (0,0), over time. Only when <italic>E</italic><sub><italic>i</italic></sub> &gt; 1 is the system considered to be in a seizure state. Thus, the escape time of node <italic>i</italic> is <italic>min</italic>(<italic>t</italic>(<italic>E</italic><sub><italic>i</italic></sub> &gt; 1)). This is illustrated in <xref ref-type="fig" rid="pcbi.1004642.g007">Fig 7</xref> (lower right panel).</p>
+</sec>
+<sec id="sec016">
+<title>Validation of the model</title>
+<p>To test the performance of the model we ran simulations for both controls and patients over 100 iterations with changing noise seeds. The two groups were compared to identify any differences in either the node escape times or in the locations of commonly escaping nodes. In addition to comparing the time taken for the first node to escape we also ran simulations until three nodes had escaped in succession, taking this as an indicator that the activity had begun to propagate.</p>
+</sec>
+<sec id="sec017">
+<title>Simulation of surgery</title>
+<p>We simulated three different conditions of surgery: 1) random resection, 2) clinical resection, and 3) patient-specific resection. Simulating surgery was achieved by setting inputs and outputs to and from a resected node to zero values, effectively isolating the node from the network.
+<list list-type="order"><list-item><p>Random resections removed three nodes from the network, the first chosen at random and then its two nearest neighbours with connection weights greater than the average were also removed, in order to remove a set of nodes with similar characteristics to those removed in clinical resections. These resections serve as a benchmark to which other resective techniques can be compared.</p></list-item> <list-item><p>Clinical resections removed three regions most commonly resected in an amygdalohippocampectomy procedure (ipsilateral hippocampus, amygdala and parahippocampal gyrus).</p></list-item> <list-item><p>For subject specific optimised resections, the top three fastest escaping nodes were found for every patient and subsequently removed (see <xref ref-type="supplementary-material" rid="pcbi.1004642.s004">S2 Table</xref> for a list of the top three nodes for each patient). These top escaping nodes were different for every patient, and in many cases the vector of resected nodes included one or more of the clinically removed areas.</p></list-item></list></p>
+</sec>
+</sec>
+<sec id="sec018">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1004642.s001" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004642.s001" mimetype="application/eps" xlink:type="simple">
+<label>S1 Fig</label>
+<caption>
+<title>Patient and Control escape time comparison, first and second nodes to escape.</title>
+<p>Similar to <xref ref-type="fig" rid="pcbi.1004642.g001">Fig 1</xref>, controls and patients show different distributions of escape times. Part a) shows the times for the first nodes to escape, and part b) plots the times taken for the second nodes to escape in each subject.</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004642.s002" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004642.s002" mimetype="application/eps" xlink:type="simple">
+<label>S2 Fig</label>
+<caption>
+<title>Mean streamline length is similar to median streamline length between regions.</title>
+<p>Exemplary connections between brain areas demonstrating similarity of streamline length measures. a) Streamlines connecting the left (purple) and right (red) superior frontal areas. Streamlines are coloured according to their direction. b) Histogram of the lengths of the streamlines shown in a). c) Streamlines connecting the precentral (yellow) and postcentral (red) gyri in the right hemisphere. Transparency of the gyri enables visualisation of the streamlines. d) Histogram of the lengths of the streamlines shown in c).</p>
+<p>(EPS)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004642.s003" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004642.s003" mimetype="application/pdf" xlink:type="simple">
+<label>S1 Table</label>
+<caption>
+<title>The numerical codes for different regions.</title>
+<p>This table shows which numbers correspond to which brain region. ‘lh’ is short for left hemisphere, (nodes 1 to 41) while ‘rh’ is short for right hemisphere (nodes 42 to 82).</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004642.s004" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004642.s004" mimetype="application/pdf" xlink:type="simple">
+<label>S2 Table</label>
+<caption>
+<title>Top escaping nodes for all subjects.</title>
+<p>This table shows a list of the 3 nodes which were consistently the earliest to escape to a seizure state for each individual in patients and controls, ranked in the order of number of appearances. It additionally includes patient age and gender information, where M indicates a male and F female. The numerical code for the node regions is explained in the previous table. Where there is a NaN (‘Not a Number’) label instead of a number there were only one or two nodes which were consistently the earliest to escape.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004642.s005" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004642.s005" mimetype="application/pdf" xlink:type="simple">
+<label>S3 Table</label>
+<caption>
+<title>A table of further node measures for the fastest escaping nodes of patients and controls.</title>
+<p>Fibre length measures and surface areas were checked and documented to look for any evidence of influence. The table shows z scores found from mean fibre lengths normalised by maximum fibre length and z scores from surface area data. These standard scores show the deviation from the main distribution and were found for the mean lengths of fibres connected to the fastest nodes, as well as for the surface areas of the fastest nodes. These measures were checked for all subjects and also within subject groupings of patients and controls.</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+<supplementary-material id="pcbi.1004642.s006" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004642.s006" mimetype="application/pdf" xlink:type="simple">
+<label>S4 Table</label>
+<caption>
+<title>Further patient information.</title>
+<p>Additional information recorded about the patients included in this study. FS in the Early insult column is short for Febrile Seizures, and the seizure types recorded are simple partial seizures (SPS), complex partial seizures (CPS) and secondary generalised tonic clonic seizures (SGTCS).</p>
+<p>(PDF)</p>
+</caption>
+</supplementary-material>
+</sec>
+</body>
+<back>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004642.ref001">
+<label>1</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Fisher</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Boas</surname> <given-names>WvE</given-names></name>, <name name-style="western"><surname>Blume</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Elger</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Genton</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Lee</surname> <given-names>P</given-names></name>, <etal>et al</etal>. <article-title>Epileptic seizures and epilepsy: definitions proposed by the International League Against Epilepsy (ILAE) and the International Bureau for Epilepsy (IBE) [Journal Article]</article-title>. <source>Epilepsia</source>. <year>2005</year>;<volume>46</volume>(<issue>4</issue>):<fpage>470</fpage>–<lpage>472</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.0013-9580.2005.66104.x" xlink:type="simple">10.1111/j.0013-9580.2005.66104.x</ext-link></comment> <object-id pub-id-type="pmid">15816939</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref002">
+<label>2</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Baier</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Goodfellow</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Taylor</surname> <given-names>PN</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Garry</surname> <given-names>DJ</given-names></name>. <article-title>The importance of modeling epileptic seizure dynamics as spatio-temporal patterns [Journal Article]</article-title>. <source>Frontiers in Physiology</source>. <year>2012</year>;<volume>3</volume>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3389/fphys.2012.00281" xlink:type="simple">10.3389/fphys.2012.00281</ext-link></comment> <object-id pub-id-type="pmid">22934035</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref003">
+<label>3</label>
+<mixed-citation xlink:type="simple" publication-type="other">WHO. World Health Organisation Epilepsy fact sheet [Web Page]. WHO; 2012. <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.who.int/mediacentre/factsheets/fs999/en/">http://www.who.int/mediacentre/factsheets/fs999/en/</ext-link></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref004">
+<label>4</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Berg</surname> <given-names>AT</given-names></name>, <name name-style="western"><surname>Berkovic</surname> <given-names>SF</given-names></name>, <name name-style="western"><surname>Brodie</surname> <given-names>MJ</given-names></name>, <name name-style="western"><surname>Buchhalter</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Cross</surname> <given-names>JH</given-names></name>, <name name-style="western"><surname>Van Emde Boas</surname> <given-names>W</given-names></name>, <etal>et al</etal>. <article-title>Revised terminology and concepts for organization of seizures and epilepsies: report of the ILAE Commission on Classification and Terminology, 2005–2009</article-title>. <source>Epilepsia</source>. <year>2010</year>;<volume>51</volume>(<issue>4</issue>):<fpage>676</fpage>–<lpage>685</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1528-1167.2010.02522.x" xlink:type="simple">10.1111/j.1528-1167.2010.02522.x</ext-link></comment> <object-id pub-id-type="pmid">20196795</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref005">
+<label>5</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Spencer</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Huh</surname> <given-names>L</given-names></name>. <article-title>Outcomes of epilepsy surgery in adults and children</article-title>. <source>The Lancet Neurology</source>. <year>2008</year>;<volume>7</volume>(<issue>6</issue>):<fpage>525</fpage>–<lpage>537</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S1474-4422(08)70109-1" xlink:type="simple">10.1016/S1474-4422(08)70109-1</ext-link></comment> <object-id pub-id-type="pmid">18485316</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref006">
+<label>6</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Hemb</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Palmini</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Paglioli</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Paglioli</surname> <given-names>EB</given-names></name>, <name name-style="western"><surname>da Costa</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Azambuja</surname> <given-names>N</given-names></name>, <etal>et al</etal>. <article-title>An 18-year follow-up of seizure outcome after surgery for temporal lobe epilepsy and hippocampal sclerosis [Journal Article]</article-title>. <source>Journal of Neurology, Neurosurgery &amp; Psychiatry</source>. <year>2013</year>;<volume>84</volume>(<issue>7</issue>):<fpage>800</fpage>–<lpage>805</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1136/jnnp-2012-304038" xlink:type="simple">10.1136/jnnp-2012-304038</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref007">
+<label>7</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>de Tisi</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Bell</surname> <given-names>GS</given-names></name>, <name name-style="western"><surname>Peacock</surname> <given-names>JL</given-names></name>, <name name-style="western"><surname>McEvoy</surname> <given-names>AW</given-names></name>, <name name-style="western"><surname>Harkness</surname> <given-names>WF</given-names></name>, <name name-style="western"><surname>Sander</surname> <given-names>JW</given-names></name>, <etal>et al</etal>. <article-title>The long-term outcome of adult epilepsy surgery, patterns of seizure remission, and relapse: a cohort study</article-title>. <source>The Lancet</source>. <year>2011</year>;<volume>378</volume>(<issue>9800</issue>):<fpage>1388</fpage>–<lpage>1395</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0140-6736(11)60890-8" xlink:type="simple">10.1016/S0140-6736(11)60890-8</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref008">
+<label>8</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Taylor</surname> <given-names>PN</given-names></name>, <name name-style="western"><surname>Han</surname> <given-names>CE</given-names></name>, <name name-style="western"><surname>Schoene-Bake</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Weber</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Kaiser</surname> <given-names>M</given-names></name>. <article-title>Structural connectivity changes in temporal lobe epilepsy: Spatial features contribute more than topological measures</article-title>. <source>NeuroImage: Clinical</source>. <year>2015</year>;<volume>8</volume>:<fpage>322</fpage>–<lpage>328</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.nicl.2015.02.004" xlink:type="simple">10.1016/j.nicl.2015.02.004</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref009">
+<label>9</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bonilha</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Elm</surname> <given-names>JJ</given-names></name>, <name name-style="western"><surname>Edwards</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Morgan</surname> <given-names>PS</given-names></name>, <name name-style="western"><surname>Hicks</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Lozar</surname> <given-names>C</given-names></name>, <etal>et al</etal>. <article-title>How common is brain atrophy in patients with medial temporal lobe epilepsy?</article-title> <source>Epilepsia</source>. <year>2010</year>;<volume>51</volume>(<issue>9</issue>):<fpage>1774</fpage>–<lpage>1779</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1528-1167.2010.02576.x" xlink:type="simple">10.1111/j.1528-1167.2010.02576.x</ext-link></comment> <object-id pub-id-type="pmid">20412283</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref010">
+<label>10</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bonilha</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Kobayashi</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Rorden</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Cendes</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>L</given-names></name>. <article-title>Medial temporal lobe atrophy in patients with refractory temporal lobe epilepsy</article-title>. <source>Journal of Neurology, Neurosurgery &amp; Psychiatry</source>. <year>2003</year>;<volume>74</volume>(<issue>12</issue>):<fpage>1627</fpage>–<lpage>1630</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1136/jnnp.74.12.1627" xlink:type="simple">10.1136/jnnp.74.12.1627</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref011">
+<label>11</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bonilha</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Rorden</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Castellano</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Pereira</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Rio</surname> <given-names>PA</given-names></name>, <name name-style="western"><surname>Cendes</surname> <given-names>F</given-names></name>, <etal>et al</etal>. <article-title>Voxel-based morphometry reveals gray matter network atrophy in refractory medial temporal lobe epilepsy</article-title>. <source>Archives of neurology</source>. <year>2004</year>;<volume>61</volume>(<issue>9</issue>):<fpage>1379</fpage>–<lpage>1384</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1001/archneur.61.9.1379" xlink:type="simple">10.1001/archneur.61.9.1379</ext-link></comment> <object-id pub-id-type="pmid">15364683</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref012">
+<label>12</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bonilha</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Rorden</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Castellano</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Cendes</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>LM</given-names></name>. <article-title>Voxel-based morphometry of the thalamus in patients with refractory medial temporal lobe epilepsy [Journal Article]</article-title>. <source>NeuroImage</source>. <year>2005</year>;<volume>25</volume>(<issue>3</issue>):<fpage>1016</fpage>–<lpage>1021</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2004.11.050" xlink:type="simple">10.1016/j.neuroimage.2004.11.050</ext-link></comment> <object-id pub-id-type="pmid">15809001</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref013">
+<label>13</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Pitkänen</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Tuunanen</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Kälviäinen</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Partanen</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Salmenperä</surname> <given-names>T</given-names></name>. <article-title>Amygdala damage in experimental and human temporal lobe epilepsy</article-title>. <source>Epilepsy research</source>. <year>1998</year>;<volume>32</volume>(<issue>1</issue>):<fpage>233</fpage>–<lpage>253</lpage>. <object-id pub-id-type="pmid">9761324</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref014">
+<label>14</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bernasconi</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Duchesne</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Janke</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Lerch</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Collins</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Bernasconi</surname> <given-names>A</given-names></name>. <article-title>Whole-brain voxel-based statistical analysis of gray matter and white matter in temporal lobe epilepsy</article-title>. <source>NeuroImage</source>. <year>2004</year>;<volume>23</volume>(<issue>2</issue>):<fpage>717</fpage>–<lpage>723</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2004.06.015" xlink:type="simple">10.1016/j.neuroimage.2004.06.015</ext-link></comment> <object-id pub-id-type="pmid">15488421</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref015">
+<label>15</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Thivard</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Lehéricy</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Krainik</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Adam</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Dormont</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Chiras</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>Diffusion tensor imaging in medial temporal lobe epilepsy with hippocampal sclerosis</article-title>. <source>NeuroImage</source>. <year>2005</year>;<volume>28</volume>(<issue>3</issue>):<fpage>682</fpage>–<lpage>690</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2005.06.045" xlink:type="simple">10.1016/j.neuroimage.2005.06.045</ext-link></comment> <object-id pub-id-type="pmid">16084113</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref016">
+<label>16</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Assaf</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Pasternak</surname> <given-names>O</given-names></name>. <article-title>Diffusion tensor imaging (DTI)-based white matter mapping in brain research: a review [Journal Article]</article-title>. <source>Journal of Molecular Neuroscience</source>. <year>2008</year>;<volume>34</volume>(<issue>1</issue>):<fpage>51</fpage>–<lpage>61</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s12031-007-0029-0" xlink:type="simple">10.1007/s12031-007-0029-0</ext-link></comment> <object-id pub-id-type="pmid">18157658</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref017">
+<label>17</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Mori</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>J</given-names></name>. <article-title>Principles of diffusion tensor imaging and its applications to basic neuroscience research [Journal Article]</article-title>. <source>Neuron</source>. <year>2006</year>;<volume>51</volume>(<issue>5</issue>):<fpage>527</fpage>–<lpage>539</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuron.2006.08.012" xlink:type="simple">10.1016/j.neuron.2006.08.012</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref018">
+<label>18</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Besson</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Dinkelacker</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Valabregue</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Thivard</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Leclerc</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Baulac</surname> <given-names>M</given-names></name>, <etal>et al</etal>. <article-title>Structural connectivity differences in left and right temporal lobe epilepsy</article-title>. <source>NeuroImage</source>. <year>2014</year>;<volume>100</volume>:<fpage>135</fpage>–<lpage>144</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2014.04.071" xlink:type="simple">10.1016/j.neuroimage.2014.04.071</ext-link></comment> <object-id pub-id-type="pmid">24814212</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref019">
+<label>19</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>DeSalvo</surname> <given-names>MN</given-names></name>, <name name-style="western"><surname>Douw</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Tanaka</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Reinsberger</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Stufflebeam</surname> <given-names>SM</given-names></name>. <article-title>Altered Structural Connectome in Temporal Lobe Epilepsy [Journal Article]</article-title>. <source>Radiology</source>. <year>2014</year>;<volume>270</volume>(<issue>3</issue>):<fpage>842</fpage>–<lpage>848</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1148/radiol.13131044" xlink:type="simple">10.1148/radiol.13131044</ext-link></comment> <object-id pub-id-type="pmid">24475828</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref020">
+<label>20</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bonilha</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Helpern</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Sainju</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Nesland</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Edwards</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Glazier</surname> <given-names>SS</given-names></name>, <etal>et al</etal>. <article-title>Presurgical connectome and postsurgical seizure control in temporal lobe epilepsy [Journal Article]</article-title>. <source>Neurology</source>. <year>2013</year>;<volume>81</volume>(<issue>19</issue>):<fpage>1704</fpage>–<lpage>1710</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1212/01.wnl.0000435306.95271.5f" xlink:type="simple">10.1212/01.wnl.0000435306.95271.5f</ext-link></comment> <object-id pub-id-type="pmid">24107863</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref021">
+<label>21</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bonilha</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Nesland</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Martz</surname> <given-names>GU</given-names></name>, <name name-style="western"><surname>Joseph</surname> <given-names>JE</given-names></name>, <name name-style="western"><surname>Spampinato</surname> <given-names>MV</given-names></name>, <name name-style="western"><surname>Edwards</surname> <given-names>JC</given-names></name>, <etal>et al</etal>. <article-title>Medial temporal lobe epilepsy is associated with neuronal fibre loss and paradoxical increase in structural connectivity of limbic structures [Journal Article]</article-title>. <source>Journal of Neurology, Neurosurgery &amp; Psychiatry</source>. <year>2012</year>;<volume>83</volume>(<issue>9</issue>):<fpage>903</fpage>–<lpage>909</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1136/jnnp-2012-302476" xlink:type="simple">10.1136/jnnp-2012-302476</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref022">
+<label>22</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Liao</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Pan</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Mantini</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Ding</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Duan</surname> <given-names>X</given-names></name>, <etal>et al</etal>. <article-title>Default mode network abnormalities in mesial temporal lobe epilepsy: a study combining fMRI and DTI [Journal Article]</article-title>. <source>Human Brain Mapping</source>. <year>2011</year>;<volume>32</volume>(<issue>6</issue>):<fpage>883</fpage>–<lpage>895</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/hbm.21076" xlink:type="simple">10.1002/hbm.21076</ext-link></comment> <object-id pub-id-type="pmid">20533558</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref023">
+<label>23</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Zhang</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Liao</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Chen</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Mantini</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Ding</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Xu</surname> <given-names>Q</given-names></name>, <etal>et al</etal>. <article-title>Altered functional–structural coupling of large-scale brain networks in idiopathic generalized epilepsy</article-title>. <source>Brain</source>. <year>2011</year>;<volume>134</volume>(<issue>10</issue>):<fpage>2912</fpage>–<lpage>2928</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/brain/awr223" xlink:type="simple">10.1093/brain/awr223</ext-link></comment> <object-id pub-id-type="pmid">21975588</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref024">
+<label>24</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Yan</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>P</given-names></name>. <article-title>The emergence of abnormal hypersynchronization in the anatomical structural network of human brain</article-title>. <source>NeuroImage</source>. <year>2013</year>;<volume>65</volume>:<fpage>34</fpage>–<lpage>51</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2012.09.031" xlink:type="simple">10.1016/j.neuroimage.2012.09.031</ext-link></comment> <object-id pub-id-type="pmid">23000784</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref025">
+<label>25</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Taylor</surname> <given-names>PN</given-names></name>, <name name-style="western"><surname>Goodfellow</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Wang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Baier</surname> <given-names>G</given-names></name>. <article-title>Towards a large-scale model of patient-specific epileptic spike-wave discharges</article-title>. <source>Biological Cybernetics</source>. <year>2013</year>;<volume>107</volume>(<issue>1</issue>):<fpage>83</fpage>–<lpage>94</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s00422-012-0534-2" xlink:type="simple">10.1007/s00422-012-0534-2</ext-link></comment> <object-id pub-id-type="pmid">23132433</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref026">
+<label>26</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Taylor</surname> <given-names>PN</given-names></name>, <name name-style="western"><surname>Thomas</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Sinha</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Dauwels</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Kaiser</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Thesen</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Ruths</surname> <given-names>J</given-names></name>. <article-title>Optimal control based seizure abatement using patient derived connectivity</article-title>. <source>Frontiers in Neuroscience</source>. <year>2015</year>;<volume>9</volume>:<fpage>202</fpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.3389/fnins.2015.00202" xlink:type="simple">10.3389/fnins.2015.00202</ext-link></comment> <object-id pub-id-type="pmid">26089775</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref027">
+<label>27</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Taylor</surname> <given-names>PN</given-names></name>, <name name-style="western"><surname>Kaiser</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Dauwels</surname> <given-names>J</given-names></name>. <article-title>Structural connectivity based whole brain modelling in epilepsy</article-title>. <source>Journal of Neuroscience Methods</source>. <year>2014</year>;<volume>236</volume>(<issue>0</issue>):<fpage>51</fpage>–<lpage>57</lpage>. <comment>Available from: <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.sciencedirect.com/science/article/pii/S0165027014002945">http://www.sciencedirect.com/science/article/pii/S0165027014002945</ext-link></comment> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jneumeth.2014.08.010" xlink:type="simple">10.1016/j.jneumeth.2014.08.010</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref028">
+<label>28</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Jirsa</surname> <given-names>VK</given-names></name>, <name name-style="western"><surname>Stacey</surname> <given-names>WC</given-names></name>, <name name-style="western"><surname>Quilichini</surname> <given-names>PP</given-names></name>, <name name-style="western"><surname>Ivanov</surname> <given-names>AI</given-names></name>, <name name-style="western"><surname>Bernard</surname> <given-names>C</given-names></name>. <article-title>On the nature of seizure dynamics</article-title>. <source>Brain</source>. <year>2014</year>;<volume>137</volume>(<issue>8</issue>):<fpage>2210</fpage>–<lpage>2230</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/brain/awu133" xlink:type="simple">10.1093/brain/awu133</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref029">
+<label>29</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Wang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Goodfellow</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Taylor</surname> <given-names>PN</given-names></name>, <name name-style="western"><surname>Baier</surname> <given-names>G</given-names></name>. <article-title>Phase space approach for modeling of epileptic dynamics</article-title>. <source>Physical Review E</source>. <year>2012</year>;<volume>85</volume>(<issue>6</issue>):<fpage>061918</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevE.85.061918" xlink:type="simple">10.1103/PhysRevE.85.061918</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref030">
+<label>30</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Taylor</surname> <given-names>PN</given-names></name>, <name name-style="western"><surname>Baier</surname> <given-names>G</given-names></name>. <article-title>A Spatially Extended Model for Macroscopic Spike-Wave Discharges</article-title>. <source>Journal of Computational Neuroscience</source>. <year>2011</year>;<volume>31</volume>(<issue>3</issue>):<fpage>679</fpage>–<lpage>684</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10827-011-0332-1" xlink:type="simple">10.1007/s10827-011-0332-1</ext-link></comment> <object-id pub-id-type="pmid">21556886</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref031">
+<label>31</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Kramer</surname> <given-names>MA</given-names></name>, <name name-style="western"><surname>Szeri</surname> <given-names>AJ</given-names></name>, <name name-style="western"><surname>Sleigh</surname> <given-names>JW</given-names></name>, <name name-style="western"><surname>Kirsch</surname> <given-names>HE</given-names></name>. <article-title>Mechanisms of seizure propagation in a cortical model</article-title>. <source>Journal of Computational Neuroscience</source>. <year>2007</year>;<volume>22</volume>(<issue>1</issue>):<fpage>63</fpage>–<lpage>80</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10827-006-9508-5" xlink:type="simple">10.1007/s10827-006-9508-5</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref032">
+<label>32</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Marten</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Rodrigues</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Suffczynski</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Richardson</surname> <given-names>MP</given-names></name>, <name name-style="western"><surname>Terry</surname> <given-names>JR</given-names></name>. <article-title>Derivation and analysis of an ordinary differential equation mean-field model for studying clinically recorded epilepsy dynamics</article-title>. <source>Physical Review E</source>. <year>2009</year>;<volume>79</volume>(<issue>2</issue>):<fpage>021911</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevE.79.021911" xlink:type="simple">10.1103/PhysRevE.79.021911</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref033">
+<label>33</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Breakspear</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Roberts</surname> <given-names>JA</given-names></name>, <name name-style="western"><surname>Terry</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Rodrigues</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Mahant</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Robinson</surname> <given-names>PA</given-names></name>. <article-title>A unifying explanation of primary generalized seizures through nonlinear brain modeling and bifurcation analysis</article-title>. <source>Cerebral Cortex</source>. <year>2006</year>;<volume>16</volume>(<issue>9</issue>):<fpage>1296</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/cercor/bhj072" xlink:type="simple">10.1093/cercor/bhj072</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref034">
+<label>34</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Proix</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Bartolomei</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Chauvel</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Bernard</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Jirsa</surname> <given-names>VK</given-names></name>. <article-title>Permittivity coupling across brain regions determines seizure recruitment in partial epilepsy</article-title>. <source>The Journal of Neuroscience</source>. <year>2014</year>;<volume>34</volume>(<issue>45</issue>), <fpage>15009</fpage>–<lpage>15021</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1523/JNEUROSCI.1570-14.2014" xlink:type="simple">10.1523/JNEUROSCI.1570-14.2014</ext-link></comment> <object-id pub-id-type="pmid">25378166</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref035">
+<label>35</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Wendling</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Benquet</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Bartolomei</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Jirsa</surname> <given-names>V</given-names></name>. <article-title>Computational models of epileptiform activity</article-title>. <source>Journal of neuroscience methods</source>. <year>2015</year>; <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jneumeth.2015.03.027" xlink:type="simple">10.1016/j.jneumeth.2015.03.027</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref036">
+<label>36</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>da Silva</surname> <given-names>FHL</given-names></name>, <name name-style="western"><surname>Blanes</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Kalitzin</surname> <given-names>SN</given-names></name>, <name name-style="western"><surname>Parra</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Suffczynski</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Velis</surname> <given-names>DN</given-names></name>. <article-title>Dynamical diseases of brain systems: different routes to epileptic seizures [Journal Article]</article-title>. <source>Biomedical Engineering, IEEE Transactions on</source>. <year>2003</year>;<volume>50</volume>(<issue>5</issue>):<fpage>540</fpage>–<lpage>548</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1109/TBME.2003.810703" xlink:type="simple">10.1109/TBME.2003.810703</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref037">
+<label>37</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Wendling</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Bartolomei</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Bellanger</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Chauvel</surname> <given-names>P</given-names></name>. <article-title>Epileptic fast activity can be explained by a model of impaired GABAergic dendritic inhibition</article-title>. <source>European Journal of Neuroscience</source>. <year>2002</year>;<volume>15</volume>(<issue>9</issue>):<fpage>1499</fpage>–<lpage>1508</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1046/j.1460-9568.2002.01985.x" xlink:type="simple">10.1046/j.1460-9568.2002.01985.x</ext-link></comment> <object-id pub-id-type="pmid">12028360</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref038">
+<label>38</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Da Silva</surname> <given-names>FL</given-names></name>, <name name-style="western"><surname>Blanes</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Kalitzin</surname> <given-names>SN</given-names></name>, <name name-style="western"><surname>Parra</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Suffczynski</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Velis</surname> <given-names>DN</given-names></name>. <article-title>Epilepsies as dynamical diseases of brain systems: basic models of the transition between normal and epileptic activity</article-title>. <source>Epilepsia</source>. <year>2003</year>;<volume>44</volume>(<issue>s12</issue>):<fpage>72</fpage>–<lpage>83</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.0013-9580.2003.12005.x" xlink:type="simple">10.1111/j.0013-9580.2003.12005.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref039">
+<label>39</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Kalitzin</surname> <given-names>SN</given-names></name>, <name name-style="western"><surname>Velis</surname> <given-names>DN</given-names></name>, <name name-style="western"><surname>Lopes da Silva</surname> <given-names>FH</given-names></name>. <article-title>Stimulation-based anticipation and control of state transitions in the epileptic brain</article-title>. <source>Epilepsy &amp; Behavior</source>. <year>2010</year>;<volume>17</volume>(<issue>3</issue>):<fpage>310</fpage>–<lpage>323</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.yebeh.2009.12.023" xlink:type="simple">10.1016/j.yebeh.2009.12.023</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref040">
+<label>40</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Benjamin</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Fitzgerald</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Ashwin</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Tsaneva-Atanasova</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Chowdhury</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Richardson</surname> <given-names>MP</given-names></name>, <etal>et al</etal>. <article-title>A phenomenological model of seizure initiation suggests network structure may explain seizure frequency in idiopathic generalised epilepsy [Journal Article]</article-title>. <source>J Math Neurosci</source>. <year>2012</year>;<volume>2</volume>(<issue>1</issue>):<fpage>1</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1186/2190-8567-2-1" xlink:type="simple">10.1186/2190-8567-2-1</ext-link></comment> <object-id pub-id-type="pmid">22657571</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref041">
+<label>41</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Terry</surname> <given-names>JR</given-names></name>, <name name-style="western"><surname>Benjamin</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Richardson</surname> <given-names>MP</given-names></name>. <article-title>Seizure generation: the role of nodes and networks [Journal Article]</article-title>. <source>Epilepsia</source>. <year>2012</year>;<volume>53</volume>(<issue>9</issue>):<fpage>e166</fpage>–<lpage>e169</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1528-1167.2012.03560.x" xlink:type="simple">10.1111/j.1528-1167.2012.03560.x</ext-link></comment> <object-id pub-id-type="pmid">22709380</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref042">
+<label>42</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Schindler</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Ghast</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Stieglitz</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Stibal</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Hauf</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Weist</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Mariani</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Rummel</surname> <given-names>C</given-names></name>. <article-title>Forbidden ordinal patterns of periictal intra-cranial EEG indicate deterministic dynamics in human epileptic seizures</article-title>. <source>Epilepsia</source> <year>2011</year>; <volume>52</volume>:<fpage>1771</fpage>–<lpage>1780</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1528-1167.2011.03202.x" xlink:type="simple">10.1111/j.1528-1167.2011.03202.x</ext-link></comment> <object-id pub-id-type="pmid">21838792</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref043">
+<label>43</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Arruda</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Cendes</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Andermann</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Dubeau</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Villemure</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Jones-Gotman</surname> <given-names>M</given-names></name>, <etal>et al</etal>. <article-title>Mesial atrophy and outcome after amygdalohippocampectomy or temporal lobe removal</article-title>. <source>Annals of neurology</source>. <year>1996</year>;<volume>40</volume>(<issue>3</issue>):<fpage>446</fpage>–<lpage>450</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/ana.410400314" xlink:type="simple">10.1002/ana.410400314</ext-link></comment> <object-id pub-id-type="pmid">8797534</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref044">
+<label>44</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Richardson</surname> <given-names>MP</given-names></name>. <article-title>Large scale brain models of epilepsy: dynamics meets connectomics</article-title>. <source>Journal of Neurology, Neurosurgery and Psychiatry</source>. <year>2012</year>;<volume>83</volume>(<issue>12</issue>):<fpage>1238</fpage>–<lpage>1248</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1136/jnnp-2011-301944" xlink:type="simple">10.1136/jnnp-2011-301944</ext-link></comment> <object-id pub-id-type="pmid">22917671</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref045">
+<label>45</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Keller</surname> <given-names>SS</given-names></name>, <name name-style="western"><surname>Roberts</surname> <given-names>N</given-names></name>. <article-title>Voxel-based morphometry of temporal lobe epilepsy: An introduction and review of the literature</article-title>. <source>Epilepsia</source>. <year>2008</year>;<volume>49</volume>(<issue>5</issue>):<fpage>741</fpage>–<lpage>757</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1528-1167.2007.01485.x" xlink:type="simple">10.1111/j.1528-1167.2007.01485.x</ext-link></comment> <object-id pub-id-type="pmid">18177358</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref046">
+<label>46</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Seidenberg</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Kelly</surname> <given-names>KG</given-names></name>, <name name-style="western"><surname>Parrish</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Geary</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Dow</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Rutecki</surname> <given-names>P</given-names></name>, <etal>et al</etal>. <article-title>Ipsilateral and contralateral MRI volumetric abnormalities in chronic unilateral temporal lobe epilepsy and their clinical correlates</article-title>. <source>Epilepsia</source>. <year>2005</year>;<volume>46</volume>(<issue>3</issue>):<fpage>420</fpage>–<lpage>430</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.0013-9580.2005.27004.x" xlink:type="simple">10.1111/j.0013-9580.2005.27004.x</ext-link></comment> <object-id pub-id-type="pmid">15730540</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref047">
+<label>47</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bettus</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Guedj</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Joyeux</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Confort-Gouny</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Soulier</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Laguitton</surname> <given-names>V</given-names></name>, <etal>et al</etal>. <article-title>Decreased basal fMRI functional connectivity in epileptogenic networks and contralateral compensatory mechanisms</article-title>. <source>Human Brain Mapping</source>. <year>2009</year>;<volume>30</volume>(<issue>5</issue>):<fpage>1580</fpage>–<lpage>1591</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/hbm.20625" xlink:type="simple">10.1002/hbm.20625</ext-link></comment> <object-id pub-id-type="pmid">18661506</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref048">
+<label>48</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Kullmann</surname> <given-names>DM</given-names></name>. <article-title>What’s wrong with the amygdala in temporal lobe epilepsy?</article-title> <source>Brain</source>. <year>2011</year>;<volume>134</volume>(<issue>10</issue>):<fpage>2800</fpage>–<lpage>2801</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/brain/awr246" xlink:type="simple">10.1093/brain/awr246</ext-link></comment> <object-id pub-id-type="pmid">21921018</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref049">
+<label>49</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Isnard</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Guénot</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Ostrowsky</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Sindou</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Mauguière</surname> <given-names>F</given-names></name>. <article-title>The role of the insular cortex in temporal lobe epilepsy</article-title>. <source>Annals of Neurology</source>. <year>2000</year>;<volume>48</volume>(<issue>4</issue>):<fpage>614</fpage>–<lpage>623</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/1531-8249(200010)48:4%3C614::AID-ANA8%3E3.0.CO;2-S" xlink:type="simple">10.1002/1531-8249(200010)48:4%3C614::AID-ANA8%3E3.0.CO;2-S</ext-link></comment> <object-id pub-id-type="pmid">11026445</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref050">
+<label>50</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Guye</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Régis</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Tamura</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Wendling</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Mc Gonigal</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Chauvel</surname> <given-names>P</given-names></name>, <etal>et al</etal>. <article-title>The role of corticothalamic coupling in human temporal lobe epilepsy</article-title>. <source>Brain</source>. <year>2006</year>;<volume>129</volume>(<issue>7</issue>):<fpage>1917</fpage>–<lpage>1928</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/brain/awl151" xlink:type="simple">10.1093/brain/awl151</ext-link></comment> <object-id pub-id-type="pmid">16760199</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref051">
+<label>51</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>McDonald</surname> <given-names>CR</given-names></name>, <name name-style="western"><surname>Hagler</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Ahmadi</surname> <given-names>ME</given-names></name>, <name name-style="western"><surname>Tecoma</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Iragui</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Gharapetian</surname> <given-names>L</given-names></name>, <etal>et al</etal>. <article-title>Regional neocortical thinning in mesial temporal lobe epilepsy</article-title>. <source>Epilepsia</source>. <year>2008</year>;<volume>49</volume>(<issue>5</issue>):<fpage>794</fpage>–<lpage>803</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1528-1167.2008.01539.x" xlink:type="simple">10.1111/j.1528-1167.2008.01539.x</ext-link></comment> <object-id pub-id-type="pmid">18266751</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref052">
+<label>52</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Riley</surname> <given-names>JD</given-names></name>, <name name-style="western"><surname>Moore</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Cramer</surname> <given-names>SC</given-names></name>, <name name-style="western"><surname>Lin</surname> <given-names>JJ</given-names></name>. <article-title>Caudate atrophy and impaired frontostriatal connections are linked to executive dysfunction in temporal lobe epilepsy</article-title>. <source>Epilepsy &amp; Behavior</source>. <year>2011</year>;<volume>21</volume>(<issue>1</issue>):<fpage>80</fpage>–<lpage>87</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.yebeh.2011.03.013" xlink:type="simple">10.1016/j.yebeh.2011.03.013</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref053">
+<label>53</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bernhardt</surname> <given-names>BC</given-names></name>, <name name-style="western"><surname>Worsley</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Kim</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Evans</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Bernasconi</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Bernasconi</surname> <given-names>N</given-names></name>. <article-title>Longitudinal and cross-sectional analysis of atrophy in pharmacoresistant temporal lobe epilepsy</article-title>. <source>Neurology</source>. <year>2009</year>;<volume>72</volume>(<issue>20</issue>):<fpage>1747</fpage>–<lpage>1754</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1212/01.wnl.0000345969.57574.f5" xlink:type="simple">10.1212/01.wnl.0000345969.57574.f5</ext-link></comment> <object-id pub-id-type="pmid">19246420</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref054">
+<label>54</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Lieb</surname> <given-names>JP</given-names></name>, <name name-style="western"><surname>Dasheiff</surname> <given-names>RM</given-names></name>, <name name-style="western"><surname>Engel</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>Role of the frontal lobes in the propagation of mesial temporal lobe seizures</article-title>. <source>Epilepsia</source>. <year>1991</year>;<volume>32</volume>(<issue>6</issue>):<fpage>822</fpage>–<lpage>837</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1528-1157.1991.tb05539.x" xlink:type="simple">10.1111/j.1528-1157.1991.tb05539.x</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref055">
+<label>55</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Tomasi</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Volkow</surname> <given-names>ND</given-names></name>. <article-title>Association between functional connectivity hubs and brain networks</article-title>. <source>Cerebral Cortex</source>. <year>2011</year>;<volume>21</volume>(<issue>9</issue>):<fpage>2003</fpage>–<lpage>2013</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/cercor/bhq268" xlink:type="simple">10.1093/cercor/bhq268</ext-link></comment> <object-id pub-id-type="pmid">21282318</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref056">
+<label>56</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Sporns</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Honey</surname> <given-names>CJ</given-names></name>, <name name-style="western"><surname>Kötter</surname> <given-names>R</given-names></name>. <article-title>Identification and classification of hubs in brain networks</article-title>. <source>PLoS One</source>. <year>2007</year>;<volume>2</volume>(<issue>10</issue>):<fpage>e1049</fpage>–<lpage>e1049</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0001049" xlink:type="simple">10.1371/journal.pone.0001049</ext-link></comment> <object-id pub-id-type="pmid">17940613</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref057">
+<label>57</label>
+<mixed-citation xlink:type="simple" publication-type="other">Engel J, Pedley TA. Epilepsy: A Comprehensive Textbook, Second Edition. 530 Walnut Street, Philadelphia, PA 19106 USA: Lippincott Williams and Wilkins, A Wolters Kluwer business; 2008.</mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref058">
+<label>58</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Jackson</surname> <given-names>GD</given-names></name>, <name name-style="western"><surname>Briellmann</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Kuzniecky</surname> <given-names>RI</given-names></name>. <source>Temporal lobe epilepsy</source>. <publisher-name>Elsevier Academic Press</publisher-name>, <publisher-loc>Burlington, MA</publisher-loc>; <year>2005</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref059">
+<label>59</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Babalola</surname> <given-names>KO</given-names></name>, <name name-style="western"><surname>Patenaude</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Aljabar</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Schnabel</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Kennedy</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Crum</surname> <given-names>W</given-names></name>, <etal>et al</etal>. <article-title>An evaluation of four automatic methods of segmenting the subcortical structures in the brain</article-title>. <source>NeuroImage</source>. <year>2009</year>;<volume>47</volume>(<issue>4</issue>):<fpage>1435</fpage>–<lpage>1447</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2009.05.029" xlink:type="simple">10.1016/j.neuroimage.2009.05.029</ext-link></comment> <object-id pub-id-type="pmid">19463960</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref060">
+<label>60</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Isnard</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Mauguiere</surname> <given-names>F</given-names></name>. <article-title>The insula in partial epilepsy</article-title>. <source>Revue neurologique</source>. <year>2005</year>;<volume>161</volume>(<issue>1</issue>):<fpage>17</fpage>–<lpage>26</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0035-3787(05)84970-7" xlink:type="simple">10.1016/S0035-3787(05)84970-7</ext-link></comment> <object-id pub-id-type="pmid">15677998</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref061">
+<label>61</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Ostrowsky</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Isnard</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Ryvlin</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Guénot</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Fischer</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Mauguière</surname> <given-names>F</given-names></name>. <article-title>Functional mapping of the insular cortex: clinical implication in temporal lobe epilepsy</article-title>. <source>Epilepsia</source>. <year>2000</year>;<volume>41</volume>(<issue>6</issue>):<fpage>681</fpage>–<lpage>686</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1528-1157.2000.tb00228.x" xlink:type="simple">10.1111/j.1528-1157.2000.tb00228.x</ext-link></comment> <object-id pub-id-type="pmid">10840399</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref062">
+<label>62</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Ryvlin</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Kahane</surname> <given-names>P</given-names></name>. <article-title>The hidden causes of surgery-resistant temporal lobe epilepsy: extratemporal or temporal plus? editorial review</article-title>. <source>Current opinion in neurology</source>. <year>2005</year>;<volume>18</volume>(<issue>2</issue>):<fpage>125</fpage>–<lpage>127</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1097/01.wco.0000162852.22026.6f" xlink:type="simple">10.1097/01.wco.0000162852.22026.6f</ext-link></comment> <object-id pub-id-type="pmid">15791141</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref063">
+<label>63</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Keller</surname> <given-names>SS</given-names></name>, <name name-style="western"><surname>Richardson</surname> <given-names>MP</given-names></name>, <name name-style="western"><surname>Schoene-Bake</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>O’Muircheartaigh</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Elkommos</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Kreilkamp</surname> <given-names>B</given-names></name>, <etal>et al</etal>. <article-title>Thalamotemporal alteration and postoperative seizures in temporal lobe epilepsy</article-title>. <source>Annals of neurology</source>. <year>2015</year>;<volume>77</volume>(<issue>5</issue>):<fpage>760</fpage>–<lpage>774</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/ana.24376" xlink:type="simple">10.1002/ana.24376</ext-link></comment> <object-id pub-id-type="pmid">25627477</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref064">
+<label>64</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Keller</surname> <given-names>SS</given-names></name>, <name name-style="western"><surname>Richardson</surname> <given-names>MP</given-names></name>, <name name-style="western"><surname>O’Muircheartaigh</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Schoene-Bake</surname> <given-names>JC</given-names></name>, <name name-style="western"><surname>Elger</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Weber</surname> <given-names>B</given-names></name>. <article-title>Morphometric MRI alterations and postoperative seizure control in refractory temporal lobe epilepsy</article-title>. <source>Human Brain Mapping</source>. <year>2015</year>;<volume>36</volume>(<issue>5</issue>):<fpage>1637</fpage>–<lpage>1647</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/hbm.22722" xlink:type="simple">10.1002/hbm.22722</ext-link></comment> <object-id pub-id-type="pmid">25704244</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref065">
+<label>65</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Rosenberg</surname> <given-names>DS</given-names></name>, <name name-style="western"><surname>Mauguière</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Demarquay</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Ryvlin</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Isnard</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Fischer</surname> <given-names>C</given-names></name>, <etal>et al</etal>. <article-title>Involvement of medial pulvinar thalamic nucleus in human temporal lobe seizures</article-title>. <source>Epilepsia</source>. <year>2006</year>;<volume>47</volume>(<issue>1</issue>):<fpage>98</fpage>–<lpage>107</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1528-1167.2006.00375.x" xlink:type="simple">10.1111/j.1528-1167.2006.00375.x</ext-link></comment> <object-id pub-id-type="pmid">16417537</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref066">
+<label>66</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Keller</surname> <given-names>SS</given-names></name>, <name name-style="western"><surname>O’Muircheartaigh</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Traynor</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Towgood</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Barker</surname> <given-names>GJ</given-names></name>, <name name-style="western"><surname>Richardson</surname> <given-names>MP</given-names></name>. <article-title>Thalamotemporal impairment in temporal lobe epilepsy: A combined MRI analysis of structure, integrity, and connectivity</article-title>. <source>Epilepsia</source>. <year>2014</year>;<volume>55</volume>(<issue>2</issue>):<fpage>306</fpage>–<lpage>315</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/epi.12520" xlink:type="simple">10.1111/epi.12520</ext-link></comment> <object-id pub-id-type="pmid">24447099</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref067">
+<label>67</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Seidenberg</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Hermann</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Pulsipher</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Morton</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Parrish</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Geary</surname> <given-names>E</given-names></name>, <etal>et al</etal>. <article-title>Thalamic atrophy and cognition in unilateral temporal lobe epilepsy</article-title>. <source>Journal of the International Neuropsychological Society</source>. <year>2008</year>;<volume>14</volume>(<issue>03</issue>):<fpage>384</fpage>–<lpage>393</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1017/S1355617708080399" xlink:type="simple">10.1017/S1355617708080399</ext-link></comment> <object-id pub-id-type="pmid">18419837</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref068">
+<label>68</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bonelli</surname> <given-names>SB</given-names></name>, <name name-style="western"><surname>Powell</surname> <given-names>RH</given-names></name>, <name name-style="western"><surname>Yogarajah</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Samson</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Symms</surname> <given-names>MR</given-names></name>, <name name-style="western"><surname>Thompson</surname> <given-names>PJ</given-names></name>, <etal>et al</etal>. <article-title>Imaging memory in temporal lobe epilepsy: predicting the effects of temporal lobe resection</article-title>. <source>Brain</source>. <year>2010</year>;p. <fpage>awq006</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref069">
+<label>69</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Alstott</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Breakspear</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Hagmann</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Cammoun</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Sporns</surname> <given-names>O</given-names></name>. <article-title>Modeling the impact of lesions in the human brain [Journal Article]</article-title>. <source>PLoS Computational Biology</source>. <year>2009</year>;<volume>5</volume>(<issue>6</issue>):<fpage>e1000408</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1000408" xlink:type="simple">10.1371/journal.pcbi.1000408</ext-link></comment> <object-id pub-id-type="pmid">19521503</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref070">
+<label>70</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Kaiser</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Martin</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Andras</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Young</surname> <given-names>MP</given-names></name>. <article-title>Simulation of robustness against lesions of cortical networks</article-title>. <source>European Journal of Neuroscience</source>. <year>2007</year>;<volume>25</volume>(<issue>10</issue>):<fpage>3185</fpage>–<lpage>3192</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1460-9568.2007.05574.x" xlink:type="simple">10.1111/j.1460-9568.2007.05574.x</ext-link></comment> <object-id pub-id-type="pmid">17561832</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref071">
+<label>71</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Honey</surname> <given-names>CJ</given-names></name>, <name name-style="western"><surname>Sporns</surname> <given-names>O</given-names></name>. <article-title>Dynamical consequences of lesions in cortical networks [Journal Article]</article-title>. <source>Human Brain Mapping</source>. <year>2008</year>;<volume>29</volume>(<issue>7</issue>):<fpage>802</fpage>–<lpage>809</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/hbm.20579" xlink:type="simple">10.1002/hbm.20579</ext-link></comment> <object-id pub-id-type="pmid">18438885</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref072">
+<label>72</label>
+<mixed-citation xlink:type="simple" publication-type="other">Sinha N, Dauwels J, Wang Y, Cash SS, Taylor PN. An in silico approach for pre-surgical evaluation of an epileptic cortex. In: Engineering in Medicine and Biology Society (EMBC), 2014 36th Annual International Conference of the IEEE. IEEE; 2014. p. 4884–4887.</mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref073">
+<label>73</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Jbabdi</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Johansen-Berg</surname> <given-names>H</given-names></name>. <article-title>Tractography: where do we go from here?</article-title> <source>Brain Connectivity</source>. <year>2011</year>;<volume>1</volume>(<issue>3</issue>):<fpage>169</fpage>–<lpage>183</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1089/brain.2011.0033" xlink:type="simple">10.1089/brain.2011.0033</ext-link></comment> <object-id pub-id-type="pmid">22433046</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref074">
+<label>74</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Markov</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Ercsey-Ravasz</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Gomes</surname> <given-names>AR</given-names></name>, <name name-style="western"><surname>Lamy</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Magrou</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Vezoli</surname> <given-names>J</given-names></name>, <etal>et al</etal>. <article-title>A weighted and directed interareal connectivity matrix for macaque cerebral cortex</article-title>. <source>Cerebral Cortex</source>. <year>2012</year>;p. <fpage>bhs270</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref075">
+<label>75</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>David</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>Friston</surname> <given-names>KJ</given-names></name>. <article-title>A neural mass model for MEG/EEG:: coupling and neuronal dynamics</article-title>. <source>NeuroImage</source>. <year>2003</year>;<volume>20</volume>(<issue>3</issue>):<fpage>1743</fpage>–<lpage>1755</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2003.07.015" xlink:type="simple">10.1016/j.neuroimage.2003.07.015</ext-link></comment> <object-id pub-id-type="pmid">14642484</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref076">
+<label>76</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Felleman</surname> <given-names>DJ</given-names></name>, <name name-style="western"><surname>Van Essen</surname> <given-names>DC</given-names></name>. <article-title>Distributed hierarchical processing in the primate cerebral cortex</article-title>. <source>Cerebral Cortex</source>. <year>1991</year>;<volume>1</volume>(<issue>1</issue>):<fpage>1</fpage>–<lpage>47</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/cercor/1.1.1" xlink:type="simple">10.1093/cercor/1.1.1</ext-link></comment> <object-id pub-id-type="pmid">1822724</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref077">
+<label>77</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Diehl</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Piao</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Tkach</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Busch</surname> <given-names>RM</given-names></name>, <name name-style="western"><surname>LaPresto</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Najm</surname> <given-names>I</given-names></name>, <etal>et al</etal>. <article-title>Cortical stimulation for language mapping in focal epilepsy: correlations with tractography of the arcuate fasciculus</article-title>. <source>Epilepsia</source>. <year>2010</year>;<volume>51</volume>(<issue>4</issue>):<fpage>639</fpage>–<lpage>646</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/j.1528-1167.2009.02421.x" xlink:type="simple">10.1111/j.1528-1167.2009.02421.x</ext-link></comment> <object-id pub-id-type="pmid">20002151</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref078">
+<label>78</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Keller</surname> <given-names>CJ</given-names></name>, <name name-style="western"><surname>Honey</surname> <given-names>CJ</given-names></name>, <name name-style="western"><surname>Mégevand</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Entz</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Ulbert</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Mehta</surname> <given-names>AD</given-names></name>. <article-title>Mapping human brain networks with cortico-cortical evoked potentials</article-title>. <source>Philosophical Transactions of the Royal Society B: Biological Sciences</source>. <year>2014</year>;<volume>369</volume>(<issue>1653</issue>):<fpage>20130528</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1098/rstb.2013.0528" xlink:type="simple">10.1098/rstb.2013.0528</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref079">
+<label>79</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bucci</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Mandelli</surname> <given-names>ML</given-names></name>, <name name-style="western"><surname>Berman</surname> <given-names>JI</given-names></name>, <name name-style="western"><surname>Amirbekian</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Nguyen</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Berger</surname> <given-names>MS</given-names></name>, <name name-style="western"><surname>Henry</surname> <given-names>RG</given-names></name>. <article-title>Quantifying diffusion MRI tractography of the corticospinal tract in brain tumors with deterministic and probabilistic methods</article-title>. <source>NeuroImage: Clinical</source>, <year>2013</year>;<volume>3</volume>:<fpage>361</fpage>–<lpage>368</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.nicl.2013.08.008" xlink:type="simple">10.1016/j.nicl.2013.08.008</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref080">
+<label>80</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Tournier</surname> <given-names>JD</given-names></name>, <name name-style="western"><surname>Calamante</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Connelly</surname> <given-names>A</given-names></name>. <article-title>MRtrix: Diffusion tractography in crossing fiber regions</article-title>. <source>International Journal of Imaging Systems and Technology</source>. <year>2012</year>;<volume>22</volume>:<fpage>53</fpage>–<lpage>66</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/ima.22005" xlink:type="simple">10.1002/ima.22005</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref081">
+<label>81</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Lim</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Han</surname> <given-names>CE</given-names></name>, <name name-style="western"><surname>Uhlhaas</surname> <given-names>PJ</given-names></name>, <name name-style="western"><surname>Kaiser</surname> <given-names>M</given-names></name>. <article-title>Preferential detachment during human brain development: Age-and sex-specific structural connectivity in diffusion tensor imaging (DTI) data</article-title>. <source>Cerebral Cortex</source>. <year>2015</year>;<volume>25</volume>(<issue>6</issue>):<fpage>1477</fpage>–<lpage>1489</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/cercor/bht333" xlink:type="simple">10.1093/cercor/bht333</ext-link></comment> <object-id pub-id-type="pmid">24343892</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref082">
+<label>82</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Avecillas-Chasin</surname> <given-names>JM</given-names></name>, <name name-style="western"><surname>Alonso-Frech</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Parras</surname> <given-names>O</given-names></name>, <name name-style="western"><surname>del-Prado</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Barcia</surname> <given-names>JA</given-names></name>. <article-title>Assessment of a method to determine deep brain stimulation targets using deterministic tractography in a navigation system</article-title>. <source>Neurosurgical review</source>, <year>2015</year>;<volume>38</volume>(<issue>4</issue>):<fpage>739</fpage>–<lpage>751</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10143-015-0643-1" xlink:type="simple">10.1007/s10143-015-0643-1</ext-link></comment> <object-id pub-id-type="pmid">25962557</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref083">
+<label>83</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Catani</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Jones</surname> <given-names>DK</given-names></name>, <name name-style="western"><surname>Donato</surname> <given-names>R</given-names></name>. <article-title>Occipito temporal connections in the human brain</article-title>. <source>Brain</source>, <year>2003</year>;<volume>126</volume>(<issue>9</issue>):<fpage>2093</fpage>–<lpage>2107</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/brain/awg203" xlink:type="simple">10.1093/brain/awg203</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref084">
+<label>84</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Mori</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Van-Zijl</surname> <given-names>PC</given-names></name>. <article-title>Fiber tracking: principles and strategies-a technical review</article-title>. <source>NMR in Biomedicine</source>. <year>2002</year>;<volume>15</volume>(<issue>7–8</issue>):<fpage>468</fpage>–<lpage>480</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/nbm.781" xlink:type="simple">10.1002/nbm.781</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref085">
+<label>85</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Khalsa</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Mayhew</surname> <given-names>SD</given-names></name>, <name name-style="western"><surname>Chechlacz</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Bagary</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Bagshaw</surname> <given-names>AP</given-names></name>. <article-title>The structural and functional connectivity of the posterior cingulate cortex: Comparison between deterministic and probabilistic tractography for the investigation of structure–function relationships</article-title>. <source>NeuroImage</source>. <year>2014</year>;<volume>102</volume>:<fpage>118</fpage>–<lpage>127</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2013.12.022" xlink:type="simple">10.1016/j.neuroimage.2013.12.022</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref086">
+<label>86</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bonilha</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Gleichgerrcht</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Fridriksson</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Rorden</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Breedlove</surname> <given-names>JL</given-names></name>, <name name-style="western"><surname>Nesland</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Paulus</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Helms</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Focke</surname> <given-names>NK</given-names></name>. <article-title>Reproducibility of the Structural Brain Connectome Derived from Diffusion Tensor Imaging</article-title>. <source>PLoS One</source> <year>2015</year>;<volume>10</volume>(<issue>9</issue>): <fpage>e0135247</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0135247" xlink:type="simple">10.1371/journal.pone.0135247</ext-link></comment> <object-id pub-id-type="pmid">26332788</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref087">
+<label>87</label>
+<mixed-citation xlink:type="simple" publication-type="other">Girard G, Whittingstall K, Deriche R, Descoteaux M. Structural connectivity reproducibility through multiple acquisitions. Organization for Human Brain Mapping. 2015;Conference paper</mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref088">
+<label>88</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Lilja</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Ljungberg</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Starck</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Malmgren</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Rydenhag</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Nilsson</surname> <given-names>DT</given-names></name>. <article-title>Visualizing Meyer’s loop: A comparison of deterministic and probabilistic tractography</article-title>. <source>Epilepsy research</source>, <year>2014</year>;<volume>108</volume>(<issue>3</issue>):<fpage>481</fpage>–<lpage>490</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.eplepsyres.2014.01.017" xlink:type="simple">10.1016/j.eplepsyres.2014.01.017</ext-link></comment> <object-id pub-id-type="pmid">24559840</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref089">
+<label>89</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Zalesky</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Fornito</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Harding</surname> <given-names>IH</given-names></name>, <name name-style="western"><surname>Cocchi</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Yücel</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Pantelis</surname> <given-names>C</given-names></name>, <etal>et al</etal>. <article-title>Whole-brain anatomical networks: does the choice of nodes matter?</article-title> <source>NeuroImage</source>. <year>2010</year>;<volume>50</volume>(<issue>3</issue>):<fpage>970</fpage>–<lpage>983</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2009.12.027" xlink:type="simple">10.1016/j.neuroimage.2009.12.027</ext-link></comment> <object-id pub-id-type="pmid">20035887</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref090">
+<label>90</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>de Reus</surname> <given-names>MA</given-names></name>, <name name-style="western"><surname>Van den Heuvel</surname> <given-names>MP</given-names></name>. <article-title>The parcellation-based connectome: limitations and extensions</article-title>. <source>NeuroImage</source>, <year>2013</year>;<volume>80</volume>:<fpage>397</fpage>–<lpage>404</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2013.03.053" xlink:type="simple">10.1016/j.neuroimage.2013.03.053</ext-link></comment> <object-id pub-id-type="pmid">23558097</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref091">
+<label>91</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Gordon</surname> <given-names>EM</given-names></name>, <name name-style="western"><surname>Laumann</surname> <given-names>TO</given-names></name>, <name name-style="western"><surname>Adeyemo</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Huckins</surname> <given-names>JF</given-names></name>, <name name-style="western"><surname>Kelley</surname> <given-names>WM</given-names></name>, <name name-style="western"><surname>Petersen</surname> <given-names>SE</given-names></name>. <article-title>Generation and evaluation of a cortical area parcellation from resting-state correlations</article-title>. <source>Cerebral Cortex</source>. <year>2014</year>;. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/cercor/bhu239" xlink:type="simple">10.1093/cercor/bhu239</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref092">
+<label>92</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Cabral</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Hugues</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Kringelbach</surname> <given-names>ML</given-names></name>, <name name-style="western"><surname>Deco</surname> <given-names>G</given-names></name>. <article-title>Modeling the outcome of structural disconnection on resting-state functional connectivity</article-title>. <source>NeuroImage</source>. <year>2012</year>; <volume>62</volume>(<issue>3</issue>): <fpage>1342</fpage>–<lpage>1353</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2012.06.007" xlink:type="simple">10.1016/j.neuroimage.2012.06.007</ext-link></comment> <object-id pub-id-type="pmid">22705375</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref093">
+<label>93</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Kochunov</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Williamson</surname> <given-names>DE</given-names></name>, <name name-style="western"><surname>Lancaster</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Fox</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Cornell</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Blangero</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Glahn</surname> <given-names>DC</given-names></name>. <article-title>Fractional anisotropy of water diffusion in cerebral white matter across the lifespan</article-title>. <source>Neurobiology of aging</source> <year>2012</year>;<volume>33</volume>(<issue>1</issue>): <fpage>9</fpage>–<lpage>20</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neurobiolaging.2010.01.014" xlink:type="simple">10.1016/j.neurobiolaging.2010.01.014</ext-link></comment> <object-id pub-id-type="pmid">20122755</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref094">
+<label>94</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Wijtenburg</surname> <given-names>SA</given-names></name>, <name name-style="western"><surname>McGuire</surname> <given-names>SA</given-names></name>, <name name-style="western"><surname>Rowland</surname> <given-names>LM</given-names></name>, <name name-style="western"><surname>Sherman</surname> <given-names>PM</given-names></name>, <name name-style="western"><surname>Lancaster</surname> <given-names>JL</given-names></name>, <name name-style="western"><surname>Tate</surname> <given-names>DF</given-names></name>, <name name-style="western"><surname>Hardies</surname> <given-names>LJ</given-names></name>, <name name-style="western"><surname>Patel</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Glahn</surname> <given-names>DC</given-names></name>, <name name-style="western"><surname>Hong</surname> <given-names>LE</given-names></name>, <name name-style="western"><surname>Fox</surname> <given-names>PT</given-names></name>, <name name-style="western"><surname>Kochunov</surname> <given-names>P</given-names></name>. <article-title>Relationship between fractional anisotropy of cerebral white matter and metabolite concentrations measured using 1 H magnetic resonance spectroscopy in healthy adults</article-title>. <source>NeuroImage</source>. <year>2013</year>;<volume>66</volume>:<fpage>161</fpage>–<lpage>168</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2012.10.014" xlink:type="simple">10.1016/j.neuroimage.2012.10.014</ext-link></comment> <object-id pub-id-type="pmid">23073233</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref095">
+<label>95</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Wang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Goodfellow</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Taylor</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Baier</surname> <given-names>G</given-names></name>. <article-title>Dynamic mechanisms of neocortical focal seizure onset</article-title>. <source>PLoS Computational Biology</source>. <year>2014</year>;<volume>10</volume>(<issue>8</issue>):<fpage>e1003787</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1003787" xlink:type="simple">10.1371/journal.pcbi.1003787</ext-link></comment> <object-id pub-id-type="pmid">25122455</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref096">
+<label>96</label>
+<mixed-citation xlink:type="simple" publication-type="other">FreeSurfer;. <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://surfer.nmr.mgh.harvard.edu/">http://surfer.nmr.mgh.harvard.edu/</ext-link>. <comment>Available from: <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://surfer.nmr.mgh.harvard.edu/">http://surfer.nmr.mgh.harvard.edu/</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref097">
+<label>97</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Fischl</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>van der Kouwe</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Destrieux</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Halgren</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Ségonne</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Salat</surname> <given-names>DH</given-names></name>, <etal>et al</etal>. <article-title>Automatically parcellating the human cerebral cortex</article-title>. <source>Cerebral Cortex</source>. <year>2004</year>;<volume>14</volume>(<issue>1</issue>):<fpage>11</fpage>–<lpage>22</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1093/cercor/bhg087" xlink:type="simple">10.1093/cercor/bhg087</ext-link></comment> <object-id pub-id-type="pmid">14654453</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref098">
+<label>98</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Desikan</surname> <given-names>RS</given-names></name>, <name name-style="western"><surname>Ségonne</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Fischl</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Quinn</surname> <given-names>BT</given-names></name>, <name name-style="western"><surname>Dickerson</surname> <given-names>BC</given-names></name>, <name name-style="western"><surname>Blacker</surname> <given-names>D</given-names></name>, <etal>et al</etal>. <article-title>An automated labeling system for subdividing the human cerebral cortex on MRI scans into gyral based regions of interest</article-title>. <source>NeuroImage</source>. <year>2006</year>;<volume>31</volume>(<issue>3</issue>):<fpage>968</fpage>–<lpage>980</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuroimage.2006.01.021" xlink:type="simple">10.1016/j.neuroimage.2006.01.021</ext-link></comment> <object-id pub-id-type="pmid">16530430</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref099">
+<label>99</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Mori</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Barker</surname> <given-names>PB</given-names></name>. <article-title>Diffusion magnetic resonance imaging: its principle and applications</article-title>. <source>The Anatomical Record</source>. <year>1999</year>;<volume>257</volume>(<issue>3</issue>):<fpage>102</fpage>–<lpage>109</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/(SICI)1097-0185(19990615)257:3%3C102::AID-AR7%3E3.3.CO;2-Y" xlink:type="simple">10.1002/(SICI)1097-0185(19990615)257:3%3C102::AID-AR7%3E3.3.CO;2-Y</ext-link></comment> <object-id pub-id-type="pmid">10397783</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref100">
+<label>100</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Wang</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Benner</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Sorensen</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Wedeen</surname> <given-names>V</given-names></name>. <article-title>Diffusion toolkit: a software package for diffusion imaging data processing and tractography</article-title>. In: <source>Proceedings of the International Society for Magnetic Resonance in Medicine</source>. vol. <volume>15</volume>; <year>2007</year>. p. <fpage>3720</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref101">
+<label>101</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>van den Heuvel</surname> <given-names>MP</given-names></name>, <name name-style="western"><surname>de Reus</surname> <given-names>MA</given-names></name>, <name name-style="western"><surname>Feldman Barrett</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Scholtens</surname> <given-names>LH</given-names></name>, <name name-style="western"><surname>Coopmans</surname> <given-names>FM</given-names></name>, <name name-style="western"><surname>Schmidt</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Preuss</surname> <given-names>TM</given-names></name>, <name name-style="western"><surname>Rilling</surname> <given-names>JK</given-names></name>, <name name-style="western"><surname>Li</surname> <given-names>L</given-names></name>. <article-title>Comparison of diffusion tractography and tract tracing measures of connectivity strength in rhesus macaque connectome</article-title>. <source>Human Brain Mapping</source>. <year>2015</year>;<volume>36</volume>(<issue>8</issue>):<fpage>3064</fpage>–<lpage>3075</lpage> <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/hbm.22828" xlink:type="simple">10.1002/hbm.22828</ext-link></comment> <object-id pub-id-type="pmid">26058702</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref102">
+<label>102</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Liao</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Zhang</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Pan</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Mantini</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Ding</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Duan</surname> <given-names>X</given-names></name>, <etal>et al</etal>. <article-title>Altered functional connectivity and small-world in mesial temporal lobe epilepsy</article-title>. <source>PloS One</source>. <year>2010</year>;<volume>5</volume>(<issue>1</issue>):<fpage>e8525</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0008525" xlink:type="simple">10.1371/journal.pone.0008525</ext-link></comment> <object-id pub-id-type="pmid">20072616</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref103">
+<label>103</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Bojak</surname> <given-names>I</given-names></name>, <name name-style="western"><surname>Oostendorp</surname> <given-names>TF</given-names></name>, <name name-style="western"><surname>Reid</surname> <given-names>AT</given-names></name>, <name name-style="western"><surname>Kötter</surname> <given-names>R</given-names></name>. <article-title>Connecting mean field models of neural activity to EEG and fMRI data</article-title>. <source>Brain topography</source>. <year>2010</year>;<volume>23</volume>(<issue>2</issue>):<fpage>139</fpage>–<lpage>149</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1007/s10548-010-0140-3" xlink:type="simple">10.1007/s10548-010-0140-3</ext-link></comment> <object-id pub-id-type="pmid">20364434</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004642.ref104">
+<label>104</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Quiroga</surname> <given-names>RQ</given-names></name>, <name name-style="western"><surname>Garcia</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Rabinowicz</surname> <given-names>A</given-names></name>. <article-title>Frequency evolution during tonic-clonic seizures</article-title>. <source>Electromyography and clinical neurophysiology</source>. <year>2002</year>;<volume>42</volume>(<issue>6</issue>):<fpage>323</fpage>–<lpage>332</lpage>.</mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

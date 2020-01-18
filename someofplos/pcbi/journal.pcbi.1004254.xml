@@ -1,0 +1,973 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" dtd-version="3.0" xml:lang="en" article-type="research-article">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-14-01669</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004254</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Monte Carlo Planning Method Estimates Planning Horizons during Interactive Social Exchange</article-title>
+<alt-title alt-title-type="running-head">Monte Carlo Planning in Social Exchange</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Hula</surname> <given-names>Andreas</given-names></name>
+<xref ref-type="aff" rid="aff001"><sup>1</sup></xref>
+<xref ref-type="corresp" rid="cor001">*</xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Montague</surname> <given-names>P. Read</given-names></name>
+<xref ref-type="aff" rid="aff002"><sup>2</sup></xref>
+<xref ref-type="aff" rid="aff003"><sup>3</sup></xref>
+<xref ref-type="aff" rid="aff004"><sup>4</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Dayan</surname> <given-names>Peter</given-names></name>
+<xref ref-type="aff" rid="aff005"><sup>5</sup></xref>
+</contrib>
+</contrib-group>
+<aff id="aff001">
+<label>1</label>
+<addr-line>Wellcome Trust Centre for Neuroimaging, University College London, London, United Kingdom</addr-line>
+</aff>
+<aff id="aff002">
+<label>2</label>
+<addr-line>Wellcome Trust Centre for Neuroimaging, University College London, London, United Kingdom</addr-line>
+</aff>
+<aff id="aff003">
+<label>3</label>
+<addr-line>Human Neuroimaging Laboratory, Virginia Tech Carilion Research Institute, Roanoke, Virginia, United States of America</addr-line>
+</aff>
+<aff id="aff004">
+<label>4</label>
+<addr-line>Department of Physics, Virginia Polytechnic Institute and State University, Blacksburg, Virginia, United States of America</addr-line>
+</aff>
+<aff id="aff005">
+<label>5</label>
+<addr-line>Gatsby Computational Neuroscience Unit, University College London, London, United Kingdom</addr-line>
+</aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Gershman</surname> <given-names>Samuel</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1">
+<addr-line>Massachusetts Institute of Technology, UNITED STATES</addr-line>
+</aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the simulations: AH PRM PD. Performed the simulations: AH. Analyzed the data: AH. Contributed reagents/materials/analysis tools: AH PRM. Wrote the paper: AH PRM PD.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">ahula@ucl.ac.uk</email></corresp>
+</author-notes>
+<pub-date pub-type="collection">
+<month>6</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="epub">
+<day>8</day>
+<month>6</month>
+<year>2015</year>
+</pub-date>
+<volume>11</volume>
+<issue>6</issue>
+<elocation-id>e1004254</elocation-id>
+<history>
+<date date-type="received">
+<day>13</day>
+<month>9</month>
+<year>2014</year>
+</date>
+<date date-type="accepted">
+<day>23</day>
+<month>3</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Hula et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004254" xlink:type="simple"/>
+<abstract>
+<p>Reciprocating interactions represent a central feature of all human exchanges. They have been the target of various recent experiments, with healthy participants and psychiatric populations engaging as dyads in multi-round exchanges such as a repeated trust task. Behaviour in such exchanges involves complexities related to each agent’s preference for equity with their partner, beliefs about the partner’s appetite for equity, beliefs about the partner’s model of their partner, and so on. Agents may also plan different numbers of steps into the future. Providing a computationally precise account of the behaviour is an essential step towards understanding what underlies choices. A natural framework for this is that of an interactive partially observable Markov decision process (IPOMDP). However, the various complexities make IPOMDPs inordinately computationally challenging. Here, we show how to approximate the solution for the multi-round trust task using a variant of the Monte-Carlo tree search algorithm. We demonstrate that the algorithm is efficient and effective, and therefore can be used to invert observations of behavioural choices. We use generated behaviour to elucidate the richness and sophistication of interactive inference.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>Agents interacting in games with multiple rounds must model their partner’s thought processes over extended time horizons. This poses a substantial computational challenge that has restricted previous behavioural analyses. By taking advantage of recent advances in algorithms for planning in the face of uncertainty, we demonstrate how these formal methods can be extended. We use a well studied social exchange game called the trust task to illustrate the power of our method, showing how agents with particular cognitive and social characteristics can be expected to interact, and how to infer the properties of individuals from observing their behaviour.</p>
+</abstract>
+<funding-group>
+<funding-statement>This work was supported by a Wellcome Trust Principal Research Fellowship (PRM, AH) under grant 091188/Z/10/Z, The Kane Family Foundation (PRM), NIDA grant R01DA11723 (PRM), NIMH grant R01MH085496 (PRM), NIA grant RC4AG039067 (PRM), and The Gatsby Charitable Foundation (PD). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="24"/>
+<table-count count="0"/>
+<page-count count="38"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>The data are available from the following github repository: <ext-link ext-link-type="uri" xlink:href="https://github.com/AndreasHula/Trust" xlink:type="simple">https://github.com/AndreasHula/Trust</ext-link></meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<disp-quote>
+<p>This is a <italic>PLOS Computational Biology</italic> Methods paper.</p>
+</disp-quote>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>Successful social interactions require individuals to understand the consequences of their actions on the future actions and beliefs of those around them. To map these processes is a complex challenge in at least three different ways. The first is that other peoples’ preferences or utilities are not known exactly. Even if the various components of the utility functions are held in common, the actual values of the parameters of partners, e.g., their degrees of envy or guilt [<xref ref-type="bibr" rid="pcbi.1004254.ref001">1</xref>–<xref ref-type="bibr" rid="pcbi.1004254.ref006">6</xref>], could well differ. This ignorance decreases through experience, and can be modeled using the framework of a partially observable Markov decision process (POMDP). However, normal mechanisms for learning in POMDPs involve probing or running experiments, which has the potential cost of partners fooling each other. The second complexity is represented by characterizing the form of the model agents have of others. In principle, agent A’s model of agent B should include agent B’s model of agent A; and in turn, agent B’s model of agent A’s model of agent B, and so forth. The beautiful theory of Nash equilibria [<xref ref-type="bibr" rid="pcbi.1004254.ref007">7</xref>], extended to the case of incomplete information via so-called Bayes-Nash equilibria [<xref ref-type="bibr" rid="pcbi.1004254.ref008">8</xref>] dispenses with this so-called cognitive hierarchy [<xref ref-type="bibr" rid="pcbi.1004254.ref009">9</xref>–<xref ref-type="bibr" rid="pcbi.1004254.ref012">12</xref>], looking instead for an equilibrium solution. However, a wealth of work (see for instance [<xref ref-type="bibr" rid="pcbi.1004254.ref013">13</xref>]) has shown that people deviate from Nash behaviour. It has instead been proposed that people model others to a strictly limited, yet non-negligible, degree [<xref ref-type="bibr" rid="pcbi.1004254.ref009">9</xref>, <xref ref-type="bibr" rid="pcbi.1004254.ref012">12</xref>].</p>
+<p>The final complexity arises when we consider that although it is common in experimental economics to create one-shot interactions, many of the most interesting and richest aspects of behaviour arise with multiple rounds of interactions. Here, for concreteness, we consider the multi round trust task, which is a social exchange game that has been used with hundreds of pairs (dyads) of subjects, including both normal and clinical populations [<xref ref-type="bibr" rid="pcbi.1004254.ref014">14</xref>–<xref ref-type="bibr" rid="pcbi.1004254.ref018">18</xref>]. This game has been used to show that characteristics that only arise in multi-round interactions such as defection (agent A increases their cooperation between two rounds; agent B responds by decreasing theirs) have observable neural consequences that can be measured using functional magnetic resonance imaging (fMRI) [<xref ref-type="bibr" rid="pcbi.1004254.ref016">16</xref>, <xref ref-type="bibr" rid="pcbi.1004254.ref019">19</xref>–<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>].</p>
+<p>The interactive POMDP (IPOMDP) [<xref ref-type="bibr" rid="pcbi.1004254.ref023">23</xref>] is a theoretical framework that formalizes many of these complexities. It characterizes the uncertainties about the utility functions and planning over multiple rounds in terms of a POMDP, and constructs an explicit cognitive hierarchy of models about the other (hence the moniker ‘interactive’). This framework has previously been used with data from the multi-round trust task [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>, <xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>]. However, solving IPOMDPs is computationally extremely challenging, restricting those previous investigations to a rather minuscule degree of forward planning (just two- out of what is actually a ten-round interaction). Our main contribution is the adaptation of an efficient Monte Carlo tree search method, called partially observable Monte Carlo planning (POMCP) to IPOMDP problems. Our second contribution is to illustrate this algorithm through examination of the multiround trust task. We show characteristic patterns of behaviour to be expected for subjects with particular degrees of inequality aversion, other-modeling and planning capacities, and consider how to invert observed behaviour to make inferences about the nature of subjects’ reasoning capacities.</p>
+</sec>
+<sec id="sec002" sec-type="results">
+<title>Results</title>
+<p>We first briefly review Markov decision processes (MDPs), their partially observable extensions (POMDPs), and the POMCP algorithm invented to solve them approximately, but efficiently. These concern single agents. We then discuss IPOMDPs and the application of POMCP to solving them when there are multiple agents. Finally, we describe the multi-round trust task.</p>
+<sec id="sec003">
+<title>Partially Observable Markov Decision Processes</title>
+<p>A Markov decision process (MDP) [<xref ref-type="bibr" rid="pcbi.1004254.ref025">25</xref>] is defined by sets 𝓢 of “states” and 𝓐 of “actions”, and several components that evaluate and link the two, including transition probabilities 𝓣, and information ℛ about possible rewards. States describe the position of the agent in the environment, and determine which actions can be taken, accounting for, at least probabilistically, the consequences for rewards and future states. Transitions between states are described by means of a collection of transition probabilities 𝓣, assigning to each possible state <italic>s</italic> ∈ 𝓢 and each possible action <italic>a</italic> ∈ 𝓐 from that state, a transition probability distribution or measure <inline-formula id="pcbi.1004254.e001"><mml:math id="M1" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mo>𝓣</mml:mo> <mml:mrow><mml:mi>s</mml:mi> <mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>^</mml:mo></mml:mover></mml:mrow> <mml:mi>a</mml:mi></mml:msubsup> <mml:mo>=</mml:mo> <mml:mo>𝓣</mml:mo> <mml:mo stretchy="false">(</mml:mo> <mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mo>,</mml:mo> <mml:mi>a</mml:mi> <mml:mo>,</mml:mo> <mml:mi>s</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo>:</mml:mo> <mml:mo>=</mml:mo> <mml:mo>ℙ</mml:mo> <mml:mo stretchy="false">[</mml:mo> <mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mo stretchy="false">∣</mml:mo> <mml:mi>s</mml:mi> <mml:mo>,</mml:mo> <mml:mi>a</mml:mi> <mml:mo stretchy="false">]</mml:mo></mml:mrow></mml:math></inline-formula> which encodes the likelihood of ending in state <inline-formula id="pcbi.1004254.e002"><mml:math id="M2" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>^</mml:mo></mml:mover></mml:mrow></mml:math></inline-formula> after taking action <italic>a</italic> from state <italic>s</italic>. The Markov property requires that the transition (and reward probabilities) only depend on the current state (and action), and are independent from the past events. An illustration of these concepts can be found in <xref ref-type="fig" rid="pcbi.1004254.g001">Fig 1</xref>.</p>
+<fig id="pcbi.1004254.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>A Markov decision process.</title>
+<p>The agent starts at state <italic>s</italic><sub>0</sub> and has two possible actions <italic>a</italic><sub>1</sub> and <italic>a</italic><sub>2</sub>. Exercising either, it can transition into three possible states, one of which (<italic>s</italic><sub>2</sub>) can be reached through either action. Each state and action combination is associated with a particular reward expectation <italic>R</italic>(<italic>a</italic>, <italic>s</italic>). Based on this information, the agent can choose an action and transitions with probability <inline-formula id="pcbi.1004254.e071"><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1004254.e071" xlink:type="simple"/></inline-formula> to a new state <italic>ŝ</italic>, obtaining an actual reward <italic>r</italic> in the process. The procedure is then repeated from the new state, with its’ given action possibilities or else the decision process might end, depending on the given process.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g001"/>
+</fig>
+<p>By contrast, in a partially observable MDP (i.e., a POMDP [<xref ref-type="bibr" rid="pcbi.1004254.ref026">26</xref>]), the agent can also be uncertain about its state <italic>s</italic>. Instead, there is a set of observations <italic>o</italic> ∈ 𝓞 that incompletely pin down states, depending on the observation probabilities <inline-formula id="pcbi.1004254.e003"><mml:math id="M3" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mo>𝓦</mml:mo> <mml:mrow><mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mi>o</mml:mi></mml:mrow> <mml:mi>a</mml:mi></mml:msubsup> <mml:mo>=</mml:mo> <mml:mo>𝓦</mml:mo> <mml:mo stretchy="false">(</mml:mo> <mml:mi>o</mml:mi> <mml:mo>,</mml:mo> <mml:mi>a</mml:mi> <mml:mo>,</mml:mo> <mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mo stretchy="false">)</mml:mo> <mml:mo>:</mml:mo> <mml:mo>=</mml:mo> <mml:mo>ℙ</mml:mo> <mml:mo stretchy="false">[</mml:mo> <mml:mi>o</mml:mi> <mml:mo stretchy="false">∣</mml:mo> <mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mo>,</mml:mo> <mml:mi>a</mml:mi> <mml:mo stretchy="false">]</mml:mo> <mml:mo>.</mml:mo></mml:mrow></mml:math></inline-formula> These report the probability of observing <italic>o</italic> when action <italic>a</italic> has occasioned a transition to state <inline-formula id="pcbi.1004254.e004"><mml:math id="M4" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>^</mml:mo></mml:mover></mml:mrow></mml:math></inline-formula>. See <xref ref-type="fig" rid="pcbi.1004254.g002">Fig 2</xref> for an illustration of the concept.</p>
+<fig id="pcbi.1004254.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>A partially observable Markov decision process.</title>
+<p>Starting from a observed interaction history <italic>h</italic>, the agents use their belief state <inline-formula id="pcbi.1004254.e072"><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1004254.e072" xlink:type="simple"/></inline-formula>, to determine how likely they are to find themselves in one of three possible actual states <italic>s</italic><sub>1</sub>, <italic>s</italic><sub>2</sub>, <italic>s</italic><sub>3</sub>. The POMDP solution requires to integrate over all possible states according to the belief state at every possible following history. The solution allows to choose the next action a. Following this, an observation <italic>o</italic> is obtained by the agent and the new history {<italic>h</italic>, <italic>a</italic>, <italic>o</italic>} becomes the starting point for the next decision.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g002"/>
+</fig>
+<p>We use the notation <italic>s</italic><sub><italic>t</italic></sub> = <italic>s</italic>, <italic>a</italic><sub><italic>t</italic></sub> = <italic>a</italic> or <italic>o</italic><sub><italic>t</italic></sub> = <italic>o</italic> to refer explicitly to the outcome state, action or observation at a given time. The <italic>history</italic> <italic>h</italic> ∈ ℋ is the sequence of actions and observations, wherein each action from the point of view of the agent moves the time index ahead by 1, <italic>h</italic><sub><italic>t</italic></sub>: = {<italic>o</italic><sub>0</sub>, <italic>a</italic><sub>0</sub>, <italic>o</italic><sub>1</sub>, <italic>a</italic><sub>1</sub>, …, <italic>a</italic><sub><italic>t</italic>−1</sub>, <italic>o</italic><sub><italic>t</italic></sub>}. Here <italic>o</italic><sub>0</sub> may be trivial (deterministic or empty). The agent can perform Bayesian inference to turn its history at time <italic>t</italic> into a distribution ℙ[<italic>S</italic><sub><italic>t</italic></sub> = <italic>s</italic><sub><italic>t</italic></sub>∣<italic>h</italic><sub><italic>t</italic></sub>] over its state at time <italic>t</italic>, where <italic>S</italic><sub><italic>t</italic></sub> denotes the random variable encoding the uncertainty about the current state at time <italic>t</italic>. This distribution is called its belief state 𝓑(<italic>h</italic><sub><italic>t</italic></sub>), with ℙ<sub>𝓑(<italic>h</italic><sub><italic>t</italic></sub>)</sub>[<italic>S</italic><sub><italic>t</italic></sub> = <italic>s</italic><sub><italic>t</italic></sub>]: = ℙ[<italic>S</italic><sub><italic>t</italic></sub> = <italic>s</italic><sub><italic>t</italic></sub>∣<italic>h</italic><sub><italic>t</italic></sub>]. Inference depends on knowing 𝓣, 𝓦 and the distribution over the initial state <italic>S</italic><sub>0</sub>, which we write as 𝓑(<italic>h</italic><sub>0</sub>). Information about rewards ℛ comprises a collection of utility functions <italic>r</italic> ∈ ℛ, <italic>r</italic>:𝓐 × 𝓢 × 𝓞 → ℝ, a discount function Γ ∈ ℛ,Γ:ℕ → [0, 1] and a survival function <italic>H</italic> ∈ ℛ, <italic>H</italic>:ℕ × ℕ → [0, 1]. The utility functions determine the immediate gain associated with executing action <italic>a</italic> at state <italic>s</italic> and observing <italic>o</italic> (sometimes writing <italic>r</italic><sub><italic>t</italic></sub> for the reward following the <italic>t</italic><sup>th</sup> action). From the utilities, we define the reward function <italic>R</italic>: 𝓐 × 𝓢 → ℝ, as the expected gain for taking action <italic>a</italic> at state <italic>s</italic> as <italic>R</italic>(<italic>a</italic>, <italic>s</italic>) = 𝔼[<italic>r</italic>(<italic>a</italic>, <italic>s</italic>, <italic>o</italic>)], where this expectation is taken over all possible observations <italic>o</italic>. Since we usually operate on histories, rather than fixed states, we define the expected reward from a given history <italic>h</italic> as <italic>R</italic>(<italic>a</italic>, <italic>h</italic>): = ∑<sub><italic>s</italic> ∈ 𝓢</sub> <italic>R</italic>(<italic>a</italic>, <italic>s</italic>)ℙ[<italic>s</italic>∣<italic>h</italic>]. The discount function weights the present impact of a future return, depending only on the separation between present and future. We use exponential discounting with a fixed number <italic>γ</italic> ∈ [0, 1] to define our discount function:
+<disp-formula id="pcbi.1004254.e005"><alternatives><graphic id="pcbi.1004254.e005g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e005"/><mml:math id="M5" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mo>Γ</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>τ</mml:mi> <mml:mo>-</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:msup><mml:mi>γ</mml:mi> <mml:mrow><mml:mi>τ</mml:mi> <mml:mo>-</mml:mo> <mml:mi>t</mml:mi></mml:mrow></mml:msup> <mml:mspace width="1.em"/><mml:mo>∀</mml:mo> <mml:mi>τ</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi> <mml:mo>∈</mml:mo> <mml:mo>ℕ</mml:mo> <mml:mo>,</mml:mo> <mml:mi>τ</mml:mi> <mml:mo>≥</mml:mo> <mml:mi>t</mml:mi> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(1)</label></disp-formula></p>
+<p>Additionally, we define <italic>H</italic> such that <italic>H</italic>(<italic>τ</italic>, <italic>t</italic>) is 0 for <italic>τ</italic> &gt; <italic>K</italic> and 1 otherwise. <italic>K</italic> in general is a random stopping time. We call the second component <italic>t</italic> the reference time of the survival function.</p>
+<p>The survival function allows us to encode the planning horizon of an agent during decision making: If <italic>H</italic>(<italic>τ</italic>, <italic>t</italic>) is 0 for <italic>τ</italic>−<italic>t</italic> &gt; <italic>P</italic>, we say that the local planning horizon at <italic>t</italic> is less than or equal to <italic>P</italic>.</p>
+<p>The policy <italic>π</italic> ∈ Π, <italic>π</italic>(<italic>a</italic>, <italic>h</italic>): = ℙ[<italic>a</italic>∣<italic>h</italic>] is defined as a mapping of histories to probabilities over possible actions. Here Π is called the set of admissible policies. For convenience, we sometimes write the distribution function as <italic>π</italic>(<italic>h</italic>). The value function of a fixed policy <italic>π</italic> starting from present history <italic>h</italic><sub><italic>t</italic></sub> is
+<disp-formula id="pcbi.1004254.e006"><alternatives><graphic id="pcbi.1004254.e006g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e006"/><mml:math id="M6" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msup><mml:mi>V</mml:mi> <mml:mi>π</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>h</mml:mi> <mml:mi>t</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>:</mml:mo> <mml:mo>=</mml:mo> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>τ</mml:mi> <mml:mo>=</mml:mo> <mml:mi>t</mml:mi></mml:mrow> <mml:mi>∞</mml:mi></mml:munderover> <mml:msup><mml:mi>γ</mml:mi> <mml:mrow><mml:mi>τ</mml:mi> <mml:mo>-</mml:mo> <mml:mi>t</mml:mi></mml:mrow></mml:msup> <mml:mi>H</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>τ</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>𝔼</mml:mo> <mml:mrow><mml:mo>[</mml:mo> <mml:msub><mml:mi>r</mml:mi> <mml:mi>τ</mml:mi></mml:msub> <mml:mo>|</mml:mo> <mml:mi>π</mml:mi> <mml:mo>,</mml:mo> <mml:msub><mml:mi>h</mml:mi> <mml:mi>τ</mml:mi></mml:msub> <mml:mo>]</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(2)</label></disp-formula>
+i.e., a sum of the discounted future expected rewards (note that <italic>h</italic><sub><italic>τ</italic></sub> is a random variable here, not a fixed value). Equally, the state-action value is
+<disp-formula id="pcbi.1004254.e007"><alternatives><graphic id="pcbi.1004254.e007g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e007"/><mml:math id="M7" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msup><mml:mi>Q</mml:mi> <mml:mi>π</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>,</mml:mo> <mml:msub><mml:mi>h</mml:mi> <mml:mi>t</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>:</mml:mo> <mml:mo>=</mml:mo> <mml:mi>R</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>,</mml:mo> <mml:msub><mml:mi>h</mml:mi> <mml:mi>t</mml:mi></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>τ</mml:mi> <mml:mo>=</mml:mo> <mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>∞</mml:mi></mml:munderover> <mml:msup><mml:mi>γ</mml:mi> <mml:mrow><mml:mi>τ</mml:mi> <mml:mo>-</mml:mo> <mml:mi>t</mml:mi></mml:mrow></mml:msup> <mml:mi>H</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>τ</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>𝔼</mml:mo> <mml:mrow><mml:mo>[</mml:mo> <mml:msub><mml:mi>r</mml:mi> <mml:mi>τ</mml:mi></mml:msub> <mml:mo>|</mml:mo> <mml:mi>π</mml:mi> <mml:mo>,</mml:mo> <mml:msub><mml:mi>h</mml:mi> <mml:mi>τ</mml:mi></mml:msub> <mml:mo>]</mml:mo></mml:mrow> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(3)</label></disp-formula></p>
+<p><bold>Definition 1</bold> <bold>(Formal Definition—POMDP).</bold> Using the notation of this section, a POMDP is defined as a tuple (<italic>𝓢, 𝓐, 𝓞, 𝓣, 𝓦, ℛ, Π, 𝓑<sub>0</sub></italic>) of components as outlined above.</p>
+<p><bold>Convention 1</bold> <bold>(Softmax Decision Making).</bold> A wealth of experimental work (for instance [<xref ref-type="bibr" rid="pcbi.1004254.ref027">27</xref>–<xref ref-type="bibr" rid="pcbi.1004254.ref029">29</xref>]) has found that the choices of humans (and other animals) can be well described by softmax policies based on the agent’s state-action values, to encompass the stochasticity of observed behaviour in real subject data. See [<xref ref-type="bibr" rid="pcbi.1004254.ref030">30</xref>], for a behavioural economics perspective and [<xref ref-type="bibr" rid="pcbi.1004254.ref010">10</xref>] for a neuroscience perspective. In view of using our model primarily for experimental analysis, we will base our discussion on the decision making rule: <disp-formula id="pcbi.1004254.e008"><alternatives><graphic id="pcbi.1004254.e008g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e008"/><mml:math id="M8" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>π</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>,</mml:mo> <mml:mi>h</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mo>ℙ</mml:mo> <mml:mrow><mml:mo>[</mml:mo> <mml:mi>a</mml:mi> <mml:mo>|</mml:mo> <mml:mi>h</mml:mi> <mml:mo>]</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mfrac><mml:msup><mml:mi>e</mml:mi> <mml:mrow><mml:mi>β</mml:mi> <mml:msup><mml:mi>Q</mml:mi> <mml:mi>π</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>,</mml:mo> <mml:mi>h</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:msup> <mml:mrow><mml:msub><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>b</mml:mi> <mml:mo>∈</mml:mo> <mml:mo>𝓐</mml:mo></mml:mrow></mml:msub> <mml:msup><mml:mi>e</mml:mi> <mml:mrow><mml:mi>β</mml:mi> <mml:msup><mml:mi>Q</mml:mi> <mml:mi>π</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>b</mml:mi> <mml:mo>,</mml:mo> <mml:mi>h</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:msup></mml:mrow></mml:mfrac></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(4)</label></disp-formula> where β &gt; 0 is called the inverse temperature parameter and controls how diffuse are the probabilities. The policy <disp-formula id="pcbi.1004254.e009"><alternatives><graphic id="pcbi.1004254.e009g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e009"/><mml:math id="M9" display="block" overflow="scroll"><mml:mrow><mml:mi>π</mml:mi><mml:mo stretchy="false">(</mml:mo><mml:mi>a</mml:mi><mml:mo>,</mml:mo><mml:mi>h</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo> <mml:mrow><mml:mtable columnalign="left"><mml:mtr columnalign="left"><mml:mtd columnalign="left"><mml:mn>1</mml:mn></mml:mtd><mml:mtd columnalign="left"><mml:mrow><mml:mtext>if</mml:mtext><mml:msup><mml:mi>Q</mml:mi><mml:mi>π</mml:mi></mml:msup><mml:mo stretchy="false">(</mml:mo><mml:mi>a</mml:mi><mml:mo>,</mml:mo><mml:mi>h</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>=</mml:mo><mml:mi>max</mml:mi><mml:mo>{</mml:mo><mml:msup><mml:mi>Q</mml:mi><mml:mi>π</mml:mi></mml:msup><mml:mo stretchy="false">(</mml:mo><mml:mi>b</mml:mi><mml:mo>,</mml:mo><mml:mi>h</mml:mi><mml:mo stretchy="false">)</mml:mo><mml:mo>|</mml:mo><mml:mi>b</mml:mi><mml:mo>∈</mml:mo><mml:mi mathvariant="script">A</mml:mi><mml:mo>}</mml:mo><mml:mspace width="1.em"/><mml:mo stretchy="false">(</mml:mo><mml:mtext>assumingthisisunique</mml:mtext><mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:mtd></mml:mtr><mml:mtr columnalign="left"><mml:mtd columnalign="left"><mml:mn>0</mml:mn></mml:mtd><mml:mtd columnalign="left"><mml:mrow><mml:mtext>otherwise</mml:mtext></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow> </mml:mrow></mml:mrow></mml:math></alternatives> <label>(5)</label></disp-formula> can be obtained as a limiting case for β → ∞.</p>
+<p><bold>Convention 2</bold>. From now on, we shall denote by <italic>Q</italic>(<italic>a</italic>, <italic>h</italic>), the state-action value <italic>Q</italic><sup>π</sup>(<italic>a</italic>, <italic>h</italic>) with respect to the softmax policy.</p>
+</sec>
+<sec id="sec004">
+<title>POMCP</title>
+<p>POMCP was introduced by [<xref ref-type="bibr" rid="pcbi.1004254.ref031">31</xref>] as an efficient approximation scheme for solving POMDPs. Here, for completeness, we describe the algorithm; later, we adapt it to the case of an IPOMDP.</p>
+<p>POMCP is a generative model-based sampling method for calculating history-action values. That is, it builds a limited portion of the tree of future histories starting from the current <italic>h</italic><sub><italic>t</italic></sub>, using a sample-based search algorithm (called upper confidence bounds for trees (UCT); [<xref ref-type="bibr" rid="pcbi.1004254.ref032">32</xref>]) which provides guarantees as to how far from optimal the resulting action can be, given a certain number of samples (based on results in [<xref ref-type="bibr" rid="pcbi.1004254.ref033">33</xref>] and [<xref ref-type="bibr" rid="pcbi.1004254.ref034">34</xref>]). Algorithm 1 provides pseudo code for the adapted POMCP algorithm. The procedure is presented schematically in <xref ref-type="fig" rid="pcbi.1004254.g003">Fig 3</xref>.</p>
+<fig id="pcbi.1004254.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>Illustration of POMCP.</title>
+<p>The algorithm samples a state <italic>s</italic> from the Belief state <inline-formula id="pcbi.1004254.e073"><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1004254.e073" xlink:type="simple"/></inline-formula> at the root Y (Y representing the current history <italic>h</italic>), keeps this state <italic>s</italic> fixed till step 4), follows UCT in already visited domains (labelled tree nodes <italic>T</italic>) and performs a rollout and Bellman backup when hitting a leaf (labelled <italic>L</italic>). Then step 1)–4) is repeated until the specified number of simulations has been reached.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g003"/>
+</fig>
+<p>The algorithm is based on a tree structure <italic>T</italic>, wherein nodes <inline-formula id="pcbi.1004254.e011"><mml:math id="M11" display="inline" overflow="scroll"><mml:mrow><mml:mi>T</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:mi>h</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo>=</mml:mo> <mml:mo stretchy="false">(</mml:mo> <mml:mi>N</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:mi>h</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo>,</mml:mo> <mml:mover accent="true"><mml:mi>Q</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mo stretchy="false">(</mml:mo> <mml:mi>h</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo>,</mml:mo> <mml:mo>𝓑</mml:mo> <mml:mo stretchy="false">(</mml:mo> <mml:mi>h</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> represent possible future histories explored by the algorithm, and are characterized by the number <italic>N</italic>(<italic>h</italic>) of times history <italic>h</italic> was visited in the simulation, the estimated value <inline-formula id="pcbi.1004254.e012"><mml:math id="M12" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>Q</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mo stretchy="false">(</mml:mo> <mml:mi>h</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> for visiting <italic>h</italic> and the approximate belief state 𝓑(<italic>h</italic>) at <italic>h</italic>. Each new node in <italic>T</italic> is initialized with initial action exploration counts <italic>N</italic>(<italic>h</italic>, <italic>a</italic>) = 0 for all possible actions <italic>a</italic> from <italic>h</italic> and an initial action value estimate <inline-formula id="pcbi.1004254.e013"><mml:math id="M13" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>Q</mml:mi> <mml:mo>˜</mml:mo></mml:mover>  <mml:mo stretchy="false">(</mml:mo> <mml:mi>h</mml:mi> <mml:mo>,</mml:mo> <mml:mi>a</mml:mi> <mml:mo stretchy="false">)</mml:mo> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn></mml:mrow></mml:math></inline-formula> for all possible actions <italic>a</italic> from <italic>h</italic> and an empty belief state 𝓑(<italic>h</italic>) = ∅.</p>
+<p>The value <italic>N</italic>(<italic>h</italic>) is then calculated from all actions counts from the node <italic>N</italic>(<italic>h</italic>) = ∑<sub><italic>a</italic> ∈ 𝓐</sub> <italic>N</italic>(<italic>h</italic>, <italic>a</italic>). <inline-formula id="pcbi.1004254.e014"><mml:math id="M14" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>Q</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mo stretchy="false">(</mml:mo> <mml:mi>h</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> denotes the mean of obtained values, for simulations starting from node <italic>h</italic>. 𝓑(<italic>h</italic>) can either be calculated analytically, if it is computationally feasible to apply Bayes theorem, or be approximated by the so called <italic>root sampling</italic> procedure (see below).</p>
+<p>In terms of the algorithm, the generative model 𝓖 of the POMDP determines (<italic>s</italic><sup>′</sup>, <italic>o</italic>, <italic>r</italic>) ∼ 𝓖(<italic>s</italic>, <italic>a</italic>), the simulated reward, observation and subsequent state for taking <italic>a</italic> at <italic>s</italic>; <italic>s</italic> itself is sampled from the current history <italic>h</italic>. Then, every (future) history of actions and observations <italic>h</italic> defines a node <italic>T</italic>(<italic>h</italic>) in the tree structure <italic>T</italic>, which is characterized by the available actions and their average simulated action values <inline-formula id="pcbi.1004254.e015"><mml:math id="M15" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>Q</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mo stretchy="false">(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>,</mml:mo> <mml:mi>h</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> under the policy S<sc>oft</sc>UCT at future states.</p>
+<table-wrap id="pcbi.1004254.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.t001</object-id>
+<label>Algorithm 1</label> <caption><title>Partially Observable Monte Carlo Planning.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004254.t001g" mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.t001"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="top" span="1"/>
+<col align="left" valign="top" span="1"/>
+</colgroup>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>procedure</bold> SEARCH(h, t, n)</td>
+<td align="left" rowspan="1" colspan="1"><bold>procedure</bold> SIMULATE (s, h, t, k)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"> <bold>for</bold> SIMULATIONS = 1, …, <italic>n</italic> <bold>do</bold></td>
+<td align="left" rowspan="1" colspan="1"> <bold>if</bold> <italic>H</italic>(<italic>k</italic>, <italic>t</italic>) ≤ 0 <bold>then</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">  <italic>k</italic> ← <italic>t</italic></td>
+<td align="left" rowspan="1" colspan="1">  <bold>return</bold> 0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">  <bold>if</bold> <italic>h<sub>t</sub></italic> = <italic>o</italic><sub>0</sub> <bold>then</bold></td>
+<td align="left" rowspan="1" colspan="1"> <bold>end if</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">   <italic>s</italic> ∼ <italic>𝓑</italic><sub>0</sub></td>
+<td align="left" rowspan="1" colspan="1"> <bold>if</bold> <italic>h</italic> ∉ T <bold>then</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">  <bold>else</bold></td>
+<td align="left" rowspan="1" colspan="1">  <bold>for all</bold> <italic>a</italic> ∈ <italic>𝓐</italic> do</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">   <italic>s</italic> ∼ <italic>𝓑</italic>(<italic>h<sub>t</sub></italic>)</td>
+<td align="left" rowspan="1" colspan="1">  <italic>T</italic>(<italic>ha</italic>) ← (<italic>N</italic>(<italic>h</italic>, <italic>a</italic>); <italic>Q</italic>(<italic>a</italic>, <italic>h</italic>), ∅)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">  <bold>end if</bold></td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">  SIMULATE (<italic>s, h, t, k</italic>)</td>
+<td align="left" rowspan="1" colspan="1">  <bold>end for</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"> <bold>end for</bold></td>
+<td align="left" rowspan="1" colspan="1">  <bold>return</bold> ROLLOUT (<italic>s, h, t, k</italic>)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"> <bold>return</bold> <italic>a</italic> ∼ S<sc>oft</sc>UCT(Q(.|h))</td>
+<td align="left" rowspan="1" colspan="1"> <bold>end if</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>end procedure</bold></td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>procedure</bold> ROLLOUT(<italic>s, h, t, k</italic>)</td>
+<td align="left" rowspan="1" colspan="1"> <italic>a</italic> ∼ S<sc>oft</sc>UCT(Q(.|h))</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"> <bold>if</bold> <italic>H</italic>(<italic>k</italic>, <italic>t</italic>) ≤ 0 <bold>then</bold></td>
+<td align="left" rowspan="1" colspan="1"> (<italic>s</italic>′, <italic>o</italic>, <italic>r</italic>) ∼ <italic>𝓖</italic>(<italic>s</italic>, <italic>a</italic>)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">  <bold>return</bold> 0</td>
+<td align="left" rowspan="1" colspan="1"> <italic>h</italic> ← {<italic>h</italic>, <italic>a</italic>, <italic>o</italic>}</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"> <bold>end if</bold></td>
+<td align="left" rowspan="1" colspan="1"> <italic>k</italic> ← <italic>k</italic> + 1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"> <italic>a</italic> ∼ π<sub>rollout</sub>(<italic>h</italic>, ·)</td>
+<td align="left" rowspan="1" colspan="1"> <italic>R</italic> ← <italic>r</italic>+<italic>γ</italic>SIMULATE(<italic>s′, h, t, k</italic>)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"> (<italic>s</italic>′, <italic>o</italic>, <italic>r</italic>) ∼ 𝓖(<italic>s</italic>, <italic>a</italic>)</td>
+<td align="left" rowspan="1" colspan="1"> <italic>N(h)</italic> ← <italic>N(h)</italic> + 1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"> <italic>h</italic> ← {<italic>h, a, o</italic>}</td>
+<td align="left" rowspan="1" colspan="1"> <italic>N(h, a)</italic> ← <italic>N(h, a)</italic> + 1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"> <italic>k</italic> ← <italic>k</italic> + 1</td>
+<td align="left" rowspan="1" colspan="1"> 
+<inline-formula id="pcbi.1004254.e010">
+<mml:math id="M10" display="inline" overflow="scroll">
+<mml:mrow>
+<mml:mover accent="true">
+<mml:mi>Q</mml:mi>
+<mml:mo>˜</mml:mo>
+</mml:mover>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>a</mml:mi>
+<mml:mo>,</mml:mo>
+<mml:mi>h</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+<mml:mo>←</mml:mo>
+<mml:mover accent="true">
+<mml:mi>Q</mml:mi>
+<mml:mo>˜</mml:mo>
+</mml:mover>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>a</mml:mi>
+<mml:mo>,</mml:mo>
+<mml:mi>h</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+<mml:mo>+</mml:mo>
+<mml:mfrac>
+<mml:mrow>
+<mml:mi>R</mml:mi>
+<mml:mo>−</mml:mo>
+<mml:mover accent="true">
+<mml:mi>Q</mml:mi>
+<mml:mo>˜</mml:mo>
+</mml:mover>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>a</mml:mi>
+<mml:mo>,</mml:mo>
+<mml:mi>h</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+<mml:mrow>
+<mml:mi>N</mml:mi>
+<mml:mo stretchy="false">(</mml:mo>
+<mml:mi>h</mml:mi>
+<mml:mo>,</mml:mo>
+<mml:mi>a</mml:mi>
+<mml:mo stretchy="false">)</mml:mo>
+</mml:mrow>
+</mml:mfrac>
+</mml:mrow>
+</mml:math>
+</inline-formula>
+</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"> <bold>return</bold> <italic>r</italic>+<italic>γ</italic>ROLLOUT(<italic>s′ h, t, k</italic>)</td>
+<td align="left" rowspan="1" colspan="1"> <bold>return R</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>end procedure</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>end procedure</bold></td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+<p>If the node has been visited for the <italic>N</italic>(<italic>h</italic>)<sup>th</sup> time; with action <italic>a</italic> being taken for the <italic>N</italic>(<italic>h</italic>, <italic>a</italic>)<sup>th</sup> time, then the average simulated value is updated (starting from 0) using sampled simulated rewards <italic>R</italic> up to terminal time <italic>K</italic>, when the current simulation/tree traversal ends as:
+<disp-formula id="pcbi.1004254.e016"><alternatives><graphic id="pcbi.1004254.e016g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e016"/><mml:math id="M16" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msup><mml:mover accent="true"><mml:mi>Q</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mi>new</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>,</mml:mo> <mml:mi>h</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:msup><mml:mover accent="true"><mml:mi>Q</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mi>old</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>,</mml:mo> <mml:mi>h</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mrow><mml:mi>N</mml:mi> <mml:mo>(</mml:mo> <mml:mi>h</mml:mi> <mml:mo>,</mml:mo> <mml:mi>a</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mfrac> <mml:mo>(</mml:mo> <mml:mi>R</mml:mi> <mml:mo>-</mml:mo> <mml:msup><mml:mover accent="true"><mml:mi>Q</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mi>old</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>,</mml:mo> <mml:mi>h</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>)</mml:mo> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(6)</label></disp-formula></p>
+<p>The search algorithm has two decision rules, depending on whether a traversed node has already been visited or is a leaf of the search tree. In the former case, a decision is reached using S<sc>oft</sc>UCT by defining
+<disp-formula id="pcbi.1004254.e017"><alternatives><graphic id="pcbi.1004254.e017g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e017"/><mml:math id="M17" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mtext>SoftUCT(Q(.</mml:mtext><mml:mo>∣</mml:mo><mml:mtext>h))</mml:mtext> <mml:mspace width="2.em"/><mml:mi>Q</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>,</mml:mo> <mml:mi>h</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>:</mml:mo> <mml:mo>=</mml:mo> <mml:mover accent="true"><mml:mi>Q</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>,</mml:mo> <mml:mi>h</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:mi>c</mml:mi> <mml:msqrt><mml:mfrac><mml:mrow><mml:mo form="prefix">log</mml:mo> <mml:mi>N</mml:mi> <mml:mo>(</mml:mo> <mml:mi>h</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mi>N</mml:mi> <mml:mo>(</mml:mo> <mml:mi>h</mml:mi> <mml:mo>,</mml:mo> <mml:mi>a</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:mfrac></mml:msqrt> <mml:mspace width="2.em"/><mml:mo>ℙ</mml:mo> <mml:mrow><mml:mo>[</mml:mo> <mml:mi>a</mml:mi> <mml:mo>|</mml:mo> <mml:mi>h</mml:mi> <mml:mo>]</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mfrac><mml:msup><mml:mi>e</mml:mi> <mml:mrow><mml:mi>β</mml:mi> <mml:mo>(</mml:mo> <mml:mi>Q</mml:mi> <mml:mo>(</mml:mo> <mml:mi>a</mml:mi> <mml:mo>,</mml:mo> <mml:mi>h</mml:mi> <mml:mo>)</mml:mo> <mml:mo>)</mml:mo></mml:mrow></mml:msup> <mml:mrow><mml:msub><mml:mo>∑</mml:mo> <mml:mi>b</mml:mi></mml:msub> <mml:msup><mml:mi>e</mml:mi> <mml:mrow><mml:mi>β</mml:mi> <mml:mo>(</mml:mo> <mml:mi>Q</mml:mi> <mml:mo>(</mml:mo> <mml:mi>b</mml:mi> <mml:mo>,</mml:mo> <mml:mi>h</mml:mi> <mml:mo>)</mml:mo> <mml:mo>)</mml:mo></mml:mrow></mml:msup></mml:mrow></mml:mfrac></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(7)</label></disp-formula>
+where <italic>c</italic> is a parameter that favors exploration (analogous to an equivalent parameter in UCT).</p>
+<p>If the node is new, a so-called “rollout” policy is used to provide a crude estimate of the value of the leaf. This policy can be either very simple (uniform or <italic>ε</italic>–greedy based on a very simple model) or specifically adjusted to the search space, in order to optimize performance.</p>
+<p>The rollout value estimate together with the S<sc>oft</sc>UCT exploration rule is the core mechanism for efficient tree exploration. In this work, we only use an <italic>ε</italic>–greedy mechanism, as is described in the section on the multi round trust game.</p>
+<p>Another innovation in POMCP that underlies its dramatically superior performance is called <italic>root sampling</italic>. This procedure allows to form the belief state at later states, as long as the initial belief state 𝓑<sub>0</sub> is known. This means that, although it is necessary to perform inference to draw samples from the belief state at the root of the search tree, one can then use each sample as if it was (temporarily) true, without performing inference at states that are deeper in the search tree to work out the new transition probabilities that pertain to the new belief states associated with the histories at those points. The reason for this is that the probabilities of getting to the nodes in the search tree represent exactly what is necessary to compensate for the apparent inferential infelicity [<xref ref-type="bibr" rid="pcbi.1004254.ref031">31</xref>]– i.e., the search tree performs as a probabilistic filter. The technical details of the root sampling procedure can be found in [<xref ref-type="bibr" rid="pcbi.1004254.ref031">31</xref>].</p>
+<p>In the presence of analytically tractable updating rules (or at least analytically tractable approximations), the belief state at a new node can instead be calculated by Bayes’ theorem. This will also be the case for the multi round trust game below, where we follow the approximate updating rule in [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>].</p>
+</sec>
+<sec id="sec005">
+<title>Interactive Partially Observable Markov Decision Processes</title>
+<p>An Interactive Partially Observable Markov Decision Process (IPOMDP) is a multi agent setting in which the actions of each agent may observably affect the distribution of expected rewards for the other agents.</p>
+<p>Since IPOMDPs may be less familiar than POMDPs, we provide more detail about them; consult [<xref ref-type="bibr" rid="pcbi.1004254.ref023">23</xref>] for a complete reference formulation and [<xref ref-type="bibr" rid="pcbi.1004254.ref035">35</xref>] for an excellent discussion and extension.</p>
+<p>We define the IPOMDP such that the decision making process of each agent becomes a standard (albeit large) POMDP, allowing the direct application of POMDP methods to IPOMDP problems.</p>
+<p><bold>Definition 2 (Formal Definition—IPOMDP).</bold> An IPOMDP is a collection of POMDPs such that the following holds:</p>
+<p>Agents are indexed by the finite set ℐ. Each agent i ∈ ℐ is described by a single POMDP (𝓢<sup>i</sup>, 𝓐<sup>i</sup>, 𝓞<sup>i</sup>, 𝓣<sup>i</sup>, 𝓦<sup>i</sup>, ℛ<sup>i</sup>, Π<sup>i</sup>, <inline-formula id="pcbi.1004254.e018"><mml:math id="M18" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mo>𝓑</mml:mo> <mml:mn>0</mml:mn> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> denoting its actual decision making process. We first define the physical state space <inline-formula id="pcbi.1004254.e019"><mml:math id="M19" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mo>𝓢</mml:mo> <mml:mtext mathvariant="normal">phys</mml:mtext> <mml:mi>i</mml:mi></mml:msubsup></mml:mrow></mml:math></inline-formula>: an element <inline-formula id="pcbi.1004254.e020"><mml:math id="M20" display="inline" overflow="scroll"><mml:mrow><mml:msup><mml:mo>𝓢</mml:mo><mml:mi>i</mml:mi></mml:msup> <mml:mo>∈</mml:mo> <mml:msubsup><mml:mo>𝓢</mml:mo> <mml:mtext mathvariant="normal">phys</mml:mtext> <mml:mi>i</mml:mi></mml:msubsup></mml:mrow></mml:math></inline-formula> is a complete setting of all features of the environment that determine the action possibilities 𝓐<sup>i</sup> and obtainable rewards ℛ<sup>i</sup> of i for the present and all possible following histories, from the point of view of i. The physical state space <inline-formula id="pcbi.1004254.e021"><mml:math id="M21" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mo>𝓢</mml:mo> <mml:mtext mathvariant="normal">phys</mml:mtext> <mml:mi>i</mml:mi></mml:msubsup></mml:mrow></mml:math></inline-formula> is augmented by the set 𝓓<sup>i</sup> of models of the partner agents θ<sup>ij</sup> ∈ 𝓓<sup>i</sup>, j ∈ ℐ\{i}, called intentional models, which are themselves POMDPs θ<sup>ij</sup> = (𝓢<sup>ij</sup>, 𝓐<sup>ij</sup>, 𝓞<sup>ij</sup>, 𝓣<sup>ij</sup>, 𝓦<sup>ij</sup>, ℛ<sup>ij</sup>, Π<sup>ij</sup>, <inline-formula id="pcbi.1004254.e022"><mml:math id="M22" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mo>𝓑</mml:mo> <mml:mn>0</mml:mn> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msubsup> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula>. These describe how agent i believes agent j perceives the world and reaches its decisions. The possible state space of agent i can be written <inline-formula id="pcbi.1004254.e023"><mml:math id="M23" display="inline" overflow="scroll"><mml:mrow><mml:msup><mml:mo>𝓢</mml:mo> <mml:mi>i</mml:mi></mml:msup> <mml:mo>=</mml:mo> <mml:msubsup><mml:mo>𝓢</mml:mo> <mml:mtext mathvariant="normal">phys</mml:mtext> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo> × </mml:mo> <mml:msup><mml:mo>𝓓</mml:mo> <mml:mi>i</mml:mi></mml:msup></mml:mrow></mml:math></inline-formula> and a given state can be written <inline-formula id="pcbi.1004254.e024"><mml:math id="M24" display="inline" overflow="scroll"><mml:mrow><mml:msup><mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mi>i</mml:mi></mml:msup> <mml:mo>=</mml:mo> <mml:mo stretchy="false">(</mml:mo> <mml:msup><mml:mi>s</mml:mi> <mml:mi>i</mml:mi></mml:msup> <mml:mo>,</mml:mo> <mml:msub><mml:mo> × </mml:mo> <mml:mi>j</mml:mi></mml:msub> <mml:msup><mml:mi>θ</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msup> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula>, where <inline-formula id="pcbi.1004254.e025"><mml:math id="M25" display="inline" overflow="scroll"><mml:mrow><mml:msup><mml:mi>s</mml:mi> <mml:mi>i</mml:mi></mml:msup> <mml:mo>∈</mml:mo> <mml:msubsup><mml:mo>𝓢</mml:mo> <mml:mtext mathvariant="normal">phys</mml:mtext> <mml:mi>i</mml:mi></mml:msubsup></mml:mrow></mml:math></inline-formula> is the physical state of the environment and θ<sup>ij</sup> are the models of the other agents. Note that the intentional models θ<sup>ij</sup> contain themselves state spaces that encode the history of the game as observed by agent j from the point of view of agent i. The elements of 𝓢<sup>i</sup> are called interactive states. Agents themselves act according to the softmax function of history-action values, and assume that their interactive partner agents do the same. The elements of the definition are summarized in <xref ref-type="fig" rid="pcbi.1004254.g004">Fig 4</xref>.</p>
+<fig id="pcbi.1004254.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Interactive partially observable Markov decision process.</title>
+<p>Compared to a POMDP, the process is further complicated by the necessity to keep different models Θ of the other agent’s intentions, so that evidence about the correct intentional model may be accrued in the belief state <inline-formula id="pcbi.1004254.e074"><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1004254.e074" xlink:type="simple"/></inline-formula>. The IPOMDP solution requires to integrate over all possible states and intentional models according to the belief state at every possible history.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g004"/>
+</fig>
+<p><bold>Convention 3</bold>. We denote by <italic>S</italic> and <inline-formula id="pcbi.1004254.e026"><mml:math id="M26" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>S</mml:mi> <mml:mo>˜</mml:mo></mml:mover></mml:mrow></mml:math></inline-formula> the random variables, that encode uncertainty about the physical state and the interactive state respectively.</p>
+<p>When choosing the set of intentional models, we consider agents and their partners to engage in a cognitive hierarchy of successive mentalization steps [<xref ref-type="bibr" rid="pcbi.1004254.ref009">9</xref>, <xref ref-type="bibr" rid="pcbi.1004254.ref012">12</xref>], depicted in <xref ref-type="fig" rid="pcbi.1004254.g005">Fig 5</xref>. The simplest agent can try to infer what kind of partner it faces (level 0 thinking). The next simplest agent could additionally try to infer what the partner might be thinking of it (level 1). Next, the agent might try to understand their partner’s inferences about the agent’s thinking about the partner (level 2). Generally, this would enable a potentially unbounded chain of mentalization steps. It is a tenet of cognitive hierarchy theory [<xref ref-type="bibr" rid="pcbi.1004254.ref009">9</xref>] that the hierarchy terminates finitely and for many tasks after only very few steps (e.g., Poisson, with a mean of around 1.5).</p>
+<fig id="pcbi.1004254.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Computational theory of mind (ToM) formalizes the notion of our understanding of other peoples’ thought processes.</title>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g005"/>
+</fig>
+<p>We formalize this notion as follows.</p>
+<p><bold>Definition 3 (A Hierarchy Of Intentional Models).</bold> Since models of the partner agent may contain interactive states in which it in turn models the agent i, we can specify a hierarchical intentional structure 𝓓<sup>i, l</sup>, built from what we call the level l ≥ −1 intentional models 𝓓<sup>i,l</sup>. 𝓓<sup>i,l</sup> is defined inductively from <disp-formula id="pcbi.1004254.e027"><alternatives><graphic id="pcbi.1004254.e027g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e027"/><mml:math id="M27" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msup><mml:mi>θ</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi> <mml:mo>,</mml:mo> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msup> <mml:mo>∈</mml:mo> <mml:msup><mml:mo>𝓓</mml:mo> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>,</mml:mo> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msup> <mml:mo>⇔</mml:mo> <mml:msup><mml:mi>S</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi> <mml:mo>,</mml:mo> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msup> <mml:mo>=</mml:mo> <mml:msubsup><mml:mo>𝓢</mml:mo> <mml:mi>phys</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msubsup> <mml:mo> × </mml:mo> <mml:mrow><mml:mo>{</mml:mo> <mml:mi>∅</mml:mi> <mml:mo>}</mml:mo></mml:mrow> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(8)</label></disp-formula> This means that any level −1 intentional model reacts strictly to the environment, without holding any further intentional models. The higher levels are obtained as <disp-formula id="pcbi.1004254.e028"><alternatives><graphic id="pcbi.1004254.e028g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e028"/><mml:math id="M28" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msup><mml:mi>θ</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi> <mml:mo>,</mml:mo> <mml:mi>l</mml:mi></mml:mrow></mml:msup> <mml:mo>∈</mml:mo> <mml:msup><mml:mo>𝓓</mml:mo> <mml:mrow><mml:mi>i</mml:mi> <mml:mo>,</mml:mo> <mml:mi>l</mml:mi></mml:mrow></mml:msup> <mml:mo>⇔</mml:mo> <mml:msup><mml:mo>𝓢</mml:mo> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi> <mml:mo>,</mml:mo> <mml:mi>l</mml:mi></mml:mrow></mml:msup> <mml:mo>=</mml:mo> <mml:msubsup><mml:mo>𝓢</mml:mo> <mml:mi>phys</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msubsup> <mml:mo> × </mml:mo> <mml:msup><mml:mo>𝓓</mml:mo> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi> <mml:mo>,</mml:mo> <mml:mi>l</mml:mi> <mml:mo>-</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msup> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(9)</label></disp-formula> Here 𝓓<sup>ij, l−1</sup> denotes the l−1 intentional models, that agent i thinks agent j might hold of the other players. These level l−1 intentional models arise by the same procedure applied to the level −1 models that agent i thinks agent j might hold.</p>
+<p><bold>Definition 4 (Theory of Mind (ToM) Level).</bold> We follow a similar assumption as the so called k-level thinking (see [<xref ref-type="bibr" rid="pcbi.1004254.ref012">12</xref>]), in that we assume that each agent operates at a particular level l<sup>i</sup> (called the agent’s theory of mind (ToM) level; and which it is assumed to know), and models all partners as being at level l<sup>j</sup> = l<sup>i</sup>−1.</p>
+<p>We chose definition 4 for comparability with earlier work [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>, <xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>].</p>
+<p><bold>Convention 4.</bold> It is necessary to be able to calculate the belief state in every POMDP that is encountered. An agent updates its belief state in a Bayesian manner, following an action <inline-formula id="pcbi.1004254.e029"><mml:math id="M29" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup></mml:mrow></mml:math></inline-formula> and an observation <inline-formula id="pcbi.1004254.e030"><mml:math id="M30" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>o</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup></mml:mrow></mml:math></inline-formula>. This leads to a sequential update rule operating over the belief state <inline-formula id="pcbi.1004254.e031"><mml:math id="M31" display="inline" overflow="scroll"><mml:mrow><mml:mo>ℙ</mml:mo> <mml:mo stretchy="false">[</mml:mo> <mml:msubsup><mml:mover accent="true"><mml:mi>S</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo stretchy="false">∣</mml:mo> <mml:msubsup><mml:mi>h</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo stretchy="false">]</mml:mo></mml:mrow></mml:math></inline-formula> of a given agent i at a given time t: <disp-formula id="pcbi.1004254.e032"><alternatives><graphic id="pcbi.1004254.e032g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e032"/><mml:math id="M32" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mo>ℙ</mml:mo> <mml:mrow><mml:mo>[</mml:mo> <mml:msubsup><mml:mover accent="true"><mml:mi>S</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>=</mml:mo> <mml:msub><mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mn>1</mml:mn></mml:msub> <mml:mo>|</mml:mo> <mml:mrow><mml:mo>{</mml:mo> <mml:msubsup><mml:mi>h</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>,</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>,</mml:mo> <mml:msubsup><mml:mi>o</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>}</mml:mo></mml:mrow> <mml:mo>]</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mi>η</mml:mi> <mml:mo>𝓦</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:msubsup><mml:mi>o</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>,</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>,</mml:mo> <mml:msub><mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mn>1</mml:mn></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:munder><mml:mo>∑</mml:mo> <mml:mrow><mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mo>∈</mml:mo> <mml:msup><mml:mo>𝓢</mml:mo> <mml:mi>i</mml:mi></mml:msup></mml:mrow></mml:munder> <mml:mo>𝓣</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mn>1</mml:mn></mml:msub> <mml:mo>,</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>,</mml:mo> <mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>ℙ</mml:mo> <mml:mrow><mml:mo>[</mml:mo> <mml:msubsup><mml:mover accent="true"><mml:mi>S</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>=</mml:mo> <mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mo>|</mml:mo> <mml:msubsup><mml:mi>h</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>]</mml:mo></mml:mrow> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(10)</label></disp-formula> Here η is a normalization constant associated with the joint distribution of transition and observation probability, conditional on <inline-formula id="pcbi.1004254.e033"><mml:math id="M33" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>˜</mml:mo></mml:mover></mml:mrow></mml:math></inline-formula>, <inline-formula id="pcbi.1004254.e034"><mml:math id="M34" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>˜</mml:mo></mml:mover> <mml:mn>1</mml:mn></mml:msub> <mml:mo>,</mml:mo> <mml:msubsup><mml:mi>o</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup></mml:mrow></mml:math></inline-formula> and <inline-formula id="pcbi.1004254.e035"><mml:math id="M35" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup></mml:mrow></mml:math></inline-formula>. The observation <inline-formula id="pcbi.1004254.e036"><mml:math id="M36" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>o</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup></mml:mrow></mml:math></inline-formula> in particular incorporates any results of the actions of the other agents, before the next action of the given agent.</p>
+<p>We note that the above rule applies recursively to every intentional model in the nested structure 𝓓<sup>i</sup>, as every POMDP has a separate belief state.</p>
+<p>This is slightly different from [<xref ref-type="bibr" rid="pcbi.1004254.ref023">23</xref>] so that the above update is conventional for a POMDP.</p>
+<p><bold>Convention 5.</bold> (Expected Utility Maximisation). The decision making rule in our IPOMDP treatment is based on expected utility as encoded in the reward function. The explicit formula for the action value <inline-formula id="pcbi.1004254.e037"><mml:math id="M37" display="inline" overflow="scroll"><mml:mrow><mml:mi>Q</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>,</mml:mo> <mml:msubsup><mml:mi>h</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> under a softmax policy (<xref ref-type="disp-formula" rid="pcbi.1004254.e008">Eq (4)</xref>) is: <disp-formula id="pcbi.1004254.e038"><alternatives><graphic id="pcbi.1004254.e038g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e038"/><mml:math id="M38" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>Q</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>,</mml:mo> <mml:msubsup><mml:mi>h</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mi>R</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>,</mml:mo> <mml:msubsup><mml:mi>h</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>+</mml:mo> <mml:munder><mml:mo>∑</mml:mo> <mml:mrow><mml:msubsup><mml:mi>o</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>∈</mml:mo> <mml:mo>𝓞</mml:mo></mml:mrow></mml:munder> <mml:mo>ℙ</mml:mo> <mml:mrow><mml:mo>[</mml:mo> <mml:msubsup><mml:mi>o</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>|</mml:mo> <mml:mrow><mml:mo>{</mml:mo> <mml:msubsup><mml:mi>h</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>,</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>}</mml:mo></mml:mrow> <mml:mo>]</mml:mo></mml:mrow> <mml:munder><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>w</mml:mi> <mml:mo>∈</mml:mo> <mml:msup><mml:mo>𝓐</mml:mo> <mml:mi>i</mml:mi></mml:msup></mml:mrow></mml:munder> <mml:msup><mml:mi>γ</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>i</mml:mi> <mml:mo>)</mml:mo></mml:mrow></mml:msup> <mml:mi>H</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mi>Q</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>w</mml:mi> <mml:mo>,</mml:mo> <mml:msubsup><mml:mi>h</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>|</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>ℙ</mml:mo> <mml:mrow><mml:mo>[</mml:mo> <mml:mi>b</mml:mi> <mml:mo>|</mml:mo> <mml:msubsup><mml:mi>h</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>]</mml:mo></mml:mrow> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(11)</label></disp-formula> Here <inline-formula id="pcbi.1004254.e039"><mml:math id="M39" display="inline" overflow="scroll"><mml:mrow><mml:msub><mml:mi>h</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:mo stretchy="false">{</mml:mo> <mml:msubsup><mml:mi>h</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>,</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>,</mml:mo> <mml:msubsup><mml:mi>o</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo stretchy="false">}</mml:mo></mml:mrow></mml:math></inline-formula> and <inline-formula id="pcbi.1004254.e040"><mml:math id="M40" display="inline" overflow="scroll"><mml:mrow><mml:mi>Q</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:mi>b</mml:mi> <mml:mo>,</mml:mo> <mml:msubsup><mml:mi>h</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo stretchy="false">∣</mml:mo> <mml:mi>t</mml:mi> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> denotes the action value at t+1 with the survival function conditioned to reference time t. γ<sup>(i)</sup> is the discount factor of agent i, rather than the i-th power. This defines a recursive Bellman equation, with the value of taking action <inline-formula id="pcbi.1004254.e041"><mml:math id="M41" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup></mml:mrow></mml:math></inline-formula> given history <inline-formula id="pcbi.1004254.e042"><mml:math id="M42" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>h</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup></mml:mrow></mml:math></inline-formula> being the expected immediate reward <inline-formula id="pcbi.1004254.e043"><mml:math id="M43" display="inline" overflow="scroll"><mml:mrow><mml:mi>R</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>,</mml:mo> <mml:msubsup><mml:mi>h</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> plus the expected value of future actions conditional on <inline-formula id="pcbi.1004254.e044"><mml:math id="M44" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup></mml:mrow></mml:math></inline-formula> and its possible consequences <inline-formula id="pcbi.1004254.e045"><mml:math id="M45" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>o</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup></mml:mrow></mml:math></inline-formula> discounted by γ<sup>i</sup>.</p>
+<p>The belief state <inline-formula id="pcbi.1004254.e046"><mml:math id="M46" display="inline" overflow="scroll"><mml:mrow><mml:mo>𝓑</mml:mo> <mml:mo stretchy="false">(</mml:mo> <mml:msubsup><mml:mi>h</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> allows us to link <inline-formula id="pcbi.1004254.e047"><mml:math id="M47" display="inline" overflow="scroll"><mml:mrow><mml:msubsup><mml:mi>h</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup></mml:mrow></mml:math></inline-formula> to a distribution of interactive states and use 𝓦 to calculate <inline-formula id="pcbi.1004254.e048"><mml:math id="M48" display="inline" overflow="scroll"><mml:mrow><mml:mo>ℙ</mml:mo> <mml:mo stretchy="false">[</mml:mo> <mml:msubsup><mml:mi>o</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo stretchy="false">∣</mml:mo> <mml:mo>{</mml:mo><mml:msubsup><mml:mi>h</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>,</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup><mml:mo>}</mml:mo> <mml:mo stretchy="false">]</mml:mo></mml:mrow></mml:math></inline-formula>
+, in particular including the reactions of other agents to the actions of one agent. We call the resulting policy the “solution” to the IPOMDP.</p>
+</sec>
+<sec id="sec006">
+<title>Equilibria and IPOMDPs</title>
+<p>Our central interest is in the use of the IPOMDP to capture the interaction amongst human agents with limited cognitive resources and time for their exchanges. It has been noted in [<xref ref-type="bibr" rid="pcbi.1004254.ref009">9</xref>] that the distribution of subject levels favours rather low values (e.g., Poisson, with a mean of around 1.5). In the opposite limit, sufficient conditions are known in which taking the cognitive hierarchy out to infinity for all involved agents allows for at least one Bayes-Nash equilibrium solution (part II, theorem II, p. 322 of Harsanyi [<xref ref-type="bibr" rid="pcbi.1004254.ref008">8</xref>]) and sufficient conditions have been shown in [<xref ref-type="bibr" rid="pcbi.1004254.ref036">36</xref>], given which a solution to the infinite hierarchy model can be approximated by the sequence of finite hierarchy model solutions. A discussion of a different condition can be found in [<xref ref-type="bibr" rid="pcbi.1004254.ref037">37</xref>]; however, this condition does assume a infinite time horizon in the interaction. In general, as [<xref ref-type="bibr" rid="pcbi.1004254.ref009">9</xref>], p.868 notes, it is not true that the infinite hierarchy solution will be a Nash equilibrium. For the purposes of computational psychiatry, we find the very mismatches and limitations, that prevent subjects’ strategies to evolve to a (Bayes)-Nash equilibrium in the given time frame, to be of particular interest. Therefore we restrict our attention to quantal response equilibrium like behaviours ([<xref ref-type="bibr" rid="pcbi.1004254.ref030">30</xref>]), based on potentially inconsistent initial beliefs by the involved agents with ultimately very limited cognitive resources and finite time exchanges.</p>
+</sec>
+<sec id="sec007">
+<title>Applying POMCP to an IPOMDP</title>
+<p>An IPOMDP is a collection of POMDPs, so POMCP is, in principle, applicable to each encountered POMDP.</p>
+<p>However, unlike the examples in [<xref ref-type="bibr" rid="pcbi.1004254.ref031">31</xref>], an IPOMDP contains the intentional model POMDPs <italic>θ</italic><sup><italic>ij</italic></sup> as part of the state space, and these themselves contain a rich structure of beliefs. So, the state is sampled from the belief state at the root for agent <italic>i</italic> is an <italic>I</italic> tuple <inline-formula id="pcbi.1004254.e049"><mml:math id="M49" display="inline" overflow="scroll"><mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:msup><mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mi>i</mml:mi></mml:msup> <mml:mo>,</mml:mo> <mml:msup><mml:mover accent="true"><mml:mi>θ</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mi>i</mml:mi> <mml:mn>1</mml:mn></mml:mrow></mml:msup> <mml:mo>,</mml:mo> <mml:mo>…</mml:mo> <mml:mo>,</mml:mo> <mml:msup><mml:mover accent="true"><mml:mi>θ</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mi>i</mml:mi> <mml:mo stretchy="false">(</mml:mo> <mml:mo stretchy="false">∣</mml:mo> <mml:mo>ℐ</mml:mo> <mml:mo stretchy="false">∣</mml:mo> <mml:mo>−</mml:mo> <mml:mn>1</mml:mn> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:msup> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula> of a physical state <inline-formula id="pcbi.1004254.e050"><mml:math id="M50" display="inline" overflow="scroll"><mml:mrow><mml:msup><mml:mover accent="true"><mml:mi>s</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mi>i</mml:mi></mml:msup></mml:mrow></mml:math></inline-formula> and (∣ℐ∣−1) POMDPs, one for each partner. (This is also akin to the random instantiation of players in [<xref ref-type="bibr" rid="pcbi.1004254.ref008">8</xref>]). Since the <inline-formula id="pcbi.1004254.e051"><mml:math id="M51" display="inline" overflow="scroll"><mml:mrow><mml:msup><mml:mover accent="true"><mml:mi>θ</mml:mi> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msup></mml:mrow></mml:math></inline-formula> still contain belief states in their own right, it is still necessary to do some explicit inference during the creation of each tree. Indeed, explicit inference is hard to avoid altogether during simulation, as the interactive states require the partner to be able to learn [<xref ref-type="bibr" rid="pcbi.1004254.ref023">23</xref>]. Nevertheless, a number of performance improvements that we detail below still allow us to apply the POMCP method involving substantial planning horizons.</p>
+</sec>
+<sec id="sec008">
+<title>Simplifications for Dydadic Repeated Exchange</title>
+<p>Many social paradigms based upon game theory, including the iterated ultimatum game, prisoners’ dilemma, iterated “rock, paper, scissors” (for 2 agents) and the multi round trust game, involve repeated dyads. In these, each interaction involves the same structure of physical states and actions (𝓢<sub>phys</sub>, 𝓐) (see below), and all discount functions are 0 past a finite horizon.</p>
+<p><bold>Definition 5 (Dyadic Repeated Exchange without state uncertainty).</bold> Consider a two agent IPOMDP framework in which there is no physical state uncertainty: both agents fully observe each others’ actions and there is no uncertainty about environmental influence; and in which agents vary their play only based on intentional models. Additionally, the framework is assumed to reset after each exchange (i.e., after both agents have acted once).</p>
+<p>Formally this means: There is a fixed setting (𝓢<sub>phys</sub>, 𝓐, 𝓣), such that physical states, actions from these states, transitions in the physical state and hence also obtainable rewards, differ only by a changing time index and there is no observational uncertainty. Then after each exchange the framework is assumed to reset to the same distribution of physical initial states 𝓢<sub>phys</sub> within this setting (i.e. the game begins anew).</p>
+<p>Games of this sort admit an immediate simplification:</p>
+<p><bold>Theorem 1 (Level 0 Recombining Tree).</bold> In the situation of definition 5, level 0 action values at any given time only depend on the total set of actions and observations so far and not the order in which those exchanges were observed.</p>
+<p><italic>Proof</italic>. The level −1 partner model only acts on the physical state it encounters and the physical state space variable <italic>S</italic> is reset at the beginning of each round in the situation of 5. Therefore, given a state <italic>s</italic> in the current round and an action <italic>a</italic> by a level 0 agent, the likelihood of each transition to some state <italic>s</italic><sub>1</sub>, 𝓣(<italic>s</italic><sub>1</sub>, <italic>a</italic>, <italic>s</italic>), and of making observation <italic>o</italic>, 𝓦(<italic>o</italic>, <italic>a</italic>, <italic>s</italic><sub>1</sub>), is the same at every round from the point of view of the level 0 agent. It follows that the cumulative belief update from <xref ref-type="disp-formula" rid="pcbi.1004254.e032">Eq 10</xref>, from the initial beliefs 𝓑<sub>0</sub> to the current beliefs, will not depend on the order in which the action observation pairs (<italic>a</italic>, <italic>o</italic>) were observed.</p>
+<p>This means, that depending on the size of the state space and the depth of planning of interest, we may analytically calculate level 0 action values even online or use precalculated values for larger problems. Furthermore, because their action values will only depend on past exchanges and not on the order in which they were observed, their decision making tree can be reformulated as a recombining tree.</p>
+<p>Sometimes, an additional simplification can be made:</p>
+<p><bold>Theorem 2 (Trivialised Planning).</bold> In the situation of definition 5, if the two agents do not act simultaneously and the state transition of the second agent is entirely dependent on the action executed by the first agent (as in the multi round trust task); and additionally the intentional model of the partner can not be changed through the actions of the second agent, then a level 0 second agent can gain no advantage from planning ahead, since their actions will not change the action choices of the first agent.</p>
+<p><italic>Proof</italic>. In the scenario described in theorem 2 the physical state variable <italic>S</italic> of the agent 2 is entirely dependent on the action of the other agent. If the agent is level 0, they model their partner as level −1 and by additional assumption the second agent does not believe that the partner can be made to transition between different intentional models by the second agent’s actions, hence their partner will not change their distribution of state transitions, depending on the agent’s actions and hence also their distribution of future obtainable rewards will not change.</p>
+<p><bold>Theorem 3 (Trivialised Theory of Mind Levels).</bold> In the situation of theorem 2, we state that for the first to go agent, only the even theory of mind levels <italic>k</italic> ∈ {0}∪2ℕ show distinct behaviours, while the odd levels <italic>k</italic> ∈ 2ℕ−1 behave like one level below, meaning <italic>k</italic>−1. For the second to go partner equivalently, only the odd levels <italic>k</italic> ∈ {0}∪2ℕ−1 show distinct behaviours.</p>
+<p><italic>Proof</italic>. In the scenario described in theorem 2, the second to go level 0 agent behaves like a level −1 agent, as it does not benefit from modeling the partner. This implies that the first to go agent, gains no additional information at the level 1 thinking, since the partner behaves like level −1, which was modeled by the level 0 first to agent already. In turn, the level 2 second to go agent gains no additional information over the level 1 second to go agent, as the their partner model does not change between modeling the partner at level 0 or level −1. By induction, we get the result.</p>
+<p>Examples of the additional simplifications in theorems 2 and 3 can be seen in the ultimatum game and the multi round trust game.</p>
+</sec>
+<sec id="sec009">
+<title>The Trust Task</title>
+<p>The multi-round trust task, illustrated in <xref ref-type="fig" rid="pcbi.1004254.g006">Fig 6</xref> is a paradigm social exchange game. It involves two people, one playing the role of an ‘investor’ the other the one of a ‘trustee’, over 10 sequential rounds, expressed by a time index <italic>t</italic> = 1,2,…,10.</p>
+<fig id="pcbi.1004254.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>Physical features of the multi round trust game.</title>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g006"/>
+</fig>
+<p>Both agents know all the rules of the game. In each round, the investor receives an initial endowment of 20 monetary units. The investor can send any of this amount to the trustee. The experimenter trebles this quantity and then the trustee decides how much to send back to the investor, between 0 points and the whole amount that she receives. The repayment by the trustee is not increased by the experimenter. After the trustee’s action, the investor is informed, and the next round starts. We consider the trust task as an IPOMDP with two agents, i.e., ℐ = {<italic>I</italic>, <italic>T</italic>} contains just <italic>I</italic> for the investor and <italic>T</italic> for the trustee. We consider the state to contain two components; one physical and observable (the endowment and investments), the other non-physical and non-observable (in our case, parameters of the utility function). It is the latter that leads to the partial observability in the IPOMDP. Following [<xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>], we reduce complexity by quantizing the actions and the (non-observable) states of both investor and trustee—shown for one complete round in <xref ref-type="fig" rid="pcbi.1004254.g007">Fig 7</xref>.</p>
+<fig id="pcbi.1004254.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Discretized actions of both players.</title>
+<p>Investor: (left) The 21 possible actions are summarized into 5 possible investment categories. Trustee: (right) returns are classified into 5 possible categories, conditionally on investor action. Impossible returns are marked in black.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g007"/>
+</fig>
+<p>The actions are quantized into 5 fractional categories shown in <xref ref-type="fig" rid="pcbi.1004254.g007">Fig 7</xref>. For the investor, we consider <italic>a</italic><sup><italic>I</italic></sup> ∈ {0,0.25,0.5,0.75,1} (corresponding to an investment of $20 × <italic>a</italic><sup><italic>I</italic></sup>, and encompassing even investment ranges). For the trustee, we consider <italic>a</italic><sup><italic>T</italic></sup> ∈ {0,0.167,0.333,0.5,0.67} (corresponding to a return of $3 × 20 × <italic>a</italic><sup><italic>I</italic></sup> × <italic>a</italic><sup><italic>T</italic></sup>, and encompassing even return ranges). Note that the trustee’s action is degenerate if the investor gives 0. The pure monetary payoffs for both agents in each round are
+<disp-formula id="pcbi.1004254.e052"><alternatives><graphic id="pcbi.1004254.e052g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e052"/><mml:math id="M52" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>investor</mml:mi> <mml:mo>:</mml:mo> <mml:msup><mml:mi>χ</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mo>,</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mn>20</mml:mn> <mml:mo>-</mml:mo> <mml:mn>20</mml:mn> <mml:mo> × </mml:mo><mml:msup><mml:mi>a</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mo>+</mml:mo> <mml:mn>3</mml:mn> <mml:mo> × </mml:mo> <mml:mn>20</mml:mn> <mml:msup><mml:mi>a</mml:mi> <mml:mi>I</mml:mi></mml:msup><mml:mo> × </mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>T</mml:mi></mml:msup></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(12)</label></disp-formula> <disp-formula id="pcbi.1004254.e053"><alternatives><graphic id="pcbi.1004254.e053g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e053"/><mml:math id="M53" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mi>trustee</mml:mi> <mml:mo>:</mml:mo> <mml:msup><mml:mi>χ</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mo>,</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mn>3</mml:mn> <mml:mo> × </mml:mo> <mml:mn>20</mml:mn><mml:mo> × </mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mo>-</mml:mo> <mml:mn>3</mml:mn> <mml:mo> × </mml:mo> <mml:mn>20</mml:mn> <mml:msup><mml:mi>a</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mo> × </mml:mo><mml:msup><mml:mi>a</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(13)</label></disp-formula></p>
+<p>The payoffs of all possible combinations and both partners are depicted in <xref ref-type="fig" rid="pcbi.1004254.g008">Fig 8</xref>.</p>
+<fig id="pcbi.1004254.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>Payoffs in the multi round trust task.</title>
+<p>(left) Investor payoffs for an single exchange. (right) Trustee payoffs for an single exchange.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g008"/>
+</fig>
+<p>In IPOMDP terms, the investor’s physical state is static, whereas the trustee’s state space is conditional on the previous action of the investor. The investor’s possible observations are the trustees responses, with a likelihood that depends entirely on the investor’s intentional model of the trustee. The trustee observes the investor’s action, which also determines the trustee’s new physical state, as shown in <xref ref-type="fig" rid="pcbi.1004254.g009">Fig 9</xref>.</p>
+<fig id="pcbi.1004254.g009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g009</object-id>
+<label>Fig 9</label>
+<caption>
+<title>(Physical) transitions and observations: (Left) physical state transitions and observations of the investor.</title>
+<p>The trustee’s actions are summarized to <italic>a</italic><sup><italic>T</italic></sup>, as they can not change the following physical state transition. (right) Physical state transitions and observations of the trustee. The trustee’s actions are summarized to <italic>a</italic><sup><italic>T</italic></sup>, as they can not change the following physical state transition.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g009"/>
+</fig>
+<sec id="sec010">
+<title>Inequality aversion—compulsion to fairness</title>
+<p>The aspects of the states of investor and trustee that induce partial observability are assumed to arise from differential levels of cooperation.</p>
+<p>One convenient (though not unique) way to characterize this is via the Fehr-Schmidt inequality aversion utility function (<xref ref-type="fig" rid="pcbi.1004254.g010">Fig 10</xref>). This allows us to account for the observation that many trustees return an even split even on the last exchange of the 10 rounds, even though no further gain is possible.</p>
+<fig id="pcbi.1004254.g010" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g010</object-id>
+<label>Fig 10</label>
+<caption>
+<title>Immediate Fehr-Schmidt utilities for a single exchange [<xref ref-type="bibr" rid="pcbi.1004254.ref001">1</xref>].</title>
+<p>Left column shows investor preferences: (top left) Completely unguilty investor values only the immediate payoff, (middle left) Guilt 0.4 investor is less likely to keep everything to themselves (bottom left corner option), (bottom left) Guilt 1 investor will never keep everything to themselves (bottom left option). Right column shows trustee preferences: (top right) unguilty trusty would like to keep everything to themselves. (middle right) Guilt 0.4 is more likely to return at least a fraction of the gains. (bottom right) Guilt 1 trustee will strife to return the fair split always.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g010"/>
+</fig>
+<p>We make no claim that this is the only explanation for such behaviour, but it is a tractable and well-established mechanism that has been used successfully in other tasks ([<xref ref-type="bibr" rid="pcbi.1004254.ref001">1</xref>, <xref ref-type="bibr" rid="pcbi.1004254.ref014">14</xref>, <xref ref-type="bibr" rid="pcbi.1004254.ref027">27</xref>]). For the investor, this suggests that:
+<disp-formula id="pcbi.1004254.e054"><alternatives><graphic id="pcbi.1004254.e054g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e054"/><mml:math id="M54" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msup><mml:mi>r</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mo>,</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mo>,</mml:mo> <mml:msup><mml:mi>α</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:msup><mml:mi>χ</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mo>,</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:msup><mml:mi>α</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mspace width="1pt"/><mml:mo movablelimits="true" form="prefix">max</mml:mo> <mml:mrow><mml:mo>{</mml:mo> <mml:msup><mml:mi>χ</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mo>,</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:msup><mml:mi>χ</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mo>,</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>,</mml:mo> <mml:mn>0</mml:mn> <mml:mo>}</mml:mo></mml:mrow> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(14)</label></disp-formula></p>
+<p>Here, <italic>α</italic><sup><italic>I</italic></sup> is called the “guilt” parameter of the investor and quantifies their aversion to unequal outcomes in their favor. We quantize guilt into 3 concrete guilt types {0,0.4,1} = {<italic>α</italic><sub>1</sub>, <italic>α</italic><sub>2</sub>, <italic>α</italic><sub>3</sub>}. Similarly, the trustee’s utility is
+<disp-formula id="pcbi.1004254.e055"><alternatives><graphic id="pcbi.1004254.e055g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e055"/><mml:math id="M55" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msup><mml:mi>r</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mo>,</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mo>,</mml:mo> <mml:msup><mml:mi>α</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:msup><mml:mi>χ</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mo>,</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:msup><mml:mi>α</mml:mi> <mml:mi>T</mml:mi></mml:msup><mml:mspace width="1pt"/><mml:mo movablelimits="true" form="prefix">max</mml:mo> <mml:mrow><mml:mo>{</mml:mo> <mml:msup><mml:mi>χ</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mo>,</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:msup><mml:mi>χ</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mrow><mml:mo>(</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>I</mml:mi></mml:msup> <mml:mo>,</mml:mo> <mml:msup><mml:mi>a</mml:mi> <mml:mi>T</mml:mi></mml:msup> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>,</mml:mo> <mml:mn>0</mml:mn> <mml:mo>}</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(15)</label></disp-formula>
+with the same possible guilt types. We choose these particular values, as guilt values above 0.5 tend to produce similar behaviours as <italic>α</italic> = 1 and the values below 0.3 tend to behave very similar to <italic>α</italic> = 0. Thus we take <italic>α</italic><sub>1</sub> to represent guilt values in [0,0.3], <italic>α</italic><sub>2</sub> to represent guilt values in (0.3,0.5) and <italic>α</italic><sub>2</sub> to represent guilt values in [0.5,1]. We assume that neither agent’s actual guilt type changes during the 10 exchanges.</p>
+</sec>
+<sec id="sec011">
+<title>Planning behaviour</title>
+<p>The survival functions <italic>H</italic><sup><italic>I</italic></sup> and <italic>H</italic><sup><italic>T</italic></sup> are used to delimit the planning horizon. The agents are required not to plan beyond the end of the game at time 10 and within that constraint they are supposed to plan <italic>P</italic> steps ahead into the interaction. This results in the following form for the survival functions (regardless whether for investor or trustee):
+<disp-formula id="pcbi.1004254.e056"><alternatives><graphic id="pcbi.1004254.e056g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e056"/><mml:math id="M56" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mi>H</mml:mi> <mml:mi>P</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>τ</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn> <mml:mspace width="1.em"/><mml:mrow><mml:mo>(</mml:mo> <mml:mi>τ</mml:mi> <mml:mo>-</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>≤</mml:mo> <mml:mi>P</mml:mi> <mml:mo>∧</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>τ</mml:mi> <mml:mo>+</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>≤</mml:mo> <mml:mn>10</mml:mn> <mml:mo>,</mml:mo> <mml:mspace width="2.em"/><mml:msub><mml:mi>H</mml:mi> <mml:mi>P</mml:mi></mml:msub> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>τ</mml:mi> <mml:mo>,</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mn>0</mml:mn> <mml:mspace width="1.em"/><mml:mrow><mml:mo>(</mml:mo> <mml:mi>τ</mml:mi> <mml:mo>-</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>&gt;</mml:mo> <mml:mi>P</mml:mi> <mml:mo>∨</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mi>τ</mml:mi> <mml:mo>+</mml:mo> <mml:mi>t</mml:mi> <mml:mo>)</mml:mo></mml:mrow> <mml:mo>&gt;</mml:mo> <mml:mn>10</mml:mn> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(16)</label></disp-formula>
+The value <italic>P</italic> is called the planning horizon. We consider <italic>P</italic> ∈ {0,2,7} for immediate, medium and long planning types. We chose these values as <italic>P</italic> = 7 covers the range of behaviours from <italic>P</italic> = 4 to <italic>P</italic> = 9, while planning 2 yields compatibility to earlier works ([<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>, <xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>]) and allows to have short planning but high level agents, covering the range of behaviours for planning <italic>P</italic> = 1 to <italic>P</italic> = 3. We confirm later that the behaviour of <italic>P</italic> = 7 and <italic>P</italic> = 9 agents is almost identical; and the former saves memory and processing time. Agents are characterized as assuming their opponents have the same degree of planning as they do. The discount factors <italic>γ</italic><sup><italic>I</italic></sup> and <italic>γ</italic><sup><italic>T</italic></sup> are set to 1 in our setting.</p>
+</sec>
+</sec>
+<sec id="sec012">
+<title>Belief State</title>
+<p>Since all agents use their own planning horizon in modeling the partner and level <italic>k</italic> agents model their partner at level <italic>k</italic>−1, inference in intentional models in this analysis is restricted to the guilt parameter <italic>α</italic>. Using a categorical distribution on the guilt parameter and Dirichlet prior on the probabilities of the categorical distribution, we get a Dirichlet-Multinomial distribution for the probabilities of an agent having a given guilt type at some point during the exchange. Hence 𝓑<sub>0</sub> is a Dirichlet-Multinomial distribution,
+<disp-formula id="pcbi.1004254.e057"><alternatives><graphic id="pcbi.1004254.e057g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e057"/><mml:math id="M57" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mo>𝓑</mml:mo> <mml:mn>0</mml:mn></mml:msub> <mml:mo>∼</mml:mo> <mml:mi>D</mml:mi> <mml:mi>i</mml:mi> <mml:mi>r</mml:mi> <mml:mi>M</mml:mi> <mml:mi>u</mml:mi> <mml:mi>l</mml:mi> <mml:mi>t</mml:mi> <mml:mrow><mml:mo>(</mml:mo> <mml:msub><mml:mi>a</mml:mi> <mml:mn>0</mml:mn></mml:msub> <mml:mo>)</mml:mo></mml:mrow> <mml:mspace width="2.em"/><mml:msub><mml:mi>a</mml:mi> <mml:mn>0</mml:mn></mml:msub> <mml:mo>=</mml:mo> <mml:mrow><mml:mo>(</mml:mo> <mml:mn>1</mml:mn> <mml:mo>,</mml:mo> <mml:mn>1</mml:mn> <mml:mo>,</mml:mo> <mml:mn>1</mml:mn> <mml:mo>)</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(17)</label></disp-formula>
+with the initial belief state
+<disp-formula id="pcbi.1004254.e058"><alternatives><graphic id="pcbi.1004254.e058g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e058"/><mml:math id="M58" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:mo>ℙ</mml:mo> <mml:mrow><mml:mo>[</mml:mo> <mml:msup><mml:mi>α</mml:mi> <mml:mi>partner</mml:mi></mml:msup> <mml:mo>=</mml:mo> <mml:msub><mml:mi>α</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>|</mml:mo> <mml:mi>h</mml:mi> <mml:mo>=</mml:mo> <mml:mi>∅</mml:mi> <mml:mo>]</mml:mo></mml:mrow> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mn>3</mml:mn></mml:mfrac> <mml:mo>.</mml:mo></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(18)</label></disp-formula>
+Keeping consistent with the model in [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>], our approximation of the posterior distribution is a Dirichlet-Multinomial distribution with the parameters of the Dirichlet prior being updated to
+<disp-formula id="pcbi.1004254.e059"><alternatives><graphic id="pcbi.1004254.e059g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e059"/><mml:math id="M59" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msubsup><mml:mi>a</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>=</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mi>t</mml:mi> <mml:mi>i</mml:mi></mml:msubsup> <mml:mo>+</mml:mo> <mml:mo>ℙ</mml:mo> <mml:mrow><mml:mo>[</mml:mo> <mml:msub><mml:mi>o</mml:mi> <mml:mrow><mml:mi>t</mml:mi> <mml:mo>+</mml:mo> <mml:mn>1</mml:mn></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:mi>observed</mml:mi> <mml:mi>action</mml:mi> <mml:mo>|</mml:mo> <mml:msup><mml:mi>α</mml:mi> <mml:mi>partner</mml:mi></mml:msup> <mml:mo>=</mml:mo> <mml:msub><mml:mi>α</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo>]</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(19)</label></disp-formula>
+writing <italic>α</italic><sup>partner</sup> for the intentional models.</p>
+<sec id="sec013">
+<title>Theory of mind levels and agent characterization</title>
+<p>Since the physical state transition of the trustee is fully dependent on the investor’s action and one agent’s guilt type can not be changed by the actions of the other agent, theorem 2 implies that the level 0 trustee is trivial, gaining nothing from planning ahead. Conversely, the level 0 investor can use a recombining tree as in theorem 1. Therefore, the chain of cognitive hierarchy steps for the investor is <italic>l</italic><sup><italic>I</italic></sup> ∈ {0}∪{2<italic>n</italic>∣<italic>n</italic> ∈ ℕ}, and for the trustee, it is <italic>l</italic><sup><italic>T</italic></sup> ∈ {0}∪{2<italic>n</italic>−1∣<italic>n</italic> ∈ ℕ}. Trustee planning is trivial until the trustee does at least reach theory of mind level 1. Assuming <inline-formula id="pcbi.1004254.e060"><mml:math id="M60" display="inline" overflow="scroll"><mml:mrow><mml:mi>β</mml:mi> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mn>3</mml:mn></mml:mfrac></mml:mrow></mml:math></inline-formula> in <xref ref-type="disp-formula" rid="pcbi.1004254.e008">Eq 4</xref>, determined empirically from real subject data [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>] for suitably noisy behaviour, our subjects are then characterized via the triplet (<italic>k</italic>, <italic>α</italic>, <italic>P</italic>) of theory of mind level <italic>k</italic>, guilt parameter <italic>α</italic> ∈ {0,0.4,1} and planning horizon <italic>P</italic> ∈ {0,2,7}.</p>
+</sec>
+</sec>
+<sec id="sec014">
+<title>Level −1 and POMCP Rollout Mechanism</title>
+<p>The level −1 models are obtained by having the level −1 agent always assume all partner types to be equally likely (<inline-formula id="pcbi.1004254.e061"><mml:math id="M61" display="inline" overflow="scroll"><mml:mrow><mml:mo>ℙ</mml:mo> <mml:mo stretchy="false">[</mml:mo> <mml:msup><mml:mi>α</mml:mi> <mml:mtext mathvariant="normal">partner</mml:mtext></mml:msup> <mml:mo>=</mml:mo> <mml:msub><mml:mi>α</mml:mi> <mml:mi>i</mml:mi></mml:msub> <mml:mo stretchy="false">]</mml:mo> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mn>3</mml:mn></mml:mfrac> <mml:mo>,</mml:mo> <mml:mo>∀</mml:mo> <mml:mi>i</mml:mi></mml:mrow></mml:math></inline-formula>), setting the planning horizon to 0, meaning the partner acts on immediate utilities only, and calculating the agent’s expected utilities after marginalizing over partner types and their respective response probabilities based on their immediate utilities.</p>
+<p>In the POMCP treatment of the multi round trust game, if a simulated agent reaches a given history for the first time, a value estimate for the new node is derived by treating the agent as level −1 and using an <italic>ε</italic>-greedy decision making mechanism on the expected utilities to determine their actions until the present planning horizon.</p>
+</sec>
+<sec id="sec015">
+<title>Behavioural Results</title>
+<p>We adapted the POMCP algorithm [<xref ref-type="bibr" rid="pcbi.1004254.ref031">31</xref>] to solve IPOMDPs [<xref ref-type="bibr" rid="pcbi.1004254.ref023">23</xref>], and cast the multi-round trust task as an IPOMDP that could thus be solved. We made a number of approximations that were prefigured in past work in this domain [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>, <xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>], and also made various observations that dramatically simplified the task of planning, without altering the formal solutions. This allowed us to look at longer planning horizons, which is important for the full power of the intentional modeling to become clear.</p>
+<p>Here, we first seek to use this new and more powerful planning method to understand the classes of behaviour that arise from different settings of the parameters, as shown in the following section. From the study of human interactions [<xref ref-type="bibr" rid="pcbi.1004254.ref016">16</xref>], the importance of coaxing (returning more than the fair split) has been established. From our own study of the data collected so far, we define four coarse types of ‘pure’ interactions, which we call “Cooperation”, “Coaxing to Cooperation”, “Coaxing to Exploitation”, “Greedy”; we conceptualize how these might arise. We also delimit the potential consequences of having overly restricted the planning horizon in past work in this domain, and examine the qualitative interactive signatures (such as how quickly average investments and repayments rise or fall) that might best capture the characteristics of human subjects playing the game.</p>
+<p>We then continue to discuss the quality of statistical inference, by carrying out model inversion for our new method and comparing to earlier work in this domain [<xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>].</p>
+<p>Finally, we treat real subject data collected for an earlier study ([<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>]) and show that our new approach recovers significant behavioural differences not obtained by earlier models and offers a significant improvement in the classification of subject behaviour through the inclusion of the planning parameter in the estimation and the quality of estimation on the trustee side.</p>
+</sec>
+<sec id="sec016">
+<title>Modalities</title>
+<p>All simulations were run on the local cluster at the Wellcome Trust Centre for Neuroimaging. For sample paths and posterior distributions, for each pairing of investor guilt, investor sophistication and trustee guilt and trustee sophistication, 60 full games of 10 exchanges each were simulated, totaling 8100 games. Additionally, in order to validate the estimation, a uniform mix of all parameters was used, implying a total of 2025 full games.</p>
+<p>To reduce the variance of the estimation, we employed a pre-search method. Agents with ToM greater than 0 first explored the constant strategies (offering/returning a fixed fraction) to obtain a minimal set of <inline-formula id="pcbi.1004254.e062"><mml:math id="M62" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mi>Q</mml:mi> <mml:mo>˜</mml:mo></mml:mover></mml:mrow></mml:math></inline-formula> values from which to start searching for the optimal policy using S<sc>oft</sc>UCT. This ensures that inference will not “get stuck” in a close-to-optimal initial offer just because another initial offer was not adequately explored. This is more specific than just increasing the exploration bonus in the S<sc>oft</sc>UCT rule, which would diffuse the search during all stages, rather than helping search from a stable initial grid.</p>
+<p>We set a number <italic>n</italic> of simulations for the initial step, where the beliefs about the partner are still uniform and the time horizon is still furthest away. We then reduce the number of simulations as the time horizon approaches <inline-formula id="pcbi.1004254.e063"><mml:math id="M63" display="inline" overflow="scroll"><mml:mrow><mml:mo stretchy="false">(</mml:mo> <mml:mi>n</mml:mi> <mml:mo>,</mml:mo> <mml:mi>n</mml:mi> <mml:mfrac><mml:mn>9</mml:mn> <mml:mn>10</mml:mn></mml:mfrac> <mml:mo>,</mml:mo> <mml:mi>n</mml:mi> <mml:mfrac><mml:mn>8</mml:mn> <mml:mn>10</mml:mn></mml:mfrac> <mml:mo>,</mml:mo> <mml:mo>…</mml:mo> <mml:mo>,</mml:mo> <mml:mi>n</mml:mi> <mml:mfrac><mml:mn>1</mml:mn> <mml:mn>10</mml:mn></mml:mfrac> <mml:mo stretchy="false">)</mml:mo></mml:mrow></mml:math></inline-formula>.</p>
+</sec>
+<sec id="sec017">
+<title>Simulation and Statistical Inference</title>
+<p>Unless stated otherwise, we employ an inverse temperature in the softmax of <inline-formula id="pcbi.1004254.e064"><mml:math id="M64" display="inline" overflow="scroll"><mml:mrow><mml:mi>β</mml:mi> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mn>3</mml:mn></mml:mfrac></mml:mrow></mml:math></inline-formula> (noting the substantial scale of the rewards). The exploration constant for POMCP was set to <italic>c</italic> = 25. The initial beliefs were uniform <italic>a</italic><sub><italic>i</italic></sub> = 1,∀<italic>i</italic>, for each subject. For the 3 possible guilt types we use the following expression while in text: <italic>α</italic> = <italic>α</italic><sub>1</sub> is “greedy”, <italic>α</italic> = <italic>α</italic><sub>2</sub> is “pragmatic” and <italic>α</italic> = <italic>α</italic><sub>3</sub> is “guilty”. However, on all the graphs, we give the exact model classification in the form <italic>I</italic>:(<italic>k</italic><sup><italic>I</italic></sup>, <italic>α</italic><sup><italic>I</italic></sup>, <italic>P</italic><sup><italic>I</italic></sup>) for the investor and <italic>T</italic>:(<italic>k</italic><sup><italic>T</italic></sup>, <italic>α</italic><sup><italic>T</italic></sup>, <italic>P</italic><sup><italic>T</italic></sup>) for the trustee.</p>
+<p>We present average results over multiple runs generated stochastically from each setting of the parameter values. In the figures, we report the <italic>actual</italic> characteristics of investor and trustee; however, in keeping with the overall model, although each agent knows their own parameters, they are each inferring their opponents’ degree of guilt based on their initial priors.</p>
+<p>As a consequence of our earlier observation in theorem 2, we only consider <italic>k</italic> ∈ {0,2} for the investor and <italic>k</italic> ∈ {0,1} for the trustee. Planning horizons are restricted to <italic>P</italic> ∈ {0,2,7}, as noted before, with the level 0 trustee always having a planning horizon of 0.</p>
+<p>Actions for both agents are parametrized as in section “The Trust Task” and averaged across identical parameter pairings. In the graphs, we show actions in terms of the percentages of the available points that are offered or returned. For the investor, the numerical amounts can be read directly from the graphs; for the trustee, these amounts depend on the investor’s action. In the figures, we report the <italic>actual</italic> characteristics of investor and trustee; however, in keeping with the overall model, although each player knows their own parameters, they are each inferring their opponents’ degree of guilt based on their initial priors.</p>
+<p>Dual to generating behaviour from the model is to invert it to find parameter settings that best explain observed interactions [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>, <xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>]. Conceptually, this can be done by simulating exchanges between partners of given parameter settings (<italic>k</italic>, <italic>α</italic>, <italic>P</italic>), taking the observed history of investments and responses, and using a maximum likelihood estimation procedure which finds the settings for both agents that maximise the chance that simulated exchanges between agents possessing those values would match the actual, observed exchange. We calculate the action likelihoods through the POMCP method outlined earlier and accumulate the negative log likelihoods, looking for the combination that produces the smallest negative loglikelihood. This is carried out for each combination of guilt and sophistication for both investor and trustee.</p>
+</sec>
+<sec id="sec018">
+<title>Paradigmatic Behaviours</title>
+<p>The following figures show the three characteristic types of behaviour, in each case for two sets of parameters for investor and trustee. The upper graphs show the average histories of actions of the investor (blue) and trustee (red) across the 10 rounds; the middle graphs show the mean posterior distributions over the three guilt parameters (0,0.4,1) as estimated by the investor and the lower graphs show the mean posterior distribution by the trustee (right) at four stages in the game (rounds 0, 3, 6 and 9). These show how well the agents of each type are making inferences about their partners.</p>
+<p>
+<xref ref-type="fig" rid="pcbi.1004254.g011">Fig 11</xref> shows evidence for strong cooperation between two agents who are characterized by high inequity aversion (i.e., guilty). Cooperation develops more slowly for agents with shorter (left) than longer (right) planning horizons, enabling a reliable distinction between different guilty pairs. This is shown more explicitly in <xref ref-type="fig" rid="pcbi.1004254.g012">Fig 12</xref> in terms of the total amount of money made by both participants.</p>
+<fig id="pcbi.1004254.g011" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g011</object-id>
+<label>Fig 11</label>
+<caption>
+<title>Guilty types.</title>
+<p>Averaged Exchanges (upper) and posteriors (mid and lower). Left plots: Investor (<italic>k</italic><sup><italic>I</italic></sup>, <italic>α</italic><sup><italic>I</italic></sup>, <italic>P</italic><sup><italic>I</italic></sup>) = (2,1,2); Trustee (1,1,2); right plots: Investor (2,1,7) and Trustee (1,1,7). The posterior distributions are shown for <italic>α</italic> = (0,0.4,1) at four stages in the game. Error bars are standard deviations. The asterisk denotes the true partner guilt value.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g011"/>
+</fig>
+<fig id="pcbi.1004254.g012" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g012</object-id>
+<label>Fig 12</label>
+<caption>
+<title>Average overall gains for the exchanges in <xref ref-type="fig" rid="pcbi.1004254.g011">Fig 11</xref> with planning 2 (dark blue) and 7 (light blue).</title>
+<p>The difference is highly significant (<italic>p</italic> &lt; 0.01) at a sample size of 60 for both parameter settings. Error bars are standard deviations.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g012"/>
+</fig>
+<p>Both cases can be seen as cases of a tit for tat like approach by the players, although unlike a strict tit for tat mechanism the process leading to high level cooperation is generally robust against following below par actions by either player. Rather, high level players would employ coaxing to reinforce cooperation in this case. This is true even for lower level players, as after they have formed beliefs of the partner, they will not immediately reduce their offers upon a few low offers or returns, due to the Bayesian updating mechanism.</p>
+<p>The posterior beliefs show both partners ultimately inferring the other’s guilt type correctly in both pairings, however the <italic>P</italic><sup><italic>I</italic></sup> = 7 investors remain aware of the possibility that the partners may actually be pragmatic and therefore the high level long horizon investors are prone to reduce their offers preemptively towards the end of the game. This data feature was noted in particular in the study [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>] and our generative model provides a generative explanation for it, based on the posterior beliefs of higher level agents explained above.</p>
+<p>
+<xref ref-type="fig" rid="pcbi.1004254.g013">Fig 13</xref> shows that level 1 trustees employ coaxing (returning more than the fair split) to get the investor to give higher amounts over extended periods of time. In the example settings, the level 0 investor completely falls for the trustee’s initial coaxing (left), coming to believe that the trustee is guilty rather than pragmatic until towards the very end. However, the level 2 investor (right) remains cautious and starts reducing offers soon after the trustee gets greedy, decreasing their offers faster than if playing a truly guilty type. The level 2 investor on average remains ambiguous between the partner being guilty or pragmatic. Either inference prevents them from being as badly exploited as the level 0 investor.</p>
+<fig id="pcbi.1004254.g013" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g013</object-id>
+<label>Fig 13</label>
+<caption>
+<title>Deceptive trustees.</title>
+<p>Averaged Exchanges (upper) and posteriors (mid and lower). Left plots: Investor (<italic>k</italic><sup><italic>I</italic></sup>, <italic>α</italic><sup><italic>I</italic></sup>, <italic>P</italic><sup><italic>I</italic></sup>) = (0,1,7); Trustee (1,0.4,7); right plots: Investor (2,1,7) and Trustee (1,0.4,7). The posterior distributions are shown for <italic>α</italic> = (0,0.4,1) at four stages in the game. Error bars are standard deviations. The asterisk denotes the true partner guilt value.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g013"/>
+</fig>
+<p>In these plots, investor and trustee both have long planning horizons; we later show what happens when a trustee with a shorter horizon (<italic>P</italic><sup><italic>T</italic></sup> = 2) attempts to deceive.</p>
+<p>A level 1 trustee can also get pragmatic investors to cooperate through coaxing, as demonstrated in <xref ref-type="fig" rid="pcbi.1004254.g014">Fig 14</xref>. The returns are a lot higher than for a level 0 guilty trustee, who lacks a model of their influence on the investor, and hence does not return enough to drive up cooperation. This initial coaxing is a very common behaviour of high level healthy trustees, trying to get the investor to cooperate more quickly, for both guilty and pragmatic high level trustees.</p>
+<fig id="pcbi.1004254.g014" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g014</object-id>
+<label>Fig 14</label>
+<caption>
+<title>Driving up cooperation.</title>
+<p>Average Exchanges (upper) and posteriors (mid and lower), Investor (0,0.4,7) and Trustee (1,1,7). The posterior distributions are shown for <italic>α</italic> = (0,0.4,1) at four stages in the game. Error bars are standard deviations. The asterisk denotes the true partner guilt value.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g014"/>
+</fig>
+</sec>
+<sec id="sec019">
+<title>Inconsistency or Impulsivity</title>
+<p>Trustees with planning horizon 2 tend to find it difficult to maintain deceptive strategies. As can be seen in <xref ref-type="fig" rid="pcbi.1004254.g015">Fig 15</xref>, even when both agents have a planning horizon of 2, a short sighted trustee builds significantly less trust than a long sighted one. This is because it fails to see sufficiently far in the future, and exploits too early. This planning horizon thus captures cognitive limitations or impulsive behaviour, while the planning horizon of 7 generally describes the consistent execution of a strategy during play. Such a distinction may be very valuable for the study of clinical populations suffering from psychiatric disorders such as attention deficit hyperactivity disorder (ADHD) or borderline personality disorder (BPD), who might show high level behaviours, but then fail to maintain them over the course of the entire game. Inferring this requires the ability to capture long horizons, something that had eluded previous methods. This type of behaviour shows how important the availability of different planning horizons is for modeling, as earlier implementations such as [<xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>] would treat this impulsive type as the default setting.</p>
+<fig id="pcbi.1004254.g015" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g015</object-id>
+<label>Fig 15</label>
+<caption>
+<title>Impulsive trustee can not exploit consistently.</title>
+<p>Average Exchanges (upper) and posteriors (mid and lower), Investor (0,1,2) and Trustee (1,0.4,2). The posterior distributions are shown for <italic>α</italic> = (0,0.4,1) at four stages in the game. Error bars are standard deviations. The asterisk denotes the true partner guilt value.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g015"/>
+</fig>
+</sec>
+<sec id="sec020">
+<title>Greedy Behaviour</title>
+<p>Another behavioural phenotype with potential clinical significance arises with fully greedy partners, see <xref ref-type="fig" rid="pcbi.1004254.g016">Fig 16</xref>. Greedy low level investors only invest very little, even if trustees try to convince them of a high guilt type on their part as described above (coaxing). Cooperation repeatedly breaks, which is reflected in the high variability of the investor trajectory. Two high level greedy types initially cooperate, but since the greedy trustee egregiously over-exploits, cooperation usually breaks down quickly over the course of the game, and is not repaired before the end. In the present context, the greedy type appears quite pathological in that they seem to hardly care at all about their partner’s type. The main exception to this is the level 2 greedy investor (an observation that underscores how theory of mind level and planning can change behaviour that would seem at first to be hard coded in the inequality aversion utility function). The level 0 greedy investor will cause cooperation to break down, regardless of their beliefs, as in <xref ref-type="fig" rid="pcbi.1004254.g016">Fig 16</xref> the posterior beliefs of the level 0 show that they believe the trustee to be guilty, but do not alter their behaviour in the light of this inference.</p>
+<fig id="pcbi.1004254.g016" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g016</object-id>
+<label>Fig 16</label>
+<caption>
+<title>Greedy agents break cooperation.</title>
+<p>Averaged Exchanges (upper) and posteriors (mid and lower). Left plots: Investor (<italic>k</italic><sup><italic>I</italic></sup>, <italic>α</italic><sup><italic>I</italic></sup>, <italic>P</italic><sup><italic>I</italic></sup>) = (0,0,7); Trustee (1,0,7); right plots: Investor (2,0,7) and Trustee (1,0,7). The posterior distributions are shown for <italic>α</italic> = (0,0.4,1) at four stages in the game. Error bars are standard deviations. The asterisk denotes the true partner guilt value.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g016"/>
+</fig>
+</sec>
+<sec id="sec021">
+<title>Planning Mismatch—High Level Deceived by Lower Level</title>
+<p>In <xref ref-type="fig" rid="pcbi.1004254.g017">Fig 17</xref>, the investor is level 2, and so should have the wherewithal to understand the level 1 trustee’s deception. However, the trustee’s longer planning horizon permits her to play more consistently, and thus exploit the investor for almost the entire game. This shows that the advantage of sophisticated thinking about other agents can be squandered given insufficient planning, and poses an important question about the efficient deployment of cognitive resources to the different demands of modeling and planning of social interactions.</p>
+<fig id="pcbi.1004254.g017" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g017</object-id>
+<label>Fig 17</label>
+<caption>
+<title>Higher level investor deceived by consistent trustee.</title>
+<p>Average Exchanges, Investor (2,1,2) and Trustee (1,0.4,7). Error bars are standard deviations. The asterisk denotes the true partner guilt value.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g017"/>
+</fig>
+</sec>
+<sec id="sec022">
+<title>Confusion</title>
+<sec id="sec023">
+<title>Model inversion</title>
+<p>A minimal requirement for using the proposed model to fit experimental data is self-consistency. That is, it should be possible to recover the parameters from behaviour that was actually generated from the model itself. This can alternatively be seen as a test of the statistical power of the experiment—i.e., whether 10 rounds suffice in order to infer subject parameters. We show the confusion matrix which indicates the probabilities of the inferred guilt (top), ToM (middle) and planning horizon (bottom) for investor (left) and trustee (right), in each case marginalizing over all the other factors. Afterwards, we discuss a particular special case of the obtained confusion. Said confusion relates to observations made in empirical studies (see [<xref ref-type="bibr" rid="pcbi.1004254.ref020">20</xref>, <xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>]) and suggests the notion of the planning parameter, as measure of consistency of play. Later, we show comparative data reported in the study [<xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>], which only utilized a fixed planning horizon of 2 and 2 guilt states and did not exploit the other simplifications that we introduced above. These simplifications implied that the earlier study would find recovery of theory of mind in particular to be harder.</p>
+<p>As <xref ref-type="fig" rid="pcbi.1004254.g018">Fig 18</xref> shows, Guilt is recovered in a highly reliable manner. By contrast, there is a slight tendency to overestimate ToM in the trustees.</p>
+<fig id="pcbi.1004254.g018" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g018</object-id>
+<label>Fig 18</label>
+<caption>
+<title>Percentage of inferred guilt, theory of mind and planning horizon for investor (left) and trustee (right) as a function of the true values, marginalizing out all the other parameters.</title>
+<p>Each plot corresponds to a uniform mix of 15 pairs per parameter combination and partner parameter combination.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g018"/>
+</fig>
+<p>The greatest confusion turns out to be inferring a <italic>P</italic><sup><italic>I</italic></sup> = 7 investor as having <italic>P</italic><sup><italic>I</italic></sup> = 2 when playing an impulsive trustee (<italic>P</italic><sup><italic>T</italic></sup> = 2), a problem shown more directly in <xref ref-type="fig" rid="pcbi.1004254.g019">Fig 19</xref>.</p>
+<fig id="pcbi.1004254.g019" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g019</object-id>
+<label>Fig 19</label>
+<caption>
+<title>Planning misclassification.</title>
+<p>Maximum likelihood estimation result, <italic>P</italic><sup><italic>I</italic></sup> = 7 and <italic>P</italic><sup><italic>T</italic></sup> = 2 agent combinations, marginalized maximum likelihood estimation of investor planning horizon over all other parameters.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g019"/>
+</fig>
+<p>The issue is that when the trustee is impulsive, far-sighted investors (<italic>P</italic><sup><italic>I</italic></sup> = 7) can gain no advantage over near-sighted ones (<italic>P</italic><sup><italic>I</italic></sup> = 2), and so the choices of this dyad lead to mis-estimation. Alternatively put, an impulsive trustee brings the investor down to his or her level. This has been noted in previous empirical studies, notably [<xref ref-type="bibr" rid="pcbi.1004254.ref020">20</xref>, <xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>]’s observations of the effect on investors of playing erratic trustees. The same does not apply on the trustee side, since the reactive nature of the trustee’s tactics makes them far less sensitive to impulsive investor play.</p>
+<p>Given the huge computational demands of planning, it seems likely that investors could react to observing a highly impulsive trustee by reducing their own actual planning horizons. Thus, the inferential conclusion shown in <xref ref-type="fig" rid="pcbi.1004254.g019">Fig 19</xref> may in fact not be erroneous. However, this possibility reminds us of the necessity of being cautious in making such inferences in a two-player compared to a one-player setting.</p>
+</sec>
+<sec id="sec024">
+<title>Confusion comparison to earlier work</title>
+<p>We compare our confusion analysis to the one carried out in the grid based calculation in [<xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>]. In [<xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>] the authors do not report exact confusion metrics for the guilt state, only noting that it is possible to reliably recover whether a subject is characterized by high guilt (0.7) or low guilt (0.3). We can however compare to the reported ToM level recovery. The comparison with [<xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>] faces an additional difficulty in that despite using the same formal framework as this present work, the indistinguishability of the level 1 and 2 trustees and the level 0 and 1 investors was not identified yet. This explains the somewhat higher amount of confusion when classifying ToM levels, reported in [<xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>]. Also, since calculation of the Dirichlet-Multinomial probability was done numerically in this study, some between level differences will only derive from changes in quadrature points for higher levels. As can be seen in <xref ref-type="fig" rid="pcbi.1004254.g020">Fig 20</xref> (left), almost all of the level 1 trustees at low guilt are misclassified. This is due to them being classified as level 2 instead, since both levels have the same behavioral features, but apparently the numerical calculation of the belief state favored the level 2 classification over the level 1 classification. The tendency to overestimation is true on the investor side as well, with there being a considerable confusion between level 0 and level 1 investors, who should behaviorally be equivalent. In sum, this leads to the reported overestimation of the theory of mind level. We have depicted the confusion levels reported in [<xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>] in <xref ref-type="fig" rid="pcbi.1004254.g020">Fig 20</xref>.</p>
+<fig id="pcbi.1004254.g020" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g020</object-id>
+<label>Fig 20</label>
+<caption>
+<title>Classification probability reported in [<xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>].</title>
+<p>In analogy to <xref ref-type="fig" rid="pcbi.1004254.g018">Fig 18</xref> we depict the generated vs estimated values in a matrix scheme.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g020"/>
+</fig>
+</sec>
+</sec>
+<sec id="sec025">
+<title>Computational Issues</title>
+<p>The viability of our method rests on the running time and stability of the obtained behaviours. In <xref ref-type="fig" rid="pcbi.1004254.g021">Fig 21</xref>, we show these for the case of the first action, as a function of the number of simulation paths used. All these calculations were run at the local Wellcome Trust Center for Neuroimaging (WTCN) cluster. Local processor cores where of Intel Xeon E312xx (Sandy Bridge) type clocked at 2.2 GHz and no process used more than 4 GB of RAM. Note that, unless more than 25<italic>k</italic> paths are used, calculations take less than 2 minutes.</p>
+<fig id="pcbi.1004254.g021" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g021</object-id>
+<label>Fig 21</label>
+<caption>
+<title>Numerical properties.</title>
+<p>(left) Average running times for calculating the first action value of a level 2, guilt 1 investor from a given number of simulations, as a function of planning horizon (complexity). (right) Discrepancy to the converged case of the action probabilities for the first action measured in squared discrepancies.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g021"/>
+</fig>
+<p>We quantify simulation stability by comparing simulations for 120 level 2 investors (a reasonable upper bound, because the action value calculation for this incorporates the level 1 trustee responses) based on varying numbers of paths with a simulation involving 10<sup>6</sup> paths that has converged. We calculate the between (simulated) subject discrepancies <italic>C</italic> of the probabilities for the first action for <italic>P</italic><sup><italic>I</italic></sup> ∈ {2,3,4,5,6,7,8,9}:
+<disp-formula id="pcbi.1004254.e065"><alternatives><graphic id="pcbi.1004254.e065g" mimetype="image" xlink:type="simple" position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1004254.e065"/><mml:math id="M65" display="block" overflow="scroll"><mml:mtable displaystyle="true"><mml:mtr><mml:mtd columnalign="right"><mml:mrow><mml:msub><mml:mi>C</mml:mi> <mml:mrow><mml:mi>i</mml:mi> <mml:mi>j</mml:mi></mml:mrow></mml:msub> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mn>119</mml:mn></mml:mfrac> <mml:munderover><mml:mo>∑</mml:mo> <mml:mrow><mml:mi>k</mml:mi> <mml:mo>=</mml:mo> <mml:mn>1</mml:mn></mml:mrow> <mml:mn>120</mml:mn></mml:munderover> <mml:mrow><mml:mo>(</mml:mo><mml:mo>|</mml:mo> <mml:msup><mml:mo>ℙ</mml:mo> <mml:mi>k</mml:mi></mml:msup> <mml:mrow><mml:mo>[</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mn>0</mml:mn> <mml:mi>I</mml:mi></mml:msubsup> <mml:mo>=</mml:mo> <mml:mfrac><mml:mi>i</mml:mi> <mml:mn>4</mml:mn></mml:mfrac> <mml:mo>]</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:mover accent="true"><mml:mo>ℙ</mml:mo> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mo>[</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mn>0</mml:mn> <mml:mi>I</mml:mi></mml:msubsup> <mml:mo>=</mml:mo> <mml:mfrac><mml:mi>i</mml:mi> <mml:mn>4</mml:mn></mml:mfrac> <mml:mo>]</mml:mo></mml:mrow><mml:mo>|</mml:mo> <mml:mo>)</mml:mo></mml:mrow> <mml:mrow><mml:mo>(</mml:mo><mml:mo>|</mml:mo> <mml:msup><mml:mo>ℙ</mml:mo> <mml:mi>k</mml:mi></mml:msup> <mml:mrow><mml:mo>[</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mn>0</mml:mn> <mml:mi>I</mml:mi></mml:msubsup> <mml:mo>=</mml:mo> <mml:mfrac><mml:mi>j</mml:mi> <mml:mn>4</mml:mn></mml:mfrac> <mml:mo>]</mml:mo></mml:mrow> <mml:mo>-</mml:mo> <mml:mover accent="true"><mml:mo>ℙ</mml:mo> <mml:mo>^</mml:mo></mml:mover> <mml:mrow><mml:mo>[</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mn>0</mml:mn> <mml:mi>I</mml:mi></mml:msubsup> <mml:mo>=</mml:mo> <mml:mfrac><mml:mi>j</mml:mi> <mml:mn>4</mml:mn></mml:mfrac> <mml:mo>]</mml:mo></mml:mrow><mml:mo>|</mml:mo> <mml:mo>)</mml:mo></mml:mrow> <mml:mspace width="2.em"/><mml:mi>i</mml:mi> <mml:mo>,</mml:mo> <mml:mi>j</mml:mi> <mml:mo>∈</mml:mo> <mml:mrow><mml:mo>{</mml:mo> <mml:mn>0</mml:mn> <mml:mo>,</mml:mo><mml:mo>…</mml:mo><mml:mo>,</mml:mo> <mml:mn>4</mml:mn> <mml:mo>}</mml:mo></mml:mrow></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:math></alternatives> <label>(20)</label></disp-formula>
+where <inline-formula id="pcbi.1004254.e066"><mml:math id="M66" display="inline" overflow="scroll"><mml:mrow><mml:mover accent="true"><mml:mo>ℙ</mml:mo> <mml:mo>^</mml:mo></mml:mover> <mml:mo stretchy="false">[</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mn>0</mml:mn> <mml:mi>I</mml:mi></mml:msubsup> <mml:mo>=</mml:mo> <mml:mfrac><mml:mi>i</mml:mi> <mml:mn>4</mml:mn></mml:mfrac> <mml:mo stretchy="false">]</mml:mo></mml:mrow></mml:math></inline-formula> are the converged probabilities, and <inline-formula id="pcbi.1004254.e067"><mml:math id="M67" display="inline" overflow="scroll"><mml:mrow><mml:msup><mml:mo>ℙ</mml:mo> <mml:mi>k</mml:mi></mml:msup> <mml:mo stretchy="false">[</mml:mo> <mml:msubsup><mml:mi>a</mml:mi> <mml:mn>0</mml:mn> <mml:mi>I</mml:mi></mml:msubsup> <mml:mo stretchy="false">]</mml:mo></mml:mrow></mml:math></inline-formula> is the action likelihood of simulated subject <italic>k</italic>. If the sum of squares of the entries in the discrepancy matrix is low, then the probabilities will be close to their converged values.</p>
+<p>As can be seen from <xref ref-type="fig" rid="pcbi.1004254.g021">Fig 21</xref> (right), for 25k paths even planning 9 steps ahead agents have converged in their initial action probabilities, such that their action probabilities vary from the converged value by no more than about 0.1. However, note that this convergence is not always monotonic in either the planning horizon or the number of sample paths. The former is influenced by the differing complexity of preferences for different horizons—sometimes, actions are harder to resolve for short than long horizons. The latter is influenced by the initial pre-search using constant strategies.</p>
+<p>Although 25k steps suffice for convergence even when planning 9 steps ahead, this horizon remains computationally challenging. We thus considered whether it is possible to use a shorter horizon of 7 steps, without materially changing the preferred choices. <xref ref-type="fig" rid="pcbi.1004254.g022">Fig 22</xref> illustrates that the difference is negligible compared with the fluctuations of the Monte Carlo approach, even for the worst case involving the pairing of 2 pragmatic types, with high ToM levels and long planning horizons. At the same time, the calculation for <italic>P</italic> = 7 is twice as fast as <italic>P</italic> = 9 for the level 2 investor, which even just for the first action is a difference of 100 seconds.</p>
+<fig id="pcbi.1004254.g022" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g022</object-id>
+<label>Fig 22</label>
+<caption>
+<title>Planning horizon comparison.</title>
+<p>Average Exchanges, Investor (2,0.4,7) (dark blue) and Trustee (1,0.4,7) (red), as well as Investor (2,0.4,9) (light blue) and Trustee (1,0.4,9) (rose). The difference between the 2 planning horizons is not significant at any point. Error bars are standard deviations.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g022"/>
+</fig>
+<p>Finally we compare our algorithm at planning 2 steps ahead to the grid-based calculation used before [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>, <xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>]. The speed advantage is a factor of 200 for 10<sup>4</sup> paths in POMCP demonstrating the considerable improvement that enables us to consider longer planning horizons.</p>
+</sec>
+<sec id="sec026">
+<title>Comparison To Earlier Subject Classifications</title>
+<p>We will show below, using real subject data taken from [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>], that our reduction to 3 guilt states does not render likelihoods worse and only serves to improve classification quality. We compared the results of our new method with the results obtained in earlier studes ([<xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>], [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>]).</p>
+<sec id="sec027">
+<title>Dataset</title>
+<p>We performed inference on the same data sets as in Xiang et al, [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>] (which were partially analysed in [<xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>, <xref ref-type="bibr" rid="pcbi.1004254.ref016">16</xref>] and [<xref ref-type="bibr" rid="pcbi.1004254.ref017">17</xref>]). This involved 195 dyads playing the trust game over 10 exchanges. The investor agent was always a healthy subject, the trustees comprised various clinical groups, including anonymous, healthy trustees (the “impersonal” group; 48 subjects), healthy trustees who were briefly encountered before the experiment (the “personal” group; 52 subjects), trustees diagnosed with Borderline Personality Disorder (BPD) (the “BPD” group; 55 subjects), and anonymous healthy trustees matched in socio-economic status (SES) to the (lower than healthy) SES distribution of BPD trustees, (the “low SES” group; 38 subjects).</p>
+</sec>
+<sec id="sec028">
+<title>Models used</title>
+<p>We compared our models to the results of the model used in [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>] on the same data set (which incorporates the data set used in [<xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>]). The study [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>] uses 5 guilt states {0,0.25,0.5,0.75,1} compared to our 3, a planning horizon of 2 and an inverse temperature of 1, otherwise the formal framework is exactly the same as in the section on the trust task. Action values in [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>] were calculated by an exact grid search over all possible histories and a numerical integration for the calculation of the belief state. For comparison purposes we built a “clamped” model in which the planning horizon was fixed at the value 2, with 3 guilt states and a inverse temperature set to <inline-formula id="pcbi.1004254.e068"><mml:math id="M68" display="inline" overflow="scroll"><mml:mrow><mml:mi>β</mml:mi> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mn>3</mml:mn></mml:mfrac></mml:mrow></mml:math></inline-formula>. Additionally, we compared to the outcome for the full method in this work, including estimation of the planning horizon. We noted that in the analysis in [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>], an additional approximation had been made at the level 0 investor level, which set those investors as non learning. This kept their beliefs uniform and yielded much better negative loglikelihoods within said model, than if they were learning.</p>
+</sec>
+<sec id="sec029">
+<title>Subject fit</title>
+<p>A minimal requirement to accept subject results as significant is that the negative log likelihood is significantly better than random on average at <italic>p</italic> &lt; 0.05, otherwise we would not trust a model based analysis over random chance and the estimated parameters would be unreliable. This criterion is numerically expressed as a negative loglikelihood of 16.1 for 10 exchanges, calculated from 5 possible actions at a probability of 0.2 each, with independent actions each round.</p>
+<p>For the analysis in [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>], we found that the level 0 approximation made in [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>] allowed for significantly better negative investor log likelihoods (mean 11.98); if this approximation is removed, the investor data fit at an inverse temperature of 1 would be worse than random for this data set. Additionally, the model used in [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>] did not fit the trustee data significantly better than random at <italic>p</italic> &lt; 0.05 (mean negative loglikelihoods 15.6 and standard deviation of &gt; 3).</p>
+<p>Conversely, for both our clamped and full model analysis at <inline-formula id="pcbi.1004254.e069"><mml:math id="M69" display="inline" overflow="scroll"><mml:mrow><mml:mi>β</mml:mi> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mn>3</mml:mn></mml:mfrac></mml:mrow></mml:math></inline-formula>, the trustee likelihood is significantly better than random (11.7 at the full model) and the investor negative loglikelihood is slightly better on average (smaller) than found in [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>] with 5 guilt states (11.7 for our method, vs 11.98). This confirms that reducing the number of guilt states to 3 only reduces confusion and does not worsen the fit of real subjects data. Additionally, it becomes newly possible to perform model-based analyses on the BPD trustee guilt state distribution, since the old model did not fit trustees significantly better than random at <italic>p</italic> &lt; 0.05.</p>
+<p>The seemingly low inverse temperature at <inline-formula id="pcbi.1004254.e070"><mml:math id="M70" display="inline" overflow="scroll"><mml:mrow><mml:mi>β</mml:mi> <mml:mo>=</mml:mo> <mml:mfrac><mml:mn>1</mml:mn> <mml:mn>3</mml:mn></mml:mfrac></mml:mrow></mml:math></inline-formula> is a consequence of the size of the rewards and the quick accumulation of higher expectation values with more planning steps, as the inverse temperature needs to counter balance the expectation size to keep choices from becoming nearly deterministic. Average investor outcome expectations (at the first exchange) for planning 0 steps stand at 18 with an average 18 being added at each planning step.</p>
+</sec>
+<sec id="sec030">
+<title>Marginal parameter distributions significant features</title>
+<p>
+<xref ref-type="fig" rid="pcbi.1004254.g023">Fig 23</xref> shows the significant parameter distribution differences (Kolmogorov-Smirnov two sample test, <italic>p</italic> &lt; 0.05).</p>
+<fig id="pcbi.1004254.g023" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g023</object-id>
+<label>Fig 23</label>
+<caption>
+<title>Parameter distributions for different models on the data set of [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>].</title>
+<p>(upper left) Investor ToM distribution is significant (<italic>p</italic> &lt; 0.05) between the impersonal control condition and all other conditions. (upper right) Trustee Guilt distribution is significant between impersonal controls and the BPD trustees. (middle left) Planning 2 investor ToM distribution with 3 guilt states. BPD and low SES differences to impersonal are significant. (middle right) Planning 2 trustee guilt, the difference between BPD trustees and impersonal controls is significant. (bottom left) Full planning model investor ToM, all differences to impersonal are significant. (bottom right) Full planning model trustee guilt. BPD trustees are significantly different from controls. The asterisk denotes a significant (<italic>p</italic> &lt; 0.05) difference in the Kolmogorov-Smirnov two sample test, to the impersonal control group.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g023"/>
+</fig>
+<p>For investor theory of mind and trustee guilt distribution, many of the same differences are significant for the analysis reported in [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>] (see <xref ref-type="fig" rid="pcbi.1004254.g023">Fig 23</xref>, upper panels), for an analysis using our model with a “clamped” planning horizon of 2 steps ahead (see <xref ref-type="fig" rid="pcbi.1004254.g023">Fig 23</xref>, middle panels, to match with the approach of [<xref ref-type="bibr" rid="pcbi.1004254.ref024">24</xref>]) and for our full model, using 3 guilt states, ToM level up to 2 and 3 planning horizons (see <xref ref-type="fig" rid="pcbi.1004254.g023">Fig 23</xref>, bottom panels and <xref ref-type="fig" rid="pcbi.1004254.g024">Fig 24</xref>). We find significantly lowered ToM in most other groups, compared to the impersonal control group. We find a significantly lowered guilt distribution in BPD trustees, however the guilt difference was not used for fMRI analysis in [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>], because, as noted above, the trustee was not fit significantly better than random at <italic>p</italic> &lt; 0.05 in the earlier model. For our full model with 3 planning values, we find additional significant differences on the investor side: While all ToM distributions are significantly different from the impersonal condition, the planning difference between the personal and impersonal conditions is not significant at <italic>p</italic> &lt; 0.05, while it is significant for the other groups (see <xref ref-type="fig" rid="pcbi.1004254.g024">Fig 24</xref>). Thus, this is the only model keeping the parameter distribution of the personal group distinct from both the impersonal group (from which it is not significantly different in the clamped model) and the low SES playing controls and BPD playing controls (from which it is not significantly different based on the parameters in [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>]) at the same time.</p>
+<fig id="pcbi.1004254.g024" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004254.g024</object-id>
+<label>Fig 24</label>
+<caption>
+<title>Planning horizon distribution on data set of [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>].</title>
+<p>Planning distribution for Investors, distinguished between personal condition controls (non significant) and BPD and low SES trustees (significantly lower than impersonal). The asterisk denotes a significant (<italic>p</italic> &lt; 0.05) difference in the Kolmogorov-Smirnov two sample test, to the impersonal control group.</p>
+</caption>
+<graphic mimetype="image" xlink:type="simple" position="float" xlink:href="info:doi/10.1371/journal.pcbi.1004254.g024"/>
+</fig>
+<p>This supports the planning horizon as a “consistency of play” and additional rationality measure, as the subjects might not think about possible partner deceptions as much in the personal condition, having just met the person they will be playing (resulting in lowered ToM). However, their play is non disruptive, if lower level, and consistent exchanges result. BPD and low SES trustees however disrupt the partner’s play, lowering their planning horizon.</p>
+</sec>
+</sec>
+</sec>
+<sec id="sec031" sec-type="conclusions">
+<title>Discussion</title>
+<p>We adapted the Monte-Carlo tree search algorithm designed for partially observable Markov decision processes [<xref ref-type="bibr" rid="pcbi.1004254.ref031">31</xref>] to the interactive, game-theoretic, case [<xref ref-type="bibr" rid="pcbi.1004254.ref023">23</xref>]. We provide significant simplifications to the case of dyadic social exchange, which benefit any IPOMDP based method. We illustrated the power of this method by extending the computationally viable planning horizon in a complex, multi-round, social exchange game to be able to encompass characteristic behaviours that have been seen in human play [<xref ref-type="bibr" rid="pcbi.1004254.ref016">16</xref>].</p>
+<p>We also showed that the 10 rounds that had been used empirically suffice to license high quality inference about parameter values, at least in the case that the behaviour was generated from the model itself. We exhibited three fundamental forms of dynamical behaviour in the task: cooperation, and two different varieties of coaxing. The algorithm generates values, state-action values and posterior beliefs, all of which can be used for such methods as model-based fMRI.</p>
+<p>We find that the results in on impulsive behavior and planning mismatches, as well as Figs <xref ref-type="fig" rid="pcbi.1004254.g019">19</xref> and <xref ref-type="fig" rid="pcbi.1004254.g024">24</xref> confirm the planning horizon as a consistency of play parameter, that encodes the capability of a subject to execute a consistent strategy throughout play. As such it may be disrupted by the behavior of shorter planning partners, as can be seen in <xref ref-type="fig" rid="pcbi.1004254.g019">Fig 19</xref> and <xref ref-type="fig" rid="pcbi.1004254.g024">Fig 24</xref>.</p>
+<p>Furthermore, comparing to earlier data used in the work [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>] we can confirm the relevance of the planning parameter in the treatment of real subject data, classifying subject groups along the new axis of consistency of play.</p>
+<p>The newly finer classification of subjects along the three axes of theory of mind, planning horizon and guilt (<italic>k</italic>, <italic>P</italic>, <italic>α</italic>) should provide a rich framework to classify deficits in clinical populations such as an inability to model other people’s beliefs or intentions, ineffective model-based reasoning, and a lack of empathy. Such analyses can be done at speed, of the order of 10s of subjects per hour.</p>
+<p>One might ask whether the behavioural patterns derived in this work might be obtained without invoking the cognitive hierarchy and instead using a large enough state space, which encodes the preferences and sophistication of the other agent as many separate states, rather than a few type parameters plus the cognitive hierarchy. This is in principle possible, however we prefer ToM for two reasons: Firstly, the previous study [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>] and others have found neural support for the distinction between high ToM and low ToM subjects in real play, suggesting that this distinction is not but a mathematical convenience (cf. [<xref ref-type="bibr" rid="pcbi.1004254.ref022">22</xref>], p.4 and 5 for a neural representation of prediction errors associated to level 0 and level 2 thinking). Secondly, we can specify features of interest, such as inequality aversion and planning at the lowest level, then generate high level behaviours in a way that yields an immediate psychological interpretation in terms of the mentalization steps encoded in the ToM level.</p>
+<p>The algorithm opens the door to finer analysis of complicated social exchanges, possibly allowing optimization over initial prior values in the estimation or the analysis of higher levels of theory of mind, at least on tasks with lower fan-out in the search tree. It would also be possible to search over the inverse temperature <italic>β</italic>.</p>
+<p>One important lacuna is that although it is straightforward to use maximum likelihood to search over fixed parameters (such as ToM level, planning horizon or indeed temperature), it is radically harder to perform the computations that become necessary when these factors are incorporated into the structure of the intentional models. That is, our subjects were assumed to make inferences about their opponent’s guilt, but not about their theory of mind level or planning horizon.</p>
+<p>It is possible that additional tricks would make this viable for the trust task, but it seems more promising to devise or exploit a simpler game in which this would be more straightforward.</p>
+</sec>
+<sec id="sec032" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="sec033">
+<title>Ethics Statement</title>
+<p>Informed consent was obtained for all research involving human participants, and all clinical investigation was conducted according to the principles expressed in the Declaration of Helsinki. All procedures were approved by the Institutional Review Board of the Baylor College of Medicine.</p>
+</sec>
+<sec id="sec034">
+<title>Code and Simulation Results</title>
+<p>The materials used in this work, as well as the code used to generate them, can be found on Andreas Hula’s github repository <ext-link ext-link-type="uri" xlink:href="https://github.com/AndreasHula/Trust" xlink:type="simple">https://github.com/AndreasHula/Trust</ext-link>. All material was generated on the local WTCN cluster. We used R [<xref ref-type="bibr" rid="pcbi.1004254.ref038">38</xref>] and Matlab [<xref ref-type="bibr" rid="pcbi.1004254.ref039">39</xref>] for data analysis and the boost C++ libraries [<xref ref-type="bibr" rid="pcbi.1004254.ref040">40</xref>] for code generation.</p>
+</sec>
+</sec>
+</body>
+<back>
+<ack>
+<p>The authors would like to thank James Lu, Johannes Heinrich, Terry Lohrenz and Arthur Guez for helpful discussions and Xiaosi Gu, Michael Moutoussis, Tobias Nolte and Iris Vilares for comments on the manuscript. Special thanks go to Andreas Morhammer, who brilliantly advised on several issues with C++, as well as the IT support staff at the Wellcome Trust Center for Neuroimaging and Virgina Tech Carilion Research Institute.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004254.ref001">
+<label>1</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Fehr</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Schmidt</surname> <given-names>KM</given-names></name>. <article-title>A theory of fairness, competition, and cooperation</article-title>. <source>Q J Econ</source>. <year>1999</year>; <volume>114</volume>: <fpage>817</fpage>–<lpage>868</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1162/003355399556151" xlink:type="simple">10.1162/003355399556151</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref002">
+<label>2</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Fehr</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Gächter</surname> <given-names>S</given-names></name>. <article-title>Fairness and Retaliation: The Economics of Reciprocity</article-title>. <source>J Econ Prospect</source>. <year>2000</year>;<volume>14</volume>:<fpage>159</fpage>–<lpage>181</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1257/jep.14.3.159" xlink:type="simple">10.1257/jep.14.3.159</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref003">
+<label>3</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Fehr</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Fischbacher</surname> <given-names>U</given-names></name>. <article-title>The nature of human altruism</article-title>. <source>Nature</source>. <year>2003</year>; <volume>425</volume>: <fpage>785</fpage>–<lpage>791</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature02043" xlink:type="simple">10.1038/nature02043</ext-link></comment> <object-id pub-id-type="pmid">14574401</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref004">
+<label>4</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Fehr</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Fischbacher</surname> <given-names>U</given-names></name>. <article-title>Social norms and human cooperation</article-title>. <source>Trends Cogn Sci</source>. <year>2004</year>; <volume>8</volume>(<issue>4</issue>):<fpage>185</fpage>–<lpage>190</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.tics.2004.02.007" xlink:type="simple">10.1016/j.tics.2004.02.007</ext-link></comment> <object-id pub-id-type="pmid">15050515</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref005">
+<label>5</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Camerer</surname> <given-names>CF</given-names></name>. <source>Behavioral Game theory: Experiments in Strategic Interaction</source>. <publisher-name>Princeton University Press</publisher-name>. <year>2003</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref006">
+<label>6</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>McCabe</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Rigdon</surname> <given-names>ML</given-names></name>, <name name-style="western"><surname>Smith</surname> <given-names>V</given-names></name>. <article-title>Positive Reciprocity and Intentions in Trust Games</article-title>. <source>J Econ Behav Organ</source>. <year>2003</year>; <volume>52</volume>(<issue>2</issue>):<fpage>267</fpage>–<lpage>275</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0167-2681(03)00003-9" xlink:type="simple">10.1016/S0167-2681(03)00003-9</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref007">
+<label>7</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Nash</surname> <given-names>JF</given-names></name>. <article-title>Equilibrium points in n-person games</article-title>. <source>Proc Natl Acad Sci USA</source>. <year>1950</year>; <volume>36</volume>: <fpage>48</fpage>–<lpage>49</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.36.1.48" xlink:type="simple">10.1073/pnas.36.1.48</ext-link></comment> <object-id pub-id-type="pmid">16588946</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref008">
+<label>8</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Harsanyi</surname> <given-names>JC</given-names></name>. <article-title>Games with incomplete information played by “Bayesian” players</article-title>. <source>Manage Sci</source>. <year>1967</year>; <volume>14</volume>: <fpage>159</fpage>–<lpage>182</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1287/mnsc.14.3.159" xlink:type="simple">10.1287/mnsc.14.3.159</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref009">
+<label>9</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Camerer</surname> <given-names>CF</given-names></name>, <name name-style="western"><surname>Ho</surname> <given-names>TH</given-names></name>, <name name-style="western"><surname>Chong</surname> <given-names>JK</given-names></name>. <article-title>A cognitive hierarchy model of games</article-title>. <source>Q J Econ</source>. <year>2004</year>; <volume>119</volume>: <fpage>861</fpage>–<lpage>898</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1162/0033553041502225" xlink:type="simple">10.1162/0033553041502225</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref010">
+<label>10</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Yoshida</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Dolan</surname> <given-names>RJ</given-names></name>, <name name-style="western"><surname>Friston</surname> <given-names>KJ</given-names></name>. <article-title>Game theory of mind</article-title>. <source>PLoS Comput Biol</source>. <year>2008</year>; <volume>4</volume>:<fpage>e1000254</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1000254" xlink:type="simple">10.1371/journal.pcbi.1000254</ext-link></comment> <object-id pub-id-type="pmid">19112488</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref011">
+<label>11</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Sanfey</surname> <given-names>AG</given-names></name>. <article-title>Social decision-making: insights from game theory and neuroscience</article-title>. <source>Science</source>. <year>2007</year>; <volume>318</volume>:<fpage>598</fpage>–<lpage>602</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1142996" xlink:type="simple">10.1126/science.1142996</ext-link></comment> <object-id pub-id-type="pmid">17962552</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref012">
+<label>12</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Costa-Gomes</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Crawford</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Broseta</surname> <given-names>B</given-names></name>. <article-title>Cognition and behavior in normal-form games: An experimental study</article-title>. <source>Econometrica</source>. <year>2001</year>; <volume>69</volume>(<issue>5</issue>):<fpage>1193</fpage>–<lpage>1235</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1111/1468-0262.00239" xlink:type="simple">10.1111/1468-0262.00239</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref013">
+<label>13</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>McKelvey</surname> <given-names>RD</given-names></name>, <name name-style="western"><surname>Palfrey</surname> <given-names>TR</given-names></name>. <article-title>An Experimental Study of the Centipede Game</article-title>. <source>Econometrica</source>. <year>1992</year>; <volume>60</volume>: <fpage>803</fpage>–<lpage>836</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2307/2951567" xlink:type="simple">10.2307/2951567</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref014">
+<label>14</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Fehr</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Camerer</surname> <given-names>CF</given-names></name>. <article-title>Social neuroeconomics: the neural circuitry of social preferences</article-title>. <source>Trends Cogn Sci</source>. <year>2007</year>; <volume>11</volume>:<fpage>419</fpage>–<lpage>427</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.tics.2007.09.002" xlink:type="simple">10.1016/j.tics.2007.09.002</ext-link></comment> <object-id pub-id-type="pmid">17913566</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref015">
+<label>15</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Kishida</surname> <given-names>KT</given-names></name>, <name name-style="western"><surname>King-Casas</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Montague</surname> <given-names>PR</given-names></name>. <article-title>Neuroeconomic approaches to mental disorders</article-title>. <source>Neuron</source>. <year>2010</year>; <volume>67</volume>(<issue>4</issue>):<fpage>543</fpage>–<lpage>554</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuron.2010.07.021" xlink:type="simple">10.1016/j.neuron.2010.07.021</ext-link></comment> <object-id pub-id-type="pmid">20797532</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref016">
+<label>16</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>King-Casas</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Sharp</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Lomax</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Lohrenz</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Fonagy</surname> <given-names>P</given-names></name>, <etal>et al</etal>. <article-title>The rupture and repair of cooperation in borderline personality disorder</article-title>. <source>Science</source>. <year>2008</year>; <volume>321</volume>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1156902" xlink:type="simple">10.1126/science.1156902</ext-link></comment> <object-id pub-id-type="pmid">18687957</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref017">
+<label>17</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Koshelev</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Lohrenz</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Vannucci</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Montague</surname> <given-names>PR</given-names></name>. <article-title>Biosensor Approach to Psychopathology Classification</article-title>. <source>PLoS Comput Biol</source>. <year>2010</year>;<volume>6</volume>(<issue>10</issue>): <fpage>e1000966</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1000966" xlink:type="simple">10.1371/journal.pcbi.1000966</ext-link></comment> <object-id pub-id-type="pmid">20975934</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref018">
+<label>18</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Chiu</surname> <given-names>PH</given-names></name>, <name name-style="western"><surname>Kayali</surname> <given-names>MA</given-names></name>, <name name-style="western"><surname>Kishida</surname> <given-names>KT</given-names></name>, <name name-style="western"><surname>Tomlin</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Klinger</surname> <given-names>LG</given-names></name>, <etal>et al</etal>. <article-title>Self responses along cingulate cortex reveal quantitative neural phenotype for high-functioning autism</article-title>. <source>Neuron</source>. <year>2008</year>; <volume>57</volume>: <fpage>463</fpage>–<lpage>473</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuron.2007.12.020" xlink:type="simple">10.1016/j.neuron.2007.12.020</ext-link></comment> <object-id pub-id-type="pmid">18255038</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref019">
+<label>19</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Lee</surname> <given-names>D</given-names></name>. <article-title>Game theory and neural basis of social decision making</article-title>. <source>Nat Neurosci</source>. <year>2008</year>; <volume>11</volume>:<fpage>404</fpage>–<lpage>409</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nn2065" xlink:type="simple">10.1038/nn2065</ext-link></comment> <object-id pub-id-type="pmid">18368047</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref020">
+<label>20</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>King-Casas</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Tomlin</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Anen</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Camerer</surname> <given-names>CF</given-names></name>, <name name-style="western"><surname>Quartz</surname> <given-names>SR</given-names></name>, <etal>et al</etal>. <article-title>Getting to know you: Reputation and Trust in a two-person economic exchange</article-title>. <source>Science</source>. <year>2005</year>; <volume>308</volume>:<fpage>78</fpage>–<lpage>83</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1108062" xlink:type="simple">10.1126/science.1108062</ext-link></comment> <object-id pub-id-type="pmid">15802598</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref021">
+<label>21</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>McCabe</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Houser</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Ryan</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Smith</surname> <given-names>V</given-names></name>, <name name-style="western"><surname>Trouard</surname> <given-names>T</given-names></name>. <article-title>A functional imaging study of cooperation in two-person reciprocal exchange</article-title>. <source>Proc Natl Acad Sci USA</source>. <year>2001</year>; <volume>98</volume>(<issue>20</issue>):<fpage>11832</fpage>–<lpage>35</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.211415698" xlink:type="simple">10.1073/pnas.211415698</ext-link></comment> <object-id pub-id-type="pmid">11562505</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref022">
+<label>22</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Xiang</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Debajyoti</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Lohrenz</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Montague</surname> <given-names>PR</given-names></name>, <name name-style="western"><surname>Dayan</surname> <given-names>P</given-names></name>. <article-title>Computational Phenotyping of Two-Person Interactions Reveals Differential Neural Response to Depth-of-Thought</article-title>. <source>PLoS Comput Biol</source>. <year>2012</year>;<volume>8</volume>(<issue>12</issue>):<fpage>e1002841</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1002841" xlink:type="simple">10.1371/journal.pcbi.1002841</ext-link></comment> <object-id pub-id-type="pmid">23300423</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref023">
+<label>23</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Gmytrasiewicz</surname> <given-names>PJ</given-names></name>, <name name-style="western"><surname>Doshi</surname> <given-names>P</given-names></name>. <article-title>A Framework for Sequential Planning in Multi-Agent Settings</article-title>. <source>J Artif Intell Res</source>. <year>2005</year>; <volume>24</volume>:<fpage>49</fpage>–<lpage>75</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref024">
+<label>24</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Debajyoti</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>King-Casas</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Montague</surname> <given-names>PR</given-names></name>, <name name-style="western"><surname>Dayan</surname> <given-names>P</given-names></name>. <article-title>Bayesian Model of Behaviour in Economic Games</article-title>. <source>NIPS</source>.<year>2008</year>;<volume>21</volume>:<fpage>1345</fpage>–<lpage>1353</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref025">
+<label>25</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<name name-style="western"><surname>Puterman</surname> <given-names>ML</given-names></name>. <source>Markov Decision Processes: Discrete Stochastic Dynamic Programming</source>. <publisher-name>Wiley</publisher-name>. <year>2005</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref026">
+<label>26</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Kaelbling</surname> <given-names>ML</given-names></name>, <name name-style="western"><surname>Littman</surname> <given-names>ML</given-names></name>, <name name-style="western"><surname>Cassandra</surname> <given-names>AR</given-names></name>. <article-title>Planning and acting in partially observable stochastic domains</article-title>. <source>Artif Intell</source>. <year>1995</year>; <volume>101</volume>: <fpage>99</fpage>–<lpage>134</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0004-3702(98)00023-X" xlink:type="simple">10.1016/S0004-3702(98)00023-X</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref027">
+<label>27</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Xiang</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Lohrenz</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Montague</surname> <given-names>PR</given-names></name>. <article-title>Computational substrates of norms and their violations during social exchange</article-title>. <source>J Neurosci</source>. <year>2013</year>; <volume>33</volume>(<issue>3</issue>): <fpage>1099</fpage>–<lpage>1108</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1523/JNEUROSCI.1642-12.2013" xlink:type="simple">10.1523/JNEUROSCI.1642-12.2013</ext-link></comment> <object-id pub-id-type="pmid">23325247</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref028">
+<label>28</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Huys</surname> <given-names>QJ</given-names></name>, <name name-style="western"><surname>Cools</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Gälzer</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Friedel</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Heinz</surname> <given-names>A</given-names></name>, <etal>et al</etal>. <article-title>Disentangling the Roles of Approach, Activation and Valence in Instrumental and Pavlovian Responding</article-title>. <source>PLoS Comput Biol</source>. <year>2011</year>; <volume>7</volume>(<issue>4</issue>): <fpage>e1002028</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1002028" xlink:type="simple">10.1371/journal.pcbi.1002028</ext-link></comment> <object-id pub-id-type="pmid">21556131</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref029">
+<label>29</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Gläscher</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Daw</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Dayan</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>O’Doherty</surname> <given-names>JP</given-names></name>. <article-title>States versus Rewards: Dissociable Neural Prediction Error Signals Underlying Model-Based and Model-Free Reinforcement Learning</article-title>. <source>Neuron</source>. <year>2010</year>; <volume>66</volume>(<issue>4</issue>):<fpage>585</fpage>–<lpage>595</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.neuron.2010.04.016" xlink:type="simple">10.1016/j.neuron.2010.04.016</ext-link></comment> <object-id pub-id-type="pmid">20510862</object-id></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref030">
+<label>30</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>McKelvey</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Palfrey</surname> <given-names>T</given-names></name>. <article-title>Quantal Response Equilibria for Extensive Form Games</article-title>. <source>Experimental Economics</source>. <year>1998</year>; <volume>1</volume>:<fpage>9</fpage>–<lpage>41</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1023/A:1009905800005" xlink:type="simple">10.1023/A:1009905800005</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref031">
+<label>31</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Silver</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Veness</surname> <given-names>J</given-names></name>. <article-title>Monte Carlo Planning in Large POMDPs</article-title>. <source>NIPS</source>. <year>2010</year>; <volume>23</volume>: <fpage>2164</fpage>–<lpage>2172</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref032">
+<label>32</label>
+<mixed-citation xlink:type="simple" publication-type="other">Kocsis L, Szepesvári C. Bandit based Monte-Carlo Planning. 15th European Conference on Machine Learning. 2006: 282–293.</mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref033">
+<label>33</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Auer</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Cesa-Bianchi</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Fischer</surname> <given-names>P</given-names></name>. <article-title>Finite time analysis of the multiarmed bandit problem</article-title>. <source>Machine Learning</source>. <year>2002</year>; <volume>47</volume>(<issue>2–3</issue>):<fpage>235</fpage>–<lpage>256</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1023/A:1013689704352" xlink:type="simple">10.1023/A:1013689704352</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref034">
+<label>34</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Auer</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Cesa-Bianchi</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Freund</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Schapire</surname> <given-names>RE</given-names></name>. <article-title>The nonstochastic multiarmed bandit problem</article-title>. <source>SIAM Journal on Computing</source>. <year>2002</year>; <volume>32</volume>: <fpage>48</fpage>–<lpage>77</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1137/S0097539701398375" xlink:type="simple">10.1137/S0097539701398375</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref035">
+<label>35</label>
+<mixed-citation xlink:type="simple" publication-type="other">Wunder M, Kaisers M, Yaros JR, Littman M. Using iterated reasoning to predict opponent strategies. 10th International Conference on Autonomous Agents and Multiagent Systems, 2011; 2: 593–600.</mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref036">
+<label>36</label>
+<mixed-citation xlink:type="simple" publication-type="journal">
+<name name-style="western"><surname>Nyarko</surname> <given-names>Y</given-names></name>. <article-title>Convergence in Economic Models with Bayesian Hierarchies of Beliefs</article-title>. <source>Journal of Economic Theory</source>. <year>1997</year>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1006/jeth.1996.2254" xlink:type="simple">10.1006/jeth.1996.2254</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref037">
+<label>37</label>
+<mixed-citation xlink:type="simple" publication-type="other">Gmytrasiewicz PJ, Doshi P. On the difficulty of achieving Equilibrium in Interactive POMDPs. International Symposium on Artificial Intelligence and Mathematics (ISAIM). 2006.</mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref038">
+<label>38</label>
+<mixed-citation xlink:type="simple" publication-type="other">R Core Team. R–A Language and Environment for Statistical Computing. R Foundation for Statistical Computing. 2013. Available: <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.R-project.org/">http://www.R-project.org/</ext-link></mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref039">
+<label>39</label>
+<mixed-citation xlink:type="simple" publication-type="book">
+<collab xlink:type="simple">Matlab</collab>. <source>The Mathworks Inc</source>. <publisher-loc>Natick, Massachusetts</publisher-loc>. <year>2010</year>.</mixed-citation>
+</ref>
+<ref id="pcbi.1004254.ref040">
+<label>40</label>
+<mixed-citation xlink:type="simple" publication-type="other">Boost. Boost-Libraries. 2014. Available: <ext-link ext-link-type="uri" xlink:type="simple" xlink:href="http://www.boost.org">http://www.boost.org</ext-link></mixed-citation>
+</ref>
+</ref-list>
+</back>
+</article>

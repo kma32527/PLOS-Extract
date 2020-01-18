@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id>
+<journal-title-group>
+<journal-title>PLOS Computational Biology</journal-title>
+</journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, CA USA</publisher-loc>
+</publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1004435</article-id>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-15-00379</article-id>
+<article-categories>
+<subj-group subj-group-type="heading">
+<subject>Research Article</subject>
+</subj-group>
+</article-categories>
+<title-group>
+<article-title>Mapping the Protein Fold Universe Using the CamTube Force Field in Molecular Dynamics Simulations</article-title>
+<alt-title alt-title-type="running-head">Mapping the Protein Fold Universe with CamTube</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Kukic</surname>
+<given-names>Predrag</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Kannan</surname>
+<given-names>Arvind</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+<xref rid="aff002" ref-type="aff"><sup>2</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Dijkstra</surname>
+<given-names>Maurits J. J.</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+<xref rid="aff003" ref-type="aff"><sup>3</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Abeln</surname>
+<given-names>Sanne</given-names>
+</name>
+<xref rid="aff003" ref-type="aff"><sup>3</sup></xref>
+</contrib>
+<contrib contrib-type="author" xlink:type="simple">
+<name name-style="western">
+<surname>Camilloni</surname>
+<given-names>Carlo</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+</contrib>
+<contrib contrib-type="author" corresp="yes" xlink:type="simple">
+<name name-style="western">
+<surname>Vendruscolo</surname>
+<given-names>Michele</given-names>
+</name>
+<xref rid="aff001" ref-type="aff"><sup>1</sup></xref>
+<xref rid="cor001" ref-type="corresp">*</xref>
+</contrib>
+</contrib-group>
+<aff id="aff001"><label>1</label> <addr-line>Department of Chemistry, University of Cambridge, Cambridge, United Kingdom</addr-line></aff>
+<aff id="aff002"><label>2</label> <addr-line>Departments of Bioengineering, Stanford University, Stanford, California, United States of America</addr-line></aff>
+<aff id="aff003"><label>3</label> <addr-line>Department of Computer Science, Vrije Universiteit, Amsterdam, The Netherlands</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple">
+<name name-style="western">
+<surname>Shehu</surname>
+<given-names>Amarda</given-names>
+</name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/>
+</contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>George Mason University, UNITED STATES</addr-line></aff>
+<author-notes>
+<fn fn-type="conflict" id="coi001">
+<p>The authors have declared that no competing interests exist.</p>
+</fn>
+<fn fn-type="con" id="contrib001">
+<p>Conceived and designed the experiments: PK AK MJJD SA CC MV. Performed the experiments: PK AK MJJD. Analyzed the data: PK AK MJJD CC MV. Contributed reagents/materials/analysis tools: PK AK MJJD SA CC MV. Wrote the paper: PK AK MJJD SA CC MV.</p>
+</fn>
+<corresp id="cor001">* E-mail: <email xlink:type="simple">mv245@cam.ac.uk</email></corresp>
+</author-notes>
+<pub-date pub-type="epub">
+<day>27</day>
+<month>10</month>
+<year>2015</year>
+</pub-date>
+<pub-date pub-type="collection">
+<month>10</month>
+<year>2015</year>
+</pub-date>
+<volume>11</volume>
+<issue>10</issue>
+<elocation-id>e1004435</elocation-id>
+<history>
+<date date-type="received">
+<day>7</day>
+<month>3</month>
+<year>2015</year>
+</date>
+<date date-type="accepted">
+<day>6</day>
+<month>7</month>
+<year>2015</year>
+</date>
+</history>
+<permissions>
+<copyright-year>2015</copyright-year>
+<copyright-holder>Kukic et al</copyright-holder>
+<license xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">
+<license-p>This is an open access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited</license-p>
+</license>
+</permissions>
+<self-uri content-type="pdf" xlink:href="info:doi/10.1371/journal.pcbi.1004435" xlink:type="simple"/>
+<abstract>
+<p>It has been recently shown that the coarse-graining of the structures of polypeptide chains as self-avoiding tubes can provide an effective representation of the conformational space of proteins. In order to fully exploit the opportunities offered by such a ‘tube model’ approach, we present here a strategy to combine it with molecular dynamics simulations. This strategy is based on the incorporation of the ‘CamTube’ force field into the Gromacs molecular dynamics package. By considering the case of a 60-residue polyvaline chain, we show that CamTube molecular dynamics simulations can comprehensively explore the conformational space of proteins. We obtain this result by a 20 μs metadynamics simulation of the polyvaline chain that recapitulates the currently known protein fold universe. We further show that, if residue-specific interaction potentials are added to the CamTube force field, it is possible to fold a protein into a topology close to that of its native state. These results illustrate how the CamTube force field can be used to explore efficiently the universe of protein folds with good accuracy and very limited computational cost.</p>
+</abstract>
+<abstract abstract-type="summary">
+<title>Author Summary</title>
+<p>Modelling protein behaviour using computer simulations has progressively emerged in the last 50 years as a powerful strategy in structural and molecular biology. Over this period there has been a continuing interest in pushing the boundaries of this approach in terms of the size of the systems and the timescale of the processes that can be studied. Coarse-grained models offer in principle great opportunities in this context, but it has been extremely challenging to obtain force fields of accuracy comparable to that typical of fully atomistic models. We show here that the representation of protein molecules as self-avoiding tubes within the CamTube model enables the comprehensive, accurate and very fast exploration of the conformational space of proteins in molecular dynamics simulations. We illustrate in particular how the comprehensive mapping of the protein fold universe obtained using the CamTube model offers the possibility of analysing the behaviour of proteins in a wide range of non-native states.</p>
+</abstract>
+<funding-group>
+<funding-statement>AK was supported by a Scholarship from the Winston Churchill Foundation of the United States. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+</funding-group>
+<counts>
+<fig-count count="9"/>
+<table-count count="3"/>
+<page-count count="19"/>
+</counts>
+<custom-meta-group>
+<custom-meta id="data-availability" xlink:type="simple">
+<meta-name>Data Availability</meta-name>
+<meta-value>All relevant data are within the paper and its Supporting Information files.</meta-value>
+</custom-meta>
+</custom-meta-group>
+</article-meta>
+</front>
+<body>
+<sec id="sec001" sec-type="intro">
+<title>Introduction</title>
+<p>The conformational space of proteins is made up by a vast number of structures [<xref rid="pcbi.1004435.ref001" ref-type="bibr">1</xref>,<xref rid="pcbi.1004435.ref002" ref-type="bibr">2</xref>,<xref rid="pcbi.1004435.ref003" ref-type="bibr">3</xref>,<xref rid="pcbi.1004435.ref004" ref-type="bibr">4</xref>,<xref rid="pcbi.1004435.ref005" ref-type="bibr">5</xref>,<xref rid="pcbi.1004435.ref006" ref-type="bibr">6</xref>,<xref rid="pcbi.1004435.ref007" ref-type="bibr">7</xref>], and yet, only a limited menu of protein folds appears to exist [<xref rid="pcbi.1004435.ref008" ref-type="bibr">8</xref>,<xref rid="pcbi.1004435.ref009" ref-type="bibr">9</xref>,<xref rid="pcbi.1004435.ref010" ref-type="bibr">10</xref>]. A better understanding of the structural properties of proteins underlying this remarkable organisation of their conformational space will undoubtedly facilitate computational studies of these molecules by helping reduce the number of degrees of freedom that are required in the simulations.</p>
+<p>In this context, coarse-grained models of protein structure and dynamics provide several opportunities since their simple form makes it possible to reproduce generic features common to all proteins. Such coarse-grained approaches usually reduce the structural resolution by using a small number of interaction sites to represent a residue and by developing parameters based on various physical considerations [<xref rid="pcbi.1004435.ref011" ref-type="bibr">11</xref>,<xref rid="pcbi.1004435.ref012" ref-type="bibr">12</xref>,<xref rid="pcbi.1004435.ref013" ref-type="bibr">13</xref>,<xref rid="pcbi.1004435.ref014" ref-type="bibr">14</xref>,<xref rid="pcbi.1004435.ref015" ref-type="bibr">15</xref>,<xref rid="pcbi.1004435.ref016" ref-type="bibr">16</xref>,<xref rid="pcbi.1004435.ref017" ref-type="bibr">17</xref>,<xref rid="pcbi.1004435.ref018" ref-type="bibr">18</xref>]. A recently emerged class of coarse-grained approaches uses the so-called ‘tube’ model of a protein structure, whereby the polypeptide chain is represented as a thick tube that satisfies physically motivated constraints on its shape and curvature [<xref rid="pcbi.1004435.ref019" ref-type="bibr">19</xref>,<xref rid="pcbi.1004435.ref020" ref-type="bibr">20</xref>,<xref rid="pcbi.1004435.ref021" ref-type="bibr">21</xref>,<xref rid="pcbi.1004435.ref022" ref-type="bibr">22</xref>]. It has been shown that a tube-like description of proteins that includes energetic contributions from hydrogen bonding and hydrophobicity results in a free energy landscape that exhibits a variety of structures corresponding to the tertiary folds observed in the Protein Data Bank (PDB) [<xref rid="pcbi.1004435.ref022" ref-type="bibr">22</xref>]. It has also been found that when amino acid-specific interaction energies are incorporated in a tube model in place of generic hydrophobic terms it is possible to design sequences that fold into particular target structures [<xref rid="pcbi.1004435.ref023" ref-type="bibr">23</xref>,<xref rid="pcbi.1004435.ref024" ref-type="bibr">24</xref>].</p>
+<p>Given the efficiency with which tube models can explore the conformational space of proteins and populate protein-like structures, it would be desirable to adapt these models to molecular dynamics simulations, thus extending their scope and public availability. In this paper we address this problem by presenting a version of the tube model, called CamTube, in which the tube requirements are implemented as a force field in the Gromacs molecular dynamics simulations package [<xref rid="pcbi.1004435.ref018" ref-type="bibr">18</xref>]. To illustrate the behaviour of the CamTube approach, we first reproduce the phase behaviour of a previously reported tube model using molecular dynamics simulations [<xref rid="pcbi.1004435.ref022" ref-type="bibr">22</xref>]. Then, we demonstrate that the CamTube model can reproduce the rich conformational space of a 60-residue polyvaline chain previously observed in all-atom simulations of this system [<xref rid="pcbi.1004435.ref025" ref-type="bibr">25</xref>]. Finally, we test current residue-specific properties of the CamTube model by folding GB3, a 56-residue mixed α-β protein.</p>
+</sec>
+<sec id="sec002" sec-type="conclusions">
+<title>Results/Discussion</title>
+<sec id="sec003">
+<title>Phase behavior of the CamTube polypeptide chains</title>
+<p>In order to better understand how the energy terms in the CamTube force field affect the conformational space explored by a polypeptide chain, we carried out a series of simulations of a 60-residue polyvaline polypeptide chain (Val60) in which we varied the hydrophobic energy (<italic>ε</italic><sub><italic>W</italic></sub>) and the curvature penalty (<italic>κ</italic><sub><italic>c</italic></sub>) parameters while holding fixed the hydrogen bond energy and the temperature. Val60 serves as a suitable test case for the CamTube force field, since its conformational space was recently characterized by all-atom molecular dynamics simulations and found to cover a large variety of folds of small proteins [<xref rid="pcbi.1004435.ref025" ref-type="bibr">25</xref>].</p>
+<p>At each <italic>(ε</italic><sub><italic>W</italic></sub>, <italic>κ</italic><sub><italic>c</italic></sub><italic>)</italic> point on a grid in the parameter space, a 100 ns simulation, which is long enough to allow the polypeptide chain to adopt a stable fold, was initiated from a random coil configuration of Val60. Upon varying <italic>ε</italic><sub><italic>W</italic></sub> and <italic>κ</italic><sub><italic>c</italic></sub>, we observed a number of different states in which the structures adopted by the polypeptide chain change dramatically across boundary lines in the <italic>(ε</italic><sub><italic>W</italic></sub>, <italic>κ</italic><sub><italic>c</italic></sub><italic>)</italic> plane. The locations of these transitions define curves in the parameter space that yielded a phase diagram shown in <xref rid="pcbi.1004435.g001" ref-type="fig">Fig 1</xref>. When <italic>ε</italic><sub><italic>W</italic></sub> is sufficiently small, one obtains a phase with very few contacts between the Cβ atoms. These unfolded stable structures feature a long α-helix, a stranded β-sheet or coexistence of α-helical and β-sheet structural motifs without any tertiary contacts. When <italic>ε</italic><sub><italic>W</italic></sub> is sufficiently large, one finds a very compact stable globular state with featureless ground states and an extremely high number of contacts.</p>
+<fig id="pcbi.1004435.g001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004435.g001</object-id>
+<label>Fig 1</label>
+<caption>
+<title>Phase diagram of Val60 in the CamTube force field.</title>
+<p>The phase diagram is shown as a function of the hydrophobic energy, <italic>ε</italic><sub><italic>W</italic></sub>, and the curvature, <italic>κ</italic><sub><italic>c</italic></sub>, parameters. Representative structures in each region of the parameter space are shown as insets.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.g001" position="float" xlink:type="simple"/>
+</fig>
+<p>Between these two phases, a marginally compact phase emerges with complex tertiary folds found in natural proteins. Depending on the choice of the <italic>kc</italic> parameter this marginally compact phase samples a range of tertiary folds. When <italic>kc</italic> is sufficiently low, the sampled structures include a bundle of two, three or four α-helices. For intermediate range of <italic>kc</italic> values (2000 &lt; <italic>kc</italic> &lt; 8000), we observe a range of distinct supersecondary arrangement that contain both α-helical and β-sheet structural motifs. Lastly, for sufficiently large <italic>kc</italic> values, the CamTube force field samples β-barrel conformations with different number of β-strands.</p>
+<p>The type of phase behaviour observed in <xref rid="pcbi.1004435.g001" ref-type="fig">Fig 1</xref> is consistent with the results obtained originally for the tube model using a hydrophobic-polar (HP) interaction energy with explicit geometric terms in the energy function [<xref rid="pcbi.1004435.ref022" ref-type="bibr">22</xref>]. Thus, the CamTube force field is able to ‘presculpt’ the protein conformational space characteristic of the tube model in a molecular dynamics context by means of suitably tuned molecular dynamics potentials that mimic the effects of geometric constraints. This result provides further support for the suggestion that the range of folds accessible to proteins can arise from only few sequence-independent energy constraints imposed by the inherent geometric properties of polypeptide chains [<xref rid="pcbi.1004435.ref020" ref-type="bibr">20</xref>,<xref rid="pcbi.1004435.ref021" ref-type="bibr">21</xref>,<xref rid="pcbi.1004435.ref022" ref-type="bibr">22</xref>]. One should note, however, that even slight changes in these geometric features, as manifested by variations in <italic>ε</italic><sub><italic>W</italic></sub> and <italic>κ</italic><sub><italic>c</italic></sub> in <xref rid="pcbi.1004435.g001" ref-type="fig">Fig 1</xref>, can dramatically alter the free energy landscape and eliminate the rich repertoire of tertiary motifs that characterizes the library of natural protein folds.</p>
+</sec>
+<sec id="sec004">
+<title>Conformational space of a CamTube polypeptide chain</title>
+<p>In addition to validating the geometric parameters used in the CamTube model, we also probed in detail the conformational space described by the CamTube model. To understand how many independent structures can actually be explored with the CamTube force field, we carried out a molecular dynamics simulation of Val60 using <italic>ε</italic><sub><italic>W</italic></sub> and <italic>κ</italic><sub><italic>c</italic></sub> parameters that correspond to the centre of the α/β marginally compact phase (<italic>ε</italic><sub><italic>W</italic></sub> = 10.0 kJ mol<sup>−1</sup> and <italic>κ</italic><sub><italic>c</italic></sub> = 2000 kJ mol<sup>−1</sup> nm<sup>−2</sup>). As a sampling method, we used bias exchange metadynamics protocol [<xref rid="pcbi.1004435.ref026" ref-type="bibr">26</xref>] because of its ability to explore low probability regions of the conformational space and freely diffuse along CVs. Four CVs were chosen here, namely backbone dihedral angles, number of α-helical and β-sheet 6-residue fragments and the radius of gyration (see <xref rid="sec007" ref-type="sec">Methods</xref>).</p>
+<p>The reconstructed free energy landscape of Val60 as a function of the number of α-helical fragments and the radius of gyration is shown in <xref rid="pcbi.1004435.g002" ref-type="fig">Fig 2</xref>. We found that the free energy surface of Val60 features many conformations with similar free energies. Following a previously described procedure [<xref rid="pcbi.1004435.ref027" ref-type="bibr">27</xref>], the conformational space of Val60 was clustered in microstates (see <xref rid="sec007" ref-type="sec">Methods</xref>), which were then further analysed. To check how many known folds can be reproduced with the identified microstates, we used the CATH database [<xref rid="pcbi.1004435.ref028" ref-type="bibr">28</xref>]. This database is widely used in structural studies to classify protein folds and for the purpose of this study we selected all 265 CATH folds of the proteins containing between 40 and 75 amino acids (see Ref. [<xref rid="pcbi.1004435.ref025" ref-type="bibr">25</xref>] for the list of CATH structures). For each fold in the CATH subset, we searched in the set of the microstate conformations for its most similar structure as quantified by the TM-score [<xref rid="pcbi.1004435.ref029" ref-type="bibr">29</xref>]. We use the TM-score here because it is a measure sensitive to the global topology rather than to the local structural errors. This score lies in the [0,1] interval, with values above 0.4 indicating conformations with similar topologies, and values below 0.17 indicating conformations with different topologies [<xref rid="pcbi.1004435.ref029" ref-type="bibr">29</xref>]. For 135 out of 265 CATH structures, we were able to find at least one microstate with similar tertiary structure (TM-score &gt; 0.4). All 135 Val60 structures are shown in <xref rid="pcbi.1004435.g003" ref-type="fig">Fig 3</xref> together with three representative CATH structures. These results indicate that the conformational landscape described by the CamTube model exhibits free energy minima that can be explored efficiently by molecular dynamics simulations. Within these minima there are variety of tertiary structures that accurately reflect the diversity of protein folds observed in the PDB. Indeed, the microstates sampled from the metadynamics simulation of Val60 cover about half of all known classes of natural folds of proteins of similar size. It is important to emphasize that these folds have been selected here on the basis of the geometry requirements of the CamTube model and not on the physico-chemical properties of the amino acid sequence.</p>
+<fig id="pcbi.1004435.g002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004435.g002</object-id>
+<label>Fig 2</label>
+<caption>
+<title>Free energy surface of Val60 in the CamTube force field.</title>
+<p>The x and y axes represent two CV variables: the number of α-helical six-residue-long fragments and the radius of gyration.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.g002" position="float" xlink:type="simple"/>
+</fig>
+<fig id="pcbi.1004435.g003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004435.g003</object-id>
+<label>Fig 3</label>
+<caption>
+<title>A repertoire of representative Val60 structures generated using the CamTube force field.</title>
+<p>A selection of 135 structures whose TM-score from respective CATH structures is larger than 0.4; a-c) examples of three CATH structures with their equivalent Val60 structures. CATH codes are given bellow the respective figures.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.g003" position="float" xlink:type="simple"/>
+</fig>
+</sec>
+<sec id="sec005">
+<title>Conformational space of a small globular protein populated using the CamTube force field</title>
+<p>Having identified the conformational space that corresponds to a compact polyamino acid chain (Val60), we turned our attention to the CamTube simulation of a small globular protein. In this respect, we carried out a 1 μs long unbiased molecular dynamics simulation of the third immunoglobulin G-binding domain of protein G (GB3) using <italic>ε</italic><sub><italic>W</italic></sub> = 10.0 kJ mol<sup>−1</sup> and <italic>κ</italic><sub><italic>c</italic></sub> = 2000 kJ mol<sup>−1</sup> nm<sup>−2</sup> parameters characteristic of the α/β compact phase. Unlike a homopolymeric peptide chain Val60 that can sample a plethora of protein folds, GB3 is a small globular protein and hence the CamTube model of GB3 is expected to produce a limited repertoire of protein folds. In order to check this hypothesis, the unbiased CamTube simulation of GB3 was initiated from an extended structure and the evolution of sampled structures during the course of the simulation is depicted in <xref rid="pcbi.1004435.g004" ref-type="fig">Fig 4A</xref>. We found that the residual secondary structural content emerged shortly after the start of the simulation. Following the formation of the secondary structure, the protein was able to fold owning to the pairwise hydrophobic energy term in the CamTube force field. After initial folding, the protein was able to rearrange both its secondary structural content and hydrophobic contacts and sample a range of α/β globular folds (<xref rid="pcbi.1004435.g004" ref-type="fig">Fig 4A</xref>). The conformations sampled mainly differ in the fraction of the α-helical and β-sheet content, the number of strands in the β-sheet and the packing of the α-helix against the β-sheet. The topologies of the sampled conformations are similar to that of the native state of GB3 PDB ID: 2OED (TM_score &gt; 0.4) with RMSD values in the range from 4.7 Å to 12 Å. However, given its coarse-grained nature, the present version of the CamTube model was not able to clearly discriminate between the competing minima within this wide basin of native-like topologies, and this point was further corroborated in the free energy surface of the GB3 folding obtained from a metadynamics simulation (<xref rid="pcbi.1004435.g004" ref-type="fig">Fig 4B</xref>).</p>
+<fig id="pcbi.1004435.g004" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004435.g004</object-id>
+<label>Fig 4</label>
+<caption>
+<title>Folding of GB3 using the CamTube force field.</title>
+<p>(a) CamTube energy generated from an unbiased 1 μs long molecular dynamics simulation of GB3 as a function of the RMSD from the crystal structure, PDB ID: 2OED. Representative structures sampled in different regions of (<italic>energy</italic>, <italic>rmsd</italic>) space are shown as insets. (b) Free energy of Val60 obtained from a metadynamics simulation and the CamTube force field as a function of the RMSD from the crystal structure, PDB ID: 2OED. (c) Distributions of the radius of gyration; the radius of gyration of the native state of GB3 (PDB ID: 2OED) is indicated by the red arrow. (d) Ramachandran plot for the GB3 structures generated by the CamTube force field.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.g004" position="float" xlink:type="simple"/>
+</fig>
+<p>The results of the quality assessment for the resulting GB3 simulation are shown in <xref rid="pcbi.1004435.g004" ref-type="fig">Fig 4C and 4D</xref>. The structures that we obtained exhibit the distribution of radii of gyration centred on the value characteristic of the native state of GB3 (<xref rid="pcbi.1004435.g004" ref-type="fig">Fig 4C</xref>). These results show that the CamTube samples structures consistent with the compaction of typical protein folds despite the very coarse resolution of modelling the side chains. Moreover, the vast majority of the residues sampled were hydrogen bonded, confirming that the CamTube force field preferentially samples highly ordered structures. Lastly, the Ramachandran plot of the GB3 is strongly biased towards regions of the conformational space typical of folded proteins (<xref rid="pcbi.1004435.g004" ref-type="fig">Fig 4D</xref>). Indeed, the α-helical and β-sheet regions of the Ramachandran space are reproduced rather faithfully because of the directional hydrogen bonding in the CamTube model, and forbidden regions are populated infrequently.</p>
+</sec>
+<sec id="sec006">
+<title>Concluding remarks</title>
+<p>We have described the CamTube force field, which is designed to explore efficiently the conformational space of proteins using molecular dynamics simulations. These simulations can be readily carried out through GROMACS (see <xref rid="sec007" ref-type="sec">Methods</xref>). The CamTube model, as other coarse-grained approaches, has the ability to describe the structure, thermodynamics and kinetics of protein folding across a range of time and length scales [<xref rid="pcbi.1004435.ref030" ref-type="bibr">30</xref>,<xref rid="pcbi.1004435.ref031" ref-type="bibr">31</xref>,<xref rid="pcbi.1004435.ref032" ref-type="bibr">32</xref>,<xref rid="pcbi.1004435.ref033" ref-type="bibr">33</xref>,<xref rid="pcbi.1004435.ref034" ref-type="bibr">34</xref>,<xref rid="pcbi.1004435.ref035" ref-type="bibr">35</xref>,<xref rid="pcbi.1004435.ref036" ref-type="bibr">36</xref>,<xref rid="pcbi.1004435.ref037" ref-type="bibr">37</xref>,<xref rid="pcbi.1004435.ref038" ref-type="bibr">38</xref>,<xref rid="pcbi.1004435.ref039" ref-type="bibr">39</xref>,<xref rid="pcbi.1004435.ref040" ref-type="bibr">40</xref>]. Similar to other coarse-grained models, however, the interpretation of the time scale in the CamTube model is not straightforward. The main reason is that the underlying energy landscape is smoother as a result of the use of coarse-grained particles. The friction arising from the atomistic degrees of freedom is hence subdued and the effective time sampled using the CamTube model can be several orders of magnitude longer than in the atomistic models.</p>
+<p>The development of the CamTube force field was motivated by the observation that the conformational space of proteins can be efficiently navigated by exploiting a tube-like description of polypeptide chains [<xref rid="pcbi.1004435.ref019" ref-type="bibr">19</xref>,<xref rid="pcbi.1004435.ref020" ref-type="bibr">20</xref>,<xref rid="pcbi.1004435.ref021" ref-type="bibr">21</xref>,<xref rid="pcbi.1004435.ref022" ref-type="bibr">22</xref>]. The CamTube model thus provides a solution to the problem of generating protein-like conformations within coarse-grained simulations without the need of computationally expensive terms in the force field because the underlying geometric nature of the tube already shapes the topological properties of the simulated protein molecules. There will be, however, many applications for which the current implementation of the CamTube model is not well suited, as for instance applications for which long-range electrostatic forces are crucial. For these applications, the residue-residue interactions within the interaction matrix should be turned on. Furthermore, the current implementation is carried out <italic>in vacuo</italic>. However, with relatively small changes in the interaction matrix it will be possible to implement an implicit solvent model.</p>
+<p>In conclusion, the use of the CamTube model enables one to explore comprehensively the behaviour of proteins in their native and non-native states with great efficiency, thus providing a wide range of opportunities to study the behaviour of these important molecules. In the long-term, the CamTube is not intended to replace atomistic simulations, but rather to complement them. With the CamTube model the long time-scale and length-scale properties of complex macromolecular systems can be explored, whereas with atomistic models more specific details can be studied. In this view, on the basis of the model presented in this paper, we anticipate that it will be possible to combinef the CamTube with atomistic models in a multi-scale approach.</p>
+</sec>
+</sec>
+<sec id="sec007" sec-type="materials|methods">
+<title>Methods</title>
+<sec id="sec008">
+<title>The CamTube force field: Self-avoiding spheres</title>
+<p>The CamTube force field is defined by five backbone (N, H, Cα, C′ and O) and one side chain (Cβ) atom types in a polypeptide chain. The bonded interactions in the model, including covalent bonds and angles are taken from the Amber force field [<xref rid="pcbi.1004435.ref041" ref-type="bibr">41</xref>]. The lengths of the Cα-Cβ bonds are amino acid-dependent in the CamTube model and overwrite the standard parameters from the Amber force field (<xref rid="pcbi.1004435.g005" ref-type="fig">Fig 5</xref>). The bond lengths are constrained using LINCS [<xref rid="pcbi.1004435.ref042" ref-type="bibr">42</xref>], and a 2 fs time step is used to integrate the equations of motion.</p>
+<fig id="pcbi.1004435.g005" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004435.g005</object-id>
+<label>Fig 5</label>
+<caption>
+<title>Schematic representation of a segment of a polypeptide chain in the CamTube model.</title>
+<p>The tube-like implementation is carried out by self-avoiding spheres, which for clarity of illustration are shown here only for Cα atoms. Bond lengths (apart from the Cα-Cβ bond) and angles are taken from the Amber force field. The length of the CA-Cβ bond of Val, Pro, Thr, Ser and Cys is scaled 1.5 times; Asp, Ile, Leu and Asn 2 times; Phe 2.25 times; Glu, Gln, Met and His 2.5 times; Tyr and Trp 3 times; Lys and Arg 4 times the length of the Cα-Cβ bond in the Amber force field.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.g005" position="float" xlink:type="simple"/>
+</fig>
+<p>The tube-like characteristics of the polypeptide chain are retained via the self-avoiding spheres centred on the atom positions. The radii of the spheres are atom pair-dependent and their role is to exclude the regions of the Ramachandran map that encode steric clashes. The interactions between such hard spheres are modelled as a half harmonic potential:
+<disp-formula id="pcbi.1004435.e001">
+<alternatives>
+<graphic id="pcbi.1004435.e001g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.e001" xlink:type="simple"/>
+<mml:math display="block" id="M1" overflow="scroll">
+<mml:msubsup><mml:mrow><mml:mi>E</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mi>t</mml:mi><mml:mi>u</mml:mi><mml:mi>b</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msubsup><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mtable columnalign="left"><mml:mtr><mml:mtd><mml:mrow><mml:msub><mml:mrow><mml:mi>κ</mml:mi></mml:mrow><mml:mrow><mml:mi>t</mml:mi><mml:mi>u</mml:mi><mml:mi>b</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msub><mml:msup><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mi>d</mml:mi><mml:mo>−</mml:mo><mml:msub><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mrow><mml:mn>2</mml:mn></mml:mrow></mml:msup><mml:mi>ϑ</mml:mi><mml:mo>(</mml:mo><mml:mrow><mml:mi>d</mml:mi><mml:mo>−</mml:mo><mml:msub><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mo>)</mml:mo><mml:mspace width="1em"/><mml:mo stretchy="false">|</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>−</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mo stretchy="false">|</mml:mo><mml:mo>&gt;</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mn>0</mml:mn><mml:mspace width="11em"/><mml:mo stretchy="false">|</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>−</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mo stretchy="false">|</mml:mo><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(1)</label>
+</disp-formula>
+where <italic>ϑ(x)</italic> is the Heaviside step function, <italic>d</italic> is an atom pair dependent distance threshold and <italic>r</italic><sub><italic>ij</italic></sub> is the distance between the atoms of residues <italic>i</italic> and <italic>j</italic>. The parameter <italic>κ</italic><sub><italic>tube</italic></sub> is chosen to be as large as possible without introducing integration errors or numerical instabilities, so as to guarantee the impenetrability of the sphere. In the force field setup described here, the 2 fs integration time step allows us to take <italic>κ</italic><sub><italic>tube</italic></sub> = 100,000 kJ mol<sup>−1</sup> nm<sup>−2</sup>, which is comparable to the largest force constants in the Amber bonded potentials. The atom pair-dependent distance thresholds, <italic>d</italic>, are obtained from the statistical distribution from the PDB [<xref rid="pcbi.1004435.ref043" ref-type="bibr">43</xref>,<xref rid="pcbi.1004435.ref044" ref-type="bibr">44</xref>]. The values of 5% minimum (5<sup>th</sup> percentile band) are used here and listed in <xref rid="pcbi.1004435.t001" ref-type="table">Table 1</xref>. Nearest neighbours are not interacting through this potential for all atom pairs apart from O-O and H-H pairs. The O-O and H-H nearest neighbour pairs are crucial in excluding forbidden regions in the Ramachandran map [<xref rid="pcbi.1004435.ref043" ref-type="bibr">43</xref>,<xref rid="pcbi.1004435.ref044" ref-type="bibr">44</xref>] and they are retained in the CamTube model. The steric map of the CamTube model showing steric restrictions (dark blue) and sterically allowed regions (light blue) is given in <xref rid="pcbi.1004435.g006" ref-type="fig">Fig 6</xref>, and illustrates how sterically allowed regions contain the areas of the Ramachandran map characteristic of right-handed α-helices, left-handed α-helices and β-sheets.</p>
+<fig id="pcbi.1004435.g006" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004435.g006</object-id>
+<label>Fig 6</label>
+<caption>
+<title>Steric map in the CamTube model.</title>
+<p>The map shows main steric restrictions (dashed black line) imposed by H<sub>i</sub>-H<sub>i+1</sub>, O<sub>i–1</sub>-O<sub>i</sub> and O<sub>i–1</sub>-N<sub>i+1</sub> distances. Allowed regions are represented by light blue colour and they contain the range of dihedral angles present in right-handed α-helices, left-handed α-helices and β-sheets.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.g006" position="float" xlink:type="simple"/>
+</fig>
+<table-wrap id="pcbi.1004435.t001" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004435.t001</object-id>
+<label>Table 1</label> <caption><title>Atom pair self-avoiding sphere distances, <italic>d</italic>, from <xref rid="pcbi.1004435.e001" ref-type="disp-formula">Eq 1</xref>.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004435.t001g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.t001" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="center" rowspan="1" colspan="1">Atom types</th>
+<th align="center" rowspan="1" colspan="1">Threshold [nm]</th>
+<th align="center" rowspan="1" colspan="1">Atom types</th>
+<th align="center" rowspan="1" colspan="1">Threshold [nm]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center" rowspan="1" colspan="1">H-H</td>
+<td align="center" rowspan="1" colspan="1">0.23</td>
+<td align="center" rowspan="1" colspan="1">Cβ-Cβ</td>
+<td align="center" rowspan="1" colspan="1">0.4</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">O-O</td>
+<td align="center" rowspan="1" colspan="1">0.3</td>
+<td align="center" rowspan="1" colspan="1">Cβ-C</td>
+<td align="center" rowspan="1" colspan="1">0.32</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Cα-Cα</td>
+<td align="center" rowspan="1" colspan="1">0.4</td>
+<td align="center" rowspan="1" colspan="1">Cβ-H</td>
+<td align="center" rowspan="1" colspan="1">0.26</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Cα-Cβ</td>
+<td align="center" rowspan="1" colspan="1">0.4</td>
+<td align="center" rowspan="1" colspan="1">Cβ-N</td>
+<td align="center" rowspan="1" colspan="1">0.32</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Cα-C</td>
+<td align="center" rowspan="1" colspan="1">0.35</td>
+<td align="center" rowspan="1" colspan="1">Cβ-O</td>
+<td align="center" rowspan="1" colspan="1">0.3</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Cα-H</td>
+<td align="center" rowspan="1" colspan="1">0.30</td>
+<td align="center" rowspan="1" colspan="1">C'-C'</td>
+<td align="center" rowspan="1" colspan="1">0.35</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Cα-N</td>
+<td align="center" rowspan="1" colspan="1">0.35</td>
+<td align="center" rowspan="1" colspan="1">C'-O</td>
+<td align="center" rowspan="1" colspan="1">0.3</td>
+</tr>
+<tr>
+<td align="center" rowspan="1" colspan="1">Cα-O</td>
+<td align="center" rowspan="1" colspan="1">0.3</td>
+<td align="center" rowspan="1" colspan="1">N-N</td>
+<td align="center" rowspan="1" colspan="1">0.36</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+<sec id="sec009">
+<title>The CamTube force field: Hydrogen bonding</title>
+<p>Hydrogen bonds in the CamTube force field are modelled using a potential between pairs of O and H atoms of the Lennard-Jones form:
+<disp-formula id="pcbi.1004435.e002">
+<alternatives>
+<graphic id="pcbi.1004435.e002g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.e002" xlink:type="simple"/>
+<mml:math display="block" id="M2" overflow="scroll">
+<mml:msubsup><mml:mrow><mml:mi>E</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mi>H</mml:mi><mml:mo>−</mml:mo><mml:mi>b</mml:mi><mml:mi>o</mml:mi><mml:mi>n</mml:mi><mml:mi>d</mml:mi></mml:mrow></mml:msubsup><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mtable columnalign="left"><mml:mtr><mml:mtd><mml:mrow><mml:msub><mml:mrow><mml:mi>ϵ</mml:mi></mml:mrow><mml:mrow><mml:mi>H</mml:mi></mml:mrow></mml:msub><mml:mo>[</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:mi>n</mml:mi></mml:mrow><mml:mrow><mml:mi>m</mml:mi><mml:mo>−</mml:mo><mml:mi>n</mml:mi></mml:mrow></mml:mfrac><mml:msup><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:msub><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mn>0</mml:mn></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mrow><mml:mi>m</mml:mi></mml:mrow></mml:msup><mml:mo>−</mml:mo><mml:mfrac><mml:mrow><mml:mi>m</mml:mi></mml:mrow><mml:mrow><mml:mi>m</mml:mi><mml:mo>−</mml:mo><mml:mi>n</mml:mi></mml:mrow></mml:mfrac><mml:msup><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:msub><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mn>0</mml:mn></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:msub><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mrow><mml:mi>n</mml:mi></mml:mrow></mml:msup></mml:mrow><mml:mo>]</mml:mo><mml:mspace width="1.70em"/><mml:mo stretchy="false">|</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>−</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mo stretchy="false">|</mml:mo><mml:mo>≥</mml:mo><mml:mn>4</mml:mn></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mn>0</mml:mn><mml:mspace width="13.15em"/><mml:mo stretchy="false">|</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>−</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mo stretchy="false">|</mml:mo><mml:mo>&lt;</mml:mo><mml:mn>4</mml:mn></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(2)</label>
+</disp-formula>
+where <italic>r</italic><sub><italic>ij</italic></sub> is the distance between the O atom of residue <italic>i</italic> and H atom of residue <italic>j</italic>, and <italic>r</italic><sub><italic>0</italic></sub> is taken to be an ideal hydrogen bond length of 0.2 nm.</p>
+<p>The functional form in <xref rid="pcbi.1004435.e002" ref-type="disp-formula">Eq 2</xref> defines a smooth potential with an attractive basin at <italic>r = r</italic><sub><italic>0</italic></sub> and a well depth of <italic>ε</italic><sub><italic>H</italic></sub> for any positive exponents <italic>m ≠ n</italic>. The choice of exponents is constrained by two requirements. The first is that the potential should preferentially promote each H or O atom to participate to a single hydrogen bond. This means that the potential must decay rapidly to 0 for <italic>r &gt; r</italic><sub><italic>0</italic></sub> in order to prevent extensive crosstalk between nearby hydrogen bonds. The second requirement is that, at the same time, the potential must be sufficiently attractive at large distances in order for potential hydrogen bonding partners to come together in the first place. This requirement also ensures that the potential is soft enough to allow hydrogen bonds to form readily, allowing the tube model to rapidly cycle through different tertiary motifs.</p>
+<p>We tested the 6–12, 10–12 and 12–24 variants of the <italic>n-m</italic> potential and found that the 10–12 version provides the best compromise between confinement of the attractive basin and kinetic accessibility. The well depth <italic>ε</italic><sub><italic>H</italic></sub> sets the fundamental energy scale of the system, and all other energy parameters in the model are tuned relative to this value. For a given temperature and sampling method, the choice of <italic>ε</italic><sub><italic>H</italic></sub> can dramatically affect the observed kinetics. For large values of <italic>ε</italic><sub><italic>H</italic></sub> the polypeptide chain is unable to escape from local minima, which for small values of <italic>ε</italic><sub><italic>H</italic></sub> the secondary structure elements are not stable enough to enable the protein to fold. We found that in the case of Langevin dynamics <italic>in vacuo</italic> at a temperature of 298 K and a friction coefficient of 1 ps<sup>−1</sup>, an efficient compromise between these two extreme behaviours was reached using a well depth of 21 kJ mol<sup>−1</sup>.</p>
+</sec>
+<sec id="sec010">
+<title>The CamTube force field: Directionality of hydrogen bonds</title>
+<p>Unlike atomistic force fields, which can induce the formation of directional hydrogen bonds via a combination of steric and electrostatic interactions, the CamTube coarse-grained setup discussed here requires a more direct introduction of this directionality. We addressed this issue in an analogous manner to the tube geometry by placing spherical avoidance volumes between all C'-H and O-N atom pairs (<xref rid="pcbi.1004435.g007" ref-type="fig">Fig 7A</xref>, red and grey spheres). The radii of these spheres are chosen to correspond to 99% of the C'-H or O-N distance in an ideal hydrogen bond with 180° bond angles. As a result, when an O-H atom pair forms a hydrogen bond at the ideal distance of 0.2 nm, a combination of these self-avoidance spheres and the fixed C'-O and N-H bond lengths constrains the allowed positions of the C' and N atoms and prevents large deviations from the ideal hydrogen bond angles. For example, in the hydrogen bond shown in <xref rid="pcbi.1004435.g007" ref-type="fig">Fig 7A</xref>, the N atom is constrained to lie on the subset of the blue spherical surface that does not fall inside the red sphere. Likewise, the C' atom is confined to the regions of the teal spherical surface that are outside the grey sphere.</p>
+<fig id="pcbi.1004435.g007" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004435.g007</object-id>
+<label>Fig 7</label>
+<caption>
+<title>Illustration of the directionality of the hydrogen bonds in the CamTube model.</title>
+<p>(a) The use of spherical avoidance volumes prohibits bond angles far from 180°. The C', O, H, and N atoms are shown in teal, red, grey, and blue, respectively. (b) Angular dependence of the overall hydrogen bonding potential after the inclusion of half harmonic repulsions between C'-H and O-N pairs. The potential is plotted at the optimal O-H distance of 0.2 nm using <italic>ε</italic><sub><italic>H</italic></sub> = 21 kJ mol<sup>−1</sup>.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.g007" position="float" xlink:type="simple"/>
+</fig>
+<p>As in <xref rid="pcbi.1004435.e001" ref-type="disp-formula">Eq 1</xref>, we implemented the avoidance spheres of hydrogen bonds as half harmonic potentials, with large force constants <italic>κ</italic><sub><italic>tube</italic></sub> = 100,000 kJ mol<sup>−1</sup> nm<sup>−2</sup> to ensure impenetrability:
+<disp-formula id="pcbi.1004435.e003">
+<alternatives>
+<graphic id="pcbi.1004435.e003g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.e003" xlink:type="simple"/>
+<mml:math display="block" id="M3" overflow="scroll">
+<mml:msubsup><mml:mrow><mml:mi>E</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mi>C</mml:mi><mml:mi>H</mml:mi></mml:mrow></mml:msubsup><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mtable columnalign="left"><mml:mtr><mml:mtd><mml:mrow><mml:msub><mml:mrow><mml:mi>κ</mml:mi></mml:mrow><mml:mrow><mml:mi>t</mml:mi><mml:mi>u</mml:mi><mml:mi>b</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msub><mml:msup><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mn>0.3197</mml:mn><mml:mo>−</mml:mo><mml:msubsup><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mi>C</mml:mi><mml:mi>H</mml:mi></mml:mrow></mml:msubsup></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mrow><mml:mn>2</mml:mn></mml:mrow></mml:msup><mml:mi>ϑ</mml:mi><mml:mo>(</mml:mo><mml:mrow><mml:mn>0.3197</mml:mn><mml:mo>−</mml:mo><mml:msubsup><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mi>C</mml:mi><mml:mi>H</mml:mi></mml:mrow></mml:msubsup></mml:mrow><mml:mo>)</mml:mo><mml:mspace width="1.10em"/><mml:mo stretchy="false">|</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>−</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mo stretchy="false">|</mml:mo><mml:mo>≥</mml:mo><mml:mn>4</mml:mn></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mn>0</mml:mn><mml:mspace width="16.60em"/><mml:mo stretchy="false">|</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>−</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mo stretchy="false">|</mml:mo><mml:mo>&lt;</mml:mo><mml:mn>4</mml:mn></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(3)</label>
+</disp-formula>
+<disp-formula id="pcbi.1004435.e004">
+<alternatives>
+<graphic id="pcbi.1004435.e004g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.e004" xlink:type="simple"/>
+<mml:math display="block" id="M4" overflow="scroll">
+<mml:msubsup><mml:mrow><mml:mi>E</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mi>O</mml:mi><mml:mi>N</mml:mi></mml:mrow></mml:msubsup><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mtable columnalign="left"><mml:mtr><mml:mtd><mml:mrow><mml:msub><mml:mrow><mml:mi>κ</mml:mi></mml:mrow><mml:mrow><mml:mi>t</mml:mi><mml:mi>u</mml:mi><mml:mi>b</mml:mi><mml:mi>e</mml:mi></mml:mrow></mml:msub><mml:msup><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mn>0.2980</mml:mn><mml:mo>−</mml:mo><mml:msubsup><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mi>O</mml:mi><mml:mi>N</mml:mi></mml:mrow></mml:msubsup></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mrow><mml:mn>2</mml:mn></mml:mrow></mml:msup><mml:mi>ϑ</mml:mi><mml:mo>(</mml:mo><mml:mrow><mml:mn>0.2980</mml:mn><mml:mo>−</mml:mo><mml:msubsup><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mi>O</mml:mi><mml:mi>N</mml:mi></mml:mrow></mml:msubsup></mml:mrow><mml:mo>)</mml:mo><mml:mspace width="1.10em"/><mml:mo stretchy="false">|</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>−</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mo stretchy="false">|</mml:mo><mml:mo>≥</mml:mo><mml:mn>4</mml:mn></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mn>0</mml:mn><mml:mspace width="16.75em"/><mml:mo stretchy="false">|</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>−</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mo stretchy="false">|</mml:mo><mml:mo>&lt;</mml:mo><mml:mn>4</mml:mn></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(4)</label>
+</disp-formula></p>
+<p>Since the C'-O and N-H bond lengths are fixed by LINCS, these potentials can be rewritten as functions of the C'-O-H and O-H-N angles using the law of cosines. The resulting angular dependence of the overall hydrogen bond energy is shown in <xref rid="pcbi.1004435.g007" ref-type="fig">Fig 7B</xref>, verifying that highly bent hydrogen bonding geometries are energetically unfavourable.</p>
+</sec>
+<sec id="sec011">
+<title>The CamTube force field: Hydrophobic effect</title>
+<p>In a previous implementation of the tube model [<xref rid="pcbi.1004435.ref022" ref-type="bibr">22</xref>], the hydrophobic effect was simulated using the HP (hydrophobic-polar) propensities of the amino acids with a square well attraction between hydrophobic residues. This model was later extended by incorporating a residue-specific contact potential [<xref rid="pcbi.1004435.ref024" ref-type="bibr">24</xref>], which was adapted from lattice models of protein folding and parameterised based on the contact frequencies between amino acid pairs in the PDB [<xref rid="pcbi.1004435.ref045" ref-type="bibr">45</xref>]. This residue-specific matrix has as a reference state the interaction between the solvent and all other amino acids that is set to 0 and hence is suitable for <italic>in vacuo</italic> simulations.</p>
+<p>Given the success of this type of pair potential in allowing the sequence design of tertiary structures, we adopted a similar model to efficiently sample the conformational space in a sequence-specific manner. Thus, the CamTube force field features an analogous residue-specific interaction potential that is used here only between the Cβ atoms of the hydrophobic residue pairs:
+<disp-formula id="pcbi.1004435.e005">
+<alternatives>
+<graphic id="pcbi.1004435.e005g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.e005" xlink:type="simple"/>
+<mml:math display="block" id="M5" overflow="scroll">
+<mml:msubsup><mml:mrow><mml:mi>E</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mi>h</mml:mi><mml:mi>y</mml:mi><mml:mi>d</mml:mi><mml:mi>r</mml:mi><mml:mi>o</mml:mi><mml:mi>p</mml:mi><mml:mi>h</mml:mi><mml:mi>o</mml:mi><mml:mi>b</mml:mi><mml:mi>i</mml:mi><mml:mi>c</mml:mi></mml:mrow></mml:msubsup><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mtable columnalign="left"><mml:mtr><mml:mtd><mml:mrow><mml:msub><mml:mrow><mml:mi>ϵ</mml:mi></mml:mrow><mml:mrow><mml:mi>w</mml:mi></mml:mrow></mml:msub><mml:msub><mml:mrow><mml:mi>B</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub><mml:mo>[</mml:mo><mml:mrow><mml:mn>1</mml:mn><mml:mo>−</mml:mo><mml:mfrac><mml:mrow><mml:mn>1</mml:mn></mml:mrow><mml:mrow><mml:mn>1</mml:mn><mml:mo>+</mml:mo><mml:mi>e</mml:mi><mml:mi>x</mml:mi><mml:mi>p</mml:mi><mml:mo>(</mml:mo><mml:mrow><mml:mfrac><mml:mrow><mml:mn>0.8</mml:mn><mml:mo>−</mml:mo><mml:msub><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow></mml:msub></mml:mrow><mml:mrow><mml:mn>0.04</mml:mn></mml:mrow></mml:mfrac></mml:mrow><mml:mo>)</mml:mo></mml:mrow></mml:mfrac></mml:mrow><mml:mo>]</mml:mo><mml:mspace width="3.10em"/><mml:mo stretchy="false">|</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>−</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mo stretchy="false">|</mml:mo><mml:mo>&gt;</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mn>0</mml:mn><mml:mspace width="13em"/><mml:mo stretchy="false">|</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>−</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mo stretchy="false">|</mml:mo><mml:mo>=</mml:mo><mml:mn>1</mml:mn></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(5)</label>
+</disp-formula>
+where <italic>r</italic><sub><italic>ij</italic></sub> is the distance between the Cβ atoms of the residues <italic>i</italic> and <italic>j</italic> and <italic>B</italic><sub><italic>ij</italic></sub> is the element corresponding to the particular amino acid pairing. The values of <italic>B</italic><sub><italic>ij</italic></sub> for a pair of hydrophobic residues are taken from the interaction matrix [<xref rid="pcbi.1004435.ref045" ref-type="bibr">45</xref>], and set to 0 if either <italic>i</italic> or <italic>j</italic> is a polar or charged amino acid. In this way, the conformation of a protein is mainly defined by the interplay between hydrogen bond and hydrophobic interactions. The parameter <italic>ε</italic><sub><italic>W</italic></sub> sets the energy scale for hydrophobic contacts. The consequences of different values of <italic>ε</italic><sub><italic>W</italic></sub> on the structures sampled by the CamTube force field are discussed in the Results section.</p>
+</sec>
+<sec id="sec012">
+<title>The CamTube force field: Curvature penalty</title>
+<p>The ability of the tube model to visit protein-like conformations is dependent on the presence of geometric constraints that eliminate non-physical topologies of the tube from the accessible conformational space. In the previous Monte Carlo implementation of the tube model [<xref rid="pcbi.1004435.ref022" ref-type="bibr">22</xref>], this result was accomplished by means of a weak penalty on the local radius of curvature of the tube. We have translated this energy penalty into a form suitable for molecular dynamics simulations by introducing a weak repulsive force between C' and H atoms that are separated by two or three residues along the protein chain (<xref rid="pcbi.1004435.g008" ref-type="fig">Fig 8</xref>). For ease of implementation in Gromacs, we used the same functional form for these repulsions as for the directional hydrogen bonds (Eqs <xref rid="pcbi.1004435.e003" ref-type="disp-formula">3</xref> and <xref rid="pcbi.1004435.e004" ref-type="disp-formula">4</xref>), but with a sufficiently weak force constant to transform the potential from a hard constraint into a soft penalty:
+<disp-formula id="pcbi.1004435.e006">
+<alternatives>
+<graphic id="pcbi.1004435.e006g" position="anchor" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.e006" xlink:type="simple"/>
+<mml:math display="block" id="M6" overflow="scroll">
+<mml:msubsup><mml:mrow><mml:mi>E</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mi>c</mml:mi><mml:mi>u</mml:mi><mml:mi>r</mml:mi><mml:mi>v</mml:mi></mml:mrow></mml:msubsup><mml:mo>=</mml:mo><mml:mrow><mml:mo>{</mml:mo><mml:mtable columnalign="left"><mml:mtr><mml:mtd><mml:mrow><mml:msub><mml:mrow><mml:mi>κ</mml:mi></mml:mrow><mml:mrow><mml:mi>c</mml:mi></mml:mrow></mml:msub><mml:msup><mml:mrow><mml:mo>(</mml:mo><mml:mrow><mml:mn>0.3197</mml:mn><mml:mo>−</mml:mo><mml:msubsup><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mi>C</mml:mi><mml:mi>H</mml:mi></mml:mrow></mml:msubsup></mml:mrow><mml:mo>)</mml:mo></mml:mrow><mml:mrow><mml:mn>2</mml:mn></mml:mrow></mml:msup><mml:mi>ϑ</mml:mi><mml:mo>(</mml:mo><mml:mrow><mml:mn>0.3197</mml:mn><mml:mo>−</mml:mo><mml:msubsup><mml:mrow><mml:mi>r</mml:mi></mml:mrow><mml:mrow><mml:mi>i</mml:mi><mml:mi>j</mml:mi></mml:mrow><mml:mrow><mml:mi>C</mml:mi><mml:mi>H</mml:mi></mml:mrow></mml:msubsup></mml:mrow><mml:mo>)</mml:mo><mml:mspace width="1.10em"/><mml:mn>1</mml:mn><mml:mo>&lt;</mml:mo><mml:mo stretchy="false">|</mml:mo><mml:mrow><mml:mi>i</mml:mi><mml:mo>−</mml:mo><mml:mi>j</mml:mi></mml:mrow><mml:mo stretchy="false">|</mml:mo><mml:mo>&lt;</mml:mo><mml:mn>4</mml:mn></mml:mrow></mml:mtd></mml:mtr><mml:mtr><mml:mtd><mml:mrow><mml:mn>0</mml:mn><mml:mspace width="17em"/><mml:mtext>otherwise</mml:mtext></mml:mrow></mml:mtd></mml:mtr></mml:mtable></mml:mrow>
+</mml:math>
+</alternatives>
+<label>(6)</label>
+</disp-formula></p>
+<fig id="pcbi.1004435.g008" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004435.g008</object-id>
+<label>Fig 8</label>
+<caption>
+<title>Illustration of the repulsion between C' and H atoms introduced by the curvature term in the CamTube model.</title>
+<p>The C' and H atoms belong to the α-helix and are 2 and 3 residues apart in the sequence.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.g008" position="float" xlink:type="simple"/>
+</fig>
+<p>The presence of this curvature term has a main effect on interactions between C' and H atoms that are separated by two or three residues in α-helix. When the interactions between these atoms occur at distances below the threshold of 0.3197 nm, the curvature term becomes active. This means that the formation of α-helical segments can be marginally penalized by tuning the value of <italic>κ</italic><sub><italic>c</italic></sub>, which is essential to prevent all sequences from immediately adopting extended α-helical structures with exclusively local hydrogen bonding.</p>
+</sec>
+<sec id="sec013">
+<title>The CamTube force field: Dihedral potentials</title>
+<p>The purpose of the dihedral parameters in the CamTube force field is to cluster the conformations of amino acids near their characteristic values in the Ramachandran plot [<xref rid="pcbi.1004435.ref046" ref-type="bibr">46</xref>]. Almost all dihedral and improper parameters were taken from the Amber force field [<xref rid="pcbi.1004435.ref041" ref-type="bibr">41</xref>]. Only residue-specific Cβ-Cα-N-C' and Cβ-Cα-C'-N dihedral parameters are refitted for the purposes of the CamTube model and their values overwrite the corresponding values in the Amber force field. The parameters for Cβ-Cα-N-C' and Cβ-Cα-C'-N dihedrals are refitted here using the following values for hydrogen bond potential, hydrophobic potential and curvature penalty: e<sub>H</sub> = 21 kJ mol<sup>−1</sup>, e<sub>w</sub> = 10 kJ mol<sup>−1</sup> and k<sub>c</sub> = 2000 kJ mol<sup>−1</sup> nm<sup>−2</sup> (see Phase diagram section). The fitting procedure was carried out using a full combinatorial parameter scan that varied the Vn parameters on the grid from 0.0 to 10.0, with the step size of 0.25.</p>
+<p>Obtained residue-specific values are listed in <xref rid="pcbi.1004435.t002" ref-type="table">Table 2</xref> and their corresponding Ramachandran maps are depicted in <xref rid="pcbi.1004435.g009" ref-type="fig">Fig 9</xref>. The dihedral parameters of amino acids are grouped depending on their characteristic propensities to α-helical and β-sheet regions of the Ramachandran map obtained from the PDB [<xref rid="pcbi.1004435.ref046" ref-type="bibr">46</xref>]. Ile, Thr, Tyr, Phe and Val are similar in their unique property of preferring the β-sheet to α-helix conformation and are assigned identical distributions in the Ramachandran map. His, Asn and Asp have quite similar distributions with non-negligible populations of left-handed α-helix. Their Ramachandran maps reflect the role of especially Asp and Asn in terminating α-helices and β-sheets. Ala, Gln, Lys and Glu are similar in preferring α-helix to β-sheet, whereas Pro has a bimodal distribution of α-helix and polyproline II conformation. Finally, Arg, Cys, Leu, Met, Ser and Trp are assigned identical distribution due to their almost equal propensity for both α-helices and β-sheets.</p>
+<fig id="pcbi.1004435.g009" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004435.g009</object-id>
+<label>Fig 9</label>
+<caption>
+<title>Ramachandran maps of non-Gly residues after the introduction of the dihedral potentials in the CamTube force field.</title>
+<p>Residues are grouped according to their propensity for particular regions in the Ramachandran map: a) Arg, Cys, Met, Leu, Ser, Trp; b) Asn, Asp, His; c) Ile, Phe, Thr, Tyr, Val; d) Ala, Gln; e) Glu, Lys; f) Pro.</p>
+</caption>
+<graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.g009" position="float" xlink:type="simple"/>
+</fig>
+<table-wrap id="pcbi.1004435.t002" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004435.t002</object-id>
+<label>Table 2</label> <caption><title>Parameters for Cβ-Cα-N-C' and Cβ-Cα-C'-N dihedral angles used in the CamTube force field that encode the propensity of the amino acids for different regions in the Ramachandran map.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004435.t002g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.t002" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<thead>
+<tr>
+<th align="left" rowspan="1" colspan="1">Amino acid</th>
+<th align="left" rowspan="1" colspan="1">Angle definition</th>
+<th align="left" rowspan="1" colspan="1">Function type</th>
+<th align="left" rowspan="1" colspan="1">Vn</th>
+<th align="left" rowspan="1" colspan="1">γ</th>
+<th align="left" rowspan="1" colspan="1">n</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">Arg, Asn, Asp, Cys, His, Ile, Leu, Met, Phe, Ser, Thr, Trp, Tyr, Val</td>
+<td align="left" rowspan="1" colspan="1">Cβ Cα N C</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">10.0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Cβ Cα N C</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">5.0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Cβ Cα N C</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">0.0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">3</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Ala, Gln, Glu, Lys, Pro</td>
+<td align="left" rowspan="1" colspan="1">Cβ Cα N C</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">20.0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Cβ Cα N C</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">10.0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Cβ Cα N C</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">2.0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">3</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Arg, Cys, Glu, Leu, Lys, Met, Ser, Trp</td>
+<td align="left" rowspan="1" colspan="1">Cβ Cα C N</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">1.0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Cβ Cα C N</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">2.5</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Cβ Cα C N</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">1.0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">3</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Asn, Asp, His, Pro</td>
+<td align="left" rowspan="1" colspan="1">Cβ Cα C N</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">10.0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Cβ Cα C N</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">5.0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Cβ Cα C N</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">2.5</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">3</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">Ala, Gln, Ile, Phe, Thr, Tyr, Val</td>
+<td align="left" rowspan="1" colspan="1">Cβ Cα C N</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">0.0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Cβ Cα C N</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">2.5</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">Cβ Cα C N</td>
+<td align="center" rowspan="1" colspan="1">9</td>
+<td align="left" rowspan="1" colspan="1">2.5</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">3</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+<sec id="sec014">
+<title>Implementation of the CamTube force field</title>
+<p>The CamTube model described above was implemented in Gromacs via a suite of Python scripts. This toolkit includes a script that mimics the functionality of the native <italic>pdb2gmx</italic> utility in Gromacs by parsing an input PDB file, removing side chains and adding Cβ and H atoms as necessary, constructing a topology file using the relevant bonded parameters from the Amber force field, adding pair lists and exclusions for consistency with Eqs <xref rid="pcbi.1004435.e001" ref-type="disp-formula">1</xref>–<xref rid="pcbi.1004435.e006" ref-type="disp-formula">6</xref>, and preparing an index file with designated index groups for all six-atom types.</p>
+<p>The CamTube potential energy surface is implemented as a series of tabulated potentials that are activated by specifying <italic>coulombtype</italic> and <italic>vdwtype</italic> as ‘User’ in the <italic>mdp</italic> file. Simulations with CamTube are set up with the <italic>grompp</italic> utility as with any other Gromacs force field, and are carried out by supplying the tabulated potentials as inputs to the <italic>mdrun</italic> program. The set of <italic>mdp</italic> parameters that we have used in the development and testing of the force field is shown in <xref rid="pcbi.1004435.t003" ref-type="table">Table 3</xref>. Using these parameters, <italic>in vacuo</italic> simulations of a 60-residue peptide can be run at a rate of over 1 μs/day on a laptop computer with a 2.3 GHz quad-core i7 processor.</p>
+<table-wrap id="pcbi.1004435.t003" position="float">
+<object-id pub-id-type="doi">10.1371/journal.pcbi.1004435.t003</object-id>
+<label>Table 3</label> <caption><title>Input parameters used in simulations with the CamTube force field.</title></caption>
+<alternatives>
+<graphic id="pcbi.1004435.t003g" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1004435.t003" xlink:type="simple"/>
+<table>
+<colgroup span="1">
+<col align="left" valign="middle" span="1"/>
+<col align="left" valign="middle" span="1"/>
+</colgroup>
+<tbody>
+<tr>
+<td align="justify" rowspan="1" colspan="1">integrator</td>
+<td align="justify" rowspan="1" colspan="1">sd</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">dt</td>
+<td align="left" rowspan="1" colspan="1">0.002</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">comm-mode</td>
+<td align="left" rowspan="1" colspan="1">Angular</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">nstcomm</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">energygrps</td>
+<td align="left" rowspan="1" colspan="1">Cα Cβ C O N H</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">nstlist</td>
+<td align="left" rowspan="1" colspan="1">-1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">ns-type</td>
+<td align="left" rowspan="1" colspan="1">simple</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">pbc</td>
+<td align="left" rowspan="1" colspan="1">no</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">rlist</td>
+<td align="left" rowspan="1" colspan="1">1.5</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">coulombtype</td>
+<td align="left" rowspan="1" colspan="1">User</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">rcoulomb</td>
+<td align="left" rowspan="1" colspan="1">0.8</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">vdwtype</td>
+<td align="left" rowspan="1" colspan="1">User</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">rvdw</td>
+<td align="left" rowspan="1" colspan="1">1.2</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">table-extension</td>
+<td align="left" rowspan="1" colspan="1">0.5</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">energygrp-table</td>
+<td align="left" rowspan="1" colspan="1">Cα Cα Cβ Cβ Cα Cβ O O H H C H O H O N C Cβ H Cβ N Cβ O Cβ C Cα H Cα N Cα O Cα O C C C N N</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">tau-t</td>
+<td align="left" rowspan="1" colspan="1">1.0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">ref-t</td>
+<td align="left" rowspan="1" colspan="1">298</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">constraints</td>
+<td align="left" rowspan="1" colspan="1">all-bonds</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">constraint-algorithm</td>
+<td align="left" rowspan="1" colspan="1">LINCS</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">lincs-order</td>
+<td align="left" rowspan="1" colspan="1">6</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">lincs-iter</td>
+<td align="left" rowspan="1" colspan="1">2</td>
+</tr>
+</tbody>
+</table>
+</alternatives>
+</table-wrap>
+</sec>
+<sec id="sec015">
+<title>Bias-exchange metadynamics simulations of Val60 and GB3</title>
+<p>Bias-exchange metadynamics simulations of Val60 and GB3 were performed at 300K using four replicas, one for each of the collective variables (CVs):</p>
+<p>1) CV1 (dihedral correlation) acts on ϕ and ψ dihedral angles of all residues in the protein, parameters: Gaussian width σ = 0.1; 2) CV2 (radius of gyration) acts on the radius of gyration defined by the Cα, atoms, parameters: Gaussian width σ = 0.05; 3) CV3 (AlphaRMSD) counts the number of 6-residue fragments that have α-helical secondary structural content, parameters: Gaussian width σ = 0.5; 4) CV4 (AntiBetaRMSD) counts the number of 6-residue fragments that have antiparallel β-sheet secondary structural content, parameters: Gaussian width σ = 0.5. The functional forms of the CVs are defined in the PLUMED package [<xref rid="pcbi.1004435.ref047" ref-type="bibr">47</xref>]. Starting from an extended conformation of both Val60 and GB3 in vacuum, we run 5μs for each replica using the CamTube force field.</p>
+</sec>
+<sec id="sec016">
+<title>Free energy reconstruction in the CV space</title>
+<p>The bias potentials became stable after a simulation time t<sub>eq</sub> = 0.5 μs for Val60 and t<sub>eq</sub> = 0.32 for GB3. The simulations were further run up to 5 μs in order to reconstruct the free-energy landscape of the proteins. The configurations were then grouped together in microstates by dividing the 4-dimensional CV-space into a grid of small hypercubes [<xref rid="pcbi.1004435.ref027" ref-type="bibr">27</xref>,<xref rid="pcbi.1004435.ref048" ref-type="bibr">48</xref>]. Each frame of the trajectory was assigned to the hypercube to which it belongs and the set of frames contained in a hypercube defined a microstate. The relative free energies of each microstate were corrected using the effect of the bias. They were estimated by a WHAM approach as described previously [<xref rid="pcbi.1004435.ref048" ref-type="bibr">48</xref>] using METAGUI [<xref rid="pcbi.1004435.ref027" ref-type="bibr">27</xref>] and Visual Molecular Dynamics (VMD) [<xref rid="pcbi.1004435.ref049" ref-type="bibr">49</xref>] interface. In total, 1451 and 1707 microstates and corresponding free energies were identified for Val60 and GB3, respectively.</p>
+</sec>
+<sec id="sec017">
+<title>CamTube availability</title>
+<p>The CamTube force field is publicly available through GROMACS, with also scripts available in PLUMED. [<xref rid="pcbi.1004435.ref047" ref-type="bibr">47</xref>].</p>
+</sec>
+</sec>
+</body>
+<back>
+<ack>
+<p>We thank Prof. Martin Karplus, Prof. Christopher M. Dobson, Prof. Amos Maritan and Dr. Massimo Sandal for many important discussions about the tube model.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1004435.ref001"><label>1</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Anfinsen</surname> <given-names>C</given-names></name> (<year>1973</year>) <article-title>Principles that Govern the Folding of Protein Chains</article-title>. <source>Science</source> <volume>181</volume>: <fpage>223</fpage>–<lpage>230</lpage>. <object-id pub-id-type="pmid">4124164</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref002"><label>2</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bryngelson</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Onuchic</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Socci</surname> <given-names>N</given-names></name>, <name name-style="western"><surname>Wolynes</surname> <given-names>P</given-names></name> (<year>1995</year>) <article-title>Funnels, Pathways and the Energy Landscape of Protein Folding: A Synthesis</article-title>. <source>Proteins</source> <volume>21</volume>: <fpage>167</fpage>–<lpage>195</lpage>. <object-id pub-id-type="pmid">7784423</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref003"><label>3</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dobson</surname> <given-names>C</given-names></name> (<year>2003</year>) <article-title>Protein folding and misfolding</article-title>. <source>Nature</source> <volume>426</volume>: <fpage>884</fpage>–<lpage>890</lpage>. <object-id pub-id-type="pmid">14685248</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref004"><label>4</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Onuchic</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Luthey-Schulten</surname> <given-names>Z</given-names></name>, <name name-style="western"><surname>Wolynes</surname> <given-names>P</given-names></name> (<year>1997</year>) <article-title>Theory of protein folding: The energy landscape perspective</article-title>. <source>Annual Review of Physical Chemistry</source> <volume>48</volume>: <fpage>545</fpage>–<lpage>600</lpage>. <object-id pub-id-type="pmid">9348663</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref005"><label>5</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dill</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Chan</surname> <given-names>HS</given-names></name> (<year>1997</year>) <article-title>From Levinthal to pathways to funnels</article-title>. <source>Nature Structural Biology</source> <volume>4</volume>: <fpage>10</fpage>–<lpage>19</lpage>. <object-id pub-id-type="pmid">8989315</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref006"><label>6</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Holm</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Sander</surname> <given-names>C</given-names></name> (<year>1996</year>) <article-title>Mapping the protein universe</article-title>. <source>Science</source> <volume>273</volume>: <fpage>595</fpage>–<lpage>602</lpage>. <object-id pub-id-type="pmid">8662544</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref007"><label>7</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hartl</surname> <given-names>U</given-names></name>, <name name-style="western"><surname>Hayer-Hartl</surname> <given-names>M</given-names></name> (<year>2009</year>) <article-title>Converging concepts of protein folding in vitro and in vivo</article-title>. <source>Nature Structural &amp; Molecular Biology</source> <volume>16</volume>: <fpage>574</fpage>–<lpage>581</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nsmb.1591" xlink:type="simple">10.1038/nsmb.1591</ext-link></comment> <object-id pub-id-type="pmid">19491934</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref008"><label>8</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chothia</surname> <given-names>C</given-names></name> (<year>1992</year>) <article-title>Proteins. One thousand families for the molecular biologist</article-title>. <source>Nature</source> <volume>357</volume>: <fpage>543</fpage>–<lpage>544</lpage>. <object-id pub-id-type="pmid">1608464</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref009"><label>9</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chothia</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Gough</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Vogel</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Teichmann</surname> <given-names>S</given-names></name> (<year>2003</year>) <article-title>Evolution of the protein repertoire</article-title>. <source>Science</source> <volume>300</volume>: <fpage>1701</fpage>–<lpage>1703</lpage>. <object-id pub-id-type="pmid">12805536</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref010"><label>10</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Denton</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Marshall</surname> <given-names>C</given-names></name> (<year>2001</year>) <article-title>Laws of form revisited</article-title>. <source>Nature</source> <volume>410</volume>.</mixed-citation></ref>
+<ref id="pcbi.1004435.ref011"><label>11</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tozzini</surname> <given-names>V</given-names></name> (<year>2005</year>) <article-title>Coarse-grained models for proteins</article-title>. <source>Current Opinion in Structural Biology</source> <volume>15</volume>: <fpage>144</fpage>–<lpage>150</lpage>. <object-id pub-id-type="pmid">15837171</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref012"><label>12</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wu</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Shea</surname> <given-names>J-E</given-names></name> (<year>2011</year>) <article-title>Coarse-grained models for protein aggregation</article-title>. <source>Current Opinion in Structural Biology</source> <volume>21</volume>: <fpage>209</fpage>–<lpage>220</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.sbi.2011.02.002" xlink:type="simple">10.1016/j.sbi.2011.02.002</ext-link></comment> <object-id pub-id-type="pmid">21371882</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref013"><label>13</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>O'Brien</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Christodoulou</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Vendruscolo</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Dobson</surname> <given-names>C</given-names></name> (<year>2012</year>) <article-title>Trigger Factor Slows Co-translational Folding through Kinetic Trapping while Sterically Protecting the Nascent Chain from Aberrant Cytosolic Interactions</article-title>. <source>Journal of the American Chemical Society</source> <volume>134</volume>: <fpage>10920</fpage>–<lpage>10932</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/ja302305u" xlink:type="simple">10.1021/ja302305u</ext-link></comment> <object-id pub-id-type="pmid">22680285</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref014"><label>14</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Miller</surname> <given-names>T</given-names></name> (<year>2012</year>) <article-title>Long-Timescale Dynamics and Regulation of Sec-Facilitated Protein Translocation</article-title>. <source>Cell Reports</source> <volume>2</volume>: <fpage>927</fpage>–<lpage>937</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.celrep.2012.08.039" xlink:type="simple">10.1016/j.celrep.2012.08.039</ext-link></comment> <object-id pub-id-type="pmid">23084746</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref015"><label>15</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ueda</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Taketomi</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Gō</surname> <given-names>N</given-names></name> (<year>1978</year>) <article-title>Studies on protein folding, unfolding, and fluctuations by computer simulation. II. A. Three-dimensional lattice model of lysozyme</article-title>. <source>Biopolymers</source> <volume>17</volume>: <fpage>1531</fpage>–<lpage>1548</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004435.ref016"><label>16</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Marrink</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Risselada</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Yefimov</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Tieleman</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>de Vries</surname> <given-names>A</given-names></name> (<year>2007</year>) <article-title>The MARTINI force field: coarse grained model for biomolecular simulations</article-title>. <source>The Journal of Physical Chemistry B</source> <volume>111</volume>: <fpage>7812</fpage>–<lpage>7824</lpage>. <object-id pub-id-type="pmid">17569554</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref017"><label>17</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Monticelli</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Kandasamy</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Periole</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Larson</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>Tieleman</surname> <given-names>P</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>The MARTINI Coarse-Grained Force Field: Extension to Proteins</article-title>. <source>Journal of Chemical Theory and Computation</source> <volume>4</volume>: <fpage>819</fpage>–<lpage>834</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004435.ref018"><label>18</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hess</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Kutzner</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>van der Spoel</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Lindahl</surname> <given-names>E</given-names></name> (<year>2008</year>) <article-title>GROMACS 4: Algorithms for Highly Efficient, Load-Balanced, and Scalable Molecular Simulation</article-title>. <source>Journal of Chemical Theory and Computation</source> <volume>4</volume>: <fpage>435</fpage>–<lpage>447</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004435.ref019"><label>19</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Maritan</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Micheletti</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Trovato</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Banavar</surname> <given-names>J</given-names></name> (<year>2000</year>) <article-title>Optimal shapes of compact strings</article-title>. <source>Nature</source> <volume>406</volume>: <fpage>287</fpage>–<lpage>290</lpage>. <object-id pub-id-type="pmid">10917526</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref020"><label>20</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Banavar</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Maritan</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Micheletti</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Trovato</surname> <given-names>A</given-names></name> (<year>2002</year>) <article-title>Geometry and physics of proteins</article-title>. <source>Proteins: Structure, Function, and Bioinformatics</source> <volume>47</volume>: <fpage>315</fpage>–<lpage>322</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004435.ref021"><label>21</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Banavar</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Maritan</surname> <given-names>A</given-names></name> (<year>2007</year>) <article-title>Physics of proteins</article-title>. <source>Annual Review of Biophysics and Biomolecular Structure</source> <volume>36</volume>: <fpage>261</fpage>–<lpage>280</lpage>. <object-id pub-id-type="pmid">17477839</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref022"><label>22</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hoang</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Trovato</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Seno</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Banavar</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Maritan</surname> <given-names>A</given-names></name> (<year>2004</year>) <article-title>Geometry and symmetry presculpt the free-energy landscape of proteins</article-title>. <source>PNAS</source> <volume>101</volume>: <fpage>7960</fpage>–<lpage>7964</lpage>. <object-id pub-id-type="pmid">15148372</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref023"><label>23</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hoang</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Marsella</surname> <given-names>L</given-names></name>, <name name-style="western"><surname>Trovato</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Seno</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Banavar</surname> <given-names>J</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Common attributes of native-state structures of proteins, disordered proteins, and amyloid</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source> <volume>103</volume>: <fpage>6883</fpage>–<lpage>6888</lpage>. <object-id pub-id-type="pmid">16624879</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref024"><label>24</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Coluzza</surname> <given-names>I</given-names></name> (<year>2011</year>) <article-title>A Coarse-Grained Approach to Protein Design: Learning from Design to Understand Folding</article-title>. <source>Plos One</source> <volume>6</volume>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0020853" xlink:type="simple">10.1371/journal.pone.0020853</ext-link></comment> <object-id pub-id-type="pmid">21747930</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref025"><label>25</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cossio</surname> <given-names>P</given-names></name>, <name name-style="western"><surname>Trovato</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Pietrucci</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Seno</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Maritan</surname> <given-names>A</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Exploring the Universe of Protein Structures beyond the Protein Data Bank</article-title>. <source>Plos Computational Biology</source> <volume>6</volume>: <fpage>e1000957</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1000957" xlink:type="simple">10.1371/journal.pcbi.1000957</ext-link></comment> <object-id pub-id-type="pmid">21079678</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref026"><label>26</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Piana</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Laio</surname> <given-names>A</given-names></name> (<year>2007</year>) <article-title>A Bias-Exchange Approach to Protein Folding</article-title>. <source>J Phys Chem B</source> <volume>111</volume>: <fpage>4553</fpage>–<lpage>4559</lpage>. <object-id pub-id-type="pmid">17419610</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref027"><label>27</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Biarnés</surname> <given-names>X</given-names></name>, <name name-style="western"><surname>Pietrucci</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Marinelli</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Laio</surname> <given-names>A</given-names></name> (<year>2012</year>) <article-title>METAGUI. A VMD interface for analyzing metadynamics and molecular dynamics simulations</article-title>. <source>Computer Physics Communications</source> <volume>183</volume>: <fpage>203</fpage>–<lpage>211</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004435.ref028"><label>28</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Orengo</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Michie</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Jones</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Jones</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Swindells</surname> <given-names>M</given-names></name>, <etal>et al</etal>. (<year>1997</year>) <article-title>CATH–a hierarchic classification of protein domain structures</article-title>. <source>Structure</source> <volume>5</volume>: <fpage>1093</fpage>–<lpage>1109</lpage>. <object-id pub-id-type="pmid">9309224</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref029"><label>29</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname> <given-names>Y</given-names></name>, <name name-style="western"><surname>Skolnick</surname> <given-names>J</given-names></name> (<year>2004</year>) <article-title>Scoring function for automated assessment of protein structure template quality</article-title>. <source>Proteins</source> <volume>57</volume>: <fpage>702</fpage>–<lpage>710</lpage>. <object-id pub-id-type="pmid">15476259</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref030"><label>30</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Auer</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Miller</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Krivov</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Dobson</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Karplus</surname> <given-names>M</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Importance of metastable states in the free energy landscapes of polypeptide chains</article-title>. <source>Physical Review Letters</source> <volume>99</volume>. <object-id pub-id-type="pmid">17995375</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref031"><label>31</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Auer</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Dobson</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Vendruscolo</surname> <given-names>M</given-names></name> (<year>2007</year>) <article-title>Characterization of the nucleation barriers for protein aggregation and amyloid formation</article-title>. <source>Hfsp Journal</source> <volume>1</volume>: <fpage>137</fpage>–<lpage>146</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2976/1.2760023" xlink:type="simple">10.2976/1.2760023</ext-link></comment> <object-id pub-id-type="pmid">19404419</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref032"><label>32</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Marenduzzo</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Flammini</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Trovato</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Banavar</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Maritan</surname> <given-names>A</given-names></name> (<year>2005</year>) <article-title>Physics of thick polymers</article-title>. <source>Journal of Polymer Science Part B-Polymer Physics</source> <volume>43</volume>: <fpage>650</fpage>–<lpage>679</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004435.ref033"><label>33</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Auer</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Dobson</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Vendruscolo</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Maritan</surname> <given-names>A</given-names></name> (<year>2008</year>) <article-title>Self-Templated Nucleation in Peptide and Protein Aggregation</article-title>. <source>Physical Review Letters</source> <volume>101</volume>. <object-id pub-id-type="pmid">19113754</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref034"><label>34</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Auer</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Meersman</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Dobson</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Vendruscolo</surname> <given-names>M</given-names></name> (<year>2008</year>) <article-title>A Generic Mechanism of Emergence of Amyloid Protofilaments from Disordered Oligomeric Aggregates</article-title>. <source>Plos Computational Biology</source> <volume>4</volume>: <fpage>e1000222</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1000222" xlink:type="simple">10.1371/journal.pcbi.1000222</ext-link></comment> <object-id pub-id-type="pmid">19008938</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref035"><label>35</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Auer</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Trovato</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Vendruscolo</surname> <given-names>M</given-names></name> (<year>2009</year>) <article-title>A Condensation-Ordering Mechanism in Nanoparticle-Catalyzed Peptide Aggregation</article-title>. <source>Plos Computational Biology</source> <volume>5</volume>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1000458" xlink:type="simple">10.1371/journal.pcbi.1000458</ext-link></comment> <object-id pub-id-type="pmid">19680431</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref036"><label>36</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Poletto</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Giacometti</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Trovato</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Banavar</surname> <given-names>J</given-names></name>, <name name-style="western"><surname>Maritan</surname> <given-names>A</given-names></name> (<year>2008</year>) <article-title>Emergence of secondary motifs in tubelike polymers in a solvent</article-title>. <source>Physical Review E</source> <volume>77</volume>.</mixed-citation></ref>
+<ref id="pcbi.1004435.ref037"><label>37</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vogel</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Neuhaus</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Bachmann</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Janke</surname> <given-names>W</given-names></name> (<year>2009</year>) <article-title>Thermodynamics of tubelike flexible polymers</article-title>. <source>Physical Review E</source> <volume>80</volume>.</mixed-citation></ref>
+<ref id="pcbi.1004435.ref038"><label>38</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wolff</surname> <given-names>K</given-names></name>, <name name-style="western"><surname>Vendruscolo</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Porto</surname> <given-names>M</given-names></name> (<year>2011</year>) <article-title>Coarse-grained model for protein folding based on structural profiles</article-title>. <source>Physical Review E</source> <volume>84</volume>.</mixed-citation></ref>
+<ref id="pcbi.1004435.ref039"><label>39</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Auer</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Kashchiev</surname> <given-names>D</given-names></name> (<year>2010</year>) <article-title>Phase Diagram of alpha-Helical and beta-Sheet Forming Peptides</article-title>. <source>Physical Review Letters</source> <volume>104</volume>. <object-id pub-id-type="pmid">20482086</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref040"><label>40</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zheng</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Andrec</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Gallicchio</surname> <given-names>E</given-names></name>, <name name-style="western"><surname>Levy</surname> <given-names>R</given-names></name> (<year>2009</year>) <article-title>Recovering Kinetics from a Simplified Protein Folding Model Using Replica Exchange Simulations: A Kinetic Network and Effective Stochastic Dynamics</article-title>. <source>Journal of Physical Chemistry B</source> <volume>113</volume>: <fpage>11702</fpage>–<lpage>11709</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004435.ref041"><label>41</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Best</surname> <given-names>R</given-names></name>, <name name-style="western"><surname>de Sancho</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Mittal</surname> <given-names>J</given-names></name> (<year>2012</year>) <article-title>Residue-Specific alpha-Helix Propensities from Molecular Simulation</article-title>. <source>Biophysical Journal</source> <volume>102</volume>: <fpage>1462</fpage>–<lpage>1467</lpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.bpj.2012.02.024" xlink:type="simple">10.1016/j.bpj.2012.02.024</ext-link></comment> <object-id pub-id-type="pmid">22455930</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref042"><label>42</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hess</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Bekker</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Berendsen</surname> <given-names>H</given-names></name>, <name name-style="western"><surname>Fraaije</surname> <given-names>J</given-names></name> (<year>1997</year>) <article-title>LINCS: A linear constraint solver for molecular simulations</article-title>. <source>Journal of Computational Chemistry</source> <volume>18</volume>: <fpage>1463</fpage>–<lpage>1472</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004435.ref043"><label>43</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ramachandran</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Ramakrishnan</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Sasisekharan</surname> <given-names>V</given-names></name> (<year>1963</year>) <article-title>Stereochemistry of polypeptide chain configurations</article-title>. <source>Journal of Molecular Biology</source> <volume>7</volume>: <fpage>95</fpage>–<lpage>99</lpage>. <object-id pub-id-type="pmid">13990617</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref044"><label>44</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ho</surname> <given-names>B</given-names></name>, <name name-style="western"><surname>Thomas</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Brasseur</surname> <given-names>R</given-names></name> (<year>2003</year>) <article-title>Revisiting the Ramachandran plot: Hard-sphere repulsion, electrostatics, and H-bonding in the α-helix</article-title>. <source>Protein Science</source> <volume>12</volume>: <fpage>2508</fpage>–<lpage>2522</lpage>. <object-id pub-id-type="pmid">14573863</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref045"><label>45</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Betancourt</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Thirumalai</surname> <given-names>D</given-names></name> (<year>1999</year>) <article-title>Pair potentials for protein folding: Choice of reference states and sensitivity of predicted native states to variations in the interaction schemes</article-title>. <source>Protein Science</source> <volume>8</volume>: <fpage>361</fpage>–<lpage>369</lpage>. <object-id pub-id-type="pmid">10048329</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref046"><label>46</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hovmoller</surname> <given-names>S</given-names></name>, <name name-style="western"><surname>Zhou</surname> <given-names>T</given-names></name>, <name name-style="western"><surname>Ohlson</surname> <given-names>T</given-names></name> (<year>2002</year>) <article-title>Conformations of amino acids in proteins</article-title>. <source>Acta Crystallographica Section D</source> <volume>58</volume>: <fpage>768</fpage>–<lpage>776</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004435.ref047"><label>47</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bonomi</surname> <given-names>M</given-names></name>, <name name-style="western"><surname>Branduardi</surname> <given-names>D</given-names></name>, <name name-style="western"><surname>Bussi</surname> <given-names>G</given-names></name>, <name name-style="western"><surname>Camilloni</surname> <given-names>C</given-names></name>, <name name-style="western"><surname>Provasi</surname> <given-names>D</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>PLUMED: A portable plugin for free-energy calculations with molecular dynamics</article-title>. <source>Computer Physics Communications</source> <volume>180</volume>: <fpage>1961</fpage>–<lpage>1972</lpage>.</mixed-citation></ref>
+<ref id="pcbi.1004435.ref048"><label>48</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Marinelli</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Pietrucci</surname> <given-names>F</given-names></name>, <name name-style="western"><surname>Laio</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Piana</surname> <given-names>S</given-names></name> (<year>2009</year>) <article-title>A Kinetic Model of Trp-Cage Folding from Multiple Biased Molecular Dynamics Simulations</article-title>. <source>PLOS Computational Biology</source> <volume>5</volume>: <fpage>e1000452</fpage>. <comment>doi: <ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.1000452" xlink:type="simple">10.1371/journal.pcbi.1000452</ext-link></comment> <object-id pub-id-type="pmid">19662155</object-id></mixed-citation></ref>
+<ref id="pcbi.1004435.ref049"><label>49</label><mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Humphrey</surname> <given-names>W</given-names></name>, <name name-style="western"><surname>Dalke</surname> <given-names>A</given-names></name>, <name name-style="western"><surname>Schulten</surname> <given-names>K</given-names></name> (<year>1996</year>) <article-title>VMD: Visual molecular dynamics</article-title>. <source>Journal of Molecular Graphics &amp; Modelling</source> <volume>14</volume>: <fpage>33</fpage>–<lpage>38</lpage>.</mixed-citation></ref>
+</ref-list>
+</back>
+</article>

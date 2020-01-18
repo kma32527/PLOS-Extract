@@ -1,0 +1,948 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="publisher-id">plos</journal-id>
+      <journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+      <journal-id journal-id-type="pmc">ploscomp</journal-id>
+      <journal-title-group>
+        <journal-title>PLoS Computational Biology</journal-title>
+      </journal-title-group>
+      <issn pub-type="ppub">1553-734X</issn>
+      <issn pub-type="epub">1553-7358</issn>
+      <publisher>
+        <publisher-name>Public Library of Science</publisher-name>
+        <publisher-loc>San Francisco, USA</publisher-loc>
+      </publisher>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="publisher-id">PCOMPBIOL-D-11-01966</article-id>
+      <article-id pub-id-type="doi">10.1371/journal.pcbi.1002790</article-id>
+      <article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Research Article</subject>
+        </subj-group>
+        <subj-group subj-group-type="Discipline-v2">
+          <subject>Biology</subject>
+          <subj-group>
+            <subject>Computational biology</subject>
+            <subj-group>
+              <subject>Molecular genetics</subject>
+              <subj-group>
+                <subject>Gene expression</subject>
+              </subj-group>
+            </subj-group>
+            <subj-group>
+              <subject>Systems biology</subject>
+            </subj-group>
+          </subj-group>
+        </subj-group>
+        <subj-group subj-group-type="Discipline">
+          <subject>Computational Biology</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>Localizing Genes to Cerebellar Layers by Classifying ISH Images</article-title>
+        <alt-title alt-title-type="running-head">Localizing Genes to Cerebellar Layers Using Images</alt-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Kirsch</surname>
+            <given-names>Lior</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Liscovitch</surname>
+            <given-names>Noa</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+        </contrib>
+        <contrib contrib-type="author" xlink:type="simple">
+          <name name-style="western">
+            <surname>Chechik</surname>
+            <given-names>Gal</given-names>
+          </name>
+          <xref ref-type="aff" rid="aff1"/>
+          <xref ref-type="corresp" rid="cor1">
+            <sup>*</sup>
+          </xref>
+        </contrib>
+      </contrib-group>
+      <aff id="aff1">
+        <addr-line>The Gonda Multidisciplinary Brain Research Center, Bar-Ilan University, Ramat Gan, Israel</addr-line>
+      </aff>
+      <contrib-group>
+        <contrib contrib-type="editor" xlink:type="simple">
+          <name name-style="western">
+            <surname>Ohler</surname>
+            <given-names>Uwe</given-names>
+          </name>
+          <role>Editor</role>
+          <xref ref-type="aff" rid="edit1"/>
+        </contrib>
+      </contrib-group>
+      <aff id="edit1">
+        <addr-line>Duke University, United States of America</addr-line>
+      </aff>
+      <author-notes>
+        <corresp id="cor1">* E-mail: <email xlink:type="simple">gal.chechik@biu.ac.il</email></corresp>
+        <fn fn-type="conflict">
+          <p>The authors have declared that no competing interests exist.</p>
+        </fn>
+        <fn fn-type="con">
+          <p>Conceived and designed the experiments: LK NL GC. Performed the experiments: LK NL. Analyzed the data: LK NL GC. Wrote the paper: LK NL GC.</p>
+        </fn>
+      </author-notes>
+      <pub-date pub-type="collection">
+        <month>12</month>
+        <year>2012</year>
+      </pub-date>
+      <pub-date pub-type="epub">
+        <day>20</day>
+        <month>12</month>
+        <year>2012</year>
+      </pub-date>
+      <volume>8</volume>
+      <issue>12</issue>
+      <elocation-id>e1002790</elocation-id>
+      <history>
+        <date date-type="received">
+          <day>22</day>
+          <month>12</month>
+          <year>2011</year>
+        </date>
+        <date date-type="accepted">
+          <day>31</day>
+          <month>8</month>
+          <year>2012</year>
+        </date>
+      </history>
+      <permissions>
+        <copyright-year>2012</copyright-year>
+        <copyright-holder>Kirsch et al</copyright-holder>
+        <license xlink:type="simple">
+          <license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p>
+        </license>
+      </permissions>
+      <abstract>
+        <p>Gene expression controls how the brain develops and functions. Understanding control processes in the brain is particularly hard since they involve numerous types of neurons and glia, and very little is known about which genes are expressed in which cells and brain layers. Here we describe an approach to detect genes whose expression is primarily localized to a specific brain layer and apply it to the mouse cerebellum. We learn typical spatial patterns of expression from a few markers that are known to be localized to specific layers, and use these patterns to predict localization for new genes. We analyze images of in-situ hybridization (ISH) experiments, which we represent using histograms of local binary patterns (LBP) and train image classifiers and gene classifiers for four layers of the cerebellum: the Purkinje, granular, molecular and white matter layer. On held-out data, the layer classifiers achieve accuracy above 94% (AUC) by representing each image at multiple scales and by combining multiple image scores into a single gene-level decision. When applied to the full mouse genome, the classifiers predict specific layer localization for hundreds of new genes in the Purkinje and granular layers. Many genes localized to the Purkinje layer are likely to be expressed in astrocytes, and many others are involved in lipid metabolism, possibly due to the unusual size of Purkinje cells.</p>
+      </abstract>
+      <abstract abstract-type="summary">
+        <title>Author Summary</title>
+        <p>The way gene expression is spatially distributed across the brain reflects the function and micro-structure of neural tissues. Measuring these patterns is hard because brain tissues are composed of many types of neurons and glia cells, and average gene expression across a region mixes transcripts from many different cells. We present here an approach to identify genes that are primarily expressed in specific brain layers or cell types, based on analyzing high resolution in-situ hybridization images. By learning the spatial patterns of a few known cell markers, we annotate the expression patterns of hundreds of new genes, and predict the layers and cell types they are expressed in.</p>
+      </abstract>
+      <funding-group>
+        <funding-statement>GC was supported by the Israeli Science Foundation grant #1001/08, and by a Marie Curie reintegration grant #PIRG06-GA-2009-256566. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement>
+      </funding-group>
+      <counts>
+        <page-count count="13"/>
+      </counts>
+    </article-meta>
+  </front>
+  <body>
+    <sec id="s1">
+      <title>Introduction</title>
+      <p>A key problem in current neuroscience is to characterize how the transcriptome governs the structure and function of the brain <xref ref-type="bibr" rid="pcbi.1002790-Kang1">[1]</xref>. The challenge is particularly hard in the mammalian central nervous system because every brain region contains numerous types of neurons, astrocytes, and other non brain-specific cells such as blood vessels and immune cells. Each of these cell types have their own molecular profile, and typically exhibit unique patterns of gene expression <xref ref-type="bibr" rid="pcbi.1002790-Kang1">[1]</xref>, <xref ref-type="bibr" rid="pcbi.1002790-Colantuoni1">[2]</xref>. These patterns may depend not only on the individual cells, but also on their interaction with neighboring cells. Cell-specific expression patterns determine the formation of both the microcircuitry and the long-range neuronal connections through specific molecules <xref ref-type="bibr" rid="pcbi.1002790-Dickson1">[3]</xref>. These patterns also shape the functional properties of neurons and glia. Understanding the molecular basis of brain function therefore requires dissecting gene expression patterns into their cell-specific and layer-specific components.</p>
+      <p>Unfortunately, measuring layer-specific expression is costly and time consuming, and as a result, only a few such datasets have ever been collected <xref ref-type="bibr" rid="pcbi.1002790-Belgard1">[4]</xref>–<xref ref-type="bibr" rid="pcbi.1002790-Koirala1">[8]</xref>. Cell-type specific data can be collected by growing cell cultures in vitro, which may differ from natural growth conditions, or by sorting cells using known markers <xref ref-type="bibr" rid="pcbi.1002790-Lobo1">[6]</xref>–<xref ref-type="bibr" rid="pcbi.1002790-Koirala1">[8]</xref>. It is also possible to collect cells from specific cortical layers using laser microdissection <xref ref-type="bibr" rid="pcbi.1002790-Bernard1">[5]</xref>. Alternatively, in some cases it is possible to profile the transcriptome of strains that lack a specific type of cells, and compare them to normal developing animals <xref ref-type="bibr" rid="pcbi.1002790-Rong1">[9]</xref>.</p>
+      <p>Here we propose another approach, based on machine vision, to identify layer-specific genes. The method is based on modeling the spatial expression patterns observed in <italic>in-situ hybridization</italic> (ISH) images of a few genes that are known to be expressed exclusively in specific layers (cell-type markers). Using the learned patterns, we then automatically scan the genome-wide ISH database and detect all other layer-specific genes.</p>
+      <p>The current paper focuses on the cerebellum, which has been extensively studied due to its highly organized laminar structure. The cerebellum contains three cortical layers and a white matter layer (<xref ref-type="fig" rid="pcbi-1002790-g001">Figure 1</xref>). The innermost cortical layer is the <italic>granular layer</italic>, a densely packed layer containing mossy fibers, the cell bodies of granule cells, uni-polar brush cells, and Golgi cells. The middle cerebellar layer is the <italic>Purkinje layer</italic>, containing the cell bodies of the Purkinje cells, Candelabrum interneurons and Bergmann glia. The third, outermost, cortical layer is the <italic>molecular layer</italic>, containing the dendritic arbors of the Purkinje cells and the inhibitory Stellate and basket interneurons. These three cerebellar cortical layers and cell types are illustrated in <xref ref-type="fig" rid="pcbi-1002790-g001">Figure 1 A</xref>. Finally, the white matter layer resides within the inner most part of the cerebellum. For a more detailed review of cerebellar cell types see <xref ref-type="bibr" rid="pcbi.1002790-Schilling1">[10]</xref>.</p>
+      <fig id="pcbi-1002790-g001" position="float">
+        <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.g001</object-id>
+        <label>Figure 1</label>
+        <caption>
+          <title>Cerebellum layers and cell types.</title>
+          <p>(<bold>A</bold>) Cell types and their location across the cerebellar cortical layers. (<bold>B</bold>) Cerebellum ISH image of Calb1. The different layers can be easily discriminated. P - the Purkinje layer; G - the granular layer; M - the molecular layer; W - the white matter.</p>
+        </caption>
+        <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.g001" position="float" xlink:type="simple"/>
+      </fig>
+      <p>We use the large-scale collection of in-situ-hybridization images of the cerebellum collected by the Allen Institute <xref ref-type="bibr" rid="pcbi.1002790-Lein1">[11]</xref>, together with a small list of genetic markers of cell types that are known to reside in specific cerebellar layers. To achieve high classification accuracy, we combine multiple images of each gene. Each ISH image is represented using histograms of <italic>local binary patterns</italic> (LBP) <xref ref-type="bibr" rid="pcbi.1002790-Ojala1">[12]</xref> that are collected at multiple resolutions. This representation captures characteristic spatial structures at multiple scales and improves accuracy significantly over a single-resolution representation.</p>
+      <p>When the trained classifiers are evaluated on a held-out data of similar markers, they correctly classify each of the four main cerebellum structures with more than <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e001" xlink:type="simple"/></inline-formula> accuracy (AUC). Furthermore, when applied to the full mouse genome, manual inspection of the 250 top predictions of each class shows that the classifiers successfully identify localized genes. Overall, we identify <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e002" xlink:type="simple"/></inline-formula> genes localized primarily to the Purkinje layer, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e003" xlink:type="simple"/></inline-formula> genes in the granular layer, and several new layer specific markers for the white matter and the molecular layer. Some of these genes were previously proposed as layer-specific markers, but hundreds of the genes detected have never been associated with these layers.</p>
+    </sec>
+    <sec id="s2">
+      <title>Results</title>
+      <p>This paper is organized as follows. We start by describing the ISH image dataset and discuss our machine vision approach for classification. Next, we describe cross-validation experiments that evaluate the accuracy of the trained classifiers. We then analyze the properties of new layer-specific predictions, also during brain development. Finally, we compare the predicted layer-specific genes to previous literature, and discuss in details two new examples of such genes, Fam107b and Map2k6.</p>
+      <sec id="s2a">
+        <title>Expression patterns measured using in situ hybridization</title>
+        <p>Our approach is based on learning spatial gene expression patterns measured using non-isotopic ISH. ISH is used to localize RNA expression of a target gene in a tissue. We used ISH data collected by the Allen Brain Atlas (ABA) <xref ref-type="bibr" rid="pcbi.1002790-Lein1">[11]</xref> available at <ext-link ext-link-type="uri" xlink:href="http://mouse.brain-map.org" xlink:type="simple">http://mouse.brain-map.org</ext-link>. ISH measurements were gathered for the adult mouse full genome, covering <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e004" xlink:type="simple"/></inline-formula> genes. For each gene, mice brains were dissected into slices in sagittal and coronal sections, and the slices were fluorescently labeled and imaged to reveal places where the gene is expressed. The outcome of this process is a set of images showing the gene expression pattern across the whole mouse brain in high spatial resolution.</p>
+        <p>This paper focuses on four distinct layers of the mouse cerebellum, each layer contains a different set of neurons and glia cells. <xref ref-type="fig" rid="pcbi-1002790-g002">Figure 2 A–D</xref> shows examples of sections from the mouse cerebellum, stained with four different markers. The leftmost panel depicts the expression of Calbindin1 (Calb1), a well known marker of Purkinje cell bodies, <xref ref-type="fig" rid="pcbi-1002790-g002">Figure 2A</xref>. Purkinje cells are known to be organized in the thin Purkinje layer, and indeed, the Calb1 expression forms a distinct spatial pattern in the form of a thin stripe. Other layers of the cerebellum can also be observed: <xref ref-type="fig" rid="pcbi-1002790-g002">Figure 2B</xref> shows the expression of Neurod1, a known marker of granular cells that reside in the granular layer; <xref ref-type="fig" rid="pcbi-1002790-g002">Figure 2C</xref> shows the expression of Plp1, a myelin proteolipid protein marking cells which reside in the underlying cerebellum white matter; <xref ref-type="fig" rid="pcbi-1002790-g002">Figure 2 D</xref> shows the expression of Gad1, which is expressed in the molecular layer and also in the Purkinje layer. The molecular layer contains the dendritic arbors of the Purkinje cells, whose bodies lie in the Purkinje layer (<xref ref-type="fig" rid="pcbi-1002790-g001">Figure 1A</xref>). As a result, most genes expressed in the molecular layer are also expressed in the Purkinje layer. We therefore defined a class that contains genes which show expression in the molecular layer and also in the Purkinje layer.</p>
+        <fig id="pcbi-1002790-g002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.g002</object-id>
+          <label>Figure 2</label>
+          <caption>
+            <title>Masked ISH images of the mouse cerebellum from the Allen Brain Atlas.</title>
+            <p>Each image shows expression of a different gene, highlighting cells located at a different layer. Images are based on ISH measurements from ABA, but shown using our own color map for better visualization in print. (<bold>A</bold>) Calb1, expressed in the Purkinje layer. (<bold>B</bold>) Neurod1, expressed in the granular layer. (<bold>C</bold>) Plp1, expressed in the white matter. (<bold>D</bold>) Gad1, expressed in the molecular and Purkinje layers.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.g002" position="float" xlink:type="simple"/>
+        </fig>
+        <p>While a few dozen genes are already known to be specifically expressed in particular cell types and cerebellar layers, such location information is still unknown for most of the mouse genome. Here we use these few genes that are known to mark a specific cerebellar layer, learn their spatial expression pattern and predict new localization information for many genes. We train a separate binary classifier for each of the four classes: Purkinje, granular, molecular and white-matter. The molecular class includes genes that are expressed both in the molecular and in the Pukinje layer, but we name this class <italic>molecular</italic> for simplicity. The next section discusses the representation of the ISH images used as input to these classifiers.</p>
+      </sec>
+      <sec id="s2b">
+        <title>Representing ISH images</title>
+        <p>For natural images, there has been extensive research on extracting features that are useful for object recognition and detection <xref ref-type="bibr" rid="pcbi.1002790-Ojala1">[12]</xref>–<xref ref-type="bibr" rid="pcbi.1002790-Szeliski1">[16]</xref>. However, for ISH images of complex tissues, only little work has been done on developing such discriminative features. ISH should not be confused with single-cell FISH image analysis, which aims to identify subcellular structures. Most existing work on detection and classification of ISH tissue expression images focused on gross anatomy, where the global shape plays a prominent role. <xref ref-type="bibr" rid="pcbi.1002790-Ji1">[17]</xref>–<xref ref-type="bibr" rid="pcbi.1002790-Meng1">[21]</xref>. These methods, which employ advanced machine vision techniques and achieve state of the art results, depend on a pre-processing stage in which the images are normalized and registered. For example, <xref ref-type="bibr" rid="pcbi.1002790-Ji1">[17]</xref> used pyramid kernels to identify expression patterns in fly embryos and <xref ref-type="bibr" rid="pcbi.1002790-Puniyani1">[20]</xref> have tested a series of techniques with images that were transformed to a standard shape size and orientation. Such standardization is feasible with fly embryos whose shape is largely regular, but for brain layer recognition such standardization poses new challenges as shown below in <xref ref-type="fig" rid="pcbi-1002790-g003">Figure 3</xref>. As a result, the question of selecting a good representation for analyzing ISH expression images of brains is still open.</p>
+        <fig id="pcbi-1002790-g003" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.g003</object-id>
+          <label>Figure 3</label>
+          <caption>
+            <title>Examples of the variability within a single layer.</title>
+            <p>Shown are four genes which exhibit a high expression in the granular layer but not in the other layers. Notice the difference in texture, size, position, expression level (color) and structure shape. (<bold>A</bold>) Fxr2h. (<bold>B</bold>) Calb2. (<bold>C</bold>) Kcnj3. (<bold>D</bold>) Kcnk1.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.g003" position="float" xlink:type="simple"/>
+        </fig>
+        <p>Since images of different genes were taken from different mouse brains, and brains differ considerably in their detailed anatomy, spatial expression patterns of the same layer vary considerably across brains. <xref ref-type="fig" rid="pcbi-1002790-g003">Figure 3</xref> shows four genes expressed in the granular layer, illustrating the variability in size and shape across individuals. As a result of these differences, naive approaches that use voxel-to-voxel spatial correlations between images <xref ref-type="bibr" rid="pcbi.1002790-Hawrylycz1">[22]</xref> often fail to match images of the same layer. This problem is particularly difficult with the cerebellum with its elongated structures that are sensitive to small shifts of the images. A good representation of an expression image should therefore be invariant to the types of distortion found across brains.</p>
+        <p>An important aspect of layer-specific expression patterns, is that they exhibit structures at multiple scales. At the coarse scale, the gross structure of the cerebellum contains “finger-like” structures, each having a width of a few millimeters (<xref ref-type="fig" rid="pcbi-1002790-g004">Figure 4 A</xref>). At the same time, genes expressed in different layers may also lead to different “textures” that can be observed at a more refined resolution (<xref ref-type="fig" rid="pcbi-1002790-g004">Figure 4 B</xref>). The texture is determined by the particular spatial distribution of the cells in which the genes are expressed. To take advantage of all these sources of information, here we analyze each image at multiple scales, by down-sampling each image before extracting features. Analysis at multiple scales has been used in many other applications, such as texture classification <xref ref-type="bibr" rid="pcbi.1002790-ajn1">[23]</xref>, and we show below that combining multiple resolutions improves classification accuracy in the current problem as well.</p>
+        <fig id="pcbi-1002790-g004" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.g004</object-id>
+          <label>Figure 4</label>
+          <caption>
+            <title>Structure and texture are captured using different spatial resolutions.</title>
+            <p>(<bold>A</bold>) A low resolution ISH image of a granular layer gene from <xref ref-type="fig" rid="pcbi-1002790-g002">Figure 2 B</xref>. The 3×3 LBP grid capture the gross finger-like structure. (<bold>B</bold>) A high resolution version (zoomed to scale) of the same image. The 3×3 LBP grid captures texture patterns.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.g004" position="float" xlink:type="simple"/>
+        </fig>
+        <p>At every scale, we represented an image using a histogram of local binary patterns (LBP, <xref ref-type="bibr" rid="pcbi.1002790-Ojala1">[12]</xref>), together with the mean intensity of the image. We then combine the feature vectors from the different scales into a single representation. This representation captures both fine texture and coarser structures. For example, applying LBP to a coarsely sampled image as in <xref ref-type="fig" rid="pcbi-1002790-g004">Figure 4 A</xref> captures large structures, while applying LBP to a high resolution version of the same image can capture refined texture statistics as shown in <xref ref-type="fig" rid="pcbi-1002790-g004">Figure 4B</xref>. All four cerebellar layers contain recurring patterns at multiple scales.</p>
+      </sec>
+      <sec id="s2c">
+        <title>Two-level classification: image and gene classifiers</title>
+        <p>In our data, each gene is associated with multiple ISH images, collected from different brain slices and possibly multiple brains (typically 2–8 images per gene). Our task is to assign a cerebellar layer to each gene, rather than to classify individual images. Therefore, we need to combine classification of images into a single unified decision at the level of a single gene. Common approaches to combine scores from multiple patches, include <italic>max-pooling</italic> and <italic>average pooling</italic> <xref ref-type="bibr" rid="pcbi.1002790-Boureau1">[24]</xref>. Here we take a discriminative approache to solve this task. First, we train a classifier operating on labeled images, and then classify each gene by combining the scores provided by the image classifier.</p>
+        <p>We compared three different ways to combine image scores into a decision over genes (<italic>Mean image score</italic>, <italic>Mean LBP features</italic> and <italic>Two-level classifier</italic>). We also tested a fourth approach as a baseline, treating each image independently, and making a prediction at the level of single images.</p>
+        <p><xref ref-type="fig" rid="pcbi-1002790-g005">Figure 5</xref> shows evaluations of the precision of these four approaches, computed on held-out data. Each panel shows the ROC curve for a different layer, where the classifiers were trained to detect each cerebellar layer from a randomly selected set of genes. All classifiers achieve a very high area under the ROC curve (AUC <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e005" xlink:type="simple"/></inline-formula> for all four categories). This shows that the two-level approach succeeds to combine information from multiple images.</p>
+        <fig id="pcbi-1002790-g005" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.g005</object-id>
+          <label>Figure 5</label>
+          <caption>
+            <title>Classifier results for each cerebellar layer.</title>
+            <p>ROC curves comparing classifiers for the four layer classification tasks. For each layer, results are shown for four classifiers. Shown are results for <italic>Single image classifier</italic> (dotted purple line), <italic>Mean image score</italic> uses average pooling (dash-dotted blue line); <italic>Two levels classifier</italic> learns weights over pooling statistics using SVM (solid red line); <italic>Mean LBP features</italic> (dashed yellow line), uses the average LBP vector for each gene. Error bars denote the standard deviation across five cross-validation folds. <xref ref-type="sec" rid="s2">Results</xref> for the two layers classifier: (<bold>A</bold>) Purkinje vs random set. AUC = 0.949<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e006" xlink:type="simple"/></inline-formula>0.02. (<bold>B</bold>) Granular vs random set. AUC = 0.96<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e007" xlink:type="simple"/></inline-formula>0.017. (<bold>C</bold>) Molecular vs random set. AUC = 0.987<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e008" xlink:type="simple"/></inline-formula>0.011. (<bold>D</bold>) White matter vs random set. AUC = 0.983<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e009" xlink:type="simple"/></inline-formula>0.013.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.g005" position="float" xlink:type="simple"/>
+        </fig>
+        <p>We further trained classifiers to discriminate between every two classes (“one <italic>vs.</italic> one”). <xref ref-type="table" rid="pcbi-1002790-t001">Table 1</xref> shows that most classes can be easily discriminated, except the pair molecular <italic>vs.</italic> granular, which are confused <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e010" xlink:type="simple"/></inline-formula> of the time.</p>
+        <table-wrap id="pcbi-1002790-t001" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.t001</object-id>
+          <label>Table 1</label>
+          <caption>
+            <title>All-to-all class confusion matrix (1-AUC).</title>
+          </caption>
+          <alternatives>
+            <graphic id="pcbi-1002790-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.t001" xlink:type="simple"/>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Error (1-AUC)</td>
+                  <td align="left" rowspan="1" colspan="1">Purkinje</td>
+                  <td align="left" rowspan="1" colspan="1">Granular</td>
+                  <td align="left" rowspan="1" colspan="1">Molecular</td>
+                  <td align="left" rowspan="1" colspan="1">White matter</td>
+                  <td align="left" rowspan="1" colspan="1">Negative set</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Purkinje</td>
+                  <td align="left" rowspan="1" colspan="1">-</td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <inline-formula>
+                      <inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e011" xlink:type="simple"/>
+                    </inline-formula>
+                  </td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <inline-formula>
+                      <inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e012" xlink:type="simple"/>
+                    </inline-formula>
+                  </td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <inline-formula>
+                      <inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e013" xlink:type="simple"/>
+                    </inline-formula>
+                  </td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <inline-formula>
+                      <inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e014" xlink:type="simple"/>
+                    </inline-formula>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Granular</td>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">-</td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <inline-formula>
+                      <inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e015" xlink:type="simple"/>
+                    </inline-formula>
+                  </td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <inline-formula>
+                      <inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e016" xlink:type="simple"/>
+                    </inline-formula>
+                  </td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <inline-formula>
+                      <inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e017" xlink:type="simple"/>
+                    </inline-formula>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Molecular</td>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">-</td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <inline-formula>
+                      <inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e018" xlink:type="simple"/>
+                    </inline-formula>
+                  </td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <inline-formula>
+                      <inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e019" xlink:type="simple"/>
+                    </inline-formula>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">White matter</td>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">-</td>
+                  <td align="left" rowspan="1" colspan="1">
+                    <inline-formula>
+                      <inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e020" xlink:type="simple"/>
+                    </inline-formula>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </alternatives>
+          <table-wrap-foot>
+            <fn id="nt101">
+              <label/>
+              <p>Classification errors (1-AUC) for classifiers trained for one class against another class. All pairs can be discriminated with high confidence except granular and molecular layer genes which are confused 9% of the time.</p>
+            </fn>
+          </table-wrap-foot>
+        </table-wrap>
+        <p>To further evaluate the effect of image scale on classification accuracy, we compared the accuracy obtained using model trained at different scales (<xref ref-type="fig" rid="pcbi-1002790-g006">Figure 6</xref>). We also tested a model that uses multiple scales. Using a multi-scale representation consistently achieves higher (or similar) AUC than using any single scale. Overall, coarse resolutions perform better. Surprisingly, the granular layer and also the molecular layer can be discriminated accurately using high resolution images (<xref ref-type="fig" rid="pcbi-1002790-g006">Figure 6B,C</xref>). The high accuracy obtained when using fine-resolution features suggests that the granular and molecular layers contains texture patterns that are useful for discrimination from other layers even if their coarse expression patterns are similar.</p>
+        <fig id="pcbi-1002790-g006" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.g006</object-id>
+          <label>Figure 6</label>
+          <caption>
+            <title>The effect of image resolution on classification accuracy.</title>
+            <p>We scaled images by a factor of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e021" xlink:type="simple"/></inline-formula>, where a value of 10 means that all pixels in a 10×10 patch (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e022" xlink:type="simple"/></inline-formula> by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e023" xlink:type="simple"/></inline-formula>) were averaged into one pixel. Four classifiers are compared, one for each layer, as in <xref ref-type="fig" rid="pcbi-1002790-g005">Figure 5</xref>, but this time plotting the AUC for various downsampling factor levels. Using multiple resolutions (rightmost value) consistently improves over using a single resolution. (<bold>A</bold>) Purkinje <italic>vs</italic> random set. (<bold>B</bold>) Granular <italic>vs</italic> random set. (<bold>C</bold>) Molecular <italic>vs</italic> random set. (<bold>D</bold>) White matter <italic>vs</italic> random set.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.g006" position="float" xlink:type="simple"/>
+        </fig>
+        <p>We compared our detection results with results obtained using the ABA NeuroBlast <xref ref-type="bibr" rid="pcbi.1002790-Hawrylycz1">[22]</xref> <ext-link ext-link-type="uri" xlink:href="http://mouse.brain-map.org/" xlink:type="simple">http://mouse.brain-map.org/</ext-link>. NeuroBlast ranks genes according to their spatial correlation to a target gene. First, every in-situ image is registered to a reference template and then the spatial correlation between the registered and normalized images is computed. NeuroBlast provided a good AUC for the Purkinje layer (0.82) and the granular layer (0.73). However, NeuroBlast was less successful in detecting genes expressed in the molecular layer (0.34). For the white matter, a high AUC is obtained (0.98) and this is possibly due to the way we manually constructed labeled set of genes. Since we could not find many markers that are primarily expressed in the white matter, we used NeuroBlast to find genes that have white matter expression. NeuroBlast suggested genes which have a close expression pattern to the few known literature white matter markers. We then manually validated these suggestions. More information on the way the dataset was constructed is found in the <xref ref-type="sec" rid="s4">Methods</xref> section.</p>
+        <p>Registration based approaches, such as ABA NeuroBlast, can be sensitive to small shifts and such shifts are prevalent when aligning images of different brains. For example, a shift of a few microns can cause the thin line of the Purkinje layer to misalign with the target image, leading to a low correlation. Our registration free approach is less sensitive to such misalignments.</p>
+      </sec>
+      <sec id="s2d">
+        <title>Genome-wide predictions</title>
+        <p>The above results showed that the trained classifiers achieve high accuracy on held out data of known markers. We further applied the trained layer predictors to the full mouse genome (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e024" xlink:type="simple"/></inline-formula> genes in the ABA database). All predictions, including lists of genes that are localized to specific layers are available online at <ext-link ext-link-type="uri" xlink:href="http://chechiklab.biu.ac.il/~lior/cerebellum.html" xlink:type="simple">http://chechiklab.biu.ac.il/~lior/cerebellum.html</ext-link>. Out of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e025" xlink:type="simple"/></inline-formula> genes that are expressed in the cerebellum, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e026" xlink:type="simple"/></inline-formula> genes are predicted to be primarily expressed in the Purkinje layer, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e027" xlink:type="simple"/></inline-formula> in the granular layer, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e028" xlink:type="simple"/></inline-formula> in molecular layer and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e029" xlink:type="simple"/></inline-formula> in the white matter.</p>
+        <p>We validated the predictions by manually scanning the top predicted genes (and the bottom predicted genes - <xref ref-type="table" rid="pcbi-1002790-t002">Table 2</xref>), visualizing their measured expression patterns, and comparing them to the patterns expected at that layer. Out of the top 250 genes predicted to be localized to the Purkinje layer we correctly classified <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e030" xlink:type="simple"/></inline-formula>. Similarly, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e031" xlink:type="simple"/></inline-formula> of the top 250 granular layer prediction were accurate. The precision was worse for localization of the molecular layer: All <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e032" xlink:type="simple"/></inline-formula> prediction had a molecular expression, but <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e033" xlink:type="simple"/></inline-formula> out of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e034" xlink:type="simple"/></inline-formula> also had a granular expression. Finally, 10 out of 16 predicted white matter were positive. It should be clarified however, that many of the genes that exhibited localized expression in one cerebellar layer, are also expressed in other regions of the brain, sometimes very widely. Also, despite the fact that most of the training images in the molecular class show expression in the molecular layer and also in the Purkinje layer, our classifier was able to identify genes that show expression only in the molecular layer.</p>
+        <table-wrap id="pcbi-1002790-t002" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.t002</object-id>
+          <label>Table 2</label>
+          <caption>
+            <title>Classification results for the bottom 100 genes.</title>
+          </caption>
+          <alternatives>
+            <graphic id="pcbi-1002790-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.t002" xlink:type="simple"/>
+            <table>
+              <colgroup span="1">
+                <col align="left" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+                <col align="center" span="1"/>
+              </colgroup>
+              <thead>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1"/>
+                  <td align="left" rowspan="1" colspan="1">Granular layer</td>
+                  <td align="left" rowspan="1" colspan="1">Granular and Purkinje layers</td>
+                  <td align="left" rowspan="1" colspan="1">Purkinje layer</td>
+                  <td align="left" rowspan="1" colspan="1">Purkinje layer scattered expression</td>
+                  <td align="left" rowspan="1" colspan="1">Molecular layer</td>
+                  <td align="left" rowspan="1" colspan="1">Molecular and Purkinje layers</td>
+                  <td align="left" rowspan="1" colspan="1">Cerebellum scattered expression</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Purkinje layer detector</td>
+                  <td align="left" rowspan="1" colspan="1">7</td>
+                  <td align="left" rowspan="1" colspan="1">6</td>
+                  <td align="left" rowspan="1" colspan="1">1</td>
+                  <td align="left" rowspan="1" colspan="1">8</td>
+                  <td align="left" rowspan="1" colspan="1">0</td>
+                  <td align="left" rowspan="1" colspan="1">0</td>
+                  <td align="left" rowspan="1" colspan="1">78</td>
+                </tr>
+                <tr>
+                  <td align="left" rowspan="1" colspan="1">Granular layer detector</td>
+                  <td align="left" rowspan="1" colspan="1">7</td>
+                  <td align="left" rowspan="1" colspan="1">8</td>
+                  <td align="left" rowspan="1" colspan="1">0</td>
+                  <td align="left" rowspan="1" colspan="1">6</td>
+                  <td align="left" rowspan="1" colspan="1">1</td>
+                  <td align="left" rowspan="1" colspan="1">1</td>
+                  <td align="left" rowspan="1" colspan="1">66</td>
+                </tr>
+              </tbody>
+            </table>
+          </alternatives>
+          <table-wrap-foot>
+            <fn id="nt102">
+              <label/>
+              <p>We manually examined the 100 lowest scoring genes predicted by the Purkinje layer detector and the granular layer detector. The table shows the classification of the lowest scoring genes into 7 observed categories.</p>
+            </fn>
+          </table-wrap-foot>
+        </table-wrap>
+        <p>Applying the white-matter classifier and the molecular layer classifier to the full genome yielded very few positively scored genes. This could be attributed to the small number of positive samples in the training set for these classes. Indeed, when we manually examined one thousand of the genes in the database we only found one gene that was exclusively localized to the white matter (and one gene localized to the molecular layer). In comparison, there were many more genes localized to the granular or the Purkinje layers.</p>
+        <p>To find out if our classifiers can be generalized, and can detect genes on images that are different in their spatial expression organization. We applied the four classifiers that were previously trained on the sagittal sections to all the images available in coronal sections, covering 4000 genes. Unlike sagittal section images, many coronal images contain parts of the brain from outside the cerebellum and their layer organization is quite different from the sagittal images. Despite these large differences between the training set and the test set, the Purkinje layer classifier generalized well and detected genes that are primarily expressed in the Purkinje layer in 95% of the top 100. The other layer detectors did not generalized as well. <xref ref-type="sec" rid="s2">Results</xref> are available at <ext-link ext-link-type="uri" xlink:href="http://chechiklab.biu.ac.il/~lior/cerebellum.html" xlink:type="simple">http://chechiklab.biu.ac.il/~lior/cerebellum.html</ext-link></p>
+      </sec>
+      <sec id="s2e">
+        <title>Characterizing layer-specific genes</title>
+        <p>The above results show that at least 450 genes, which are more than 3.4% of genes that are expressed in the cerebellum, are primarily expressed in one layer (mostly the Purkinje and granular layers). There could be many reasons for this highly structured expression pattern. For example, localized genes may reflect unique cell-type dependent biological processes, like shaping the cell morphology or controlling the connectivity between specific neuron types. Alternatively, localized expression may also reflect properties that are not necessarily cell-type specific, like processes that depend on cell size, since Purkinje cells are exceptionally large. We therefore turned to characterize the properties of localized genes, by testing their functional annotations and comparing them with the transcriptome of Purkinje-deficient mice.</p>
+        <sec id="s2e1">
+          <title>Comparison with Purkinje deficient mice</title>
+          <p>To better characterize the properties of genes localized to the Purkinje layer, we aimed to separate genes whose expression is related to Purkinje cells from genes whose expression is related to non-Purkinje cells. We compared our study with a study by Rong and colleagues <xref ref-type="bibr" rid="pcbi.1002790-Rong1">[9]</xref> who aimed to identify Purkinje-cell specific genes. Rong et al compared the cerebellar gene expression of two strains of mice: wild-type mice and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e035" xlink:type="simple"/></inline-formula> mice which have a mutation in the gene Nna1 causing them to lose their Purkinje cells by adulthood. Genes with reduced expression in the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e036" xlink:type="simple"/></inline-formula> mice presumably reflect the loss of Purkinje cells.</p>
+          <p>We compared the list of genes that we predicted to localize to the Purkinje-layer with a list of 203 <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e037" xlink:type="simple"/></inline-formula> genes whose expression decayed by more than 50% as provided by <xref ref-type="bibr" rid="pcbi.1002790-Rong1">[9]</xref>. We sorted the predicted genes by the classifier margin, treated the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e038" xlink:type="simple"/></inline-formula> list as positives, and computed the precision at the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e039" xlink:type="simple"/></inline-formula> top-ranked genes. <xref ref-type="fig" rid="pcbi-1002790-g007">Figure 7 A</xref> shows that the top ranked predicted genes have high overlap with the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e040" xlink:type="simple"/></inline-formula> list, reaching 33% at the top 10.</p>
+          <fig id="pcbi-1002790-g007" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.g007</object-id>
+            <label>Figure 7</label>
+            <caption>
+              <title>Comparison with Purkinje-deficient mice and layer enrichment for cell types (A).</title>
+              <p>Comparison with Purkinje-deficient mice genes from <xref ref-type="bibr" rid="pcbi.1002790-Rong1">[9]</xref>. The overlap of the set of top ranked genes that were localized to the Purkinje layer with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e041" xlink:type="simple"/></inline-formula> Precision is the fraction of Purkinje-localized genes that are found in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e042" xlink:type="simple"/></inline-formula> mice. (<bold>B</bold>) Enrichment for cell type specific markers, taken from Cahoy <xref ref-type="bibr" rid="pcbi.1002790-Cahoy1">[7]</xref>. For each layers enrichment for cell type was tested using a hypergeometric test. The dashed red line corresponds to p-value at random. As expected, the white matter was enriched for oligodendrocyte markers and the granular layer is enriched for neuronal markers. Interestingly, Purkinje layer genes show a strong enrichment for astrocytes markers.</p>
+            </caption>
+            <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.g007" position="float" xlink:type="simple"/>
+          </fig>
+          <p>The cross-comparison between the two sets reveals genes that are localized to the Purkinje-layer, but are not Purkinje-cell related <xref ref-type="fig" rid="pcbi-1002790-g007">Figure 7A</xref>. This may include genes that are expressed in non-Purkinje cells such as Bergmann glia. The cross-comparison also reveals genes whose expression is affected by the deficient Purkinje cells, but are not localized to the Purkinje layer. These may include genes that are expressed in the dendritic arbors of Purkinje cells, or other genes that are not layer- specific but were affected by the deficiency of the Purkinje cells. Finally, for those genes that are detected to be both Purkinje-layer related and Purkinje- cell related, the cross-comparison strengthens their link to Purkinje cells.</p>
+        </sec>
+        <sec id="s2e2">
+          <title>Functional annotation</title>
+          <p>As the next step, we studied known functions of the genes that were localized to the four classified layers. We used Gene Ontology (GO) annotations to find the biological processes that are over-represented in the resulting gene sets for each layer.</p>
+          <p>As expected, genes localized to the white matter layer showed enrichment for myelination. More interesting was the enrichment for neurogenesis, which is also known to take place in the white matter <xref ref-type="bibr" rid="pcbi.1002790-Zhang1">[25]</xref>. The Purkinje layer was enriched for lipid metabolic processes and more general processes, such as <italic>oxidation/reduction</italic>. Full lists of enriched categories are provided in <xref ref-type="table" rid="pcbi-1002790-t003">Tables 3</xref>, <xref ref-type="table" rid="pcbi-1002790-t004">4</xref>, <xref ref-type="table" rid="pcbi-1002790-t005">5</xref>, and <xref ref-type="table" rid="pcbi-1002790-t006">6</xref>.</p>
+          <table-wrap id="pcbi-1002790-t003" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.t003</object-id>
+            <label>Table 3</label>
+            <caption>
+              <title>Functional enrichment of genes localized to the white matter.</title>
+            </caption>
+            <alternatives>
+              <graphic id="pcbi-1002790-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.t003" xlink:type="simple"/>
+              <table>
+                <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                </colgroup>
+                <thead>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">GO.ID</td>
+                    <td align="left" rowspan="1" colspan="1">term</td>
+                    <td align="left" rowspan="1" colspan="1"># of annotated genes</td>
+                    <td align="left" rowspan="1" colspan="1"># of significant</td>
+                    <td align="left" rowspan="1" colspan="1">FDR <italic>q</italic>-value</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">0042552</td>
+                    <td align="left" rowspan="1" colspan="1">myelination</td>
+                    <td align="left" rowspan="1" colspan="1">21</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">0.00045</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">0006665</td>
+                    <td align="left" rowspan="1" colspan="1">sphingolipid metabolic process</td>
+                    <td align="left" rowspan="1" colspan="1">36</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">0.00134</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">0008654</td>
+                    <td align="left" rowspan="1" colspan="1">phospholipid biosynthetic process</td>
+                    <td align="left" rowspan="1" colspan="1">49</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">0.00248</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">0022008</td>
+                    <td align="left" rowspan="1" colspan="1">neurogenesis</td>
+                    <td align="left" rowspan="1" colspan="1">267</td>
+                    <td align="left" rowspan="1" colspan="1">3</td>
+                    <td align="left" rowspan="1" colspan="1">0.00703</td>
+                  </tr>
+                </tbody>
+              </table>
+            </alternatives>
+            <table-wrap-foot>
+              <fn id="nt103">
+                <label/>
+                <p>For each gene ontology category (GO), shown are the GO ID, the name of the category, the number of white-matter genes that are annotated with the GO category, the number of genes predicted to be in the white matter layer in this category and the FDR <italic>q</italic>-value computed following the method of Benjamini and Hochberg's <xref ref-type="bibr" rid="pcbi.1002790-Benjamini1">[33]</xref>. Enriched categories indeed include white-matter functions (myelination) but also regulation of neurogenesis which was also found to take part in the cerebellum white matter <xref ref-type="bibr" rid="pcbi.1002790-Zhang1">[25]</xref>.</p>
+              </fn>
+            </table-wrap-foot>
+          </table-wrap>
+          <table-wrap id="pcbi-1002790-t004" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.t004</object-id>
+            <label>Table 4</label>
+            <caption>
+              <title>Functional enrichment of genes localized to the Purkinje layer.</title>
+            </caption>
+            <alternatives>
+              <graphic id="pcbi-1002790-t004-4" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.t004" xlink:type="simple"/>
+              <table>
+                <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                </colgroup>
+                <thead>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">GO.ID</td>
+                    <td align="left" rowspan="1" colspan="1">term</td>
+                    <td align="left" rowspan="1" colspan="1"># of annotated genes</td>
+                    <td align="left" rowspan="1" colspan="1"># of significant</td>
+                    <td align="left" rowspan="1" colspan="1">FDR <italic>q</italic>-value</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">0006816</td>
+                    <td align="left" rowspan="1" colspan="1">calcium ion transport</td>
+                    <td align="left" rowspan="1" colspan="1">86</td>
+                    <td align="left" rowspan="1" colspan="1">12</td>
+                    <td align="left" rowspan="1" colspan="1">9.5e-05</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">0006937</td>
+                    <td align="left" rowspan="1" colspan="1">regulation of muscle contraction</td>
+                    <td align="left" rowspan="1" colspan="1">22</td>
+                    <td align="left" rowspan="1" colspan="1">5</td>
+                    <td align="left" rowspan="1" colspan="1">0.0012</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">0030900</td>
+                    <td align="left" rowspan="1" colspan="1">forebrain development</td>
+                    <td align="left" rowspan="1" colspan="1">73</td>
+                    <td align="left" rowspan="1" colspan="1">9</td>
+                    <td align="left" rowspan="1" colspan="1">0.0018</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">0006629</td>
+                    <td align="left" rowspan="1" colspan="1">lipid metabolic process</td>
+                    <td align="left" rowspan="1" colspan="1">407</td>
+                    <td align="left" rowspan="1" colspan="1">28</td>
+                    <td align="left" rowspan="1" colspan="1">0.0018</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">0055114</td>
+                    <td align="left" rowspan="1" colspan="1">oxidation reduction</td>
+                    <td align="left" rowspan="1" colspan="1">375</td>
+                    <td align="left" rowspan="1" colspan="1">26</td>
+                    <td align="left" rowspan="1" colspan="1">0.0023</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">0007264</td>
+                    <td align="left" rowspan="1" colspan="1">small GTPase mediated signal transduction</td>
+                    <td align="left" rowspan="1" colspan="1">263</td>
+                    <td align="left" rowspan="1" colspan="1">19</td>
+                    <td align="left" rowspan="1" colspan="1">0.0057</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">0050767</td>
+                    <td align="left" rowspan="1" colspan="1">regulation of neurogenesis</td>
+                    <td align="left" rowspan="1" colspan="1">61</td>
+                    <td align="left" rowspan="1" colspan="1">7</td>
+                    <td align="left" rowspan="1" colspan="1">0.0083</td>
+                  </tr>
+                </tbody>
+              </table>
+            </alternatives>
+            <table-wrap-foot>
+              <fn id="nt104">
+                <label/>
+                <p>Columns as in <xref ref-type="table" rid="pcbi-1002790-t003">table 3</xref>. To support their large cell body and vast dendritic tree, the Purkinje cells have rapid metabolic processes, in agreement with the enrichment of <italic>lipid metabolic process</italic>.</p>
+              </fn>
+            </table-wrap-foot>
+          </table-wrap>
+          <table-wrap id="pcbi-1002790-t005" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.t005</object-id>
+            <label>Table 5</label>
+            <caption>
+              <title>Functional enrichment of genes localized to the granular layer.</title>
+            </caption>
+            <alternatives>
+              <graphic id="pcbi-1002790-t005-5" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.t005" xlink:type="simple"/>
+              <table>
+                <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                </colgroup>
+                <thead>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">GO.ID</td>
+                    <td align="left" rowspan="1" colspan="1">term</td>
+                    <td align="left" rowspan="1" colspan="1"># of annotated genes</td>
+                    <td align="left" rowspan="1" colspan="1"># of significant</td>
+                    <td align="left" rowspan="1" colspan="1">FDR <italic>q</italic>-value</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">0016192</td>
+                    <td align="left" rowspan="1" colspan="1">vesicle-mediated transport</td>
+                    <td align="left" rowspan="1" colspan="1">279</td>
+                    <td align="left" rowspan="1" colspan="1">14</td>
+                    <td align="left" rowspan="1" colspan="1">0.00036</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">0009966</td>
+                    <td align="left" rowspan="1" colspan="1">regulation of signal transduction</td>
+                    <td align="left" rowspan="1" colspan="1">317</td>
+                    <td align="left" rowspan="1" colspan="1">12</td>
+                    <td align="left" rowspan="1" colspan="1">0.00952</td>
+                  </tr>
+                </tbody>
+              </table>
+            </alternatives>
+            <table-wrap-foot>
+              <fn id="nt105">
+                <label/>
+                <p>Columns as in <xref ref-type="table" rid="pcbi-1002790-t003">table 3</xref>.</p>
+              </fn>
+            </table-wrap-foot>
+          </table-wrap>
+          <table-wrap id="pcbi-1002790-t006" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.t006</object-id>
+            <label>Table 6</label>
+            <caption>
+              <title>Functional enrichment of genes localized to the molecular layer.</title>
+            </caption>
+            <alternatives>
+              <graphic id="pcbi-1002790-t006-6" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.t006" xlink:type="simple"/>
+              <table>
+                <colgroup span="1">
+                  <col align="left" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                  <col align="center" span="1"/>
+                </colgroup>
+                <thead>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">GO.ID</td>
+                    <td align="left" rowspan="1" colspan="1">term</td>
+                    <td align="left" rowspan="1" colspan="1"># of annotated genes</td>
+                    <td align="left" rowspan="1" colspan="1"># of significant</td>
+                    <td align="left" rowspan="1" colspan="1">FDR <italic>q</italic>-value</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">0050804</td>
+                    <td align="left" rowspan="1" colspan="1">regulation of synaptic transmission</td>
+                    <td align="left" rowspan="1" colspan="1">49</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">0.0024</td>
+                  </tr>
+                  <tr>
+                    <td align="left" rowspan="1" colspan="1">0006457</td>
+                    <td align="left" rowspan="1" colspan="1">protein folding</td>
+                    <td align="left" rowspan="1" colspan="1">76</td>
+                    <td align="left" rowspan="1" colspan="1">2</td>
+                    <td align="left" rowspan="1" colspan="1">0.0059</td>
+                  </tr>
+                </tbody>
+              </table>
+            </alternatives>
+            <table-wrap-foot>
+              <fn id="nt106">
+                <label/>
+                <p>Columns as in <xref ref-type="table" rid="pcbi-1002790-t003">table 3</xref>.</p>
+              </fn>
+            </table-wrap-foot>
+          </table-wrap>
+          <p>The cerebellar cortical layers are comprised of distinct types of neurons and glia. We asked whether the genes expressed in the different layers are associated with specific cell types. To answer this question, we used lists of genes that were found to be enriched in three major cell types; neurons, astrocytes and glia <xref ref-type="bibr" rid="pcbi.1002790-Cahoy1">[7]</xref>. Enrichment was determined by isolating these cell populations using <italic>Fluorescence-Activated Cell Sorting</italic> (FACS) and quantifying their expression using microarrays. Genes with a 20-fold and up over-expression levels were defined as cell-type specific markers. The lists of cell type markers include <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e043" xlink:type="simple"/></inline-formula> genes for neurons, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e044" xlink:type="simple"/></inline-formula> for astrocytes and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e045" xlink:type="simple"/></inline-formula> for oligodendrocytes. We tested for enrichment of these markers in our results, using the entire genome as background. <xref ref-type="sec" rid="s2">Results</xref> are presented in <xref ref-type="fig" rid="pcbi-1002790-g007">Figure 7B</xref>. As expected, genes that were found to be expressed in the cerebellar white matter show a strong enrichment signal for oligodendrocytes. The granular layer, which contains large amounts of densely packed granule cells, indeed shows enrichment for neuron-related genes. The Purkinje cell layer, which is defined by the cell bodies of Purkinje neurons shows, interestingly, a strong enrichment signal for glia cells, notably astrocytes. This could be explained by the specialized astrocytes that occupy this layer, the Bergmann glia, and also by the astrocyte processes derived from cells located in the upper granular layer, covering the Purkinje cell bodies <xref ref-type="bibr" rid="pcbi.1002790-Ghandour1">[26]</xref>. Oligodendrocytes are also known to be localized close to the Purkinje cells <xref ref-type="bibr" rid="pcbi.1002790-Ghandour1">[26]</xref>. This fact can account for the enrichment of this cell type in the Purkinje cell layer.</p>
+          <p>Finally, we used the localization predictions to identify novel genetic markers for the different cerebellar layers. Out of the hundreds of new markers, here we describe two examples of genes that were top-ranked by our classifier in two layers. The first, Mitogen-activated protein kinase kinase 6 (Map2k6), was the first-ranked gene in the white matter. Its cerebellar expression pattern, depicted in <xref ref-type="fig" rid="pcbi-1002790-g008">Figure 8A</xref>, shows it is indeed clearly localized to the white matter. Map2k6 is a member of the Map kinase signal transduction pathways, and is thus involved in cell proliferation and growth. It has been shown that the human ortholog of Map2k6 is activated in the cerebellum in response to calcium, triggering a signaling pathway which results in the expression of genes responsible for the survival of newly differentiated neurons <xref ref-type="bibr" rid="pcbi.1002790-Mao1">[27]</xref>. Therefore, it is not surprising to find it in the white matter of the cerebellum, and yet this expression pattern was never previously demonstrated. While Map2k6 is a relatively well-studied gene, the second example we discuss, Fam107b (3110001A13Rik), ranked 6th by the Purkinje layer detector, has little to no associated information. This gene shows a strong, localized expression in the Purkinje layer (<xref ref-type="fig" rid="pcbi-1002790-g008">Figure 8 B</xref>). Moreover, its expression is also largely specific to the cerebellum (<xref ref-type="fig" rid="pcbi-1002790-g008">Figure 8 C</xref>).</p>
+          <fig id="pcbi-1002790-g008" position="float">
+            <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.g008</object-id>
+            <label>Figure 8</label>
+            <caption>
+              <title>Examples of novel genetic markers.</title>
+              <p>Non masked ISH images showing cerebellar expression of Map2k6 (<bold>A</bold>) and Fam107b (<bold>B</bold>). These are the raw images before the application of the expression mask. The expression of actual labeled mRNA target transcripts is marked with dark spots. (<bold>C</bold>) Whole-brain ISH image for Fam107b. Fam107b shows strong, highly localized expression in the Purkinje layer of the cerebellum.</p>
+            </caption>
+            <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.g008" position="float" xlink:type="simple"/>
+          </fig>
+        </sec>
+        <sec id="s2e3">
+          <title>Detecting layers in the developing mouse brain</title>
+          <p>To demonstrate the potential of automated classifiers, we further applied the trained detectors to find genes with localized expression over development, that could reflect temporal functional specificity. We applied our Purkinje layer detectors to ISH images from the Allen developing mouse brain atlas <ext-link ext-link-type="uri" xlink:href="http://developingmouse.brain-map.org/" xlink:type="simple">http://developingmouse.brain-map.org/</ext-link>. The images are derived from brains of mice in several developmental stages. Here we applied the classifier to postnatal stages: P4 (postnatal day 4), P14, P28 and P56. Even though our classifiers were trained on adult mice they were able to find genes expressed in the Purkinje layer with high accuracy (P28 - <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e046" xlink:type="simple"/></inline-formula> out of 69 positives, P14 - <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e047" xlink:type="simple"/></inline-formula> out of 56 positives). Using our classifier we found genes that are switched on and genes that are switched off in cerebellar layers during postnatal development. For example, the gene Doc2b is highly expressed in the adult Purkinje layer, but is only “switched on” at P14. Doc2 proteins act as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e048" xlink:type="simple"/></inline-formula> sensors and trigger spontaneous neurotransmitter release in the adult mice Purkinje cells <xref ref-type="bibr" rid="pcbi.1002790-Groffen1">[28]</xref>. Doc2b has also been suggested to be involved in embryonic neural development <xref ref-type="bibr" rid="pcbi.1002790-Korteweg1">[29]</xref>. The fact that Doc2b is only switched on during late postnatal development in the cerebellum is congruent with the fact that the cerebellum becomes developed and functional only after birth, and suggests that this gene plays a role in Purkinje layer development and function. The full ranked results are also available in our site at <ext-link ext-link-type="uri" xlink:href="http://chechiklab.biu.ac.il/~lior/cerebellum.html" xlink:type="simple">http://chechiklab.biu.ac.il/~lior/cerebellum.html</ext-link>.</p>
+        </sec>
+      </sec>
+    </sec>
+    <sec id="s3">
+      <title>Discussion</title>
+      <p>We described a machine vision approach for localizing genes to specific layers in the cerebellum. Using a small number of known cell-type markers, we trained classifiers based on visual features in ISH images of these genes and used the classifiers to detect other genes that exhibit similar localization patterns. The area under the ROC curve (AUC) of all four classifiers, trained for Purkinje, granular, molecular and white-matter layers, was higher than 0.94 on held-out data. Furthermore, when the predictions are evaluated on the full genome using human inspection, the Purkinje and granular classifiers achieved 98% accuracy over their top 250 ranked predicted genes.</p>
+      <p>Two factors contributed to the high classification accuracy of this approach. First, we extracted features from ISH images at multiple resolutions, capturing both texture and coarser structure in their features. Second, we combine multiple image predictions to a single gene-level decision. Together, these two factors reduced the classification error by over 50 percent compared to a naive classifier.</p>
+      <p>The fraction of genes whose expression is localized is surprisingly high: About 3.4% of the genes that are expressed in the cerebellum exhibit an expression pattern that was strongly localized to one layer. Functional enrichment suggest that part of this effect is due to the unusual shape and size of the Purkinje cells, leading to high expression of lipid metabolism genes. Interestingly, by comparing the genes localized to the Purkinje layer, with genes detected in Purkinje deficient mice <xref ref-type="bibr" rid="pcbi.1002790-Rong1">[9]</xref>, we find that many Purkinje-layer genes are not necessarily expressed in Purkinje cells. This result, together with the fact that Purkinje-layer genes are associated with astrocytes, suggests that the transcriptome of Bergmann astrocytes, which reside in the Purkinje layer, has a wider range of specifically expressed genes than previously suspected. The full list of Bergmann glia specific genes is provided in the Supporting Information. This list could be used to further understand the unique properties of Bergman Glia cells.</p>
+      <p>The large fraction of genes which exhibit localized pattern of expression hints to a high level of functional specialization across different cell types in the brain. It suggests that the average transcriptome of a neural tissue is actually a very heterogeneous mix of genes, some of which are expressed in unique cell types. This is in agreement with microarray analysis of specific cortical layers in the Rhesus monkeys <xref ref-type="bibr" rid="pcbi.1002790-Bernard1">[5]</xref>, where the variability of the transcriptome across layers is significant.</p>
+      <p>The approach described in this paper can be used in conjunction with other approaches to improve our understanding of how the transcriptome changes between different types of neurons and glia cells. For instance, the transcriptome of transgenic mice that lack Purkinje neurons <xref ref-type="bibr" rid="pcbi.1002790-Rong1">[9]</xref> can be used to further delineate the transcriptome of Bergmann and Purkinje cells, both a part of the Purkinje layer.</p>
+      <p>Our approach was applied to the cerebellum where the layers have a clear and pronounced structure. Other brain regions, including the dentate gyrus, the CA areas in the hippocampus or the anterior olfactory nucleus also contain laminar structures and could be analyzed in a similar way. Furthermore, it will be interesting to extend this approach to learn more refined discriminations. For example, in many brain areas astrocytes and neurons have different spatial distributions and sizes, suggesting that it may be feasible to train detectors that are sensitive to these differences. This could help further characterize the genetic profiles of many specific cell types across the brain.</p>
+    </sec>
+    <sec id="s4" sec-type="methods">
+      <title>Methods</title>
+      <sec id="s4a">
+        <title>Data and labeling procedure</title>
+        <p>We used gene expression images measured using in situ hybridization (ISH). The images were collected by the Allen Brain Institute and published online as the Allen Brain Atlas (ABA) <xref ref-type="bibr" rid="pcbi.1002790-Lein1">[11]</xref> available at <ext-link ext-link-type="uri" xlink:href="http://mouse.brain-map.org" xlink:type="simple">http://mouse.brain-map.org</ext-link>.</p>
+        <p>To measure the expression of a target gene, ISH uses fluorescently labeled DNA sequences that are complementary to the target gene RNA. These DNA probes are cloned and applied to each brain slice. The complementary probes hybridize to the target RNA sequence inside the cells, while the non bound probes are washed away. This fluorescent labeling captures the spatial pattern of expression of a target gene across the brain. The quality of this approach was quantified in <xref ref-type="bibr" rid="pcbi.1002790-Lee1">[30]</xref>, showing mostly agreement with microarray data. ISH measurements were gathered for the adult mouse full genome, covering <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e049" xlink:type="simple"/></inline-formula> genes. For each gene, mice brains were dissected into 100 <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e050" xlink:type="simple"/></inline-formula>m thick slices in sagittal and coronal sections, and the slices were fluorescently labeled and imaged. The outcome of this process is a set of images for each gene showing the gene expression pattern across the whole mouse brain.</p>
+        <p>We collected a set of positive samples for four classes: <italic>Purkinje layer</italic>, <italic>granular layer</italic>, <italic>white matter</italic> and <italic>molecular layer</italic> classes. The positive samples were collected from three sources: First, we included known markers for each of the four layers. For example, we selected Calb1 as a marker of the Purkinje layer, and Plp1 for the white matter. The molecular class contained genes that are expressed in the molecular layer and also possibly in the Purkinje layers. Second, we sifted through images of 1000 random genes (ordered by gene name) and manually selected images with spatial patterns that fit the four classes. Finally, since the white matter and the molecular class had only few genes, we computed the spatial correlation of expression between the positive samples selected from the first two sources and the rest of the genome using ABA NeuroBlast <xref ref-type="bibr" rid="pcbi.1002790-Hawrylycz1">[22]</xref>. We added genes whose expression in the hindbrain was highly correlated (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e051" xlink:type="simple"/></inline-formula>-value<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e052" xlink:type="simple"/></inline-formula>) with the positive samples. Overall, the number of positive genes in each of our classes was <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e053" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e054" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e055" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e056" xlink:type="simple"/></inline-formula> for Purkinje, granular, molecular and white matter. We also collected a set of 300 randomly selected genes (632 images) to act as a negative set for each class. For each gene we then collected all its ISH images covering the area of 600–1200 microns medial to the most lateral cut. The number of images per gene varied considerably: <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e057" xlink:type="simple"/></inline-formula> in Purkinje genes, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e058" xlink:type="simple"/></inline-formula> in granular, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e059" xlink:type="simple"/></inline-formula> in molecular, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e060" xlink:type="simple"/></inline-formula> in white matter.</p>
+        <p>All together, a total of 433 genes and 1112 images were used in the labeled training set. Also, 13361 genes and 31321 unlabeled images were used in genome-wide analysis.</p>
+      </sec>
+      <sec id="s4b">
+        <title>Preprocessing and feature extraction</title>
+        <p>We used masked gene expression images available from ABA as RGB images. We transformed the RGB triplet at every pixel into a scalar intensity value using the <italic>heat</italic> color scale. Images that were completely black (no expression detected) were excluded. This happens, for example, when the sampled gene is not active in the cerebellum or when gene activity was too low to be detected by ISH. We downsampled every image at multiple resolution to capture structures at multiple scales. We used downsampling factors of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e061" xlink:type="simple"/></inline-formula>.</p>
+        <p>As feature vector we used local binary patterns (LBP, <xref ref-type="bibr" rid="pcbi.1002790-Ojala1">[12]</xref>). At every scale the LBP representation computes an 8-bits signature at every pixel of the image (<xref ref-type="fig" rid="pcbi-1002790-g009">Figure 9B</xref>), by comparing the pixel intensity to the intensities of its 8 circular neighbors (<xref ref-type="fig" rid="pcbi-1002790-g009">Figure 9D</xref>), yielding a value of 0 for a lower intensity neighbor and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e062" xlink:type="simple"/></inline-formula> otherwise (<xref ref-type="fig" rid="pcbi-1002790-g009">Figure 9E</xref>). LBP signatures are then collected across the full image and their histogram is computed, yielding a 256-features vector (<xref ref-type="fig" rid="pcbi-1002790-g009">Figure 9F</xref>). The feature vectors of each resolution are then concatenated into a single feature vector (<xref ref-type="fig" rid="pcbi-1002790-g009">Figure 9G</xref>) representing the image in different scales.</p>
+        <fig id="pcbi-1002790-g009" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.g009</object-id>
+          <label>Figure 9</label>
+          <caption>
+            <title>Representing expression images using LBP features.</title>
+            <p>(<bold>A–B</bold>) The masked gene expression image is downsampled at multiple resolutions yielding several sampled images. The color marks the expression intensity of the gene at that point (<bold>C</bold>). The numerical level of expression at the 8 neighbors (<bold>D</bold>) is compared to the expression at the center, yielding an 8-bit binary word (<bold>E</bold>). All binary patterns from each image are collected, and their histogram is computed (<bold>F</bold>). All histograms are then concatenated into one - the image feature vector (<bold>G</bold>).</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.g009" position="float" xlink:type="simple"/>
+        </fig>
+        <p>In LBP, the distance from the center to the surrounding pixels could be tuned. Here we used a circle of radius <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e063" xlink:type="simple"/></inline-formula> centered at each pixel (known as LBP(8,2)) which achieved superior performance in early experiments. A common variant of LBP, called uniform LBP <xref ref-type="bibr" rid="pcbi.1002790-Ojala1">[12]</xref>, avoids collecting all <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e064" xlink:type="simple"/></inline-formula> possible binary patterns separately. Instead, it merges bins that correspond to sequences (going around the center) with more than two bit flips. While in some applications uniform LBP may improve runtime and classification accuracy <xref ref-type="bibr" rid="pcbi.1002790-Ojala1">[12]</xref>, this was not the case in our experiments, probably because ISH images have very different statistics than real world images. The total number of features per image at a specific resolution was therefore 257 (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e065" xlink:type="simple"/></inline-formula> LBP features and the mean image intensity). Features were scaled to the range [0,1] by dividing by the maximal value in the histogram.</p>
+        <p>We also tested classifiers that uses SIFT features <xref ref-type="bibr" rid="pcbi.1002790-Lowe1">[13]</xref>. The Purkinje layer detector showed lower performance, the granular layer detector and the white matter detector performance did not change much and molecular layer detector was improved. We chose to use LBP for their ease of implementation and interpretation (<xref ref-type="sec" rid="s2">Results</xref> using SIFT as features are not shown).</p>
+      </sec>
+      <sec id="s4c">
+        <title>Classification</title>
+        <p>For image classifiers, we trained a support vector machine (SVM) to discriminate images of each layer from images of other layers. Given a new (test) image that is not used in training, each classifier can provide a “soft” decision score (<xref ref-type="fig" rid="pcbi-1002790-g010">Figure 10 C</xref>), based on the distance of the sample from the separating hyperplane (the margin).</p>
+        <fig id="pcbi-1002790-g010" position="float">
+          <object-id pub-id-type="doi">10.1371/journal.pcbi.1002790.g010</object-id>
+          <label>Figure 10</label>
+          <caption>
+            <title>The two layered classifier.</title>
+            <p>(<bold>A</bold>) All available images of gene Gap43 are processed (taken from different cuts or different experiments). (<bold>B</bold>) For each image an LBP feature vector is produced and used as input for the image level SVM. (<bold>C</bold>) Each image receives a confidence score from the image level SVM. (<bold>D</bold>) The gene's images scores are collected and a using their mean, median, first, second and third max, a gene feature vector is computed. (<bold>E</bold>) The gene is classified using the gene level SVM.</p>
+          </caption>
+          <graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1002790.g010" position="float" xlink:type="simple"/>
+        </fig>
+        <p>To classify images, we trained an SVM using libSVM <xref ref-type="bibr" rid="pcbi.1002790-Chang1">[31]</xref> with a radial basis function (RBF) kernel. We choose SVM because its inherent regularization handles well learning with a relatively small number of samples per class. We used two layers of five-fold cross-validation, one to tune the classifier parameters and the second to tune the hyper parameters. When splitting images into the train and test sets, all images of a gene were either in the train or the test set, but never in both, to avoid overfitting. We used grid search to select the best regularization hyper parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e066" xlink:type="simple"/></inline-formula>, and best RBF hyper parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e067" xlink:type="simple"/></inline-formula>. Optimal AUC was usually found to be near the middle of the regularization range and near <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e068" xlink:type="simple"/></inline-formula> for the RBF hyper parameter.</p>
+        <p>Our dataset is highly imbalanced with many more negatives than positives for each class. To take this bias into account, we assigned different costs to false positive and false negative errors during training. This was done by setting the c+ and c− parameters in SVM, based on the relative sizes of the positive and negative sets. Also, we evaluate performance using the area under the ROC curve (AUC) a measure that is invariant to this bias.</p>
+      </sec>
+      <sec id="s4d">
+        <title>Pooling image information to make a single decision about a gene</title>
+        <p>Combining image scores into a single gene score is a special case of what is known as multi-instance learning (MIL). In general, MIL deals with the case were labels are assigned to a “bag” of samples, which in our case are all the images of a common gene. MIL also commonly appears in tasks like visual object recognition, where features are collected over multiple patches in a single image. The features of the instances are then pooled together using a summary statistic like the mean or maximal.</p>
+        <p>We tested three different ways to combine image scores into a decision over genes. First, we used the mean scores of all images that correspond to a certain gene. We call this approach <italic>Mean image score</italic>. Second, we collected the LBP features of all images that correspond to a gene, computed their average histogram, and trained a classifier using this single histogram as a feature vector. We call this approach <italic>Mean LBP features</italic>. Third, instead of using only a single order statistic (max, median or mean), we combined multiple order statistics of the images scores. Using the soft decision scores from all images, we trained a second classifier. This approach is referred as <italic>Two level classifier</italic>. We also tested a fourth approach as a baseline, treating each image independently, and making a prediction at the level of single images. This can also be viewed as classification when each gene has a single image only.</p>
+        <p>For the gene-level classifier we trained a linear SVM which receives as inputs the confidence scores (<xref ref-type="fig" rid="pcbi-1002790-g010">Figure 10C</xref>) of all corresponding images (their distance from the separating hyperplane). Since each gene has a different number of corresponding images, image scores were pooled using order and moment statistics (<xref ref-type="fig" rid="pcbi-1002790-g010">Figure 10D</xref>). Specifically, we used the mean, the median and the k-top images scores (total of 5 features). We found that best performance was achieved for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e069" xlink:type="simple"/></inline-formula>. Whenever a gene had less than 3 corresponding images the lowest available value was duplicated to fill the missing values. We used again two layers of 5-fold cross-validation for tuning the SVM regularization hyper-parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e070" xlink:type="simple"/></inline-formula>.</p>
+      </sec>
+      <sec id="s4e">
+        <title>Comparison with NeuroBlast</title>
+        <p>NeuroBlast <xref ref-type="bibr" rid="pcbi.1002790-Hawrylycz1">[22]</xref> - <ext-link ext-link-type="uri" xlink:href="http://mouse.brain-map.org/" xlink:type="simple">http://mouse.brain-map.org/</ext-link> ranks in-situ images according to their spatial correlation to an image of a specific gene (the seed). We focused on correlation in the cerebellum region. For seeds we used a layer known marker (Plp1, Calb1, Neurond1 and Pvalb for the white matter, Purkinje, granular, molecular layers respectively). For each gene from our manual labeled list we collected the correlation scores of its images and computed their mean correlation score. These gene scores were used to calculate the AUC for each layer.</p>
+      </sec>
+      <sec id="s4f">
+        <title>Functional enrichment</title>
+        <p>GO enrichment was tested using <italic>elim</italic> <xref ref-type="bibr" rid="pcbi.1002790-Alexa1">[32]</xref>, which takes into account local dependencies in the hierarchical structure of the Gene Ontology trees, and then by applying the fisher exact test to determine statistical significance of the results (compared to hypergeometric distribution). <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1002790.e071" xlink:type="simple"/></inline-formula>-values were corrected for multiple comparisons using FDR <xref ref-type="bibr" rid="pcbi.1002790-Benjamini1">[33]</xref>.</p>
+      </sec>
+    </sec>
+    <sec id="s5">
+      <title>Supporting Information</title>
+      <supplementary-material id="pcbi.1002790.s001" mimetype="text/comma-separated-values" xlink:href="info:doi/10.1371/journal.pcbi.1002790.s001" position="float" xlink:type="simple">
+        <label>Table S1</label>
+        <caption>
+          <p><bold>Purkinje layer detector results.</bold> The full list of genes predicted to reside in the Purkinje layer - ordered by confidence score.</p>
+          <p>(CSV)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002790.s002" mimetype="text/comma-separated-values" xlink:href="info:doi/10.1371/journal.pcbi.1002790.s002" position="float" xlink:type="simple">
+        <label>Table S2</label>
+        <caption>
+          <p><bold>Purkinje layer astrocytes.</bold> List of genes in the Purkinje layer that are also enriched for astrocytes (Cahoy <xref ref-type="bibr" rid="pcbi.1002790-Cahoy1">[7]</xref>).</p>
+          <p>(CSV)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002790.s003" mimetype="text/comma-separated-values" xlink:href="info:doi/10.1371/journal.pcbi.1002790.s003" position="float" xlink:type="simple">
+        <label>Table S3</label>
+        <caption>
+          <p><bold>Purkinje layer but not Purkinje cells.</bold> List of genes in the Purkinje layer that not Purkinje cells. These genes are expressed in the Pukinje layer but do not appear in the list of Purkinje cell related genes from Rong et al <xref ref-type="bibr" rid="pcbi.1002790-Rong1">[9]</xref>.</p>
+          <p>(CSV)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002790.s004" mimetype="text/comma-separated-values" xlink:href="info:doi/10.1371/journal.pcbi.1002790.s004" position="float" xlink:type="simple">
+        <label>Table S4</label>
+        <caption>
+          <p><bold>Bergmann glia.</bold> List of genes in the Purkinje layer that show enrichment for astrocytes <xref ref-type="bibr" rid="pcbi.1002790-Cahoy1">[7]</xref> and also do not appear to be related to Purkinje cells <xref ref-type="bibr" rid="pcbi.1002790-Rong1">[9]</xref>.</p>
+          <p>(CSV)</p>
+        </caption>
+      </supplementary-material>
+      <supplementary-material id="pcbi.1002790.s005" mimetype="text/comma-separated-values" xlink:href="info:doi/10.1371/journal.pcbi.1002790.s005" position="float" xlink:type="simple">
+        <label>Table S5</label>
+        <caption>
+          <p><bold>Purkinje cells (Rong).</bold> List of Purkinje cell related genes from <xref ref-type="bibr" rid="pcbi.1002790-Rong1">[9]</xref>.</p>
+          <p>(CSV)</p>
+        </caption>
+      </supplementary-material>
+    </sec>
+  </body>
+  <back>
+    <ack>
+      <p>We are grateful to the <italic>Allen Institute</italic> for Brain Science for creating the mouse-brain gene expression database, making it publicly available and helping with all our inquiries.</p>
+    </ack>
+    <ref-list>
+      <title>References</title>
+      <ref id="pcbi.1002790-Kang1">
+        <label>1</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kang</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Kawasawa</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Cheng</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Zhu</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Xu</surname><given-names>X</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Spatio-temporal transcriptome of the human brain</article-title>. <source>Nature</source> <volume>478</volume>: <fpage>483</fpage>–<lpage>489</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Colantuoni1">
+        <label>2</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Colantuoni</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Lipska</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Ye</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Hyde</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Tao</surname><given-names>R</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Temporal dynamics and genetic control of transcription in the human prefrontal cortex</article-title>. <source>Nature</source> <volume>478</volume>: <fpage>519</fpage>–<lpage>523</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Dickson1">
+        <label>3</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dickson</surname><given-names>BJ</given-names></name> (<year>2002</year>) <article-title>Molecular mechanisms of axon guidance</article-title>. <source>Science</source> <volume>298</volume>: <fpage>1959</fpage>–<lpage>64</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Belgard1">
+        <label>4</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Belgard</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Marques</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Oliver</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Abaan</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Sirey</surname><given-names>T</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>A transcriptomic atlas of mouse neocortical layers</article-title>. <source>Neuron</source> <volume>71</volume>: <fpage>605</fpage>–<lpage>616</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Bernard1">
+        <label>5</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Bernard</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Lubbers</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Tanis</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Luo</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Podtelezhnikov</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Transcriptional architecture of the primate neocortex</article-title>. <source>Neuron</source> <volume>73</volume>: <fpage>1083</fpage>–<lpage>1099</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Lobo1">
+        <label>6</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lobo</surname><given-names>MK</given-names></name>, <name name-style="western"><surname>Karsten</surname><given-names>SL</given-names></name>, <name name-style="western"><surname>Gray</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Geschwind</surname><given-names>DH</given-names></name>, <name name-style="western"><surname>Yang</surname><given-names>XW</given-names></name> (<year>2006</year>) <article-title>Facs-array profiling of striatal projection neuron subtypes in juvenile and adult mouse brains</article-title>. <source>Nature Neuroscience</source> <volume>9</volume>: <fpage>443</fpage>–<lpage>452</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Cahoy1">
+        <label>7</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cahoy</surname><given-names>JD</given-names></name>, <name name-style="western"><surname>Emery</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Kaushal</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Foo</surname><given-names>LC</given-names></name>, <name name-style="western"><surname>Zamanian</surname><given-names>JL</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>A transcriptome database for astrocytes, neurons, and oligodendrocytes: A new resource for understanding brain development and function</article-title>. <source>The Journal of Neuroscience</source> <volume>28</volume>: <fpage>264</fpage>–<lpage>278</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Koirala1">
+        <label>8</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Koirala</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Corfas</surname><given-names>G</given-names></name> (<year>2010</year>) <article-title>Identification of novel glial genes by single-cell transcriptional profiling of bergmann glial cells from mouse cerebellum</article-title>. <source>PloS one</source> <volume>5</volume>: <fpage>e9198</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Rong1">
+        <label>9</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rong</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Morgan</surname><given-names>J</given-names></name> (<year>2004</year>) <article-title>Identification of candidate purkinje cell-specific markers by gene expression profiling in wild-type and pcd3j mice</article-title>. <source>Molecular brain research</source> <volume>132</volume>: <fpage>128</fpage>–<lpage>145</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Schilling1">
+        <label>10</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Schilling</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Oberdick</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Rossi</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Baader</surname><given-names>SL</given-names></name> (<year>2008</year>) <article-title>Besides purkinje cells and granule neurons: an appraisal of the cell biology of the interneurons of the cerebellar cortex</article-title>. <source>Histochemistry and Cell Biology</source> <volume>130</volume>: <fpage>601</fpage>–<lpage>615</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Lein1">
+        <label>11</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lein</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Hawrylycz</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Ao</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Ayres</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Bensinger</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Genome-wide atlas of gene expression in the adult mouse brain</article-title>. <source>Nature</source> <volume>445</volume>: <fpage>168</fpage>–<lpage>176</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Ojala1">
+        <label>12</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ojala</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Pietikainen</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Maenpaa</surname><given-names>T</given-names></name> (<year>2002</year>) <article-title>Multiresolution gray-scale and rotation invariant texture classification with local binary patterns</article-title>. <source>IEEE Transactions on Pattern Analysis and Machine Intelligence</source> <volume>24</volume>: <fpage>971</fpage>–<lpage>987</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Lowe1">
+        <label>13</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Lowe D (1999) Object recognition from local scale-invariant features. In: The Proceedings of the Seventh IEEE International Conference on Computer Vision, 1999. <volume>2</volume>: : 1150–1157.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Bay1">
+        <label>14</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Bay H, Ess A, Tuytelaars T, Van Gool LV (2006) Surf: Speeded up robust features. In: Computer Vision and Image Understanding (CVIU). ECCV 2006. Graz, Austria. <volume>110</volume>: : 404–417.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Mikolajczyk1">
+        <label>15</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mikolajczyk</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Schmid</surname><given-names>C</given-names></name> (<year>2005</year>) <article-title>A performance evaluation of local descriptors</article-title>. <source>IEEE Transactions on Pattern Analysis and Machine Intelligence</source> <volume>27</volume>: <fpage>1615</fpage>–<lpage>1630</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Szeliski1">
+        <label>16</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Szeliski R (2010) Computer vision: Algorithms and applications. New York: Springer-Verlag.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Ji1">
+        <label>17</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ji</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Sun</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Jin</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Kumar</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Ye</surname><given-names>J</given-names></name> (<year>2008</year>) <article-title>Automated annotation of drosophila gene expression patterns using a controlled vocabulary</article-title>. <source>Bioinformatics</source> <volume>24</volume>: <fpage>1881</fpage>–<lpage>1888</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Li1">
+        <label>18</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Li</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Ji</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Kumar</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Ye</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Zhou</surname><given-names>Z</given-names></name> (<year>2012</year>) <article-title>Drosophila gene expression pattern annotation through multi-instance multi-label learning</article-title>. <source>IEEE/ACMTransactions on Computational Biology and Bioinformatics (TCBB)</source> <volume>9</volume>: <fpage>98</fpage>–<lpage>112</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Mace1">
+        <label>19</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mace</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Varnado</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Frise</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Ohler</surname><given-names>U</given-names></name> (<year>2010</year>) <article-title>Extraction and comparison of gene expression patterns from 2d rna in situ hybridization images</article-title>. <source>Bioinformatics</source> <volume>26</volume>: <fpage>761</fpage>–<lpage>769</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Puniyani1">
+        <label>20</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Puniyani</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Faloutsos</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Xing</surname><given-names>EP</given-names></name> (<year>2010</year>) <article-title>Spex2: automated concise extraction of spatial gene expression patterns from fly embryo ish images</article-title>. <source>Bioinformatics</source> <volume>26</volume>: <fpage>i47</fpage>–<lpage>i56</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Meng1">
+        <label>21</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Meng T, Shyu M (2011) Automatic annotation of drosophila developmental stages using association classification and information integration. In: 2011 IEEE International Conference onInformation Reuse and Integration (IRI). IEEE, pp. 142–147.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Hawrylycz1">
+        <label>22</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hawrylycz</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Ng</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Page</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Morris</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Lau</surname><given-names>C</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Multi-scale correlation structure of gene expression in the brain</article-title>. <source>Neural Networks</source> <volume>24</volume>: <fpage>933</fpage>–<lpage>42</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-ajn1">
+        <label>23</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Šajn</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Kononenko</surname><given-names>I</given-names></name> (<year>2008</year>) <article-title>Multiresolution image parametrization for improving texture classification</article-title>. <source>EURASIP Journal on Advances in Signal Processing</source> <volume>2008</volume>: <fpage>137:1</fpage>–<lpage>137:12</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Boureau1">
+        <label>24</label>
+        <mixed-citation publication-type="other" xlink:type="simple">Boureau Y, Ponce J, LeCun Y (2010) A theoretical analysis of feature pooling in visual recognition. In: 27th International Conference on Machine Learning. Haifa, Israel.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Zhang1">
+        <label>25</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhang</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Goldman</surname><given-names>JE</given-names></name> (<year>1996</year>) <article-title>Generation of cerebellar interneurons from dividing progenitors in white matter</article-title>. <source>Neuron</source> <volume>16</volume>: <fpage>47</fpage>–<lpage>54</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Ghandour1">
+        <label>26</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ghandour</surname><given-names>MS</given-names></name>, <name name-style="western"><surname>Vincendon</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Gombos</surname><given-names>G</given-names></name> (<year>1980</year>) <article-title>Astrocyte and oligodendrocyte distribution in adult rat cerebellum: an immunohistological study</article-title>. <source>Journal of Neurocytology</source> <volume>9</volume>: <fpage>637</fpage>–<lpage>646</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Mao1">
+        <label>27</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mao</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Bonni</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Xia</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Nadal-Vicens</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Greenberg</surname><given-names>ME</given-names></name> (<year>1999</year>) <article-title>Neuronal activity-dependent cell survival mediated by transcription factor mef2</article-title>. <source>Science</source> <volume>286</volume>: <fpage>785</fpage>–<lpage>790</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Groffen1">
+        <label>28</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Groffen</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Martens</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Arazola</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Cornelisse</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Lozovaya</surname><given-names>N</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Doc2b is a high-affinity ca2+ sensor for spontaneous neurotransmitter release</article-title>. <source>Science's STKE</source> <volume>327</volume>: <fpage>1614</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Korteweg1">
+        <label>29</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Korteweg</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Denekamp</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Verhage</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Burbach</surname><given-names>J</given-names></name> (<year>2000</year>) <article-title>Different spatiotemporal expression of doc2 genes in the developing rat brain argues for an additional, nonsynaptic role of doc2b in early development</article-title>. <source>European Journal of Neuroscience</source> <volume>12</volume>: <fpage>165</fpage>–<lpage>171</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Lee1">
+        <label>30</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lee</surname><given-names>CK</given-names></name>, <name name-style="western"><surname>Sunkin</surname><given-names>SM</given-names></name>, <name name-style="western"><surname>Kuan</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Thompson</surname><given-names>CL</given-names></name>, <name name-style="western"><surname>Pathak</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Quantitative methods for genome-scale analysis of in situ hybridization and correlation with microarray data</article-title>. <source>Genome Biology</source> <volume>9</volume>: <fpage>R23</fpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Chang1">
+        <label>31</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chang</surname><given-names>CC</given-names></name>, <name name-style="western"><surname>Lin</surname><given-names>CJ</given-names></name> (<year>2011</year>) <article-title>LIBSVM: A library for support vector machines</article-title>. <source>ACM Transactions on Intelligent Systems and Technology</source> <volume>2</volume>: <fpage>27:1</fpage>–<lpage>27:27</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Alexa1">
+        <label>32</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Alexa</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Rahnenführer</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Lengauer</surname><given-names>T</given-names></name> (<year>2006</year>) <article-title>Improved scoring of functional groups from gene expression data by decorrelating go graph structure</article-title>. <source>Bioinformatics</source> <volume>22</volume>: <fpage>1600</fpage>–<lpage>1607</lpage>.</mixed-citation>
+      </ref>
+      <ref id="pcbi.1002790-Benjamini1">
+        <label>33</label>
+        <mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Benjamini</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Hochberg</surname><given-names>Y</given-names></name> (<year>1995</year>) <article-title>Controlling the false discovery rate: a practical and powerful approach to multiple testing</article-title>. <source>Journal of the Royal Statistical Society Series B (Methodological)</source> <volume>57</volume>: <fpage>289</fpage>–<lpage>300</lpage>.</mixed-citation>
+      </ref>
+    </ref-list>
+  </back>
+</article>

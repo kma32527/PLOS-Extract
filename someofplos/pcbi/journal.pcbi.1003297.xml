@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id><journal-title-group>
+<journal-title>PLoS Computational Biology</journal-title></journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-12-01902</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1003297</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group></article-categories>
+<title-group>
+<article-title>Comparing Algorithms That Reconstruct Cell Lineage Trees Utilizing Information on Microsatellite Mutations</article-title>
+<alt-title alt-title-type="running-head">Cell Lineage Tree Reconstruction</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple"><name name-style="western"><surname>Chapal-Ilani</surname><given-names>Noa</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" equal-contrib="yes" xlink:type="simple"><name name-style="western"><surname>Maruvka</surname><given-names>Yosef E.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Spiro</surname><given-names>Adam</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Reizel</surname><given-names>Yitzhak</given-names></name><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Adar</surname><given-names>Rivka</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Shlush</surname><given-names>Liran I.</given-names></name><xref ref-type="aff" rid="aff4"><sup>4</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Shapiro</surname><given-names>Ehud</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff3"><sup>3</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Department of Computer Science and Applied Mathematics, Weizmann Institute of Science, Rehovot, Israel</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>Department of Biological Regulation, Weizmann Institute of Science, Rehovot, Israel</addr-line></aff>
+<aff id="aff3"><label>3</label><addr-line>Department of Biological Chemistry, Weizmann Institute of Science, Rehovot, Israel</addr-line></aff>
+<aff id="aff4"><label>4</label><addr-line>Bruce Rappaport Faculty of Medicine and Research Institute, Technion – Israel Institute of Technology, Haifa, Israel</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Wasserman</surname><given-names>Wyeth W.</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>University of British Columbia, Canada</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">ehud.shapiro@weizmann.ac.il</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: NCI YEM ES. Analyzed the data: NCI YEM AS. Contributed reagents/materials/analysis tools: YR RA LIS. Wrote the paper: NCI YEM AS ES.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><month>11</month><year>2013</year></pub-date>
+<pub-date pub-type="epub"><day>14</day><month>11</month><year>2013</year></pub-date>
+<volume>9</volume>
+<issue>11</issue>
+<elocation-id>e1003297</elocation-id>
+<history>
+<date date-type="received"><day>1</day><month>12</month><year>2012</year></date>
+<date date-type="accepted"><day>9</day><month>9</month><year>2013</year></date>
+</history>
+<permissions>
+<copyright-year>2013</copyright-year>
+<copyright-holder>Chapal-Ilani et al</copyright-holder><license xlink:href="http://creativecommons.org/licenses/by/3.0/" xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/3.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>Organism cells proliferate and die to build, maintain, renew and repair it. The cellular history of an organism up to any point in time can be captured by a cell lineage tree in which vertices represent all organism cells, past and present, and directed edges represent progeny relations among them. The root represents the fertilized egg, and the leaves represent extant and dead cells. Somatic mutations accumulated during cell division endow each organism cell with a genomic signature that is unique with a very high probability. Distances between such genomic signatures can be used to reconstruct an organism's cell lineage tree. Cell populations possess unique features that are absent or rare in organism populations (e.g., the presence of stem cells and a small number of generations since the zygote) and do not undergo sexual reproduction, hence the reconstruction of cell lineage trees calls for careful examination and adaptation of the standard tools of population genetics. Our lab developed a method for reconstructing cell lineage trees by examining only mutations in highly variable microsatellite loci (MS, also called short tandem repeats, STR). In this study we use experimental data on somatic mutations in MS of individual cells in human and mice in order to validate and quantify the utility of known lineage tree reconstruction algorithms in this context. We employed extensive measurements of somatic mutations in individual cells which were isolated from healthy and diseased tissues of mice and humans. The validation was done by analyzing the ability to infer known and clear biological scenarios. In general, we found that if the biological scenario is simple, almost all algorithms tested can infer it. Another somewhat surprising conclusion is that the best algorithm among those tested is Neighbor Joining where the distance measure used is normalized absolute distance. We include our full dataset in <xref ref-type="supplementary-material" rid="pcbi.1003297.s015">Tables S1</xref>, <xref ref-type="supplementary-material" rid="pcbi.1003297.s016">S2</xref>, <xref ref-type="supplementary-material" rid="pcbi.1003297.s017">S3</xref>, <xref ref-type="supplementary-material" rid="pcbi.1003297.s018">S4</xref>, <xref ref-type="supplementary-material" rid="pcbi.1003297.s019">S5</xref> to enable further analysis of this data by others.</p>
+</abstract>
+<abstract abstract-type="summary"><title>Author Summary</title>
+<p>The history of an organism's cells, from a single cell until any particular moment in time, can be captured by a cell lineage tree. Many fundamental open questions in biology and medicine, such as which cells give rise to metastases, whether oocytes and beta cells renew, and what is the role of stem cells in brain development and maintenance, are in fact questions about the structure and dynamics of that tree. Random mutations that occur during cell division endow each organism cell with an almost unique genomic signature. Distances between signatures capture distances in the cell lineage tree, and can be used to reconstruct that tree. On this basis, our lab developed a method for cell lineage reconstruction utilizing a panel of about 120 microsatellites. In this work, we use a large dataset of microsatellite mutations from many cells that we collected in our lab in the last few years, in order to test the performance of different distance measures and tree reconstruction algorithms. We found that the best method is not the one that gives the most accurate estimates of the mean distance, but rather the one with the lowest variance.</p>
+</abstract>
+<funding-group><funding-statement>This work was supported by The European Union FP7-ERC-AdG and by a research grant from Ms. Sally Appelbaum. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="17"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>A multi-cellular organism develops from a single cell – the zygote, through cell division and cell death, and displays an astonishing complexity of trillions of cells of different types, residing in different tissues and expressing different genes. The development of an organism from a single cell until any moment in time can be captured by a mathematical entity called a cell lineage tree <xref ref-type="bibr" rid="pcbi.1003297-Frumkin1">[1]</xref>–<xref ref-type="bibr" rid="pcbi.1003297-Salipante2">[4]</xref>.</p>
+<p>Uncovering the human or even the mouse cell lineage tree may help to resolve many open fundamental questions in biology and medicine, as illustrated by our earlier work <xref ref-type="bibr" rid="pcbi.1003297-Frumkin2">[5]</xref>–<xref ref-type="bibr" rid="pcbi.1003297-Shlush1">[9]</xref>.</p>
+<p>In the past few years, our lab developed a method for reconstructing the lineage relations among cells of multi-cellular organisms <xref ref-type="bibr" rid="pcbi.1003297-Frumkin1">1</xref>,<xref ref-type="bibr" rid="pcbi.1003297-Wasserstrom1">10</xref> and applied it to various questions of biological and medical importance <xref ref-type="bibr" rid="pcbi.1003297-Frumkin2">[5]</xref>–<xref ref-type="bibr" rid="pcbi.1003297-Shlush1">[9]</xref>. The method is based on the fact that cells accumulate mutations during mitosis in a way that, with a high probability, endow each cell with a unique genomic signature, and distances between genomic signatures of different cells can be used, in principle, to reconstruct the organism's cell lineage tree <xref ref-type="bibr" rid="pcbi.1003297-Frumkin1">[1]</xref>. Instead of examining the whole genome of all cells of an organism, which is currently not feasible, our method uses Microsatellite (MS) loci which are repeated DNA sequences of 1–6 base pairs. Slippage mutations, in which repeated units are inserted or deleted, occur at relatively high rates (10<sup>−5</sup> per locus per cell division in both wild type mice and humans <xref ref-type="bibr" rid="pcbi.1003297-Frumkin1">[1]</xref>, <xref ref-type="bibr" rid="pcbi.1003297-Ellegren1">[11]</xref>), and thus provide high variation. These mutations are phenotypically neutral <xref ref-type="bibr" rid="pcbi.1003297-Ellegren1">[11]</xref>–<xref ref-type="bibr" rid="pcbi.1003297-Subramanian1">[13]</xref> and they are highly abundant in the genome (composing 3% of the genome). Importantly, Mismatch-Repair (MMR) deficient mice display an even higher mutation rate (10<sup>−2</sup> per locus per cell division <xref ref-type="bibr" rid="pcbi.1003297-Wasserstrom2">[14]</xref>) in MS and are available for experimentation and analysis <xref ref-type="bibr" rid="pcbi.1003297-Frumkin2">[5]</xref>–<xref ref-type="bibr" rid="pcbi.1003297-Segev1">[8]</xref>, <xref ref-type="bibr" rid="pcbi.1003297-Wasserstrom1">[10]</xref>, <xref ref-type="bibr" rid="pcbi.1003297-Wei1">[15]</xref>, <xref ref-type="bibr" rid="pcbi.1003297-Vilkki1">[16]</xref>. By comparison, SNPs have a mutation rate of the order 10<sup>−8</sup> per site per generation <xref ref-type="bibr" rid="pcbi.1003297-Nachman1">[17]</xref>, and thus about 10<sup>−10</sup> per site per cell division.</p>
+<p>Besides the use of MS to reconstruct cell lineage trees which was proposed also by others <xref ref-type="bibr" rid="pcbi.1003297-Salipante1">[3]</xref>, <xref ref-type="bibr" rid="pcbi.1003297-Salipante2">[4]</xref>, <xref ref-type="bibr" rid="pcbi.1003297-Salipante3">[18]</xref>–<xref ref-type="bibr" rid="pcbi.1003297-Tsao1">[20]</xref>, several other retrospective methods to trace cell lineages in mammalians have been proposed. These methods include the genomic profiling of single nucleotide polymorphism (SNP) <xref ref-type="bibr" rid="pcbi.1003297-Ding1">[21]</xref>–<xref ref-type="bibr" rid="pcbi.1003297-Hou1">[23]</xref>, copy number variations (CNV) <xref ref-type="bibr" rid="pcbi.1003297-Navin1">[24]</xref> and DNA methylation <xref ref-type="bibr" rid="pcbi.1003297-Hong1">[25]</xref>–<xref ref-type="bibr" rid="pcbi.1003297-Nicolas1">[27]</xref>. A common feature of all these methods is the use of a genomic property that accumulates mutations during cell divisions, thus making it suitable to be used as a genomic signature.</p>
+<p>While phylogenetic lineage tree reconstruction of cells is similar to that of organisms and species, it also has unique characteristics such as the existence of stem cells (that influence the shape of the tree), a sometimes very shallow tree (in the order of dozens of generations), a dramatic variation in the number of divisions the cells have undergone since the zygote (which is much larger than what exists in species with different evolutionary paces), and the fact that the cells have undergone binary cell divisions. Besides the last feature, which has been widely investigated in population genetics <xref ref-type="bibr" rid="pcbi.1003297-Gao1">[28]</xref>, these unique characteristics as well as the uncertainties about the exact nature of the mutational process in somatic cells require an assessment of the accuracy of known lineage reconstruction algorithms for this application. Another meaningful difference is that MS are usually used to define relationships between groups (species or populations) <xref ref-type="bibr" rid="pcbi.1003297-Takezaki1">[29]</xref>,  and not between individuals. Thus the mathematical measures defining the distance are different.</p>
+<p>The goal of this work is to test the existing algorithms on experimental cell data and to validate their use. In addition we want to test which of these methods (even though not developed for the purpose of cell lineage reconstruction) performs best.</p>
+<p>In order to accomplish this goal, we took experimental data from clearly known biological expectations and examined whether the reconstructed trees present this knowledge. The data was obtained by isolating cells from different mice and humans, and extracting their genomic signatures (see <xref ref-type="sec" rid="s4">Materials and Methods</xref>). Due to the fact that the real cell lineage tree is not known, we examined two aspects of the estimated tree. One aspect is the clustering of biologically distinct cell groups on the tree, and the second is the ability to distinguish between two groups of cells that are known to have different <italic>depths</italic> (number of divisions the cell has undergone since the zygote).</p>
+</sec><sec id="s2">
+<title>Results</title>
+<sec id="s2a">
+<title>Validating and quantifying the ability to reconstruct a cell lineage tree</title>
+<p>As mentioned earlier the goal of this work is to validate and quantify the ability to reconstruct a cell lineage tree utilizing genomic signatures of individual cells that record mutations in microsatellites. Since precise inference of tree topology cannot be accomplished using our current limited number of loci (See <xref ref-type="supplementary-material" rid="pcbi.1003297.s020">Table S6</xref>), we examined in this work whether certain aspects of the inferred tree reflect known biological scenarios. The first is the clustering of different cell groups. The basic assumption of this test is that if a statistically significant clustering on the cell lineage tree is consistent with a biological characteristic, then such clustering is very likely to reflect a real biological phenomenon, and therefore the more significant the clustering found by an algorithm, the better the algorithm. The simplest possible grouping of cells can be according to which individual they belong. Investigating the lineage relations among cells of different individuals is normally not done, however it is useful as a benchmark to test the validity of cell lineage reconstruction algorithms, as cells from different individuals clearly should be clustered separately. The second aspect we examined is the depth separation between different types of cells that are known to have different depths.</p>
+<p>The tree reconstruction algorithms that we used are Neighbor Joining (NJ) <xref ref-type="bibr" rid="pcbi.1003297-Saitou1">[31]</xref>, UPGMA <xref ref-type="bibr" rid="pcbi.1003297-Sokal1">[32]</xref>, and a quartet-based method as implemented in the QMC tool <xref ref-type="bibr" rid="pcbi.1003297-Snir1">[33]</xref>. The distance measures that we used are two versions of the Absolute genetic distance (regular and normalized), Euclidian distance, Equal or Not distance, and six versions of likelihood distances – assuming equal mutation rates for all loci, assuming two different mutation rates for mono-nucleotide and di-nucleotide repeats, and assuming length dependent mutation rates. These three mutation models were tested on both the Stepwise Mutation Model – SMM, and the Multistep Mutation Model – MMM (for more details regarding the reconstructing methods see <xref ref-type="sec" rid="s4">Materials and Methods</xref>). In addition to distance-based algorithms, Bayesian methods can also be used to infer the cell lineage tree. Even though these Bayesian methods hold great promise, there are currently only a very limited amount of existing tools that can be used to analyze MS. In addition most of the existing tools (such as MrBayes <xref ref-type="bibr" rid="pcbi.1003297-Ronquist1">[34]</xref>, <xref ref-type="bibr" rid="pcbi.1003297-Ronquist2">[35]</xref>, Migrate <xref ref-type="bibr" rid="pcbi.1003297-Beerli1">[36]</xref> and Beast <xref ref-type="bibr" rid="pcbi.1003297-Wu1">[37]</xref>) assume no linkage between the different loci. However, in the cell-lineage tree, the range of the linkage disequilibrium is infinite (i.e. the whole chromosome is fully linked, as the mitotic recombination rate is very small compared to the MS mutation rate multiplied by the chromosome length and the depth of the trees). Moreover, in the special case of cells inside multicellular organisms, since each cell has only one single parent cell from which all its chromosomes derive, all the MS loci share the same history, and hence all the loci are fully linked (including loci that are on different chromosomes).The only ML tool that we found to be applicable to our case is BATWING <xref ref-type="bibr" rid="pcbi.1003297-Wilson1">[38]</xref> which reads in multi-locus haplotype data, a model and prior distribution specifications. It may be worthwhile to test the performance of the other Likelihood\Bayesian algorithms, even though they assume that loci are not fully linked; however, these algorithms are highly computationally intensive, and therefore we could not test these.</p>
+</sec><sec id="s2b">
+<title>Clustering</title>
+<p>In this section we checked the clustering quality of the tree reconstruction methods. An example for a case where cells from different individuals are clustered distinctively on the tree can be seen in <xref ref-type="fig" rid="pcbi-1003297-g001">Figure 1</xref>. We used all cell types (see <xref ref-type="supplementary-material" rid="pcbi.1003297.s015">Table S1</xref> for the list of cell types of each individual) from three mice (<xref ref-type="fig" rid="pcbi-1003297-g001">Figure 1A</xref>) and from seven humans (<xref ref-type="fig" rid="pcbi-1003297-g001">Figure 1B</xref>), with the Normalized Absolute genetic distance and the Neighbor Joining tree reconstruction algorithm. It can be seen that the cells of each individual are clustered separately on the tree.</p>
+<fig id="pcbi-1003297-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003297.g001</object-id><label>Figure 1</label><caption>
+<title>Cells from different organisms are clustered separately in the lineage tree.</title>
+<p>Two reconstructed lineage trees are shown: (A) A lineage tree containing cells from three mice, M3 (blue), M5 (pink) and M6 (green). (B) A lineage tree containing cells from seven humans, H1 (blue), H2 (red), H3 (orange), H4 (pink), H5 (green), H6 (purple) and H7 (turquoise). The root of the trees (colored in black) is the weighted mean of the organisms' putative zygotes. The trees were reconstructed using the NJ algorithm along with the Normalized-Absolute distance measure.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003297.g001" position="float" xlink:type="simple"/></fig>
+<p>However, due to the many types of noise existing in the system, such a distinct clustering is not likely to happen in all cases, especially if the individuals are related to each other (as in the case of some of the experimental mice), and their zygotes are genetically close. In such cases, due to the small panel of MS used, cells from different individuals can randomly accumulate mutations that reduce the genetic distance between them, and may become closer to each other than to other cells from the same individual. This effect depends on the ratio between the genetic distance between the zygotes of the mice and the number of divisions the cells in each mouse underwent. We showed via computer simulation (<xref ref-type="supplementary-material" rid="pcbi.1003297.s024">Text S1</xref> and <xref ref-type="supplementary-material" rid="pcbi.1003297.s001">Figures S1</xref>, <xref ref-type="supplementary-material" rid="pcbi.1003297.s002">S2</xref>, <xref ref-type="supplementary-material" rid="pcbi.1003297.s003">S3</xref>) that when this ratio is small it is very hard to distinguish which cells belong to which mouse. In addition, we showed that as the number of loci grows, the separation between the mice improves.</p>
+<p>Our panel contains ∼120 loci but we prefer to ignore loci where there are allelic dropouts- i.e. where there is amplification failure of one of the two heterozygous alleles while the other allele successfully amplifies, which may often be misinterpreted and lead to errors in allele size determination. We thus used an average of about 80 loci per cell. In addition, those 80 loci can be different between distinct cells, so the actual number of loci used for the distance calculation can be even smaller (with a minimum limit of 25). We showed that when the ratio is 0.2 and the mutation rate is 1/100, a separation of 90% can be achieved using at least 200 loci. An example of such a case is shown in <xref ref-type="fig" rid="pcbi-1003297-g002">Figure 2</xref> where we present the tree of five mice with all their cells. It can be seen that three of these mice (M1, M2 and M3) are separated quite well in the lineage tree, compared to the cells of the other two mice (M7 and M8) which are strongly mixed. It may be due to their possible family relations; however since we do not know the real relations but rather estimation, other types of noise can mix the cells, such as errors in the amplification of the genetic sequence or in the PCR reaction.</p>
+<fig id="pcbi-1003297-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003297.g002</object-id><label>Figure 2</label><caption>
+<title>Cells from different organisms are mixed in the lineage tree.</title>
+<p>A reconstructed lineage tree containing cells from six mice, M1 (turquoise), M2 (red), M3 (blue), M7 (yellow), and M8 (purple). The root of the trees (colored in black) is the weighted mean of the organisms' putative zygotes. The trees are reconstructed using the NJ algorithm along with the Normalized-Absolute distance measure.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003297.g002" position="float" xlink:type="simple"/></fig>
+<p>Nevertheless, not all the algorithms and distance measures suffer from this problem to the same degree. This may be due to the fact that some measures describe the mutational process more accurately, or due to some other robustness feature of the algorithm. An example for a different performance between different metrics is shown in <xref ref-type="fig" rid="pcbi-1003297-g003">Figure 3</xref> where we applied two methods to the same dataset. It can be seen that the NJ- Normalized Absolute (<xref ref-type="fig" rid="pcbi-1003297-g003">Figure 3A</xref>) produced better cluster separation than the NJ- Equal or Not method (<xref ref-type="fig" rid="pcbi-1003297-g003">Figure 3B</xref>).</p>
+<fig id="pcbi-1003297-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003297.g003</object-id><label>Figure 3</label><caption>
+<title>Performance of different methods on the same dataset.</title>
+<p>Two reconstructed lineage trees containing the same cells from three different mice are shown: M1 (turquoise), M3 (blue), and M4 (orange). (A) A tree using the NJ algorithm along with the Normalized-Absolute distance measure. (B) A tree using the NJ algorithm along with the Equal or Not distance measure. The root of the trees (colored in black) is the weighted mean of the organisms' putative zygotes. It can be seen that the performance of the Normalized-Absolute distance measure is clearly better.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003297.g003" position="float" xlink:type="simple"/></fig>
+<p>The difference between methods in the clustering separation of cell groups necessitates the quantification of their performance, in order to determine which method is the best (if any). In order to do so, we used three measures to quantify the clustering quality of distinct groups: the Quality of the Largest Cluster (QLC) from each group, the Tree Entropy (TE), and the probability of getting such a cluster under the assumption of hyper geometric sampling (HS). (A detailed explanation of the measures is given in the <xref ref-type="sec" rid="s4">Materials and Methods</xref>).</p>
+<p>We analyzed the performance of the methods on all the information that we have available: cells from nine mice and seven humans, each containing a few types of cells (<xref ref-type="supplementary-material" rid="pcbi.1003297.s015">Table S1</xref>). We combined two or more individuals into one larger dataset, using all their cell types or a single type. For each dataset, we reconstructed the cell lineage tree using all the methods we have. Then we quantified the separation performance of each method with the measures listed above, and determined the method with the best performance. In the following section, we present the results of this test and its variants.</p>
+<sec id="s2b1">
+<title>All cells together</title>
+<p>We started with rough wide-scale tests, reconstructing all the optional combinations of the datasets, regardless of whether different individuals share the same types of cells. We then continued with more refined tests, which pay attention to the specific types of cells, and used datasets containing only one type of cell. From the nine mice that we have, we could produce <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e001" xlink:type="simple"/></inline-formula> datasets but since they contain sets of zero or one individual and these are not relevant to our analysis, the number of datasets is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e002" xlink:type="simple"/></inline-formula> . We reconstructed the cell lineage tree of each dataset using NJ and QMC algorithms, and quantified the clustering separation between the different mice using the three measures. UPGMA and BATWING assume that all the cells have the same depth, and although we test these methods for all cases, only those cases where the similar depth assumption is reasonable, are interesting.</p>
+<p>Examples of the results on a few specific datasets are presented in <xref ref-type="table" rid="pcbi-1003297-t001">Table 1</xref>. These datasets present cases where all (or almost all) the methods successfully separate the cell groups; cases in which all the methods do not perform so well, and cases where a few methods perform well while others fail. (Examples of all the reconstructed trees of a few specific datasets are presented in <xref ref-type="supplementary-material" rid="pcbi.1003297.s004">Figures S4</xref>, <xref ref-type="supplementary-material" rid="pcbi.1003297.s005">S5</xref>, <xref ref-type="supplementary-material" rid="pcbi.1003297.s006">S6</xref>).</p>
+<table-wrap id="pcbi-1003297-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003297.t001</object-id><label>Table 1</label><caption>
+<title>Example of results on a few datasets.</title>
+</caption><alternatives><graphic id="pcbi-1003297-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003297.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1">#</td>
+<td align="left" rowspan="1" colspan="1">Name</td>
+<td align="left" rowspan="1" colspan="1">Score</td>
+<td align="left" rowspan="1" colspan="1">NJ-</td>
+<td align="left" rowspan="1" colspan="1">NJ-</td>
+<td align="left" rowspan="1" colspan="1">NJ-</td>
+<td align="left" rowspan="1" colspan="1">NJ-</td>
+<td align="left" rowspan="1" colspan="1">NJ-SMM</td>
+<td align="left" rowspan="1" colspan="1">NJ-SMM</td>
+<td align="left" rowspan="1" colspan="1">NJ-SMM</td>
+<td align="left" rowspan="1" colspan="1">NJ-MMM</td>
+<td align="left" rowspan="1" colspan="1">NJ-MMM</td>
+<td align="left" rowspan="1" colspan="1">NJ-MMM</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">ABS</td>
+<td align="left" rowspan="1" colspan="1">NormABS</td>
+<td align="left" rowspan="1" colspan="1">EqualOrNot</td>
+<td align="left" rowspan="1" colspan="1">EUC</td>
+<td align="left" rowspan="1" colspan="1">equal rates</td>
+<td align="left" rowspan="1" colspan="1">monoDi rates</td>
+<td align="left" rowspan="1" colspan="1">lenDep rates</td>
+<td align="left" rowspan="1" colspan="1">equal rates</td>
+<td align="left" rowspan="1" colspan="1">monoDi rates</td>
+<td align="left" rowspan="1" colspan="1">lenDep rates</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>1</bold></td>
+<td align="left" rowspan="1" colspan="1">M1M2M3M4M5M6M7M8M9</td>
+<td align="left" rowspan="1" colspan="1">QLC</td>
+<td align="left" rowspan="1" colspan="1">0.347823</td>
+<td align="left" rowspan="1" colspan="1">0.275611</td>
+<td align="left" rowspan="1" colspan="1">0.37813</td>
+<td align="left" rowspan="1" colspan="1">0.301447</td>
+<td align="left" rowspan="1" colspan="1">0.371728</td>
+<td align="left" rowspan="1" colspan="1">0.350756</td>
+<td align="left" rowspan="1" colspan="1">0.368669</td>
+<td align="left" rowspan="1" colspan="1">0.365139</td>
+<td align="left" rowspan="1" colspan="1">0.30166</td>
+<td align="left" rowspan="1" colspan="1">0.287746</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">All cell types</td>
+<td align="left" rowspan="1" colspan="1">TE</td>
+<td align="left" rowspan="1" colspan="1">84.40917</td>
+<td align="left" rowspan="1" colspan="1">60.78266</td>
+<td align="left" rowspan="1" colspan="1">101.2351</td>
+<td align="left" rowspan="1" colspan="1">97.113</td>
+<td align="left" rowspan="1" colspan="1">92.00133</td>
+<td align="left" rowspan="1" colspan="1">92.45571</td>
+<td align="left" rowspan="1" colspan="1">122.3109</td>
+<td align="left" rowspan="1" colspan="1">102.0853</td>
+<td align="left" rowspan="1" colspan="1">93.23476</td>
+<td align="left" rowspan="1" colspan="1">112.3511</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">HS</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>2</bold></td>
+<td align="left" rowspan="1" colspan="1">M1M3M4M5M6</td>
+<td align="left" rowspan="1" colspan="1">QLC</td>
+<td align="left" rowspan="1" colspan="1">0.682521</td>
+<td align="left" rowspan="1" colspan="1">0.705587</td>
+<td align="left" rowspan="1" colspan="1">0.496068</td>
+<td align="left" rowspan="1" colspan="1">0.487241</td>
+<td align="left" rowspan="1" colspan="1">0.703336</td>
+<td align="left" rowspan="1" colspan="1">0.610997</td>
+<td align="left" rowspan="1" colspan="1">0.633189</td>
+<td align="left" rowspan="1" colspan="1">0.723407</td>
+<td align="left" rowspan="1" colspan="1">0.731626</td>
+<td align="left" rowspan="1" colspan="1">0.674685</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">All cell types</td>
+<td align="left" rowspan="1" colspan="1">TE</td>
+<td align="left" rowspan="1" colspan="1">70.22079</td>
+<td align="left" rowspan="1" colspan="1">67.6069</td>
+<td align="left" rowspan="1" colspan="1">138.9407</td>
+<td align="left" rowspan="1" colspan="1">83.75034</td>
+<td align="left" rowspan="1" colspan="1">94.94297</td>
+<td align="left" rowspan="1" colspan="1">108.827</td>
+<td align="left" rowspan="1" colspan="1">115.5496</td>
+<td align="left" rowspan="1" colspan="1">98.87133</td>
+<td align="left" rowspan="1" colspan="1">95.21636</td>
+<td align="left" rowspan="1" colspan="1">95.26127</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">HS</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>3</bold></td>
+<td align="left" rowspan="1" colspan="1">M1M2M6</td>
+<td align="left" rowspan="1" colspan="1">QLC</td>
+<td align="left" rowspan="1" colspan="1">0.753549</td>
+<td align="left" rowspan="1" colspan="1">0.945355</td>
+<td align="left" rowspan="1" colspan="1">0.553541</td>
+<td align="left" rowspan="1" colspan="1">0.633164</td>
+<td align="left" rowspan="1" colspan="1">0.78515</td>
+<td align="left" rowspan="1" colspan="1">0.74055</td>
+<td align="left" rowspan="1" colspan="1">0.674994</td>
+<td align="left" rowspan="1" colspan="1">0.638117</td>
+<td align="left" rowspan="1" colspan="1">0.642526</td>
+<td align="left" rowspan="1" colspan="1">0.802127</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">All cell types</td>
+<td align="left" rowspan="1" colspan="1">TE</td>
+<td align="left" rowspan="1" colspan="1">105.9908</td>
+<td align="left" rowspan="1" colspan="1">14.81306</td>
+<td align="left" rowspan="1" colspan="1">201.029</td>
+<td align="left" rowspan="1" colspan="1">250.6545</td>
+<td align="left" rowspan="1" colspan="1">147.167</td>
+<td align="left" rowspan="1" colspan="1">103.9354</td>
+<td align="left" rowspan="1" colspan="1">116.4198</td>
+<td align="left" rowspan="1" colspan="1">170.2311</td>
+<td align="left" rowspan="1" colspan="1">163.8052</td>
+<td align="left" rowspan="1" colspan="1">96.83945</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">HS</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>4</bold></td>
+<td align="left" rowspan="1" colspan="1">M1M2M3M9</td>
+<td align="left" rowspan="1" colspan="1">QLC</td>
+<td align="left" rowspan="1" colspan="1">0.522825</td>
+<td align="left" rowspan="1" colspan="1">0.761499</td>
+<td align="left" rowspan="1" colspan="1">0.353106</td>
+<td align="left" rowspan="1" colspan="1">0.364581</td>
+<td align="left" rowspan="1" colspan="1">0.568366</td>
+<td align="left" rowspan="1" colspan="1">0.478402</td>
+<td align="left" rowspan="1" colspan="1">0.520778</td>
+<td align="left" rowspan="1" colspan="1">0.497532</td>
+<td align="left" rowspan="1" colspan="1">0.498754</td>
+<td align="left" rowspan="1" colspan="1">0.522246</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">All cell types</td>
+<td align="left" rowspan="1" colspan="1">TE</td>
+<td align="left" rowspan="1" colspan="1">234.5802</td>
+<td align="left" rowspan="1" colspan="1">98.08597</td>
+<td align="left" rowspan="1" colspan="1">296.6947</td>
+<td align="left" rowspan="1" colspan="1">333.6574</td>
+<td align="left" rowspan="1" colspan="1">216.7348</td>
+<td align="left" rowspan="1" colspan="1">254.1092</td>
+<td align="left" rowspan="1" colspan="1">202.1498</td>
+<td align="left" rowspan="1" colspan="1">237.8789</td>
+<td align="left" rowspan="1" colspan="1">218.5638</td>
+<td align="left" rowspan="1" colspan="1">205.0351</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">HS</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0.000288</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>5</bold></td>
+<td align="left" rowspan="1" colspan="1">M1M4</td>
+<td align="left" rowspan="1" colspan="1">QLC</td>
+<td align="left" rowspan="1" colspan="1">0.805541</td>
+<td align="left" rowspan="1" colspan="1">0.99087</td>
+<td align="left" rowspan="1" colspan="1">0.676715</td>
+<td align="left" rowspan="1" colspan="1">0.738966</td>
+<td align="left" rowspan="1" colspan="1">0.811159</td>
+<td align="left" rowspan="1" colspan="1">0.811159</td>
+<td align="left" rowspan="1" colspan="1">0.996552</td>
+<td align="left" rowspan="1" colspan="1">0.996552</td>
+<td align="left" rowspan="1" colspan="1">0.811159</td>
+<td align="left" rowspan="1" colspan="1">0.996552</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">All cell types</td>
+<td align="left" rowspan="1" colspan="1">TE</td>
+<td align="left" rowspan="1" colspan="1">98.5246</td>
+<td align="left" rowspan="1" colspan="1">10.80349</td>
+<td align="left" rowspan="1" colspan="1">366.0483</td>
+<td align="left" rowspan="1" colspan="1">253.7946</td>
+<td align="left" rowspan="1" colspan="1">128.6547</td>
+<td align="left" rowspan="1" colspan="1">97.8306</td>
+<td align="left" rowspan="1" colspan="1">5.655992</td>
+<td align="left" rowspan="1" colspan="1">5.655992</td>
+<td align="left" rowspan="1" colspan="1">102.336</td>
+<td align="left" rowspan="1" colspan="1">5.655992</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">HS</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0.000127</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>6</bold></td>
+<td align="left" rowspan="1" colspan="1">M1M9</td>
+<td align="left" rowspan="1" colspan="1">QLC</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0.747105</td>
+<td align="left" rowspan="1" colspan="1">0.841311</td>
+<td align="left" rowspan="1" colspan="1">0.988636</td>
+<td align="left" rowspan="1" colspan="1">0.977273</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">All cell types</td>
+<td align="left" rowspan="1" colspan="1">TE</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">125.1425</td>
+<td align="left" rowspan="1" colspan="1">157.2069</td>
+<td align="left" rowspan="1" colspan="1">4.430817</td>
+<td align="left" rowspan="1" colspan="1">8.501064</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">HS</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>7</bold></td>
+<td align="left" rowspan="1" colspan="1">M5M9</td>
+<td align="left" rowspan="1" colspan="1">QLC</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">0.899543</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+<td align="left" rowspan="1" colspan="1">1</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">All cell types</td>
+<td align="left" rowspan="1" colspan="1">TE</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">87.94826</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">HS</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>The table represents the results of the three clustering measures (QLC, TE and HS) over 10 NJ reconstructed methods. For the measure QLC higher scores mean better performance, whereas for the measures TE and HS lower values mean better performance. It can be seen that in some cases, for example dataset #7, all the distance measures (except for Euclidian) give the same best score (1 for QLC and 0 for TE and HS). For dataset #1, on the other hand, all the distance measures give a rather similar bad score. It is not surprising that the scores of a dataset which contains 9 individuals (#1) will be lower than the scores of a dataset which contains only 2 individuals (#7). There are cases, like #3 and #4, in which the best performance is achieved by one method (NJ-Normalized Absolute) and other cases, like #5, where a few methods receive a very high score (NJ-Normalized Absolute, NJ-MMM length dependent rates, and more).</p></fn></table-wrap-foot></table-wrap>
+<p>The results of the 502 datasets are given in <xref ref-type="supplementary-material" rid="pcbi.1003297.s019">Table S5.1</xref>. A summary of the results is given in <xref ref-type="fig" rid="pcbi-1003297-g004">Figure 4</xref> (upper part). The upper panels of the figure (<xref ref-type="fig" rid="pcbi-1003297-g004">Figure 4A</xref>) present the average score of all the methods. The values are transformations of the real ones such that higher values mean better performance. (For detailed explanations of the measures and the transformations see <xref ref-type="sec" rid="s4">Materials and Methods</xref>). The second panels (<xref ref-type="fig" rid="pcbi-1003297-g004">Figure 4B</xref>) show the number of times every method got the highest rank (in this case it is 20 since we compared 20 methods: 10 NJ and 10 QMC methods). It is important to emphasize that more than one method can be ranked a specific rank; this is when two or more methods get the same score. The results of the two other algorithms (UPGMA and BATWING) as well as other representations of the results are shown in <xref ref-type="supplementary-material" rid="pcbi.1003297.s007">Figure S7</xref>, where we show the normalized average scores in which the higher the values the higher the performance. This representation is needed in order to enable a comparison of the results of ‘simple’ and ‘complicated’ scenarios simultaneously. In simple scenarios, each group of cells is strongly separated so all the methods receive a good score, while in complicated scenarios the cells are mixed and none of the methods' performance is good. Another representation is the average rank of each method, where a method receives the highest rank when its score is best.</p>
+<fig id="pcbi-1003297-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003297.g004</object-id><label>Figure 4</label><caption>
+<title>Performance summary of all the methods on all the datasets of mice and humans.</title>
+<p>Upper panels – Mouse, Lower panels- Human. Each column presents a different clustering measure (see <xref ref-type="sec" rid="s4">Materials and Methods</xref> for details), and each bar represents a different distance measure, where the colors specify the distance measures as noted in the legend. The first and the second group of bars (from left to right) present the results using the NJ algorithm and the QMC algorithm respectively. Rows description: (A) The average score of all the methods, where higher values (that are transformations of the real scores) indicate better performance. (B) The number of times every method received the highest rank (for the mouse panel the highest rank is 20 since we compared 20 methods, and for the human panel the highest rank is 12).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003297.g004" position="float" xlink:type="simple"/></fig>
+<p>As seen, the NJ- Normalized Absolute method is ranked the best more frequently than the other methods in all the three different measures, and the next best performance is associated with the NJ- Absolute method. The absolute distance measure captures the underlying mutational process precisely only if there are no back mutations, namely the addition of a repeat followed by its deletion, or vice versa. However, this is not likely to be the case in general as empirical data shows that MSs accumulate many mutations and yet have small variability over time, hence back mutations must be present, most likely in accordance with a random walk model <xref ref-type="bibr" rid="pcbi.1003297-Felsenstein1">[39]</xref>. We believe that normalizing the mutations (as in the Normalized Absolute measure) eliminates the depth of the cells and therefore the weight of the loci with fewer mutations is larger, and neglecting the backward mutations has less effect.</p>
+<p>We conducted a similar rough test (i.e. including different types of cells) using the human data which contains seven individuals, thus producing 120 datasets. A summary of the results is given in <xref ref-type="fig" rid="pcbi-1003297-g004">Figure 4</xref> (bottom part) and <xref ref-type="supplementary-material" rid="pcbi.1003297.s007">Figure S7</xref> (full results are given in <xref ref-type="supplementary-material" rid="pcbi.1003297.s019">Table S5.2</xref>). It can be seen that all the distance measures along with the NJ algorithm give an almost perfect separation, however the NJ-Normalized Absolute still performs best, just as with the mice datasets. Note that for the human datasets we compared only two ML methods (and not six), as we do not have an estimation of different mutation rates for mono-nucleotide and di-nucleotide repeats.</p>
+<p>In order to validate these results we performed lineage tree reconstruction of simulated trees similar to the ones reconstructed using the real data (as described in <xref ref-type="sec" rid="s4">Materials and Methods</xref>). The simulated trees contained cells separated according to their types and the individual to which they belong. We simulated several topologies in which three depth parameters were varied: 1. the distance between the root of the tree and the individuals' zygotes, 2. the distance between the individual's zygote and the MRCA of each cell type group, and 3. the depth of each cell (examples are shown in <xref ref-type="supplementary-material" rid="pcbi.1003297.s008">Figure S8</xref>). The simulations show that when the distance between the leaves and their MRCA (most recent common ancestor) is high, compared to the distance between the root of the simulated tree and these MRCA (topology A in <xref ref-type="supplementary-material" rid="pcbi.1003297.s008">Figure S8</xref>), using ∼100 loci (the amount used in the experiments analyzed in this paper), the Normalized-absolute distance performs best in separating the different cell types. This result agrees with our analysis of the real data (results are shown in <xref ref-type="supplementary-material" rid="pcbi.1003297.s021">Table S7.1</xref> and in <xref ref-type="supplementary-material" rid="pcbi.1003297.s009">Figure S9A</xref>). Using more than 100 loci or less, similar results are obtained, whereas when the amount of loci increases, the performance increases as well. However, when the distance between the leaves and their MRCA is small, compared to the distance between the root and these MRCA (topology B in <xref ref-type="supplementary-material" rid="pcbi.1003297.s008">Figure S8</xref>), only for small mutation rates (1/10000) does the Normalized-absolute distance perform best. For the other cases, it is difficult to conclude which method is best.</p>
+</sec><sec id="s2b2">
+<title>Cells with similar depth</title>
+<p>In general one cannot assume that the depth is the same for different cell types, and therefore tree reconstruction algorithms that produce ultrametric trees are not applicable. Even though, by using the same type of cells from organisms with the same age, the same depth assumption is reasonable, still, there might be a problem that the zygotes of the different organisms do not have the same depth. However due to the fact that our mice are MMR deficient, their mutation rates after the zygote are a few orders of magnitude higher than before the zygote, and all of them are genetically related, it is reasonable to assume that they have the same depth from the zygote.</p>
+<p>By using the same cells from different mice with the same age, we also tested the UPGMA algorithm with all the distance measures that we have, as well as BATWING. In general the NJ and the UPGMA algorithms perform better than the QMC and the BATWING. The NJ has a small advantage over the UPGMA, but since the dataset size is relatively small we cannot provide a convincing conclusion. Among all the measures, using NJ- Normalized Absolute performs the best as shown in <xref ref-type="fig" rid="pcbi-1003297-g005">Figure 5</xref> and <xref ref-type="supplementary-material" rid="pcbi.1003297.s010">Figure S10</xref> (full results are given in <xref ref-type="supplementary-material" rid="pcbi.1003297.s019">Table S5.3</xref>.). In addition, both UPGMA and QMC (in some of the clustering measures) perform similarly to NJ, however using these algorithms the Normalized Absolute distance is not always the best but also some of the ML distances.</p>
+<fig id="pcbi-1003297-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003297.g005</object-id><label>Figure 5</label><caption>
+<title>Performance summary of all the methods for datasets composed of cells of same depth only.</title>
+<p>Each column presents a different clustering measure (see <xref ref-type="sec" rid="s4">Materials and Methods</xref> for details), and each bar represents a different distance measure, where the colors specify the distance measures as noted in the legend. The first group of bars (from left to right) presents the results using the NJ algorithm, the second group of bars presents the results using the QMC algorithm, the third presents the results using the UPGMA algorithm, and the last one presents the results using the BATWING tool. Rows description: (A) The average score of all the methods, where higher values (that are transformations of the real scores) indicate better performance. (B) The number of times every method received the highest rank (in this case it is 31 since we compared 31 methods).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003297.g005" position="float" xlink:type="simple"/></fig>
+<p>The Bayesian method did not perform well, compared to the other methods. This is not surprising taking into account the fact that its assumptions do not describe well the cell population, both in the reproduction process, and the demographic model. BATWING assumes an exponential growth, while the true demography is much more complicated and includes for instance bottlenecks for the different types of cells <xref ref-type="bibr" rid="pcbi.1003297-Reizel1">[6]</xref>. This indicates that in order to apply Bayesian and Likelihood methods to cell populations, there is a need to develop specific tools that will fit cell populations.</p>
+</sec><sec id="s2b3">
+<title>Many cell types in one individual</title>
+<p>The comprehensive test presented above is not identical to the common cases in cell lineage research. In the above test, we used cells from different organisms, while in the common research questions of cell lineage, cells from the same organism are used. A priori there is no reason to believe that the evolvement of the mutational process inside the individual is different than the one between different individuals. This is because many general features of the MS mutational process (such as the dependency on the unit size, the length of the MS, and the specific letter) show a similar behavior (Chapal-Illani et al, in preparation), and because the MMR-deficient mice are relatives, and thus the genetic distance between them is relatively small and the vast majority of their mutations are somatic. As a result we assume that there is no difference in the performance of the reconstructing algorithms, and since the NJ-Normalized Absolute algorithm performs best between individuals, we can assume it has the best performance inside a single individual. To validate this assumption we reconstructed lineage trees of single cells from the same individual, using all types of methods mentioned above, without knowing what the true separation of the different cell types is. In <xref ref-type="supplementary-material" rid="pcbi.1003297.s011">Figure S11</xref> we present the performance of the methods on a relatively small sample: eight mice and seven humans that have more than one type of cells. For each mouse and human we used all the cell types that we have (see <xref ref-type="supplementary-material" rid="pcbi.1003297.s015">Table S1</xref> for the list of cell types of each individual). Even though the real scenario is not clear, we found that there is a separation between the cell types, and the method with the best performance (but not substantially better) was the NJ-Normalized Absolute, similar to the results obtained for different individuals. We performed a permutation test which involves the shuffling of the different cells in the reconstructed tree, and we found that the separation between the cell types is statistically significant (P&lt;10<sup>−3</sup>). That indicates that the separation we observed is not random and we can assume that the method for separating between individuals works just as well for separating within an individual.</p>
+<p>We also performed lineage tree reconstruction of simulated trees of single cells of different types from one individual (described in <xref ref-type="sec" rid="s4">Materials and Methods</xref>). We simulated several topologies, similar to the ones we performed for the simulated trees, containing several individuals (examples are shown in <xref ref-type="supplementary-material" rid="pcbi.1003297.s008">Figure S8</xref>). The simulations showed that the NJ-Normalized Absolute has an advantage over the other method. However, this holds when the distance between the leaves and their MRCA is high, compared to the distance between the root of the simulated tree and these MRCA (topology A in <xref ref-type="supplementary-material" rid="pcbi.1003297.s008">Figure S8</xref>). When the distance between the leaves and their MRCA is small (topology B in <xref ref-type="supplementary-material" rid="pcbi.1003297.s008">Figure S8</xref>), the performance of NJ-Normalized Absolute is not always the best. These results (<xref ref-type="supplementary-material" rid="pcbi.1003297.s021">Table S7.2</xref> and in <xref ref-type="supplementary-material" rid="pcbi.1003297.s009">Figure S9B</xref>) also agree with the simulations of the trees containing multiple individuals that we performed.</p>
+</sec><sec id="s2b4">
+<title>Same type of cells</title>
+<p>In order to examine the clustering abilities in a refined way, we produced datasets using only one type of cells from different individuals, and tested the performance of the different methods. This step is important for two reasons: a. The use of different cell types for different mice may lead to an artificial separation between the mice, simply because of the diverse features of different cells (such as division rate, etc.). The use of the same type of cells assures that the methods indeed distinguish between the different organisms. b. We want to check the presence of a correlation between the clustering qualities of the different methods with specific types of cells, i.e. whether there are some methods that succeed in separating some types of cells, while others succeed in separating other types. <xref ref-type="supplementary-material" rid="pcbi.1003297.s012">Figure S12</xref> shows the results of the methods performed on 57 mouse datasets and 146 human datasets. Overall, the results are consistent with the results obtained by using various cell types together indicating that the NJ-Normalized Absolute is the best method.</p>
+</sec></sec><sec id="s2c">
+<title>Depth separation</title>
+<p>As mentioned before, clustering is just one example of a feature of the tree in which we are interested. Another feature is the depth of specific types of cells. Different depths can indicate different biological scenarios, for example whether some types of cells divide only during the embryonic stage or also in the adult stage. In this section our goal is to quantify the performance of the different methods in identifying depth differences between groups of cells.</p>
+<p>In order to obtain cases where the depth separation between the cell groups is known, we used the same type of cells from individuals with a substantial gap between their ages. The list of cell types of each individual is given in <xref ref-type="supplementary-material" rid="pcbi.1003297.s015">Table S1</xref>. The tree-reconstruction algorithm that was applied in this case is the NJ algorithm, since it is the only algorithm that allows different depths for different cells inside the same individual. Two examples of trees with depth difference are presented in <xref ref-type="fig" rid="pcbi-1003297-g006">Figure 6</xref>, one with a good depth separation (<xref ref-type="fig" rid="pcbi-1003297-g006">Figure 6B</xref>) and one with a poor separation (<xref ref-type="fig" rid="pcbi-1003297-g006">Figure 6A</xref>).</p>
+<fig id="pcbi-1003297-g006" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003297.g006</object-id><label>Figure 6</label><caption>
+<title>Depth separation comparison of two distance measures on the same dataset.</title>
+<p>Two reconstructed lineage trees containing whole crypts from M9 (52 days) and two reconstructed lineage trees containing whole crypts from M7 (199 days) are shown. The root of the trees (colored in black) is the signature of the tail extracted from each mouse. (A) Two reconstructed trees using the NJ algorithm along with Equal or Not distance measure. (B) Two reconstructed trees using the NJ algorithm along with the Absolute distance measure.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003297.g006" position="float" xlink:type="simple"/></fig>
+<p>The depth of each group of cells as reconstructed by the NJ varies even if all the cells of this group actually have exactly the same number of divisions. Therefore for each group of cells, the depth is described by a distribution rather than by a single number. In order to quantify the performance of a method in separating between the two groups, quantities that differentiate between distributions are needed.</p>
+<p>The most natural choice is the Kolmogorov-Smirnov (KS) test, which measures the similarities between two datasets. However, this test has some disadvantages for our purposes; the most significant one is the ability to determine that two datasets are different even if they have exactly the same average depth, in cases where their standard deviations are substantially different. Therefore in addition to the KS we added two other measures that focus on the separation between the two distributions. The first is the normalized distance between the mean of the two groups, and the second is the overlap percentage between the two distributions (see <xref ref-type="sec" rid="s4">Materials and Methods</xref> for more details). The difference between them is that the overlap percentage is affected by the behavior of the extreme cells, while the normalized average distance captures the behavior of the bulk. Another minor difference is that the average normalized distance can distinguish between the separation qualities of methods even in the case of fully separated groups.</p>
+<p>A summary of the depth separation tests' results is presented in <xref ref-type="fig" rid="pcbi-1003297-g007">Figure 7</xref> and <xref ref-type="supplementary-material" rid="pcbi.1003297.s013">Figure S13</xref> (full results are given in <xref ref-type="supplementary-material" rid="pcbi.1003297.s019">Table S5.4</xref>). In this case there is no one method which is superior over the others, but a few which are rather equally good: Normalized Absolute, Euclidean and SMM with length dependent mutational rates. This implies that for the depth separation there is no one tree which can be considered the correct one. The various inferred trees should be seen as approximate projections of the real tree, which cannot be inferred precisely as of yet, since the genetic identifier is not sufficiently informative. These results were validated by simulations in which lineage trees with different cell depths were reconstructed and the differences were evaluated using the depth measures described in <xref ref-type="sec" rid="s4">Materials and Methods</xref>. In each iteration, two lineage trees were simulated and the difference between the depths was calculated, where we distinguished between cases in which the trees were relatively shallow, and cases in which the trees were relatively deep. The simulations show that when the trees are shallow, when using 100 loci, there is no one method which is uniformly better than the others, in accordance with our result obtained with real data. When using 50 loci, the Normalized-absolute has the worst performance, while with 500 loci; the Normalized-absolute performs best. When the trees are deep, with 500 loci there is no one method that is better than the others, whereas when using fewer loci, the Normalized-absolute has the worst performance (results are shown in <xref ref-type="supplementary-material" rid="pcbi.1003297.s022">Table S8</xref> and in <xref ref-type="supplementary-material" rid="pcbi.1003297.s014">Figure S14</xref>).</p>
+<fig id="pcbi-1003297-g007" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003297.g007</object-id><label>Figure 7</label><caption>
+<title>Depth quality of the different methods.</title>
+<p>Each column presents a different depth quality measure (see <xref ref-type="sec" rid="s4">Materials and Methods</xref> for details), and each bar represents a different distance measure, where the colors specify the distance measures as noted in the legend. Rows description: (A) The average depth score of all the methods, where lower values for the KS test, lower values for the overlap percentage and higher values for the normalized distance test mean better performance. (B)The number of times every method received the highest rank (in this case it is 10 since we compared 10 methods).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003297.g007" position="float" xlink:type="simple"/></fig></sec><sec id="s2d">
+<title>Reliability of reconstructed lineage trees</title>
+<p>Bootstrap analysis was used in order to evaluate the robustness and reproducibility of the estimated trees, the clustering of the tree and the depth separation according to cell type. We performed this analysis on several mice and human datasets which showed a good clustering or depth separation using the NJ-Normalized Absolute method.</p>
+<p>The bootstrap values were obtained by generating 100 trees using MS values extracted from sampling with replacement of the loci from each dataset. The bootstrap showed that the robustness of any particular branch in the tree is low, but the robustness of the clustering results and depth separation according to cell type is high (see <xref ref-type="supplementary-material" rid="pcbi.1003297.s023">Table S9</xref> for all the results).</p>
+</sec></sec><sec id="s3">
+<title>Discussion</title>
+<p>In the preliminary stages of the cell lineage research conducted by our lab, small-scale investigations of the ability to reconstruct cell lineage trees were done. The large amount of information that was gathered during the last few years enabled us to conduct this investigation in a much more comprehensive way. The main outcome of this research is that even though currently only a limited amount of microsatellite loci are available, preventing the reconstruction of the accurate cell-lineage tree, many biological conclusions can still be confidentially drawn. By this we mean that apart from specific noisy cases, almost always we are able to identify the correct biological scenario from the reconstructed cell lineage if the proper tree reconstruction algorithm and distance measure are used.</p>
+<p>Among the NJ methods, we have found that the NJ- Normalized Absolute method outperforms the other methods at inferring the clustering of distinct groups. Interestingly, this shows that clear cluster- separation is not necessarily correlated with the most precise description of the mutational process. A result with a similar spirit was obtained previously <xref ref-type="bibr" rid="pcbi.1003297-Takezaki1">[29]</xref> for using MS allele frequency in order to infer the phylogenetic tree of different species/populations. They also found that the best method is not necessarily the one that described the mutational process in the most accurate way.</p>
+<p>However, such a measure cannot describe accurately cell depth because depth information is eliminated in the normalization procedure. It is not unreasonable to assume that a Likelihood (or a Bayesian) method tailored towards cell lineage analysis that will make use of all the cells' information, without summarizing it into distance measure, will enable one to infer simultaneously both the topology and the depth in an accurate way. We hope to follow such a path in the future.</p>
+<p>We expect that in the coming years next generation sequencing methods will provide us with a much richer genetic signature, and thus improve our ability to infer the cell lineage tree more accurately. This in turn will enable relying on even fine details of the cell lineage tree and not only its rough features.</p>
+</sec><sec id="s4" sec-type="materials|methods">
+<title>Materials and Methods</title>
+<sec id="s4a">
+<title>Ethics statement</title>
+<p>All animal husbandry and euthanasia procedures were performed in accordance with the Institutional Animal Care and Use Committee (IACUC) of the Weizmann Institute of Science.</p>
+<p>All human patients signed an informed consent; the study has received Helsinki authorization and was approved by the Rambam Hospital IRB committee and by the Bioethics Committee of the Weizmann Institute of Science.</p>
+<p>Our aim is to quantify the performance of different tree reconstruction methods in inferring clustering and depth separation. Most of the methods we tested are distance-based algorithms which use a distance measure between the cells to iteratively join close samples together, such as the Neighbor-Joining algorithm (the full list of methods and distance measures is given below). We tested each method on two features:</p>
+<list list-type="order"><list-item>
+<p><italic>Clustering</italic>: The ability to produce distinct clusters for biological groups known to be distinct (e.g., cells from different mice).</p>
+</list-item><list-item>
+<p><italic>Depth separation</italic>: The ability to produce distinct depth differences between cells that are known to have divided a different number of times (e.g., the same cell type from old and young mice).</p>
+</list-item></list>
+</sec><sec id="s4b">
+<title>Tree reconstruction algorithms</title>
+<p>The first distance based algorithm we used is UPGMA (Unweighted Pair Group Method with Arithmetic Mean algorithm) <xref ref-type="bibr" rid="pcbi.1003297-Sokal1">[32]</xref> which assumes that all lineages evolve at the same rate. This assumption limits us to reconstructing trees which contain cells that underwent the same (or very similar) number of divisions.</p>
+<p>The second algorithm we used is NJ (Neighbor-Joining) <xref ref-type="bibr" rid="pcbi.1003297-Saitou1">[31]</xref>. In order to fit the algorithm to our problem, we corrected the branch lengths such that they will not be negative. When negative branches appear during the running of the algorithm, we set its length to 0, adjusting its sibling branch accordingly <xref ref-type="bibr" rid="pcbi.1003297-Kuhner1">[40]</xref>. Note that this correction does not change the inference of the topology, since it depends only on the distance matrix, and is not affected by the branch lengths of the inferred tree. With the NJ algorithm, a rooted tree can be created by using an out-group, and the root can then effectively be placed on the point in the tree where the edges from the out-group connect. The root in our trees is usually a mix of a wide variety of cell types (a description of the root's determination is given below, in the Data description section).</p>
+<p>The third algorithm we used is QMC (Quartet MaxCut) <xref ref-type="bibr" rid="pcbi.1003297-Snir1">[33]</xref>, <xref ref-type="bibr" rid="pcbi.1003297-Snir2">[41]</xref>. Quartets-based methods were initially proposed to provide an alternative to maximum likelihood methods, which are computationally intensive. These methods first estimate a set of trees on many four-leaf subsets of the taxa, and then combine them into a tree on the full set of taxa. The QMC method is based on a recursive divide and conquer algorithm that seeks to maximize the ratio between satisfied and violated quartets at each step. The common implementations of the quartet method (including QMC) produce only a tree topology without any explicit information about the branches lengths. Even though it is possible to add depth estimation to the QMC, we limited ourselves to assessing the quality of existing methods without any new features added.</p>
+<p>Apart from the distance based algorithms, we tested a Bayesian method for inferring the cell lineage tree. We used the computer software, BATWING <xref ref-type="bibr" rid="pcbi.1003297-Wilson1">[38]</xref> which reads in multi-locus haplotype data, a model and prior distribution specifications. This program uses a Markov Chain Monte Carlo (MCMC) method based on coalescent theory to generate approximate random samples from the posterior distributions of parameters such as mutation rates, effective population sizes and growth rates, and times of population splitting events. Even though there is currently no Likelihood or Bayesian tree reconstructing algorithm that uses microsatellites, which was developed to include the unique features of cell lineages, the growing population implementation of BATWING seemed most suited for our study. The priors we used are 1/100 for the mutation rate, and uniform distributions for the effective population size and the population growth rate per generation (on the intervals [10,000 10,000,000] and [0 2] respectively).</p>
+</sec><sec id="s4c">
+<title>Distance matrices</title>
+<p>The distance-based methods require a distance measure between cells, which ideally should be linear with the actual number of divisions separating any two samples, and should provide the most robust tree reconstruction. We have tested several different distance functions. In these functions <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e003" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e004" xlink:type="simple"/></inline-formula> are the number of repeats in the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e005" xlink:type="simple"/></inline-formula> single allele of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e006" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e007" xlink:type="simple"/></inline-formula> sampled cells, respectively, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e008" xlink:type="simple"/></inline-formula> is the set of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e009" xlink:type="simple"/></inline-formula> alleles which were amplified for both samples <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e010" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e011" xlink:type="simple"/></inline-formula> (for autosomal loci, both alleles were included, and for chromosome X loci, one allele was included in male samples):</p>
+<list list-type="order"><list-item>
+<p>Absolute distance – the distance between two samples, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e012" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e013" xlink:type="simple"/></inline-formula>, is the average absolute differences between their number of repeats in all alleles which were analyzed in both samples:<disp-formula id="pcbi.1003297.e014"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003297.e014" xlink:type="simple"/></disp-formula></p>
+</list-item><list-item>
+<p>Normalized Absolute distance – the distance between two samples, <italic><sub>i</sub></italic> and <italic>j</italic>, is the average normalized absolute difference between their number of repeats in all alleles which were analyzed in both samples:<disp-formula id="pcbi.1003297.e015"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003297.e015" xlink:type="simple"/></disp-formula>Since normalizing the values eliminates the depth information, we used the depth values from the Absolute distance when performing tree reconstruction using this measure. In order to incorporate the depth <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e016" xlink:type="simple"/></inline-formula> into the reconstructed tree, we used a bottom-up method, where for each pair of sibling leaves we first set their depth according to <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e017" xlink:type="simple"/></inline-formula> and then calculated the distance of their parent from the root using <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e018" xlink:type="simple"/></inline-formula> where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e019" xlink:type="simple"/></inline-formula>. We then continued until reaching the root.</p>
+</list-item><list-item>
+<p>Euclidean distance – the distance between two samples, i and j, is:<disp-formula id="pcbi.1003297.e020"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003297.e020" xlink:type="simple"/></disp-formula></p>
+</list-item><list-item>
+<p>“Equal or not” distance – the distance between two samples, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e021" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e022" xlink:type="simple"/></inline-formula>, is the number of alleles that differ between the two identifiers:<disp-formula id="pcbi.1003297.e023"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003297.e023" xlink:type="simple"/></disp-formula></p>
+</list-item><list-item>
+<p>Maximum Likelihood (ML) – each entry in the distance matrix is taken as the maximum likelihood estimate of the number of divisions separating the two cells (more details in <xref ref-type="bibr" rid="pcbi.1003297-Reizel2">[7]</xref>). The ML estimator is calculated according to two different assumptions: Symmetric Stepwise Mutation Model (SMM) <xref ref-type="bibr" rid="pcbi.1003297-Ota1">[42]</xref> , which assumes an equal probability of addition or deletion of one repeat given that a mutation happens, and a Multistep Mutation Model (MMM) in which multiple additions or deletions of the repeat unit are possible according to a symmetrical distribution. The mutation rate for these step models was set differently for mice and humans. For humans we used the often quoted mutation rate of 1/1000 per meiosis <xref ref-type="bibr" rid="pcbi.1003297-Ellegren2">[43]</xref>. For mice we used three types of mutation rates: 1. an equal mutation rate for all loci (estimated to be 1/30 from <italic>ex-vivo trees</italic> <xref ref-type="bibr" rid="pcbi.1003297-Reizel2">[7]</xref>), 2. different mutation rates according to loci basic unit length (in our panel we have only mono-nucleotide and di-nucleotide repeat loci and their rates were estimated to be 1/22 and 1/32, respectively), and 3. a variable mutation rate linearly dependent on the MS repeat number (with slope and intersection of 0.0183 and 1/2000 respectively, estimated from <italic>ex-vivo</italic> trees).</p>
+</list-item></list>
+</sec><sec id="s4d">
+<title>Clustering measures</title>
+<p>We used three different measures to quantify the quality of the clustering separation ability:</p>
+<list list-type="order"><list-item>
+<p>Quality of the Largest Cluster (QLC) – this measure focuses on the existence of one large cluster and ignores the behavior of the rest of the cells, and it is calculated as follows. For each cell type <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e024" xlink:type="simple"/></inline-formula>, we run over all the internal nodes and count the number of leaves of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e025" xlink:type="simple"/></inline-formula> type that are descendants of this node. The degree of the node is defined as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e026" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e027" xlink:type="simple"/></inline-formula> is the percentage of cells from the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e028" xlink:type="simple"/></inline-formula> type that are descendants of this node out of all the cells of type <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e029" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e030" xlink:type="simple"/></inline-formula> is the percentage of cells from type <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e031" xlink:type="simple"/></inline-formula> that are descendants of this node among all the cells that are descendants of this node. If <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e032" xlink:type="simple"/></inline-formula>, the degree of this node is defined as zero. The score of each cell type <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e033" xlink:type="simple"/></inline-formula> is defined as:<disp-formula id="pcbi.1003297.e034"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003297.e034" xlink:type="simple"/></disp-formula>and the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e035" xlink:type="simple"/></inline-formula> of the whole tree is defined as the average <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e036" xlink:type="simple"/></inline-formula> on all the cell types:<disp-formula id="pcbi.1003297.e037"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003297.e037" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e038" xlink:type="simple"/></inline-formula> is the set of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e039" xlink:type="simple"/></inline-formula> cell types.</p>
+</list-item><list-item>
+<p>Tree Entropy (TE) – this measure assesses the amount of mixing on the tree between each pair of cell groups. It is affected only by the number of clusters on the tree that each cell group has, regardless of the sizes of these clusters. The entropy of the whole tree is the average over the entropy matrix containing the entropy between each pair. It is calculated as follows: the number of clusters of each pair of cell types <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e040" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e041" xlink:type="simple"/></inline-formula> is obtained (here cluster is defined only if all the descendants of a node are of a specific type. Obviously by this definition every leaf is a cluster of size one, unless it is part of a larger cluster). The equivalent state of the system is all the cases that will have the same number of clusters of each type. The number of equivalent states is:<disp-formula id="pcbi.1003297.e042"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003297.e042" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e043" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e044" xlink:type="simple"/></inline-formula> are the number of cells of type <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e045" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e046" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e047" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e048" xlink:type="simple"/></inline-formula> are the number of clusters of type <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e049" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e050" xlink:type="simple"/></inline-formula>. The entropy is:<disp-formula id="pcbi.1003297.e051"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003297.e051" xlink:type="simple"/></disp-formula>Thus the entropy of the tree is a matrix (half diagonal) and not a scalar. The scalar entropy of the tree is the average over all the pairs <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e052" xlink:type="simple"/></inline-formula>:<disp-formula id="pcbi.1003297.e053"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003297.e053" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e054" xlink:type="simple"/></inline-formula> is the number of all pairs <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e055" xlink:type="simple"/></inline-formula>.The matrix entropy enables one to analyze all the relationships between the different cell types, and to see which pair is mixed and which pair is separated. As the value of the TE is lower, the various groups of cells in the lineage tree are more clustered, however in order for the figures of this work to be clearer, the TE values presented in them were transformed such that higher values mean better performance (i.e. better clustering).The transformation is: <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e056" xlink:type="simple"/></inline-formula></p>
+</list-item><list-item>
+<p>Hypergeometric score (HS) – this measure detects a statistically significant clustering of a predefined group of cells on the reconstructed lineage tree. According to the method, given a dichotomous classification of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e057" xlink:type="simple"/></inline-formula> cells in an experiment where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e058" xlink:type="simple"/></inline-formula> cells belong to group <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e059" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e060" xlink:type="simple"/></inline-formula> cells belong to the complementary group <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e061" xlink:type="simple"/></inline-formula>, for every branch/internal node in the inferred lineage tree, the null hypotheses of no association between the sub-tree and the classification is tested. This is done by performing a hypergeometric test. Given a sub-tree of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e062" xlink:type="simple"/></inline-formula> cells in which <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e063" xlink:type="simple"/></inline-formula> cells are of type <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e064" xlink:type="simple"/></inline-formula> ,the branch's p-value is the probability to see <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e065" xlink:type="simple"/></inline-formula> or more cells of type <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e066" xlink:type="simple"/></inline-formula> given that the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e067" xlink:type="simple"/></inline-formula> cells are random samples from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e068" xlink:type="simple"/></inline-formula>:<disp-formula id="pcbi.1003297.e069"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003297.e069" xlink:type="simple"/></disp-formula>We use a False Discovery Rate correction with an FDR of 20% to determine the p-value threshold for the tree. The Hypergeometric score of the whole tree is defined as:<disp-formula id="pcbi.1003297.e070"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003297.e070" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e071" xlink:type="simple"/></inline-formula> is the set of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e072" xlink:type="simple"/></inline-formula> cell types, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e073" xlink:type="simple"/></inline-formula> is the most significant p-value of cell type <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e074" xlink:type="simple"/></inline-formula>.</p>
+<p>The HS values presented in the figures of this work were taken as the log HS values. Since they range from 0 to 1 and are normalized by the best value, the higher normalized values mean better performance (i.e. better clustering).</p>
+</list-item></list>
+<p>All these measures evaluate the quality of the separation of the distinct groups on the tree, but they measure parameters that are slightly different. The QLC focuses on the existence of one large cluster and ignores the behavior of the rest of the cells. The TE on the other hand is determined by the number of distinct clusters of each cell type, and ignores their sizes. Hence, the TE focuses on the global behavior of the tree and not just on one sub-tree. The HS, like the QLC, focuses on the existence of a large cluster, but does not ignore the rest of the cells as it detects a statistically significant clustering of a group of cells on the lineage tree.</p>
+</sec><sec id="s4e">
+<title>Depth measures</title>
+<p>We used three different measures to quantify the quality of the depth separation ability:</p>
+<list list-type="order"><list-item>
+<p>Kolmogorov Smirnov (KS) test – this measure answers the question of whether two datasets were taken from the same distribution. Even if the datasets have the same average but have very different standard deviations, the KS test will reject the null hypothesis of both having the same distribution. For some features of separation, this test answers the required question, but for other features, other tests are necessary, such as the other two measures presented below.</p>
+</list-item><list-item>
+<p>Normalized Distance (ND) – this measure evaluates the normalized distance between the averages of two datasets, defined as:<disp-formula id="pcbi.1003297.e075"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003297.e075" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e076" xlink:type="simple"/></inline-formula> is the average depth of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e077" xlink:type="simple"/></inline-formula> dataset, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e078" xlink:type="simple"/></inline-formula> is the standard deviation of the <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e079" xlink:type="simple"/></inline-formula> dataset.</p>
+</list-item><list-item>
+<p>Overlap percentage – this measure gives the percentage of overlap between two datasets and is defined as follows. For each data point of distribution <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e080" xlink:type="simple"/></inline-formula>, its degree of overlap is the number of data points from distribution <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003297.e081" xlink:type="simple"/></inline-formula> it penetrates. The overlap percentage is defined as:<disp-formula id="pcbi.1003297.e082"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003297.e082" xlink:type="simple"/></disp-formula></p>
+</list-item></list>
+</sec><sec id="s4f">
+<title>Data description</title>
+<sec id="s4f1">
+<title>Mice</title>
+<p>Mlh1+/−C57Bl/6 (obtained from Prof. Michael Liskay) <xref ref-type="bibr" rid="pcbi.1003297-Baker1">[44]</xref> and Mlh1+/−129SvEv (provided by Prof. Ari Elson from the Weizmann Institute, Israel) were mated to yield Mlh1−/− progeny of the dual backgrounds. These were used for experiments. All animal husbandry and euthanasia procedures were performed in accordance with the Institutional Animal Care and Use Committee at the Weizmann Institute of Science.</p>
+</sec><sec id="s4f2">
+<title>Humans</title>
+<p>Peripheral Blood (PB) and Bone Marrow (BM) biopsies at diagnosis and relapse collected from leukemia patients were received from the Rambam Healthcare Campus, Haifa, Israel. All patients signed an informed consent, and the study was approved by the RambamIRB committee.</p>
+</sec><sec id="s4f3">
+<title>Obtaining genetic signature of single cells</title>
+<p>The system takes as input a set of DNA samples from individual cells and PCR primers for Microsatellites (MSs), and outputs a reconstructed cell lineage tree of the cells from mutations identified in these MSs. This tree provides an inferred topology and a depth estimation representing the inferred number of cell divisions that occurred along each edge of the lineage tree. The system utilizes a programmable laboratory robot augmented with a PCR and capillary electrophoresis machines. The capillary machine histograms are analyzed by a computer program that utilizes a signal processing algorithm to assign each sample a vector, which is a mathematical representation of the mutations the cell acquired in the MS set. A computer program applies a phylogenetic algorithm to the set of vectors and produces a reconstructed cell lineage tree associated with the DNA samples.</p>
+</sec><sec id="s4f4">
+<title>Tree reconstruction</title>
+<p>Different cell types were sampled from mice and humans (<xref ref-type="supplementary-material" rid="pcbi.1003297.s015">Table S1</xref>). The cells were serially diluted in order to apply whole genome amplification (WGA) to individual cells. The genomic DNA obtained was amplified by ∼120 PCR reactions of mouse or human MSs combined in multiplex groups (<xref ref-type="supplementary-material" rid="pcbi.1003297.s016">Tables S2.1 and S2.2</xref>). The amplified products were combined and analyzed by capillary electrophoresis followed by computer-aided signal analysis. The size of each locus was determined, thereby providing a genomic signature – the deviation from the putative zygote in the number of MS repeats at each locus (<xref ref-type="supplementary-material" rid="pcbi.1003297.s017">Tables S31, S3.2.</xref>, <xref ref-type="supplementary-material" rid="pcbi.1003297.s018">S4.1 and S4.2</xref>). For mice, the genomic signature of the putative zygote was taken from the tail's genomic DNA of each mouse. The tail contains cells that originated from the ectoderm, endoderm and mesoderm and therefore its genomic signature represents the zygote, or one of its immediate descendants. For humans, the putative zygote signature was taken as the median of the locus size values of all cells. When a tree of several mice or humans was reconstructed, the root signature was a weighted mean of the organisms' putative zygotes.</p>
+<p>It is important to note that since all the loci are fully linked, the question of which of the two alleles mutated is not meaningful, as we treat the same locus on the two alleles as two independent loci. This is acceptable because we generally analyzed loci from the chromosome X of males, where there is only one allele. In the few cases where we analyzed loci from other chromosomes (or from chromosome X of a female), we used only loci with very distinct numbers of repeats on each allele, that enable us to identify which of the two alleles underwent mutation, even though we cannot say which copy of the chromosome has which allele.</p>
+<p>We should note that aneuploidy, as well as copy number variations (CNV), both of which are frequent in cancer cells, may lead to a situation where even in the male X-chromosome there will be more than one allele. However, in cases with more than one allele the locus was not taken into account for this specific cell. In other chromosomes, the CNV may lead to deletion of one of the alleles which dramatically affects the results, and therefore such loci were not taken into account. Our principle was to analyze only loci in which we detected the amount of alleles expected.</p>
+</sec><sec id="s4f5">
+<title>Cell isolation</title>
+<p>Mice were sacrificed before tissues isolation. Cells were isolated by tissues digestion followed by MACS or FACS. Aliquots of 0.5 µl were spread on a flat bottom 96 well plate and observed under the microscope. Drops that contained single cell were collected into 0.2 ml tubes and subjected to whole genome amplification. Alternatively, cells were isolated by laser micro-dissection as previously demonstrated <xref ref-type="bibr" rid="pcbi.1003297-Frumkin3">[45]</xref>.</p>
+</sec><sec id="s4f6">
+<title>Whole Genome amplification (WGA) of single cells</title>
+<p>WGA was performed using the IllustraGenomiPhi V2 DNA Amplification kit (GE Healthcare Life Sciences, Piscataway, NJ, USA) according to the manufacturer's instructions as described by G. Kumar et al <xref ref-type="bibr" rid="pcbi.1003297-Kumar1">[46]</xref>. Briefly, single cells from a 96-well (flat bottom) plate were transferred to PCR tubes (0.2 ml volume) using 3 µlSamplebuffer from the kit. In the optimized protocol, 1.5 µl cell lysissolution (600 mMKOH, 10 mMEDTA, 100 mMdithiothreitol (DTT)) was added to each tube. Cell lysis was carried out for 10 min at 30°C, followed by the addition of 1.5 µl neutralizing solution (4 vol 1 M Tris-HCl, pH 8.0, added to 1 vol of 3 M HCl). WGA reaction was initiated by the addition of a mix composed of 4 µlSample buffer, 9 µlReaction buffer, and 1 µl enzyme, all supplied with the kit. The amplification was then carried out at 30°C for 4 h followed by heat inactivation at 65°C for 10 min.</p>
+</sec></sec><sec id="s4g">
+<title>Tree simulations</title>
+<p>We simulated trees similar to the ones reconstructed using the real data, with some trees containing 3 individuals with 5 different cell types for each individual, and other trees composed of a single individual. We simulated several kinds of topologies, which were different from each other in branch length. For example, in one topology the distance between the leaves and their MRCA was high, compared to the distance between the root and these MRCAs, and in another topology this distance between the leaves and their MRCA was much lower. We repeated the simulation 1000 times, where in each iteration, we built a random tree and randomly added MS mutations according to a given mutation rate (1/100, 1/1000 and 1/10000) using a binomial distribution. We then reconstructed the tree using all of our methods and compared it with the actual tree that was generated. The topology comparison between the inferred and the actual trees was done using Penny &amp; Hendy's topological distance algorithm <xref ref-type="bibr" rid="pcbi.1003297-Graur1">[47]</xref>. In this algorithm each internal edge confers a partitioning of the tree into two groups by removing the edge. We assigned a score equal to the ratio of equal partitions of the two trees to the total number of partitions. For each of the simulated trees we also calculated the clustering measures (mentioned above).</p>
+</sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1003297.s001" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s001" position="float" xlink:type="simple"><label>Figure S1</label><caption>
+<p><bold>Schematic description of the lineage relationship between cells from two brothers.</bold> Blue circles represent zygotes (the two lower ones are the zygotes of two brothers, and the upper one is the zygote of their mother), red circles represent cells from the brothers, which were harvested at the same time point. Stage 1 starts at the mother's zygote and ends at the zygotes of the brothers. Stage 2 starts at the zygotes of the brothers and ends at the time the cells were harvested.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s002" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s002" position="float" xlink:type="simple"><label>Figure S2</label><caption>
+<p><bold>The percentage of separation between the two mice as a function of the ratio between the two stages.</bold> The number of cells we used for each mice were 3 (black), 10 (blue), and 50 (red). The rest of the parameters are: 50 loci, a mutation rate of 1 mutation per 100 divisions and stage 1 is 40 divisions. The X axis is the ratio between stage 2 to stage 1, and the Y axis is the percentage of fully separated mice. It can be seen that below ratio 2, the percentage is almost 1, and above ratio 2, the percentage declines sharply.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s003" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s003" position="float" xlink:type="simple"><label>Figure S3</label><caption>
+<p><bold>The percentage of separation between the two mice as a function of the number of loci.</bold> The mutation rates used are 0.1 (blue), 0.001 (red), 0.0005 (turquoise), and 0.0001 (black). The ratio between stage 1 and stage 2 is 5. It can be seen that as the mutation rate gets higher, less loci are needed in order to obtain a separation of above 90%.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s004" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s004" position="float" xlink:type="simple"><label>Figure S4</label><caption>
+<p><bold>Lineage trees of one dataset of cells from three individuals: M1 (turquoise), M2 (red) and M6 (green).</bold> All the trees were reconstructed using the NJ algorithm with the following distance matrices: (A) Absolute (B) Normalized- Absolute (C) Equal or Not (D) Euclidean (E) SMM with equal mutation rates (F) SMM with a different mutation rate for mono repeats and a different mutation rate for di repeats (G) SMM with length dependent mutation rates (H) MMM with equal mutation rates (I) MMM with a different mutation rate for mono repeats and a different mutation rate for di repeats (J) MMM with length dependent mutation rates.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s005" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s005" position="float" xlink:type="simple"><label>Figure S5</label><caption>
+<p><bold>Lineage trees of one dataset of cells from a single individual (M1).</bold> Each cell type is colored by a different color. All the trees were reconstructed using the NJ algorithm with the following distance matrices: (A) Absolute (B) Normalized- Absolute (C) Equal or Not (D) Euclidean (E) SMM with equal mutation rates (F) SMM with a different mutation rate for mono repeats and a different mutation rate for di repeats (G) SMM with length dependent mutation rates (H) MMM with equal mutation rates (I) MMM with a different mutation rate for mono repeats and a different mutation rate for di repeats (J) MMM with length dependent mutation rates.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s006" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s006" position="float" xlink:type="simple"><label>Figure S6</label><caption>
+<p><bold>Lineage trees of one dataset of cells from two individuals. M2 (red) and M3 (blue), composed of one cell type (oocytes).</bold> All the trees were reconstructed using the NJ algorithm with the following distance matrices: (A) Absolute (B) Normalized- Absolute (C) Equal or Not (D) Euclidean (E) SMM with equal mutation rates (F) SMM with a different mutation rate for mono repeats and a different mutation rate for di repeats (G) SMM with length dependent mutation rates (H) MMM with equal mutation rates (I) MMM with a different mutation rate for mono repeats and a different mutation rate for di repeats (J) MMM with length dependent mutation rates.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s007" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s007" position="float" xlink:type="simple"><label>Figure S7</label><caption>
+<p><bold>Performance summary of all the methods on all the datasets of mice and humans.</bold> Left panel – Mouse, right panel- Human. Each column presents a different clustering measure (see <xref ref-type="sec" rid="s4">Materials and Methods</xref> for details), and each bar represents a different distance measure, where the colors specify the distance measures as noted in the legend. The first group of bars (from left to right) presents the results using the NJ algorithm, the second group of bars presents the results using the QMC algorithm, the third presents the results using the UPGMA algorithm, and the last one presents the results using the BATWING tool. Rows description: (A) The average score of all the methods, where higher values (that are transformations of the real scores) indicate better performance. (B) The normalized average scores in which again, higher values mean better performance. (C) The average rank of each method. (D) The number of times every method received the highest rank (for the mouse panel the highest rank is 31 since we compared 31 methods, and for the human panel the highest rank is 19).</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s008" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s008" position="float" xlink:type="simple"><label>Figure S8</label><caption>
+<p><bold>Examples of simulated trees composed of multiple individuals and a single individual.</bold> Shown are two kinds of topologies of the simulated trees which are different from each other in their branch lengths. (A) The distance between the leaves and their MRCA is high, compared to the distance between the root and these MRCAs, (B) The distance between the leaves and their MRCA is low, compared to the distance between the root and these MRCAs. The left tree in each panel is a simulated tree composed of three individuals and the right tree is a simulated tree composed of one individual.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s009" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s009" position="float" xlink:type="simple"><label>Figure S9</label><caption>
+<p><bold>Clustering simulation results.</bold> (A) <xref ref-type="sec" rid="s2">Results</xref> of simulated trees composed of multiple individuals. (B) <xref ref-type="sec" rid="s2">Results</xref> of simulated trees composed of one individual. Left panels present the results of the simulation of topology A, and Right panels present the results of the simulation of topology B (shown in <xref ref-type="supplementary-material" rid="pcbi.1003297.s008">Figure S8</xref>). Each column presents a different clustering measure (see <xref ref-type="sec" rid="s4">Materials and Methods</xref> for details), and each bar represents a different distance measure, where the colors specify different amounts of loci (50, 100 and 500). Each row presents a different mutation rate (1/100, 1/1000 and 1/10,000). The values are the average score, where higher values (that are transformations of the real scores) indicate better performance.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s010" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s010" position="float" xlink:type="simple"><label>Figure S10</label><caption>
+<p><bold>Performance summary of all the methods for datasets composed of cells of same depth only.</bold> Each column presents a different clustering measure (see <xref ref-type="sec" rid="s4">Materials and Methods</xref> for details), and each bar represents a different distance measure, where the colors specify the distance measures as noted in the legend. The first group of bars (from left to right) presents the results using the NJ algorithm, the second group of bars presents the results using the QMC algorithm, the third presents the results using the UPGMA algorithm, and the last one presents the results using the BATWING tool. Rows description: (A) The average score of all the methods, where higher values (that are transformations of the real scores) indicate better performance. (B) The normalized average scores in which again, higher values mean better performance. (C) The average rank of each method. (D) The number of times every method received the highest rank (in this case it is 31 since we compared 31 methods).</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s011" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s011" position="float" xlink:type="simple"><label>Figure S11</label><caption>
+<p><bold>Performance summary of all the methods for datasets composed of cells from single individuals.</bold> Left panel - Mouse, right panel - Human. Each column presents a different clustering measure (see <xref ref-type="sec" rid="s4">Materials and Methods</xref> for details), and each bar represents a different distance measure, where the colors specify the distance measures as noted in the legend. The first group of bars (from left to right) presents the results using the NJ algorithm, the second group of bars presents the results using the QMC algorithm, the third presents the results using the UPGMA algorithm, and the last one presents the results using the BATWING tool. Rows description: (A) The average score of all the methods, where higher values (that are transformations of the real scores) indicate better performance. (B) The normalized average scores in which again, higher values mean better performance. (C) The average rank of each method. (D) The number of times every method received the highest rank (for the mouse panel the highest rank is 31 since we compared 31 methods, and for the human panel the highest rank is 19).</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s012" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s012" position="float" xlink:type="simple"><label>Figure S12</label><caption>
+<p><bold>Performance summary of all the methods for datasets composed of one cell type.</bold> Left panel - Mouse, right panel - Human. Each column presents a different clustering measure (see <xref ref-type="sec" rid="s4">Materials and Methods</xref> for details), and each bar represents a different distance measure, where the colors specify the distance measures as noted in the legend. The first group of bars (from left to right) presents the results using the NJ algorithm, the second group of bars presents the results using the QMC algorithm, the third presents the results using the UPGMA algorithm, and the last one presents the results using the BATWING tool. Rows description: (A) The average score of all the methods, where higher values (that are transformations of the real scores) indicate better performance. (B) The normalized average scores in which again, higher values mean better performance. (C) The average rank of each method. (D) The number of times every method received the highest rank (for the mouse panel the highest rank is 31 since we compared 31 methods, and for the human panel the highest rank is 19).</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s013" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s013" position="float" xlink:type="simple"><label>Figure S13</label><caption>
+<p><bold>Depth quality of the different methods.</bold> Each column presents a different depth quality measure (see <xref ref-type="sec" rid="s4">Materials and Methods</xref> for details), and each bar represents a different distance measure, where the colors specify the distance measures as noted in the legend. Rows description: (A) The average depth score of all the methods, where lower values for the KS test, lower values for the overlap percentage and higher values for the normalized distance test mean better performance. (B) The normalized average scores in which again, higher values mean better performance. (C) The average rank of each method. (D) The number of times every method received the highest rank (in this case it is 10 since we compared 10 methods).</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s014" mimetype="image/tiff" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s014" position="float" xlink:type="simple"><label>Figure S14</label><caption>
+<p><bold>Depth simulation results.</bold> Left panels present the results of the simulation of topology A where the cells are shallow, and Right panels present the results of the simulation of topology B where the cells are deep. Each column presents a different depth measure (see <xref ref-type="sec" rid="s4">Materials and Methods</xref> for details), and each bar represents a different distance measure, where the colors specify different amounts of loci (50, 100 and 500). Each row presents a different mutation rate (1/100, 1/1000 and 1/10,000). The values are the average score, where higher values of KS and Normalized-Distance, and lower values of the Overlap percentage indicate better performance.</p>
+<p>(TIF)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s015" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s015" position="float" xlink:type="simple"><label>Table S1</label><caption>
+<p><bold>Description of the organisms we used for our research and cell types which were isolated from them.</bold> The description contains the name, species, gender, age of the organism, and the cell types which were extracted from it.</p>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s016" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s016" position="float" xlink:type="simple"><label>Table S2</label><caption>
+<p><bold>Mouse (S2.1) and Human (S2.2) microsatellite panel.</bold> Description of the microsatellite loci we used in our experiments. The tables contain the loci names, their size and their forward and reverse primers. Loci name (first column): [Organism type][Chromosome]_[Basic unit][number of repeats]_[serial number]. Organism type can be M for mouse or H for human, Chromosome can be a number or the letter X.</p>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s017" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s017" position="float" xlink:type="simple"><label>Table S3</label><caption>
+<p><bold>Fragment sizes of Mouse (S3.1) and Human (S3.2).</bold> The tables contain information of each cell we have analyzed. This includes the sample's name (Sample ID), the name of the animal it was taken from (Animal ID) and a description of its origin (Tissue). In addition it contains the fragment sizes which were calculated from the capillary machine histograms. These sizes include the locus length and the primers which were designed to amplify this locus. Each two following columns present the sizes of 2 alleles in the same locus. In the header line, the names of the loci are presented. ‘X’ represents missing data. Empty cells indicate that this current locus was not measured for this sample.</p>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s018" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s018" position="float" xlink:type="simple"><label>Table S4</label><caption>
+<p><bold>Absolute loci lengths of Mouse (S4.1) and Human (S4.2).</bold> The tables contain information of each cell we have analyzed. This includes the sample's name (Sample ID), the name of the animal it was taken from (Animal ID) and a description of its origin (Tissue). In addition it contains the absolute loci lengths which were evaluated as the fragment sizes (calculated from the capillary machine histograms) minus the primers lengths. Each two following columns present the sizes of 2 alleles in the same locus. In the header line, the names of the loci are presented. ‘X’ represents missing data. Empty cells indicate that this current locus was not measured for this sample.</p>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s019" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s019" position="float" xlink:type="simple"><label>Table S5</label><caption>
+<p><xref ref-type="sec" rid="s2"><bold>Results</bold></xref><bold> of clustering and depths tests.</bold> Clustering: tables S5.1 (all datasets of Mouse), S5.2 (all datasets of Human) and S5.3 (datasets with the same cell depth) present the results of the three clustering measures (QLC, TE and HS) over 31 reconstructed algorithms (10 NJ methods, 10 QMC methods, 10 UPGMA methods and the Batwing method). When the value of the measure QLC is higher the performance is better, whereas the opposite occurs for the measures TE and HS where a lower value means better performance. Depths: table S5.4 presents the results of the three depth measures (KS, Norm-D and Overlap). When the values of the measures KS and Overlap are lower the performance is better, whereas the opposite occurs for the measure Norm-D in which a higher value means better performance. The results are presented over 10 NJ reconstructed algorithms. In all tables, first column - the dataset name [List of organisms ID's]_[cell type]. If the cell type is ‘all’ it means that all the cells in the organisms were used. If the list of organisms contains only one organism, it means that the clustering test was performed over the different cell types of the organism.</p>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s020" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s020" position="float" xlink:type="simple"><label>Table S6</label><caption>
+<p><bold>Topology comparison simulation results of multiple individuals (S6.1) and single individuals (S6.2).</bold> The tables present the results of the comparison between topologies of the inferred trees and the simulated trees, which was done using Penny &amp; Hendy's topological distance algorithm. The top part of the table refers to the simulated trees of topology A, and the other part of the table refers to the simulated trees of topology B (both topologies are presented in <xref ref-type="supplementary-material" rid="pcbi.1003297.s008">Figure S8</xref>). For each topology, the simulations performed over three mutation rates (1/100, 1/1000, and 1/10000) and over three amounts of loci (50, 100 and 500). The values presented in the table are the average scores of 1000 simulations. The highest value which can be achieved is 1 (Higher values are better) and it can be seen that none of the methods in any of the scenarios is close to that value.</p>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s021" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s021" position="float" xlink:type="simple"><label>Table S7</label><caption>
+<p><bold>Clustering simulation results of multiple individuals (S7.1) and single individuals (S7.2).</bold> The tables present the clustering measures of the lineage tree reconstruction of the simulated trees (described in Methods and Materials). The top part of the table refers to the simulated trees of topology A, and the other part of the table refers to the simulated trees of topology B (both topologies are presented in <xref ref-type="supplementary-material" rid="pcbi.1003297.s008">Figure S8</xref>). For each topology, the simulations performed over three mutation rates (1/100, 1/1000, and 1/10000) and over three amounts of loci (50, 100 and 500). The values presented in the table are the average scores of 1000 simulations. Higher values of QLC and lower values of TE and HS are better. The different clustering measures are described in Methods and Materials.</p>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s022" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s022" position="float" xlink:type="simple"><label>Table S8</label><caption>
+<p><bold>Depth simulation results.</bold> The table presents the results of the depth simulations. The top part of the table refers to simulated trees with relatively low depths of cells (20 and 50 divisions), and the other part of the table refers to the simulated trees with relatively high depths of cells (250 and 300 divisions). For each scenario, the simulations were performed over three mutation rates (1/100, 1/1000, and 1/10000) and over three amounts of loci (50, 100 and 500). The values are the average results of 1000 simulations. The bold values are the best ones over the different distance matrices (lower values of KS and Overlap and higher values of Norm-D are better).The different depth measures are described in Methods and Materials.</p>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s023" mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s023" position="float" xlink:type="simple"><label>Table S9</label><caption>
+<p><bold>Reliability of reconstructed lineage trees.</bold> #1–#8 are datasets on which the clustering separation was checked, #9–#11 are datasets on which the depths separation was checked. The bootstrap scores are the average scores over the sampled trees. The TE score was normalized by dividing it with the score of a tree with random permutations of the leaves. For details about the different scores see <xref ref-type="sec" rid="s4">Materials and Methods</xref>.</p>
+<p>(XLSX)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003297.s024" mimetype="application/msword" xlink:href="info:doi/10.1371/journal.pcbi.1003297.s024" position="float" xlink:type="simple"><label>Text S1</label><caption>
+<p><bold>Computer simulations for separation analysis between related mice.</bold></p>
+<p>(DOC)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We thank B. Chor and A. Tanay for helpful comments on the manuscript. Ehud Shapiro is the Incumbent of The Harry Weinrebe Professorial Chair of Computer Science and Biology.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1003297-Frumkin1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Frumkin</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Wasserstrom</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Kaplan</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Feige</surname><given-names>U</given-names></name>, <name name-style="western"><surname>Shapiro</surname><given-names>E</given-names></name> (<year>2005</year>) <article-title>Genomic variability within an organism exposes its cell lineage tree</article-title>. <source>PLoS Comput Biol</source> <volume>1</volume>: <fpage>e50</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Sulston1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sulston</surname><given-names>JE</given-names></name>, <name name-style="western"><surname>Schierenberg</surname><given-names>E</given-names></name>, <name name-style="western"><surname>White</surname><given-names>JG</given-names></name>, <name name-style="western"><surname>Thomson</surname><given-names>JN</given-names></name> (<year>1983</year>) <article-title>The embryonic cell lineage of the nematode Caenorhabditis elegans</article-title>. <source>Dev Biol</source> <volume>100</volume>: <fpage>64</fpage>–<lpage>119</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Salipante1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Salipante</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Horwitz</surname><given-names>MS</given-names></name> (<year>2006</year>) <article-title>Phylogenetic fate mapping</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>103</volume>: <fpage>5448</fpage>–<lpage>5453</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Salipante2"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Salipante</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Horwitz</surname><given-names>MS</given-names></name> (<year>2007</year>) <article-title>A phylogenetic approach to mapping cell fate</article-title>. <source>Curr Top Dev Biol</source> <volume>79</volume>: <fpage>157</fpage>–<lpage>184</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Frumkin2"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Frumkin</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Wasserstrom</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Itzkovitz</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Stern</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Harmelin</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Cell lineage analysis of a mouse tumor</article-title>. <source>Cancer Res</source> <volume>68</volume>: <fpage>5924</fpage>–<lpage>5931</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Reizel1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Reizel</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Chapal-Ilani</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Adar</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Itzkovitz</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Elbaz</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Colon stem cell and crypt dynamics exposed by cell lineage reconstruction</article-title>. <source>PLoS Genet</source> <volume>7</volume>: <fpage>e1002192</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Reizel2"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Reizel</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Itzkovitz</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Adar</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Elbaz</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Jinich</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Cell lineage analysis of the Mammalian female germline</article-title>. <source>PLoS Genet</source> <volume>8</volume>: <fpage>e1002477</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Segev1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Segev</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Shefer</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Adar</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Chapal-Ilani</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Itzkovitz</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Muscle-bound primordial stem cells give rise to myofiber-associated myogenic and non-myogenic progenitors</article-title>. <source>PLoS One</source> <volume>6</volume>: <fpage>e25605</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Shlush1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shlush</surname><given-names>LI</given-names></name>, <name name-style="western"><surname>Chapal-Ilani</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Adar</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Pery</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Maruvka</surname><given-names>Y</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Cell lineage analysis of acute leukemia relapse uncovers the role of replication-rate heterogeneity and miscrosatellite instability</article-title>. <source>Blood</source></mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Wasserstrom1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wasserstrom</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Adar</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Shefer</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Frumkin</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Itzkovitz</surname><given-names>S</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Reconstruction of cell lineage trees in mice</article-title>. <source>PLoS One</source> <volume>3</volume>: <fpage>e1939</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Ellegren1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ellegren</surname><given-names>H</given-names></name> (<year>2004</year>) <article-title>Microsatellites: simple sequences with complex evolution</article-title>. <source>Nat Rev Genet</source> <volume>5</volume>: <fpage>435</fpage>–<lpage>445</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Payseur1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Payseur</surname><given-names>BA</given-names></name>, <name name-style="western"><surname>Jing</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Haasl</surname><given-names>RJ</given-names></name> (<year>2011</year>) <article-title>A genomic portrait of human microsatellite variation</article-title>. <source>Mol Biol Evol</source> <volume>28</volume>: <fpage>303</fpage>–<lpage>312</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Subramanian1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Subramanian</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Mishra</surname><given-names>RK</given-names></name>, <name name-style="western"><surname>Singh</surname><given-names>L</given-names></name> (<year>2003</year>) <article-title>Genome-wide analysis of microsatellite repeats in humans: their abundance and density in specific genomic regions</article-title>. <source>Genome Biol</source> <volume>4</volume>: <fpage>R13</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Wasserstrom2"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wasserstrom</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Frumkin</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Adar</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Itzkovitz</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Stern</surname><given-names>T</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Estimating cell depth from somatic mutations</article-title>. <source>PLoS Comput Biol</source> <volume>4</volume>: <fpage>e1000058</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Wei1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wei</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Kucherlapati</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Edelmann</surname><given-names>W</given-names></name> (<year>2002</year>) <article-title>Mouse models for human DNA mismatch-repair gene defects</article-title>. <source>Trends Mol Med</source> <volume>8</volume>: <fpage>346</fpage>–<lpage>353</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Vilkki1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Vilkki</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Tsao</surname><given-names>JL</given-names></name>, <name name-style="western"><surname>Loukola</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Pöyhönen</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Vierimaa</surname><given-names>O</given-names></name>, <etal>et al</etal>. (<year>2001</year>) <article-title>Extensive somatic microsatellite mutations in normal human tissue</article-title>. <source>Cancer Res</source> <volume>61</volume>: <fpage>4541</fpage>–<lpage>4544</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Nachman1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nachman</surname><given-names>MW</given-names></name>, <name name-style="western"><surname>Crowell</surname><given-names>SL</given-names></name> (<year>2000</year>) <article-title>Estimate of the mutation rate per nucleotide in humans</article-title>. <source>Genetics</source> <volume>156</volume>: <fpage>297</fpage>–<lpage>304</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Salipante3"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Salipante</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Thompson</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>Horwitz</surname><given-names>MS</given-names></name> (<year>2008</year>) <article-title>Phylogenetic fate mapping: theoretical and experimental studies applied to the development of mouse fibroblasts</article-title>. <source>Genetics</source> <volume>178</volume>: <fpage>967</fpage>–<lpage>977</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Salipante4"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Salipante</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Kas</surname><given-names>A</given-names></name>, <name name-style="western"><surname>McMonagle</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Horwitz</surname><given-names>MS</given-names></name> (<year>2010</year>) <article-title>Phylogenetic analysis of developmental and postnatal mouse cell lineages</article-title>. <source>Evol Dev</source> <volume>12</volume>: <fpage>84</fpage>–<lpage>94</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Tsao1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tsao</surname><given-names>JL</given-names></name>, <name name-style="western"><surname>Tavaré</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Salovaara</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Jass</surname><given-names>JR</given-names></name>, <name name-style="western"><surname>Aaltonen</surname><given-names>LA</given-names></name>, <etal>et al</etal>. (<year>1999</year>) <article-title>Colorectal adenoma and cancer divergence. Evidence of multilineage progression</article-title>. <source>Am J Pathol</source> <volume>154</volume>: <fpage>1815</fpage>–<lpage>1824</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Ding1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ding</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Ley</surname><given-names>TJ</given-names></name>, <name name-style="western"><surname>Larson</surname><given-names>DE</given-names></name>, <name name-style="western"><surname>Miller</surname><given-names>CA</given-names></name>, <name name-style="western"><surname>Koboldt</surname><given-names>DC</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Clonal evolution in relapsed acute myeloid leukaemia revealed by whole-genome sequencing</article-title>. <source>Nature</source> <volume>481</volume>: <fpage>506</fpage>–<lpage>510</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Carlson1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Carlson</surname><given-names>CA</given-names></name>, <name name-style="western"><surname>Kas</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Kirkwood</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Hays</surname><given-names>LE</given-names></name>, <name name-style="western"><surname>Preston</surname><given-names>BD</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Decoding cell lineage from acquired mutations using arbitrary deep sequencing</article-title>. <source>Nat Methods</source> <volume>9</volume>: <fpage>78</fpage>–<lpage>80</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Hou1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hou</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Song</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Zhu</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Tao</surname><given-names>Y</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Single-cell exome sequencing and monoclonal evolution of a JAK2-negative myeloproliferative neoplasm</article-title>. <source>Cell</source> <volume>148</volume>: <fpage>873</fpage>–<lpage>885</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Navin1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Navin</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Kendall</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Troge</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Andrews</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Rodgers</surname><given-names>L</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Tumour evolution inferred by single-cell sequencing</article-title>. <source>Nature</source> <volume>472</volume>: <fpage>90</fpage>–<lpage>94</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Hong1"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hong</surname><given-names>YJ</given-names></name>, <name name-style="western"><surname>Marjoram</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Shibata</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Siegmund</surname><given-names>KD</given-names></name> (<year>2010</year>) <article-title>Using DNA methylation patterns to infer tumor ancestry</article-title>. <source>PLoS One</source> <volume>5</volume>: <fpage>e12002</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Siegmund1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Siegmund</surname><given-names>KD</given-names></name>, <name name-style="western"><surname>Marjoram</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Woo</surname><given-names>YJ</given-names></name>, <name name-style="western"><surname>Tavaré</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Shibata</surname><given-names>D</given-names></name> (<year>2009</year>) <article-title>Inferring clonal expansion and cancer stem cell dynamics from DNA methylation patterns in colorectal cancers</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>106</volume>: <fpage>4828</fpage>–<lpage>4833</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Nicolas1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Nicolas</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Kim</surname><given-names>KM</given-names></name>, <name name-style="western"><surname>Shibata</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Tavaré</surname><given-names>S</given-names></name> (<year>2007</year>) <article-title>The stem cell population of the human colon crypt: analysis via methylation patterns</article-title>. <source>PLoS Comput Biol</source> <volume>3</volume>: <fpage>e28</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Gao1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gao</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Bailes</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Robertson</surname><given-names>DL</given-names></name>, <name name-style="western"><surname>Chen</surname><given-names>YL</given-names></name>, <name name-style="western"><surname>Rodenburg</surname><given-names>CM</given-names></name>, <etal>et al</etal>. (<year>1999</year>) <article-title>Origin of HIV-1 in the chimpanzee Pan troglodytes troglodytes</article-title>. <source>Nature</source> <volume>397</volume>: <fpage>436</fpage>–<lpage>441</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Takezaki1"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Takezaki</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Nei</surname><given-names>M</given-names></name> (<year>1996</year>) <article-title>Genetic distances and reconstruction of phylogenetic trees from microsatellite DNA</article-title>. <source>Genetics</source> <volume>144</volume>: <fpage>389</fpage>–<lpage>399</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Takezaki2"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Takezaki</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Nei</surname><given-names>M</given-names></name> (<year>2008</year>) <article-title>Empirical tests of the reliability of phylogenetic trees constructed with microsatellite DNA</article-title>. <source>Genetics</source> <volume>178</volume>: <fpage>385</fpage>–<lpage>392</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Saitou1"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Saitou</surname><given-names>N</given-names></name>, <name name-style="western"><surname>Nei</surname><given-names>M</given-names></name> (<year>1987</year>) <article-title>The neighbor-joining method: a new method for reconstructing phylogenetic trees</article-title>. <source>Mol Biol Evol</source> <volume>4</volume>: <fpage>406</fpage>–<lpage>425</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Sokal1"><label>32</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sokal</surname><given-names>RR</given-names></name>, <name name-style="western"><surname>Michener</surname><given-names>CD</given-names></name> (<year>1958</year>) <article-title>A statistical method for evaluating systematic relationships</article-title>. <source>Univ Kans Sci Bull</source> <volume>38</volume>: <fpage>1409</fpage>–<lpage>1438</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Snir1"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Snir</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Rao</surname><given-names>S</given-names></name> (<year>2010</year>) <article-title>Quartets MaxCut: A Divide and Conquer Quartets Algorithm</article-title>. <source>Ieee-Acm Transactions on Computational Biology and Bioinformatics</source> <volume>7</volume>: <fpage>704</fpage>–<lpage>718</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Ronquist1"><label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ronquist</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Huelsenbeck</surname><given-names>JP</given-names></name> (<year>2003</year>) <article-title>MrBayes 3: Bayesian phylogenetic inference under mixed models</article-title>. <source>Bioinformatics</source> <volume>19</volume>: <fpage>1572</fpage>–<lpage>1574</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Ronquist2"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ronquist</surname><given-names>F</given-names></name>, <name name-style="western"><surname>Teslenko</surname><given-names>M</given-names></name>, <name name-style="western"><surname>van der Mark</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Ayres</surname><given-names>DL</given-names></name>, <name name-style="western"><surname>Darling</surname><given-names>A</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>MrBayes 3.2: efficient Bayesian phylogenetic inference and model choice across a large model space</article-title>. <source>Syst Biol</source> <volume>61</volume>: <fpage>539</fpage>–<lpage>542</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Beerli1"><label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Beerli</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Felsenstein</surname><given-names>J</given-names></name> (<year>2001</year>) <article-title>Maximum likelihood estimation of a migration matrix and effective population sizes in n subpopulations by using a coalescent approach</article-title>. <source>Proceedings of the National Academy of Sciences of the United States of America</source> <volume>98</volume>: <fpage>4563</fpage>–<lpage>4568</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Wu1"><label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wu</surname><given-names>CH</given-names></name>, <name name-style="western"><surname>Drummond</surname><given-names>AJ</given-names></name> (<year>2011</year>) <article-title>Joint inference of microsatellite mutation models, population history and genealogies using transdimensional Markov Chain Monte Carlo</article-title>. <source>Genetics</source> <volume>188</volume>: <fpage>151</fpage>–<lpage>164</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Wilson1"><label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wilson</surname><given-names>IJ</given-names></name>, <name name-style="western"><surname>Weale</surname><given-names>ME</given-names></name>, <name name-style="western"><surname>Balding</surname><given-names>DJ</given-names></name> (<year>2003</year>) <article-title>Inferences from DNA data: population histories, evolutionary processes and forensic match probabilities</article-title>. <source>Journal of the Royal Statistical Society Series a-Statistics in Society</source> <volume>166</volume>: <fpage>155</fpage>–<lpage>188</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Felsenstein1"><label>39</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Felsenstein</surname><given-names>J</given-names></name> (<year>2004</year>) <article-title>Inferring phylogenies</article-title>. <source>Inferring phylogenies</source> <fpage>i</fpage>–<lpage>xx, 1–664</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Kuhner1"><label>40</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kuhner</surname><given-names>MK</given-names></name>, <name name-style="western"><surname>Felsenstein</surname><given-names>J</given-names></name> (<year>1994</year>) <article-title>Simulation Comparison of Phylogeny Algorithms Under Equal And Unequal Evolutionary Rates</article-title>. <source>Molecular Biology and Evolution</source> <volume>11</volume>: <fpage>459</fpage>–<lpage>468</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Snir2"><label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Snir</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Warnow</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Rao</surname><given-names>S</given-names></name> (<year>2008</year>) <article-title>Short quartet puzzling: a new quartet-based phylogeny reconstruction algorithm</article-title>. <source>J Comput Biol</source> <volume>15</volume>: <fpage>91</fpage>–<lpage>103</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Ota1"><label>42</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ota</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Kimura</surname><given-names>M</given-names></name> (<year>1973</year>) <article-title>A model of mutation appropriate to estimate the number of electrophoretically detectable alleles in a finite population</article-title>. <source>Genet Res</source> <volume>22</volume>: <fpage>201</fpage>–<lpage>204</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Ellegren2"><label>43</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ellegren</surname><given-names>H</given-names></name> (<year>2000</year>) <article-title>Microsatellite mutations in the germline: implications for evolutionary inference</article-title>. <source>Trends Genet</source> <volume>16</volume>: <fpage>551</fpage>–<lpage>558</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Baker1"><label>44</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Baker</surname><given-names>SM</given-names></name>, <name name-style="western"><surname>Plug</surname><given-names>AW</given-names></name>, <name name-style="western"><surname>Prolla</surname><given-names>TA</given-names></name>, <name name-style="western"><surname>Bronner</surname><given-names>CE</given-names></name>, <name name-style="western"><surname>Harris</surname><given-names>AC</given-names></name>, <etal>et al</etal>. (<year>1996</year>) <article-title>Involvement of mouse Mlh1 in DNA mismatch repair and meiotic crossing over</article-title>. <source>Nature Genetics</source> <volume>13</volume>: <fpage>336</fpage>–<lpage>342</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Frumkin3"><label>45</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Frumkin</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Wasserstrom</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Itzkovitz</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Harmelin</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Rechavi</surname><given-names>G</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Amplification of multiple genomic loci from single cells isolated by laser micro-dissection of tissues</article-title>. <source>BMC Biotechnology</source> <fpage>17</fpage> (16 pp.).</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Kumar1"><label>46</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kumar</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Garnova</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Reagin</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Vidali</surname><given-names>A</given-names></name> (<year>2008</year>) <article-title>Improved multiple displacement amplification with phi 29 DNA polymerase for genotyping of single human cells</article-title>. <source>Biotechniques</source> <volume>44</volume>: <fpage>879</fpage>–<lpage>+</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003297-Graur1"><label>47</label>
+<mixed-citation publication-type="other" xlink:type="simple">Graur D, Wen-Hsiung L (2000) Fundamental molecular evolution. Sinauer Associates.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

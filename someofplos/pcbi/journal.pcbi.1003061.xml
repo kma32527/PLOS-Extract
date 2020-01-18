@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id><journal-title-group>
+<journal-title>PLoS Computational Biology</journal-title></journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-12-01697</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1003061</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Biology</subject><subj-group><subject>Population biology</subject><subj-group><subject>Epidemiology</subject><subj-group><subject>Epidemiological methods</subject><subject>Infectious disease epidemiology</subject></subj-group></subj-group><subj-group><subject>Population dynamics</subject><subj-group><subject>Disease dynamics</subject></subj-group></subj-group></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Medicine</subject><subj-group><subject>Epidemiology</subject><subj-group><subject>Epidemiological methods</subject><subject>Infectious disease epidemiology</subject></subj-group></subj-group><subj-group><subject>Infectious diseases</subject><subj-group><subject>Infectious disease control</subject><subject>Infectious disease modeling</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>Estimation of Vaccine Efficacy and Critical Vaccination Coverage in Partially Observed Outbreaks</article-title>
+<alt-title alt-title-type="running-head">Mumps Vaccine Efficacy</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>van Boven</surname><given-names>Michiel</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Ruijs</surname><given-names>Wilhelmina L. M.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Wallinga</surname><given-names>Jacco</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>O'Neill</surname><given-names>Philip D.</given-names></name><xref ref-type="aff" rid="aff3"><sup>3</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Hahné</surname><given-names>Susan</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Centre for Infectious Disease Control, National Institute for Public Health and the Environment, Bilthoven, The Netherlands</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>Academic Collaborative Centre AMPHI, Department of Primary and Community Care, Radboud University Nijmegen Medical Centre, Nijmegen, The Netherlands</addr-line></aff>
+<aff id="aff3"><label>3</label><addr-line>School of Mathematical Sciences, University of Nottingham, Nottingham, United Kingdom</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Ferguson</surname><given-names>Neil</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Imperial College London, United Kingdom</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">michiel.van.boven@rivm.nl</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: WLMR SH. Performed the experiments: WLMR SH. Analyzed the data: MvB. Contributed reagents/materials/analysis tools: MvB. Wrote the paper: MvB WLMR JW PDO SH.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><month>5</month><year>2013</year></pub-date>
+<pub-date pub-type="epub"><day>2</day><month>5</month><year>2013</year></pub-date>
+<volume>9</volume>
+<issue>5</issue>
+<elocation-id>e1003061</elocation-id>
+<history>
+<date date-type="received"><day>29</day><month>10</month><year>2012</year></date>
+<date date-type="accepted"><day>28</day><month>3</month><year>2013</year></date>
+</history>
+<permissions>
+<copyright-year>2013</copyright-year>
+<copyright-holder>van Boven et al</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the Creative Commons Attribution License, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>Classical approaches to estimate vaccine efficacy are based on the assumption that a person's risk of infection does not depend on the infection status of others. This assumption is untenable for infectious disease data where such dependencies abound. We present a novel approach to estimating vaccine efficacy in a Bayesian framework using disease transmission models. The methodology is applied to outbreaks of mumps in primary schools in the Netherlands. The total study population consisted of 2,493 children in ten primary schools, of which 510 (20%) were known to have been infected, and 832 (33%) had unknown infection status. The apparent vaccination coverage ranged from 12% to 93%, and the apparent infection attack rate varied from 1% to 76%. Our analyses show that vaccination reduces the probability of infection per contact substantially but not perfectly (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e001" xlink:type="simple"/></inline-formula> = 0.933; 95CrI: 0.908–0.954). Mumps virus appears to be moderately transmissible in the school setting, with each case yielding an estimated 2.5 secondary cases in an unvaccinated population (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e002" xlink:type="simple"/></inline-formula> = 2.49; 95%CrI: 2.36–2.63), resulting in moderate estimates of the critical vaccination coverage (64.2%; 95%CrI: 61.7–66.7%). The indirect benefits of vaccination are highest in populations with vaccination coverage just below the critical vaccination coverage. In these populations, it is estimated that almost two infections can be prevented per vaccination. We discuss the implications for the optimal control of mumps in heterogeneously vaccinated populations.</p>
+</abstract>
+<abstract abstract-type="summary"><title>Author Summary</title>
+<p>Less than two decades ago, it was generally believed that in developed countries infectious diseases such as measles, mumps, and pertussis were under firm control via vaccination. Nowadays, it is increasingly recognized that this picture has been overly optimistic. A central question is whether recurrent disease outbreaks are caused by vaccination coverage having dropped below safe levels, or by vaccines having become less effective. To answer this question, the authors study outbreaks of mumps in primary schools in the Netherlands. Using disease transmission models, the authors estimate vaccine efficacy and the critical vaccination coverage needed to prevent large outbreaks. The analyses show that the vaccine has been highly effective in preventing infection, but that vaccination coverage has been insufficient in some schools. The authors argue that catch-up vaccination campaigns aimed at populations with intermediate vaccination coverage will be most efficient, as these would maximize the (direct and indirect) benefits of vaccination.</p>
+</abstract>
+<funding-group><funding-statement>Funding was provided by the Dutch Ministry of Health, Welfare and Sport, and the Netherlands Organisation for Health Research and Development (grant 125050004). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="9"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>Mass vaccination programs for childhood diseases have been highly successful in reducing the incidence and public health impact of the targeted diseases. Nevertheless, with the exception of smallpox, eradication has not been achieved, and outbreaks continue to occur even in highly vaccinated populations <xref ref-type="bibr" rid="pcbi.1003061-deMelker1">[1]</xref>–<xref ref-type="bibr" rid="pcbi.1003061-Greenland1">[4]</xref>. A prominent example is that of mumps, which has re-emerged in the past decade in highly vaccinated populations throughout the world <xref ref-type="bibr" rid="pcbi.1003061-Cohen1">[5]</xref>–<xref ref-type="bibr" rid="pcbi.1003061-Muhsen1">[7]</xref>. The question arises as to whether this re-emergence is due to current vaccines becoming less effective, or to reduced vaccine coverage which allows the virus to spread in partially vaccinated populations <xref ref-type="bibr" rid="pcbi.1003061-Rubin1">[8]</xref>.</p>
+<p>In the Netherlands, large outbreaks of mumps genotypes D and G have occurred in recent years <xref ref-type="bibr" rid="pcbi.1003061-Ruijs1">[9]</xref>–<xref ref-type="bibr" rid="pcbi.1003061-Snijders1">[11]</xref>. Since 1987, a combined MMR (measles-mumps-rubella) vaccine containing live attenuated virus is routinely given at 14 months and 9 years of age. Vaccination coverage has been high ever since introduction of the vaccine in 1987 (90–95%). Nevertheless, there are municipalities in which vaccination coverage is substantially lower <xref ref-type="bibr" rid="pcbi.1003061-Ruijs2">[12]</xref>, <xref ref-type="bibr" rid="pcbi.1003061-vanLier1">[13]</xref>.</p>
+<p>To determine whether the outbreaks of mumps are the result of low vaccination coverage or insufficient protection conferred by the vaccine, we estimate vaccine efficacy using outbreak data from ten primary schools in the Netherlands <xref ref-type="bibr" rid="pcbi.1003061-Ruijs1">[9]</xref>, <xref ref-type="bibr" rid="pcbi.1003061-Snijders1">[11]</xref>. The total number of children included in our study is 2,493, of whom 510 had a reported mumps infection. Vaccination coverage in these schools ranged from 12%–93%, and infection attack rates ranged from 4% to 76%, with highest attack rates occurring in schools with the lowest vaccination coverage and lowest attack rates in schools with high vaccination coverage (<xref ref-type="table" rid="pcbi-1003061-t001">Table 1</xref>). Notably, the attack rates in unvaccinated individuals varied from more than 80% in schools with low vaccination coverage (&lt;15%) to lower than 25% in schools with high vaccination coverage (≥75%), indicating substantial differences in the infection pressure between schools.</p>
+<table-wrap id="pcbi-1003061-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003061.t001</object-id><label>Table 1</label><caption>
+<title>Summary statistics of the study population.</title>
+</caption><alternatives><graphic id="pcbi-1003061-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003061.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">number of persons</td>
+<td align="left" rowspan="1" colspan="1">number infected</td>
+<td align="left" rowspan="1" colspan="1">vaccination coverage</td>
+<td colspan="2" align="left" rowspan="1">attack rate in unvaccinated persons</td>
+<td colspan="2" align="left" rowspan="1">attack rate in vaccinated persons</td>
+<td align="left" rowspan="1" colspan="1">overall attack rate</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">all schools</td>
+<td align="left" rowspan="1" colspan="1">2493</td>
+<td align="left" rowspan="1" colspan="1">510–1342</td>
+<td align="left" rowspan="1" colspan="1">0.62<xref ref-type="table-fn" rid="nt102">*</xref></td>
+<td align="left" rowspan="1" colspan="1">0.68</td>
+<td align="left" rowspan="1" colspan="1">(485/709)</td>
+<td align="left" rowspan="1" colspan="1">0.03</td>
+<td align="left" rowspan="1" colspan="1">(25/952)</td>
+<td align="left" rowspan="1" colspan="1">0.31</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 1</td>
+<td align="left" rowspan="1" colspan="1">432</td>
+<td align="left" rowspan="1" colspan="1">205–369</td>
+<td align="left" rowspan="1" colspan="1">0.12</td>
+<td align="left" rowspan="1" colspan="1">0.86</td>
+<td align="left" rowspan="1" colspan="1">(204/237)</td>
+<td align="left" rowspan="1" colspan="1">0.03</td>
+<td align="left" rowspan="1" colspan="1">(1/31)</td>
+<td align="left" rowspan="1" colspan="1">0.76</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 2</td>
+<td align="left" rowspan="1" colspan="1">338</td>
+<td align="left" rowspan="1" colspan="1">135–289</td>
+<td align="left" rowspan="1" colspan="1">0.13</td>
+<td align="left" rowspan="1" colspan="1">0.82</td>
+<td align="left" rowspan="1" colspan="1">(131/160)</td>
+<td align="left" rowspan="1" colspan="1">0.17</td>
+<td align="left" rowspan="1" colspan="1">(4/24)</td>
+<td align="left" rowspan="1" colspan="1">0.73</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 3</td>
+<td align="left" rowspan="1" colspan="1">259</td>
+<td align="left" rowspan="1" colspan="1">68–159</td>
+<td align="left" rowspan="1" colspan="1">0.42</td>
+<td align="left" rowspan="1" colspan="1">0.72</td>
+<td align="left" rowspan="1" colspan="1">(68/94)</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">(0/74)</td>
+<td align="left" rowspan="1" colspan="1">0.40</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 4</td>
+<td align="left" rowspan="1" colspan="1">184</td>
+<td align="left" rowspan="1" colspan="1">40–70</td>
+<td align="left" rowspan="1" colspan="1">0.54</td>
+<td align="left" rowspan="1" colspan="1">0.53</td>
+<td align="left" rowspan="1" colspan="1">(37/70)</td>
+<td align="left" rowspan="1" colspan="1">0.04</td>
+<td align="left" rowspan="1" colspan="1">(3/84)</td>
+<td align="left" rowspan="1" colspan="1">0.26</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 5</td>
+<td align="left" rowspan="1" colspan="1">130</td>
+<td align="left" rowspan="1" colspan="1">13–33</td>
+<td align="left" rowspan="1" colspan="1">0.75</td>
+<td align="left" rowspan="1" colspan="1">0.46</td>
+<td align="left" rowspan="1" colspan="1">(13/28)</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">(0/82)</td>
+<td align="left" rowspan="1" colspan="1">0.12</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 6</td>
+<td align="left" rowspan="1" colspan="1">263</td>
+<td align="left" rowspan="1" colspan="1">28–171</td>
+<td align="left" rowspan="1" colspan="1">0.76</td>
+<td align="left" rowspan="1" colspan="1">0.70</td>
+<td align="left" rowspan="1" colspan="1">(19/27)</td>
+<td align="left" rowspan="1" colspan="1">0.10</td>
+<td align="left" rowspan="1" colspan="1">(9/93)</td>
+<td align="left" rowspan="1" colspan="1">0.23</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 7</td>
+<td align="left" rowspan="1" colspan="1">194</td>
+<td align="left" rowspan="1" colspan="1">6–43</td>
+<td align="left" rowspan="1" colspan="1">0.78</td>
+<td align="left" rowspan="1" colspan="1">0.19</td>
+<td align="left" rowspan="1" colspan="1">(6/31)</td>
+<td align="left" rowspan="1" colspan="1">0</td>
+<td align="left" rowspan="1" colspan="1">(0/126)</td>
+<td align="left" rowspan="1" colspan="1">0.04</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 8</td>
+<td align="left" rowspan="1" colspan="1">227</td>
+<td align="left" rowspan="1" colspan="1">3–27</td>
+<td align="left" rowspan="1" colspan="1">0.79</td>
+<td align="left" rowspan="1" colspan="1">0.05</td>
+<td align="left" rowspan="1" colspan="1">(2/41)</td>
+<td align="left" rowspan="1" colspan="1">0.01</td>
+<td align="left" rowspan="1" colspan="1">(1/162)</td>
+<td align="left" rowspan="1" colspan="1">0.01</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 9</td>
+<td align="left" rowspan="1" colspan="1">258</td>
+<td align="left" rowspan="1" colspan="1">6–119</td>
+<td align="left" rowspan="1" colspan="1">0.93</td>
+<td align="left" rowspan="1" colspan="1">0.18</td>
+<td align="left" rowspan="1" colspan="1">(2/11)</td>
+<td align="left" rowspan="1" colspan="1">0.03</td>
+<td align="left" rowspan="1" colspan="1">(4/134)</td>
+<td align="left" rowspan="1" colspan="1">0.04</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 10</td>
+<td align="left" rowspan="1" colspan="1">208</td>
+<td align="left" rowspan="1" colspan="1">6–62</td>
+<td align="left" rowspan="1" colspan="1">0.93</td>
+<td align="left" rowspan="1" colspan="1">0.30</td>
+<td align="left" rowspan="1" colspan="1">(3/10)</td>
+<td align="left" rowspan="1" colspan="1">0.02</td>
+<td align="left" rowspan="1" colspan="1">(3/142)</td>
+<td align="left" rowspan="1" colspan="1">0.04</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>The column ‘number infected’ shows the possible range of actual infections, ranging from the number known to be infected to the sum of this number and the number of persons with unknown infection status. Vaccination coverages and attack rates are calculated using persons with known vaccination status (vaccination coverage), and known vaccination and infection status (attack rates). See <xref ref-type="supplementary-material" rid="pcbi.1003061.s001">Tables S1</xref>, <xref ref-type="supplementary-material" rid="pcbi.1003061.s002">S2</xref> for the complete data.</p></fn><fn id="nt102"><label>*</label><p>: averaged over schools.</p></fn></table-wrap-foot></table-wrap>
+<p>Classical methods to estimate vaccine efficacy from outbreak data compare the infection attack rates in the vaccinated versus unvaccinated groups (i.e. the cohort method) <xref ref-type="bibr" rid="pcbi.1003061-Orenstein1">[14]</xref>, <xref ref-type="bibr" rid="pcbi.1003061-Halloran1">[15]</xref>. This method, however, has significant drawbacks. First, it is not straightforward to take account of missing data on vaccination and infection status. This is unfortunate as outbreak data are almost never complete, and judicious choices will have to be made to avoid introducing systematic bias in the parameter estimates. Even more importantly, the cohort method fails to acknowledge that the probability of infection of an individual is dependent on the number of infections in the population, i.e. on the infection status of others.</p>
+<p>To take account of the dependencies between individuals that arise naturally in infectious disease outbreaks we base the statistical analyses on a Bayesian inferential framework using infectious disease transmission models. In this framework, missing vaccination and infection information is imputed in a consistent manner, thereby making efficient use of the available information, and enabling precise estimation of vaccine efficacy and the critical vaccination coverage needed to prevent epidemic outbreaks <xref ref-type="bibr" rid="pcbi.1003061-ONeill1">[16]</xref>, <xref ref-type="bibr" rid="pcbi.1003061-Cauchemez1">[17]</xref>. The basis of our statistical analyses is the contact process that specifies how often and with which person-types each person makes infectious contacts, i.e. contacts that are sufficient for transmission if the sender is infected and the receiver as yet uninfected <xref ref-type="bibr" rid="pcbi.1003061-Demiris1">[18]</xref>–<xref ref-type="bibr" rid="pcbi.1003061-vanBoven1">[20]</xref>. The contact process specifies a directed graph, of which the connected component with the initial infective as the root determines which individuals are ultimately infected. Estimation of the epidemiological parameters (basic reproduction number, vaccine efficacy) is based on the likelihood of directed graphs that are compatible with the data.</p>
+<p>The analyses reveal that mumps vaccine effectively prevents infection, and that herd immunity against mumps is achieved with moderate vaccination coverages. We argue that resource-limited catch-up vaccination efforts should be focused at communities with intermediate vaccination coverages, thereby maximizing both the direct and indirect benefits of vaccination.</p>
+</sec><sec id="s2">
+<title>Results</title>
+<sec id="s2a">
+<title>Vaccine efficacy and the critical vaccination coverage</title>
+<p>Our baseline scenario assumes a common transmissibility and vaccine efficacy across schools. The analysis indicates that mumps is moderately transmissible (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e003" xlink:type="simple"/></inline-formula> = 2.49; 95%CrI: 2.36–2.63), and that the vaccine reduces the probability of transmission by more than 90% per contact that would have resulted in transmission to an unvaccinated person (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e004" xlink:type="simple"/></inline-formula> = 0.933; 95CrI: 0.908–0.954)(<xref ref-type="fig" rid="pcbi-1003061-g001">Figure 1</xref>). The differences between the apparent and estimated vaccination coverages and attack rates are small (&lt;2% and &lt;5%, respectively; <xref ref-type="table" rid="pcbi-1003061-t001">Tables 1</xref>–<xref ref-type="table" rid="pcbi-1003061-t002">2</xref>).</p>
+<fig id="pcbi-1003061-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003061.g001</object-id><label>Figure 1</label><caption>
+<title>Posterior distributions of the basic reproduction number and vaccine efficacy (A) and vaccination coverages and attack rates (B) when assuming common parameters across schools (baseline scenario).</title>
+<p>The median of the basic reproduction number is 2.49 (95% CrI: 2.36–2.63) and the median of vaccine efficacy is 0.933 (95CrI: 0.908–0.954). The estimated critical vaccination coverage is 0.642 (95% CrI: 0.617–0.666).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003061.g001" position="float" xlink:type="simple"/></fig><table-wrap id="pcbi-1003061-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003061.t002</object-id><label>Table 2</label><caption>
+<title>Estimates of vaccination coverage and attack rate per school when assuming common epidemiological parameters across schools (baseline scenario).</title>
+</caption><alternatives><graphic id="pcbi-1003061-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003061.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td colspan="2" align="left" rowspan="1">unvaccinated</td>
+<td colspan="2" align="left" rowspan="1">vaccinated</td>
+<td align="left" rowspan="1" colspan="1">vaccination coverage</td>
+<td align="left" rowspan="1" colspan="1">attack rate</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">total</td>
+<td align="left" rowspan="1" colspan="1">infected</td>
+<td align="left" rowspan="1" colspan="1">total</td>
+<td align="left" rowspan="1" colspan="1">infected</td>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 1</td>
+<td align="left" rowspan="1" colspan="1">382 (372–389)</td>
+<td align="left" rowspan="1" colspan="1">327 (315–337)</td>
+<td align="left" rowspan="1" colspan="1">50 (43–59)</td>
+<td align="left" rowspan="1" colspan="1">3 (1–6)</td>
+<td align="left" rowspan="1" colspan="1">0.12 (0.10–0.14)</td>
+<td align="left" rowspan="1" colspan="1">0.77 (0.74–0.79)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 2</td>
+<td align="left" rowspan="1" colspan="1">293 (286–301)</td>
+<td align="left" rowspan="1" colspan="1">243 (232–256)</td>
+<td align="left" rowspan="1" colspan="1">45 (37–52)</td>
+<td align="left" rowspan="1" colspan="1">6 (4–11)</td>
+<td align="left" rowspan="1" colspan="1">0.13 (0.11–0.15)</td>
+<td align="left" rowspan="1" colspan="1">0.74 (0.70–0.78)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 3</td>
+<td align="left" rowspan="1" colspan="1">150 (141–158)</td>
+<td align="left" rowspan="1" colspan="1">110 (101–119)</td>
+<td align="left" rowspan="1" colspan="1">109 (101–117)</td>
+<td align="left" rowspan="1" colspan="1">3 (0–8)</td>
+<td align="left" rowspan="1" colspan="1">0.42 (0.39–0.45)</td>
+<td align="left" rowspan="1" colspan="1">0.44 (0.41–0.47)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 4</td>
+<td align="left" rowspan="1" colspan="1">84 (79–90)</td>
+<td align="left" rowspan="1" colspan="1">45 (41–50)</td>
+<td align="left" rowspan="1" colspan="1">100 (94–104)</td>
+<td align="left" rowspan="1" colspan="1">4 (3–6)</td>
+<td align="left" rowspan="1" colspan="1">0.53 (0.51–0.56)</td>
+<td align="left" rowspan="1" colspan="1">0.27 (0.24–0.30)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 5</td>
+<td align="left" rowspan="1" colspan="1">33 (30–37)</td>
+<td align="left" rowspan="1" colspan="1">15 (13–18)</td>
+<td align="left" rowspan="1" colspan="1">97 (93–100)</td>
+<td align="left" rowspan="1" colspan="1">0 (0–2)</td>
+<td align="left" rowspan="1" colspan="1">0.75 (0.72–0.77)</td>
+<td align="left" rowspan="1" colspan="1">0.12 (0.10–0.15)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 6</td>
+<td align="left" rowspan="1" colspan="1">67 (59–76)</td>
+<td align="left" rowspan="1" colspan="1">50 (42–59)</td>
+<td align="left" rowspan="1" colspan="1">196 (187–204)</td>
+<td align="left" rowspan="1" colspan="1">20 (14–27)</td>
+<td align="left" rowspan="1" colspan="1">0.75 (0.71–0.78)</td>
+<td align="left" rowspan="1" colspan="1">0.27 (0.23–0.30)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 7</td>
+<td align="left" rowspan="1" colspan="1">42 (38–46)</td>
+<td align="left" rowspan="1" colspan="1">10 (7–13)</td>
+<td align="left" rowspan="1" colspan="1">152 (148–156)</td>
+<td align="left" rowspan="1" colspan="1">0 (0–3)</td>
+<td align="left" rowspan="1" colspan="1">0.78 (0.76–0.80)</td>
+<td align="left" rowspan="1" colspan="1">0.05 (0.04–0.07)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 8</td>
+<td align="left" rowspan="1" colspan="1">48 (45–52)</td>
+<td align="left" rowspan="1" colspan="1">3 (2–5)</td>
+<td align="left" rowspan="1" colspan="1">179 (175–182)</td>
+<td align="left" rowspan="1" colspan="1">1 (1–2)</td>
+<td align="left" rowspan="1" colspan="1">0.79 (0.77–0.80)</td>
+<td align="left" rowspan="1" colspan="1">0.02 (0.01–0.03)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 9</td>
+<td align="left" rowspan="1" colspan="1">18 (13–25)</td>
+<td align="left" rowspan="1" colspan="1">6 (3–11)</td>
+<td align="left" rowspan="1" colspan="1">240 (233–245)</td>
+<td align="left" rowspan="1" colspan="1">11 (7–16)</td>
+<td align="left" rowspan="1" colspan="1">0.93 (0.90–0.95)</td>
+<td align="left" rowspan="1" colspan="1">0.07 (0.05–0.09)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 10</td>
+<td align="left" rowspan="1" colspan="1">13 (10–17)</td>
+<td align="left" rowspan="1" colspan="1">4 (3–7)</td>
+<td align="left" rowspan="1" colspan="1">195 (191–198)</td>
+<td align="left" rowspan="1" colspan="1">5 (3–8)</td>
+<td align="left" rowspan="1" colspan="1">0.94 (0.92–0.95)</td>
+<td align="left" rowspan="1" colspan="1">0.05 (0.03–0.06)</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt103"><label/><p>Estimates are represented by posterior medians with 95% credible intervals.</p></fn></table-wrap-foot></table-wrap>
+<p>We use estimates of transmissibility and vaccine efficacy to obtain estimates of the critical vaccination coverage. The analyses yield an estimated critical vaccination coverage of 0.642 (95%CrI: 0.617–0.666), indicating that herd immunity in the school setting can be obtained with moderate vaccination coverages. Estimates of transmissibility and vaccine efficacy are used to obtain an estimate of the number of infections prevented per vaccination. This number is highest for vaccination coverages just below the critical vaccination coverage, as at these values the slope of attack rate versus vaccination coverage is steepest (<xref ref-type="fig" rid="pcbi-1003061-g002">Figure 2</xref>). The number of infections prevented per vaccination near the threshold coverage is well approximated (using a Taylor series expansion) by<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e005" xlink:type="simple"/></inline-formula>. Hence, it is expected that the (direct and indirect) benefits of vaccination are such that <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e006" xlink:type="simple"/></inline-formula> infections can be prevented per vaccination if the initial vaccination coverage is just below the threshold value, which is estimated by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e007" xlink:type="simple"/></inline-formula>.</p>
+<fig id="pcbi-1003061-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003061.g002</object-id><label>Figure 2</label><caption>
+<title>Relation between vaccination coverage and overall attack rate in the baseline scenario.</title>
+<p>The figure shows the medians of the posterior vaccination coverages versus posterior attack rates in the ten schools (blue dots), the deterministic final size attack rate using the posterior medians of the basic reproduction number and vaccine efficacy (dotted line), and the results of simulations in populations of size 200 using samples from the posterior distributions of the basic reproduction number and vaccine efficacy (black line: median; grey area: 2.5%–97.5% percentiles). See text for details.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003061.g002" position="float" xlink:type="simple"/></fig></sec><sec id="s2b">
+<title>Schools with low versus high vaccination coverage</title>
+<p>Schools in our study population span a large range of possible vaccination coverages, and it is of interest to evaluate the consistency of the estimates of vaccine efficacy and pathogen transmissibility. <xref ref-type="fig" rid="pcbi-1003061-g002">Figure 2</xref> shows the relation between vaccination coverage and infection attack rate in the ten schools, together with the theoretical relation between vaccination coverage and attack rate in a large population, and simulations of a finite population. Overall, the correspondence between the observed and simulated data is excellent for schools with low vaccination coverage and high attack rates, while there is a tendency for higher attack rates than expected in schools with high vaccination coverage and a small number of infections.</p>
+<p>To investigate the information contained in the data by school we perform analyses in which each school is equipped with its own transmissibility and vaccine efficacy. It appears that precise estimates of transmissibility and vaccine efficacy can be obtained in schools with high attack rates (schools 1–4), but not in schools with only a handful of infections (schools 7–10). In fact, in schools with less than 10 confirmed infections credible intervals of the reproduction number range from well below 1 to more than 3, while vaccine efficacy estimates can range from less than 0.20 (schools 8–10) to almost 1 (schools 7–10; <xref ref-type="table" rid="pcbi-1003061-t003">Table 3</xref>, <xref ref-type="fig" rid="pcbi-1003061-g003">Figure 3</xref>). Further, the analyses show that in schools with high attack rates (schools 1–4) the parameter estimates are quite close to those of the baseline scenario, indicating that estimates of transmissibility and vaccine efficacy in the baseline scenario are dominated by schools with large numbers of infections and low vaccination coverages.</p>
+<fig id="pcbi-1003061-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003061.g003</object-id><label>Figure 3</label><caption>
+<title>Estimated reproduction numbers (top, blue dots) and vaccine efficacies (bottom, gray dots) per school, with associated 95% credible intervals (cf. <xref ref-type="table" rid="pcbi-1003061-t003">Table 3</xref>).</title>
+<p> Note that estimated vaccine efficacy is consistently high in schools with high exposure (schools 1–6), but cannot be estimated with any precision in schools with low exposure (schools 8–10).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003061.g003" position="float" xlink:type="simple"/></fig><table-wrap id="pcbi-1003061-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003061.t003</object-id><label>Table 3</label><caption>
+<title>Overview of the analyses per school (cf. <xref ref-type="fig" rid="pcbi-1003061-g003">Figure 3</xref>).</title>
+</caption><alternatives><graphic id="pcbi-1003061-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003061.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">basic reproduction number <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e111" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">vaccine efficacy <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e112" xlink:type="simple"/></inline-formula></td>
+<td align="left" rowspan="1" colspan="1">critical vaccination coverage <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e113" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 1</td>
+<td align="left" rowspan="1" colspan="1">2.5 (2.3–2.7)</td>
+<td align="left" rowspan="1" colspan="1">0.97 (0.91–1.0)</td>
+<td align="left" rowspan="1" colspan="1">0.63 (0.59–0.67)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 2</td>
+<td align="left" rowspan="1" colspan="1">2.3 (2.1–2.5)</td>
+<td align="left" rowspan="1" colspan="1">0.87 (0.67–0.96)</td>
+<td align="left" rowspan="1" colspan="1">0.65 (0.57–0.80)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 3</td>
+<td align="left" rowspan="1" colspan="1">2.8 (2.4–3.3)</td>
+<td align="left" rowspan="1" colspan="1">0.99 (0.96–1.0)</td>
+<td align="left" rowspan="1" colspan="1">0.66 (0.60–0.70)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 4</td>
+<td align="left" rowspan="1" colspan="1">2.5 (1.9–3.2)</td>
+<td align="left" rowspan="1" colspan="1">0.94 (0.84–0.98)</td>
+<td align="left" rowspan="1" colspan="1">0.64 (0.51–0.74)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 5</td>
+<td align="left" rowspan="1" colspan="1">3.6 (2.1–6.0)</td>
+<td align="left" rowspan="1" colspan="1">0.98 (0.89–1.0)</td>
+<td align="left" rowspan="1" colspan="1">0.74 (0.54–0.85)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 6</td>
+<td align="left" rowspan="1" colspan="1">3.0 (2.2–3.9)</td>
+<td align="left" rowspan="1" colspan="1">0.88 (0.78–0.94)</td>
+<td align="left" rowspan="1" colspan="1">0.76 (0.66–0.83)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 7</td>
+<td align="left" rowspan="1" colspan="1">1.9 (0.73–3.8)</td>
+<td align="left" rowspan="1" colspan="1">0.95 (0.67–1.0)</td>
+<td align="left" rowspan="1" colspan="1">0.51 (0–0.77)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 8</td>
+<td align="left" rowspan="1" colspan="1">1.1 (0.25–3.5)</td>
+<td align="left" rowspan="1" colspan="1">0.67 (0.06–0.96)</td>
+<td align="left" rowspan="1" colspan="1">0.10 (0–1)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 9</td>
+<td align="left" rowspan="1" colspan="1">0.96 (0.31–2.9)</td>
+<td align="left" rowspan="1" colspan="1">0.67 (0.08–0.92)</td>
+<td align="left" rowspan="1" colspan="1">0 (0–0.74)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 10</td>
+<td align="left" rowspan="1" colspan="1">1.6 (0.40–4.5)</td>
+<td align="left" rowspan="1" colspan="1">0.80 (0.16–0.96)</td>
+<td align="left" rowspan="1" colspan="1">0.46 (0–0.85)</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt104"><label/><p>The table shows the estimates of the basic reproduction number, vaccine efficacy, and critical vaccination coverage. Estimates are represented by posterior medians with 95% credible intervals.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s2c">
+<title>Estimation of vaccine efficacy by the cohort method</title>
+<p>In comparison with our estimates of vaccine efficacy as the reduction in the probability of infection (<xref ref-type="table" rid="pcbi-1003061-t003">Table 3</xref>), estimates of vaccine efficacy by the cohort method tend to be somewhat lower in schools with low vaccination coverage and high infection attack rates (schools 1–4; <xref ref-type="table" rid="pcbi-1003061-t004">Table 4</xref>, <xref ref-type="supplementary-material" rid="pcbi.1003061.s003">Table S3</xref>). Moreover, in these schools credible intervals tend to be slightly broader when using the cohort method. The most conspicuous difference, however, is that in populations with high vaccination coverage (schools 7–10), vaccine efficacy is sometimes estimated with fair precision when using the cohort method, even though the number of infections is very small (≤6).</p>
+<table-wrap id="pcbi-1003061-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003061.t004</object-id><label>Table 4</label><caption>
+<title>Estimates of vaccine efficacy by the cohort method, i.e. as 1 minus the relative risk of infection in vaccinated versus unvaccinated persons (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e008" xlink:type="simple"/></inline-formula>).</title>
+</caption><alternatives><graphic id="pcbi-1003061-t004-4" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003061.t004" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">vaccine efficacy <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e114" xlink:type="simple"/></inline-formula></td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 1</td>
+<td align="left" rowspan="1" colspan="1">0.93 (0.81–0.99)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 2</td>
+<td align="left" rowspan="1" colspan="1">0.76 (0.56–0.92)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 3</td>
+<td align="left" rowspan="1" colspan="1">0.98 (0.93–1.0)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 4</td>
+<td align="left" rowspan="1" colspan="1">0.91 (0.80–0.98)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 5</td>
+<td align="left" rowspan="1" colspan="1">0.97 (0.90–1.0)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 6</td>
+<td align="left" rowspan="1" colspan="1">0.84 (0.73–0.93)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 7</td>
+<td align="left" rowspan="1" colspan="1">0.96 (0.83–1.0)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 8</td>
+<td align="left" rowspan="1" colspan="1">0.75 (0.0–0.98)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 9</td>
+<td align="left" rowspan="1" colspan="1">0.78 (0.25–0.96)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1">school 10</td>
+<td align="left" rowspan="1" colspan="1">0.90 (0.68–0.98)</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt105"><label/><p>Estimates are represented by posterior medians with 95% credible intervals. See text for details.</p></fn></table-wrap-foot></table-wrap></sec></sec><sec id="s3">
+<title>Discussion</title>
+<p>Our analyses have shown that mumps is moderately transmissible in the setting of primary schools, and that the vaccine used in these populations is highly effective in preventing infection. These results are largely in line with earlier studies <xref ref-type="bibr" rid="pcbi.1003061-Cohen1">[5]</xref>, <xref ref-type="bibr" rid="pcbi.1003061-Dayan1">[6]</xref>, but contrast with a recent study that suggested that outbreaks of mumps in populations with large-scale vaccination programs may be due to the vaccine having become less effective in preventing infection <xref ref-type="bibr" rid="pcbi.1003061-Greenland1">[4]</xref>. The younger average age of our study population and the fact that these outbreaks have been caused by viruses of different genotypes (genotype D versus genotype G) may help explain these contrasting findings. Since genotype D viruses are genetically distant from the current vaccine virus (Jeryl Lynn strain, genotype A) our results indicate that the Jeryl Lynn-based vaccine is highly effective in curbing transmission to vaccinated persons, even if genetic differences between the vaccine and outbreaks strains are substantial <xref ref-type="bibr" rid="pcbi.1003061-Rubin1">[8]</xref>.</p>
+<p>Estimates of the transmissbility of mumps are most precise in schools 1–4, i.e. in schools with low vaccination coverage and large numbers of infections. In these schools, the basic reproduction number is estimated at 2.5, 2.3, 2.8, and 2.5, with credible intervals ranging from 1.9 to 3.2. Vaccine efficacy, on the other hand, is estimated most precisely in schools 1, 3, 4, and 5 (<xref ref-type="table" rid="pcbi-1003061-t003">Table 3</xref>, <xref ref-type="fig" rid="pcbi-1003061-g003">Figure 3</xref>). In these schools, estimates of vaccine efficacy are 0.97, 0.99, 0.94, and 0.98, with credible intervals ranging from 0.84 to 1. These schools have low vaccination coverage and high levels of exposure (i.e. high attack rates) but still more than 30 vaccinated persons. In school 2 the exposure level has been high but the number of vaccinated persons is too small for precise estimation of vaccine efficacy. In schools with high coverage, vaccine efficacy cannot be estimated with any precision, as in these schools it is uncertain whether escape from infection is caused by the vaccine or by a lack of exposure.</p>
+<p>The schools included in this study differ greatly with respect to vaccination coverages (range: 12%–93%) and infection attack rates (range: 4%–76%). Nevertheless, estimates of vaccine efficacy are remarkably consistent across schools (<xref ref-type="table" rid="pcbi-1003061-t003">Table 3</xref>, <xref ref-type="fig" rid="pcbi-1003061-g003">Figure 3</xref>). In fact, only in schools with just a handful of infections (≤6) (schools 8–10) does the estimated vaccine efficacy drop below 0.88. In these schools, credible intervals of vaccine efficacy are wide, and estimates are less determined by the information contained in the data than by the prior distribution of vaccine efficacy. This is also the reason that estimates of vaccine efficacy in the baseline scenario are dominated by schools with low vaccination coverages and high attack rates, as these schools contain much more information than schools with high vaccination coverages and low infection attack rates (<xref ref-type="fig" rid="pcbi-1003061-g002">Figure 2</xref>).</p>
+<p>Schools in our study were included based on confirmed mumps infections. It is therefore possible that large outbreaks are more likely to be detected and included than small outbreaks. In other words, it is conceivable that the inclusion process systematically favours inclusion of schools with uncharacteristically high attack rates, thereby leading to selection bias. For schools with low vaccination coverage (and high attack rates) this is arguably not a problem as variation in outbreak sizes is expected to be minor, given the sizes of the schools included (<xref ref-type="fig" rid="pcbi-1003061-g002">Figure 2</xref>). For schools with high vaccination coverage, however, selection bias may well have played a role, and may explain the relatively high attack rates in some of these schools (school 6 and to a lesser extend schools 9–10) (<xref ref-type="fig" rid="pcbi-1003061-g002">Figure 2</xref>). Fortunately, one could argue that our statistical methodology provides a natural weighting of schools, in which schools with small number of infections have lower weight than schools with high number of infections. If specific details were available on the inclusion process, one could envisage extension of the analyses in which the selection process is modelled explicitly. This, however, would introduce more model options, additional parameters to be estimated, and would certainly lead to a more complicated analysis.</p>
+<p>We have assumed throughout that infections outside the school played a marginal role. Again, this assumption is probably less problematic in schools with low vaccination coverage and high infection attack rates than in schools with high vaccination coverage and lower attack rates, as variation in the expected number of infections is expected to be small in schools with low vaccination coverage. Moreover, there was no sustained community transmission during the study period, suggesting that the impact of infection outside the schools may have been small. Nevertheless, it would be interesting to extend the current analyses, e.g., along the lines of <xref ref-type="bibr" rid="pcbi.1003061-Neal1">[21]</xref>, <xref ref-type="bibr" rid="pcbi.1003061-Groendyke1">[22]</xref> by inclusion of other major transmission settings.</p>
+<p>Classical estimates of mumps transmissibility have been based on the mean age at infection in the pre-vaccination era (<xref ref-type="bibr" rid="pcbi.1003061-Anderson1">[23]</xref> and references therein), or on seroprevalence data from the pre-vaccination era <xref ref-type="bibr" rid="pcbi.1003061-Kanaan1">[24]</xref>, <xref ref-type="bibr" rid="pcbi.1003061-Wallinga1">[25]</xref>. These analyses yielded estimates of the basic reproduction number in fully unvaccinated populations that are substantially higher (∼7–20) than our estimates (∼2–3). It should be noted that these population-based estimates cannot directly be translated to our school-based estimates. Still, should those early estimates be indicative of the current transmissibility of mumps at the population level, then not only are schools an important transmission route but other settings also have the potential to contribute significantly to overall transmission. Again, to assess the contribution of different settings to the overall transmission dynamics, it would be desirable to extend the current studies beyond the school setting, by including household information and, in the specific case of this study, information on the churches attended by the participants <xref ref-type="bibr" rid="pcbi.1003061-Ruijs1">[9]</xref>. This, however, is only possible if detailed information were available on these settings, not only with respect to their composition but also with respect to vaccination and infection status of a sizeable part of the population.</p>
+<p>Vaccine efficacy and transmissibility together determine the critical vaccination coverage needed to prevent epidemic outbreaks. In our study, estimates of the critical vaccination coverage are 64% (95%CrI: 62%–67%) in the baseline scenario, and range from 63% (95%CrI: 58%–68%; school 1) to 76% (95%CrI: 66%–83%; school 6) in schools with more than 10 confirmed infections (schools 1–6). This indicates that the critical vaccination coverage does not need to be as high as suggested by early population-based estimates, which are in the range of 86%–95%.</p>
+<p>In none of the analyses presented here have we made a distinction between children who had been vaccinated once and those that had been vaccinated twice. This was done because preliminary analyses and previous results <xref ref-type="bibr" rid="pcbi.1003061-Ruijs1">[9]</xref>, <xref ref-type="bibr" rid="pcbi.1003061-Snijders1">[11]</xref> could not find any evidence for differences in vaccine efficacy between the two groups. In view of the data this is not unexpected, as the total number of infections in vaccinated children was small, and as attack rates in the two subpopulations were identical (15 infections among the 582 children who had been vaccinated once; 10 infections among the 370 who had been vaccinated twice). The fact that attack rates were identical is somewhat surprising, as one could have expected more infections in the group that had been vaccinated only once, more than five years ago. For completeness, we have presented the full data in <xref ref-type="supplementary-material" rid="pcbi.1003061.s002">Table S2</xref>.</p>
+<p>Further, in our analyses we assume that the vaccine works by reducing the probability of transmission (i.e. we assume a leaky vaccine), rather than by providing all-or-nothing immunity. This was done for simplicity, and since the current data do not allow us to distinguish between the different workings of the vaccine. If additional data was available, e.g., on the pre-outbreak antibody titres, one could consider extension of the method by using pre-outbreak antibody titres as an indicator for the ‘level of immunity’, and use this indicator to estimate how the level of pre-existing immunity relates to the probability of infection. In most situations, however, such information will be hard to get, as this would necessitate a large prospective study.</p>
+<p>Our definition of vaccine efficacy has a clear-cut biological interpretation (reduction of the probability of infection per contact). This makes it possible to meaningfully average over populations with varying vaccination coverages and exposure levels, and also to extrapolate beyond the study population. This contrasts with traditional estimates of vaccine efficacy that are based on a comparison of attack rates in vaccinated and unvaccinated individuals (the cohort method), or that simply use the vaccination status of the infected individuals together with the population vaccination coverage (the screening method) <xref ref-type="bibr" rid="pcbi.1003061-Orenstein1">[14]</xref>, <xref ref-type="bibr" rid="pcbi.1003061-Farrington1">[26]</xref>. Vaccine efficacy estimated by these methods lack a clear biological interpretation, and in essence assumes that a person's risk of infection is independent of whether or not others in the population are infected. This makes interpretation of the estimates problematic, and forbids estimation of the critical vaccination coverage <xref ref-type="bibr" rid="pcbi.1003061-Halloran1">[15]</xref>, <xref ref-type="bibr" rid="pcbi.1003061-Becker1">[27]</xref>–<xref ref-type="bibr" rid="pcbi.1003061-VanderWeele1">[29]</xref>.</p>
+<p>Even though our definition of vaccine efficacy differs fundamentally from vaccine efficacy measured by the cohort method, the results are quantitatively in fair agreement with traditional estimates, especially in populations with low vaccination coverage and large number of infections (<xref ref-type="table" rid="pcbi-1003061-t003">Table 3</xref> versus <xref ref-type="table" rid="pcbi-1003061-t004">Table 4</xref> and <xref ref-type="supplementary-material" rid="pcbi.1003061.s003">Table S3</xref>). In schools with high vaccination coverage and small numbers of infections the reverse tends to be true, and estimates of vaccine efficacy generally are both higher and more precise when using the cohort method. For instance, in school 10 there are 6 confirmed infections, and vaccine efficacy is poorly estimated in our analysis (95%CrI: 0.16–0.96) but with fair precision by the cohort method (95%CrI: 0.68–0.98). This is arguably an artefact of the latter method's assumption that all 139 uninfected vaccinated persons have been exposed to an infected person, thereby artificially increasing the precision of the estimates of vaccine efficacy.</p>
+<p>Our results point to strategies to efficiently allocate catch-up vaccination efforts in heterogeneously vaccinated populations. No additional vaccination is needed in schools with high vaccination coverage (&gt;75%, say) as these are already protected against epidemic outbreaks affecting a large fraction of students. Similarly, allocating vaccines to schools with low vaccination coverage (&lt;50%, say) is inefficient as it does not markedly reduce the probability of infection for those who are not vaccinated, i.e. the indirect benefits of vaccination are small in these populations. Our analyses suggest that vaccination of populations in the range between these two extremes is most efficient, and that in these populations a single vaccination can potentially prevent almost two infections. Of course, in practice other considerations, for instance on ethical issues, communication, and cost-effectiveness would also come into play.</p>
+</sec><sec id="s4" sec-type="methods">
+<title>Methods</title>
+<sec id="s4a">
+<title>Study design and data collection</title>
+<p>In the Netherlands, several large outbreaks of mumps virus (genotype D) occurred in 2007–2009. We collected data from children attending primary schools with evidence of mumps virus transmission (report of at least one laboratory confirmed mumps case or more than one clinical mumps case) <xref ref-type="bibr" rid="pcbi.1003061-Ruijs1">[9]</xref>, <xref ref-type="bibr" rid="pcbi.1003061-Snijders1">[11]</xref>. Children's parents were asked to fill out a questionnaire asking for information on the child's vaccination status and occurrence of mumps. Individual data on vaccination status were also retrieved from the national Dutch vaccination register. When these were not available, we used the self-reported vaccination status (vaccinated/unvaccinated). Children who were vaccinated more than twice (one case), and who were reported to have had mumps before September 2007 (three cases) were excluded. The study was approved by the medical ethics committee of the University Medical Centre Utrecht and the Radboud University Nijmegen Medical Centre. The data are presented in <xref ref-type="table" rid="pcbi-1003061-t001">Table 1</xref> and <xref ref-type="supplementary-material" rid="pcbi.1003061.s001">Tables S1</xref>, <xref ref-type="supplementary-material" rid="pcbi.1003061.s002">S2</xref>.</p>
+</sec><sec id="s4b">
+<title>Estimation of vaccine efficacy in a disease transmission framework</title>
+<sec id="s4b1">
+<title>Model structure</title>
+<p>The analyses are based on the distribution of the number of persons infected in an outbreak <xref ref-type="bibr" rid="pcbi.1003061-ONeill1">[16]</xref>–<xref ref-type="bibr" rid="pcbi.1003061-Demiris1">[18]</xref>. Specifically, we use so-called final size distributions of a two-type SEIR (susceptible-exposed-infectious-recovered) model in which the two types represent unvaccinated and vaccinated persons.</p>
+<p>In SEIR models, each individual in the population can either be susceptible (i.e. healthy), exposed (infected but not able to infect others), infective (infected and able to infect others) or recovered (not infectious and now immune). We assume that infectious contacts are made at the level of the school, and not at other organizational levels (e.g., class, household, community). These assumptions seem reasonable since there was no evidence of sustained community transmission during the study period, while only limited information was available on class structure within schools.</p>
+<p>We focus on estimation of two key epidemiological quantities, the basic reproduction number <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e009" xlink:type="simple"/></inline-formula> which quantifies the transmissibility of the pathogen, and vaccine efficacy <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e010" xlink:type="simple"/></inline-formula> which determines the reduction in the probability of infection for those who have been vaccinated. We use a Bayesian inferential framework in which these parameters are estimated and the missing information is imputed.</p>
+<p>Throughout we assume that a pair of individuals makes contacts at a rate that is inversely proportional to the school size <italic>N</italic>, thus ensuring that each person makes an identical expected number of contacts per unit of time. Specifically, whilst infective an unvaccinated person makes infectious contacts with each unvaccinated individual according to a Poisson process of rate<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e011" xlink:type="simple"/></inline-formula>, and with each vaccinated individual according to a Poisson process of rate<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e012" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e013" xlink:type="simple"/></inline-formula> represents vaccine efficacy for susceptibility <xref ref-type="bibr" rid="pcbi.1003061-deMelker1">[1]</xref>. All Poisson processes are assumed mutually independent. Notice that vaccine efficacy as defined here can be interpreted as the reduction in the probability of infection for a contact that would have resulted in infection if the contacted person was unvaccinated. Hence, we have <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e014" xlink:type="simple"/></inline-formula> by definition.</p>
+<p>Final size data alone do not allow us to estimate parameters with respect to calendar time, but only relative to other model parameters. To set a time-scale, and for simplicity, we therefore assume that the infectious period (i.e. the time that an individual is in the infective state) is fixed at length 1 time unit and set the basic reproduction number <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e015" xlink:type="simple"/></inline-formula>equal to the contact rate parameter <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e016" xlink:type="simple"/></inline-formula>. An alternative possibility, which could also be incorporated into our modelling and inference framework, is to assume that infectious periods are exponentially distributed with mean 1, which yields a geometric distribution for the number of contacts made by an individual whilst they remain infective <xref ref-type="bibr" rid="pcbi.1003061-LloydSmith1">[30]</xref>, <xref ref-type="bibr" rid="pcbi.1003061-vanBoven2">[31]</xref>. In practice, this alternative choice of infectious period distribution rarely makes any material difference to the results <xref ref-type="bibr" rid="pcbi.1003061-Demiris1">[18]</xref>.</p>
+<p>Our model contains two epidemiological parameters, namely the basic reproduction number <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e017" xlink:type="simple"/></inline-formula> determining overall transmissibility, and vaccine efficacy<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e018" xlink:type="simple"/></inline-formula> which quantifies the extent to which vaccination reduces the probability of becoming infected by a single contact. In a large population with vaccination coverage <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e019" xlink:type="simple"/></inline-formula> the reproduction number in the early stages of an epidemic, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e020" xlink:type="simple"/></inline-formula>, takes a simple form, namely <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e021" xlink:type="simple"/></inline-formula> <xref ref-type="bibr" rid="pcbi.1003061-Diekmann1">[32]</xref>. The critical vaccination coverage <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e022" xlink:type="simple"/></inline-formula> which makes major outbreaks highly improbable is found by solving the above equation for <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e023" xlink:type="simple"/></inline-formula>, yielding<disp-formula id="pcbi.1003061.e024"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003061.e024" xlink:type="simple"/></disp-formula>This equation is used to estimate the critical vaccination coverage directly from estimates of the basic reproduction number and vaccine efficacy.</p>
+<p>The parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e025" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e026" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e027" xlink:type="simple"/></inline-formula> also determine outbreak size in a large population through the final size equations <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e028" xlink:type="simple"/></inline-formula>and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e029" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e030" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e031" xlink:type="simple"/></inline-formula> denote the fractions infected in the unvaccinated and vaccinated groups, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e032" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e033" xlink:type="simple"/></inline-formula>) represent the type-reproduction numbers <xref ref-type="bibr" rid="pcbi.1003061-Diekmann1">[32]</xref>. In our model we have <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e034" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e035" xlink:type="simple"/></inline-formula>.</p>
+</sec><sec id="s4b2">
+<title>The likelihood function</title>
+<p>In a Bayesian framework the key object of interest is the posterior density of the model parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e036" xlink:type="simple"/></inline-formula> given data <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e037" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e038" xlink:type="simple"/></inline-formula>. Using Bayes' rule the posterior density can be expressed as <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e039" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e040" xlink:type="simple"/></inline-formula> is the likelihood and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e041" xlink:type="simple"/></inline-formula> the prior density of the parameters. In practical applications, this formulation is of limited use because the likelihood <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e042" xlink:type="simple"/></inline-formula> can be extremely complicated, even if no infection or vaccination information is missing. We therefore adopt an alternative approach in which attention is shifted to the joint posterior density of the parameters of interest and random directed graphs (digraphs) <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e043" xlink:type="simple"/></inline-formula> which describe the potential pathways of infection. Specifically, a given graph <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e044" xlink:type="simple"/></inline-formula>describes all directed contacts made between individuals, some of which may correspond to actual infections (e.g. a link from an infective to a susceptible) while others may not (e.g. a link from a susceptible to an infective). Knowledge of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e045" xlink:type="simple"/></inline-formula>, and the identity of the initially infective individual(s), determines which individuals in the population ultimately become infected, i.e. the final outcome. Full details of this method are given in <xref ref-type="bibr" rid="pcbi.1003061-Demiris1">[18]</xref>, <xref ref-type="bibr" rid="pcbi.1003061-ONeill2">[19]</xref> and so we now recall the salient points in our setting.</p>
+<p>The augmented posterior density is given by<disp-formula id="pcbi.1003061.e046"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003061.e046" xlink:type="simple"/></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e047" xlink:type="simple"/></inline-formula> is the augmented likelihood, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e048" xlink:type="simple"/></inline-formula> is the prior density of the parameters <xref ref-type="bibr" rid="pcbi.1003061-Demiris1">[18]</xref>. The (augmented) likelihood contains two factors, of which the first indicates whether a certain combination of parameters and digraphs is compatible with the data, i.e. <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e049" xlink:type="simple"/></inline-formula> if the parameters and digraphs are compatible with the data, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e050" xlink:type="simple"/></inline-formula> otherwise. The second factor gives the likelihood of a certain infection graph conditional on the values of the transmission parameters. For a single school the likelihood of a digraph <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e051" xlink:type="simple"/></inline-formula> given parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e052" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e053" xlink:type="simple"/></inline-formula>, is given by the product of the likelihoods of all infectious links and non-links (i.e. the absence of an infectious link) in the set of infected and potentially infected persons, times the product of all non-links from infected persons to persons who were known to be uninfected. Hence, in a school with <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e054" xlink:type="simple"/></inline-formula> infected persons, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e055" xlink:type="simple"/></inline-formula> potentially infected persons, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e056" xlink:type="simple"/></inline-formula> uninfected persons, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e057" xlink:type="simple"/></inline-formula> is given by the product of the probabilities of all <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e058" xlink:type="simple"/></inline-formula> links and non-links in the set of infected and potentially infected persons, times the product of the probabilities of the non-links from persons that are infected in the digraph to persons who are known to be uninfected. Since there are at least <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e059" xlink:type="simple"/></inline-formula> infected persons and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e060" xlink:type="simple"/></inline-formula> uninfected persons the number of non-links to uninfected persons is at least <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e061" xlink:type="simple"/></inline-formula>. It can be higher if some of the persons with unknown infection status are infected, and reaches a maximum of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e062" xlink:type="simple"/></inline-formula> if all persons with unknown infection status are infected.</p>
+<p>The above description can be made mathematically precise <xref ref-type="bibr" rid="pcbi.1003061-Demiris1">[18]</xref>, <xref ref-type="bibr" rid="pcbi.1003061-ONeill2">[19]</xref>. If we denote by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e063" xlink:type="simple"/></inline-formula> the (unobserved) set of infected individuals (of which there are at least <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e064" xlink:type="simple"/></inline-formula> and at most <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e065" xlink:type="simple"/></inline-formula>), by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e066" xlink:type="simple"/></inline-formula> the set of individuals who are known to be infected together with the individuals who may or may not have been infected, by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e067" xlink:type="simple"/></inline-formula> the set of individuals who are known to be uninfected, by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e068" xlink:type="simple"/></inline-formula> (for unvaccinated) and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e069" xlink:type="simple"/></inline-formula> (for vaccinated) the possible person types, by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e070" xlink:type="simple"/></inline-formula> the type of an individual with label <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e071" xlink:type="simple"/></inline-formula>, by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e072" xlink:type="simple"/></inline-formula> the probability that there is a link from the individual with label <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e073" xlink:type="simple"/></inline-formula> to an individual of type <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e074" xlink:type="simple"/></inline-formula>, by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e075" xlink:type="simple"/></inline-formula> the number of links from individual <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e076" xlink:type="simple"/></inline-formula> to persons of type <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e077" xlink:type="simple"/></inline-formula>, by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e078" xlink:type="simple"/></inline-formula> the number of individuals of type <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e079" xlink:type="simple"/></inline-formula> in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e080" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e081" xlink:type="simple"/></inline-formula>), and by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e082" xlink:type="simple"/></inline-formula> the number of individuals of type <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e083" xlink:type="simple"/></inline-formula> in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e084" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e085" xlink:type="simple"/></inline-formula>), then the likelihood <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e086" xlink:type="simple"/></inline-formula> is given by<disp-formula id="pcbi.1003061.e087"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003061.e087" xlink:type="simple"/><label>(1)</label></disp-formula>Recall that we assume that the infectious periods are of fixed duration. Together with our earlier assumption that contacts are made according to mutually independent Poisson processes with rates that are inversely proportional to school size, the infection probabilities <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e088" xlink:type="simple"/></inline-formula> (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e089" xlink:type="simple"/></inline-formula>) are given by<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e090" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e091" xlink:type="simple"/></inline-formula> are the type-specific reproduction numbers, Our parameterization implies <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e092" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e093" xlink:type="simple"/></inline-formula>.</p>
+</sec><sec id="s4b3">
+<title>Scenarios and estimation</title>
+<p>The parameter vector <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e094" xlink:type="simple"/></inline-formula> contains the epidemiological parameters <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e095" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e096" xlink:type="simple"/></inline-formula>, and the unknown vaccination statuses. Throughout, the basic reproduction number and vaccine efficacy are assigned uninformative uniform prior distributions (<inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e097" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e098" xlink:type="simple"/></inline-formula>). We further assume that the probability that a person with unknown vaccination status is vaccinated is given by the observed vaccination coverage of the school in which the person resides (<xref ref-type="table" rid="pcbi-1003061-t002">Table 2</xref>). We consider two scenarios: One in which both <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e099" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e100" xlink:type="simple"/></inline-formula> are identical across schools, and the other in which <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e101" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e102" xlink:type="simple"/></inline-formula> are estimated for each school separately.</p>
+<p>The posterior density is explored using a Markov chain Monte Carlo method, whereby the missing vaccination statuses are included as latent parameters <xref ref-type="bibr" rid="pcbi.1003061-Demiris1">[18]</xref>–<xref ref-type="bibr" rid="pcbi.1003061-vanBoven1">[20]</xref>. Digraphs are updated by adding and deleting edges at random from <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e103" xlink:type="simple"/></inline-formula>. Specifically, we use a birth-death construction for updating, in which infectious contacts between any two persons that are (potentially) infected are chosen uniformly at random <xref ref-type="bibr" rid="pcbi.1003061-Demiris1">[18]</xref>–<xref ref-type="bibr" rid="pcbi.1003061-vanBoven1">[20]</xref>. The Metropolis-Hastings acceptance probability of adding an infectious link to a digraph <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e104" xlink:type="simple"/></inline-formula> resulting in a digraph <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e105" xlink:type="simple"/></inline-formula>, is given by <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e106" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e107" xlink:type="simple"/></inline-formula> is the maximum number of infectious contacts, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e108" xlink:type="simple"/></inline-formula> the number of infectious contacts in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e109" xlink:type="simple"/></inline-formula>. Likewise the acceptance probability of an attempt to delete an edge is <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003061.e110" xlink:type="simple"/></inline-formula>, where it is understood that digraphs that are not compatible with the data have zero likelihood. Notice that, in contrast to earlier studies, the likelihood ratio of two graphs differing by one link in general does not reduce to the likelihood ratio of having an infectious contact at a particular position versus not having an infectious contact at that position <xref ref-type="bibr" rid="pcbi.1003061-Demiris1">[18]</xref>–<xref ref-type="bibr" rid="pcbi.1003061-vanBoven1">[20]</xref>. In particular, it is possible that by adding or deleting an infectious contact the number of infected persons increases or decreases by more than one, because an addition or deletion of an infectious contact could result in the addition or deletion of a number of vertices to the connected component which determines the final size. Hence, updating of the graphs requires calculation of the full likelihood of the proposed graph, which is a computationally expensive operation, resulting in long runtimes if the number of infected persons is large.</p>
+<p>The basic reproduction number and vaccine efficacy are updated with a random-walk Metropolis algorithm using Gaussian proposal distributions with standard deviations of 0.2–2 and 0.02–0.2, respectively. Vaccination statuses are updated by flipping the vaccination status of a randomly selected person with unknown vaccination status <xref ref-type="bibr" rid="pcbi.1003061-vanBoven1">[20]</xref>. The index case is assumed to be an unvaccinated person.</p>
+<p>Updating is performed in blocks, in the order 1) update the value of the reproduction number, 2) update the value of vaccine efficacy, 3) for each school update the vaccination status of a randomly chosen person with missing vaccination information, 4) for each school attempt to add an infectious contact, and 5) for each school attempt to delete an infectious contact. Each cycle of the chain thus contains 32 updating events. To improve mixing every 50<sup>th</sup> cycle the positions in the digraph of infected persons (both vaccinated and vaccinated) are randomly permuted so that the chain does not get stuck in topologies from which links to persons with unknown infection status cannot easily be removed. Notice that this operation leaves the topology of the graph intact (distribution of links and types), and thus does not affect the likelihood.</p>
+<p>After running a number of exploratory analyses output is generated for a single chain of length 30,000–50,000, of which the last 20,000–25,000 cycles are used to obtain a thinned sample of size 5,000 or 10,000. Inspection of convergence of the chain is performed visually. Run times are approximately 7–10 days on a 3.2Ghz eight-core workstation.</p>
+</sec></sec><sec id="s4c">
+<title>Simulated outbreaks</title>
+<p>To explore the correspondence between the parameter estimates with the data, we simulated outbreaks in schools of size 200 using the digraph construction described above. To prevent early extinction we introduced three infectious persons with random vaccination status in each simulation. For each vaccination composition, we generated 5,000 random digraphs with the values of the basic reproduction number and vaccine efficacy sampled without replacement from the posterior distribution. Subsequently, for each graph we calculated the attack rate among those that were initially susceptible, and present the median and 2.5% and 97.5% percentiles of the resulting distributions (the black line and grey area in <xref ref-type="fig" rid="pcbi-1003061-g002">Figure 2</xref>).</p>
+</sec><sec id="s4d">
+<title>Estimation of vaccine efficacy by the cohort method</title>
+<p>To compare our results with estimates of vaccine efficacy using the cohort method <xref ref-type="bibr" rid="pcbi.1003061-Orenstein1">[14]</xref>, we have calculated vaccine efficacy as 1 minus the relative risk of infection in vaccinated versus unvaccinated persons. In these analyses only information of persons with known vaccination and infection status was taken into account (<xref ref-type="supplementary-material" rid="pcbi.1003061.s001">Table S1</xref>). As in the above we employ a Bayesian framework in which the probabilities in the unvaccinated and vaccinated groups are assigned uniform prior distributions, yielding beta-binomial posterior distributions for the infection probabilities. Estimates are obtained using Markov chain Monte Carlo (MCMC) methods, specifically by taking a thinned sample of 10,000 from a converged chain of length 500,000. <xref ref-type="supplementary-material" rid="pcbi.1003061.s003">Table S3</xref> reports classical (frequentist) estimates of vaccine efficacy using the cohort method <xref ref-type="bibr" rid="pcbi.1003061-Orenstein1">[14]</xref>.</p>
+</sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1003061.s001" mimetype="application/msword" xlink:href="info:doi/10.1371/journal.pcbi.1003061.s001" position="float" xlink:type="simple"><label>Table S1</label><caption>
+<p>Overview of the outbreaks of mumps in Dutch primary schools. See Ruijs et al. (2011) (ref <xref ref-type="bibr" rid="pcbi.1003061-Ruijs1">[9]</xref>) and Snijders et al. (2012)(ref <xref ref-type="bibr" rid="pcbi.1003061-Snijders1">[11]</xref>) for details.</p>
+<p>(DOC)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003061.s002" mimetype="application/msword" xlink:href="info:doi/10.1371/journal.pcbi.1003061.s002" position="float" xlink:type="simple"><label>Table S2</label><caption>
+<p>Summary statistics of the study population, distinguishing between one and two vaccinations (cf. <xref ref-type="table" rid="pcbi-1003061-t001">Table 1</xref>). The column ‘number infected’ shows the possible range of actual infections, ranging from the number known to be infected to the sum of this number and the number of persons with unknown infection status. Vaccination coverage and attack rates are calculated using persons with known vaccination status (vaccination coverage), and known vaccination and infection status (attack rates).</p>
+<p>(DOC)</p>
+</caption></supplementary-material><supplementary-material id="pcbi.1003061.s003" mimetype="application/msword" xlink:href="info:doi/10.1371/journal.pcbi.1003061.s003" position="float" xlink:type="simple"><label>Table S3</label><caption>
+<p>Classical estimates of vaccine efficacy by the cohort method, i.e. as 1 minus the relative risk of infection in vaccinated versus unvaccinated persons (Orenstein et al. 1985) (ref <xref ref-type="bibr" rid="pcbi.1003061-Orenstein1">[14]</xref>). Approximate 95% confidence intervals of the parameter estimates are given between brackets.</p>
+<p>(DOC)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We thank all children and parents who participated in this study. Jan van de Kassteele is acknowledged for helpful discussions.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1003061-deMelker1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>de Melker</surname><given-names>HE</given-names></name>, <name name-style="western"><surname>Schellekens</surname><given-names>JF</given-names></name>, <name name-style="western"><surname>Neppelenbroek</surname><given-names>SE</given-names></name>, <name name-style="western"><surname>Mooi</surname><given-names>FR</given-names></name>, <name name-style="western"><surname>Rümke</surname><given-names>HC</given-names></name>, <etal>et al</etal>. (<year>2000</year>) <article-title>Reemergence of pertussis in the highly vaccinated population of the Netherlands: observations on surveillance data</article-title>. <source>Emerging Infectious Diseases</source> <volume>6</volume>: <fpage>348</fpage>–<lpage>357</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Wichmann1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wichmann</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Hellenbrand</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Sagebiel</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Santibanez</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Ahlemeyer</surname><given-names>G</given-names></name>, <etal>et al</etal>. (<year>2006</year>) <article-title>Large measles outbreak at a German public school, 2006</article-title>. <source>Pediatric Infectious Disease Journal</source> <volume>26</volume>: <fpage>782</fpage>–<lpage>786</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Quinlisk1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Quinlisk</surname><given-names>MP</given-names></name> (<year>2010</year>) <article-title>Mumps control today</article-title>. <source>Journal of Infectious Diseases</source> <volume>202</volume>: <fpage>655</fpage>–<lpage>656</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Greenland1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Greenland</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Whelan</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Fanoy</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Borgert</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Hulshof</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Mumps outbreak among vaccinated university students associated with a large party, the Netherlands, 2010</article-title>. <source>Vaccine</source> <volume>30</volume>: <fpage>4676</fpage>–<lpage>4680</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Cohen1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cohen</surname><given-names>C</given-names></name>, <name name-style="western"><surname>White</surname><given-names>JM</given-names></name>, <name name-style="western"><surname>Savage</surname><given-names>EJ</given-names></name>, <name name-style="western"><surname>Glynn</surname><given-names>JR</given-names></name>, <name name-style="western"><surname>Choi</surname><given-names>Y</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Vaccine effectiveness estimates, 2004–2005 mumps outbreak, England</article-title>. <source>Emerging Infectious Diseases</source> <volume>13</volume>: <fpage>12</fpage>–<lpage>17</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Dayan1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Dayan</surname><given-names>GH</given-names></name>, <name name-style="western"><surname>Quinlisk</surname><given-names>MP</given-names></name>, <name name-style="western"><surname>Parker</surname><given-names>AA</given-names></name>, <name name-style="western"><surname>Barskey</surname><given-names>AE</given-names></name>, <name name-style="western"><surname>Harris</surname><given-names>ML</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>Recent resurgence of mumps in the United States</article-title>. <source>New England Journal of Medicine</source> <volume>358</volume>: <fpage>1580</fpage>–<lpage>1589</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Muhsen1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Muhsen</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Shohat</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Aboudy</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Mendelson</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Algor</surname><given-names>N</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Seroprevalence of mumps-antibodies in subpopulations subsequently affected by a large scale mumps epidemic in Israel</article-title>. <source>Vaccine</source> <volume>29</volume>: <fpage>3878</fpage>–<lpage>3882</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Rubin1"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Rubin</surname><given-names>SA</given-names></name>, <name name-style="western"><surname>Link</surname><given-names>MA</given-names></name>, <name name-style="western"><surname>Sauder</surname><given-names>CJ</given-names></name>, <name name-style="western"><surname>Zhang</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Ngo</surname><given-names>L</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Recent mumps outbreaks in vaccinated populations: no evidence of immune escape</article-title>. <source>Journal of Virology</source> <volume>86</volume>: <fpage>615</fpage>–<lpage>620</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Ruijs1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ruijs</surname><given-names>WL</given-names></name>, <name name-style="western"><surname>Hautvast</surname><given-names>JL</given-names></name>, <name name-style="western"><surname>Akkermans</surname><given-names>RP</given-names></name>, <name name-style="western"><surname>Hulscher</surname><given-names>ME</given-names></name>, <name name-style="western"><surname>van der Velden</surname><given-names>K</given-names></name> (<year>2011</year>) <article-title>The role of schools in the spread of mumps among unvaccinated children: a retrospective cohort study</article-title>. <source>BMC Infectious Diseases</source> <volume>11</volume>: <fpage>227</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Wielders1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wielders</surname><given-names>CC</given-names></name>, <name name-style="western"><surname>van Binnendijk</surname><given-names>RS</given-names></name>, <name name-style="western"><surname>Snijders</surname><given-names>BE</given-names></name>, <name name-style="western"><surname>Tipples</surname><given-names>GA</given-names></name>, <name name-style="western"><surname>Cremer</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Mumps epidemic in orthodox religious low-vaccination communities in the Netherlands and Canada, 2007 to 2009</article-title>. <source>Euro Surveillance</source> <volume>16</volume>: <fpage>pii 19989</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Snijders1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Snijders</surname><given-names>BE</given-names></name>, <name name-style="western"><surname>Lier</surname><given-names>AV</given-names></name>, <name name-style="western"><surname>van de Kassteele</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Fanoy</surname><given-names>EB</given-names></name>, <name name-style="western"><surname>Ruijs</surname><given-names>WL</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Mumps vaccine effectiveness in primary schools and households, the Netherlands, 2008</article-title>. <source>Vaccine</source> <volume>30</volume>: <fpage>2999</fpage>–<lpage>3002</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Ruijs2"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Ruijs</surname><given-names>WL</given-names></name>, <name name-style="western"><surname>Hautvast</surname><given-names>JL</given-names></name>, <name name-style="western"><surname>van Ansem</surname><given-names>WJ</given-names></name>, <name name-style="western"><surname>Akkermans</surname><given-names>RP</given-names></name>, <name name-style="western"><surname>van't Spijker</surname><given-names>K</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Measuring vaccination coverage in a hard to reach minority</article-title>. <source>European Journal of Public Health</source> <volume>22</volume>: <fpage>359</fpage>–<lpage>364</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-vanLier1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>van Lier</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Oomen</surname><given-names>P</given-names></name>, <name name-style="western"><surname>de Hoogh</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Drijfhout</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Elsinghorst</surname><given-names>B</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>Præventis, the immunization register of the Netherlands: a tool to evaluate the National Immunization Programme</article-title>. <source>Euro Surveillance</source> <volume>17</volume>: <fpage>pii = 20153</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Orenstein1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Orenstein</surname><given-names>WA</given-names></name>, <name name-style="western"><surname>Bernier</surname><given-names>RH</given-names></name>, <name name-style="western"><surname>Dondero</surname><given-names>TJ</given-names></name>, <etal>et al</etal>. (<year>1985</year>) <article-title>Field evaluation of vaccine efficacy</article-title>. <source>Bulletin of the World Health Organization</source> <volume>63</volume>: <fpage>1055</fpage>–<lpage>1068</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Halloran1"><label>15</label>
+<mixed-citation publication-type="other" xlink:type="simple">Halloran ME, Longini IM, Struchiner CJ (2010) Design and Analysis of Vaccine Studies. New York: Springer.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-ONeill1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>O'Neill</surname><given-names>PD</given-names></name> (<year>2010</year>) <article-title>Introduction and snapshot review: Relating infectious disease transmission models to data</article-title>. <source>Statistics in Medicine</source> <volume>29</volume>: <fpage>2069</fpage>–<lpage>2077</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Cauchemez1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cauchemez</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Ferguson</surname><given-names>NM</given-names></name> (<year>2012</year>) <article-title>Methods to infer transmission risk factors in complex outbreak data</article-title>. <source>Proceedings of the Royal Society Interface</source> <volume>9</volume>: <fpage>456</fpage>–<lpage>569</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Demiris1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Demiris</surname><given-names>N</given-names></name>, <name name-style="western"><surname>O'Neill</surname><given-names>PD</given-names></name> (<year>2005</year>) <article-title>Bayesian inference for stochastic multitype epidemics in structured populations via random graphs</article-title>. <source>Journal of the Royal Statistical Society B</source> <volume>67</volume>: <fpage>731</fpage>–<lpage>745</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-ONeill2"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>O'Neill</surname><given-names>PD</given-names></name> (<year>2009</year>) <article-title>Bayesian inference for stochastic multitype epidemics in structured populations using sample data</article-title>. <source>Biostatistics</source> <volume>10</volume>: <fpage>779</fpage>–<lpage>791</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-vanBoven1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>van Boven</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Kretzschmar</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Wallinga</surname><given-names>J</given-names></name>, <name name-style="western"><surname>O'Neill</surname><given-names>PD</given-names></name>, <name name-style="western"><surname>Wichmann</surname><given-names>O</given-names></name> (<year>2010</year>) <article-title>Estimation of measles vaccine efficacy and critical vaccination coverage in a highly vaccinated population</article-title>. <source>Journal of the Royal Society Interface</source> <volume>7</volume>: <fpage>1537</fpage>–<lpage>1544</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Neal1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Neal</surname><given-names>PJ</given-names></name>, <name name-style="western"><surname>Roberts</surname><given-names>GO</given-names></name> (<year>2004</year>) <article-title>Statistical inference and model selection for the 1861Hagelloch measles epidemic</article-title>. <source>Biostatistics</source> <volume>5</volume>: <fpage>249</fpage>–<lpage>61</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Groendyke1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Groendyke</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Welch</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Hunter</surname><given-names>DR</given-names></name> (<year>2012</year>) <article-title>A network-based analysis of the 1861 Hagelloch measles data</article-title>. <source>Biometrics</source> <volume>68</volume>: <fpage>755</fpage>–<lpage>765</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Anderson1"><label>23</label>
+<mixed-citation publication-type="other" xlink:type="simple">Anderson RM, May RM (1991) Infectious Diseases of Humans. Dynamics and Control. Oxford: Oxford University Press.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Kanaan1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kanaan</surname><given-names>MN</given-names></name>, <name name-style="western"><surname>Farrington</surname><given-names>CP</given-names></name> (<year>2005</year>) <article-title>Matrix models for childhood infections: a Bayesian approach with applications to rubella and mumps</article-title>. <source>Epidemiology and Infection</source> <volume>133</volume>: <fpage>1009</fpage>–<lpage>1021</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Wallinga1"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wallinga</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Teunis</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Kretzschmar</surname><given-names>M</given-names></name> (<year>2006</year>) <article-title>Using data on social contacts to estimate age-specific transmission parameters for respiratory-spread infectious agents</article-title>. <source>American Journal of Epidemiology</source> <volume>164</volume>: <fpage>936</fpage>–<lpage>944</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Farrington1"><label>26</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Farrington</surname><given-names>CP</given-names></name> (<year>1993</year>) <article-title>Estimation of vaccine effectiveness using the screening method</article-title>. <source>International Journal of Epidemiology</source> <volume>22</volume>: <fpage>742</fpage>–<lpage>746</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Becker1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Becker</surname><given-names>NG</given-names></name>, <name name-style="western"><surname>Britton</surname><given-names>T</given-names></name>, <name name-style="western"><surname>O'Neill</surname><given-names>PD</given-names></name> (<year>2003</year>) <article-title>Estimating vaccine effects on transmission of infection from household outbreak data</article-title>. <source>Biometrics</source> <volume>59</volume>: <fpage>467</fpage>–<lpage>475</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Hudgens1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Hudgens</surname><given-names>MG</given-names></name>, <name name-style="western"><surname>Halloran</surname><given-names>ME</given-names></name> (<year>2008</year>) <article-title>Toward causal inference with interference</article-title>. <source>Journal of the American Statistical Association</source> <volume>103</volume>: <fpage>832</fpage>–<lpage>842</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-VanderWeele1"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>VanderWeele</surname><given-names>TJ</given-names></name>, <name name-style="western"><surname>Vandenbroucke</surname><given-names>JP</given-names></name>, <name name-style="western"><surname>Tchetgen</surname><given-names>EJ</given-names></name>, <name name-style="western"><surname>Robins</surname><given-names>JM</given-names></name> (<year>2012</year>) <article-title>A mapping between interactions and interference: implications for vaccine trials</article-title>. <source>Epidemiology</source> <volume>23</volume>: <fpage>285</fpage>–<lpage>292</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-LloydSmith1"><label>30</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lloyd-Smith</surname><given-names>JO</given-names></name>, <name name-style="western"><surname>Schreiber</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Kopp</surname><given-names>PE</given-names></name>, <name name-style="western"><surname>Getz</surname><given-names>WM</given-names></name> (<year>2005</year>) <article-title>Superspreading and the effect of individual variation on disease emergence</article-title>. <source>Nature</source> <volume>438</volume>: <fpage>355</fpage>–<lpage>359</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-vanBoven2"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>van Boven</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Koopmans</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Du Ry van Beest Holle</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Meijer</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Klinkenberg</surname><given-names>D</given-names></name>, <etal>et al</etal>. (<year>2007</year>) <article-title>Detecting emerging transmissibility of avian influenza virus in human households</article-title>. <source>PLoS Computational Biology</source> <volume>3</volume>: <fpage>e145</fpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003061-Diekmann1"><label>32</label>
+<mixed-citation publication-type="other" xlink:type="simple">Diekmann O, Heesterbeek JAP, Britton T (2012) Mathematical Epidemiology of Infectious Diseases. Model Building, Analysis and Inference. New York: Wiley.</mixed-citation>
+</ref>
+</ref-list></back>
+</article>

@@ -1,0 +1,957 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article
+  PUBLIC "-//NLM//DTD Journal Publishing DTD v3.0 20080202//EN" "http://dtd.nlm.nih.gov/publishing/3.0/journalpublishing3.dtd">
+<article xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" article-type="research-article" dtd-version="3.0" xml:lang="en">
+<front>
+<journal-meta>
+<journal-id journal-id-type="publisher-id">plos</journal-id>
+<journal-id journal-id-type="nlm-ta">PLoS Comput Biol</journal-id>
+<journal-id journal-id-type="pmc">ploscomp</journal-id><journal-title-group>
+<journal-title>PLoS Computational Biology</journal-title></journal-title-group>
+<issn pub-type="ppub">1553-734X</issn>
+<issn pub-type="epub">1553-7358</issn>
+<publisher>
+<publisher-name>Public Library of Science</publisher-name>
+<publisher-loc>San Francisco, USA</publisher-loc></publisher>
+</journal-meta>
+<article-meta>
+<article-id pub-id-type="publisher-id">PCOMPBIOL-D-13-01831</article-id>
+<article-id pub-id-type="doi">10.1371/journal.pcbi.1003603</article-id>
+<article-categories><subj-group subj-group-type="heading"><subject>Research Article</subject></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Biology and life sciences</subject><subj-group><subject>Biophysics</subject></subj-group><subj-group><subject>Computational biology</subject></subj-group></subj-group><subj-group subj-group-type="Discipline-v2"><subject>Physical sciences</subject><subj-group><subject>Chemistry</subject><subj-group><subject>Computational chemistry</subject></subj-group></subj-group><subj-group><subject>Mathematics</subject><subj-group><subject>Statistics (mathematics)</subject></subj-group></subj-group><subj-group><subject>Physics</subject><subj-group><subject>Statistical mechanics</subject></subj-group></subj-group></subj-group></article-categories>
+<title-group>
+<article-title>NbIT - A New Information Theory-Based Analysis of Allosteric Mechanisms Reveals Residues that Underlie Function in the Leucine Transporter LeuT</article-title>
+<alt-title alt-title-type="running-head">NbIT Analysis of Allosteric Mechanisms in LeuT</alt-title>
+</title-group>
+<contrib-group>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>LeVine</surname><given-names>Michael V.</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref></contrib>
+<contrib contrib-type="author" xlink:type="simple"><name name-style="western"><surname>Weinstein</surname><given-names>Harel</given-names></name><xref ref-type="aff" rid="aff1"><sup>1</sup></xref><xref ref-type="aff" rid="aff2"><sup>2</sup></xref><xref ref-type="corresp" rid="cor1"><sup>*</sup></xref></contrib>
+</contrib-group>
+<aff id="aff1"><label>1</label><addr-line>Department of Physiology and Biophysics, Weill Cornell Medical College of Cornell University (WCMC), New York, New York, United States of America</addr-line></aff>
+<aff id="aff2"><label>2</label><addr-line>HRH Prince Alwaleed Bin Talal Bin Abdulaziz Alsaud Institute of Computational Biomedicine, Weill Cornell Medical College of Cornell University, New York, New York, United States of America</addr-line></aff>
+<contrib-group>
+<contrib contrib-type="editor" xlink:type="simple"><name name-style="western"><surname>Schlessinger</surname><given-names>Avner</given-names></name>
+<role>Editor</role>
+<xref ref-type="aff" rid="edit1"/></contrib>
+</contrib-group>
+<aff id="edit1"><addr-line>Icahn School of Medicine at Mount Sinai, United States of America</addr-line></aff>
+<author-notes>
+<corresp id="cor1">* E-mail: <email xlink:type="simple">haw2002@med.cornell.edu</email></corresp>
+<fn fn-type="conflict"><p>The authors have declared that no competing interests exist.</p></fn>
+<fn fn-type="con"><p>Conceived and designed the experiments: MVL HW. Performed the experiments: MVL. Analyzed the data: MVL HW. Contributed reagents/materials/analysis tools: MVL. Wrote the paper: MVL HW.</p></fn>
+</author-notes>
+<pub-date pub-type="collection"><month>5</month><year>2014</year></pub-date>
+<pub-date pub-type="epub"><day>1</day><month>5</month><year>2014</year></pub-date>
+<volume>10</volume>
+<issue>5</issue>
+<elocation-id>e1003603</elocation-id>
+<history>
+<date date-type="received"><day>18</day><month>10</month><year>2013</year></date>
+<date date-type="accepted"><day>24</day><month>3</month><year>2014</year></date>
+</history>
+<permissions>
+<copyright-year>2014</copyright-year>
+<copyright-holder>LeVine, Weinstein</copyright-holder><license xlink:type="simple"><license-p>This is an open-access article distributed under the terms of the <ext-link ext-link-type="uri" xlink:href="http://creativecommons.org/licenses/by/4.0/" xlink:type="simple">Creative Commons Attribution License</ext-link>, which permits unrestricted use, distribution, and reproduction in any medium, provided the original author and source are credited.</license-p></license></permissions>
+<abstract>
+<p>Complex networks of interacting residues and microdomains in the structures of biomolecular systems underlie the reliable propagation of information from an input signal, such as the concentration of a ligand, to sites that generate the appropriate output signal, such as enzymatic activity. This information transduction often carries the signal across relatively large distances at the molecular scale in a form of allostery that is essential for the physiological functions performed by biomolecules. While allosteric behaviors have been documented from experiments and computation, the mechanism of this form of allostery proved difficult to identify at the molecular level. Here, we introduce a novel analysis framework, called N-body Information Theory (NbIT) analysis, which is based on information theory and uses measures of configurational entropy in a biomolecular system to identify microdomains and individual residues that act as (i)-channels for long-distance information sharing between functional sites, and (ii)-coordinators that organize dynamics within functional sites. Application of the new method to molecular dynamics (MD) trajectories of the occluded state of the bacterial leucine transporter LeuT identifies a channel of allosteric coupling between the functionally important intracellular gate and the substrate binding sites known to modulate it. NbIT analysis is shown also to differentiate residues involved primarily in stabilizing the functional sites, from those that contribute to allosteric couplings between sites. NbIT analysis of MD data thus reveals rigorous mechanistic elements of allostery underlying the dynamics of biomolecular systems.</p>
+</abstract>
+<abstract abstract-type="summary"><title>Author Summary</title>
+<p>We developed the new information theory-based analysis framework presented here, NbIT analysis, for the study of allosteric mechanisms in biomolecular systems from Molecular Dynamics trajectories. The illustrative application of NbIT to the analysis of the occluded state in the bacterial transporter LeuT, produced a quantitative representation of the allosteric behavior, and identified intramolecular channels that enable the long-distance information transmission. Our findings, identifying the roles of specific residues in the communication of the allosteric information, were validated by the recognition of residues that have been previously shown to play functional roles in this very well studied system. In addition, we show that application of NbIT analysis leads to the discrimination of functional roles by differentiating between residues that are essential to the dynamics within functional sites (e.g., the substrate binding sites), and residues whose role is to communicate between such functional sites. These results demonstrate that the information theoretical analysis presented here is a powerful tool for quantifying complex allosteric behavior in biomolecular systems and for identifying the crucial components underlying those behaviors.</p>
+</abstract>
+<funding-group><funding-statement>This work was funded by National Institutes of Health grants P01DA012408, R01DA017293, U54GM087519 and Ruth L. Kirschstein National Research Service Award F31DA035533. Computational resources at (1) the Institute for Computational Biomedicine at Weill Medical College of Cornell University, (2) the New York Blue Gene Computational Science facility housed at Brookhaven National Lab, (3) the NERSC computational resources allocation m1710 and (4) NSF Teragrid allocation MCB090132 (to George Khelashvili). The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.</funding-statement></funding-group><counts><page-count count="15"/></counts></article-meta>
+</front>
+<body><sec id="s1">
+<title>Introduction</title>
+<p>The propagation of information over long distances at the molecular and cellular scale is essential for the expedient and efficient regulation of cell function. For example, biomolecular systems involved in cell signaling can detect an input signal, such as the concentration of a ligand, ion, or biomolecule, and transmit that signal through molecular interaction networks to specialized sites such as ligand release sites in transporters, or catalytic sites in enzymes. The intramolecular propagation of information between distant parts of the biomolecules is now known as allostery, and was first discussed in the context of end-product inhibition by Monod, Changeux, and Jacob <xref ref-type="bibr" rid="pcbi.1003603-Monod1">[1]</xref>. It is now well documented that such allosteric communication underlies function in a vast number of biomolecular systems, to the point that it is believed that nearly all proteins display some level of allosteric behavior <xref ref-type="bibr" rid="pcbi.1003603-Gunasekaran1">[2]</xref>.</p>
+<p>The development of new experimental and computational techniques has recently made it possible to observe allosteric behavior with high resolution. The prototypical member of the family of neurotransmitter∶sodium symporters (NSS), the bacterial transporter LeuT analyzed here with the new approach, has been particularly well studied, and the results from many experimental and computational investigations suggest that transport is driven by a complex allosteric mechanism spanning the entire length of the transporter. The transport cycle is believed to adhere to the stages of the canonical alternating access model <xref ref-type="bibr" rid="pcbi.1003603-Jardetzky1">[3]</xref> involving transitions between at least three distinct conformational states: an <italic>extracellular-open, outward-facing state</italic> <xref ref-type="bibr" rid="pcbi.1003603-Krishnamurthy1">[4]</xref> in which the symported ions and substrate are bound, followed by an <italic>occluded state</italic> <xref ref-type="bibr" rid="pcbi.1003603-Yamashita1">[5]</xref> that shields the transported substrate from the extracellular environment from which it came, and an <italic>intracellular-open, inward-facing state</italic> <xref ref-type="bibr" rid="pcbi.1003603-Krishnamurthy1">[4]</xref> which can then release the substrate. From single molecule FRET (smFRET) experiments carried out on LeuT, a number of transport-related structural transitions were identified in the intracellular gate region that occludes the substrate from the cytoplasm <xref ref-type="bibr" rid="pcbi.1003603-Kniazeff1">[6]</xref>, and these were shown to be modulated by binding events at the extracellular end <xref ref-type="bibr" rid="pcbi.1003603-Zhao1">[7]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Zhao2">[8]</xref>. Crystallographic studies have also revealed that a second binding site in the extracellular vestibule (termed S2) is the target of several transport inhibitors (including many of the psycho-active drugs acting on the cognate NSS neurotransmitter transporters) <xref ref-type="bibr" rid="pcbi.1003603-Andersen1">[9]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Singh1">[10]</xref>, and biochemical and computational evidence suggests that the release of substrate is allosterically connected to the binding of a second substrate in this site <xref ref-type="bibr" rid="pcbi.1003603-Shi1">[11]</xref>–<xref ref-type="bibr" rid="pcbi.1003603-Cheng1">[13]</xref>. These results bring to light the cross-talk between several allosterically coupled domains in the transport mechanism of NSS transporters, and suggest that modulation of these domains can both facilitate and hinder function. The schematics in <xref ref-type="fig" rid="pcbi-1003603-g001">Fig. 1</xref> depict the transport cycle that takes into account the recently described allosteric roles of substrate in bound in the primary site, S1, and in S2. Still lacking, however, is a suitable quantitative formulation of the channels through which information can be communicated from one part of the molecule to another in the individual states of the transporter that constitute the transport cycle.</p>
+<fig id="pcbi-1003603-g001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003603.g001</object-id><label>Figure 1</label><caption>
+<title>Representation of the states in the transport cycle of an NSS transporter.</title>
+<p>In this model, the transporter begins in an outward-open state (red), which can bind Na+ (yellow) and substrate (purple) in the primary site (S1) and then transition to a substrate-bound occluded state (orange). This state can bind in the S2 site, either inhibitors, such as TCAs, which block substrate release, or substrates (green), which produce release of Na+ and substrate from S1 (blue). Reproduced and modified with permission from <xref ref-type="bibr" rid="pcbi.1003603-Shan1">[12]</xref>.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003603.g001" position="float" xlink:type="simple"/></fig>
+<p>Indeed, the specific process of allosteric signal propagation in a molecular system through intramolecular interactions has not yet been subjected to experimental measurements, although the allosteric effect can be observed experimentally from the apparent relation between distal parts of a macromolecule. To date, there are no experimental methods capable of specifically and definitively defining the role of the intramolecular interactions involved in propagating allostery. Most proposed mechanisms are descriptions of series of local rearrangements presumed (but not demonstrated) to be causally sequential – a specific, quantitative definition of the information flow does not exist. For example, a successful experimental method for determining residues that are coupled to ligand binding, the mutant cycle analysis <xref ref-type="bibr" rid="pcbi.1003603-Gleitsman1">[14]</xref>, while able to quantify thermodynamic coupling at a distance, still relies on these sequential descriptions to propose the underlying mechanism of propagation. For these reasons, theoretical and computational approaches to determine if and how distant domains are coupled within a single state have been proposed <xref ref-type="bibr" rid="pcbi.1003603-Sethi1">[15]</xref>–<xref ref-type="bibr" rid="pcbi.1003603-DelSol1">[17]</xref>, with the intention of using atomic-level insight which in unavailable experimentally to propose physical mechanisms.</p>
+<p>In developing the new analysis described herein, we reasoned that if the macro (i.e., whole molecule) states of two domains are coupled (e.g., if the population of an open and a closed state of the intracellular gate, as well as the transitions between them, are coupled to the occupancy state of the substrate sites), their micro (i.e., component) states would also exhibit coupling (e.g., the fluctuations within the closed state of the intracellular gate would be coupled to the fluctuations within the bound state of the substrate site). Because this needs to be demonstrated rigorously, we undertook the investigation of the information coupling between such molecular domains known to have functional significance in LeuT in a particular state. Investigating the mechanics of the protein in one such state of the transport cycle enables the identification of potential allosteric channels that may be used to propagate information in general.</p>
+<p>In previous computational approaches to solve this problem, the focus is on modeling single states of a protein as an interaction network obtained by assigning nodes to residues and parameterizing edges using either crystal structure contacts <xref ref-type="bibr" rid="pcbi.1003603-DelSol1">[17]</xref>–<xref ref-type="bibr" rid="pcbi.1003603-DeRuvo1">[19]</xref>, or pair-wise atomic fluctuation correlations from Molecular Dynamics <xref ref-type="bibr" rid="pcbi.1003603-Sethi1">[15]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Chennubhotla1">[16]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-VanWart1">[20]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Tikhonova1">[21]</xref>. The advantage of such networks is that the parameterization of edges in the interaction network is computationally reasonable (only requiring structures and reasonable simulation time) and appropriate network theoretical approaches exist, mostly based on graph theory, to achieve the identification of (a)-paths through the network that may propagate allosteric effects <xref ref-type="bibr" rid="pcbi.1003603-Sol1">[22]</xref>, and (b)-community structures that may act as information hubs or subnetworks <xref ref-type="bibr" rid="pcbi.1003603-Sethi1">[15]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Gasper1">[23]</xref>. However, analysis of allosteric mechanisms with these methods must be considered incomplete, because only pair-wise correlation is considered, and not the other N-body correlated motions. This is a drawback, because correlated motions at the N-body level are both present in, and required for, a complex collective behavior such as allostery (see illustrative example in “Supporting Discussion 1: Efficient Information Transmission” and Fig. S1 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>). The new method we describe here identifies communication channels within allosteric biomolecular systems through information theory-based analysis of N-body collective dynamics determined from the configurational entropy of the system.</p>
+<p>We describe the new method, which we call <bold>N</bold>-<bold>b</bold>ody <bold>I</bold>nformation <bold>T</bold>heory (NbIT) analysis, through the application to a structurally defined state of LeuT, the occluded state (3GJD) described above <xref ref-type="bibr" rid="pcbi.1003603-Quick1">[24]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Mondal1">[25]</xref>. A mechanistic scheme for the substrate-modulated gating dynamics in such a LeuT state can be considered intuitively as an information theoretical communication process. In such a mechanistic scheme, the binding signal is detected by the substrate site(s), which then acts as a <italic>transmitter</italic> that sends the information through an intramolecular channel spanning the transmembrane region, to the <italic>receiver</italic>. In the case of LeuT, the receiver is the intracellular gate that needs to open in order for the transported substrate to be eventually released to the cytoplasm. Based on this representation in the frame of information transmission through the intramolecular channel, the goal of identifying the allosteric mechanism connecting the two distally positioned functional sites, translates into an analysis that can identify the specific residues that compose the intramolecular communication channel by identifying patterns of multi-body information sharing.</p>
+<p>The new NbIT analysis method presented here utilizes a generalization of the concept of <italic>co-information</italic> (also known as interaction information) <xref ref-type="bibr" rid="pcbi.1003603-Bell1">[26]</xref>–<xref ref-type="bibr" rid="pcbi.1003603-Sakaguchi1">[29]</xref>, an information theoretical measure which enables a description of the contribution that a variable makes to the <italic>mutual information</italic> shared between two other variables. We extend <italic>co-information</italic> to describe the contribution of a variable to the more general measure of <italic>total correlation</italic>, in order to describe the contribution of a variable to information shared between any number of other variables. The advantage of this extension beyond the <italic>mutual information</italic> <xref ref-type="bibr" rid="pcbi.1003603-Cover1">[30]</xref>, which describes the information shared by 2 variables, to the <italic>total correlation</italic> (also known as multi-information) <xref ref-type="bibr" rid="pcbi.1003603-Watanabe1">[31]</xref>–<xref ref-type="bibr" rid="pcbi.1003603-Margolin1">[33]</xref>, is that the latter describes the <underline>total amount of information</underline> shared between a set of N variables through all possible n-body correlations ranging from 2 to N. This generalization of <italic>co-information</italic> is called <italic>coordination information</italic>, and it can identify residues that coordinate the N-body correlated motions present within a set of residues, such as functional sites, by playing the role of channel across many different transmitter-receiver combinations (see <xref ref-type="fig" rid="pcbi-1003603-g002">Fig. 2</xref>, right). We show that the use of <italic>coordination information</italic> reveals how global motions within functional domains are modulated allosterically by distant sites. In addition, by developing another information theoretical measure, the <italic>mutual coordination information</italic>, we are able to identify channels that propagate coordination information. This is illustrated specifically when NbIT is applied to the analysis of configurational entropies estimated from Molecular Dynamics (MD) simulations of LeuT starting from the occluded state crystal structure. Thus, the molecular level mechanism of information transduction that emerges from the analysis describes how several already known allosteric couplings are generated. Specifically, we examine the communication within the ligand-bound occluded state in which the intracellular gate is closed. Importantly, we show that within this state, we can identify the specific contribution to the allosteric mechanism of “functional residues” (both previously known and newly revealed here). Moreover, we contrast the roles of such “functional residues” to those of other residues that contribute only to the stability of the functional sites, but not the allosteric coupling. The detailed illustration shows how NbIT analysis applied to a functionally distinct macrostate for which the configurational entropy can be estimated reveals the allosteric channels conducive to a key component of the functional mechanism. This example further suggests that when the same NbIT analysis is applied to an ensemble of states of a particular molecular system such as the LeuT, which can include several functionally distinct macrostates, the results should reveal the complement of allosteric channels conducive to the functional mechanism of that molecular system.</p>
+<fig id="pcbi-1003603-g002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003603.g002</object-id><label>Figure 2</label><caption>
+<title>Allosteric information communication.</title>
+<p>Left: Illustration of the basic receiver-channel-transmitter system. The receiver and transmitter (blue) interact separately with the channel (green) via direct interaction (green lines). This leads to an indirect, allosteric interaction between the receiver and transmitter (blue dashed line). Right: several receiver-transmitter pairs are coupled by the same channel, which leads to coordination of the behavior of all the receivers/transmitters.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003603.g002" position="float" xlink:type="simple"/></fig></sec><sec id="s2" sec-type="methods">
+<title>Methods</title>
+<sec id="s2a">
+<title>Trajectories from Molecular Dynamics Simulations</title>
+<p>Two separate trajectories of the same LeuT structure were analyzed with the NbIT method. The LeuT<sub>POPE/POPG</sub> trajectory is a simulation of the occluded LeuT structure <xref ref-type="bibr" rid="pcbi.1003603-Quick1">[24]</xref> (PDB ID 3GJD) bound to the two sodium ions and leucine, but with the octyl-glucoside (OG) detergent molecule removed, which has been described previously <xref ref-type="bibr" rid="pcbi.1003603-Mondal1">[25]</xref>. The LeuT<sub>MNG-3</sub> trajectory is for the same LeuT structure simulated in lauryl maltose-neopentyl glycol (MNG-3), a detergent known for its excellent stabilization of transmembrane proteins, including LeuT, in micellar environments <xref ref-type="bibr" rid="pcbi.1003603-Chae1">[34]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Chung1">[35]</xref>. Both simulations were run at in an NPT ensemble at 310 K temperature using the CHARMM27 force field with CMAP corrections for proteins <xref ref-type="bibr" rid="pcbi.1003603-Brooks1">[36]</xref> and CHARMM36 lipid force field <xref ref-type="bibr" rid="pcbi.1003603-Klauda1">[37]</xref> in NAMD 2.7 <xref ref-type="bibr" rid="pcbi.1003603-Phillips1">[38]</xref> using the Nose-Hoover Langevin piston algorithm and PME for electrostatic interactions. LeuT<sub>POPE/POPG</sub> was run under semi-isotropic pressure coupling conditions and LeuT<sub>MNG-3</sub> was run under isotropic pressure coupling conditions. For more details, see Supporting Methods in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>. The trajectories used for the analysis are from the production phase and only include the segment of the simulations after the Cα RMSD had converged. The total lengths of the equilibrated trajectories were 148 ns for LeuT<sub>POPE/POPG</sub> and 146 ns for LeuT<sub>MNG-3</sub>.</p>
+</sec><sec id="s2b">
+<title>Definition of Functional Residue Clusters</title>
+<p>Mechanistic and structure-function studies of LeuT as a prototypical NSS transporter have identified specific residues and structural microdomains that have significant roles in functional mechanisms. These include the binding sites for substrate and ions identified in the crystal structures <xref ref-type="bibr" rid="pcbi.1003603-Yamashita1">[5]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Singh1">[10]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Quick1">[24]</xref>, as well as the intracellular gate and surrounding interaction network, which has been shown to be involved in the transport mechanism <xref ref-type="bibr" rid="pcbi.1003603-Kniazeff1">[6]</xref>. We used these findings to define functional residue clusters (<italic>frc</italic>-s). Specifically, we defined the S1-frc to include the substrate, leucine, and residues L25, G26, V104, Y108, F253, T254, S256, F259, S355, and I359. The NA1-frc includes the bound ion, leucine, and residues A22, N27, T254, and N286 of the Na1 binding site. The NA2-frc is composed of the second ion bound, and residues G20, V23, A351, T354, and S355 of the Na2 binding site. We defined the S2-frc as composed of L29, R30, Y107, I111, W114, F253, A319, F320, F324, L400, and D404, and the intracellular gate region as an “intracellular network of interactions”, INI-frc, composed of R5, I187, S267, Y268, Q361, and D369. The locations of these sites in the LeuT structure are presented in <xref ref-type="fig" rid="pcbi-1003603-g003">Fig. 3</xref>.</p>
+<fig id="pcbi-1003603-g003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003603.g003</object-id><label>Figure 3</label><caption>
+<title>The structure of LeuT.</title>
+<p>Top panels: The 3GJD crystal structure of LeuT from two perspectives. TMs are displayed as cyan cylinders connected by loops. Each frc-site is represented by an outer surface: S1 (grey), S2 (orange), INI (tan), Na1 (yellow) and Na2 (purple). Bottom left: The INI-frc; numbers refer to the residue identity. Bottom right: The S1-frc (the leucine substrate is in grey, Na2 is added for reference).</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003603.g003" position="float" xlink:type="simple"/></fig></sec><sec id="s2c">
+<title>Post-Processing of the MD Trajectories</title>
+<sec id="s2c1">
+<title>Accounting for symmetries</title>
+<p>In order to estimate entropy from MD simulations, the coordinate of each atom is tracked throughout the trajectory to create a distribution of Cartesian coordinates. For side chains that display symmetry (Phe, Tyr, the carboyxlate groups of unprotonated Glu and Asp), simple tracking of atoms based on their numbering in the structure file can make symmetric states appear non-symmetric. To account for this, we used a clustering algorithm to group states by dihedral angles, and then divide the states by symmetry. For Phe and Tyr, we defined the state of the ring by the dihedral angle formed by the Cα, Cβ, the benzyl carbon bound to Cβ, and a benzyl carbon para to that carbon. For Glu and Asp, the state of the carboxylate was defined as the dihedral angle formed by N, Cα, the carbonyl carbon, and a carboxylate oxygen. For each residue, the <italic>sin</italic> and <italic>cos</italic> of each angle was calculated in order to project the angles onto the unit circle. Finally, the projections were collected into two clusters using the k-means clustering algorithm (implemented in R using the kmeans function in the stats package). If the angle between the centers of the two clusters was &gt;90°, the position of the fourth atom was rotated by 180° relative to the plane formed by the first three atoms (as listed above) in frames from the second cluster.</p>
+</sec><sec id="s2c2">
+<title>Clustering of MD simulations</title>
+<p>From analysis of a large number of LeuT simulations in our lab, we became aware of long-lived rearrangements in the conformation of the INI. Because the normal approximation we used for determining entropies may not be appropriate if there are large changes to the state of a set of residues, we determined first if there were distinct substates of the INI, by using k-means clustering on the minimum distances between side chains in the INI. Indeed, this revealed the transition between two long-lived states in the two simulations used for the NbIT analysis. Specifically, in LeuT<sub>POPE/POPG</sub>, the system transitioned after ∼118 ns from the crystal structure configuration in which R5 interacts with D369 and S267 in the INI, to a new configuration where R5 interacts with the surrounding water. In LeuT<sub>MNG-3</sub>, the equilibrated portion of the simulation begins with R5 interacting with the D369 and S267, but after ∼25 ns there is a transient rearrangement event, leading to a state in which R5 breaks away from D369, followed by a return of the INI to its original state after ∼20 ns. In order to isolate these states, MD simulation trajectories were clustered by the minimum distance between non-hydrogen side chain atoms of residues within the <italic>frc</italic>-s using the k-means clustering algorithm. Distance time series were smoothed over 1 ns windows to minimize thermal noise, and the best clustering was taken from 100 k-means runs. We performed the same clustering analysis using each <italic>frc</italic> individually, and found that not only did the INI have the most conformational variability (nearly an order of magnitude greater sum of square distance between frames in comparison to the other frc-s), but clustering into two states accounted for most of the variability (see Table S2 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>). Furthermore, we determined the similarity between results of clustering by the conformation of a specific <italic>frc</italic> versus all <italic>frc</italic>-s, by calculating the overlap as:<disp-formula id="pcbi.1003603.e001"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e001" xlink:type="simple"/><label>(1.1)</label></disp-formula><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e002" xlink:type="simple"/></inline-formula> corresponds to the set of frames in the occluded state when clustered by a given frc, whereas <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e003" xlink:type="simple"/></inline-formula> corresponds to the set when clustered by all <italic>frc-s</italic>. We find that clustering by all residues in the <italic>frc</italic>-s of interest provided a near identical result to clustering specifically by the INI. These results indicate that the INI rearrangement is the only significant rearrangement of a structural motif that takes place in the simulation trajectories. As the interaction between R5, D369, and S267 is observed crystallographically, we focused the study herein on comparing only this state from both simulations, in trajectories of over 100 ns from each simulation. While it might be interesting eventually to study as well the minor states of the INI not observed crystallographically, in which the gate is broken, these were not sampled sufficiently in either trajectory and thus are not yet adequate for rigorous analysis.</p>
+</sec></sec><sec id="s2d">
+<title>Information Theory Quantities</title>
+<sec id="s2d1">
+<title>Estimation of configurational entropy</title>
+<p>In order to estimate the configurational entropies <xref ref-type="bibr" rid="pcbi.1003603-Kroemer1">[39]</xref> from MD simulations, we first approximate the probability distribution of the atomic coordinates as a 3N-dimensional multivariate normal distribution of the multivariate random vector <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e004" xlink:type="simple"/></inline-formula>, where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e005" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e006" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e007" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e008" xlink:type="simple"/></inline-formula> are the random variables corresponding to the x, y, and z coordinates of atom i, respectively. We then calculate the entropy analytically from the probability density function describing the distribution of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e009" xlink:type="simple"/></inline-formula>. The probability distribution is defined as: <disp-formula id="pcbi.1003603.e010"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e010" xlink:type="simple"/><label>(2.1)</label></disp-formula><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e011" xlink:type="simple"/></inline-formula> is the probability density when <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e012" xlink:type="simple"/></inline-formula> (i.e., when the multivariate random vector X has value <italic>x</italic>), <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e013" xlink:type="simple"/></inline-formula> is the covariance matrix, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e014" xlink:type="simple"/></inline-formula> is the inverse of the covariance matrix, k is the rank of the covariance matrix, and μ is the vector of mean coordinates. In a Cartesian coordinate system, each covariance matrix can be estimated directly from the atomic fluctuations in the MD trajectory (the atomic fluctuation for a given frame, in a given coordinate axis, is the deviation the average coordinate in that axis). The covariance between variables <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e015" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e016" xlink:type="simple"/></inline-formula>, where i and k correspond to the atom index and j and l correspond to the dimension index, is calculated as: <disp-formula id="pcbi.1003603.e017"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e017" xlink:type="simple"/><label>(3.1)</label></disp-formula></p>
+<p>Covariances were calculated using <bold>carma</bold> <xref ref-type="bibr" rid="pcbi.1003603-Glykos1">[40]</xref>. The entropy of the continuous multivariate normal distribution can be calculated analytically through the differential entropy:<disp-formula id="pcbi.1003603.e018"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e018" xlink:type="simple"/><label>(4.1)</label></disp-formula><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e019" xlink:type="simple"/></inline-formula> is the covariance matrix describing all variables in <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e020" xlink:type="simple"/></inline-formula>. For each residue or set of residues, we consider all non-hydrogen atoms, and we apply here an approximation for the entropy that has been used recently <xref ref-type="bibr" rid="pcbi.1003603-Lange1">[41]</xref>. This approximation is similar to previous harmonic <xref ref-type="bibr" rid="pcbi.1003603-Karplus1">[42]</xref> and quasi-harmonic <xref ref-type="bibr" rid="pcbi.1003603-Andricioaei1">[43]</xref> approximations, and we note that the calculations for the NbIT method are not limited to the use of any of these approximations, and can utilize other non-harmonic approximations of configurational entropy.</p>
+</sec><sec id="s2d2">
+<title>Mutual information</title>
+<p>The mutual information between two residues and/or two sets of residues <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e021" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e022" xlink:type="simple"/></inline-formula> is the Kullback-Liebler divergence between the joint distribution and the product of the marginal distributions:<disp-formula id="pcbi.1003603.e023"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e023" xlink:type="simple"/><label>(5.1)</label></disp-formula><disp-formula id="pcbi.1003603.e024"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e024" xlink:type="simple"/><label>(5.2)</label></disp-formula></p>
+<p>We use I<sub>n</sub> to describe the information that is shared between all n bodies.</p>
+</sec><sec id="s2d3">
+<title>Co-information</title>
+<p>3-body co-information is defined as:<disp-formula id="pcbi.1003603.e025"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e025" xlink:type="simple"/><label>(6.1)</label></disp-formula><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e026" xlink:type="simple"/></inline-formula> is the <italic>conditional mutual information</italic> between <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e027" xlink:type="simple"/></inline-formula> and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e028" xlink:type="simple"/></inline-formula>, conditioning on <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e029" xlink:type="simple"/></inline-formula>:<disp-formula id="pcbi.1003603.e030"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e030" xlink:type="simple"/><label>(7.1)</label></disp-formula><disp-formula id="pcbi.1003603.e031"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e031" xlink:type="simple"/><label>(7.2)</label></disp-formula></p>
+<p>Co-information can be visualized easily using an information Venn diagram (see Fig. S3 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>). While several representations of this information are found in the literature with varying signs, we have chosen to use the sign convention described by <xref ref-type="bibr" rid="pcbi.1003603-Bell1">[26]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Sakaguchi1">[29]</xref>. Using this convention, when co-information is positive, the third body may increase the information transmission between the two others, whereas when it is negative, the third body diminishes it.</p>
+<p>In order to compare co-information, we calculate the normalized co-information defined by:<disp-formula id="pcbi.1003603.e032"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e032" xlink:type="simple"/><label>(8.1)</label></disp-formula>where <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e033" xlink:type="simple"/></inline-formula> is the mutual information between the transmitter and receiver and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e034" xlink:type="simple"/></inline-formula> is the co-information between the transmitter, receiver, and channel. This measure is not equivalent for all possible assignments of <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e035" xlink:type="simple"/></inline-formula>, <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e036" xlink:type="simple"/></inline-formula>, and <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e037" xlink:type="simple"/></inline-formula> to transmitter, receiver, and channel.</p>
+</sec><sec id="s2d4">
+<title>Total correlation and coordination information</title>
+<p><italic>Total correlation</italic> (TC) describes the total amount of information that is shared among multivariate random variables in a set, and is a generalization of mutual information. TC is the Kullback-Liebler divergence between the product of the marginal distributions of the N multivariate random variables and the joint distribution.<disp-formula id="pcbi.1003603.e038"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e038" xlink:type="simple"/><label>(9.1)</label></disp-formula><disp-formula id="pcbi.1003603.e039"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e039" xlink:type="simple"/><label>(9.2)</label></disp-formula></p>
+<p>We generalize co-information to describe how much information that is shared by a set of variables of arbitrary size is also shared with another variable. This is calculated as the difference between the TC and the conditional TC, which we will call the <italic>coordination information</italic>:<disp-formula id="pcbi.1003603.e040"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e040" xlink:type="simple"/><label>(10.1)</label></disp-formula><inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e041" xlink:type="simple"/></inline-formula> is the <italic>conditional total correlation</italic> between <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e042" xlink:type="simple"/></inline-formula>, conditioning on <inline-formula><inline-graphic xlink:href="info:doi/10.1371/journal.pcbi.1003603.e043" xlink:type="simple"/></inline-formula>: <disp-formula id="pcbi.1003603.e044"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e044" xlink:type="simple"/><label>(11.1)</label></disp-formula><disp-formula id="pcbi.1003603.e045"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e045" xlink:type="simple"/><label>(11.2)</label></disp-formula></p>
+<p>It should be noted that this generalization is not equivalent to the generalization of co-information to N-body information described by others previously <xref ref-type="bibr" rid="pcbi.1003603-Matsuda1">[28]</xref>. Our generalization describes the amount of the total correlation in a set that is shared with another variable, and is only symmetric in the special case of a set of 2.</p>
+<p>In order to compare coordination information, we calculate the <italic>normalized coordination information</italic>,<disp-formula id="pcbi.1003603.e046"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e046" xlink:type="simple"/><label>(12.1)</label></disp-formula></p>
+</sec><sec id="s2d5">
+<title>Coordination channel analysis</title>
+<p>In order to define channels that mediate coordination information, we calculate the amount of coordination information that is shared between two residues and the same set, which we call <italic>mutual coordination information,</italic><disp-formula id="pcbi.1003603.e047"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e047" xlink:type="simple"/><label>(13.1)</label></disp-formula></p>
+<p>We then calculate the <italic>normalized mutual coordination information</italic>,<disp-formula id="pcbi.1003603.e048"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e048" xlink:type="simple"/><label>(14.1)</label></disp-formula></p>
+</sec><sec id="s2d6">
+<title>Calculation of single residue contributions to information measures</title>
+<p>To identify residues that contribute significantly to information measures, we calculated the contribution of a single residue to an arbitrary information metric, I, as:<disp-formula id="pcbi.1003603.e049"><graphic position="anchor" xlink:href="info:doi/10.1371/journal.pcbi.1003603.e049" xlink:type="simple"/><label>(15.1)</label></disp-formula></p>
+<p>For details as to how this contribution was calculated for specific information measures, see Supplementary Methods in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>.</p>
+<p>We are currently in the process of creating an open-source R package that will be released to the community at a later date and will include the tools described here as well as additional tools that are in development. Information regarding resource packages is provided at <ext-link ext-link-type="uri" xlink:href="http://physiology.med.cornell.edu/faculty/hweinstein/resources.html" xlink:type="simple">http://physiology.med.cornell.edu/faculty/hweinstein/resources.html</ext-link>.</p>
+</sec></sec></sec><sec id="s3">
+<title>Results</title>
+<p>NbIT analysis was developed to provide unique insight into the molecular interactions driving global, coordinated motions, in the framework of information theory concepts developed for many-body systems. Thus, NbIT is ideally suited for analysis of biomolecular systems that display ligand-modulated coordinated motions in functional domains, as illustrated here for LeuT which serves this purpose well by virtue of its well-studied properties as an allosteric membrane protein that displays ligand-modulated dynamics. Importantly, the detailed molecular information available for LeuT from experimental and computational evaluations of structure-function relations in the intracellular gates, and the ion and substrate binding sites, makes it possible to probe directly the results from NbIT analysis. The MD trajectories analyzed with NbIT for this illustration of the method include only the long segments in which the interaction between R5, D369, and S267, which is observed crystallographically, is maintained (see above, section on “Clustering of MD Simulations”).</p>
+<sec id="s3a">
+<title>The Pairwise Mutual Information</title>
+<p>The analysis of pairwise <italic>mutual information</italic> for each of the functional residue clusters (<italic>frc</italic>-s) we defined (see “<xref ref-type="sec" rid="s2">Methods</xref>: Defining Functional Residue Clusters”) in the crystallographically determined state, is summarized in <xref ref-type="table" rid="pcbi-1003603-t001">Table 1</xref>. The calculated values show that the component residues in each of the <italic>frc</italic>-s exhibit coupled motions within the LeuT state studied here, as indicated by the mutual information that is greater than zero. Note, however, that it is difficult to compare the strength of coupling between two different sets of <italic>frc</italic>-s, because mutual information cannot be easily normalized from differential entropies calculated from multivariate normal distributions (see “Supporting Discussion 2: Normalizing Mutual Information” in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref> for additional discussion). Therefore, we will not discuss further below the coupling strength between sites until we discuss other measures of information that can be normalized.</p>
+<table-wrap id="pcbi-1003603-t001" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003603.t001</object-id><label>Table 1</label><caption>
+<title>Mutual information between known function sites in LeuT<sub>POPE/POPG</sub>.</title>
+</caption><alternatives><graphic id="pcbi-1003603-t001-1" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003603.t001" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">S1</td>
+<td align="left" rowspan="1" colspan="1">S2</td>
+<td align="left" rowspan="1" colspan="1">Na1</td>
+<td align="left" rowspan="1" colspan="1">Na2</td>
+<td align="left" rowspan="1" colspan="1">Na1, Na2</td>
+<td align="left" rowspan="1" colspan="1">Na1, Na2, S1</td>
+<td align="left" rowspan="1" colspan="1">Na1, Na2, S1, S2</td>
+<td align="left" rowspan="1" colspan="1">INI</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>S1</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>−328.1 (0.5)</italic></bold></td>
+<td align="left" rowspan="1" colspan="1">23.4 (0.6)</td>
+<td align="left" rowspan="1" colspan="1">9.3 (0.1)</td>
+<td align="left" rowspan="1" colspan="1">7.1(0.1)</td>
+<td align="left" rowspan="1" colspan="1">13.2 (0.2)</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">12.9 (0.3)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>S2</bold></td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>−356.3 (0.7)</italic></bold></td>
+<td align="left" rowspan="1" colspan="1">14.9 (0.3)</td>
+<td align="left" rowspan="1" colspan="1">7.5 (0.2)</td>
+<td align="left" rowspan="1" colspan="1">21.6 (0.6)</td>
+<td align="left" rowspan="1" colspan="1">33.0 (1.0)</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">15.1 (0.4)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Na1</bold></td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>−141.2 (0.1)</italic></bold></td>
+<td align="left" rowspan="1" colspan="1">8.3 (0.1)</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">4.8 (0.1)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Na2</bold></td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>−112.9</italic></bold><bold> (0.1)</bold></td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">4.0 (0.1)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Na1, Na2</bold></td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>−262.4 (0.12</italic></bold></td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">8.4 (0.3)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Na1, Na2, S1</bold></td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>−519.2 (0.9)</italic></bold></td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">18.1 (0.6)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Na1, Na2, S1, S2</bold></td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>−869.6(2.5)</italic></bold></td>
+<td align="left" rowspan="1" colspan="1">31.7 (1.2)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>INI</bold></td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>−136.8 (1.4)</italic></bold></td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt101"><label/><p>Off-diagonal elements correspond to the mutual information between two given <italic>frc-s</italic>, where as the diagonal elements correspond to the entropy of a given <italic>frc</italic>. Units are in nats.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3b">
+<title>The Communication Channel Coupling the S1-frc to the INI-frc Utilizes TM6</title>
+<p>A central mechanistic question regarding the functional dynamics of transporters is how the binding of substrate can trigger the conformational reorganization leading to the intracellular-open state from which the substrate is eventually released. Because studies have shown that just the binding of Na<sup>+</sup> and substrate cause measurable dynamic effects at the intracellular end of the LeuT molecule, even in the absence of transport <xref ref-type="bibr" rid="pcbi.1003603-Zhao1">[7]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Zhao2">[8]</xref>, we sought to determine the information channel enabling this allosteric behavior. To this end, we performed <italic>co-information analysis</italic> as described in <xref ref-type="sec" rid="s2">Methods</xref> to evaluate which residues played the role of channel in the information exchange between the substrate sites and the INI.</p>
+<p>As described, the co-information describes the information shared between all residues in a set. We calculated the 3-body co-information between each <italic>frc</italic> and a potential single residue channel using <xref ref-type="disp-formula" rid="pcbi.1003603.e025">Equation 6.1</xref> and then normalized as to the mutual information between the sites (see “Co-information” in <xref ref-type="sec" rid="s2">Methods</xref>) to determine how much of the allosteric coupling could be attributed to that residue. In the interpretation of these results we considered that in a simple transmitter-channel-receiver system, the 3-body co-information can be understood intuitively as the intersect of the three entropies in a 3-body information Venn diagram (see Fig. S2 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>), and can determine how much of the mutual information between the receiver and transmitter can be explained by the information they both share with the channel.</p>
+<p>The calculated values are shown as a <italic>co-information</italic> versus <italic>co-information rank</italic> plot, which features a linear middle region with high, and low, co-information extremes (see Fig. S4 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>). Based on the plot, we defined residues to be potential <italic>channels</italic> if they were in the region of the high co-information extreme (see “Supporting Methods: Identifying High Co-Information Residues” in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>). We note that the criterion of high co-information is not sufficient to differentiate between a <underline>true</underline> channel and a residue that has high mutual information with a true channel. However, the latter will display lower co-information than the former, and thus our most confident channel predictions are the residues with the highest co-information as described below (for an illustrative example using a model system, see “Supporting Discussion: Analysis of the K1,4 Network” and Fig. S4 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>).</p>
+<p>Applying co-information analysis reveals that S1 and the INI are coupled through a set of residues consisting largely of residues from TM6b, TM8, and TM2 (See <xref ref-type="fig" rid="pcbi-1003603-g004">Fig. 4</xref>). Co-information analysis also reveals a channel between S2 and the INI, which is similarly composed of residues from TM6b and TM8, in addition to residues from S1 in the unstructured region between TM6a and TM6b (see Fig. S5 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>).</p>
+<fig id="pcbi-1003603-g004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003603.g004</object-id><label>Figure 4</label><caption>
+<title>TMs 2, 6b, and 8 form a co-information channel between S1 and the INI in LeuT<sub>POPE/POPG</sub>.</title>
+<p>Main: Residues found to have high co-information with S1 and the INI are colored by normalized co-information (NCoI) values using the scale at the top right (range from smallest-in blue to largest-in red); Min and Max NCoI refers to the minimum and maximum values among all possible residues. S1 is in orange surface and the INI is in tan surface; all other residues are represented in grey. Bottom right: A close up of the TM2, TM6b, and TM8 interface. The definitions of the S1 and INI frc-s can be found in <xref ref-type="sec" rid="s2"><bold>Methods</bold></xref>.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003603.g004" position="float" xlink:type="simple"/></fig>
+<p>Not all the residues in a particular <italic>frc</italic> contribute equally to the allosteric communication. In order to identify which residues within the substrate sites and the INI are essential for allosteric communication we identified the residues within these sites that made large contributions to the mutual information. Such residues contribute by coupling the sites directly to the channel, and by distributing the information throughout the rest of their respective site. They were identified from the calculated values of their contribution to the mutual information, expressed as the percentage of the <italic>mutual information</italic> that could be explained <bold>by conditioning on that residue</bold> (see <xref ref-type="sec" rid="s2">Methods</xref>, “Calculation of Single Residue Contributions to Information Measures”). Calculated in this manner, the percentage of the <italic>mutual information</italic> describes how much of the information shared between the two sites is shared with that residue specifically. It is essential to note that the total sum of contribution from all residues does not necessarily sum to 100%. This occurs because just as the residues share information, they can also share their contribution to the mutual information, so the sum of the contribution will exceed 100%. This is also the case for other contribution measures, as described further below.</p>
+<p>Using Equation S.1 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>, we found that for the coupling between the S1-frc and the INI, it is residues I359, F259, F253 in the S1-frc that make the largest contributions (21.2% 18.8%, and 12.5% respectively), and in the INI the largest contribution is from residues Q361, R5, and Y268 (28.3, 21.6%, and 21.3% respectively%). These very specific identifications underscore the validity of the calculated communication channel, as they are consistent with results from previous work in which mutations of I359 and F259 were shown to modulate transport efficacy <xref ref-type="bibr" rid="pcbi.1003603-Piscitelli1">[44]</xref>. Interestingly, we find that for the coupling between the S2-frc and the INI, residues R30, F324, and W114 make the largest contributions in S2 (20.1%, 12.9%, and 12.5%), and in the INI residues R5, I187, and Y268 make the largest contributions (27.1%, 23.3%, and 9.5% respectively). Because R30 is considered to form an extracellular gate with D404, the significant role we find for it here in the coupling of S2 and the INI underscores the strong relationship between the extracellular and intracellular gates. These results are summarized in <xref ref-type="table" rid="pcbi-1003603-t002">Table 2</xref> and <xref ref-type="table" rid="pcbi-1003603-t003">3</xref>.</p>
+<table-wrap id="pcbi-1003603-t002" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003603.t002</object-id><label>Table 2</label><caption>
+<title>Specific residues highly contribute to mutual information between S1 and the INI in LeuT<sub>POPE/POPG</sub>.</title>
+</caption><alternatives><graphic id="pcbi-1003603-t002-2" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003603.t002" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>S1</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Leu</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>L25</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>G26</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>V104</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Y108</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>F253</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">10.5% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">9.9% (0.0%)</td>
+<td align="left" rowspan="1" colspan="1">6.4% (0.0%)</td>
+<td align="left" rowspan="1" colspan="1">8.4% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">11.8% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>12.5% (0.1%)</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>T254</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>S256</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>F259</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>S355</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>I359</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Na1</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">8.8% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">9.3% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>18.8% (0.1%)</bold></td>
+<td align="left" rowspan="1" colspan="1">7.7% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>21.2% (0.2%)</bold></td>
+<td align="left" rowspan="1" colspan="1">3.0% (0.0%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>INI</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>R5</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>I187</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>S267</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Y268</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Q361</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>D369</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>21.6% (0.3%)</bold></td>
+<td align="left" rowspan="1" colspan="1">19.7% (0.4%)</td>
+<td align="left" rowspan="1" colspan="1">14.6% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>21.3% (0.1%)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>28.3% (0.3%)</bold></td>
+<td align="left" rowspan="1" colspan="1">15.6% (0.1%)</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt102"><label/><p>The contribution of specific residues in S1 (top) and the INI (bottom) to the communication between S1 and the INI (top 3 in each site are bold).</p></fn></table-wrap-foot></table-wrap><table-wrap id="pcbi-1003603-t003" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003603.t003</object-id><label>Table 3</label><caption>
+<title>Specific residues highly contribute to mutual information between S2and the INI in LeuT<sub>POPE/POPG</sub>.</title>
+</caption><alternatives><graphic id="pcbi-1003603-t003-3" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003603.t003" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>S2</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>L29</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>R30</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Y107</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>I111</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>W114</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>F253</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">8.8% (0.6%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>20.1% (0.0%)</bold></td>
+<td align="left" rowspan="1" colspan="1">9.9% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">7.5% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>12.5% (0.1%)</bold></td>
+<td align="left" rowspan="1" colspan="1">10.6% (0.1%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>A319</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>F320</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>F324</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>L400</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>D404</bold></td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">6.1% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">10.2% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>12.9% (0.1%)</bold></td>
+<td align="left" rowspan="1" colspan="1">9.1% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">8.6% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>INI</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>R5</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>I187</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>S267</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Y268</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Q361</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>D369</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>27.1% (0.3%)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>23.3% (0.5%)</bold></td>
+<td align="left" rowspan="1" colspan="1">14.6% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>19.5% (0.1%)</bold></td>
+<td align="left" rowspan="1" colspan="1">17.3% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">18.2% (0.2%)</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt103"><label/><p>The contribution of specific residues in S2 (top) and the INI (bottom) to the communication between S2 and the INI (top 3 in each site are bold).</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3c">
+<title>The Coordination within frc-s Is Performed by Known Functional Residues</title>
+<p>We hypothesized that that the proper fold and specific local function of a given <italic>frc</italic>, such as substrate binding, are maintained through short-distance allosteric couplings underlying collective behavior among the residues in the clusters. We probed this by calculating the <italic>total correlation</italic> (TC) for each <italic>frc</italic> to obtain a measure of the total amount of information shared by a set of size <italic>N</italic> through any type of correlation from 2 to <italic>N</italic>-body. We then calculated the contribution of a given residue in the <italic>frc</italic> to this TC (see <xref ref-type="sec" rid="s2">Methods</xref>, “Total Correlation and Coordination Information”).</p>
+<p>With this approach, we find that in the INI, the three largest contributors are Y268 (60.7%), S267 (59.0%) and R5 (42.7%). This is consistent with their central location in the INI topology and with previous reports that mutation of the highly conserved Y268 and R5 to alanine has a strong effect on the structure and dynamics of the intracellular gate <xref ref-type="bibr" rid="pcbi.1003603-Kniazeff1">[6]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Zhao1">[7]</xref>. In the S1-frc, the largest contributions to the TC were calculated to come from T254 (40.3%), the leucine substrate (38.9%), and F253 (38.9%). The bound Leu is expected to contribute strongly, as seen here, because it interacts with all other residues in S1. Furthermore, as mutation of F253 has been shown to greatly reduce binding in S1 <xref ref-type="bibr" rid="pcbi.1003603-Zhao2">[8]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Claxton1">[45]</xref>, it is possible that its role is not only to stabilize Leu binding through direct interaction, but also to stabilize the site as a whole by coordinating the rest of the S1 residues.</p>
+<p>In the other <italic>frc</italic>-s we also found a small number of specific high contributions. Thus, in the Na1 site the largest contributions to the total correlation are made by the Na1 sodium ion (61.7%), T254 (60.1%), and by leucine (58.4%). Interestingly, in the Na2 site, T354 and S355 contribute significantly more (70.9% and 66.4%, respectively) than the Na<sup>+</sup> ion (52.1%). Finally, in S2, residues F320, A319, and R30 are found to make the largest contributions of 39.6%, 33.0%, and 31.1%, respectively. These results are summarized in <xref ref-type="table" rid="pcbi-1003603-t004">Table 4</xref>.</p>
+<table-wrap id="pcbi-1003603-t004" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003603.t004</object-id><label>Table 4</label><caption>
+<title>The contribution of specific residues to the total correlation of their sites in LeuT<sub>POPE/POPG</sub>.</title>
+</caption><alternatives><graphic id="pcbi-1003603-t004-4" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003603.t004" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>S1</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Leu</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>L25</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>G26</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>V104</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Y108</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>F253</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>38.9% (0.2%)</bold></td>
+<td align="left" rowspan="1" colspan="1">36.2% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">32.3% (0.3%)</td>
+<td align="left" rowspan="1" colspan="1">13.2% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">23.3% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>38.9% (0.2%)</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>T254</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>S256</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>F259</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>S355</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>I359</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Na1</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>40.3% (0.3%)</bold></td>
+<td align="left" rowspan="1" colspan="1">29.1% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">20.1% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">13.6% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">12.1% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">20.2% (0.2%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>S2</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>L29</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>R30</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Y107</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>I111</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>W114</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>F253</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">25.6% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>31.1% (0.2%)</bold></td>
+<td align="left" rowspan="1" colspan="1">17.4% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">17.4% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">18.5% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">10.9% (0.0%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>A319</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>F320</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>F324</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>L400</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>D404</bold></td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>33.0% (0.3%)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>39.6% (0.3%)</bold></td>
+<td align="left" rowspan="1" colspan="1">20.9% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">14.0% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">15.0% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Na1</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Na1</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>A22</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>N27</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>T254</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>N286</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Leu</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>61.7% (0.3%)</bold></td>
+<td align="left" rowspan="1" colspan="1">49.5% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">50.0% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>60.1% (0.2%)</bold></td>
+<td align="left" rowspan="1" colspan="1">36.3% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>58.4% (0.2%)</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Na2</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Na2</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>G20</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>V23</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>A351</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>T354</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>S355</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>52.1% (0.2%)</bold></td>
+<td align="left" rowspan="1" colspan="1">37.6% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">40.1% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">38.6% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>70.9% (0.1%)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>66.4% (0.1%)</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>INI</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>R5</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>I187</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>S267</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Y268</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Q361</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>D369</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>42.7% (0.4%)</bold></td>
+<td align="left" rowspan="1" colspan="1">34.8% (0.8%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>59.0% (0.6%)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>60.7% (0.4%)</bold></td>
+<td align="left" rowspan="1" colspan="1">23.8% (0.4%)</td>
+<td align="left" rowspan="1" colspan="1">28.8% (0.4%)</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt104"><label/><p>For each <italic>frc</italic>, the contribution of each residue to the total correlation is presented. The top 3 residues in each site are shown in bold.</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3d">
+<title>Both the S1-frc and the S2-frc Coordinate Multi-Body Collective Motions in the INI</title>
+<p>Key findings from smFRET experiments investigating the allosteric modulation of intracellular gating in LeuT <xref ref-type="bibr" rid="pcbi.1003603-Zhao1">[7]</xref> were that conformational changes in the intracellular gates require collective motions resulting in large spatial displacements, and that these motions are modulated (in some undetermined way) by the state of the substrate binding sites, S1 and S2 <xref ref-type="bibr" rid="pcbi.1003603-Zhao2">[8]</xref>. In order to investigate the role of these substrate binding sites in the collective dynamics <underline>within</underline> the INI-frc, we calculated how much each of the two binding sites contributed to the total correlation of INI. This contribution, termed here <italic>coordination information</italic> (CI), describes the amount of total correlation in a set of variables (the “coordinated set”, here the INI-frc) that is shared with a variable (or multivariate distribution) that is not included in the coordinated set (“the coordinator”, here the S1 or S2 frc-s) (see <xref ref-type="sec" rid="s2">Methods</xref>, “Total Correlation” and “Coordination Information”, and Fig. S6 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>). When calculated in this manner, CI describes the contribution of a site to all possible n-body correlations within another site (for an illustrative example using a model system, see “Supporting Discussion: Analysis of the K1,4 Network” in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>). Here we used as the descriptor the <italic>normalized coordination information</italic> (NCI), in which the coordination information is normalized to the total correlation within the coordinated site. It should be noted that <italic>coordinators</italic> are not all <italic>coordination channels</italic>. <italic>Coordinators</italic> can be coupled to <italic>coordination channels</italic>, and thus perturbation to the <italic>coordinator</italic> leads to a perturbation in the coordinated set.</p>
+<p>As summarized in <xref ref-type="table" rid="pcbi-1003603-t005">Table 5</xref>, the NCI calculated for S1 and S2 show that they both coordinate the INI, with values of 19.1% for S1, and 21.2% for S2. The Na1 and Na2 sites coordinate the INI only weakly (NCI = 9.0% and 6.9%, respectively), and their combined NCI in coordinating the INI is 11.1%. The coordination of INI by the combination of S1, S2, and the Na1 and Na2 frc-s is 27.1%, indicating that just under a third of all the correlated motions in the INI are related to these sites. The coordination exerted by INI on the binding sites was also calculated, because coordination information is not symmetric. We find that while S1 and S2 coordinate the INI strongly, the INI coordinates the two only moderately (NCI = 12.0% and 7.4%, respectively). Interestingly, in the MD trajectory we analyzed, the coordination by INI of the Na1 (NCI = 14.2%) and Na2 (NCI = 10.5%) sites is stronger than in the opposite direction. These results, along with results for all comparisons of sites, are summarized in <xref ref-type="table" rid="pcbi-1003603-t005">Table 5</xref>. To estimate the importance of these coordination values for the allosteric mechanism, we performed control calculations of the normalized coordination information for S1 and S2, with several other intracellular sites not known for their functional roles, including specific helices, loops, and interfaces between them. In all cases, S1 and S2 coordination of any of these control sites was half (or much less) that of the INI (see “Supplementary Results: Coordination of Other Intracellular Domains”, Fig. S8, and Table S1 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>).</p>
+<table-wrap id="pcbi-1003603-t005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003603.t005</object-id><label>Table 5</label><caption>
+<title>Normalized coordination information between sites in LeuT<sub>POPE/POPG</sub>.</title>
+</caption><alternatives><graphic id="pcbi-1003603-t005-5" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003603.t005" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<thead>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">S1</td>
+<td align="left" rowspan="1" colspan="1">S2</td>
+<td align="left" rowspan="1" colspan="1">Na1</td>
+<td align="left" rowspan="1" colspan="1">Na2</td>
+<td align="left" rowspan="1" colspan="1">Na1, Na2</td>
+<td align="left" rowspan="1" colspan="1">Na1, Na2, S1</td>
+<td align="left" rowspan="1" colspan="1">Na1, Na2, S1, S2</td>
+<td align="left" rowspan="1" colspan="1">INI</td>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>S1</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>30.6 (0.2)</italic></bold></td>
+<td align="left" rowspan="1" colspan="1">23.8% (0.5%)</td>
+<td align="left" rowspan="1" colspan="1">27.5% (0.4%)</td>
+<td align="left" rowspan="1" colspan="1">17.3% (0.3%)</td>
+<td align="left" rowspan="1" colspan="1">31.0% (0.5%)</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">12.0% (0.4%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>S2</bold></td>
+<td align="left" rowspan="1" colspan="1">14.2% (0.4%)</td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>33.1</italic></bold><bold> (0.4)</bold></td>
+<td align="left" rowspan="1" colspan="1">8.2% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">4.5% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">8.9% (0.3%)</td>
+<td align="left" rowspan="1" colspan="1">15.0% (0.5%)</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">7.4% (0.3%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Na1</bold></td>
+<td align="left" rowspan="1" colspan="1">51.5% (0.5%)</td>
+<td align="left" rowspan="1" colspan="1">44.2% (0.5%)</td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>9.2</italic></bold><bold> (0.1)</bold></td>
+<td align="left" rowspan="1" colspan="1">39.1% (0.3%)</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">14.2% (0.5%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Na2</bold></td>
+<td align="left" rowspan="1" colspan="1">40.1% (0.4%)</td>
+<td align="left" rowspan="1" colspan="1">16.7% (0.3%)</td>
+<td align="left" rowspan="1" colspan="1">32.4% (0.3%)</td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>12.04</italic></bold><bold>(0.1)</bold></td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">10.5% (0.3%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Na1, Na2</bold></td>
+<td align="left" rowspan="1" colspan="1">32.1% (0.3%)</td>
+<td align="left" rowspan="1" colspan="1">23.3% (0.4%)</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>29.8</italic></bold><bold> (0.2)</bold></td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">10.1% (0.3%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Na1, Na2, S1</bold></td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">16.3% (0.5%)</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>67.2</italic></bold><bold> (0.6)</bold></td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">8.8% (0.3%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>Na1, Na2, S1, S2</bold></td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1">X</td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>132.9</italic></bold><bold> (2.0)</bold></td>
+<td align="left" rowspan="1" colspan="1">6.2% (0.4%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>INI</bold></td>
+<td align="left" rowspan="1" colspan="1">19.1% (0.6%)</td>
+<td align="left" rowspan="1" colspan="1">21.2% (0.7%)</td>
+<td align="left" rowspan="1" colspan="1">9.0% (0.3%)</td>
+<td align="left" rowspan="1" colspan="1">6.9% (0.3%)</td>
+<td align="left" rowspan="1" colspan="1">11.1% (0.4%)</td>
+<td align="left" rowspan="1" colspan="1">20.5% (0.7%)</td>
+<td align="left" rowspan="1" colspan="1">27.1% (1.2%)</td>
+<td align="left" rowspan="1" colspan="1"><bold><italic>14.3</italic></bold><bold> (0.1)</bold></td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt105"><label/><p>For each pair of <italic>frc-s</italic>, the normalized coordination information is presented, with residues on the top (columns) acting as the coordinator and residues on the left (rows) being coordinated. On the diagonal, the total correlation of the site is shown in bold.</p></fn></table-wrap-foot></table-wrap>
+<p>Given the importance of the INI in the function of the transporter, we also determined which individual residues make the largest contributions to coordination of the INI. For each residue in the S1-frc and S2-frc residue we calculated the contribution of the residue to the particular frc coordination of the INI, as well as the contribution of INI residues to receiving that coordination, using Equation S.3 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>. Results summarized in <xref ref-type="table" rid="pcbi-1003603-t006">Table 6</xref> show that for coordination of the INI-frc by S1, the top 3 <italic>coordinators</italic> are F259 (contribution = 69.6%), S256 (contribution = 34.9%), and I359 (contribution = 34.6%), and the top 3 <italic>receivers</italic> are R5 (contribution = 67.8%), I187 (contribution = 63.8%), and S267 (contribution = 59.9%). For coordination by S2 (see <xref ref-type="table" rid="pcbi-1003603-t007">Table 7</xref>), the top 3 <italic>coordinators</italic> are R30 (contribution = 54.7%), F253 (contribution = 28.7%), and F324 (contribution = 24.0%), and the top 3 <italic>receivers</italic> are R5 (contribution = 80.8%), I187 (contribution = 71.0%), and D369 (contribution = 58.1%). This underscores the important role of INI residues R5, I187, and S267 in the coordination of the INI-frc by the known allosteric substrate sites.</p>
+<table-wrap id="pcbi-1003603-t006" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003603.t006</object-id><label>Table 6</label><caption>
+<title>Specific residues highly contribute to coordination of the INI by S1 in LeuT<sub>POPE/POPG</sub>.</title>
+</caption><alternatives><graphic id="pcbi-1003603-t006-6" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003603.t006" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>S1</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Leu</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>L25</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>G26</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>V104</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Y108</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>F253</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">24.5% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">22.8% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">21.9% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">18.8% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">13.9% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">31.0% (0.2%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>T254</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>S256</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>F259</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>S355</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>I359</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Na1</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">27.3% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>33.6%</bold> (0.3%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>67.6%</bold> (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">13.3% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>33.2%</bold> (0.4%)</td>
+<td align="left" rowspan="1" colspan="1">16.6% (0.1%)</td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>INI</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>R5</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>I187</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>S267</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Y268</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Q361</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>D369</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>66.1%</bold> (0.3%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>63.1%</bold> (0.2%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>58.7%</bold> (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">57.3% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">57.2% (0.4%)</td>
+<td align="left" rowspan="1" colspan="1">48.1% (0.3%)</td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt106"><label/><p>The contribution of specific residues in the S1-frc (top) and the INI-frc (bottom) to the coordination of the INI-frc by the S1-frc (top 3 in each site are bold).</p></fn></table-wrap-foot></table-wrap><table-wrap id="pcbi-1003603-t007" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003603.t007</object-id><label>Table 7</label><caption>
+<title>Specific residues highly contribute to coordination of the INI by S2 in LeuT<sub>POPE/POPG</sub>.</title>
+</caption><alternatives><graphic id="pcbi-1003603-t007-7" position="float" mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003603.t007" xlink:type="simple"/>
+<table><colgroup span="1"><col align="left" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/><col align="center" span="1"/></colgroup>
+<tbody>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>S2</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>L29</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>R30</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Y107</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>I111</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>W114</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>F253</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">20.1% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>53.8% (0.5%)</bold></td>
+<td align="left" rowspan="1" colspan="1">10.6% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">9.0% (0.3%)</td>
+<td align="left" rowspan="1" colspan="1">14.6% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>28.0% (0.2%)</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>A319</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>F320</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>F324</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>L400</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>D404</bold></td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1">10.7% (0.0%)</td>
+<td align="left" rowspan="1" colspan="1">11.4% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>23.2% (0.1%)</bold></td>
+<td align="left" rowspan="1" colspan="1">16.2% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1">18.8% (0.1%)</td>
+<td align="left" rowspan="1" colspan="1"/>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"><bold>INI</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>R5</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>I187</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>S267</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Y268</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>Q361</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>D369</bold></td>
+</tr>
+<tr>
+<td align="left" rowspan="1" colspan="1"/>
+<td align="left" rowspan="1" colspan="1"><bold>78.3% (0.2%)</bold></td>
+<td align="left" rowspan="1" colspan="1"><bold>69.0% (0.2%)</bold></td>
+<td align="left" rowspan="1" colspan="1">48.5% (0.2%)</td>
+<td align="left" rowspan="1" colspan="1">42.5% (0.3%)</td>
+<td align="left" rowspan="1" colspan="1">40.0% (0.3%)</td>
+<td align="left" rowspan="1" colspan="1"><bold>57.6% (0.4%)</bold></td>
+</tr>
+</tbody>
+</table>
+</alternatives><table-wrap-foot><fn id="nt107"><label/><p>The contribution of specific residues in the S2-frc (top) and the INI-frc (bottom) to the coordination of the INI-frc by the S2-frc (top 3 in each site are bold).</p></fn></table-wrap-foot></table-wrap></sec><sec id="s3e">
+<title>The Coordination Channel Mediating the INI-frc Coordination by the Substrate <italic>frc</italic>-s Is through TM6b</title>
+<p>Because TM6b emerged as the major channel for communication between S1 and the INI, we investigated whether it was also the major channel for the CI between the substrate sites and the INI. We calculated the <italic>mutual coordination information</italic> (MCI) using <xref ref-type="disp-formula" rid="pcbi.1003603.e047">Equation 13.1</xref>, which described how much of the coordination information is shared between two coordinators that are coordinating the same set (see <xref ref-type="sec" rid="s2">Methods</xref>, Coordination Channel Analysis), and then normalized to the coordination information of the coordinator of interest (NMCI). Using this analysis, we identified residues in the high NMCI region using the same criteria described for <italic>co-information</italic>. The results identify a <italic>coordination channel</italic> that is nearly identical to the channel revealed by the <italic>co-information analysis</italic>, with a significantly larger signal in TM6b than that calculated with co-information analysis (see <xref ref-type="fig" rid="pcbi-1003603-g004">Fig. 4</xref>). We are able to identify a similar coordination channel for S2 (see Fig. S9 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>). These results indicate that TM6b is the major channel for the coordination of the INI by S1 and S2.</p>
+</sec><sec id="s3f">
+<title>The Allosteric Couplings Calculated for LeuT in MNG-3 Micelles Are Similar to Those in Membranes</title>
+<p>Detergent micelles are a common environment used in experimental studies of membrane proteins e.g., crystallography and biophysical experiments such as isothermal calorimetry and smFRET. Previous work has indicated that some detergents may affect measurements such as binding affinity and stoichiometry <xref ref-type="bibr" rid="pcbi.1003603-Quick1">[24]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Quick2">[46]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Khelashvili1">[47]</xref>. Here we investigated the same LeuT construct examined by simulations in membranes, in a micellar environment composed of MNG-3 detergent, which has been shown not to have the same detrimental effects as other detergents in several experimental measurements of LeuT <xref ref-type="bibr" rid="pcbi.1003603-Wang1">[48]</xref>. Our findings agree, as the allosteric coupling measures calculated for LeuT<sub>MNG-3</sub> are comparable to those we obtained for LeuT<sub>POPE/POPG</sub> (see Table S3 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref> for LeuT<sub>MNG-3</sub> and <xref ref-type="table" rid="pcbi-1003603-t005">Table 5</xref> for LeuT<sub>POPE/POPG</sub>), albeit with some noticeable changes to allosteric couplings involving only the Na<sup>+</sup> sites. Despite these changes, the contribution of specific residues to the total correlation of their <italic>frc</italic> remains conserved, and so do the major contributors to the total correlation (see Table S4 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref> for LeuT<sub>MNG-3</sub> and <xref ref-type="table" rid="pcbi-1003603-t004">Table 4</xref> for LeuT<sub>POPE/POPG</sub>). In addition, the major contributors to coordination between the substrate site <italic>frc</italic>-s and the INI are also preserved (see Table S5 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref> for LeuT<sub>MNG-3</sub> and <xref ref-type="table" rid="pcbi-1003603-t006">Table 6</xref> for LeuT<sub>POPE/POPG</sub>), and together the results for LeuT<sub>MNG-3</sub> indicate that the allosteric behavior seen in the membrane simulation is conserved in the micelle simulation. It is worth noting however, that in the LeuT<sub>MNG-3</sub> the coordination channel between the S1 and the INI <italic>frc</italic>-s includes fewer residues than in LeuT<sub>POPE/POPG</sub>, although they are still mainly from TM6b (see Fig. S10 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref> for LeuT<sub>MNG-3</sub> and <xref ref-type="fig" rid="pcbi-1003603-g005">Fig. 5</xref> for LeuT<sub>POPE/POPG</sub>), but so few residues are identified for coordination by S2 (see Fig. S11 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref> for LeuT<sub>MNG-3</sub> and Fig. S9 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref> for LeuT<sub>POPE/POPG</sub>) that a clear coordination channel is not resolvable between S2 and the INI in LeuT<sub>MNG-3</sub>. In an additional analysis suggested in the review process, we compared these results to those obtained from an apo (substrate-free) state of LeuT, by analyzing a trajectory (see “Supporting Methods: MD Simulations” in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref> for details) provided by Dr. Lei Shi (data unpublished, personal communication). Again, we find TM6b to be the major channel for coordination of the INI by both S1 and S2.</p>
+<fig id="pcbi-1003603-g005" position="float"><object-id pub-id-type="doi">10.1371/journal.pcbi.1003603.g005</object-id><label>Figure 5</label><caption>
+<title>TMs 2, 6b, and 8 form a coordination channel between S1 and the INI in LeuT<sub>POPE/POPG</sub>.</title>
+<p>Main: Residues found to have high mutual coordination information with S1 and the INI are colored by normalized mutual coordination information (NCMI) using the scale at the top right, where the minimum and maximum NCMI refers to the minimum and maximum among all possible residues. S1 is in orange surface and the INI is in tan surface; all other residues are represented in grey. Bottom right: A close up of the TM2, TM6b, and TM8 interface. The definitions of the S1 and INI frc-s can be found in <xref ref-type="sec" rid="s2"><bold>Methods</bold></xref>.</p>
+</caption><graphic mimetype="image" xlink:href="info:doi/10.1371/journal.pcbi.1003603.g005" position="float" xlink:type="simple"/></fig></sec></sec><sec id="s4">
+<title>Discussion</title>
+<p>Taking advantage of the information about specific functional motifs for the allosteric transporter LeuT, the illustration of the new NbIT analysis method brings to light how it identifies the details of allosteric couplings, and can quantify them at a previously unattained level of detail. Moreover, the choice of LeuT for this illustration of NbIT allowed us not only to start from well-defined <italic>frc</italic>-s, but also to compare the results and the inferences from NbIT analysis to known mechanistic elements in the allosteric process underlying LeuT function. Indeed, the allosteric pathway between the known ligand (ions, substrate) binding sites and previously proposed functional elements such as the intracellular gate (in INI), were identified by the NbIT analysis as the channels that propagate these couplings. This agreement with previous mechanistic insights is important because computational approaches, and in particular the type of MD simulations utilized here as well, have been used successfully to study the dynamics of transporter molecules and to infer on residues and motifs that play essential roles in the allosteric mechanisms <xref ref-type="bibr" rid="pcbi.1003603-Cheng1">[13]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Moradi1">[49]</xref>–<xref ref-type="bibr" rid="pcbi.1003603-Kolds1">[51]</xref>, By taking advantage of this kind of data, the novel NbIT analysis provides the first rigorous method for the identification of specific channels by which information is transmitted between functional sites of an allosteric molecular system. Key observations from the present application of NbIT analysis are discussed below to stress the specific molecular detail of the results, and to indicate the predictive power that this new method can bring to the many other allosteric protein systems for which the type of information available for LeuT is currently lacking.</p>
+<sec id="s4a">
+<title/>
+<sec id="s4a1">
+<title>1. Allosteric coordination of the INI by S1 and S2</title>
+<p>The CI calculations were essential in revealing that the S1 and S2 sites coordinate the internal dynamics of the INI (<xref ref-type="table" rid="pcbi-1003603-t005">Table 5</xref>). The allosteric modulation of the intracellular gate considered on the single molecule macro scale (as described in the <xref ref-type="sec" rid="s1">Introduction</xref>) has been noted previously in the dynamic changes revealed by smFRET experiments with LeuT in detergent; this study showed how the allosteric connection enabling modulation at the micro scale is effectuated. <italic>Coordination information</italic> as calculated here connects the collective coordination of the INI domain to the individual components (specific residues) and interactions (within, and outside the <italic>frc</italic> to which they belong) that underlie it. This provides insight at unprecedented detail about the elaborate coordination in the allosteric mechanism underlying ligand-induced opening of the gate. An intriguing observation in view of the ongoing controversy surrounding the role of the S2 binding site <xref ref-type="bibr" rid="pcbi.1003603-Shi1">[11]</xref>–<xref ref-type="bibr" rid="pcbi.1003603-Cheng1">[13]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Quick1">[24]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Quick2">[46]</xref>–<xref ref-type="bibr" rid="pcbi.1003603-Wang1">[48]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Piscitelli2">[52]</xref> is that the S2-frc coordinates the INI through a channel that includes the S1 site (<xref ref-type="table" rid="pcbi-1003603-t004">Table 4</xref>, Figure S6 in <xref ref-type="supplementary-material" rid="pcbi.1003603.s001">File S1</xref>). The coordination found here, of the INI by the <italic>apo</italic> S2 site (the MD trajectories analyzed here did not include substrate bound in S2) may explain why mutations to the S2 site have been shown to affect intracellular gating dynamics <xref ref-type="bibr" rid="pcbi.1003603-Zhao1">[7]</xref>. Although they demonstrate the ability of the S2-frc to coordinate the intracellular gate, the present results cannot inform about the role of substrate binding in S2 in the transport process, since this was not covered in the MD simulation.</p>
+</sec><sec id="s4a2">
+<title>2. Propagation of information between S1, S2, and the INI requires TM6b</title>
+<p>The channel that propagates the coordination of the INI by S1 and S2 was found here to consist largely of residues in TM6b (<xref ref-type="fig" rid="pcbi-1003603-g005">Fig. 5</xref>). Indeed, several residues in the S1 site and the INI are part of the highly conserved TM6, and its intracellular end, TM6b, was shown to undergo a large rotation of 17° in a recent crystal structure of a LeuT mutant stabilized in what is believed to be an <italic>apo</italic> intracellular-open state <xref ref-type="bibr" rid="pcbi.1003603-Krishnamurthy2">[53]</xref>; TM1a and TM8 also contain many residues from S1 and the INI.</p>
+<p>Notably, while this manuscript was in preparation, a set of LeuT mutants have been described that were constructed to resemble the human serotonin transporter <xref ref-type="bibr" rid="pcbi.1003603-Wang2">[54]</xref>, and all constructs containing a mutation of the TM6b residue Y265 to F, were found to lack transport activity despite retaining high affinity inhibitor binding. This indicates a possible role of TM6b in function, and we interpret the observed rotation of TM6b and the effect of the Y265F mutation as support for their role in propagating information from the substrate site to the intracellular gate during the transition between LeuT states. The fact that the role of TM6b became evident from the NbIT analysis of the S1-occupied occluded state supports its role as an information conduit from the substrate sites to the intracellular gate.</p>
+</sec><sec id="s4a3">
+<title>3. The intramolecular allosteric mechanism involves a subset of residues known to have functional roles</title>
+<p>With NbIT analysis, we identified specific residues that play a role in allosteric connections related to function, and were able to discern different contributions (i.e., “stabilizers” and “communicators”). In the S1-frc we find that while the bound leucine substrate, F253, and T254 coordinate the binding site's internal correlations (hence acting as stabilizers), residues F259, S256, and Q359 contribute to the coupling between S1 and the INI (<xref ref-type="table" rid="pcbi-1003603-t005">Table 5A</xref>) and belong to “communicators”, which are involved in between-site allosteric communication. We know of no previous computational method that offered such functionally specific discrimination.</p>
+<p>The identification of functional roles for specific residues in the allosteric communication revealed further details of their mechanistic involvement:</p>
+<p>Our analysis predicted that F259 interactions may have a significant effect on transport. Earlier crystallographic studies had indicates that F259 may be involved in the diversity of transport phenotypes produced by various LeuT substrates <xref ref-type="bibr" rid="pcbi.1003603-Singh2">[55]</xref>. Three basic modes of interaction have been observed: (i)-in crystal structures of LeuT in complex with leucine, methionine, or p-flurophenylalanine, the hydrophobic side chains interact with F259; (ii)-in LeuT structures with alanine or glycine, this interaction is lost, leading to a 30° rotation of the F259 side chain; (iii)-in the structure bound to tryptophan, the indole ring makes a ring-ring contact with the F259 side chain. The three distinct modes of interaction observed for F259 correlate with distinct transport phenotypes. Thus, although the overall binding modes could appear nearly identical, the transport efficiencies differ, with alanine being transported with highest efficiency (k<sub>cat</sub>/K<sub>m</sub>); leucine, methionine, and p-flurophenylalanine displaying low efficiency, and tryptophan acting as an inhibitor. While the efficiency for glycine is even lower than for the low efficiency amino acids mentioned above, the difference may in fact be due to the very low affinity of Gly for LeuT which may not allow it to remain bound to the transporter long enough to initiate transport (no k<sub>on</sub> or k<sub>off</sub> values have been reported). Together, these structure/function relations suggest that substrate interactions with F259 may lead to different effects on transport. Our analysis predicted a specific participation in the allosteric mechanism. We suggest that because alanine does not interact with F259 and induces a change in the rotameric state of F259 relative to that observed for the less efficiently transported substrates, F259 plays an inhibitory role by allosterically blocking transport. Clarification of the specific role that this type of allosteric modulation plays in the transport cycle with the NbIT method must await a complete trajectory of the transition among the different states, but the insights gained in this study offer an intriguing avenue for future experimentation.</p>
+<p>We find that Y268 R5, and S267 all play the role of both strong stabilizers and communicators in the INI. Both R5 and Y268 are known to be involved in function, with mutation of either residue to alanine resulting in disruption of the intracellular gate <xref ref-type="bibr" rid="pcbi.1003603-Kniazeff1">[6]</xref>, <xref ref-type="bibr" rid="pcbi.1003603-Zhao1">[7]</xref>, characterized by an increased “open” (intracellular gate) population observed in smFRET experiments of the intracellular gate. However, the R5A mutation has also been shown to cause increased transitions between the “open” and “closed” (intracellular gate) state in the presence of leucine <xref ref-type="bibr" rid="pcbi.1003603-Zhao1">[7]</xref>. Considered together, these experimental findings indicate that mutation of R5 can affect the allosterically modulated gating dynamics; in agreement, R5 is predicted to be the strongest <italic>coordinator</italic> within the INI. The result that Y268, S267, and R5 all play the role of both <italic>coordinator</italic> and <italic>stabilizer</italic> is especially noteworthy because one would expect that residues that are essential to the stability of the gate would need to be modulated in order to initiate large collective conformational changes, such as the opening of the gate. That such residues are also communicators substantiates the allosteric modulation of the conformational change that opens the gate. Indeed, these residues are highly conserved in NSS transporters <xref ref-type="bibr" rid="pcbi.1003603-Beuming1">[56]</xref>, and our finding leads to the prediction that disruption of interactions between S267 and its surrounding network will strongly affect transport. Future experiments should be able to better define the role of S267 in the transport function based on this testable hypothesis. In addition, we find that while I187 has a minor stabilizer role in the INI, it plays a significant role as a communicator. This leads to the mechanistic prediction that mutation of I187 may lead to disruption of allosteric modulation without disrupting the structure of the intracellular gate.</p>
+</sec></sec></sec><sec id="s5">
+<title>Supporting Information</title>
+<supplementary-material id="pcbi.1003603.s001" mimetype="application/pdf" xlink:href="info:doi/10.1371/journal.pcbi.1003603.s001" position="float" xlink:type="simple"><label>File S1</label><caption>
+<p><bold>Supporting Methods (MD simulations; Moving block bootstrapping of MD simulations; Contributions for specific information measures; Identifying high information residues); Supporting Discussion (Efficient information transmission; Normalizing mutual information; Negative </bold><bold><italic>co-information</italic></bold><bold>; Analysis of the K<sub>1,4</sub> network; Control study); Tables S1–S4; Figures S1–S11; Supporting References.</bold></p>
+<p>(PDF)</p>
+</caption></supplementary-material></sec></body>
+<back>
+<ack>
+<p>We thank Drs. George Khelashvili, Lei Shi and Sebastian Stolzenberg for thoughtful discussions. Dr. Khelashili is thanked for assistance in constructing and running the LeuT<sub>MNG-3</sub> simulation and for the LeuT<sub>POPE/POPG</sub> trajectory, and Dr. Lei Shi for the LeuT<sub>APO</sub> trajectory.</p>
+</ack>
+<ref-list>
+<title>References</title>
+<ref id="pcbi.1003603-Monod1"><label>1</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Monod</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Changeux</surname><given-names>J-P</given-names></name>, <name name-style="western"><surname>Jacob</surname><given-names>F</given-names></name> (<year>1963</year>) <article-title>Allosteric proteins and cellular control systems</article-title>. <source>J Mol Biol</source> <volume>6</volume>: <fpage>306</fpage>–<lpage>329</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/S0022-2836(63)80091-1" xlink:type="simple">10.1016/S0022-2836(63)80091-1</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Gunasekaran1"><label>2</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gunasekaran</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Ma</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Nussinov</surname><given-names>R</given-names></name> (<year>2004</year>) <article-title>Is allostery an intrinsic property of all dynamic proteins?</article-title> <source>Proteins</source> <volume>57</volume>: <fpage>433</fpage>–<lpage>443</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/prot.20232" xlink:type="simple">10.1002/prot.20232</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Jardetzky1"><label>3</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Jardetzky</surname><given-names>O</given-names></name> (<year>1966</year>) <article-title>Simple allosteric model for membrane pumps</article-title>. <source>Nature</source> <fpage>969</fpage>–<lpage>970</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/211969a0" xlink:type="simple">10.1038/211969a0</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Krishnamurthy1"><label>4</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Krishnamurthy</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Gouaux</surname><given-names>E</given-names></name> (<year>2012</year>) <article-title>X-ray structures of LeuT in substrate-free outward-open and apo inward-open states</article-title>. <source>Nature</source> <volume>481</volume>: <fpage>469</fpage>–<lpage>474</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature10737" xlink:type="simple">10.1038/nature10737</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Yamashita1"><label>5</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Yamashita</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Singh</surname><given-names>SK</given-names></name>, <name name-style="western"><surname>Kawate</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Jin</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Gouaux</surname><given-names>E</given-names></name> (<year>2005</year>) <article-title>Crystal structure of a bacterial homologue of Na+/Cl–dependent neurotransmitter transporters</article-title>. <source>Nature</source> <volume>437</volume>: <fpage>215</fpage>–<lpage>223</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature03978" xlink:type="simple">10.1038/nature03978</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Kniazeff1"><label>6</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Kniazeff</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Shi</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Loland</surname><given-names>CJ</given-names></name>, <name name-style="western"><surname>Javitch</surname><given-names>Ja</given-names></name>, <name name-style="western"><surname>Weinstein</surname><given-names>H</given-names></name>, <etal>et al</etal>. (<year>2008</year>) <article-title>An intracellular interaction network regulates conformational transitions in the dopamine transporter</article-title>. <source>J Biol Chem</source> <volume>283</volume>: <fpage>17691</fpage>–<lpage>17701</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1074/jbc.M800475200" xlink:type="simple">10.1074/jbc.M800475200</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Zhao1"><label>7</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhao</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Terry</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Shi</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Weinstein</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Blanchard</surname><given-names>SC</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Single-molecule dynamics of gating in a neurotransmitter transporter homologue</article-title>. <source>Nature</source> <volume>465</volume>: <fpage>188</fpage>–<lpage>193</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature09057" xlink:type="simple">10.1038/nature09057</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Zhao2"><label>8</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Zhao</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Terry</surname><given-names>DS</given-names></name>, <name name-style="western"><surname>Shi</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Quick</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Weinstein</surname><given-names>H</given-names></name>, <etal>et al</etal>. (<year>2011</year>) <article-title>Substrate-modulated gating dynamics in a Na+-coupled neurotransmitter transporter homologue</article-title>. <source>Nature</source> <volume>474</volume>: <fpage>109</fpage>–<lpage>113</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature09971" xlink:type="simple">10.1038/nature09971</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Andersen1"><label>9</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Andersen</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Taboureau</surname><given-names>O</given-names></name>, <name name-style="western"><surname>Hansen</surname><given-names>KB</given-names></name>, <name name-style="western"><surname>Olsen</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Egebjerg</surname><given-names>J</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Location of the antidepressant binding site in the serotonin transporter: importance of Ser-438 in recognition of citalopram and tricyclic antidepressants</article-title>. <source>J Biol Chem</source> <volume>284</volume>: <fpage>10276</fpage>–<lpage>10284</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1074/jbc.M806907200" xlink:type="simple">10.1074/jbc.M806907200</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Singh1"><label>10</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Singh</surname><given-names>SK</given-names></name>, <name name-style="western"><surname>Yamashita</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Gouaux</surname><given-names>E</given-names></name> (<year>2007</year>) <article-title>Antidepressant binding site in a bacterial homologue of neurotransmitter transporters</article-title>. <source>Nature</source> <volume>448</volume>: <fpage>952</fpage>–<lpage>956</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature06038" xlink:type="simple">10.1038/nature06038</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Shi1"><label>11</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shi</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Quick</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Zhao</surname><given-names>Y</given-names></name>, <name name-style="western"><surname>Weinstein</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Javitch</surname><given-names>Ja</given-names></name> (<year>2008</year>) <article-title>The mechanism of a neurotransmitter∶sodium symporter–inward release of Na+ and substrate is triggered by substrate in a second binding site</article-title>. <source>Mol Cell</source> <volume>30</volume>: <fpage>667</fpage>–<lpage>677</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.molcel.2008.05.008" xlink:type="simple">10.1016/j.molcel.2008.05.008</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Shan1"><label>12</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Shan</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Javitch</surname><given-names>Ja</given-names></name>, <name name-style="western"><surname>Shi</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Weinstein</surname><given-names>H</given-names></name> (<year>2011</year>) <article-title>The substrate-driven transition to an inward-facing conformation in the functional mechanism of the dopamine transporter</article-title>. <source>PLoS One</source> <volume>6</volume>: <fpage>e16350</fpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0016350" xlink:type="simple">10.1371/journal.pone.0016350</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Cheng1"><label>13</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Cheng</surname><given-names>MH</given-names></name>, <name name-style="western"><surname>Bahar</surname><given-names>I</given-names></name> (<year>2013</year>) <article-title>Coupled Global and Local Changes Direct Substrate Translocation by Neurotransmitter-Sodium Symporter Ortholog LeuT</article-title>. <source>Biophys J</source> <volume>105</volume>: <fpage>630</fpage>–<lpage>639</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.bpj.2013.06.032" xlink:type="simple">10.1016/j.bpj.2013.06.032</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Gleitsman1"><label>14</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gleitsman</surname><given-names>KR</given-names></name>, <name name-style="western"><surname>Shanata</surname><given-names>JaP</given-names></name>, <name name-style="western"><surname>Frazier</surname><given-names>SJ</given-names></name>, <name name-style="western"><surname>Lester</surname><given-names>Ha</given-names></name>, <name name-style="western"><surname>Dougherty</surname><given-names>Da</given-names></name> (<year>2009</year>) <article-title>Long-range coupling in an allosteric receptor revealed by mutant cycle analysis</article-title>. <source>Biophys J</source> <volume>96</volume>: <fpage>3168</fpage>–<lpage>3178</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.bpj.2008.12.3949" xlink:type="simple">10.1016/j.bpj.2008.12.3949</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Sethi1"><label>15</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sethi</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Eargle</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Black</surname><given-names>Aa</given-names></name>, <name name-style="western"><surname>Luthey-Schulten</surname><given-names>Z</given-names></name> (<year>2009</year>) <article-title>Dynamical networks in tRNA:protein complexes</article-title>. <source>PNAS</source> <volume>106</volume>: <fpage>6620</fpage>–<lpage>6625</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0810961106" xlink:type="simple">10.1073/pnas.0810961106</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Chennubhotla1"><label>16</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chennubhotla</surname><given-names>C</given-names></name>, <name name-style="western"><surname>Bahar</surname><given-names>I</given-names></name> (<year>2007</year>) <article-title>Signal propagation in proteins and relation to equilibrium fluctuations</article-title>. <source>PLoS Comput Biol</source> <volume>3</volume>: <fpage>1716</fpage>–<lpage>1726</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pcbi.0030172" xlink:type="simple">10.1371/journal.pcbi.0030172</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-DelSol1"><label>17</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Del Sol</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Fujihashi</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Amoros</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Nussinov</surname><given-names>R</given-names></name> (<year>2006</year>) <article-title>Residues crucial for maintaining short paths in network communication mediate signaling in proteins</article-title>. <source>Mol Syst Biol</source> <volume>2</volume>: <fpage>2006.0019</fpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/msb4100063" xlink:type="simple">10.1038/msb4100063</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Amitai1"><label>18</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Amitai</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Shemesh</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Sitbon</surname><given-names>E</given-names></name>, <name name-style="western"><surname>Shklar</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Netanely</surname><given-names>D</given-names></name>, <etal>et al</etal>. (<year>2004</year>) <article-title>Network analysis of protein structures identifies functional residues</article-title>. <source>J Mol Biol</source> <volume>344</volume>: <fpage>1135</fpage>–<lpage>1146</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.jmb.2004.10.055" xlink:type="simple">10.1016/j.jmb.2004.10.055</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-DeRuvo1"><label>19</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>De Ruvo</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Giuliani</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Paci</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Santoni</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Di Paola</surname><given-names>L</given-names></name> (<year>2012</year>) <article-title>Shedding light on protein-ligand binding by graph theory: The topological nature of allostery</article-title>. <source>Biophys Chem</source> <volume>165–166</volume>: <fpage>21</fpage>–<lpage>29</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.bpc.2012.03.001" xlink:type="simple">10.1016/j.bpc.2012.03.001</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-VanWart1"><label>20</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>VanWart</surname><given-names>AT</given-names></name>, <name name-style="western"><surname>Eargle</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Luthey-Schulten</surname><given-names>Z</given-names></name>, <name name-style="western"><surname>Amaro</surname><given-names>RE</given-names></name> (<year>2012</year>) <article-title>Exploring Residue Component Contributions to Dynamical Network Models of Allostery</article-title>. <source>J Chem Theory Comput</source> <volume>8</volume>: <fpage>2949</fpage>–<lpage>2961</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/ct300377a" xlink:type="simple">10.1021/ct300377a</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Tikhonova1"><label>21</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Tikhonova</surname><given-names>IG</given-names></name>, <name name-style="western"><surname>Selvam</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Ivetac</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Wereszczynski</surname><given-names>J</given-names></name>, <name name-style="western"><surname>McCammon</surname><given-names>JA</given-names></name> (<year>2013</year>) <article-title>Simulations of Biased Agonists in the β2 Adrenergic Receptor with Accelerated Molecular Dynamics</article-title>. <source>Biochemistry</source> <volume>52</volume>: <fpage>5593</fpage>–<lpage>603</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/bi400499n" xlink:type="simple">10.1021/bi400499n</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Sol1"><label>22</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sol</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Fujihashi</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Amoros</surname><given-names>D</given-names></name>, <name name-style="western"><surname>Nussinov</surname><given-names>R</given-names></name> (<year>2006</year>) <article-title>Residues crucial for maintaining short paths in network communication mediate signaling in proteins</article-title>. <source>Mol Syst Biol</source> <fpage>1</fpage>–<lpage>12</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/msb4100063" xlink:type="simple">10.1038/msb4100063</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Gasper1"><label>23</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Gasper</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Fuglestad</surname><given-names>B</given-names></name> (<year>2012</year>) <article-title>Allosteric networks in thrombin distinguish procoagulant vs. anticoagulant activities</article-title>. <source>PNAS</source> <volume>109</volume>: <fpage>21216</fpage>–<lpage>21222</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1218414109" xlink:type="simple">10.1073/pnas.1218414109</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Quick1"><label>24</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Quick</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Winther</surname><given-names>A-ML</given-names></name>, <name name-style="western"><surname>Shi</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Nissen</surname><given-names>P</given-names></name>, <name name-style="western"><surname>Weinstein</surname><given-names>H</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>Binding of an octylglucoside detergent molecule in the second substrate (S2) site of LeuT establishes an inhibitor-bound conformation</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>106</volume>: <fpage>5563</fpage>–<lpage>5568</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.0811322106" xlink:type="simple">10.1073/pnas.0811322106</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Mondal1"><label>25</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Mondal</surname><given-names>S</given-names></name>, <name name-style="western"><surname>Khelashvili</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Shi</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Weinstein</surname><given-names>H</given-names></name> (<year>2013</year>) <article-title>The cost of living in the membrane: a case study of hydrophobic mismatch for the multi-segment protein LeuT</article-title>. <source>Chem Phys Lipids</source> <volume>169</volume>: <fpage>27</fpage>–<lpage>38</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1016/j.chemphyslip.2013.01.006" xlink:type="simple">10.1016/j.chemphyslip.2013.01.006</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Bell1"><label>26</label>
+<mixed-citation publication-type="other" xlink:type="simple">Bell AJ (2003) The co-information lattice. 4th Int Sympoosium Indep Compon Anal Blind Signal Sep: 921g926.</mixed-citation>
+</ref>
+<ref id="pcbi.1003603-McGill1"><label>27</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>McGill</surname><given-names>WJ</given-names></name> (<year>1954</year>) <article-title>Multivariate Information Transmission</article-title>. <source>Inf Theory, Trans IRE Prof Gr</source> <volume>4</volume>: <fpage>93</fpage>–<lpage>111</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Matsuda1"><label>28</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Matsuda</surname><given-names>H</given-names></name> (<year>2000</year>) <article-title>Physical nature of higher-order mutual information: intrinsic correlations and frustration</article-title>. <source>Phys Rev E Stat Phys Plasmas Fluids Relat Interdiscip Topics</source> <volume>62</volume>: <fpage>3096</fpage>–<lpage>3102</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1103/PhysRevE.62.3096" xlink:type="simple">10.1103/PhysRevE.62.3096</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Sakaguchi1"><label>29</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Sakaguchi</surname><given-names>M</given-names></name> (<year>1967</year>) <article-title>Interaction information in multivariate probability distributions</article-title>. <source>Kodai Math Semin Reports</source> <volume>19</volume>: <fpage>147</fpage>–<lpage>155</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.2996/kmj/1138845386" xlink:type="simple">10.2996/kmj/1138845386</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Cover1"><label>30</label>
+<mixed-citation publication-type="book" xlink:type="simple">Cover T.M. and Thomas JA (1991) Elements of information theory. New York, NY: John Wiley &amp; Sons.</mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Watanabe1"><label>31</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Watanabe</surname><given-names>S</given-names></name> (<year>1960</year>) <article-title>Information Theoretical Analysis of Multivariate Correlation</article-title>. <source>IBM J Res Dev</source> <volume>4</volume>: <fpage>66</fpage>–<lpage>82</lpage>.</mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Garner1"><label>32</label>
+<mixed-citation publication-type="book" xlink:type="simple">Garner W (1962) Uncertainty and Structure as Psychological Concepts. New York, NY: John Wiley &amp; Sons.</mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Margolin1"><label>33</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Margolin</surname><given-names>aa</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Califano</surname><given-names>a</given-names></name>, <name name-style="western"><surname>Nemenman</surname><given-names>I</given-names></name> (<year>2010</year>) <article-title>Multivariate dependence and genetic networks inference</article-title>. <source>IET Syst Biol</source> <volume>4</volume>: <fpage>428</fpage>–<lpage>440</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1049/iet-syb.2010.0009" xlink:type="simple">10.1049/iet-syb.2010.0009</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Chae1"><label>34</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chae</surname><given-names>PS</given-names></name>, <name name-style="western"><surname>Rasmussen</surname><given-names>SGF</given-names></name>, <name name-style="western"><surname>Rana</surname><given-names>RR</given-names></name>, <name name-style="western"><surname>Gotfryd</surname><given-names>K</given-names></name>, <name name-style="western"><surname>Chandra</surname><given-names>R</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Maltose-neopentyl glycol (MNG) amphipgiles for solubilization, stabilization and crystallization of membrane proteins</article-title>. <source>Nat Methods</source> <volume>7</volume>: <fpage>1003</fpage>–<lpage>8</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nMeth.1526" xlink:type="simple">10.1038/nMeth.1526</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Chung1"><label>35</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Chung</surname><given-names>KY</given-names></name>, <name name-style="western"><surname>Kim</surname><given-names>TH</given-names></name>, <name name-style="western"><surname>Manglik</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Alvares</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Kobilka</surname><given-names>BK</given-names></name>, <etal>et al</etal>. (<year>2012</year>) <article-title>The role of detergents on conformational exchange of a G protein-coupled receptor</article-title>. <source>J Biol Chem</source> <fpage>1</fpage>–<lpage>19</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1074/jbc.M112.406371" xlink:type="simple">10.1074/jbc.M112.406371</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Brooks1"><label>36</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Brooks</surname><given-names>BR</given-names></name>, <name name-style="western"><surname>Brooks</surname><given-names>CL</given-names></name>, <name name-style="western"><surname>Mackerell</surname><given-names>AD</given-names></name>, <name name-style="western"><surname>Nilsson</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Petrella</surname><given-names>RJ</given-names></name>, <etal>et al</etal>. (<year>2009</year>) <article-title>CHARMM: the biomolecular simulation program</article-title>. <source>J Comput Chem</source> <volume>30</volume>: <fpage>1545</fpage>–<lpage>1614</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/jcc.21287" xlink:type="simple">10.1002/jcc.21287</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Klauda1"><label>37</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Klauda</surname><given-names>JB</given-names></name>, <name name-style="western"><surname>Venable</surname><given-names>RM</given-names></name>, <name name-style="western"><surname>Freites</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>O'Connor</surname><given-names>JW</given-names></name>, <name name-style="western"><surname>Tobias</surname><given-names>DJ</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Update of the CHARMM all-atom additive force field for lipids: validation on six lipid types</article-title>. <source>J Phys Chem B</source> <volume>114</volume>: <fpage>7830</fpage>–<lpage>7843</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/jp101759q" xlink:type="simple">10.1021/jp101759q</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Phillips1"><label>38</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Phillips</surname><given-names>JC</given-names></name>, <name name-style="western"><surname>Braun</surname><given-names>R</given-names></name>, <name name-style="western"><surname>Wang</surname><given-names>W</given-names></name>, <name name-style="western"><surname>Gumbart</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Tajkhorshid</surname><given-names>E</given-names></name>, <etal>et al</etal>. (<year>2005</year>) <article-title>Scalable molecular dynamics with NAMD</article-title>. <source>J Comput Chem</source> <volume>26</volume>: <fpage>1781</fpage>–<lpage>1802</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/jcc.20289" xlink:type="simple">10.1002/jcc.20289</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Kroemer1"><label>39</label>
+<mixed-citation publication-type="book" xlink:type="simple">Kroemer H, Kittel C (1980) Thermal Physics. 2nd ed. W. H. Freeman Company.</mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Glykos1"><label>40</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Glykos</surname><given-names>NM</given-names></name> (<year>2006</year>) <article-title>Software news and updates. Carma: a molecular dynamics analysis program</article-title>. <source>J Comput Chem</source> <volume>27</volume>: <fpage>1765</fpage>–<lpage>1768</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/jcc.20482" xlink:type="simple">10.1002/jcc.20482</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Lange1"><label>41</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Lange</surname><given-names>OF</given-names></name>, <name name-style="western"><surname>Grubmüller</surname><given-names>H</given-names></name> (<year>2006</year>) <article-title>Generalized correlation for biomolecular dynamics</article-title>. <source>Proteins</source> <volume>62</volume>: <fpage>1053</fpage>–<lpage>1061</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1002/prot.20784" xlink:type="simple">10.1002/prot.20784</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Karplus1"><label>42</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Karplus</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Kushick</surname><given-names>JN</given-names></name> (<year>1981</year>) <article-title>Method for estimating the configurational entropy of macromolecules</article-title>. <source>Macromolecules</source> <volume>14</volume>: <fpage>325</fpage>–<lpage>332</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/ma50003a019" xlink:type="simple">10.1021/ma50003a019</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Andricioaei1"><label>43</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Andricioaei</surname><given-names>I</given-names></name>, <name name-style="western"><surname>Karplus</surname><given-names>M</given-names></name> (<year>2001</year>) <article-title>On the calculation of entropy from covariance matrices of the atomic fluctuations</article-title>. <source>J Chem Phys</source> <volume>115</volume>: <fpage>6289</fpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1063/1.1401821" xlink:type="simple">10.1063/1.1401821</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Piscitelli1"><label>44</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Piscitelli</surname><given-names>CL</given-names></name>, <name name-style="western"><surname>Gouaux</surname><given-names>E</given-names></name> (<year>2012</year>) <article-title>Insights into transport mechanism from LeuT engineered to transport tryptophan</article-title>. <source>EMBO J</source> <volume>31</volume>: <fpage>228</fpage>–<lpage>235</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/emboj.2011.353" xlink:type="simple">10.1038/emboj.2011.353</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Claxton1"><label>45</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Claxton</surname><given-names>DP</given-names></name>, <name name-style="western"><surname>Quick</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Shi</surname><given-names>L</given-names></name>, <name name-style="western"><surname>de Carvalho</surname><given-names>FD</given-names></name>, <name name-style="western"><surname>Weinstein</surname><given-names>H</given-names></name>, <etal>et al</etal>. (<year>2010</year>) <article-title>Ion/substrate-dependent conformational dynamics of a bacterial homolog of neurotransmitter∶sodium symporters</article-title>. <source>Nat Struct Mol Biol</source> <volume>17</volume>: <fpage>822</fpage>–<lpage>829</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nsmb.1854" xlink:type="simple">10.1038/nsmb.1854</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Quick2"><label>46</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Quick</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Shi</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Zehnpfennig</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Weinstein</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Javitch</surname><given-names>Ja</given-names></name> (<year>2012</year>) <article-title>Experimental conditions can obscure the second high-affinity site in LeuT</article-title>. <source>Nat Struct Mol Biol</source> <volume>19</volume>: <fpage>207</fpage>–<lpage>211</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nsmb.2197" xlink:type="simple">10.1038/nsmb.2197</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Khelashvili1"><label>47</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Khelashvili</surname><given-names>G</given-names></name>, <name name-style="western"><surname>Levine</surname><given-names>MV</given-names></name>, <name name-style="western"><surname>Shi</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Quick</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Javitch</surname><given-names>Ja</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>The Membrane Protein LeuT in Micellar Systems: Aggregation Dynamics and Detergent Binding to the S2 Site</article-title>. <source>J Am Chem Soc</source> <volume>135</volume>: <fpage>14266</fpage>–<lpage>14275</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1021/ja405984v" xlink:type="simple">10.1021/ja405984v</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Wang1"><label>48</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Gouaux</surname><given-names>E</given-names></name> (<year>2012</year>) <article-title>Substrate binds in the S1 site of the F253A mutant of LeuT, a neurotransmitter sodium symporter homologue</article-title>. <source>EMBO Rep</source> <fpage>1</fpage>–<lpage>6</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/embor.2012.110" xlink:type="simple">10.1038/embor.2012.110</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Moradi1"><label>49</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Moradi</surname><given-names>M</given-names></name>, <name name-style="western"><surname>Tajkhorshid</surname><given-names>E</given-names></name> (<year>2013</year>) <article-title>Mechanistic picture for conformational transition of a membrane transporter at atomic resolution</article-title>. <source>Proc Natl Acad Sci U S A</source> <volume>110</volume>: <fpage>18916</fpage>–<lpage>18921</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1073/pnas.1313202110" xlink:type="simple">10.1073/pnas.1313202110</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Celik1"><label>50</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Celik</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Schiøtt</surname><given-names>B</given-names></name>, <name name-style="western"><surname>Tajkhorshid</surname><given-names>E</given-names></name> (<year>2008</year>) <article-title>Substrate binding and formation of an occluded state in the leucine transporter</article-title>. <source>Biophys J</source> <volume>94</volume>: <fpage>1600</fpage>–<lpage>1612</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1529/biophysj.107.117580" xlink:type="simple">10.1529/biophysj.107.117580</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Kolds1"><label>51</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Koldsø</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Autzen</surname><given-names>HE</given-names></name>, <name name-style="western"><surname>Grouleff</surname><given-names>J</given-names></name>, <name name-style="western"><surname>Schiøtt</surname><given-names>B</given-names></name> (<year>2013</year>) <article-title>Ligand induced conformational changes of the human serotonin transporter revealed by molecular dynamics simulations</article-title>. <source>PLoS One</source> <volume>8</volume>: <fpage>e63635</fpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1371/journal.pone.0063635" xlink:type="simple">10.1371/journal.pone.0063635</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Piscitelli2"><label>52</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Piscitelli</surname><given-names>CL</given-names></name>, <name name-style="western"><surname>Krishnamurthy</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Gouaux</surname><given-names>E</given-names></name> (<year>2010</year>) <article-title>Neurotransmitter/sodium symporter orthologue LeuT has a single high-affinity substrate site</article-title>. <source>Nature</source> <volume>468</volume>: <fpage>1129</fpage>–<lpage>1132</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature09581" xlink:type="simple">10.1038/nature09581</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Krishnamurthy2"><label>53</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Krishnamurthy</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Gouaux</surname><given-names>E</given-names></name> (<year>2012</year>) <article-title>X-ray structures of LeuT in substrate-free outward-open and apo inward-open states</article-title>. <source>Nature</source> <volume>481</volume>: <fpage>469</fpage>–<lpage>474</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1038/nature10737" xlink:type="simple">10.1038/nature10737</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Wang2"><label>54</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Wang</surname><given-names>H</given-names></name>, <name name-style="western"><surname>Goehring</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Wankg</surname><given-names>KH</given-names></name>, <name name-style="western"><surname>Penmatsa</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Ressler</surname><given-names>R</given-names></name>, <etal>et al</etal>. (<year>2013</year>) <article-title>Structural basis for action by diverse antidepressants on biogenic amine transports</article-title>. <source>Nature</source> <volume>503</volume>: <fpage>141</fpage>–<lpage>5</lpage> Doi: 10.1038/nature12648.</mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Singh2"><label>55</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Singh</surname><given-names>SK</given-names></name>, <name name-style="western"><surname>Piscitelli</surname><given-names>CL</given-names></name>, <name name-style="western"><surname>Yamashita</surname><given-names>A</given-names></name>, <name name-style="western"><surname>Gouaux</surname><given-names>E</given-names></name> (<year>2008</year>) <article-title>A competitive inhibitor traps LeuT in an open-to-out conformation</article-title>. <source>Science (80- )</source> <volume>322</volume>: <fpage>1655</fpage>–<lpage>1661</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1126/science.1166777" xlink:type="simple">10.1126/science.1166777</ext-link></comment></mixed-citation>
+</ref>
+<ref id="pcbi.1003603-Beuming1"><label>56</label>
+<mixed-citation publication-type="journal" xlink:type="simple"><name name-style="western"><surname>Beuming</surname><given-names>T</given-names></name>, <name name-style="western"><surname>Shi</surname><given-names>L</given-names></name>, <name name-style="western"><surname>Javitch</surname><given-names>JA</given-names></name>, <name name-style="western"><surname>Weinstein</surname><given-names>H</given-names></name> (<year>2006</year>) <article-title>A Comprehensive Structure-Based Alignment of Prokaryotic and Eukaryotic Neurotransmitter/Na+ Symporters ( NSS ) Aids in the Use of the LeuT Structure to Probe NSS Structure and Function</article-title>. <volume>70</volume>: <fpage>1630</fpage>–<lpage>1642</lpage> <comment>doi:<ext-link ext-link-type="uri" xlink:href="http://dx.doi.org/10.1124/mol.106.026120.targets" xlink:type="simple">10.1124/mol.106.026120.targets</ext-link></comment></mixed-citation>
+</ref>
+</ref-list></back>
+</article>
